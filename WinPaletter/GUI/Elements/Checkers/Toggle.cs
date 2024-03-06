@@ -292,7 +292,6 @@ namespace WinPaletter.UI.WP
                 using (Pen P = new(lgborderChecked)) { G.DrawRoundedRect_LikeW11(P, MainRect, 9, true); }
 
                 using (Pen P = new(lgborderNonChecked)) { G.DrawRoundedRect_LikeW11(P, MainRect, 9, true); }
-
             }
 
             base.OnPaint(e);

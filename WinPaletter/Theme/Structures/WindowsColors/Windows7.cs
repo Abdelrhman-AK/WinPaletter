@@ -19,12 +19,6 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Glow or blur color</summary>
         public Color ColorizationAfterglow;
 
-        /// <summary>Enable aero peek feature: hovering on taskbar right corner will show apps with aero transparent glass rectangles on desktop.</summary>
-        public bool EnableAeroPeek;
-
-        ///
-        public bool AlwaysHibernateThumbnails;
-
         /// <summary>Control amount of main Windows color</summary>
         public int ColorizationColorBalance;
 
@@ -126,10 +120,6 @@ namespace WinPaletter.Theme.Structures
                     }
 
                 }
-
-                EnableAeroPeek = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", @default.EnableAeroPeek));
-
-                AlwaysHibernateThumbnails = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", @default.AlwaysHibernateThumbnails));
             }
 
             else
@@ -141,8 +131,6 @@ namespace WinPaletter.Theme.Structures
                 ColorizationBlurBalance = @default.ColorizationBlurBalance;
                 ColorizationGlassReflectionIntensity = @default.ColorizationGlassReflectionIntensity;
                 Theme = @default.Theme;
-                EnableAeroPeek = @default.EnableAeroPeek;
-                AlwaysHibernateThumbnails = @default.AlwaysHibernateThumbnails;
             }
         }
 
@@ -161,7 +149,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.Aero:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
                             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -172,7 +160,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.AeroOpaque:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
                             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
                             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
@@ -183,7 +171,7 @@ namespace WinPaletter.Theme.Structures
                     case Themes.Basic:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
 
                             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
                             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);
@@ -206,9 +194,6 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);
-
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
-                EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
                 EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1);
 
                 Program.RefreshDWM(TM);

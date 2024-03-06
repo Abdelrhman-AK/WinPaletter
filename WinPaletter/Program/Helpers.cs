@@ -84,6 +84,8 @@ namespace WinPaletter
 
         private static void LoadThemeManager()
         {
+            FirstVisualStyles = UxTheme.GetCurrentVS().Item1 ?? SysPaths.Windows + "\\Resources\\Themes\\aero\\aero.msstyles";
+
             if (OS.W12)
                 WindowStyle = PreviewHelpers.WindowStyle.W12;
 
@@ -237,15 +239,15 @@ namespace WinPaletter
         {
             if (Settings.FileTypeManagement.AutoAddExt)
             {
-                if (!System.IO.Directory.Exists(PathsExt.appData)) System.IO.Directory.CreateDirectory(PathsExt.appData);
+                if (!System.IO.Directory.Exists(SysPaths.appData)) System.IO.Directory.CreateDirectory(SysPaths.appData);
 
-                WriteIfChangedOrNotExists($@"{PathsExt.appData}\fileextension.ico", Properties.Resources.fileextension.ToByteArray());
-                WriteIfChangedOrNotExists($@"{PathsExt.appData}\settingsfile.ico", Properties.Resources.settingsfile.ToByteArray());
-                WriteIfChangedOrNotExists($@"{PathsExt.appData}\themerespack.ico", Properties.Resources.ThemesResIcon.ToByteArray());
+                WriteIfChangedOrNotExists($@"{SysPaths.appData}\fileextension.ico", Properties.Resources.fileextension.ToBytes());
+                WriteIfChangedOrNotExists($@"{SysPaths.appData}\settingsfile.ico", Properties.Resources.settingsfile.ToBytes());
+                WriteIfChangedOrNotExists($@"{SysPaths.appData}\themerespack.ico", Properties.Resources.ThemesResIcon.ToBytes());
 
-                bool assoc0 = CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, $@"{PathsExt.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
-                bool assoc1 = CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, $@"{PathsExt.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
-                bool assoc2 = CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, $@"{PathsExt.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc0 = CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, $@"{SysPaths.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc1 = CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, $@"{SysPaths.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc2 = CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, $@"{SysPaths.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
 
                 if (!assoc0 || !assoc1 || !assoc2)
                 {
@@ -271,14 +273,14 @@ namespace WinPaletter
         {
             try
             {
-                if (!System.IO.Directory.Exists(PathsExt.MSTheme_Dir))
+                if (!System.IO.Directory.Exists(SysPaths.MSTheme_Dir))
                 {
-                    System.IO.Directory.CreateDirectory(PathsExt.MSTheme_Dir);
+                    System.IO.Directory.CreateDirectory(SysPaths.MSTheme_Dir);
                 }
 
-                WriteIfChangedOrNotExists(PathsExt.MSTheme_ZIP, Properties.Resources.luna);
+                WriteIfChangedOrNotExists(SysPaths.MSTheme_ZIP, Properties.Resources.luna);
 
-                using (System.IO.FileStream s = new(PathsExt.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                using (System.IO.FileStream s = new(SysPaths.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
                     using (System.IO.Compression.ZipArchive z = new(s, System.IO.Compression.ZipArchiveMode.Read))
                     {
@@ -286,7 +288,7 @@ namespace WinPaletter
                         {
                             if (entry.FullName.Contains(@"\"))
                             {
-                                string dest = System.IO.Path.Combine(PathsExt.MSTheme_Dir, entry.FullName);
+                                string dest = System.IO.Path.Combine(SysPaths.MSTheme_Dir, entry.FullName);
                                 string dest_dir = dest.Replace($@"\{dest.Split('\\').Last()}", string.Empty);
 
                                 if (!System.IO.Directory.Exists(dest_dir))
@@ -294,12 +296,12 @@ namespace WinPaletter
                                     System.IO.Directory.CreateDirectory(dest_dir);
                                 }
                             }
-                            entry.ExtractToFile(System.IO.Path.Combine(PathsExt.MSTheme_Dir, entry.FullName), true);
+                            entry.ExtractToFile(System.IO.Path.Combine(SysPaths.MSTheme_Dir, entry.FullName), true);
                         }
                     }
                     s.Close();
                 }
-                System.IO.File.WriteAllText(PathsExt.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{PathsExt.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                System.IO.File.WriteAllText(SysPaths.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
             }
             catch (Exception ex)
             {
@@ -311,10 +313,10 @@ namespace WinPaletter
         {
             try
             {
-                if (!OS.WXP && !System.IO.File.Exists($@"{PathsExt.appData}\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && !System.IO.File.Exists($@"{SysPaths.appData}\WindowsStartup_Backup.wav"))
                 {
-                    byte[] SoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                    System.IO.File.WriteAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav", SoundBytes);
+                    byte[] SoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                    System.IO.File.WriteAllBytes($@"{SysPaths.appData}\WindowsStartup_Backup.wav", SoundBytes);
                 }
             }
             catch (Exception ex)
@@ -327,7 +329,7 @@ namespace WinPaletter
         {
             if (!Program.UninstallDone)
             {
-                if (System.IO.File.Exists(PathsExt.SysEventsSounds) && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(PathsExt.SysEventsSounds)))
+                if (System.IO.File.Exists(SysPaths.SysEventsSounds) && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(SysPaths.SysEventsSounds)))
                 {
                     //Update
                     if (Settings.UsersServices.ShowSysEventsSoundsInstaller)

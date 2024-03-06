@@ -368,7 +368,7 @@ namespace WinPaletter
                 // Get text of the DB from URL
                 Status_lbl.SetText(string.Format(Program.Lang.Store_Accessing, DB));
                 response.Clear();
-                response = DM.ReadString(DB).CList();
+                response = DM.ReadString(DB).Split('\n').ToList();
                 items.Clear();
 
                 // Add valid lines (Correct format) in a themes list
@@ -419,7 +419,7 @@ namespace WinPaletter
                     string FileName = temp.Split('/').Last();
                     temp = temp.Replace($"/{FileName}", string.Empty);
                     string FolderName = temp.Split('/').Last();
-                    string Dir = PathsExt.StoreCache;
+                    string Dir = SysPaths.StoreCache;
                     if (!string.IsNullOrWhiteSpace(FolderName))
                         Dir += $@"\{reposName}\{FolderName}";
                     if (!System.IO.Directory.Exists(Dir))

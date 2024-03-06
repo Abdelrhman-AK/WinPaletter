@@ -9,7 +9,7 @@ using System.Text;
 namespace WinPaletter.TypesExtensions
 {
     /// <summary>
-    /// Extension methods for working with byte arrays.
+    /// Extension methods for working with <see cref="Byte"/> arrays.
     /// </summary>
     public static class ByteArrayExtensions
     {
@@ -64,16 +64,6 @@ namespace WinPaletter.TypesExtensions
             lOGFONT.lfFaceName = Encoding.Default.GetString(array).TrimEnd(null);
 
             return lOGFONT;
-        }
-
-        /// <summary>
-        /// Converts a byte array to a <see cref="Font"/> object.
-        /// </summary>
-        /// <param name="fontBytes">The byte array containing font information.</param>
-        /// <returns>A <see cref="Font"/> object representing the font.</returns>
-        public static Font ToFont(this byte[] fontBytes)
-        {
-            return Font.FromLogFont(fontBytes.ToLogFont());
         }
 
         /// <summary>

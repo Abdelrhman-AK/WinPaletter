@@ -923,16 +923,15 @@ namespace WinPaletter.Templates
             }
         }
 
-        public void LoadFromWinThemeString(string String, string ThemeName)
+        public void LoadFromWinThemeString(string DB, string ThemeName)
         {
-            if (string.IsNullOrWhiteSpace(String) || !String.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) return;
+            if (string.IsNullOrWhiteSpace(DB) || !DB.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) return;
 
-            List<string> AllThemes = String.CList();
             string SelectedTheme = string.Empty;
 
             bool Found = false;
 
-            foreach (string theme in AllThemes)
+            foreach (string theme in DB.Split('\n'))
             {
                 if ((theme.Split('|')[0].ToLower() ?? string.Empty) == (ThemeName.ToLower() ?? string.Empty))
                 {
@@ -944,14 +943,12 @@ namespace WinPaletter.Templates
 
             if (!Found) return;
 
-            List<string> SelectedThemeList = SelectedTheme.CList();
-
             bool FoundGradientActive = false;
             bool FoundGradientInactive = false;
 
             Visible = false;
 
-            foreach (string item in SelectedThemeList)
+            foreach (string item in SelectedTheme.Split('\n'))
             {
                 string x = item.ToLower();
 

@@ -433,12 +433,12 @@ namespace WinPaletter.Theme.Structures
             EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_WiFiConnectionFailed", Snd_WiFiConnectionFailed, RegistryValueKind.String);
 
 
-            if (System.IO.File.Exists(PathsExt.SysEventsSounds_Local_INI)) { System.IO.File.Delete(PathsExt.SysEventsSounds_Local_INI); }
+            if (System.IO.File.Exists(SysPaths.SysEventsSounds_Local_INI)) { System.IO.File.Delete(SysPaths.SysEventsSounds_Local_INI); }
 
-            if (System.IO.File.Exists(PathsExt.SysEventsSounds_Global_INI))
+            if (System.IO.File.Exists(SysPaths.SysEventsSounds_Global_INI))
             {
-                try { System.IO.File.Delete(PathsExt.SysEventsSounds_Global_INI); }
-                catch { Program.SendCommand($"{PathsExt.CMD} /C del \"{PathsExt.SysEventsSounds_Global_INI}\" && exit"); }
+                try { System.IO.File.Delete(SysPaths.SysEventsSounds_Global_INI); }
+                catch { Program.SendCommand($"{SysPaths.CMD} /C del \"{SysPaths.SysEventsSounds_Global_INI}\" && exit"); }
             }
 
             if (Enabled)
@@ -480,27 +480,27 @@ namespace WinPaletter.Theme.Structures
                     if (File.Exists(Snd_Imageres_SystemStart) && Path.GetExtension(Snd_Imageres_SystemStart).ToUpper() == ".WAV")
                     {
 
-                        byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                        byte[] CurrentSoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                         byte[] TargetSoundBytes = File.ReadAllBytes(Snd_Imageres_SystemStart);
 
                         if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
                         {
-                            PE.ReplaceResource(TreeView, PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080, TargetSoundBytes);
+                            PE.ReplaceResource(TreeView, SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080, TargetSoundBytes);
                         }
                     }
 
                     else if (Snd_Imageres_SystemStart.Trim().ToUpper() == "DEFAULT")
                     {
-                        byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                        byte[] OriginalSoundBytes = File.ReadAllBytes($@"{PathsExt.appData}\WindowsStartup_Backup.wav");
+                        byte[] CurrentSoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                        byte[] OriginalSoundBytes = File.ReadAllBytes($@"{SysPaths.appData}\WindowsStartup_Backup.wav");
 
                         if (!CurrentSoundBytes.Equals_Method2(OriginalSoundBytes))
                         {
-                            PE.ReplaceResource(TreeView, PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080, OriginalSoundBytes);
+                            PE.ReplaceResource(TreeView, SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080, OriginalSoundBytes);
                         }
 
                         if (Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound)
-                            SFC(PathsExt.imageres);
+                            SFC(SysPaths.imageres);
                     }
 
                 }
@@ -617,10 +617,10 @@ namespace WinPaletter.Theme.Structures
                     EditReg(TreeView, string.Format(Scope, "PanelSound"), string.Empty, Snd_SpeechRec_PanelSound, RegistryValueKind.String);
                 }
 
-                if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir))
-                    System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir);
+                if (!System.IO.Directory.Exists(SysPaths.SysEventsSoundsDir))
+                    System.IO.Directory.CreateDirectory(SysPaths.SysEventsSoundsDir);
 
-                INI[] INIs = new INI[] { new(PathsExt.SysEventsSounds_Local_INI), new(PathsExt.SysEventsSounds_Global_INI) };
+                INI[] INIs = new INI[] { new(SysPaths.SysEventsSounds_Local_INI), new(SysPaths.SysEventsSounds_Global_INI) };
 
                 foreach (INI ini in INIs)
                 {

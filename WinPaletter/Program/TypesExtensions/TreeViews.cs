@@ -5,10 +5,13 @@ using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extensions for <see cref="TreeView"/>
+    /// </summary>
     public static class TreeViewExtensions
     {
         /// <summary>
-        /// Serialize from a JObj File to TreeView Nodes
+        /// Serialize from a JSON file to TreeView Nodes
         /// </summary>
         public static void FromJSON(this TreeView TreeView, string JSON_File, string rootName)
         {
@@ -81,7 +84,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Serialize a node to JObj Formatted String
+        /// Serialize a node to JSON formatted String
         /// </summary>
         public static string ToJSON(this TreeNode TreeNode)
         {

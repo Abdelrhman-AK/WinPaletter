@@ -108,7 +108,7 @@ namespace WinPaletter
                 if (!OS.WXP)
                 {
 
-                    byte[] SoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                    byte[] SoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                     try
                     {
                         using (MemoryStream ms = new(SoundBytes))
@@ -137,7 +137,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        using (FileStream FS = new($@"{PathsExt.appData}\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
+                        using (FileStream FS = new($@"{SysPaths.appData}\WindowsStartup_Backup.wav", FileMode.Open, FileAccess.Read))
                         {
                             SP = new(FS);
                             SP.Load();
@@ -147,7 +147,7 @@ namespace WinPaletter
                     catch // Use method #2
                     {
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio($@"{PathsExt.appData}\WindowsStartup_Backup.wav");
+                        NativeMethods.DLLFunc.PlayAudio($@"{SysPaths.appData}\WindowsStartup_Backup.wav");
                     }
 
                 }

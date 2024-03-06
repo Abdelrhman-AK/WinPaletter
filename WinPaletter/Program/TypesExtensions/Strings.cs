@@ -75,23 +75,6 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Convert String to List (String should be multi-lines)
-        /// </summary>
-        public static List<string> CList(this string String)
-        {
-            List<string> List = new();
-            List.Clear();
-            using (StringReader Reader = new(String))
-            {
-                while (Reader.Peek() >= 0)
-                    List.Add(Reader.ReadLine());
-                Reader.Close();
-                Reader.Dispose();
-            }
-            return List;
-        }
-
-        /// <summary>
         /// Measure String by a certain font
         /// </summary>
         public static SizeF Measure(this string text, Font font)
@@ -110,7 +93,7 @@ namespace WinPaletter.TypesExtensions
 
         public static string PhrasePath(this string path)
         {
-            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", $@"{PathsExt.ProgramFiles}\Plus!\Themes"));
+            return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", $@"{SysPaths.ProgramFiles}\Plus!\Themes"));
         }
 
 

@@ -170,9 +170,6 @@
         QocMeWsj7zL0Zr6M3sCXkceglyLj7zzQ/0PRaL8Bj/ZX36gZG8YAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="ClassicColorsDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ClassicThemesDB;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="darkmode_dark" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -5770,9 +5767,6 @@
   </data>
   <data name="luna" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\luna.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="MetricsFontsDB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MetricsFontsDB;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Noise" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

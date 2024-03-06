@@ -49,21 +49,20 @@ namespace WinPaletter.Theme
         /// Get all colors inside from a string
         /// <br><b>Take a look at Properties.Resources.ClassicColorsDB</b></br>
         /// </summary>
-        /// <param name="String">String that has .theme file data</param>
+        /// <param name="DB">DB that has .theme file data</param>
         /// <param name="ThemeName">Selected theme name</param>
         /// <returns></returns>
-        public static List<Color> GetPaletteFromString(string String, string ThemeName)
+        public static List<Color> GetPaletteFromString(string DB, string ThemeName)
         {
-            if (string.IsNullOrWhiteSpace(String) || !String.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) { return null; }
+            if (string.IsNullOrWhiteSpace(DB) || !DB.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) { return null; }
 
             List<Color> ls = new();
             ls.Clear();
 
-            List<string> AllThemes = String.CList();
             string SelectedTheme = string.Empty;
             bool Found = false;
 
-            foreach (string th in AllThemes)
+            foreach (string th in DB.Split('\n'))
             {
                 if ((th.Split('|')[0].ToLower() ?? string.Empty) == (ThemeName.ToLower() ?? string.Empty))
                 {
@@ -75,9 +74,7 @@ namespace WinPaletter.Theme
 
             if (!Found) { return null; }
 
-            List<string> SelectedThemeList = SelectedTheme.CList();
-
-            foreach (string x in SelectedThemeList)
+            foreach (string x in SelectedTheme.Split('\n'))
             {
                 if (x.Contains("=") && x.Split('=').Count() >= 2 && x.Split('=')[1].Contains(" ") && x.Split('=')[1].Split(' ').Count() == 3)
                 {
@@ -322,11 +319,11 @@ namespace WinPaletter.Theme
 
             try
             {
-                DecompressedData = System.IO.File.ReadAllText(File).Decompress().CList();
+                DecompressedData = System.IO.File.ReadAllText(File).Decompress().Split('\n').ToList();
             }
             catch
             {
-                DecompressedData = System.IO.File.ReadAllText(File).CList();
+                DecompressedData = System.IO.File.ReadAllText(File).Split('\n').ToList();
             }
 
             return DecompressedData;

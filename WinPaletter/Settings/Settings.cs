@@ -333,8 +333,8 @@ namespace WinPaletter
                     Bypass = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Bypass", false));
                     ListAllFonts = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "ListAllFonts", false));
                     Path_Deflection = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Path_Deflection", false));
-                    Terminal_Stable_Path = GetReg(REG_WindowsTerminals, "Terminal_Stable_Path", PathsExt.TerminalJSON).ToString();
-                    Terminal_Preview_Path = GetReg(REG_WindowsTerminals, "Terminal_Preview_Path", PathsExt.TerminalPreviewJSON).ToString();
+                    Terminal_Stable_Path = GetReg(REG_WindowsTerminals, "Terminal_Stable_Path", SysPaths.TerminalJSON).ToString();
+                    Terminal_Preview_Path = GetReg(REG_WindowsTerminals, "Terminal_Preview_Path", SysPaths.TerminalPreviewJSON).ToString();
                 }
 
                 public void Save()
@@ -500,7 +500,7 @@ namespace WinPaletter
                     AutoBackupOnAppOpen = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnAppOpen", false));
                     AutoBackupOnApply = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApply", true));
                     AutoBackupOnThemeLoad = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnThemeLoad", false));
-                    BackupPath = GetReg(REG_Backup, "BackupPath", $"{PathsExt.appData}\\Backup\\Themes").ToString();
+                    BackupPath = GetReg(REG_Backup, "BackupPath", $"{SysPaths.appData}\\Backup\\Themes").ToString();
                 }
 
                 public void Save()
@@ -669,8 +669,8 @@ namespace WinPaletter
             Bypass = false,
             ListAllFonts = false,
             Path_Deflection = false,
-            Terminal_Stable_Path = PathsExt.TerminalJSON,
-            Terminal_Preview_Path = PathsExt.TerminalPreviewJSON
+            Terminal_Stable_Path = SysPaths.TerminalJSON,
+            Terminal_Preview_Path = SysPaths.TerminalPreviewJSON
         };
 
         public Structures.Store Store = new()
@@ -713,7 +713,7 @@ namespace WinPaletter
             AutoBackupOnAppOpen = false,
             AutoBackupOnApply = true,
             AutoBackupOnThemeLoad = false,
-            BackupPath = $"{PathsExt.appData}\\Backup\\Themes"
+            BackupPath = $"{SysPaths.appData}\\Backup\\Themes"
         };
 
         public Structures.AspectsControl AspectsControl = new()

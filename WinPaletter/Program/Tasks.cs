@@ -21,7 +21,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Shutdown"), "task_remove");
-                        Program.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Shutdown /F");
+                        Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Shutdown /F");
                         break;
                     }
 
@@ -29,7 +29,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Logoff"), "task_remove");
-                        Program.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Logoff /F");
+                        Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Logoff /F");
                         break;
                     }
 
@@ -37,7 +37,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Logon"), "task_remove");
-                        Program.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Logon /F");
+                        Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Logon /F");
                         break;
                     }
 
@@ -45,7 +45,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\Unlock"), "task_remove");
-                        Program.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\Unlock /F");
+                        Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Unlock /F");
                         break;
                     }
 
@@ -53,7 +53,7 @@ namespace WinPaletter
                     {
                         if (TreeView is not null)
                             Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_DeleteTask, @"WinPaletter\ChargerConnected"), "task_remove");
-                        Program.SendCommand(@$"{PathsExt.SchTasks} /Delete /TN WinPaletter\ChargerConnected /F");
+                        Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\ChargerConnected /F");
                         break;
                     }
             }

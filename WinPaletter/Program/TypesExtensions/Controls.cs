@@ -8,25 +8,10 @@ using System.Windows.Forms;
 namespace WinPaletter.TypesExtensions
 {
     /// <summary>
-    /// Extensions to controls
+    /// Extensions to <see cref="Control"/> class
     /// </summary>
     public static class ControlExtensions
     {
-        /// <summary>
-        /// SetStyle to controls without restriction
-        /// </summary>
-        public static bool SetStyle(this Control c, ControlStyles Style, bool value)
-        {
-            bool retval = false;
-            if (c != null)
-            {
-                Type typeTB = typeof(Control);
-                System.Reflection.MethodInfo misSetStyle = typeTB.GetMethod("SetStyle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                if (misSetStyle != null) { misSetStyle.Invoke(c, new object[] { Style, value }); retval = true; }
-            }
-            return retval;
-        }
-
         /// <summary>
         /// Set the value of a property in an object
         /// </summary>

@@ -154,10 +154,10 @@ namespace WinPaletter
         {
             string mostRecentFile = null;
 
-            string defaultLockScreen = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{PathsExt.Windows}\\Web\\Screen\\img100.jpg") as string;
+            string defaultLockScreen = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg") as string;
 
             // Get the path to the current user's lock screen image
-            string lockScreenPath = System.IO.Path.Combine(PathsExt.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
+            string lockScreenPath = System.IO.Path.Combine(SysPaths.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
 
             if (System.IO.Directory.Exists(lockScreenPath))
             {

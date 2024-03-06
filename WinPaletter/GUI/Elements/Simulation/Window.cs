@@ -406,12 +406,12 @@ namespace WinPaletter.UI.Simulation
 
         public delegate void MetricsChangedEventHandler();
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            if (!DesignMode) ProcessBack();
+        //protected override void OnHandleCreated(EventArgs e)
+        //{
+        //    if (!DesignMode) ProcessBack();
 
-            base.OnHandleCreated(e);
-        }
+        //    base.OnHandleCreated(e);
+        //}
 
         protected override void OnBackgroundImageChanged(EventArgs e)
         {
@@ -439,41 +439,48 @@ namespace WinPaletter.UI.Simulation
 
         public void ProcessBack()
         {
-            Bitmap Wallpaper = Parent.BackgroundImage is null ? Program.Wallpaper : Parent.BackgroundImage as Bitmap;
-
-            if (Wallpaper is not null)
+            // Styles support transparency (Mica/AeroGlass)
+            if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W7Aero)
             {
-                Rectangle imageBounds = new(0, 0, Wallpaper.Width, Wallpaper.Height);
-                if (imageBounds.Contains_ButNotExceed(Bounds)) AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat);
-            }
+                Bitmap Wallpaper = Parent.BackgroundImage is null ? Program.Wallpaper : Parent.BackgroundImage as Bitmap;
 
-            if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
-            {
-                if (AdaptedBack is not null)
+                if (Wallpaper is not null)
                 {
-                    Bitmap b = new Bitmap(AdaptedBack).Blur(15);
+                    Rectangle imageBounds = new(0, 0, Wallpaper.Width, Wallpaper.Height);
+                    if (imageBounds.Contains_ButNotExceed(Bounds)) AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat);
+                }
 
-                    if (DarkMode)
+                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
+                {
+                    if (Active && !AccentColor_Enabled && AdaptedBack is not null)
                     {
-                        if (b is not null)
+                        Bitmap b = AdaptedBack.Blur(15);
+
+                        if (DarkMode)
                         {
-                            using (ImageFactory ImgF = new())
+                            if (b is not null)
                             {
-                                ImgF.Load(b);
-                                ImgF.Saturation(5);
-                                ImgF.Brightness(-20);
-                                AdaptedBackBlurred = ImgF.Image.Clone() as Bitmap;
+                                using (ImageFactory ImgF = new())
+                                {
+                                    ImgF.Load(b);
+                                    ImgF.Saturation(-30);
+                                    ImgF.Brightness(-20);
+                                    AdaptedBackBlurred = ImgF.Image.Clone() as Bitmap;
+                                }
                             }
                         }
-                    }
 
-                    else { AdaptedBackBlurred = b; }
+                        else { AdaptedBackBlurred = b; }
+                    }
+                }
+
+                else if (Preview == Preview_Enum.W7Aero)
+                {
+                    if (AdaptedBack is not null) { AdaptedBackBlurred = AdaptedBack.Blur(3); }
+
+                    Noise7 = Assets.Win7Preview.AeroGlass.Fade(Win7Noise / 100);
                 }
             }
-
-            else if (AdaptedBack is not null) { AdaptedBackBlurred = new Bitmap(AdaptedBack).Blur(3); }
-
-            Noise7 = Assets.Win7Preview.AeroGlass.Fade(Win7Noise / 100);
         }
 
         protected override void Dispose(bool disposing)
@@ -489,47 +496,6 @@ namespace WinPaletter.UI.Simulation
         #endregion
 
         #region Methods
-
-        public void CopycatFrom(Window Window, bool IgnoreLocationSizesAndText = false)
-        {
-            Shadow = Window.Shadow;
-            Radius = Window.Radius;
-            AccentColor_Active = Window.AccentColor_Active;
-            AccentColor_Inactive = Window.AccentColor_Inactive;
-            AccentColor2_Active = Window.AccentColor2_Active;
-            AccentColor2_Inactive = Window.AccentColor2_Inactive;
-            Active = Window.Active;
-            Preview = Window.Preview;
-            Win7Alpha = Window.Win7Alpha;
-            Win7ColorBal = Window.Win7ColorBal;
-            Win7GlowBal = Window.Win7GlowBal;
-            WinVista = Window.WinVista;
-            _DarkMode = Window.DarkMode;
-            _AccentColor_Enabled = Window.AccentColor_Enabled;
-            _Win7Noise = Window.Win7Noise;
-
-            if (!IgnoreLocationSizesAndText)
-            {
-                ToolWindow = Window.ToolWindow;
-                Dock = Window.Dock;
-                Size = Window.Size;
-                Location = Window.Location;
-                Text = Window.Text;
-            }
-
-            AdjustPadding();
-
-            ProcessBack();
-            Invoke(Refresh);
-        }
-
-        public void SetMetrics(Window Window)
-        {
-            Window.Metrics_BorderWidth = Metrics_BorderWidth;
-            Window.Metrics_CaptionHeight = Metrics_CaptionHeight;
-            Window.Metrics_PaddedBorderWidth = Metrics_PaddedBorderWidth;
-            Window.Refresh();
-        }
 
         public void AdjustPadding()
         {
@@ -615,7 +581,6 @@ namespace WinPaletter.UI.Simulation
         private Rectangle Rect => new(RectAll.X + FreeMargin, RectAll.Y + FreeMargin, RectAll.Width - (FreeMargin * 2), RectAll.Height - (FreeMargin * 2));
         private Rectangle RectBorder => new(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
         private Rectangle TitlebarRect => new(Rect.X, Rect.Y, Rect.Width, TitleHeight + _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3);
-        private Rectangle TitlebarRect_XP => new(TitlebarRect.X, TitlebarRect.Y + 4, TitlebarRect.Width, TitlebarRect.Height - 4);
         private Rectangle IconRect
         {
             get
@@ -637,7 +602,7 @@ namespace WinPaletter.UI.Simulation
 
                 else if (Preview == Preview_Enum.WXP)
                 {
-                    return new(Rect.X + SideSize + 4, TitlebarRect.Bottom - 8 - 14, 14, 14);
+                    return new(Rect.X + SideSize + 4, TitlebarRect.Y + (TitlebarRect.Height - 14) / 2, 14, 14);
                 }
 
                 else
@@ -669,7 +634,7 @@ namespace WinPaletter.UI.Simulation
                 else if (Preview == Preview_Enum.WXP)
                 {
                     int offsetX = Rect.X + SideSize + (ToolWindow ? 3 : 21);
-                    resultRect = new(offsetX, TitlebarRect.Bottom - 5 - CloseBtn_W, Rect.Width - CloseBtn_W - SideSize * 2, CloseBtn_W);
+                    resultRect = new(offsetX, TitlebarRect.Bottom - 2 - CloseBtn_W, Rect.Width - CloseBtn_W - SideSize * 2, CloseBtn_W);
                 }
                 else
                 {
@@ -1226,7 +1191,7 @@ namespace WinPaletter.UI.Simulation
                     using (SolidBrush br = new(AccentColor_Active)) { G.FillRectangle(br, Rect); }
                     G.ResetClip();
                 }
-               
+
                 if (AccentColor_Enabled)
                 {
                     if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRectangle(P, Rect); } }
@@ -1767,9 +1732,9 @@ namespace WinPaletter.UI.Simulation
 
                 using (SolidBrush br = new(WindowsXPColor)) { G.FillRectangle(br, ClientBorderRect); }
 
-                resVS?.Draw(G, TitlebarRect_XP, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
+                resVS?.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
 
-                CloseButtonRect = new(ClientRect.Right - CloseBtn_W - RightEdge_XP.Width + 3, Rect.Y + TitlebarRect_XP.Height + 1 - CloseBtn_W, CloseBtn_W, CloseBtn_W);
+                CloseButtonRect = new(ClientRect.Right - CloseBtn_W - RightEdge_XP.Width + 4, Rect.Y + TitlebarRect.Height - CloseBtn_W - 3, CloseBtn_W, CloseBtn_W);
 
                 resVS?.Draw(G, LeftEdge_XP, VisualStylesRes.Element.LeftEdge, Active, ToolWindow);
                 resVS?.Draw(G, RightEdge_XP, VisualStylesRes.Element.RightEdge, Active, ToolWindow);
@@ -1833,8 +1798,8 @@ namespace WinPaletter.UI.Simulation
                 using (Pen P = new(color0))
                 using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
                 {
-                    G.FillRoundedRect(hb, Preview != Preview_Enum.WXP ? TitlebarRect : TitlebarRect_XP, Radius, true);
-                    G.DrawRoundedRect(P, Preview != Preview_Enum.WXP ? TitlebarRect : TitlebarRect_XP, Radius, true);
+                    G.FillRoundedRect(hb, TitlebarRect, Radius, true);
+                    G.DrawRoundedRect(P, TitlebarRect, Radius, true);
                 }
             }
 

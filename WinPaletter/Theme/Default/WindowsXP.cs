@@ -627,24 +627,24 @@ namespace WinPaletter.Theme
                 ScreenSaver.Enabled = true;
                 ScreenSaver.IsSecure = false;
                 ScreenSaver.TimeOut = 60;
-                ScreenSaver.File = $@"{PathsExt.System32}\logon.scr";
+                ScreenSaver.File = $@"{SysPaths.System32}\logon.scr";
             }
 
             {
                 ref Structures.Sounds Sounds = ref TM.Sounds;
                 Sounds.Snd_Imageres_SystemStart = string.Empty;
-                Sounds.Snd_Win_Default = $@"{PathsExt.Windows}\media\Windows XP Ding.wav";
+                Sounds.Snd_Win_Default = $@"{SysPaths.Windows}\media\Windows XP Ding.wav";
                 Sounds.Snd_Win_AppGPFault = string.Empty;
                 Sounds.Snd_Win_CCSelect = string.Empty;
                 Sounds.Snd_Win_ChangeTheme = string.Empty;
                 Sounds.Snd_Win_Close = string.Empty;
-                Sounds.Snd_Win_CriticalBatteryAlarm = $@"{PathsExt.Windows}\media\Windows XP Battery Critical.wav";
-                Sounds.Snd_Win_DeviceConnect = $@"{PathsExt.Windows}\media\Windows XP Hardware Insert.wav";
-                Sounds.Snd_Win_DeviceDisconnect = $@"{PathsExt.Windows}\media\Windows XP Hardware Remove.wav";
-                Sounds.Snd_Win_DeviceFail = $@"{PathsExt.Windows}\media\Windows XP Hardware Fail.wav";
+                Sounds.Snd_Win_CriticalBatteryAlarm = $@"{SysPaths.Windows}\media\Windows XP Battery Critical.wav";
+                Sounds.Snd_Win_DeviceConnect = $@"{SysPaths.Windows}\media\Windows XP Hardware Insert.wav";
+                Sounds.Snd_Win_DeviceDisconnect = $@"{SysPaths.Windows}\media\Windows XP Hardware Remove.wav";
+                Sounds.Snd_Win_DeviceFail = $@"{SysPaths.Windows}\media\Windows XP Hardware Fail.wav";
                 Sounds.Snd_Win_FaxBeep = string.Empty;
-                Sounds.Snd_Win_LowBatteryAlarm = $@"{PathsExt.Windows}\media\Windows XP Battery Low.wav";
-                Sounds.Snd_Win_MailBeep = $@"{PathsExt.Windows}\media\Windows XP Notify.wav";
+                Sounds.Snd_Win_LowBatteryAlarm = $@"{SysPaths.Windows}\media\Windows XP Battery Low.wav";
+                Sounds.Snd_Win_MailBeep = $@"{SysPaths.Windows}\media\Windows XP Notify.wav";
                 Sounds.Snd_Win_Maximize = string.Empty;
                 Sounds.Snd_Win_MenuCommand = string.Empty;
                 Sounds.Snd_Win_MenuPopup = string.Empty;
@@ -682,33 +682,33 @@ namespace WinPaletter.Theme
                 Sounds.Snd_Win_RestoreDown = string.Empty;
                 Sounds.Snd_Win_RestoreUp = string.Empty;
                 Sounds.Snd_Win_ShowBand = string.Empty;
-                Sounds.Snd_Win_SystemAsterisk = $@"{PathsExt.Windows}\media\Windows XP Error.wav";
-                Sounds.Snd_Win_SystemExclamation = $@"{PathsExt.Windows}\media\Windows XP Exclamation.wav";
-                Sounds.Snd_Win_SystemExit = $@"{PathsExt.Windows}\media\Windows XP Shutdown.wav";
-                Sounds.Snd_Win_SystemStart = $@"{PathsExt.Windows}\media\Windows XP Startup.wav";
-                Sounds.Snd_Win_SystemHand = $@"{PathsExt.Windows}\media\Windows XP Critical Stop.wav";
-                Sounds.Snd_Win_SystemNotification = $@"{PathsExt.Windows}\media\Windows XP Balloon.wav";
+                Sounds.Snd_Win_SystemAsterisk = $@"{SysPaths.Windows}\media\Windows XP Error.wav";
+                Sounds.Snd_Win_SystemExclamation = $@"{SysPaths.Windows}\media\Windows XP Exclamation.wav";
+                Sounds.Snd_Win_SystemExit = $@"{SysPaths.Windows}\media\Windows XP Shutdown.wav";
+                Sounds.Snd_Win_SystemStart = $@"{SysPaths.Windows}\media\Windows XP Startup.wav";
+                Sounds.Snd_Win_SystemHand = $@"{SysPaths.Windows}\media\Windows XP Critical Stop.wav";
+                Sounds.Snd_Win_SystemNotification = $@"{SysPaths.Windows}\media\Windows XP Balloon.wav";
                 Sounds.Snd_Win_SystemQuestion = string.Empty;
-                Sounds.Snd_Win_WindowsLogoff = $@"{PathsExt.Windows}\media\Windows XP Logoff Sound.wav";
-                Sounds.Snd_Win_WindowsLogon = $@"{PathsExt.Windows}\media\Windows XP Logon Sound.wav";
+                Sounds.Snd_Win_WindowsLogoff = $@"{SysPaths.Windows}\media\Windows XP Logoff Sound.wav";
+                Sounds.Snd_Win_WindowsLogon = $@"{SysPaths.Windows}\media\Windows XP Logon Sound.wav";
                 Sounds.Snd_Win_WindowsUAC = string.Empty;
                 Sounds.Snd_Win_WindowsUnlock = string.Empty;
                 Sounds.Snd_Explorer_ActivatingDocument = string.Empty;
-                Sounds.Snd_Explorer_BlockedPopup = $@"{PathsExt.Windows}\media\Windows Pop-up Blocked.wav";
-                Sounds.Snd_Explorer_EmptyRecycleBin = $@"{PathsExt.Windows}\media\Windows XP Recycle.wav";
-                Sounds.Snd_Explorer_FeedDiscovered = $@"{PathsExt.Windows}\media\Windows Feed Discovered.wav";
+                Sounds.Snd_Explorer_BlockedPopup = $@"{SysPaths.Windows}\media\Windows Pop-up Blocked.wav";
+                Sounds.Snd_Explorer_EmptyRecycleBin = $@"{SysPaths.Windows}\media\Windows XP Recycle.wav";
+                Sounds.Snd_Explorer_FeedDiscovered = $@"{SysPaths.Windows}\media\Windows Feed Discovered.wav";
                 Sounds.Snd_Explorer_MoveMenuItem = string.Empty;
-                Sounds.Snd_Explorer_Navigating = $@"{PathsExt.Windows}\media\Windows Navigation Start.wav";
-                Sounds.Snd_Explorer_SecurityBand = $@"{PathsExt.Windows}\media\Windows Information Bar.wav";
+                Sounds.Snd_Explorer_Navigating = $@"{SysPaths.Windows}\media\Windows Navigation Start.wav";
+                Sounds.Snd_Explorer_SecurityBand = $@"{SysPaths.Windows}\media\Windows Information Bar.wav";
                 Sounds.Snd_Explorer_SearchProviderDiscovered = string.Empty;
-                Sounds.Snd_Explorer_FaxError = $@"{PathsExt.Windows}\media\ding.wav";
-                Sounds.Snd_Explorer_FaxLineRings = $@"{PathsExt.Windows}\media\ringin.wav";
-                Sounds.Snd_Explorer_FaxNew = $@"{PathsExt.Windows}\media\notify.wav";
-                Sounds.Snd_Explorer_FaxSent = $@"{PathsExt.Windows}\media\tada.wav";
-                Sounds.Snd_NetMeeting_PersonJoins = $@"{PathsExt.ProgramFiles}\NetMeeting\Blip.wav";
-                Sounds.Snd_NetMeeting_PersonLeaves = $@"{PathsExt.ProgramFiles}\NetMeeting\Blip.wav";
-                Sounds.Snd_NetMeeting_ReceiveCall = $@"{PathsExt.Windows}\media\Windows XP RingIn.wav";
-                Sounds.Snd_NetMeeting_ReceiveRequestToJoin = $@"{PathsExt.Windows}\media\Windows XP RingIn.wav";
+                Sounds.Snd_Explorer_FaxError = $@"{SysPaths.Windows}\media\ding.wav";
+                Sounds.Snd_Explorer_FaxLineRings = $@"{SysPaths.Windows}\media\ringin.wav";
+                Sounds.Snd_Explorer_FaxNew = $@"{SysPaths.Windows}\media\notify.wav";
+                Sounds.Snd_Explorer_FaxSent = $@"{SysPaths.Windows}\media\tada.wav";
+                Sounds.Snd_NetMeeting_PersonJoins = $@"{SysPaths.ProgramFiles}\NetMeeting\Blip.wav";
+                Sounds.Snd_NetMeeting_PersonLeaves = $@"{SysPaths.ProgramFiles}\NetMeeting\Blip.wav";
+                Sounds.Snd_NetMeeting_ReceiveCall = $@"{SysPaths.Windows}\media\Windows XP RingIn.wav";
+                Sounds.Snd_NetMeeting_ReceiveRequestToJoin = $@"{SysPaths.Windows}\media\Windows XP RingIn.wav";
                 Sounds.Snd_SpeechRec_DisNumbersSound = string.Empty;
                 Sounds.Snd_SpeechRec_HubOffSound = string.Empty;
                 Sounds.Snd_SpeechRec_HubOnSound = string.Empty;
@@ -719,7 +719,7 @@ namespace WinPaletter.Theme
 
             {
                 ref Structures.Wallpaper Wallpaper = ref TM.Wallpaper;
-                Wallpaper.ImageFile = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
+                Wallpaper.ImageFile = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
                 Wallpaper.WallpaperStyle = Structures.Wallpaper.WallpaperStyles.Stretched;
             }
 

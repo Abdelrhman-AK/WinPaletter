@@ -192,7 +192,7 @@ namespace WinPaletter
                         ver = string.Empty;
 
                         string result = await DM.ReadStringAsync(Links.Updates);
-                        Updates_ls = result.CList();
+                        Updates_ls = result.Split(new char[] { '\r' , '\n' }).ToList();
 
                         foreach (string updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                         {
@@ -555,14 +555,14 @@ namespace WinPaletter
             {
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
+                if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{PathsExt.System32}\logoff.exe", AppWinStyle.Hide);
+                    Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.LogoffNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }

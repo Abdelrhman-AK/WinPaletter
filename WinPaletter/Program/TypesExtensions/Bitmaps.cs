@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extensions for <see cref="Bitmap"/> class
+    /// </summary>
     public static class BitmapExtensions
     {
         /// <summary>
@@ -264,14 +267,6 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Resize Image in the size you choose
-        /// </summary>
-        public static Bitmap Resize(this Image imSource, Size TargetSize)
-        {
-            return ((Bitmap)imSource).Resize(TargetSize.Width, TargetSize.Height);
-        }
-
-        /// <summary>
         /// Return image tinted by a color
         /// </summary>
         public static Bitmap Tint(this Bitmap originalBitmap, Color tintColor)
@@ -441,6 +436,13 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        /// <summary>
+        /// Split bitmap into parts, provided by the number of parts.
+        /// <br>This is used for splitting visual styles bitmaps.</br>
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <param name="parts"></param>
+        /// <returns></returns>
         public static List<Bitmap> Split(this Bitmap bitmap, int parts)
         {
             if (bitmap is null) return null;

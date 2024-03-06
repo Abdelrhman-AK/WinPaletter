@@ -20,7 +20,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Arrow = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_arrow.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_arrow.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -59,7 +59,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_AppLoading = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_working.ani",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_working.ani",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -98,7 +98,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Busy = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_busy.ani",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_busy.ani",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -137,7 +137,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Help = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_helpsel.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_helpsel.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -176,7 +176,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Move = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_move.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_move.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -215,7 +215,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_NS = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_ns.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_ns.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -254,7 +254,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_EW = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_ew.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_ew.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -293,7 +293,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_NESW = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_nesw.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_nesw.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -332,7 +332,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_NWSE = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_nwse.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_nwse.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -371,7 +371,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Up = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_up.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_up.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -410,7 +410,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Pen = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_pen.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_pen.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -449,7 +449,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_None = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_unavail.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_unavail.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -488,7 +488,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Link = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_link.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_link.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -527,7 +527,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Pin = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_pin.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_pin.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,
@@ -566,7 +566,7 @@ namespace WinPaletter.Theme
         public Structures.Cursor Cursor_Person = new()
         {
             UseFromFile = false,
-            File = $"{PathsExt.Windows}\\Cursors\\aero_person.cur",
+            File = $"{SysPaths.Windows}\\Cursors\\aero_person.cur",
             PrimaryColor1 = Color.White,
             PrimaryColor2 = Color.White,
             PrimaryColorGradient = false,

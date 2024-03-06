@@ -70,7 +70,7 @@ namespace WinPaletter.UI.Style
                 }
             }
 
-            return c.CString(" ");
+            return string.Join(" ", c);
         }
 
         /// <summary>

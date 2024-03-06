@@ -519,16 +519,13 @@
     <Compile Include="Program\TypesExtensions\Bitmaps.cs" />
     <Compile Include="Program\TypesExtensions\ByteArray.cs" />
     <Compile Include="Program\TypesExtensions\Colors.cs" />
-    <Compile Include="Program\TypesExtensions\ComboBoxes.cs" />
     <Compile Include="Program\TypesExtensions\Controls.cs" />
     <Compile Include="Program\TypesExtensions\Graphics.cs" />
     <Compile Include="Program\TypesExtensions\Icons.cs" />
     <Compile Include="Program\TypesExtensions\Integers.cs" />
     <Compile Include="Program\TypesExtensions\LogFonts.cs" />
     <Compile Include="Program\TypesExtensions\StringFormats.cs" />
-    <Compile Include="Program\TypesExtensions\StringLists.cs" />
     <Compile Include="Program\TypesExtensions\Strings.cs" />
-    <Compile Include="Program\TypesExtensions\Structures.cs" />
     <Compile Include="Program\TypesExtensions\TreeViews.cs" />
     <Compile Include="Program\Users\SetSystemCursor.cs" />
     <Compile Include="Program\NativeMethods\User32.cs" />
@@ -569,7 +566,7 @@
     <Compile Include="Program\GlobalVariables\Exceptions.cs" />
     <Compile Include="Program\GlobalVariables\Fonts.cs" />
     <Compile Include="Program\GlobalVariables\ImageLists.cs" />
-    <Compile Include="Program\GlobalVariables\PathsExt.cs" />
+    <Compile Include="Program\GlobalVariables\SysPaths.cs" />
     <Compile Include="Program\GlobalVariables\OS.cs" />
     <Compile Include="Program\Arguments.cs" />
     <Compile Include="Program\AssemblyLoader.cs" />
@@ -642,6 +639,7 @@
     <Compile Include="OS_Dashboard.Designer.cs">
       <DependentUpon>OS_Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Theme\Default\Schemes.cs" />
     <Compile Include="Theme\Default\Windows10.cs" />
     <Compile Include="Theme\Default\Windows12.cs" />
     <Compile Include="Theme\Default\Windows11.cs" />

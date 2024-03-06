@@ -1,5 +1,4 @@
 ﻿using Devcorp.Controls.VisualStyles;
-using libmsstyle;
 using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
@@ -8,14 +7,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
-using WinPaletter.Theme.Structures;
-using static System.Net.Mime.MediaTypeNames;
-using static WinPaletter.NativeMethods.User32;
-using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -154,8 +148,8 @@ namespace WinPaletter
                         {
                             if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
                             {
-                                System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                                theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                                System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                             }
 
                             if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
@@ -262,7 +256,10 @@ namespace WinPaletter
             windowMetrics1.BackgroundImage = Program.Wallpaper;
             Desktop_icons.BackgroundImage = Program.Wallpaper;
 
-            comboBox1.PopulateMetricsFonts();
+            alertBox1.Visible = OS.W11 || OS.W12;
+
+            comboBox1.Items.Clear();
+            comboBox1.Items.AddRange(Theme.Schemes.Metrics.Split('\n').Select(f => f.Split('|')[0]).ToArray());
             comboBox1.SelectedIndex = 0;
 
             LoadFromTM(Program.TM);
@@ -275,14 +272,14 @@ namespace WinPaletter
             {
                 case 0:
                     {
-                        tabs_preview_1.SelectedIndex = 0;
+                        tabs_preview.SelectedIndex = 0;
                         windowMetrics1.ShowMenuSection = false;
                         windowMetrics1.ShowAsMenu = true;
                         break;
                     }
                 case 1:
                     {
-                        tabs_preview_1.SelectedIndex = 1;
+                        tabs_preview.SelectedIndex = 1;
                         windowMetrics1.ShowMenuSection = false;
                         windowMetrics1.ShowAsMenu = false;
                         break;
@@ -291,14 +288,14 @@ namespace WinPaletter
                     {
                         windowMetrics1.ShowMenuSection = true;
                         windowMetrics1.ShowAsMenu = true;
-                        tabs_preview_1.SelectedIndex = 0;
+                        tabs_preview.SelectedIndex = 0;
                         break;
                     }
                 case 3:
                     {
                         windowMetrics1.ShowMenuSection = true;
                         windowMetrics1.ShowAsMenu = false;
-                        tabs_preview_1.SelectedIndex = 0;
+                        tabs_preview.SelectedIndex = 0;
                         break;
                     }
             }
@@ -449,16 +446,15 @@ namespace WinPaletter
             }
         }
 
-        public void LoadFromWinThemeString(string String, string ThemeName)
+        public void LoadFromWinThemeString(string DB, string ThemeName)
         {
-            if (string.IsNullOrWhiteSpace(String) || !String.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) return;
+            if (string.IsNullOrWhiteSpace(DB) || !DB.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) return;
 
-            List<string> AllThemes = String.CList();
             string SelectedTheme = string.Empty;
 
             bool Found = false;
 
-            foreach (string theme in AllThemes)
+            foreach (string theme in DB.Split('\n'))
             {
                 if ((theme.Split('|')[0].ToLower() ?? string.Empty) == (ThemeName.ToLower() ?? string.Empty))
                 {
@@ -956,7 +952,7 @@ namespace WinPaletter
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (IsShown) LoadFromWinThemeString(Properties.Resources.MetricsFontsDB, comboBox1.SelectedItem.ToString());
+            if (IsShown) LoadFromWinThemeString(Schemes.Metrics, comboBox1.SelectedItem.ToString());
         }
     }
 }

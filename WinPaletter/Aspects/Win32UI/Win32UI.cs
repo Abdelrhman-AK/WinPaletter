@@ -89,8 +89,8 @@ namespace WinPaletter
                         {
                             if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
                             {
-                                System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                                theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                                System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                             }
 
                             if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
@@ -203,8 +203,10 @@ namespace WinPaletter
 
             splitContainer1.Panel2Collapsed = !checkBox1.Checked;
 
-            ComboBox1.PopulateClassicColors();
+            ComboBox1.Items.Clear();
+            ComboBox1.Items.AddRange(Theme.Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray());
             ComboBox1.SelectedIndex = 0;
+
             ApplyDefaultTMValues();
 
             LoadFromTM(Program.TM);
@@ -756,7 +758,7 @@ namespace WinPaletter
 
             Toggle1.Checked = condition0 | condition1 | condition2;
 
-            retroDesktopColors1.LoadFromWinThemeString(Properties.Resources.ClassicColorsDB, ComboBox1.SelectedItem.ToString());
+            retroDesktopColors1.LoadFromWinThemeString(Theme.Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
 
             LoadFromRetroPreview(retroDesktopColors1);
         }

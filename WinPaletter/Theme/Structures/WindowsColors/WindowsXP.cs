@@ -64,7 +64,7 @@ namespace WinPaletter.Theme.Structures
                 string colorName = ThemeTuple.Item2;
                 string sizeName = ThemeTuple.Item3;
 
-                if ((vsFile.ToString().ToLower() ?? string.Empty) == (PathsExt.Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? string.Empty))
+                if ((vsFile.ToString().ToLower() ?? string.Empty) == (SysPaths.Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? string.Empty))
                 {
                     if (colorName.ToString().ToLower() == "normalcolor")
                     {
@@ -97,7 +97,7 @@ namespace WinPaletter.Theme.Structures
                 else if (string.IsNullOrEmpty(vsFile.ToString()))
                 {
                     Theme = Themes.Classic;
-                    ThemeFile = $@"{PathsExt.Windows.ToLower()}\resources\Themes\Luna.theme";
+                    ThemeFile = $@"{SysPaths.Windows.ToLower()}\resources\Themes\Luna.theme";
                     ColorScheme = "NormalColor";
                 }
 
@@ -133,21 +133,21 @@ namespace WinPaletter.Theme.Structures
                     case Themes.LunaBlue:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
                             break;
                         }
 
                     case Themes.LunaOliveGreen:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
                             break;
                         }
 
                     case Themes.LunaSilver:
                         {
                             UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
+                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
                             break;
                         }
 

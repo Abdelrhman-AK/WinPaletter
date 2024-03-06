@@ -444,11 +444,11 @@ namespace WinPaletter
         {
             if (Program.WindowStyle == WindowStyle.WXP)
             {
-                TextBox1.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
+                TextBox1.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox1.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
+                TextBox1.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
             }
         }
 
@@ -935,11 +935,11 @@ namespace WinPaletter
             {
                 if (Program.WindowStyle == WindowStyle.WXP)
                 {
-                    WallpaperPath = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
+                    WallpaperPath = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WallpaperPath = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
+                    WallpaperPath = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 
@@ -951,16 +951,16 @@ namespace WinPaletter
         {
             if (Program.WindowStyle == WindowStyle.WXP)
             {
-                TextBox3.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
+                TextBox3.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
             }
             else
             {
-                TextBox3.Text = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
+                TextBox3.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
             }
 
             if (!File.Exists(TextBox1.Text))
             {
-                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.WindowStyle == WindowStyle.WXP ? $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp" : $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg").ToString();
+                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.WindowStyle == WindowStyle.WXP ? $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp" : $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg").ToString();
             }
             ApplyHSLPreview();
         }

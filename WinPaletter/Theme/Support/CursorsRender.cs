@@ -74,11 +74,11 @@ namespace WinPaletter.Theme
             if (TreeView is not null)
                 AddNode(TreeView, string.Format(Program.Lang.Verbose_RenderingCursor, CurName), "pe_patch");
 
-            if (!Directory.Exists(PathsExt.CursorsWP)) Directory.CreateDirectory(PathsExt.CursorsWP);
+            if (!Directory.Exists(SysPaths.CursorsWP)) Directory.CreateDirectory(SysPaths.CursorsWP);
 
             if (!(Type == Paths.CursorType.Busy) & !(Type == Paths.CursorType.AppLoading))
             {
-                string Path = $"{PathsExt.CursorsWP}\\{CurName}.cur";
+                string Path = $"{SysPaths.CursorsWP}\\{CurName}.cur";
 
                 using (FileStream FS = new(Path, FileMode.Create))
                 {
@@ -279,7 +279,7 @@ namespace WinPaletter.Theme
                     if (scale == 64) { curFileNameModifier = "_l"; }
                     if (scale == 128) { curFileNameModifier = "_xl"; }
 
-                    string OutputFile = $@"{PathsExt.CursorsWP}\{CurName}{curFileNameModifier}.ani";
+                    string OutputFile = $@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani";
 
                     using (FileStream fs = new(OutputFile, FileMode.Create))
                     {
@@ -287,7 +287,7 @@ namespace WinPaletter.Theme
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { AN.WriteFrame(BMPList[(int)i1]); }
 
-                        ProcessedFiles = ProcessedFiles.ToList().Append($@"{PathsExt.CursorsWP}\{CurName}{curFileNameModifier}.ani").ToArray();
+                        ProcessedFiles = ProcessedFiles.ToList().Append($@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani").ToArray();
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { BMPList[(int)i1].Dispose(); }
                         BMPList.Clear();
@@ -296,7 +296,7 @@ namespace WinPaletter.Theme
                     }
 
                     if (TreeView is not null)
-                        AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, $@"{PathsExt.CursorsWP}\{CurName}{curFileNameModifier}.ani"), "info");
+                        AddNode(TreeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, $@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani"), "info");
                 }
             }
         }
@@ -309,7 +309,7 @@ namespace WinPaletter.Theme
         /// <param name="TreeView">TreeView used to show applying log</param>
         public void ApplyCursorsToReg(Manager TM, string scopeReg = "HKEY_CURRENT_USER", TreeView TreeView = null)
         {
-            string Path = PathsExt.CursorsWP;
+            string Path = SysPaths.CursorsWP;
 
             double DPI = Program.GetWindowsScreenScalingFactor();
             string DPI_Fixer = string.Empty;

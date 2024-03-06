@@ -2,8 +2,17 @@
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extensions for <see cref="StringFormat"/>
+    /// </summary>
     public static class StringFormatExtensions
     {
+        /// <summary>
+        /// Convert ContentAlignment to StringFormat
+        /// </summary>
+        /// <param name="TextAlign"></param>
+        /// <param name="RightToLeft"></param>
+        /// <returns></returns>
         public static StringFormat ToStringFormat(this ContentAlignment TextAlign, bool RightToLeft = false)
         {
             StringFormat SF = new();

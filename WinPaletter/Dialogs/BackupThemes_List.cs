@@ -222,7 +222,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                System.Diagnostics.Process.Start(PathsExt.Explorer, $"/select, \"{listView1.SelectedItems[0].SubItems[1].Text}\"");
+                System.Diagnostics.Process.Start(SysPaths.Explorer, $"/select, \"{listView1.SelectedItems[0].SubItems[1].Text}\"");
             }
         }
 

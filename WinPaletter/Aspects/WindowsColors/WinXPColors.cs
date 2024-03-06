@@ -200,18 +200,18 @@ namespace WinPaletter
 
                 if (WXP_Luna_Blue.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Luna_OliveGreen.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Luna_Silver.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Classic.Checked)
                 {
@@ -228,8 +228,8 @@ namespace WinPaletter
                     {
                         if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
                         {
-                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle={WXP_VS_ColorsList.SelectedItem}{"\r\n"}Size=NormalSize");
-                            theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                            System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle={WXP_VS_ColorsList.SelectedItem}{"\r\n"}Size=NormalSize");
+                            theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                         }
 
                         if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
@@ -375,8 +375,8 @@ namespace WinPaletter
             {
                 if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
 
                 windowsDesktop1.WindowsXPThemePath = theme;
@@ -428,18 +428,18 @@ namespace WinPaletter
 
                 if (WXP_Luna_Blue.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Luna_OliveGreen.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Luna_Silver.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Classic.Checked)
                 {
@@ -456,8 +456,8 @@ namespace WinPaletter
                     {
                         if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
                         {
-                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle={WXP_VS_ColorsList.SelectedItem}{"\r\n"}Size=NormalSize");
-                            theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                            System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle={WXP_VS_ColorsList.SelectedItem}{"\r\n"}Size=NormalSize");
+                            theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                         }
 
                         if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
@@ -489,18 +489,18 @@ namespace WinPaletter
 
                 if (WXP_Luna_Blue.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Luna_OliveGreen.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Luna_Silver.Checked)
                 {
-                    System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={PathsExt.MSTheme_Luna_theme}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
-                    theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={SysPaths.MSTheme_Luna_theme}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
+                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
                 else if (WXP_Classic.Checked)
                 {
@@ -517,8 +517,8 @@ namespace WinPaletter
                     {
                         if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
                         {
-                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle={WXP_VS_ColorsList.SelectedItem}{"\r\n"}Size=NormalSize");
-                            theme = $@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme";
+                            System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle={WXP_VS_ColorsList.SelectedItem}{"\r\n"}Size=NormalSize");
+                            theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                         }
 
                         if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))

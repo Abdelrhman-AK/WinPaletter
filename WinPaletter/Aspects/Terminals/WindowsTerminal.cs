@@ -131,8 +131,8 @@ namespace WinPaletter
 
                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                     {
-                        TerDir = PathsExt.TerminalJSON;
-                        TerPreDir = PathsExt.TerminalPreviewJSON;
+                        TerDir = SysPaths.TerminalJSON;
+                        TerPreDir = SysPaths.TerminalPreviewJSON;
                     }
                     else
                     {
@@ -142,7 +142,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            TerDir = PathsExt.TerminalJSON;
+                            TerDir = SysPaths.TerminalJSON;
                         }
 
                         if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
@@ -151,7 +151,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            TerPreDir = PathsExt.TerminalPreviewJSON;
+                            TerPreDir = SysPaths.TerminalPreviewJSON;
                         }
                     }
 
@@ -511,7 +511,7 @@ namespace WinPaletter
                 NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string path = string.Empty;
                 if (temp.Commandline is not null)
-                    path = temp.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
+                    path = temp.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
                 NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                 if (File.Exists(path))
@@ -1360,8 +1360,8 @@ namespace WinPaletter
 
             if (!Program.Settings.WindowsTerminals.Path_Deflection)
             {
-                TerDir = PathsExt.TerminalJSON;
-                TerPreDir = PathsExt.TerminalPreviewJSON;
+                TerDir = SysPaths.TerminalJSON;
+                TerPreDir = SysPaths.TerminalPreviewJSON;
             }
             else
             {
@@ -1371,7 +1371,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerDir = PathsExt.TerminalJSON;
+                    TerDir = SysPaths.TerminalJSON;
                 }
 
                 if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
@@ -1380,7 +1380,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerPreDir = PathsExt.TerminalPreviewJSON;
+                    TerPreDir = SysPaths.TerminalPreviewJSON;
                 }
             }
 
@@ -1389,14 +1389,14 @@ namespace WinPaletter
                 case WinTerminal.Version.Stable:
                     {
                         if (File.Exists(TerDir))
-                            Interaction.Shell(@$"{PathsExt.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App");
+                            Interaction.Shell(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App");
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
                         if (File.Exists(TerPreDir))
-                            Interaction.Shell(@$"{PathsExt.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App");
+                            Interaction.Shell(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App");
                         break;
                     }
             }
@@ -1483,8 +1483,8 @@ namespace WinPaletter
                 string TerDir;
                 string TerPreDir;
 
-                TerDir = PathsExt.TerminalJSON;
-                TerPreDir = PathsExt.TerminalPreviewJSON;
+                TerDir = SysPaths.TerminalJSON;
+                TerPreDir = SysPaths.TerminalPreviewJSON;
 
 
                 if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
@@ -1512,8 +1512,8 @@ namespace WinPaletter
                         string TerDir;
                         string TerPreDir;
 
-                        TerDir = PathsExt.TerminalJSON;
-                        TerPreDir = PathsExt.TerminalPreviewJSON;
+                        TerDir = SysPaths.TerminalJSON;
+                        TerPreDir = SysPaths.TerminalPreviewJSON;
 
                         if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
                         {
@@ -1700,7 +1700,7 @@ namespace WinPaletter
                             NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                             string path = string.Empty;
                             if (CCatFrom.Commandline is not null)
-                                path = CCatFrom.Commandline.Replace("%SystemRoot%", PathsExt.Windows);
+                                path = CCatFrom.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
                             NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                             if (File.Exists(path))

@@ -875,88 +875,28 @@ namespace WinPaletter.UI.Retro
             {
                 if (TextAlign == ContentAlignment.MiddleCenter)
                 {
-                    Rectangle r = rect;
+                    RectangleF r = rect;
+
+                    Parent.Text = Font.Size.ToString();
 
                     // Resetting positions to fix layout misadjust
                     // Never modify
                     if (Font.Name == "Marlett" & Text.Count() == 1)
                     {
                         SizeF textSize = Text.Measure(Font);
-                        int x = (int)Math.Round(rect.X + (rect.Width - textSize.Width) / 2f);
-                        int y = (int)Math.Round(rect.Y + (rect.Height - textSize.Height) / 2f);
-                        int w = (int)Math.Round(textSize.Width);
-                        int h = (int)Math.Round(textSize.Height);
+                        float x = rect.X + (rect.Width - textSize.Width) / 2f;
+                        float y = rect.Y + (rect.Height - textSize.Height) / 2f;
+                        float w = textSize.Width;
+                        float h = textSize.Height;
 
-                        if (Font.Size >= 4.4d && Font.Size < 5.2d)
-                        {
-                            h += 2;
-                        }
-
-                        else if (Font.Size >= 5.2d && Font.Size < 5.6d)
-                        {
-                            x += 1;
-                        }
-
-                        else if (Font.Size >= 5.6d && Font.Size < 6)
-                        {
-                            w += 1;
-                            x += 1;
-                            y += 1;
-                        }
-
-                        else if (Font.Size >= 6 && Font.Size < 6.4d)
-                        {
-                            x += 1;
-                            y += 1;
-                        }
-
-                        else if (Font.Size >= 6.4d && Font.Size < 6.8d)
-                        {
-                            y += 1;
-                        }
-
-                        else if (Font.Size >= 6.8d && Font.Size < 7.2d)
-                        {
-                            x += 1;
-                            y += 2;
-                        }
-
-                        else if (Font.Size >= 7.2d && Font.Size <= 7.6d)
-                        {
-                            y += 1;
-                        }
-
-                        else if (Font.Size >= 8 && Font.Size < 8.4d)
-                        {
-                            x += 1;
-                        }
-
-                        else if (Font.Size >= 8.4d && Font.Size < 8.8d)
-                        {
-                            x += 1;
-                            y += 1;
-                        }
-
-                        else if (Font.Size == 8.8d)
-                        {
-
-                            if (Text == "3")
-                            {
-                                x += 1;
-                                y += 1;
-                            }
-                            else if (Text != "u")
-                            {
-                                y += 1;
-                            }
-
-                        }
-
-                        r = new(x, y, w, h);
+                        r = new(x + 0.5f, y + 1f, w, h);
                     }
 
                     if (!Enabled)
-                        G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), new Rectangle(r.X + 1, r.Y + 1, r.Width, r.Height), ContentAlignment.MiddleCenter.ToStringFormat());
+                    {
+                        G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), r, ContentAlignment.MiddleCenter.ToStringFormat());
+                    }
+                       
                     G.DrawString(Text, Font, new SolidBrush(FColor), r, ContentAlignment.MiddleCenter.ToStringFormat());
                 }
                 else

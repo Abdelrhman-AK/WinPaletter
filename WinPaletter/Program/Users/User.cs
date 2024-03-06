@@ -527,23 +527,23 @@ namespace WinPaletter
         {
             if (SID != null)
             {
-                PathsExt.UserProfile = $"{GetUserProfilePath(SID)}";
+                SysPaths.UserProfile = $"{GetUserProfilePath(SID)}";
 
                 if (!OS.WXP)
                 {
-                    PathsExt.LocalAppData = $"{PathsExt.UserProfile}\\AppData\\Local";
-                    PathsExt.appData = $"{PathsExt.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
+                    SysPaths.LocalAppData = $"{SysPaths.UserProfile}\\AppData\\Local";
+                    SysPaths.appData = $"{SysPaths.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
                 }
                 else
                 {
-                    PathsExt.LocalAppData = $"{PathsExt.UserProfile}\\Local Settings\\Application Data";
-                    PathsExt.appData = $"{PathsExt.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
+                    SysPaths.LocalAppData = $"{SysPaths.UserProfile}\\Local Settings\\Application Data";
+                    SysPaths.appData = $"{SysPaths.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
                 }
 
                 using (WindowsImpersonationContext wic = Identity_Admin.Impersonate())
                 {
                     // Create a DirectoryInfo object
-                    DirectoryInfo directoryInfo = new(PathsExt.ProgramFilesData);
+                    DirectoryInfo directoryInfo = new(SysPaths.ProgramFilesData);
 
                     // Get the existing access control settings
                     DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
@@ -563,14 +563,14 @@ namespace WinPaletter
             }
             else
             {
-                PathsExt.UserProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                PathsExt.LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                PathsExt.appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
+                SysPaths.UserProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                SysPaths.LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                SysPaths.appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
             }
 
-            if (!System.IO.Directory.Exists(PathsExt.UserProfile)) { System.IO.Directory.CreateDirectory(PathsExt.UserProfile); }
-            if (!System.IO.Directory.Exists(PathsExt.LocalAppData)) { System.IO.Directory.CreateDirectory(PathsExt.LocalAppData); }
-            if (!System.IO.Directory.Exists(PathsExt.appData)) { System.IO.Directory.CreateDirectory(PathsExt.appData); }
+            if (!System.IO.Directory.Exists(SysPaths.UserProfile)) { System.IO.Directory.CreateDirectory(SysPaths.UserProfile); }
+            if (!System.IO.Directory.Exists(SysPaths.LocalAppData)) { System.IO.Directory.CreateDirectory(SysPaths.LocalAppData); }
+            if (!System.IO.Directory.Exists(SysPaths.appData)) { System.IO.Directory.CreateDirectory(SysPaths.appData); }
         }
 
         /// <summary>

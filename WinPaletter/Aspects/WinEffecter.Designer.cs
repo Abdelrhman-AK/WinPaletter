@@ -45,6 +45,7 @@ namespace WinPaletter
             this.button3 = new WinPaletter.UI.WP.Button();
             this.button2 = new WinPaletter.UI.WP.Button();
             this.button1 = new WinPaletter.UI.WP.Button();
+            this.button31 = new WinPaletter.UI.WP.Button();
             this.button21 = new WinPaletter.UI.WP.Button();
             this.CheckBox27 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox36 = new System.Windows.Forms.PictureBox();
@@ -57,20 +58,33 @@ namespace WinPaletter
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
             this.CheckBox2 = new WinPaletter.UI.WP.CheckBox();
             this.CheckBox3 = new WinPaletter.UI.WP.CheckBox();
+            this.PictureBox21 = new System.Windows.Forms.PictureBox();
+            this.CheckBox15 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
-            this.TabPage2 = new System.Windows.Forms.TabPage();
-            this.button6 = new WinPaletter.UI.WP.Button();
-            this.button7 = new WinPaletter.UI.WP.Button();
-            this.PictureBox14 = new System.Windows.Forms.PictureBox();
-            this.PictureBox5 = new System.Windows.Forms.PictureBox();
-            this.CheckBox4 = new WinPaletter.UI.WP.CheckBox();
-            this.CheckBox10 = new WinPaletter.UI.WP.CheckBox();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.button26 = new WinPaletter.UI.WP.Button();
+            this.PictureBox25 = new System.Windows.Forms.PictureBox();
+            this.button33 = new WinPaletter.UI.WP.Button();
+            this.CheckBox19 = new WinPaletter.UI.WP.CheckBox();
+            this.AlertBox5 = new WinPaletter.UI.WP.AlertBox();
+            this.PictureBox35 = new System.Windows.Forms.PictureBox();
+            this.CheckBox26 = new WinPaletter.UI.WP.CheckBox();
+            this.checkBox29 = new WinPaletter.UI.WP.CheckBox();
+            this.button30 = new WinPaletter.UI.WP.Button();
+            this.AlertBox6 = new WinPaletter.UI.WP.AlertBox();
+            this.button32 = new WinPaletter.UI.WP.Button();
+            this.pictureBox38 = new System.Windows.Forms.PictureBox();
+            this.pictureBox37 = new System.Windows.Forms.PictureBox();
+            this.checkBox28 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage3 = new System.Windows.Forms.TabPage();
             this.button8 = new WinPaletter.UI.WP.Button();
+            this.button24 = new WinPaletter.UI.WP.Button();
             this.button9 = new WinPaletter.UI.WP.Button();
             this.button10 = new WinPaletter.UI.WP.Button();
             this.button11 = new WinPaletter.UI.WP.Button();
             this.Trackbar1 = new WinPaletter.UI.Controllers.TrackBarX();
+            this.PictureBox22 = new System.Windows.Forms.PictureBox();
+            this.CheckBox16 = new WinPaletter.UI.WP.CheckBox();
             this.CheckBox12 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
@@ -80,6 +94,13 @@ namespace WinPaletter
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
             this.PictureBox6 = new System.Windows.Forms.PictureBox();
             this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
+            this.TabPage2 = new System.Windows.Forms.TabPage();
+            this.button6 = new WinPaletter.UI.WP.Button();
+            this.button7 = new WinPaletter.UI.WP.Button();
+            this.PictureBox14 = new System.Windows.Forms.PictureBox();
+            this.PictureBox5 = new System.Windows.Forms.PictureBox();
+            this.CheckBox4 = new WinPaletter.UI.WP.CheckBox();
+            this.CheckBox10 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage4 = new System.Windows.Forms.TabPage();
             this.button12 = new WinPaletter.UI.WP.Button();
             this.button13 = new WinPaletter.UI.WP.Button();
@@ -140,13 +161,6 @@ namespace WinPaletter
             this.RadioButton1 = new WinPaletter.UI.WP.RadioButton();
             this.PictureBox29 = new System.Windows.Forms.PictureBox();
             this.Label8 = new System.Windows.Forms.Label();
-            this.TabPage10 = new System.Windows.Forms.TabPage();
-            this.button23 = new WinPaletter.UI.WP.Button();
-            this.button24 = new WinPaletter.UI.WP.Button();
-            this.PictureBox28 = new System.Windows.Forms.PictureBox();
-            this.CheckBox22 = new WinPaletter.UI.WP.CheckBox();
-            this.PictureBox22 = new System.Windows.Forms.PictureBox();
-            this.CheckBox16 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage12 = new System.Windows.Forms.TabPage();
             this.button25 = new WinPaletter.UI.WP.Button();
             this.AlertBox4 = new WinPaletter.UI.WP.AlertBox();
@@ -191,26 +205,18 @@ namespace WinPaletter
             this.PictureBox33 = new System.Windows.Forms.PictureBox();
             this.PictureBox32 = new System.Windows.Forms.PictureBox();
             this.TabPage9 = new System.Windows.Forms.TabPage();
-            this.button26 = new WinPaletter.UI.WP.Button();
+            this.button23 = new WinPaletter.UI.WP.Button();
             this.button27 = new WinPaletter.UI.WP.Button();
             this.button28 = new WinPaletter.UI.WP.Button();
+            this.PictureBox28 = new System.Windows.Forms.PictureBox();
+            this.CheckBox22 = new WinPaletter.UI.WP.CheckBox();
             this.button29 = new WinPaletter.UI.WP.Button();
-            this.button30 = new WinPaletter.UI.WP.Button();
-            this.button31 = new WinPaletter.UI.WP.Button();
-            this.PictureBox35 = new System.Windows.Forms.PictureBox();
-            this.CheckBox26 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox34 = new System.Windows.Forms.PictureBox();
             this.CheckBox25 = new WinPaletter.UI.WP.CheckBox();
-            this.AlertBox6 = new WinPaletter.UI.WP.AlertBox();
-            this.AlertBox5 = new WinPaletter.UI.WP.AlertBox();
             this.PictureBox31 = new System.Windows.Forms.PictureBox();
             this.CheckBox24 = new WinPaletter.UI.WP.CheckBox();
-            this.PictureBox21 = new System.Windows.Forms.PictureBox();
-            this.CheckBox15 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox24 = new System.Windows.Forms.PictureBox();
             this.CheckBox18 = new WinPaletter.UI.WP.CheckBox();
-            this.PictureBox25 = new System.Windows.Forms.PictureBox();
-            this.CheckBox19 = new WinPaletter.UI.WP.CheckBox();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox36)).BeginInit();
@@ -218,15 +224,22 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
-            this.TabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
+            this.tabPage10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox35)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox37)).BeginInit();
             this.TabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
+            this.TabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
             this.TabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
@@ -248,9 +261,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).BeginInit();
-            this.TabPage10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).BeginInit();
             this.TabPage12.SuspendLayout();
             this.Panel3.SuspendLayout();
             this.Panel24.SuspendLayout();
@@ -262,12 +272,10 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox33)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).BeginInit();
             this.TabPage9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox35)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox24)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -288,15 +296,15 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControl1.Controls.Add(this.TabPage1);
-            this.TabControl1.Controls.Add(this.TabPage2);
+            this.TabControl1.Controls.Add(this.tabPage10);
             this.TabControl1.Controls.Add(this.TabPage3);
+            this.TabControl1.Controls.Add(this.TabPage2);
             this.TabControl1.Controls.Add(this.TabPage4);
             this.TabControl1.Controls.Add(this.TabPage5);
             this.TabControl1.Controls.Add(this.TabPage6);
             this.TabControl1.Controls.Add(this.TabPage7);
             this.TabControl1.Controls.Add(this.TabPage8);
             this.TabControl1.Controls.Add(this.TabPage11);
-            this.TabControl1.Controls.Add(this.TabPage10);
             this.TabControl1.Controls.Add(this.TabPage12);
             this.TabControl1.Controls.Add(this.TabPage9);
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
@@ -306,7 +314,7 @@ namespace WinPaletter
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(767, 419);
+            this.TabControl1.Size = new System.Drawing.Size(767, 449);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 209;
             // 
@@ -318,6 +326,7 @@ namespace WinPaletter
             this.TabPage1.Controls.Add(this.button3);
             this.TabPage1.Controls.Add(this.button2);
             this.TabPage1.Controls.Add(this.button1);
+            this.TabPage1.Controls.Add(this.button31);
             this.TabPage1.Controls.Add(this.button21);
             this.TabPage1.Controls.Add(this.CheckBox27);
             this.TabPage1.Controls.Add(this.PictureBox36);
@@ -330,11 +339,13 @@ namespace WinPaletter
             this.TabPage1.Controls.Add(this.PictureBox4);
             this.TabPage1.Controls.Add(this.CheckBox2);
             this.TabPage1.Controls.Add(this.CheckBox3);
+            this.TabPage1.Controls.Add(this.PictureBox21);
+            this.TabPage1.Controls.Add(this.CheckBox15);
             this.TabPage1.Controls.Add(this.PictureBox3);
             this.TabPage1.Location = new System.Drawing.Point(174, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(589, 411);
+            this.TabPage1.Size = new System.Drawing.Size(589, 441);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Window";
             // 
@@ -346,8 +357,8 @@ namespace WinPaletter
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Image = null;
+            this.button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button5.ImageGlyph")));
             this.button5.ImageGlyphEnabled = true;
-            this.button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button5.ImageVector")));
             this.button5.Location = new System.Drawing.Point(549, 156);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(34, 24);
@@ -363,8 +374,8 @@ namespace WinPaletter
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
+            this.button4.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button4.ImageGlyph")));
             this.button4.ImageGlyphEnabled = true;
-            this.button4.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button4.ImageVector")));
             this.button4.Location = new System.Drawing.Point(549, 126);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(34, 24);
@@ -380,8 +391,8 @@ namespace WinPaletter
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = null;
+            this.button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button3.ImageGlyph")));
             this.button3.ImageGlyphEnabled = true;
-            this.button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button3.ImageVector")));
             this.button3.Location = new System.Drawing.Point(549, 96);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(34, 24);
@@ -397,8 +408,8 @@ namespace WinPaletter
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
+            this.button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button2.ImageGlyph")));
             this.button2.ImageGlyphEnabled = true;
-            this.button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button2.ImageVector")));
             this.button2.Location = new System.Drawing.Point(549, 66);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(34, 24);
@@ -414,14 +425,31 @@ namespace WinPaletter
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
+            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageGlyph")));
             this.button1.ImageGlyphEnabled = true;
-            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageVector")));
             this.button1.Location = new System.Drawing.Point(549, 36);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(34, 24);
             this.button1.TabIndex = 232;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button31.ForeColor = System.Drawing.Color.White;
+            this.button31.Image = null;
+            this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageGlyph")));
+            this.button31.ImageGlyphEnabled = true;
+            this.button31.Location = new System.Drawing.Point(549, 186);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(34, 24);
+            this.button31.TabIndex = 246;
+            this.button31.UseVisualStyleBackColor = false;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
             // button21
             // 
@@ -431,8 +459,8 @@ namespace WinPaletter
             this.button21.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button21.ForeColor = System.Drawing.Color.White;
             this.button21.Image = null;
+            this.button21.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button21.ImageGlyph")));
             this.button21.ImageGlyphEnabled = true;
-            this.button21.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button21.ImageVector")));
             this.button21.Location = new System.Drawing.Point(549, 6);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(34, 24);
@@ -573,6 +601,30 @@ namespace WinPaletter
             this.CheckBox3.TabIndex = 6;
             this.CheckBox3.Text = "UI effects";
             // 
+            // PictureBox21
+            // 
+            this.PictureBox21.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox21.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox21.Image")));
+            this.PictureBox21.Location = new System.Drawing.Point(6, 186);
+            this.PictureBox21.Name = "PictureBox21";
+            this.PictureBox21.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox21.TabIndex = 145;
+            this.PictureBox21.TabStop = false;
+            // 
+            // CheckBox15
+            // 
+            this.CheckBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox15.Checked = false;
+            this.CheckBox15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox15.ForeColor = System.Drawing.Color.White;
+            this.CheckBox15.Location = new System.Drawing.Point(36, 186);
+            this.CheckBox15.Name = "CheckBox15";
+            this.CheckBox15.Size = new System.Drawing.Size(500, 24);
+            this.CheckBox15.TabIndex = 144;
+            this.CheckBox15.Text = "Snap cursor to default button in a dialog window";
+            // 
             // PictureBox3
             // 
             this.PictureBox3.BackColor = System.Drawing.Color.Transparent;
@@ -584,112 +636,238 @@ namespace WinPaletter
             this.PictureBox3.TabIndex = 5;
             this.PictureBox3.TabStop = false;
             // 
-            // TabPage2
+            // tabPage10
             // 
-            this.TabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage2.Controls.Add(this.button6);
-            this.TabPage2.Controls.Add(this.button7);
-            this.TabPage2.Controls.Add(this.PictureBox14);
-            this.TabPage2.Controls.Add(this.PictureBox5);
-            this.TabPage2.Controls.Add(this.CheckBox4);
-            this.TabPage2.Controls.Add(this.CheckBox10);
-            this.TabPage2.Location = new System.Drawing.Point(174, 4);
-            this.TabPage2.Name = "TabPage2";
-            this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(589, 411);
-            this.TabPage2.TabIndex = 1;
-            this.TabPage2.Text = "Icons";
+            this.tabPage10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage10.Controls.Add(this.button26);
+            this.tabPage10.Controls.Add(this.PictureBox25);
+            this.tabPage10.Controls.Add(this.button33);
+            this.tabPage10.Controls.Add(this.CheckBox19);
+            this.tabPage10.Controls.Add(this.AlertBox5);
+            this.tabPage10.Controls.Add(this.PictureBox35);
+            this.tabPage10.Controls.Add(this.CheckBox26);
+            this.tabPage10.Controls.Add(this.checkBox29);
+            this.tabPage10.Controls.Add(this.button30);
+            this.tabPage10.Controls.Add(this.AlertBox6);
+            this.tabPage10.Controls.Add(this.button32);
+            this.tabPage10.Controls.Add(this.pictureBox38);
+            this.tabPage10.Controls.Add(this.pictureBox37);
+            this.tabPage10.Controls.Add(this.checkBox28);
+            this.tabPage10.Location = new System.Drawing.Point(174, 4);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage10.Size = new System.Drawing.Size(589, 441);
+            this.tabPage10.TabIndex = 12;
+            this.tabPage10.Text = "Taskbar";
             // 
-            // button6
+            // button26
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Image = null;
-            this.button6.ImageGlyphEnabled = true;
-            this.button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button6.ImageVector")));
-            this.button6.Location = new System.Drawing.Point(549, 36);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(34, 24);
-            this.button6.TabIndex = 234;
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button26.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button26.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button26.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button26.ForeColor = System.Drawing.Color.White;
+            this.button26.Image = null;
+            this.button26.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button26.ImageGlyph")));
+            this.button26.ImageGlyphEnabled = true;
+            this.button26.Location = new System.Drawing.Point(549, 154);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(34, 24);
+            this.button26.TabIndex = 251;
+            this.button26.UseVisualStyleBackColor = false;
+            this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
-            // button7
+            // PictureBox25
             // 
-            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button7.ForeColor = System.Drawing.Color.White;
-            this.button7.Image = null;
-            this.button7.ImageGlyphEnabled = true;
-            this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
-            this.button7.Location = new System.Drawing.Point(549, 6);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(34, 24);
-            this.button7.TabIndex = 233;
-            this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.PictureBox25.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox25.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox25.Image")));
+            this.PictureBox25.Location = new System.Drawing.Point(6, 6);
+            this.PictureBox25.Name = "PictureBox25";
+            this.PictureBox25.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox25.TabIndex = 224;
+            this.PictureBox25.TabStop = false;
             // 
-            // PictureBox14
+            // button33
             // 
-            this.PictureBox14.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
-            this.PictureBox14.Location = new System.Drawing.Point(6, 36);
-            this.PictureBox14.Name = "PictureBox14";
-            this.PictureBox14.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox14.TabIndex = 9;
-            this.PictureBox14.TabStop = false;
+            this.button33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button33.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button33.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button33.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button33.ForeColor = System.Drawing.Color.White;
+            this.button33.Image = null;
+            this.button33.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button33.ImageGlyph")));
+            this.button33.ImageGlyphEnabled = true;
+            this.button33.Location = new System.Drawing.Point(549, 124);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(34, 24);
+            this.button33.TabIndex = 257;
+            this.button33.UseVisualStyleBackColor = false;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
             // 
-            // PictureBox5
+            // CheckBox19
             // 
-            this.PictureBox5.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox5.Image")));
-            this.PictureBox5.Location = new System.Drawing.Point(6, 6);
-            this.PictureBox5.Name = "PictureBox5";
-            this.PictureBox5.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox5.TabIndex = 7;
-            this.PictureBox5.TabStop = false;
-            // 
-            // CheckBox4
-            // 
-            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.CheckBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox4.Checked = false;
-            this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox4.ForeColor = System.Drawing.Color.White;
-            this.CheckBox4.Location = new System.Drawing.Point(36, 6);
-            this.CheckBox4.Name = "CheckBox4";
-            this.CheckBox4.Size = new System.Drawing.Size(500, 24);
-            this.CheckBox4.TabIndex = 6;
-            this.CheckBox4.Text = "Drop shadow behind desktop icons label";
+            this.CheckBox19.Checked = false;
+            this.CheckBox19.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox19.ForeColor = System.Drawing.Color.White;
+            this.CheckBox19.Location = new System.Drawing.Point(36, 6);
+            this.CheckBox19.Name = "CheckBox19";
+            this.CheckBox19.Size = new System.Drawing.Size(500, 24);
+            this.CheckBox19.TabIndex = 223;
+            this.CheckBox19.Text = "Show seconds in taskbar tray clock (Windows 10 or Windows 11 Moment 3 update)";
             // 
-            // CheckBox10
+            // AlertBox5
             // 
-            this.CheckBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.AlertBox5.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.AlertBox5.BackColor = System.Drawing.Color.Transparent;
+            this.AlertBox5.CenterText = true;
+            this.AlertBox5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AlertBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.AlertBox5.Image = null;
+            this.AlertBox5.Location = new System.Drawing.Point(36, 36);
+            this.AlertBox5.Name = "AlertBox5";
+            this.AlertBox5.Size = new System.Drawing.Size(105, 22);
+            this.AlertBox5.TabIndex = 240;
+            this.AlertBox5.TabStop = false;
+            this.AlertBox5.Text = "Uses more power";
+            // 
+            // PictureBox35
+            // 
+            this.PictureBox35.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox35.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox35.Image")));
+            this.PictureBox35.Location = new System.Drawing.Point(6, 154);
+            this.PictureBox35.Name = "PictureBox35";
+            this.PictureBox35.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox35.TabIndex = 245;
+            this.PictureBox35.TabStop = false;
+            // 
+            // CheckBox26
+            // 
+            this.CheckBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox10.Checked = false;
-            this.CheckBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox10.ForeColor = System.Drawing.Color.White;
-            this.CheckBox10.Location = new System.Drawing.Point(36, 36);
-            this.CheckBox10.Name = "CheckBox10";
-            this.CheckBox10.Size = new System.Drawing.Size(500, 24);
-            this.CheckBox10.TabIndex = 8;
-            this.CheckBox10.Text = "Translucent selection rectangle";
+            this.CheckBox26.Checked = false;
+            this.CheckBox26.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox26.ForeColor = System.Drawing.Color.White;
+            this.CheckBox26.Location = new System.Drawing.Point(36, 154);
+            this.CheckBox26.Name = "CheckBox26";
+            this.CheckBox26.Size = new System.Drawing.Size(500, 24);
+            this.CheckBox26.TabIndex = 244;
+            this.CheckBox26.Text = "Enable Windows 7 taskbar volume mixer (for Windows 10 only)";
+            // 
+            // checkBox29
+            // 
+            this.checkBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox29.Checked = false;
+            this.checkBox29.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox29.ForeColor = System.Drawing.Color.White;
+            this.checkBox29.Location = new System.Drawing.Point(36, 124);
+            this.checkBox29.Name = "checkBox29";
+            this.checkBox29.Size = new System.Drawing.Size(500, 24);
+            this.checkBox29.TabIndex = 256;
+            this.checkBox29.Text = "Always hibernate taskbar thumbnails (Windows 7 and later)";
+            // 
+            // button30
+            // 
+            this.button30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button30.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button30.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button30.ForeColor = System.Drawing.Color.White;
+            this.button30.Image = null;
+            this.button30.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button30.ImageGlyph")));
+            this.button30.ImageGlyphEnabled = true;
+            this.button30.Location = new System.Drawing.Point(549, 6);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(34, 24);
+            this.button30.TabIndex = 247;
+            this.button30.UseVisualStyleBackColor = false;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // AlertBox6
+            // 
+            this.AlertBox6.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.AlertBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox6.BackColor = System.Drawing.Color.Transparent;
+            this.AlertBox6.CenterText = false;
+            this.AlertBox6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.AlertBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.AlertBox6.Image = null;
+            this.AlertBox6.Location = new System.Drawing.Point(36, 64);
+            this.AlertBox6.Name = "AlertBox6";
+            this.AlertBox6.Size = new System.Drawing.Size(547, 24);
+            this.AlertBox6.TabIndex = 241;
+            this.AlertBox6.TabStop = false;
+            this.AlertBox6.Text = "If you are using Windows 11 version lower than the Moment 3 update, utilize Explo" +
+    "rerPatcher to forcibly apply this effect.";
+            // 
+            // button32
+            // 
+            this.button32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button32.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button32.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button32.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button32.ForeColor = System.Drawing.Color.White;
+            this.button32.Image = null;
+            this.button32.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button32.ImageGlyph")));
+            this.button32.ImageGlyphEnabled = true;
+            this.button32.Location = new System.Drawing.Point(549, 95);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(34, 24);
+            this.button32.TabIndex = 255;
+            this.button32.UseVisualStyleBackColor = false;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
+            // 
+            // pictureBox38
+            // 
+            this.pictureBox38.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox38.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox38.Image")));
+            this.pictureBox38.Location = new System.Drawing.Point(6, 95);
+            this.pictureBox38.Name = "pictureBox38";
+            this.pictureBox38.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox38.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox38.TabIndex = 253;
+            this.pictureBox38.TabStop = false;
+            // 
+            // pictureBox37
+            // 
+            this.pictureBox37.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox37.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox37.Image")));
+            this.pictureBox37.Location = new System.Drawing.Point(6, 124);
+            this.pictureBox37.Name = "pictureBox37";
+            this.pictureBox37.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox37.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox37.TabIndex = 252;
+            this.pictureBox37.TabStop = false;
+            // 
+            // checkBox28
+            // 
+            this.checkBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox28.Checked = false;
+            this.checkBox28.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox28.ForeColor = System.Drawing.Color.White;
+            this.checkBox28.Location = new System.Drawing.Point(36, 95);
+            this.checkBox28.Name = "checkBox28";
+            this.checkBox28.Size = new System.Drawing.Size(500, 24);
+            this.checkBox28.TabIndex = 254;
+            this.checkBox28.Text = "Aero peek (Windows 7 and later)";
             // 
             // TabPage3
             // 
             this.TabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.TabPage3.Controls.Add(this.button8);
+            this.TabPage3.Controls.Add(this.button24);
             this.TabPage3.Controls.Add(this.button9);
             this.TabPage3.Controls.Add(this.button10);
             this.TabPage3.Controls.Add(this.button11);
             this.TabPage3.Controls.Add(this.Trackbar1);
+            this.TabPage3.Controls.Add(this.PictureBox22);
+            this.TabPage3.Controls.Add(this.CheckBox16);
             this.TabPage3.Controls.Add(this.CheckBox12);
             this.TabPage3.Controls.Add(this.PictureBox1);
             this.TabPage3.Controls.Add(this.PictureBox7);
@@ -702,7 +880,7 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(174, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(589, 411);
+            this.TabPage3.Size = new System.Drawing.Size(589, 441);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Menus";
             // 
@@ -714,14 +892,31 @@ namespace WinPaletter
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = null;
+            this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageGlyph")));
             this.button8.ImageGlyphEnabled = true;
-            this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageVector")));
             this.button8.Location = new System.Drawing.Point(549, 156);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(34, 24);
             this.button8.TabIndex = 238;
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button24
+            // 
+            this.button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button24.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button24.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button24.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button24.ForeColor = System.Drawing.Color.White;
+            this.button24.Image = null;
+            this.button24.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button24.ImageGlyph")));
+            this.button24.ImageGlyphEnabled = true;
+            this.button24.Location = new System.Drawing.Point(549, 186);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(34, 24);
+            this.button24.TabIndex = 241;
+            this.button24.UseVisualStyleBackColor = false;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
             // button9
             // 
@@ -731,8 +926,8 @@ namespace WinPaletter
             this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Image = null;
+            this.button9.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button9.ImageGlyph")));
             this.button9.ImageGlyphEnabled = true;
-            this.button9.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button9.ImageVector")));
             this.button9.Location = new System.Drawing.Point(549, 126);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(34, 24);
@@ -747,8 +942,8 @@ namespace WinPaletter
             this.button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button10.ForeColor = System.Drawing.Color.White;
             this.button10.Image = null;
+            this.button10.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button10.ImageGlyph")));
             this.button10.ImageGlyphEnabled = true;
-            this.button10.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button10.ImageVector")));
             this.button10.Location = new System.Drawing.Point(282, 36);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(34, 26);
@@ -764,8 +959,8 @@ namespace WinPaletter
             this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button11.ForeColor = System.Drawing.Color.White;
             this.button11.Image = null;
+            this.button11.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button11.ImageGlyph")));
             this.button11.ImageGlyphEnabled = true;
-            this.button11.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button11.ImageVector")));
             this.button11.Location = new System.Drawing.Point(549, 6);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(34, 24);
@@ -789,6 +984,30 @@ namespace WinPaletter
             this.Trackbar1.Size = new System.Drawing.Size(543, 24);
             this.Trackbar1.TabIndex = 134;
             this.Trackbar1.Value = 400;
+            // 
+            // PictureBox22
+            // 
+            this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
+            this.PictureBox22.Location = new System.Drawing.Point(6, 186);
+            this.PictureBox22.Name = "PictureBox22";
+            this.PictureBox22.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox22.TabIndex = 214;
+            this.PictureBox22.TabStop = false;
+            // 
+            // CheckBox16
+            // 
+            this.CheckBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox16.Checked = false;
+            this.CheckBox16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox16.ForeColor = System.Drawing.Color.White;
+            this.CheckBox16.Location = new System.Drawing.Point(36, 186);
+            this.CheckBox16.Name = "CheckBox16";
+            this.CheckBox16.Size = new System.Drawing.Size(500, 24);
+            this.CheckBox16.TabIndex = 213;
+            this.CheckBox16.Text = "Classic context menu (for Windows 11 and may require Explorer restart)";
             // 
             // CheckBox12
             // 
@@ -902,6 +1121,104 @@ namespace WinPaletter
             this.ComboBox1.Size = new System.Drawing.Size(240, 26);
             this.ComboBox1.TabIndex = 6;
             // 
+            // TabPage2
+            // 
+            this.TabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage2.Controls.Add(this.button6);
+            this.TabPage2.Controls.Add(this.button7);
+            this.TabPage2.Controls.Add(this.PictureBox14);
+            this.TabPage2.Controls.Add(this.PictureBox5);
+            this.TabPage2.Controls.Add(this.CheckBox4);
+            this.TabPage2.Controls.Add(this.CheckBox10);
+            this.TabPage2.Location = new System.Drawing.Point(174, 4);
+            this.TabPage2.Name = "TabPage2";
+            this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPage2.Size = new System.Drawing.Size(589, 441);
+            this.TabPage2.TabIndex = 1;
+            this.TabPage2.Text = "Icons";
+            // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button6.ForeColor = System.Drawing.Color.White;
+            this.button6.Image = null;
+            this.button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button6.ImageGlyph")));
+            this.button6.ImageGlyphEnabled = true;
+            this.button6.Location = new System.Drawing.Point(549, 36);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(34, 24);
+            this.button6.TabIndex = 234;
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button7.ForeColor = System.Drawing.Color.White;
+            this.button7.Image = null;
+            this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
+            this.button7.ImageGlyphEnabled = true;
+            this.button7.Location = new System.Drawing.Point(549, 6);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(34, 24);
+            this.button7.TabIndex = 233;
+            this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // PictureBox14
+            // 
+            this.PictureBox14.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
+            this.PictureBox14.Location = new System.Drawing.Point(6, 36);
+            this.PictureBox14.Name = "PictureBox14";
+            this.PictureBox14.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox14.TabIndex = 9;
+            this.PictureBox14.TabStop = false;
+            // 
+            // PictureBox5
+            // 
+            this.PictureBox5.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox5.Image")));
+            this.PictureBox5.Location = new System.Drawing.Point(6, 6);
+            this.PictureBox5.Name = "PictureBox5";
+            this.PictureBox5.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox5.TabIndex = 7;
+            this.PictureBox5.TabStop = false;
+            // 
+            // CheckBox4
+            // 
+            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox4.Checked = false;
+            this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox4.ForeColor = System.Drawing.Color.White;
+            this.CheckBox4.Location = new System.Drawing.Point(36, 6);
+            this.CheckBox4.Name = "CheckBox4";
+            this.CheckBox4.Size = new System.Drawing.Size(500, 24);
+            this.CheckBox4.TabIndex = 6;
+            this.CheckBox4.Text = "Drop shadow behind desktop icons label";
+            // 
+            // CheckBox10
+            // 
+            this.CheckBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox10.Checked = false;
+            this.CheckBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox10.ForeColor = System.Drawing.Color.White;
+            this.CheckBox10.Location = new System.Drawing.Point(36, 36);
+            this.CheckBox10.Name = "CheckBox10";
+            this.CheckBox10.Size = new System.Drawing.Size(500, 24);
+            this.CheckBox10.TabIndex = 8;
+            this.CheckBox10.Text = "Translucent selection rectangle";
+            // 
             // TabPage4
             // 
             this.TabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -914,7 +1231,7 @@ namespace WinPaletter
             this.TabPage4.Location = new System.Drawing.Point(174, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(589, 411);
+            this.TabPage4.Size = new System.Drawing.Size(589, 441);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Selection controls";
             // 
@@ -926,8 +1243,8 @@ namespace WinPaletter
             this.button12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button12.ForeColor = System.Drawing.Color.White;
             this.button12.Image = null;
+            this.button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button12.ImageGlyph")));
             this.button12.ImageGlyphEnabled = true;
-            this.button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button12.ImageVector")));
             this.button12.Location = new System.Drawing.Point(549, 36);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(34, 24);
@@ -943,8 +1260,8 @@ namespace WinPaletter
             this.button13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button13.ForeColor = System.Drawing.Color.White;
             this.button13.Image = null;
+            this.button13.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button13.ImageGlyph")));
             this.button13.ImageGlyphEnabled = true;
-            this.button13.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button13.ImageVector")));
             this.button13.Location = new System.Drawing.Point(549, 6);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(34, 24);
@@ -1017,7 +1334,7 @@ namespace WinPaletter
             this.TabPage5.Location = new System.Drawing.Point(174, 4);
             this.TabPage5.Name = "TabPage5";
             this.TabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage5.Size = new System.Drawing.Size(589, 411);
+            this.TabPage5.Size = new System.Drawing.Size(589, 441);
             this.TabPage5.TabIndex = 4;
             this.TabPage5.Text = "Tooltips & notifications";
             // 
@@ -1029,8 +1346,8 @@ namespace WinPaletter
             this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button15.ForeColor = System.Drawing.Color.White;
             this.button15.Image = null;
+            this.button15.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button15.ImageGlyph")));
             this.button15.ImageGlyphEnabled = true;
-            this.button15.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button15.ImageVector")));
             this.button15.Location = new System.Drawing.Point(549, 125);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(34, 24);
@@ -1045,8 +1362,8 @@ namespace WinPaletter
             this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button16.ForeColor = System.Drawing.Color.White;
             this.button16.Image = null;
+            this.button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button16.ImageGlyph")));
             this.button16.ImageGlyphEnabled = true;
-            this.button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button16.ImageVector")));
             this.button16.Location = new System.Drawing.Point(282, 36);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(34, 26);
@@ -1062,8 +1379,8 @@ namespace WinPaletter
             this.button17.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button17.ForeColor = System.Drawing.Color.White;
             this.button17.Image = null;
+            this.button17.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button17.ImageGlyph")));
             this.button17.ImageGlyphEnabled = true;
-            this.button17.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button17.ImageVector")));
             this.button17.Location = new System.Drawing.Point(549, 6);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(34, 24);
@@ -1190,7 +1507,7 @@ namespace WinPaletter
             this.TabPage6.Location = new System.Drawing.Point(174, 4);
             this.TabPage6.Name = "TabPage6";
             this.TabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage6.Size = new System.Drawing.Size(589, 411);
+            this.TabPage6.Size = new System.Drawing.Size(589, 441);
             this.TabPage6.TabIndex = 5;
             this.TabPage6.Text = "Focus rectangle";
             // 
@@ -1312,7 +1629,7 @@ namespace WinPaletter
             this.TabPage7.Location = new System.Drawing.Point(174, 4);
             this.TabPage7.Name = "TabPage7";
             this.TabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage7.Size = new System.Drawing.Size(589, 411);
+            this.TabPage7.Size = new System.Drawing.Size(589, 441);
             this.TabPage7.TabIndex = 6;
             this.TabPage7.Text = "Text cursor (caret)";
             // 
@@ -1407,7 +1724,7 @@ namespace WinPaletter
             this.TabPage8.Location = new System.Drawing.Point(174, 4);
             this.TabPage8.Name = "TabPage8";
             this.TabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage8.Size = new System.Drawing.Size(589, 411);
+            this.TabPage8.Size = new System.Drawing.Size(589, 441);
             this.TabPage8.TabIndex = 7;
             this.TabPage8.Text = "Active Windows tracking";
             // 
@@ -1419,8 +1736,8 @@ namespace WinPaletter
             this.button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button14.ForeColor = System.Drawing.Color.White;
             this.button14.Image = null;
+            this.button14.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button14.ImageGlyph")));
             this.button14.ImageGlyphEnabled = true;
-            this.button14.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button14.ImageVector")));
             this.button14.Location = new System.Drawing.Point(549, 36);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(34, 24);
@@ -1436,8 +1753,8 @@ namespace WinPaletter
             this.button18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button18.ForeColor = System.Drawing.Color.White;
             this.button18.Image = null;
+            this.button18.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button18.ImageGlyph")));
             this.button18.ImageGlyphEnabled = true;
-            this.button18.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button18.ImageVector")));
             this.button18.Location = new System.Drawing.Point(549, 6);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(34, 24);
@@ -1553,7 +1870,7 @@ namespace WinPaletter
             this.TabPage11.Location = new System.Drawing.Point(174, 4);
             this.TabPage11.Name = "TabPage11";
             this.TabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage11.Size = new System.Drawing.Size(589, 411);
+            this.TabPage11.Size = new System.Drawing.Size(589, 441);
             this.TabPage11.TabIndex = 10;
             this.TabPage11.Text = "Explorer (controls options)";
             // 
@@ -1565,8 +1882,8 @@ namespace WinPaletter
             this.button22.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button22.ForeColor = System.Drawing.Color.White;
             this.button22.Image = null;
+            this.button22.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button22.ImageGlyph")));
             this.button22.ImageGlyphEnabled = true;
-            this.button22.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button22.ImageVector")));
             this.button22.Location = new System.Drawing.Point(549, 235);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(34, 24);
@@ -1582,8 +1899,8 @@ namespace WinPaletter
             this.button19.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button19.ForeColor = System.Drawing.Color.White;
             this.button19.Image = null;
+            this.button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button19.ImageGlyph")));
             this.button19.ImageGlyphEnabled = true;
-            this.button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button19.ImageVector")));
             this.button19.Location = new System.Drawing.Point(549, 36);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(34, 24);
@@ -1599,8 +1916,8 @@ namespace WinPaletter
             this.button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button20.ForeColor = System.Drawing.Color.White;
             this.button20.Image = null;
+            this.button20.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button20.ImageGlyph")));
             this.button20.ImageGlyphEnabled = true;
-            this.button20.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button20.ImageVector")));
             this.button20.Location = new System.Drawing.Point(549, 6);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(34, 24);
@@ -1773,104 +2090,6 @@ namespace WinPaletter
             this.Label8.Text = "Explorer bar:";
             this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // TabPage10
-            // 
-            this.TabPage10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage10.Controls.Add(this.button23);
-            this.TabPage10.Controls.Add(this.button24);
-            this.TabPage10.Controls.Add(this.PictureBox28);
-            this.TabPage10.Controls.Add(this.CheckBox22);
-            this.TabPage10.Controls.Add(this.PictureBox22);
-            this.TabPage10.Controls.Add(this.CheckBox16);
-            this.TabPage10.Location = new System.Drawing.Point(174, 4);
-            this.TabPage10.Name = "TabPage10";
-            this.TabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage10.Size = new System.Drawing.Size(589, 411);
-            this.TabPage10.TabIndex = 9;
-            this.TabPage10.Text = "For Windows 11 only";
-            // 
-            // button23
-            // 
-            this.button23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button23.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button23.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button23.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button23.ForeColor = System.Drawing.Color.White;
-            this.button23.Image = null;
-            this.button23.ImageGlyphEnabled = true;
-            this.button23.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button23.ImageVector")));
-            this.button23.Location = new System.Drawing.Point(549, 36);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(34, 24);
-            this.button23.TabIndex = 242;
-            this.button23.UseVisualStyleBackColor = false;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
-            // 
-            // button24
-            // 
-            this.button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button24.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button24.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button24.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button24.ForeColor = System.Drawing.Color.White;
-            this.button24.Image = null;
-            this.button24.ImageGlyphEnabled = true;
-            this.button24.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button24.ImageVector")));
-            this.button24.Location = new System.Drawing.Point(549, 6);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(34, 24);
-            this.button24.TabIndex = 241;
-            this.button24.UseVisualStyleBackColor = false;
-            this.button24.Click += new System.EventHandler(this.button24_Click);
-            // 
-            // PictureBox28
-            // 
-            this.PictureBox28.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox28.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox28.Image")));
-            this.PictureBox28.Location = new System.Drawing.Point(6, 36);
-            this.PictureBox28.Name = "PictureBox28";
-            this.PictureBox28.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox28.TabIndex = 228;
-            this.PictureBox28.TabStop = false;
-            // 
-            // CheckBox22
-            // 
-            this.CheckBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox22.Checked = false;
-            this.CheckBox22.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox22.ForeColor = System.Drawing.Color.White;
-            this.CheckBox22.Location = new System.Drawing.Point(36, 36);
-            this.CheckBox22.Name = "CheckBox22";
-            this.CheckBox22.Size = new System.Drawing.Size(500, 24);
-            this.CheckBox22.TabIndex = 227;
-            this.CheckBox22.Text = "Spinning dots in boot screen";
-            // 
-            // PictureBox22
-            // 
-            this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
-            this.PictureBox22.Location = new System.Drawing.Point(6, 6);
-            this.PictureBox22.Name = "PictureBox22";
-            this.PictureBox22.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox22.TabIndex = 214;
-            this.PictureBox22.TabStop = false;
-            // 
-            // CheckBox16
-            // 
-            this.CheckBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox16.Checked = false;
-            this.CheckBox16.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox16.ForeColor = System.Drawing.Color.White;
-            this.CheckBox16.Location = new System.Drawing.Point(36, 6);
-            this.CheckBox16.Name = "CheckBox16";
-            this.CheckBox16.Size = new System.Drawing.Size(500, 24);
-            this.CheckBox16.TabIndex = 213;
-            this.CheckBox16.Text = "Classic context menu (may require Explorer restart)";
-            // 
             // TabPage12
             // 
             this.TabPage12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -1889,7 +2108,7 @@ namespace WinPaletter
             this.TabPage12.Location = new System.Drawing.Point(174, 4);
             this.TabPage12.Name = "TabPage12";
             this.TabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage12.Size = new System.Drawing.Size(589, 411);
+            this.TabPage12.Size = new System.Drawing.Size(589, 441);
             this.TabPage12.TabIndex = 11;
             this.TabPage12.Text = "Color filters (accessibility)";
             // 
@@ -1901,8 +2120,8 @@ namespace WinPaletter
             this.button25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button25.ForeColor = System.Drawing.Color.White;
             this.button25.Image = null;
-            this.button25.ImageGlyphEnabled = true;
             this.button25.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
+            this.button25.ImageGlyphEnabled = true;
             this.button25.Location = new System.Drawing.Point(441, 7);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(34, 25);
@@ -1919,7 +2138,7 @@ namespace WinPaletter
             this.AlertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox4.Image = null;
-            this.AlertBox4.Location = new System.Drawing.Point(6, 336);
+            this.AlertBox4.Location = new System.Drawing.Point(6, 366);
             this.AlertBox4.Name = "AlertBox4";
             this.AlertBox4.Size = new System.Drawing.Size(577, 68);
             this.AlertBox4.TabIndex = 239;
@@ -2403,49 +2622,41 @@ namespace WinPaletter
             // TabPage9
             // 
             this.TabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage9.Controls.Add(this.button26);
+            this.TabPage9.Controls.Add(this.button23);
             this.TabPage9.Controls.Add(this.button27);
             this.TabPage9.Controls.Add(this.button28);
+            this.TabPage9.Controls.Add(this.PictureBox28);
+            this.TabPage9.Controls.Add(this.CheckBox22);
             this.TabPage9.Controls.Add(this.button29);
-            this.TabPage9.Controls.Add(this.button30);
-            this.TabPage9.Controls.Add(this.button31);
-            this.TabPage9.Controls.Add(this.PictureBox35);
-            this.TabPage9.Controls.Add(this.CheckBox26);
             this.TabPage9.Controls.Add(this.PictureBox34);
             this.TabPage9.Controls.Add(this.CheckBox25);
-            this.TabPage9.Controls.Add(this.AlertBox6);
-            this.TabPage9.Controls.Add(this.AlertBox5);
             this.TabPage9.Controls.Add(this.PictureBox31);
             this.TabPage9.Controls.Add(this.CheckBox24);
-            this.TabPage9.Controls.Add(this.PictureBox21);
-            this.TabPage9.Controls.Add(this.CheckBox15);
             this.TabPage9.Controls.Add(this.PictureBox24);
             this.TabPage9.Controls.Add(this.CheckBox18);
-            this.TabPage9.Controls.Add(this.PictureBox25);
-            this.TabPage9.Controls.Add(this.CheckBox19);
             this.TabPage9.Location = new System.Drawing.Point(174, 4);
             this.TabPage9.Name = "TabPage9";
             this.TabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage9.Size = new System.Drawing.Size(589, 411);
+            this.TabPage9.Size = new System.Drawing.Size(589, 441);
             this.TabPage9.TabIndex = 8;
             this.TabPage9.Text = "Miscellaneous";
             // 
-            // button26
+            // button23
             // 
-            this.button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button26.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button26.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button26.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button26.ForeColor = System.Drawing.Color.White;
-            this.button26.Image = null;
-            this.button26.ImageGlyphEnabled = true;
-            this.button26.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button26.ImageVector")));
-            this.button26.Location = new System.Drawing.Point(549, 231);
-            this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(34, 24);
-            this.button26.TabIndex = 251;
-            this.button26.UseVisualStyleBackColor = false;
-            this.button26.Click += new System.EventHandler(this.button26_Click);
+            this.button23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button23.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button23.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button23.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button23.ForeColor = System.Drawing.Color.White;
+            this.button23.Image = null;
+            this.button23.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button23.ImageGlyph")));
+            this.button23.ImageGlyphEnabled = true;
+            this.button23.Location = new System.Drawing.Point(549, 96);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(34, 24);
+            this.button23.TabIndex = 242;
+            this.button23.UseVisualStyleBackColor = false;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // button27
             // 
@@ -2455,9 +2666,9 @@ namespace WinPaletter
             this.button27.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button27.ForeColor = System.Drawing.Color.White;
             this.button27.Image = null;
+            this.button27.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button27.ImageGlyph")));
             this.button27.ImageGlyphEnabled = true;
-            this.button27.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button27.ImageVector")));
-            this.button27.Location = new System.Drawing.Point(549, 201);
+            this.button27.Location = new System.Drawing.Point(549, 66);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(34, 24);
             this.button27.TabIndex = 250;
@@ -2472,14 +2683,38 @@ namespace WinPaletter
             this.button28.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button28.ForeColor = System.Drawing.Color.White;
             this.button28.Image = null;
+            this.button28.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button28.ImageGlyph")));
             this.button28.ImageGlyphEnabled = true;
-            this.button28.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button28.ImageVector")));
-            this.button28.Location = new System.Drawing.Point(549, 171);
+            this.button28.Location = new System.Drawing.Point(549, 36);
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(34, 24);
             this.button28.TabIndex = 249;
             this.button28.UseVisualStyleBackColor = false;
             this.button28.Click += new System.EventHandler(this.button28_Click);
+            // 
+            // PictureBox28
+            // 
+            this.PictureBox28.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox28.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox28.Image")));
+            this.PictureBox28.Location = new System.Drawing.Point(6, 96);
+            this.PictureBox28.Name = "PictureBox28";
+            this.PictureBox28.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox28.TabIndex = 228;
+            this.PictureBox28.TabStop = false;
+            // 
+            // CheckBox22
+            // 
+            this.CheckBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox22.Checked = false;
+            this.CheckBox22.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox22.ForeColor = System.Drawing.Color.White;
+            this.CheckBox22.Location = new System.Drawing.Point(36, 96);
+            this.CheckBox22.Name = "CheckBox22";
+            this.CheckBox22.Size = new System.Drawing.Size(500, 24);
+            this.CheckBox22.TabIndex = 227;
+            this.CheckBox22.Text = "Spinning dots in Windows 11 boot screen";
             // 
             // button29
             // 
@@ -2489,78 +2724,20 @@ namespace WinPaletter
             this.button29.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button29.ForeColor = System.Drawing.Color.White;
             this.button29.Image = null;
+            this.button29.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button29.ImageGlyph")));
             this.button29.ImageGlyphEnabled = true;
-            this.button29.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button29.ImageVector")));
-            this.button29.Location = new System.Drawing.Point(549, 141);
+            this.button29.Location = new System.Drawing.Point(549, 6);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(34, 24);
             this.button29.TabIndex = 248;
             this.button29.UseVisualStyleBackColor = false;
             this.button29.Click += new System.EventHandler(this.button29_Click);
             // 
-            // button30
-            // 
-            this.button30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button30.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button30.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button30.ForeColor = System.Drawing.Color.White;
-            this.button30.Image = null;
-            this.button30.ImageGlyphEnabled = true;
-            this.button30.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button30.ImageVector")));
-            this.button30.Location = new System.Drawing.Point(549, 36);
-            this.button30.Name = "button30";
-            this.button30.Size = new System.Drawing.Size(34, 24);
-            this.button30.TabIndex = 247;
-            this.button30.UseVisualStyleBackColor = false;
-            this.button30.Click += new System.EventHandler(this.button30_Click);
-            // 
-            // button31
-            // 
-            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button31.ForeColor = System.Drawing.Color.White;
-            this.button31.Image = null;
-            this.button31.ImageGlyphEnabled = true;
-            this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageVector")));
-            this.button31.Location = new System.Drawing.Point(549, 6);
-            this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(34, 24);
-            this.button31.TabIndex = 246;
-            this.button31.UseVisualStyleBackColor = false;
-            this.button31.Click += new System.EventHandler(this.button31_Click);
-            // 
-            // PictureBox35
-            // 
-            this.PictureBox35.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox35.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox35.Image")));
-            this.PictureBox35.Location = new System.Drawing.Point(6, 231);
-            this.PictureBox35.Name = "PictureBox35";
-            this.PictureBox35.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox35.TabIndex = 245;
-            this.PictureBox35.TabStop = false;
-            // 
-            // CheckBox26
-            // 
-            this.CheckBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox26.Checked = false;
-            this.CheckBox26.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox26.ForeColor = System.Drawing.Color.White;
-            this.CheckBox26.Location = new System.Drawing.Point(36, 231);
-            this.CheckBox26.Name = "CheckBox26";
-            this.CheckBox26.Size = new System.Drawing.Size(500, 24);
-            this.CheckBox26.TabIndex = 244;
-            this.CheckBox26.Text = "Enable Windows 7 taskbar volume mixer for Windows 10 only";
-            // 
             // PictureBox34
             // 
             this.PictureBox34.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox34.Image")));
-            this.PictureBox34.Location = new System.Drawing.Point(6, 171);
+            this.PictureBox34.Location = new System.Drawing.Point(6, 36);
             this.PictureBox34.Name = "PictureBox34";
             this.PictureBox34.Size = new System.Drawing.Size(24, 24);
             this.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2574,50 +2751,17 @@ namespace WinPaletter
             this.CheckBox25.Checked = false;
             this.CheckBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox25.ForeColor = System.Drawing.Color.White;
-            this.CheckBox25.Location = new System.Drawing.Point(36, 171);
+            this.CheckBox25.Location = new System.Drawing.Point(36, 36);
             this.CheckBox25.Name = "CheckBox25";
             this.CheckBox25.Size = new System.Drawing.Size(500, 24);
             this.CheckBox25.TabIndex = 242;
             this.CheckBox25.Text = "Full screen start menu (for Windows 10 and requires logoff and logon)";
             // 
-            // AlertBox6
-            // 
-            this.AlertBox6.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox6.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox6.CenterText = false;
-            this.AlertBox6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AlertBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox6.Image = null;
-            this.AlertBox6.Location = new System.Drawing.Point(36, 94);
-            this.AlertBox6.Name = "AlertBox6";
-            this.AlertBox6.Size = new System.Drawing.Size(547, 40);
-            this.AlertBox6.TabIndex = 241;
-            this.AlertBox6.TabStop = false;
-            this.AlertBox6.Text = "If you are using Windows 11 version lower than the Moment 3 update, utilize Explo" +
-    "rerPatcher to forcibly apply this effect.";
-            // 
-            // AlertBox5
-            // 
-            this.AlertBox5.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox5.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox5.CenterText = true;
-            this.AlertBox5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AlertBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox5.Image = null;
-            this.AlertBox5.Location = new System.Drawing.Point(36, 66);
-            this.AlertBox5.Name = "AlertBox5";
-            this.AlertBox5.Size = new System.Drawing.Size(115, 22);
-            this.AlertBox5.TabIndex = 240;
-            this.AlertBox5.TabStop = false;
-            this.AlertBox5.Text = "Uses more power";
-            // 
             // PictureBox31
             // 
             this.PictureBox31.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox31.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox31.Image")));
-            this.PictureBox31.Location = new System.Drawing.Point(6, 201);
+            this.PictureBox31.Location = new System.Drawing.Point(6, 66);
             this.PictureBox31.Name = "PictureBox31";
             this.PictureBox31.Size = new System.Drawing.Size(24, 24);
             this.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2631,41 +2775,17 @@ namespace WinPaletter
             this.CheckBox24.Checked = false;
             this.CheckBox24.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox24.ForeColor = System.Drawing.Color.White;
-            this.CheckBox24.Location = new System.Drawing.Point(36, 201);
+            this.CheckBox24.Location = new System.Drawing.Point(36, 66);
             this.CheckBox24.Name = "CheckBox24";
             this.CheckBox24.Size = new System.Drawing.Size(500, 24);
             this.CheckBox24.TabIndex = 227;
             this.CheckBox24.Text = "Automatic hide scroll bars in modern Windows apps (Windows 10 and later)";
             // 
-            // PictureBox21
-            // 
-            this.PictureBox21.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox21.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox21.Image")));
-            this.PictureBox21.Location = new System.Drawing.Point(6, 6);
-            this.PictureBox21.Name = "PictureBox21";
-            this.PictureBox21.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox21.TabIndex = 145;
-            this.PictureBox21.TabStop = false;
-            // 
-            // CheckBox15
-            // 
-            this.CheckBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox15.Checked = false;
-            this.CheckBox15.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox15.ForeColor = System.Drawing.Color.White;
-            this.CheckBox15.Location = new System.Drawing.Point(36, 6);
-            this.CheckBox15.Name = "CheckBox15";
-            this.CheckBox15.Size = new System.Drawing.Size(500, 24);
-            this.CheckBox15.TabIndex = 144;
-            this.CheckBox15.Text = "Snap cursor to default button";
-            // 
             // PictureBox24
             // 
             this.PictureBox24.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox24.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox24.Image")));
-            this.PictureBox24.Location = new System.Drawing.Point(6, 141);
+            this.PictureBox24.Location = new System.Drawing.Point(6, 6);
             this.PictureBox24.Name = "PictureBox24";
             this.PictureBox24.Size = new System.Drawing.Size(24, 24);
             this.PictureBox24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2679,45 +2799,20 @@ namespace WinPaletter
             this.CheckBox18.Checked = false;
             this.CheckBox18.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox18.ForeColor = System.Drawing.Color.White;
-            this.CheckBox18.Location = new System.Drawing.Point(36, 141);
+            this.CheckBox18.Location = new System.Drawing.Point(36, 6);
             this.CheckBox18.Name = "CheckBox18";
             this.CheckBox18.Size = new System.Drawing.Size(500, 24);
             this.CheckBox18.TabIndex = 225;
-            this.CheckBox18.Text = "Paint Windows version in desktop (Might require Windows restart)";
-            // 
-            // PictureBox25
-            // 
-            this.PictureBox25.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox25.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox25.Image")));
-            this.PictureBox25.Location = new System.Drawing.Point(6, 36);
-            this.PictureBox25.Name = "PictureBox25";
-            this.PictureBox25.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox25.TabIndex = 224;
-            this.PictureBox25.TabStop = false;
-            // 
-            // CheckBox19
-            // 
-            this.CheckBox19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox19.Checked = false;
-            this.CheckBox19.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox19.ForeColor = System.Drawing.Color.White;
-            this.CheckBox19.Location = new System.Drawing.Point(36, 36);
-            this.CheckBox19.Name = "CheckBox19";
-            this.CheckBox19.Size = new System.Drawing.Size(500, 24);
-            this.CheckBox19.TabIndex = 223;
-            this.CheckBox19.Text = "Show seconds in taskbar tray clock (Windows 10 or Windows 11 Moment 3 update)";
+            this.CheckBox18.Text = "Paint Windows version in desktop (might require Windows restart)";
             // 
             // WinEffecter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(784, 531);
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.TabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
@@ -2725,6 +2820,7 @@ namespace WinPaletter
             this.Name = "WinEffecter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Windows Effects";
+            this.AspectEnabledChanged += new WinPaletter.AspectsTemplate.AspectEnabledChangedEventHandler(this.WinEffecter_AspectEnabledChanged);
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
             this.Load += new System.EventHandler(this.WinEffecter_Load);
             this.Controls.SetChildIndex(this.TabControl1, 0);
@@ -2736,15 +2832,22 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
-            this.TabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();
+            this.tabPage10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox35)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox37)).EndInit();
             this.TabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).EndInit();
+            this.TabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();
             this.TabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
@@ -2766,9 +2869,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).EndInit();
-            this.TabPage10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).EndInit();
             this.TabPage12.ResumeLayout(false);
             this.Panel3.ResumeLayout(false);
             this.Panel24.ResumeLayout(false);
@@ -2780,12 +2880,10 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox33)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).EndInit();
             this.TabPage9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox35)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox24)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2862,7 +2960,6 @@ namespace WinPaletter
         internal UI.WP.CheckBox CheckBox21;
         internal PictureBox PictureBox28;
         internal UI.WP.CheckBox CheckBox22;
-        internal TabPage TabPage10;
         internal UI.WP.RadioButton RadioButton3;
         internal UI.WP.RadioButton RadioButton2;
         internal UI.WP.RadioButton RadioButton1;
@@ -2963,5 +3060,12 @@ namespace WinPaletter
         internal UI.WP.Button button29;
         internal UI.WP.Button button30;
         internal UI.WP.Button button31;
+        internal UI.WP.Button button33;
+        internal UI.WP.CheckBox checkBox29;
+        internal UI.WP.Button button32;
+        internal UI.WP.CheckBox checkBox28;
+        internal PictureBox pictureBox37;
+        internal PictureBox pictureBox38;
+        private TabPage tabPage10;
     }
 }

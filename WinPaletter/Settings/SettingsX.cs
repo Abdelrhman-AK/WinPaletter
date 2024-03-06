@@ -312,8 +312,8 @@ namespace WinPaletter
 
                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                     {
-                        TerDir = PathsExt.TerminalJSON;
-                        TerPreDir = PathsExt.TerminalPreviewJSON;
+                        TerDir = SysPaths.TerminalJSON;
+                        TerPreDir = SysPaths.TerminalPreviewJSON;
                     }
                     else
                     {
@@ -323,7 +323,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            TerDir = PathsExt.TerminalJSON;
+                            TerDir = SysPaths.TerminalJSON;
                         }
 
                         if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
@@ -332,7 +332,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            TerPreDir = PathsExt.TerminalPreviewJSON;
+                            TerPreDir = SysPaths.TerminalPreviewJSON;
                         }
                     }
 
@@ -836,9 +836,9 @@ namespace WinPaletter
 
         public int CalcStoreCache()
         {
-            if (Directory.Exists(PathsExt.StoreCache))
+            if (Directory.Exists(SysPaths.StoreCache))
             {
-                return (int)Directory.EnumerateFiles(PathsExt.StoreCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles(SysPaths.StoreCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -848,9 +848,9 @@ namespace WinPaletter
 
         public int CalcThemesResCache()
         {
-            if (Directory.Exists(PathsExt.ThemeResPackCache))
+            if (Directory.Exists(SysPaths.ThemeResPackCache))
             {
-                return (int)Directory.EnumerateFiles(PathsExt.ThemeResPackCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles(SysPaths.ThemeResPackCache, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -872,9 +872,9 @@ namespace WinPaletter
 
         public int CalcExErrors()
         {
-            if (Directory.Exists($"{PathsExt.appData}\\Reports"))
+            if (Directory.Exists($"{SysPaths.appData}\\Reports"))
             {
-                return (int)Directory.EnumerateFiles($"{PathsExt.appData}\\Reports", "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles($"{SysPaths.appData}\\Reports", "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -886,20 +886,20 @@ namespace WinPaletter
         {
             int s0, s1;
 
-            if (Directory.Exists(PathsExt.appData))
+            if (Directory.Exists(SysPaths.appData))
             {
-                s0 = (int)Directory.EnumerateFiles(PathsExt.appData, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                s0 = (int)Directory.EnumerateFiles(SysPaths.appData, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
                 s0 -= CalcExErrors() - CalcThemesResCache();
-                if (Program.Settings.BackupTheme.BackupPath.StartsWith(PathsExt.appData, StringComparison.OrdinalIgnoreCase)) s0 -= CalcBackupsCache();
+                if (Program.Settings.BackupTheme.BackupPath.StartsWith(SysPaths.appData, StringComparison.OrdinalIgnoreCase)) s0 -= CalcBackupsCache();
             }
             else
             {
                 s0 = 0;
             }
 
-            if (Directory.Exists(PathsExt.ProgramFilesData))
+            if (Directory.Exists(SysPaths.ProgramFilesData))
             {
-                s1 = (int)Directory.EnumerateFiles(PathsExt.ProgramFilesData, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                s1 = (int)Directory.EnumerateFiles(SysPaths.ProgramFilesData, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -1101,7 +1101,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(PathsExt.StoreCache, true);
+                Directory.Delete(SysPaths.StoreCache, true);
             }
             catch (UnauthorizedAccessException ex0)
             {
@@ -1119,7 +1119,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(PathsExt.ThemeResPackCache, true);
+                Directory.Delete(SysPaths.ThemeResPackCache, true);
             }
             catch (UnauthorizedAccessException ex0)
             {
@@ -1161,13 +1161,13 @@ namespace WinPaletter
 
         private void button26_Click(object sender, EventArgs e)
         {
-            if (System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
+            if (System.IO.Directory.Exists($@"{SysPaths.appData}\Reports"))
             {
-                Process.Start($@"{PathsExt.appData}\Reports");
+                Process.Start($@"{SysPaths.appData}\Reports");
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{PathsExt.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1175,7 +1175,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete($"{PathsExt.appData}\\Reports", true);
+                Directory.Delete($"{SysPaths.appData}\\Reports", true);
             }
             catch (UnauthorizedAccessException ex0)
             {

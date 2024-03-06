@@ -39,7 +39,7 @@ namespace WinPaletter.Theme.Structures
         /// </param>
         public void Load(string SubKey)
         {
-            string wallpaper = SubKey.ToLower() != "winxp" ? $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
+            string wallpaper = SubKey.ToLower() != "winxp" ? $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
 
             if (!File.Exists(wallpaper)) wallpaper = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper).ToString();
 
@@ -81,11 +81,11 @@ namespace WinPaletter.Theme.Structures
             string path;
             if (!OS.WXP & !OS.WVista)
             {
-                path = Path.Combine(PathsExt.appData, "TintedWallpaper.bmp");
+                path = Path.Combine(SysPaths.appData, "TintedWallpaper.bmp");
             }
             else
             {
-                path = Path.Combine(PathsExt.Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
+                path = Path.Combine(SysPaths.Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
             }
 
             if (TreeView is not null)

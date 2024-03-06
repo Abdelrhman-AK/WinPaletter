@@ -98,7 +98,7 @@
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(860, 34);
             this.Button2.TabIndex = 117;
-            this.Button2.Text = "I disagree, don\'t apply Windows effects";
+            this.Button2.Text = "I disagree, don\'t edit Windows effects";
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
@@ -145,8 +145,8 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(860, 24);
             this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Never show this dialog again (Windows Effects will be applied without any alert n" +
-    "ext time)";
+            this.checkBox1.Text = "Never show this dialog again (Windows Effects will be edited without any alert ne" +
+    "xt time)";
             // 
             // AnimatedBox1
             // 

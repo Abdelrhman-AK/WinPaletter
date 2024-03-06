@@ -1280,7 +1280,15 @@ namespace WinPaletter.Tabs
                         using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
                         {
                             G.FillPath(br, path);
-                            G.DrawPath(P, path);
+
+                            if (OS.WVista || OS.W7 || OS.W8x)
+                            {
+                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 128, 0, 0, 0))) { G.DrawPath(Px, path); }
+                            }
+                            else
+                            {
+                                G.DrawPath(P, path);
+                            }
                         }
                     }
                     else

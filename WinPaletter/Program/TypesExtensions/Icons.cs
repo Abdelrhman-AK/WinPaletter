@@ -3,10 +3,17 @@ using System.IO;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extension methods for <see cref="Icon"/> class.
+    /// </summary>
     public static class IconsExtensions
     {
-
-        public static byte[] ToByteArray(this Icon icon)
+        /// <summary>
+        /// Convert <see cref="Icon"/> to <see cref="byte"/> array.
+        /// </summary>
+        /// <param name="icon"></param>
+        /// <returns></returns>
+        public static byte[] ToBytes(this Icon icon)
         {
             using (MemoryStream ms = new())
             {
@@ -17,6 +24,11 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        /// <summary>
+        /// Convert <see cref="byte"/> array to <see cref="Icon"/>.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public static Icon ToIcon(this byte[] bytes)
         {
             using (MemoryStream ms = new(bytes))

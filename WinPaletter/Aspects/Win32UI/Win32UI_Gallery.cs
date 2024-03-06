@@ -32,9 +32,9 @@ namespace WinPaletter
             {
                 RDC.LoadMetrics(Program.TM);
                 RDC.Size = new(350, 300);
-                foreach (string item in Properties.Resources.ClassicColorsDB.CList().Select(f => f.Split('|')[0]).ToArray())
+                foreach (string item in Theme.Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray())
                 {
-                    RDC.LoadFromWinThemeString(Properties.Resources.ClassicColorsDB, item);
+                    RDC.LoadFromWinThemeString(Theme.Schemes.ClassicColors, item);
 
                     RadioImage radioImage = new()
                     {

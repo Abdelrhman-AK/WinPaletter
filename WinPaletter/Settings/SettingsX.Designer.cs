@@ -132,6 +132,10 @@ namespace WinPaletter
             this.banner5 = new WinPaletter.UI.WP.Banner();
             this.TabControl2 = new WinPaletter.UI.WP.TabControl();
             this.TabPage11 = new System.Windows.Forms.TabPage();
+            this.groupBox22 = new WinPaletter.UI.WP.GroupBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.toggle12 = new WinPaletter.UI.WP.Toggle();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
             this.groupBox17 = new WinPaletter.UI.WP.GroupBox();
             this.alertBox11 = new WinPaletter.UI.WP.AlertBox();
             this.label72 = new System.Windows.Forms.Label();
@@ -480,10 +484,6 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
-            this.groupBox22 = new WinPaletter.UI.WP.GroupBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.toggle12 = new WinPaletter.UI.WP.Toggle();
-            this.pictureBox14 = new System.Windows.Forms.PictureBox();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -524,6 +524,8 @@ namespace WinPaletter
             this.TabPage5.SuspendLayout();
             this.TabControl2.SuspendLayout();
             this.TabPage11.SuspendLayout();
+            this.groupBox22.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
             this.groupBox17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox62)).BeginInit();
             this.Panel11.SuspendLayout();
@@ -656,8 +658,6 @@ namespace WinPaletter
             this.groupBox52.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
             this.bottom_buttons.SuspendLayout();
-            this.groupBox22.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
             this.SuspendLayout();
             // 
             // ImageList1
@@ -1968,6 +1968,53 @@ namespace WinPaletter
             this.TabPage11.Size = new System.Drawing.Size(809, 493);
             this.TabPage11.TabIndex = 0;
             this.TabPage11.Text = "General";
+            // 
+            // groupBox22
+            // 
+            this.groupBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox22.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox22.Controls.Add(this.label30);
+            this.groupBox22.Controls.Add(this.toggle12);
+            this.groupBox22.Controls.Add(this.pictureBox14);
+            this.groupBox22.Location = new System.Drawing.Point(3, 143);
+            this.groupBox22.Name = "groupBox22";
+            this.groupBox22.Size = new System.Drawing.Size(803, 48);
+            this.groupBox22.TabIndex = 53;
+            // 
+            // label30
+            // 
+            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label30.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(41, 7);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(705, 34);
+            this.label30.TabIndex = 18;
+            this.label30.Text = "Always display a confirmation message (alert) when applying and disabling/enablin" +
+    "g Windows Effects";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toggle12
+            // 
+            this.toggle12.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.toggle12.Checked = false;
+            this.toggle12.DarkLight_Toggler = false;
+            this.toggle12.Location = new System.Drawing.Point(752, 14);
+            this.toggle12.Name = "toggle12";
+            this.toggle12.Size = new System.Drawing.Size(40, 20);
+            this.toggle12.TabIndex = 0;
+            this.toggle12.Text = "toggle12";
+            // 
+            // pictureBox14
+            // 
+            this.pictureBox14.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox14.Image")));
+            this.pictureBox14.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox14.TabIndex = 23;
+            this.pictureBox14.TabStop = false;
             // 
             // groupBox17
             // 
@@ -6523,52 +6570,6 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // groupBox22
-            // 
-            this.groupBox22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox22.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox22.Controls.Add(this.label30);
-            this.groupBox22.Controls.Add(this.toggle12);
-            this.groupBox22.Controls.Add(this.pictureBox14);
-            this.groupBox22.Location = new System.Drawing.Point(3, 143);
-            this.groupBox22.Name = "groupBox22";
-            this.groupBox22.Size = new System.Drawing.Size(803, 48);
-            this.groupBox22.TabIndex = 53;
-            // 
-            // label30
-            // 
-            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label30.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(41, 7);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(705, 34);
-            this.label30.TabIndex = 18;
-            this.label30.Text = "Always display a confirmation message (alert) when applying Windows Effects";
-            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toggle12
-            // 
-            this.toggle12.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.toggle12.Checked = false;
-            this.toggle12.DarkLight_Toggler = false;
-            this.toggle12.Location = new System.Drawing.Point(752, 14);
-            this.toggle12.Name = "toggle12";
-            this.toggle12.Size = new System.Drawing.Size(40, 20);
-            this.toggle12.TabIndex = 0;
-            this.toggle12.Text = "toggle12";
-            // 
-            // pictureBox14
-            // 
-            this.pictureBox14.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox14.Image")));
-            this.pictureBox14.Location = new System.Drawing.Point(11, 12);
-            this.pictureBox14.Name = "pictureBox14";
-            this.pictureBox14.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox14.TabIndex = 23;
-            this.pictureBox14.TabStop = false;
-            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -6631,6 +6632,8 @@ namespace WinPaletter
             this.TabPage5.ResumeLayout(false);
             this.TabControl2.ResumeLayout(false);
             this.TabPage11.ResumeLayout(false);
+            this.groupBox22.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
             this.groupBox17.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox62)).EndInit();
             this.Panel11.ResumeLayout(false);
@@ -6763,8 +6766,6 @@ namespace WinPaletter
             this.groupBox52.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
             this.bottom_buttons.ResumeLayout(false);
-            this.groupBox22.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
             this.ResumeLayout(false);
 
         }

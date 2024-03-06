@@ -45,7 +45,8 @@ namespace WinPaletter
 
         private void ColorPicker_Load(object sender, EventArgs e)
         {
-            ComboBox1.PopulateClassicColors();
+            ComboBox1.Items.Clear();
+            ComboBox1.Items.AddRange(Theme.Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray());
         }
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
@@ -476,7 +477,7 @@ namespace WinPaletter
 
             if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
             {
-                List<Color> colors = Theme.Manager.GetPaletteFromString(Properties.Resources.ClassicColorsDB, ComboBox1.SelectedItem.ToString());
+                List<Color> colors = Theme.Manager.GetPaletteFromString(Theme.Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
                 if (colors is not null && colors.Count > 0)
                 {
                     foreach (Color C in colors)
@@ -566,9 +567,9 @@ namespace WinPaletter
                     {
                         try
                         {
-                            System.IO.File.WriteAllText($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={TextBox2.Text}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={TextBox2.Text}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
 
-                            using (VisualStyleFile vs = new($@"{PathsExt.appData}\VisualStyles\Luna\win32uischeme.theme"))
+                            using (VisualStyleFile vs = new($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme"))
                             {
                                 foreach (FieldInfo field in typeof(VisualStyleMetricColors).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                                 {

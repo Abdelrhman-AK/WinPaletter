@@ -75,21 +75,21 @@ namespace WinPaletter
             textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Stopping, SvcName))}\r\n");
             Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
-            List<Process> Processes = Program.ProgramsRunning(PathsExt.SysEventsSounds);
+            List<Process> Processes = Program.ProgramsRunning(SysPaths.SysEventsSounds);
             if (Processes.Count > 0) { foreach (Process process in Processes) { process.Kill(); }; Thread.Sleep(100); }
 
             try
             {
                 textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Extracting, SvcName))}\r\n");
-                if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir); }
-                if (System.IO.File.Exists(PathsExt.SysEventsSounds))
-                    System.IO.File.Delete(PathsExt.SysEventsSounds);
+                if (!System.IO.Directory.Exists(SysPaths.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(SysPaths.SysEventsSoundsDir); }
+                if (System.IO.File.Exists(SysPaths.SysEventsSounds))
+                    System.IO.File.Delete(SysPaths.SysEventsSounds);
 
-                System.IO.File.WriteAllBytes(PathsExt.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds);
+                System.IO.File.WriteAllBytes(SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds);
             }
             catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
 
-            if (System.IO.File.Exists(PathsExt.SysEventsSounds))
+            if (System.IO.File.Exists(SysPaths.SysEventsSounds))
             {
                 IEnumerable<string> installutils = System.IO.Directory.EnumerateFiles(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", System.IO.SearchOption.AllDirectories);
 
@@ -98,10 +98,10 @@ namespace WinPaletter
                     string installutil = installutils.ElementAt(0);
 
                     textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName))}\r\n");
-                    Program.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"");
+                    Program.SendCommand($"\"{installutil}\" /u \"{SysPaths.SysEventsSounds}\"");
 
                     textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Installing, SvcName))}\r\n");
-                    Program.SendCommand($"\"{installutil}\" \"{PathsExt.SysEventsSounds}\"");
+                    Program.SendCommand($"\"{installutil}\" \"{SysPaths.SysEventsSounds}\"");
 
                     textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Starting, SvcName))}\r\n");
                     Program.SendCommand("net start WinPaletter.SystemEventsSounds");
@@ -131,10 +131,10 @@ namespace WinPaletter
             textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Stopping, SvcName))}\r\n");
             Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
-            List<Process> Processes = Program.ProgramsRunning(PathsExt.SysEventsSounds);
+            List<Process> Processes = Program.ProgramsRunning(SysPaths.SysEventsSounds);
             if (Processes.Count > 0) { foreach (Process process in Processes) { process.Kill(); }; Thread.Sleep(100); }
 
-            if (System.IO.File.Exists(PathsExt.SysEventsSounds))
+            if (System.IO.File.Exists(SysPaths.SysEventsSounds))
             {
                 IEnumerable<string> installutils = System.IO.Directory.EnumerateFiles(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", System.IO.SearchOption.AllDirectories);
 
@@ -143,7 +143,7 @@ namespace WinPaletter
                     string installutil = installutils.ElementAt(0);
 
                     textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName))}\r\n");
-                    Program.SendCommand($"\"{installutil}\" /u \"{PathsExt.SysEventsSounds}\"");
+                    Program.SendCommand($"\"{installutil}\" /u \"{SysPaths.SysEventsSounds}\"");
 
                     textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_UninstallCompleted, SvcName))}\r\n");
 
@@ -158,9 +158,9 @@ namespace WinPaletter
 
             try
             {
-                if (!System.IO.Directory.Exists(PathsExt.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(PathsExt.SysEventsSoundsDir); }
-                if (System.IO.File.Exists(PathsExt.SysEventsSounds))
-                    System.IO.File.Delete(PathsExt.SysEventsSounds);
+                if (!System.IO.Directory.Exists(SysPaths.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(SysPaths.SysEventsSoundsDir); }
+                if (System.IO.File.Exists(SysPaths.SysEventsSounds))
+                    System.IO.File.Delete(SysPaths.SysEventsSounds);
             }
             catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
 

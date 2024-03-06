@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extensions for <see cref="Color"/> structure
+    /// </summary>
     public static class ColorsExtensions
     {
         /// <summary>
@@ -99,6 +102,12 @@ namespace WinPaletter.TypesExtensions
             return _hsl;
         }
 
+        /// <summary>
+        /// Saturate a color by a given percentage
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="saturation"></param>
+        /// <returns></returns>
         public static Color Saturate(this Color color, float saturation)
         {
             HSL hsl = color.ToHSL();
@@ -192,7 +201,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Change Color Brightness
+        /// Change color brightness
         /// </summary>
         public static Color CB(this Color color, double correctionFactor)
         {
@@ -275,12 +284,30 @@ namespace WinPaletter.TypesExtensions
             return s;
         }
 
+        /// <summary>
+        /// Get Color as string in the format you choose
+        /// </summary>
         public enum ColorFormat
         {
+            /// <summary>
+            /// HEX color format
+            /// </summary>
             HEX,
+            /// <summary>
+            /// RGB color format
+            /// </summary>
             RGB,
+            /// <summary>
+            /// HSL color format
+            /// </summary>
             HSL,
+            /// <summary>
+            /// Decimal color format
+            /// </summary>
             Dec,
+            /// <summary>
+            /// Default color format: HEX
+            /// </summary>
             Default
         }
 
@@ -377,9 +404,17 @@ namespace WinPaletter.TypesExtensions
             return !(Color.R * 0.2126d + Color.G * 0.7152d + Color.B * 0.0722d > 255d / 2d);
         }
 
+        /// <summary>
+        /// HSL color structure
+        /// </summary>
         public struct HSL
         {
-
+            /// <summary>
+            /// Generate a HSL structure
+            /// </summary>
+            /// <param name="h"></param>
+            /// <param name="s"></param>
+            /// <param name="l"></param>
             public HSL(int h, float s, float l)
             {
                 H = h;
@@ -387,22 +422,48 @@ namespace WinPaletter.TypesExtensions
                 L = l;
             }
 
+            /// <summary>
+            /// Hue
+            /// </summary>
             public int H { get; set; }
 
+            /// <summary>
+            /// Saturation
+            /// </summary>
             public float S { get; set; }
 
+            /// <summary>
+            /// Lightness
+            /// </summary>
             public float L { get; set; }
 
+            /// <summary>
+            /// Check if two HSL colors are equal
+            /// </summary>
+            /// <param name="hsl"></param>
+            /// <returns></returns>
             public bool Equals(HSL hsl)
             {
                 return H == hsl.H && S == hsl.S && L == hsl.L;
             }
 
+            /// <summary>
+            /// Add two HSL colors
+            /// </summary>
+            /// <param name="hsl1"></param>
+            /// <param name="hsl2"></param>
+            /// <returns></returns>
             public static HSL operator +(HSL hsl1, HSL hsl2)
             {
                 return new HSL(Math.Min(Math.Max(hsl1.H + hsl2.H, 0), 360), Math.Min(Math.Max(hsl1.S + hsl2.S, 0), 100), Math.Min(Math.Max(hsl1.L + hsl2.L, 0), 100));
             }
 
+            /// <summary>
+            /// Subtract two HSL colors
+            /// </summary>
+            /// <param name="hsl1"></param>
+            /// <param name="hsl2"></param>
+            /// <returns></returns>
             public static HSL operator -(HSL hsl1, HSL hsl2)
             {
                 return new HSL(Math.Min(Math.Max(hsl1.H - hsl2.H, 0), 360), Math.Min(Math.Max(hsl1.S - hsl2.S, 0), 100), Math.Min(Math.Max(hsl1.L - hsl2.L, 0), 100));

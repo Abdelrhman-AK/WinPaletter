@@ -53,7 +53,7 @@ namespace WinPaletter
             {
                 Animator = new() { Interval = 1, TimeStep = 0.07f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
 
-                if (!System.IO.Directory.Exists(PathsExt.ProgramFilesData)) { System.IO.Directory.CreateDirectory(PathsExt.ProgramFilesData); }
+                if (!System.IO.Directory.Exists(SysPaths.ProgramFilesData)) { System.IO.Directory.CreateDirectory(SysPaths.ProgramFilesData); }
 
                 // Important to load proper style and language before showing login dialog
                 GetRoundedCorners();

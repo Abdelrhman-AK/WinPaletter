@@ -17,6 +17,9 @@ namespace WinPaletter
 
         DesignerData _data;
 
+        public delegate void AspectEnabledChangedEventHandler(object sender, EventArgs e);
+        public event AspectEnabledChangedEventHandler AspectEnabledChanged;
+
         private bool _shown = false;
         public bool IsShown
         {
@@ -406,6 +409,8 @@ namespace WinPaletter
             _data.Enabled = ((UI.WP.Toggle)sender).Checked;
 
             checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
+
+            AspectEnabledChanged?.Invoke(sender, EventArgs.Empty);
 
             if (IsShown)
             {

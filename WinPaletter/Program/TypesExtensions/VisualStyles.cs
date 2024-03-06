@@ -1,16 +1,21 @@
 ﻿using libmsstyle;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Web.UI.WebControls;
-using WinPaletter.Theme;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extension methods for the <see cref="VisualStyle"/> class and other classes in the <see cref="libmsstyle"/> namespace.
+    /// </summary>
     public static class Extensions
     {
+        /// <summary>
+        /// Get the <see cref="StyleClass"/> object for the specified class name.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="ClassName"></param>
+        /// <returns></returns>
         public static KeyValuePair<int, StyleClass> Class(this VisualStyle visualStyle, string ClassName = "sysmetrics")
         {
             KeyValuePair<int, StyleClass> cls = new();
@@ -23,11 +28,24 @@ namespace WinPaletter.TypesExtensions
             return cls;
         }
 
+        /// <summary>
+        /// Get the <see cref="StylePart"/> objects for the specified class name.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="ClassName"></param>
+        /// <returns></returns>
         public static Dictionary<int, StylePart> Parts(this VisualStyle visualStyle, string ClassName = "sysmetrics")
         {
             return visualStyle.Class(ClassName).Value.Parts;
         }
 
+        /// <summary>
+        /// Get the <see cref="StylePart"/> object for the specified class name and part ID.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="ClassName"></param>
+        /// <param name="PartID"></param>
+        /// <returns></returns>
         public static KeyValuePair<int, StylePart> Part(this VisualStyle visualStyle, string ClassName = "sysmetrics", int PartID = 0)
         {
             KeyValuePair<int, StylePart> part = new();
@@ -40,11 +58,26 @@ namespace WinPaletter.TypesExtensions
             return part;
         }
 
+        /// <summary>
+        /// Get the <see cref="StyleState"/> objects for the specified class name and part ID.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="ClassName"></param>
+        /// <param name="PartID"></param>
+        /// <returns></returns>
         public static Dictionary<int, StyleState> States(this VisualStyle visualStyle, string ClassName = "sysmetrics", int PartID = 0)
         {
             return visualStyle.Part(ClassName, PartID).Value.States;
         }
 
+        /// <summary>
+        /// Get the <see cref="StyleState"/> object for the specified class name, part ID, and state ID.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="ClassName"></param>
+        /// <param name="PartID"></param>
+        /// <param name="StateID"></param>
+        /// <returns></returns>
         public static KeyValuePair<int, StyleState> State(this VisualStyle visualStyle, string ClassName = "sysmetrics", int PartID = 0, int StateID = 0)
         {
             foreach (KeyValuePair<int, StyleState> s in visualStyle.Part(ClassName, PartID).Value.States)
@@ -55,11 +88,26 @@ namespace WinPaletter.TypesExtensions
             return new KeyValuePair<int, StyleState>();
         }
 
+        /// <summary>
+        /// Get the <see cref="StyleProperty"/> objects for the specified class name, part ID, and state ID.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="ClassName"></param>
+        /// <param name="PartID"></param>
+        /// <param name="StateID"></param>
+        /// <returns></returns>
         public static List<StyleProperty> Properties(this VisualStyle visualStyle, string ClassName = "sysmetrics", int PartID = 0, int StateID = 0)
         {
             return visualStyle.State(ClassName, PartID, StateID).Value.Properties;
         }
 
+        /// <summary>
+        /// Get WinPaletter's <see cref="Theme.Structures.Win32UI"/> structure from the specified <see cref="VisualStyle"/> object.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="PartID"></param>
+        /// <param name="StateID"></param>
+        /// <returns></returns>
         public static Theme.Structures.Win32UI ClassicColors(this VisualStyle visualStyle, int PartID = 0, int StateID = 0)
         {
             List<StyleProperty> properties = visualStyle.Properties("sysmetrics", PartID, StateID);
@@ -105,39 +153,13 @@ namespace WinPaletter.TypesExtensions
             return classicColors;
         }
 
-        private static Font ParseFontFromString(string inputString)
-        {
-            Font defaultFont = new("Segoe UI", 9f, FontStyle.Regular);
-
-            try
-            {
-                FontStyle fontStyle = FontStyle.Regular;
-
-                string[] parts = inputString.Split(',');
-
-                if (parts.Length < 2) return defaultFont;
-
-                string family = parts[0].Trim();
-                float size = float.Parse(parts[1].Trim());
-
-                if (parts.Length >= 3)
-                {
-                    string styleStr = parts[2].Trim().ToLower();
-                    if (styleStr == "bold") fontStyle |= FontStyle.Bold;
-                    else if (styleStr == "italic") fontStyle |= FontStyle.Italic;
-                    else if (styleStr == "strikeout") fontStyle |= FontStyle.Strikeout;
-                    else if (styleStr == "underline") fontStyle |= FontStyle.Underline;
-                }
-
-                return new Font(family, size, fontStyle);
-            }
-            catch // Couldn't parse the font string, return the default font
-            {
-                return defaultFont;
-            }
-        }
-
-
+        /// <summary>
+        /// Get WinPaletter's <see cref="Theme.Structures.MetricsFonts"/> structure from the specified <see cref="VisualStyle"/> object.
+        /// </summary>
+        /// <param name="visualStyle"></param>
+        /// <param name="PartID"></param>
+        /// <param name="StateID"></param>
+        /// <returns></returns>
         public static Theme.Structures.MetricsFonts MetricsFonts(this VisualStyle visualStyle, int PartID = 0, int StateID = 0)
         {
             StylePart cp = visualStyle.Class("sysmetrics").Value.Parts.FirstOrDefault().Value;
@@ -177,6 +199,38 @@ namespace WinPaletter.TypesExtensions
             metricsFonts.StatusFont = ParseFontFromString(fonts.Where(f => f.Key == (int)p.GetValue()).FirstOrDefault().Value);
 
             return metricsFonts;
+        }
+
+        private static Font ParseFontFromString(string inputString)
+        {
+            Font defaultFont = new("Segoe UI", 9f, FontStyle.Regular);
+
+            try
+            {
+                FontStyle fontStyle = FontStyle.Regular;
+
+                string[] parts = inputString.Split(',');
+
+                if (parts.Length < 2) return defaultFont;
+
+                string family = parts[0].Trim();
+                float size = float.Parse(parts[1].Trim());
+
+                if (parts.Length >= 3)
+                {
+                    string styleStr = parts[2].Trim().ToLower();
+                    if (styleStr == "bold") fontStyle |= FontStyle.Bold;
+                    else if (styleStr == "italic") fontStyle |= FontStyle.Italic;
+                    else if (styleStr == "strikeout") fontStyle |= FontStyle.Strikeout;
+                    else if (styleStr == "underline") fontStyle |= FontStyle.Underline;
+                }
+
+                return new Font(family, size, fontStyle);
+            }
+            catch // Couldn't parse the font string, return the default font
+            {
+                return defaultFont;
+            }
         }
     }
 }

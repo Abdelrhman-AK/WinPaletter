@@ -548,15 +548,15 @@ namespace WinPaletter.NativeMethods
                 byteArray.AddRange(BitConverter.GetBytes(iScrollHeight));
                 byteArray.AddRange(BitConverter.GetBytes(iCaptionWidth));
                 byteArray.AddRange(BitConverter.GetBytes(iCaptionHeight));
-                byteArray.AddRange(lfCaptionFont.ToByte(60));
+                byteArray.AddRange(lfCaptionFont.ToBytes(60));
                 byteArray.AddRange(BitConverter.GetBytes(iSMCaptionWidth));
                 byteArray.AddRange(BitConverter.GetBytes(iSMCaptionHeight));
-                byteArray.AddRange(lfSMCaptionFont.ToByte(60));
+                byteArray.AddRange(lfSMCaptionFont.ToBytes(60));
                 byteArray.AddRange(BitConverter.GetBytes(iMenuWidth));
                 byteArray.AddRange(BitConverter.GetBytes(iMenuHeight));
-                byteArray.AddRange(lfMenuFont.ToByte(60));
-                byteArray.AddRange(lfStatusFont.ToByte(60));
-                byteArray.AddRange(lfMessageFont.ToByte(60));
+                byteArray.AddRange(lfMenuFont.ToBytes(60));
+                byteArray.AddRange(lfStatusFont.ToBytes(60));
+                byteArray.AddRange(lfMessageFont.ToBytes(60));
                 byteArray.AddRange(BitConverter.GetBytes(iPaddedBorderWidth));
                 return byteArray.ToArray();
             }
@@ -629,7 +629,7 @@ namespace WinPaletter.NativeMethods
                 byteArray.AddRange(BitConverter.GetBytes(iHorzSpacing));
                 byteArray.AddRange(BitConverter.GetBytes(iVertSpacing));
                 byteArray.AddRange(BitConverter.GetBytes(iTitleWrap));
-                byteArray.AddRange(lfFont.ToByte(60));
+                byteArray.AddRange(lfFont.ToBytes(60));
 
                 return byteArray.ToArray();
             }

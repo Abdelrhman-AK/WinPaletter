@@ -86,16 +86,16 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (!OS.WXP && System.IO.File.Exists($"{PathsExt.appData}\\WindowsStartup_Backup.wav"))
+                    if (!OS.WXP && System.IO.File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
                     {
-                        string file = $"{PathsExt.appData}\\WindowsStartup_Backup.wav";
+                        string file = $"{SysPaths.appData}\\WindowsStartup_Backup.wav";
 
-                        byte[] CurrentSoundBytes = PE.GetResource(PathsExt.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+                        byte[] CurrentSoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                         byte[] TargetSoundBytes = System.IO.File.ReadAllBytes(file);
 
                         if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
                         {
-                            PE.ReplaceResource(PathsExt.imageres, "WAV", OS.WVista ? 5051 : 5080, TargetSoundBytes);
+                            PE.ReplaceResource(SysPaths.imageres, "WAV", OS.WVista ? 5051 : 5080, TargetSoundBytes);
                         }
                     }
                 }
@@ -124,15 +124,15 @@ namespace WinPaletter
 
             if (CheckBox2.Checked)
             {
-                if (System.IO.Directory.Exists(PathsExt.appData))
+                if (System.IO.Directory.Exists(SysPaths.appData))
                 {
-                    try { System.IO.Directory.Delete(PathsExt.appData, true); }
+                    try { System.IO.Directory.Delete(SysPaths.appData, true); }
                     catch { } // Ignore deleting the folder if it fails
                 }
 
-                if (System.IO.Directory.Exists(PathsExt.ProgramFilesData))
+                if (System.IO.Directory.Exists(SysPaths.ProgramFilesData))
                 {
-                    try { System.IO.Directory.Delete(PathsExt.ProgramFilesData, true); }
+                    try { System.IO.Directory.Delete(SysPaths.ProgramFilesData, true); }
                     catch { } // Ignore deleting the folder if it fails
                 }
             }
@@ -274,14 +274,14 @@ namespace WinPaletter
 
                     IntPtr intPtr = IntPtr.Zero;
                     Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                    if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
+                    if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
                     {
                         Forms.MainForm.LoggingOff = true;
-                        Interaction.Shell($@"{PathsExt.System32}\logoff.exe", AppWinStyle.Hide);
+                        Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
                     }
                     else
                     {
-                        MsgBox(string.Format(Program.Lang.LogoffNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MsgBox(string.Format(Program.Lang.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
             }
@@ -302,7 +302,7 @@ namespace WinPaletter
         {
             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
             {
-                Program.SendCommand($"{PathsExt.Explorer} ms-settings:display");
+                Program.SendCommand($"{SysPaths.Explorer} ms-settings:display");
             }
             else if (OS.WVista || OS.W7 || OS.W8x)
             {

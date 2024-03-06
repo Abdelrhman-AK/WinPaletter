@@ -122,8 +122,7 @@ namespace WinPaletter
             ColorizationAfterglowBalance_bar.Value = TM.Windows7.ColorizationAfterglowBalance;
             ColorizationBlurBalance_bar.Value = TM.Windows7.ColorizationBlurBalance;
             ColorizationGlassReflectionIntensity_bar.Value = TM.Windows7.ColorizationGlassReflectionIntensity;
-            EnableAeroPeek_toggle.Checked = TM.Windows7.EnableAeroPeek;
-            AlwaysHibernateThumbnails_Toggle.Checked = TM.Windows7.AlwaysHibernateThumbnails;
+
             switch (TM.Windows7.Theme)
             {
                 case Theme.Structures.Windows7.Themes.Aero:
@@ -168,8 +167,6 @@ namespace WinPaletter
             TM.Windows7.ColorizationAfterglowBalance = ColorizationAfterglowBalance_bar.Value;
             TM.Windows7.ColorizationBlurBalance = ColorizationBlurBalance_bar.Value;
             TM.Windows7.ColorizationGlassReflectionIntensity = ColorizationGlassReflectionIntensity_bar.Value;
-            TM.Windows7.EnableAeroPeek = EnableAeroPeek_toggle.Checked;
-            TM.Windows7.AlwaysHibernateThumbnails = AlwaysHibernateThumbnails_Toggle.Checked;
 
             if (theme_aero.Checked)
             {

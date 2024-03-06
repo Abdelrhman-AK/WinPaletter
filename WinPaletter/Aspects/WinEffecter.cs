@@ -190,6 +190,8 @@ namespace WinPaletter
                 CheckBox23.Checked = Effects.DisableNavBar;
                 CheckBox24.Checked = Effects.AutoHideScrollBars;
                 CheckBox25.Checked = Effects.FullScreenStartMenu;
+                checkBox28.Checked = Effects.EnableAeroPeek;
+                checkBox29.Checked = Effects.AlwaysHibernateThumbnails;
 
                 if (!Effects.ColorFilter_Enabled)
                 {
@@ -246,8 +248,6 @@ namespace WinPaletter
 
                 Panel2.Width = (int)Effects.Caret;
             }
-
-
         }
 
         public void ApplyToTM(Theme.Manager TM)
@@ -293,6 +293,8 @@ namespace WinPaletter
                 Effects.ShakeToMinimize = CheckBox21.Checked;
                 Effects.Win11BootDots = CheckBox22.Checked;
                 Effects.ClassicVolMixer = CheckBox26.Checked;
+                Effects.EnableAeroPeek = checkBox28.Checked;
+                Effects.AlwaysHibernateThumbnails = checkBox29.Checked;
 
                 if (RadioButton1.Checked)
                 {
@@ -849,6 +851,33 @@ namespace WinPaletter
             using (Theme.Manager TM = Default.Get(Program.WindowStyle))
             {
                 CheckBox26.Checked = TM.WindowsEffects.ClassicVolMixer;
+            }
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                checkBox28.Checked = TM.WindowsEffects.EnableAeroPeek;
+            }
+        }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            {
+                checkBox29.Checked = TM.WindowsEffects.AlwaysHibernateThumbnails;
+            }
+        }
+
+        private void WinEffecter_AspectEnabledChanged(object sender, EventArgs e)
+        {
+            if ((sender as UI.WP.Toggle).Checked 
+                && Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert 
+                && Forms.WinEffectsAlert.ShowDialog() != DialogResult.OK)
+            {
+                AspectEnabled = false;
+                (sender as UI.WP.Toggle).Checked = false;
             }
         }
     }

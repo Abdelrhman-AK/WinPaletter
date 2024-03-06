@@ -50,7 +50,7 @@ namespace WinPaletter
 
                 if (!Program.Settings.WindowsTerminals.Path_Deflection)
                 {
-                    TerDir = PathsExt.TerminalJSON;
+                    TerDir = SysPaths.TerminalJSON;
                 }
                 else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                 {
@@ -58,7 +58,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerDir = PathsExt.TerminalJSON;
+                    TerDir = SysPaths.TerminalJSON;
                 }
 
                 if (System.IO.File.Exists(TerDir))
@@ -95,7 +95,7 @@ namespace WinPaletter
 
                 if (!Program.Settings.WindowsTerminals.Path_Deflection)
                 {
-                    TerPreDir = PathsExt.TerminalPreviewJSON;
+                    TerPreDir = SysPaths.TerminalPreviewJSON;
                 }
                 else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                 {
@@ -103,7 +103,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    TerPreDir = PathsExt.TerminalPreviewJSON;
+                    TerPreDir = SysPaths.TerminalPreviewJSON;
                 }
 
                 if (System.IO.File.Exists(TerPreDir))

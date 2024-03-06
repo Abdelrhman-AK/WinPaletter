@@ -45,14 +45,14 @@ namespace WinPaletter.Dialogs
 
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists($@"{PathsExt.System32}\logoff.exe"))
+                if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{PathsExt.System32}\logoff.exe", AppWinStyle.Hide);
+                    Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.LogoffNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -65,14 +65,14 @@ namespace WinPaletter.Dialogs
 
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists($@"{PathsExt.System32}\shutdown.exe"))
+                if (System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{PathsExt.System32}\shutdown.exe /r /t 0", AppWinStyle.Hide);
+                    Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /t 0", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -85,14 +85,14 @@ namespace WinPaletter.Dialogs
 
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists($@"{PathsExt.System32}\shutdown.exe"))
+                if (System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{PathsExt.System32}\shutdown.exe /s /t 0", AppWinStyle.Hide);
+                    Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /s /t 0", AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, PathsExt.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace WinPaletter.Dialogs
         {
             if (!OS.WXP)
             {
-                Task.Run(new Action(() => { SFC(PathsExt.imageres, false, false); }));
+                Task.Run(new Action(() => { SFC(SysPaths.imageres, false, false); }));
             }
         }
 
@@ -123,7 +123,7 @@ namespace WinPaletter.Dialogs
                     {
                         StartInfo = new()
                         {
-                            FileName = $"{PathsExt.System32}\\cmd.exe",
+                            FileName = $"{SysPaths.System32}\\cmd.exe",
                             Verb = "runas",
                             UseShellExecute = true
                         }
@@ -210,36 +210,36 @@ namespace WinPaletter.Dialogs
         {
             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
             {
-                Process.Start($"{PathsExt.Explorer}", "ms-settings:windowsupdate");
+                Process.Start($"{SysPaths.Explorer}", "ms-settings:windowsupdate");
             }
             else if (OS.WXP)
             {
-                if (System.IO.File.Exists($"{PathsExt.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll"))
+                if (System.IO.File.Exists($"{SysPaths.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll"))
                 {
                     // Use legacy update if it is installed
-                    Process.Start($"{PathsExt.System32}\\rundll32.exe", $"\"{PathsExt.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll\",LaunchUpdateSite");
+                    Process.Start($"{SysPaths.System32}\\rundll32.exe", $"\"{SysPaths.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll\",LaunchUpdateSite");
                 }
                 else
                 {
                     // Use default update if legacy update is not installed
-                    Process.Start($"{PathsExt.System32}\\rundll32.exe", $"{PathsExt.System32}\\muweb.dll,LaunchMUSite");
+                    Process.Start($"{SysPaths.System32}\\rundll32.exe", $"{SysPaths.System32}\\muweb.dll,LaunchMUSite");
                 }
             }
             else
             {
-                Process.Start($"{PathsExt.System32}\\control.exe", "/name Microsoft.WindowsUpdate");
+                Process.Start($"{SysPaths.System32}\\control.exe", "/name Microsoft.WindowsUpdate");
             }
         }
 
         private void button15_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists($"{PathsExt.System32}\\restore\\rstrui.exe"))
+            if (System.IO.File.Exists($"{SysPaths.System32}\\restore\\rstrui.exe"))
             {
-                Process.Start($"{PathsExt.System32}\\restore\\rstrui.exe");
+                Process.Start($"{SysPaths.System32}\\restore\\rstrui.exe");
             }
-            else if (System.IO.File.Exists($"{PathsExt.System32}\\rstrui.exe"))
+            else if (System.IO.File.Exists($"{SysPaths.System32}\\rstrui.exe"))
             {
-                Process.Start($"{PathsExt.System32}\\rstrui.exe");
+                Process.Start($"{SysPaths.System32}\\rstrui.exe");
             }
             else
             {

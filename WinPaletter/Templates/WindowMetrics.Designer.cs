@@ -52,13 +52,13 @@
             this.windowR3 = new WinPaletter.UI.Retro.WindowR();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lbl = new WinPaletter.UI.WP.LabelAlt();
+            this.lbl = new WinPaletter.UI.Retro.LabelR();
             this.scrollBarR2 = new WinPaletter.UI.Retro.ScrollBarR();
             this.scrollBarR1 = new WinPaletter.UI.Retro.ScrollBarR();
             this.menuBarR1 = new WinPaletter.UI.Retro.MenuBarR();
             this.panel3 = new System.Windows.Forms.Panel();
             this.PanelR1 = new WinPaletter.UI.Retro.PanelR();
-            this.status = new WinPaletter.UI.WP.LabelAlt();
+            this.status = new WinPaletter.UI.Retro.LabelR();
             this.tabs_preview.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -483,7 +483,6 @@
             // 
             this.lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lbl.BackColor = System.Drawing.Color.Transparent;
-            this.lbl.DrawOnGlass = false;
             this.lbl.ForeColor = System.Drawing.Color.Black;
             this.lbl.Location = new System.Drawing.Point(69, 19);
             this.lbl.Name = "lbl";
@@ -578,7 +577,6 @@
             // 
             this.status.BackColor = System.Drawing.Color.Transparent;
             this.status.Dock = System.Windows.Forms.DockStyle.Top;
-            this.status.DrawOnGlass = false;
             this.status.ForeColor = System.Drawing.Color.Black;
             this.status.Location = new System.Drawing.Point(0, 0);
             this.status.Name = "status";
@@ -640,13 +638,13 @@
         internal UI.Retro.WindowR windowR3;
         private System.Windows.Forms.Panel panel2;
         internal System.Windows.Forms.PictureBox pictureBox1;
-        internal UI.WP.LabelAlt lbl;
+        internal UI.Retro.LabelR lbl;
         internal UI.Retro.ScrollBarR scrollBarR2;
         internal UI.Retro.ScrollBarR scrollBarR1;
         public UI.Retro.MenuBarR menuBarR1;
         private System.Windows.Forms.Panel panel3;
         internal UI.Retro.PanelR PanelR1;
-        internal UI.WP.LabelAlt status;
+        internal UI.Retro.LabelR status;
         public UI.WP.ToolStripStatusLabel statusLbl;
         private UI.WP.ToolStripMenuItem toolStripMenuItem1;
         private UI.WP.ToolStripMenuItem toolStripMenuItem2;

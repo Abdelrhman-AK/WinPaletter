@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extension methods for <see cref="int"/> types
+    /// </summary>
     public static class IntegerExtensions
     {
         /// <summary>

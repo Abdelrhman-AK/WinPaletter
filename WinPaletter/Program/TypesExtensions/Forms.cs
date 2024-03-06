@@ -2,6 +2,9 @@
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// Extensions for <see cref="Form"/> class
+    /// </summary>
     public static class FormsExtensions
     {
         /// <summary>

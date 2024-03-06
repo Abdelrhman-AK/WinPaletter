@@ -43,7 +43,7 @@ namespace WinPaletter.Theme
                 IntPtr wow64Value = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
 
-                string DirX = $@"{PathsExt.System32}\oobe\info\backgrounds";
+                string DirX = $@"{SysPaths.System32}\oobe\info\backgrounds";
 
                 Directory.CreateDirectory(DirX);
 
@@ -64,7 +64,7 @@ namespace WinPaletter.Theme
                     case Theme.Structures.LogonUI7.Sources.Default:
                         {
                             for (int i = 5031; i <= 5043; i += +1)
-                                bmpList.Add(PE_Functions.GetPNGFromDLL(PathsExt.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
+                                bmpList.Add(PE_Functions.GetPNGFromDLL(SysPaths.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
                             break;
                         }
 
@@ -148,8 +148,8 @@ namespace WinPaletter.Theme
                     }
                     else
                     {
-                        bmpList[0].Save($@"{PathsExt.appData}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                        Reg_IO.Move_File($@"{PathsExt.appData}\backgroundDefault.jpg", $@"{DirX}\backgroundDefault.jpg");
+                        bmpList[0].Save($@"{SysPaths.appData}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Reg_IO.Move_File($@"{SysPaths.appData}\backgroundDefault.jpg", $@"{DirX}\backgroundDefault.jpg");
                     }
 
                     if (ReportProgress_Detailed)
@@ -165,8 +165,8 @@ namespace WinPaletter.Theme
                         }
                         else
                         {
-                            bmpList[x].Save($"{PathsExt.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", System.Drawing.Imaging.ImageFormat.Jpeg);
-                            Reg_IO.Move_File($"{PathsExt.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", $"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}");
+                            bmpList[x].Save($"{SysPaths.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                            Reg_IO.Move_File($"{SysPaths.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", $"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}");
                         }
 
                         if (ReportProgress_Detailed)
@@ -189,7 +189,7 @@ namespace WinPaletter.Theme
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-            string lockimg = $@"{PathsExt.appData}\LockScreen.png";
+            string lockimg = $@"{SysPaths.appData}\LockScreen.png";
 
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", Windows81.NoLockScreen ? 1 : 0);
             EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String);
@@ -218,14 +218,14 @@ namespace WinPaletter.Theme
                         {
                             string syslock = string.Empty;
 
-                            if (System.IO.File.Exists($@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.png"))
+                            if (System.IO.File.Exists($@"{SysPaths.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.png"))
                             {
-                                syslock = $@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.png";
+                                syslock = $@"{SysPaths.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.png";
                             }
 
-                            else if (System.IO.File.Exists($@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.jpg"))
+                            else if (System.IO.File.Exists($@"{SysPaths.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.jpg"))
                             {
-                                syslock = $@"{PathsExt.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.jpg";
+                                syslock = $@"{SysPaths.Windows}\Web\Screen\img10{this.Windows81.LockScreenSystemID}.jpg";
 
                             }
 

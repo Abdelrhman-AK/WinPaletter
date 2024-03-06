@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
 using System.Text;
 using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.TypesExtensions
 {
     /// <summary>
-    /// Extension methods for converting logFont objects to byte arrays.
+    /// Extension methods for <see cref="LogFont"/>
     /// </summary>
     public static class LogFontExtensions
     {
@@ -18,7 +16,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="logFont">The logFont object to convert.</param>
         /// <param name="size">The size of the byte array to return. Default is 92.</param>
         /// <returns>A byte array representation of the logFont object.</returns>
-        public static byte[] ToByte(this LogFont logFont, int size = 92)
+        public static byte[] ToBytes(this LogFont logFont, int size = 92)
         {
             byte[] b = new byte[size];
 

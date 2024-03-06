@@ -648,7 +648,7 @@ namespace WinPaletter
         /// <param name="Hide">Hide console output</param>
         public static void SFC(string File = "", bool IfNotExist_DoScannow = false, bool Hide = true)
         {
-            if (System.IO.File.Exists($"{PathsExt.System32}\\cmd.exe"))
+            if (System.IO.File.Exists($"{SysPaths.System32}\\cmd.exe"))
             {
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
@@ -657,7 +657,7 @@ namespace WinPaletter
                 {
                     StartInfo = new()
                     {
-                        FileName = $"{PathsExt.System32}\\cmd.exe",
+                        FileName = $"{SysPaths.System32}\\cmd.exe",
                         Verb = "runas",
                         WindowStyle = Hide ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
                         CreateNoWindow = Hide,
@@ -697,7 +697,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.SendCommand($"{PathsExt.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : string.Empty)}");
+                Program.SendCommand($"{SysPaths.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : string.Empty)}");
 
                 try
                 {
@@ -721,7 +721,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.SendCommand($"{PathsExt.System32}\\ICACLS.exe {$"\"{File}\" /grant {(AsAdministrator ? "administrators" : "%username%")}:F"}");
+                Program.SendCommand($"{SysPaths.System32}\\ICACLS.exe {$"\"{File}\" /grant {(AsAdministrator ? "administrators" : "%username%")}:F"}");
 
                 try
                 {
@@ -740,7 +740,7 @@ namespace WinPaletter
         /// <param name="destination">Destination file</param>
         public static void Move_File(string source, string destination)
         {
-            if (System.IO.File.Exists(source)) { Program.SendCommand($"{PathsExt.CMD} /C move \"{source}\" \"{destination}\" && exit"); }
+            if (System.IO.File.Exists(source)) { Program.SendCommand($"{SysPaths.CMD} /C move \"{source}\" \"{destination}\" && exit"); }
         }
     }
 }

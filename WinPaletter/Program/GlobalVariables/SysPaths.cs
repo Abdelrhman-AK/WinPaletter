@@ -7,7 +7,7 @@ namespace WinPaletter.GlobalVariables
     /// Extended paths
     /// <br></br><b>Class contains strings have paths to system and application important directories and files</b>
     /// </summary>
-    public static class PathsExt
+    public static class SysPaths
     {
         #region System directories
         /// <summary>

@@ -46,13 +46,13 @@ namespace WinPaletter
             listView1.SmallImageList = imageList1;
 
             // Get all .scr files in the screensaver folder
-            string[] screensavers = Directory.GetFiles(PathsExt.System32, "*.scr");
+            string[] screensavers = Directory.GetFiles(SysPaths.System32, "*.scr");
 
             // Populate the ListView
             foreach (string screensaver in screensavers)
             {
                 string name = Path.GetFileNameWithoutExtension(screensaver);
-                string filePath = Path.Combine(PathsExt.System32, screensaver);
+                string filePath = Path.Combine(SysPaths.System32, screensaver);
 
                 // Get the icon for the screensaver
                 Icon icon = Icon.ExtractAssociatedIcon(filePath);

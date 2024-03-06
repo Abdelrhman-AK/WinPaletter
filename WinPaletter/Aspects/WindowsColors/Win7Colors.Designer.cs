@@ -44,16 +44,10 @@
             this.PictureBox39 = new System.Windows.Forms.PictureBox();
             this.ColorizationBlurBalance_bar = new WinPaletter.UI.Controllers.TrackBarX();
             this.Label38 = new System.Windows.Forms.Label();
-            this.AlwaysHibernateThumbnails_Toggle = new WinPaletter.UI.WP.Toggle();
             this.PictureBox8 = new System.Windows.Forms.PictureBox();
-            this.EnableAeroPeek_toggle = new WinPaletter.UI.WP.Toggle();
             this.Label15 = new System.Windows.Forms.Label();
-            this.PictureBox3 = new System.Windows.Forms.PictureBox();
             this.Label26 = new System.Windows.Forms.Label();
-            this.Aero_AlwaysHibernateThumbnails_lbl = new System.Windows.Forms.Label();
             this.PictureBox24 = new System.Windows.Forms.PictureBox();
-            this.PictureBox4 = new System.Windows.Forms.PictureBox();
-            this.Aero_EnableAeroPeek_lbl = new System.Windows.Forms.Label();
             this.GroupBox30 = new WinPaletter.UI.WP.GroupBox();
             this.ColorizationAfterglowBalance_bar = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox25 = new System.Windows.Forms.PictureBox();
@@ -118,9 +112,7 @@
             this.GroupBox22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox39)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox24)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             this.GroupBox30.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).BeginInit();
@@ -366,21 +358,15 @@
             this.GroupBox22.Controls.Add(this.PictureBox39);
             this.GroupBox22.Controls.Add(this.ColorizationBlurBalance_bar);
             this.GroupBox22.Controls.Add(this.Label38);
-            this.GroupBox22.Controls.Add(this.AlwaysHibernateThumbnails_Toggle);
             this.GroupBox22.Controls.Add(this.PictureBox8);
-            this.GroupBox22.Controls.Add(this.EnableAeroPeek_toggle);
             this.GroupBox22.Controls.Add(this.Label15);
-            this.GroupBox22.Controls.Add(this.PictureBox3);
             this.GroupBox22.Controls.Add(this.Label26);
-            this.GroupBox22.Controls.Add(this.Aero_AlwaysHibernateThumbnails_lbl);
             this.GroupBox22.Controls.Add(this.PictureBox24);
-            this.GroupBox22.Controls.Add(this.PictureBox4);
-            this.GroupBox22.Controls.Add(this.Aero_EnableAeroPeek_lbl);
             this.GroupBox22.Location = new System.Drawing.Point(4, 248);
             this.GroupBox22.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox22.Name = "GroupBox22";
             this.GroupBox22.Padding = new System.Windows.Forms.Padding(1);
-            this.GroupBox22.Size = new System.Drawing.Size(517, 155);
+            this.GroupBox22.Size = new System.Drawing.Size(517, 96);
             this.GroupBox22.TabIndex = 42;
             // 
             // ColorizationGlassReflectionIntensity_bar
@@ -443,16 +429,6 @@
             this.Label38.Text = "Aero tweaks";
             this.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // AlwaysHibernateThumbnails_Toggle
-            // 
-            this.AlwaysHibernateThumbnails_Toggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlwaysHibernateThumbnails_Toggle.Checked = false;
-            this.AlwaysHibernateThumbnails_Toggle.DarkLight_Toggler = false;
-            this.AlwaysHibernateThumbnails_Toggle.Location = new System.Drawing.Point(471, 128);
-            this.AlwaysHibernateThumbnails_Toggle.Name = "AlwaysHibernateThumbnails_Toggle";
-            this.AlwaysHibernateThumbnails_Toggle.Size = new System.Drawing.Size(40, 20);
-            this.AlwaysHibernateThumbnails_Toggle.TabIndex = 17;
-            // 
             // PictureBox8
             // 
             this.PictureBox8.BackColor = System.Drawing.Color.Transparent;
@@ -463,16 +439,6 @@
             this.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox8.TabIndex = 4;
             this.PictureBox8.TabStop = false;
-            // 
-            // EnableAeroPeek_toggle
-            // 
-            this.EnableAeroPeek_toggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.EnableAeroPeek_toggle.Checked = false;
-            this.EnableAeroPeek_toggle.DarkLight_Toggler = false;
-            this.EnableAeroPeek_toggle.Location = new System.Drawing.Point(471, 99);
-            this.EnableAeroPeek_toggle.Name = "EnableAeroPeek_toggle";
-            this.EnableAeroPeek_toggle.Size = new System.Drawing.Size(40, 20);
-            this.EnableAeroPeek_toggle.TabIndex = 16;
             // 
             // Label15
             // 
@@ -486,17 +452,6 @@
             this.Label15.Text = "Colorization blur balance";
             this.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // PictureBox3
-            // 
-            this.PictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox3.Image")));
-            this.PictureBox3.Location = new System.Drawing.Point(9, 126);
-            this.PictureBox3.Name = "PictureBox3";
-            this.PictureBox3.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox3.TabIndex = 4;
-            this.PictureBox3.TabStop = false;
-            // 
             // Label26
             // 
             this.Label26.AutoEllipsis = true;
@@ -509,20 +464,6 @@
             this.Label26.Text = "Glass reflection intensity";
             this.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Aero_AlwaysHibernateThumbnails_lbl
-            // 
-            this.Aero_AlwaysHibernateThumbnails_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Aero_AlwaysHibernateThumbnails_lbl.AutoEllipsis = true;
-            this.Aero_AlwaysHibernateThumbnails_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.Aero_AlwaysHibernateThumbnails_lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Aero_AlwaysHibernateThumbnails_lbl.Location = new System.Drawing.Point(39, 126);
-            this.Aero_AlwaysHibernateThumbnails_lbl.Name = "Aero_AlwaysHibernateThumbnails_lbl";
-            this.Aero_AlwaysHibernateThumbnails_lbl.Size = new System.Drawing.Size(424, 24);
-            this.Aero_AlwaysHibernateThumbnails_lbl.TabIndex = 3;
-            this.Aero_AlwaysHibernateThumbnails_lbl.Text = "Hibernate thumbnails";
-            this.Aero_AlwaysHibernateThumbnails_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // PictureBox24
             // 
             this.PictureBox24.BackColor = System.Drawing.Color.Transparent;
@@ -533,31 +474,6 @@
             this.PictureBox24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox24.TabIndex = 4;
             this.PictureBox24.TabStop = false;
-            // 
-            // PictureBox4
-            // 
-            this.PictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(9, 97);
-            this.PictureBox4.Name = "PictureBox4";
-            this.PictureBox4.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox4.TabIndex = 4;
-            this.PictureBox4.TabStop = false;
-            // 
-            // Aero_EnableAeroPeek_lbl
-            // 
-            this.Aero_EnableAeroPeek_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Aero_EnableAeroPeek_lbl.AutoEllipsis = true;
-            this.Aero_EnableAeroPeek_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.Aero_EnableAeroPeek_lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Aero_EnableAeroPeek_lbl.Location = new System.Drawing.Point(39, 97);
-            this.Aero_EnableAeroPeek_lbl.Name = "Aero_EnableAeroPeek_lbl";
-            this.Aero_EnableAeroPeek_lbl.Size = new System.Drawing.Size(424, 24);
-            this.Aero_EnableAeroPeek_lbl.TabIndex = 13;
-            this.Aero_EnableAeroPeek_lbl.Text = "Aero peek";
-            this.Aero_EnableAeroPeek_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // GroupBox30
             // 
@@ -1374,9 +1290,7 @@
             this.GroupBox22.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox39)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox24)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
             this.GroupBox30.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).EndInit();
@@ -1419,12 +1333,6 @@
         internal System.Windows.Forms.PictureBox PictureBox8;
         internal System.Windows.Forms.Label Label15;
         internal System.Windows.Forms.Label Label38;
-        internal UI.WP.Toggle EnableAeroPeek_toggle;
-        internal System.Windows.Forms.PictureBox PictureBox4;
-        internal System.Windows.Forms.Label Aero_EnableAeroPeek_lbl;
-        internal UI.WP.Toggle AlwaysHibernateThumbnails_Toggle;
-        internal System.Windows.Forms.PictureBox PictureBox3;
-        internal System.Windows.Forms.Label Aero_AlwaysHibernateThumbnails_lbl;
         internal UI.WP.GroupBox GroupBox30;
         internal System.Windows.Forms.PictureBox PictureBox12;
         internal UI.Controllers.ColorItem ColorizationColor_pick;

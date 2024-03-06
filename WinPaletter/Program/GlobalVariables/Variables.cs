@@ -70,7 +70,7 @@ namespace WinPaletter
         /// <summary>
         /// First visual styles file to be used in WinPaletter (Loaded at application startup)
         /// </summary>
-        public static string FirstVisualStyles = UxTheme.GetCurrentVS().Item1 ?? PathsExt.Windows + "\\Resources\\Themes\\aero\\aero.msstyles";
+        public static string FirstVisualStyles = SysPaths.Windows + "\\Resources\\Themes\\aero\\aero.msstyles";
 
         /// <summary>
         /// A class that represents WinPaletter's Language Strings (Loaded at application startup)
@@ -99,7 +99,7 @@ namespace WinPaletter
         {
             StartInfo = new()
             {
-                FileName = $@"{PathsExt.System32}\taskkill.exe",
+                FileName = $@"{SysPaths.System32}\taskkill.exe",
                 Verb = !OS.WXP ? "runas" : string.Empty,
                 Arguments = "/F /IM explorer.exe",
                 WindowStyle = ProcessWindowStyle.Hidden,
@@ -114,7 +114,7 @@ namespace WinPaletter
         {
             StartInfo = new()
             {
-                FileName = PathsExt.Explorer,
+                FileName = SysPaths.Explorer,
                 WindowStyle = ProcessWindowStyle.Normal
             }
         };

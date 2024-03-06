@@ -174,6 +174,14 @@ namespace WinPaletter.Theme.Structures
         public bool ClassicVolMixer;
 
         /// <summary>
+        /// Enable aero peek feature: hovering on taskbar right corner will show apps with aero transparent glass rectangles on desktop.
+        /// </summary>
+        public bool EnableAeroPeek;
+
+        ///
+        public bool AlwaysHibernateThumbnails;
+
+        /// <summary>
         /// Enumeration for Windows Explorer bar types
         /// </summary>
         public enum ExplorerBar
@@ -316,6 +324,8 @@ namespace WinPaletter.Theme.Structures
             BalloonNotifications = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", @default.BalloonNotifications));
             PaintDesktopVersion = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", @default.PaintDesktopVersion));
             ClassicVolMixer = !Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", !@default.ClassicVolMixer));
+            EnableAeroPeek = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", @default.EnableAeroPeek));
+            AlwaysHibernateThumbnails = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", @default.AlwaysHibernateThumbnails));
 
             bool temp = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", !@default.ShakeToMinimize));
             ShakeToMinimize = !temp;
@@ -471,6 +481,8 @@ namespace WinPaletter.Theme.Structures
                     EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);
                     EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
                     EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
+                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
 
                     if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
                     {
@@ -516,13 +528,13 @@ namespace WinPaletter.Theme.Structures
                         switch (Win11ExplorerBar)
                         {
                             case ExplorerBar.Bar:
-                                if (System.IO.File.Exists($@"{PathsExt.System32}\UIRibbon.dll"))
+                                if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll"))
                                 {
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
 
-                                    Takeown_File($@"{PathsExt.System32}\UIRibbon.dll");
-                                    Move_File($@"{PathsExt.System32}\UIRibbon.dll", $@"{PathsExt.System32}\UIRibbon.dll_bak");
+                                    Takeown_File($@"{SysPaths.System32}\UIRibbon.dll");
+                                    Move_File($@"{SysPaths.System32}\UIRibbon.dll", $@"{SysPaths.System32}\UIRibbon.dll_bak");
 
                                     // DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
                                 }
@@ -530,14 +542,14 @@ namespace WinPaletter.Theme.Structures
                                 break;
 
                             default:
-                                if (System.IO.File.Exists($@"{PathsExt.System32}\UIRibbon.dll_bak"))
+                                if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll_bak"))
                                 {
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
 
-                                    Takeown_File($@"{PathsExt.System32}\UIRibbon.dll_bak");
-                                    Takeown_File($@"{PathsExt.System32}\UIRibbon.dll");
-                                    Move_File($@"{PathsExt.System32}\UIRibbon.dll_bak", $@"{PathsExt.System32}\UIRibbon.dll");
+                                    Takeown_File($@"{SysPaths.System32}\UIRibbon.dll_bak");
+                                    Takeown_File($@"{SysPaths.System32}\UIRibbon.dll");
+                                    Move_File($@"{SysPaths.System32}\UIRibbon.dll_bak", $@"{SysPaths.System32}\UIRibbon.dll");
                                 }
 
                                 break;

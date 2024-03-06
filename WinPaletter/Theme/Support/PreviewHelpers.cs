@@ -615,11 +615,11 @@ namespace WinPaletter
             {
                 if (OS.WXP)
                 {
-                    WT.Image = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp";
+                    WT.Image = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
                 }
                 else
                 {
-                    WT.Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg";
+                    WT.Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
                 }
             }
 

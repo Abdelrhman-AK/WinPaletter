@@ -146,8 +146,6 @@ namespace WinPaletter.Theme
             ColorizationAfterglowBalance = 43,
             ColorizationBlurBalance = 49,
             ColorizationGlassReflectionIntensity = 0,
-            EnableAeroPeek = true,
-            AlwaysHibernateThumbnails = false,
             Theme = Windows7.Themes.Aero
         };
 
@@ -165,7 +163,7 @@ namespace WinPaletter.Theme
             Enabled = true,
             Theme = WindowsXP.Themes.LunaBlue,
             ColorScheme = "NormalColor",
-            ThemeFile = $@"{PathsExt.Windows}\resources\Themes\Luna\Luna.msstyles"
+            ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles"
         };
 
         /// <summary>Object derived of structure that has data about classic Windows colors, and it can be customized.</summary>
@@ -245,7 +243,7 @@ namespace WinPaletter.Theme
         public Wallpaper Wallpaper = new()
         {
             Enabled = false,
-            ImageFile = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
+            ImageFile = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg",
             WallpaperType = Wallpaper.WallpaperTypes.Picture,
             WallpaperStyle = Wallpaper.WallpaperStyles.Fill,
             Wallpaper_Slideshow_Images = new string[] { },
@@ -263,7 +261,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W12 = new()
         {
             Enabled = false,
-            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 50,
             L = 50
@@ -277,7 +275,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W11 = new()
         {
             Enabled = false,
-            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 50,
             L = 50
@@ -291,7 +289,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W10 = new()
         {
             Enabled = false,
-            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 50,
             L = 50
@@ -305,7 +303,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W81 = new()
         {
             Enabled = false,
-            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 50,
             L = 50
@@ -319,7 +317,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_W7 = new()
         {
             Enabled = false,
-            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 50,
             L = 50
@@ -333,7 +331,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_WVista = new()
         {
             Enabled = false,
-            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Windows\img0.jpg",
+            Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg",
             H = 0,
             S = 50,
             L = 50
@@ -347,7 +345,7 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_WXP = new()
         {
             Enabled = false,
-            Image = $@"{PathsExt.Windows}\Web\Wallpaper\Bliss.bmp",
+            Image = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp",
             H = 0,
             S = 50,
             L = 50
@@ -425,7 +423,9 @@ namespace WinPaletter.Theme
             ColorFilter_Enabled = false,
             ColorFilter = WinEffects.ColorFilters.Grayscale,
             ClassicVolMixer = false,
-            FullScreenStartMenu = false
+            FullScreenStartMenu = false,
+            EnableAeroPeek = false,
+            AlwaysHibernateThumbnails = false,
         };
 
         /// <summary>Object derived of structure that has data about screen saver, and it can be customized.</summary>

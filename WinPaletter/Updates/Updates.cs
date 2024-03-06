@@ -55,7 +55,7 @@ namespace WinPaletter
                         Label17.SetText(Program.Lang.Checking);
 
                         string response = await DM.ReadStringAsync(Links.Updates);
-                        ls = response.CList();
+                        ls = response.Split('\n').ToList();
 
                         foreach (string updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                         {

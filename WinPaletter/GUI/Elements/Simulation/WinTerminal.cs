@@ -614,7 +614,7 @@ namespace WinPaletter.UI.Simulation
 
             string s1 = Program.Lang.Terminal_ConsoleSample;
             string s2 = Program.Lang.Terminal_ThisIsASelection;
-            string s3 = $"{PathsExt.System32}>";
+            string s3 = $"{SysPaths.System32}>";
 
             SizeF s1X = s1.Measure(Font) + new SizeF(5f, 0f);
             SizeF s2X = s2.Measure(Font) + new SizeF(5f, 0f);

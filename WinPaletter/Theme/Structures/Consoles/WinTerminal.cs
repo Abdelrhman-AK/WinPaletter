@@ -1184,7 +1184,7 @@ namespace WinPaletter
                                 {
                                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        SettingsFile = PathsExt.TerminalJSON;
+                                        SettingsFile = SysPaths.TerminalJSON;
                                     }
                                     else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
@@ -1192,7 +1192,7 @@ namespace WinPaletter
                                     }
                                     else
                                     {
-                                        SettingsFile = PathsExt.TerminalJSON;
+                                        SettingsFile = SysPaths.TerminalJSON;
                                     }
 
                                     break;
@@ -1202,7 +1202,7 @@ namespace WinPaletter
                                 {
                                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        SettingsFile = PathsExt.TerminalPreviewJSON;
+                                        SettingsFile = SysPaths.TerminalPreviewJSON;
                                     }
                                     else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                     {
@@ -1210,7 +1210,7 @@ namespace WinPaletter
                                     }
                                     else
                                     {
-                                        SettingsFile = PathsExt.TerminalPreviewJSON;
+                                        SettingsFile = SysPaths.TerminalPreviewJSON;
                                     }
 
                                     break;

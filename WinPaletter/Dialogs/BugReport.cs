@@ -180,9 +180,9 @@ namespace WinPaletter
 
             TreeView1.SelectedNode = TreeView1.Nodes[0];
 
-            if (!System.IO.Directory.Exists($@"{PathsExt.appData}\Reports")) System.IO.Directory.CreateDirectory($@"{PathsExt.appData}\Reports");
+            if (!System.IO.Directory.Exists($@"{SysPaths.appData}\Reports")) System.IO.Directory.CreateDirectory($@"{SysPaths.appData}\Reports");
 
-            System.IO.File.WriteAllText($@"{PathsExt.appData}\Reports\{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.txt", GetDetails());
+            System.IO.File.WriteAllText($@"{SysPaths.appData}\Reports\{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.txt", GetDetails());
 
             ShowDialog();
 
@@ -277,14 +277,14 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            if (System.IO.Directory.Exists($@"{PathsExt.appData}\Reports"))
+            if (System.IO.Directory.Exists($@"{SysPaths.appData}\Reports"))
             {
                 Forms.GlassWindow.Close();
-                Process.Start($@"{PathsExt.appData}\Reports");
+                Process.Start($@"{SysPaths.appData}\Reports");
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{PathsExt.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -1251,9 +1251,9 @@ namespace WinPaletter
                         {
                             StartInfo = new()
                             {
-                                FileName = PathsExt.CMD,
+                                FileName = SysPaths.CMD,
                                 Verb = "runas",
-                                WorkingDirectory = PathsExt.UserProfile
+                                WorkingDirectory = SysPaths.UserProfile
                             }
                         };
                         prc.Start();
@@ -1266,9 +1266,9 @@ namespace WinPaletter
                         {
                             StartInfo = new()
                             {
-                                FileName = PathsExt.PS86_app,
+                                FileName = SysPaths.PS86_app,
                                 Verb = "runas",
-                                WorkingDirectory = PathsExt.UserProfile
+                                WorkingDirectory = SysPaths.UserProfile
                             }
                         };
                         prc.Start();
@@ -1281,9 +1281,9 @@ namespace WinPaletter
                         {
                             StartInfo = new()
                             {
-                                FileName = PathsExt.PS64_app,
+                                FileName = SysPaths.PS64_app,
                                 Verb = "runas",
-                                WorkingDirectory = PathsExt.UserProfile
+                                WorkingDirectory = SysPaths.UserProfile
                             }
                         };
                         prc.Start();

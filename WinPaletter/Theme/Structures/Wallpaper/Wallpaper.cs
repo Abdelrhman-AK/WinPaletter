@@ -179,7 +179,7 @@ namespace WinPaletter.Theme.Structures
 
                     else if (WallpaperType == WallpaperTypes.Picture)
                     {
-                        if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith($@"{PathsExt.Windows}\Web", StringComparison.OrdinalIgnoreCase))
+                        if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             using (Bitmap bmp = new(Bitmap_Mgr.Load(ImageFile)))
                             {

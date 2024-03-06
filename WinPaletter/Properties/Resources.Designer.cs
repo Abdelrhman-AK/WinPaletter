@@ -101,15 +101,6 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aero Fallback (Windows Vista-11)|ActiveBorder=180 180 180|ActiveTitle=153 180 209|AppWorkspace=171 171 171|Background=0 0 0|ButtonAlternateFace=0 0 0|ButtonDkShadow=105 105 105|ButtonFace=240 240 240|ButtonHilight=255 255 255|ButtonLight=227 227 227|ButtonShadow=160 160 160|ButtonText=0 0 0|GradientActiveTitle=185 209 234|GradientInactiveTitle=215 228 242|GrayText=109 109 109|HilightText=255 255 255|HotTrackingColor=0 102 204|InactiveBorder=244 247 252|InactiveTitle=191 205 219|InactiveTitleText=0 0 0|InfoT [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string ClassicColorsDB {
-            get {
-                return ResourceManager.GetString("ClassicColorsDB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap darkmode_dark {
@@ -256,15 +247,6 @@ namespace WinPaletter.Properties {
             get {
                 object obj = ResourceManager.GetObject("luna", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Classic Scheme - Windows Default (Normal)|IconMetrics=76 0 0 0 75 0 0 0 75 0 0 0 1 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 1 0 0 0 0 84 97 104 111 109 97 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0|NonclientMetrics=84 1 0 0 1 0 0 0 16 0 0 0 16 0 0 0 18 0 0 0 18 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 1 0 0 0 0 84 97 104 111 109 97 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 12 0 0 0 12 0 0 0 245 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 1 [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string MetricsFontsDB {
-            get {
-                return ResourceManager.GetString("MetricsFontsDB", resourceCulture);
             }
         }
         
