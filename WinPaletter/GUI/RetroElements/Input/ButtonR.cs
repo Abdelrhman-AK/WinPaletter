@@ -880,7 +880,6 @@ namespace WinPaletter.UI.Retro
                     Parent.Text = Font.Size.ToString();
 
                     // Resetting positions to fix layout misadjust
-                    // Never modify
                     if (Font.Name == "Marlett" & Text.Count() == 1)
                     {
                         SizeF textSize = Text.Measure(Font);
