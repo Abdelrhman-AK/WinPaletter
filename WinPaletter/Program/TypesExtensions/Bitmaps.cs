@@ -325,7 +325,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Image Fade(this Image originalImage, float opacity)
         {
-            return originalImage.Fade(opacity);
+            return (originalImage as Bitmap).Fade(opacity);
         }
 
         /// <summary>

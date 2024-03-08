@@ -101,6 +101,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
 
                 TMx.WindowsEffects.Apply();
                 TMx.Win32.Broadcast_UPM_ToDefUsers();
@@ -142,221 +143,208 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
+            ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
+            AspectEnabled = Effects.Enabled;
+            CheckBox1.Checked = Effects.WindowAnimation;
+            CheckBox2.Checked = Effects.WindowShadow;
+            CheckBox3.Checked = Effects.WindowUIEffects;
+            CheckBox6.Checked = Effects.MenuAnimation;
+            CheckBox27.Checked = Effects.AnimateControlsInsideWindow;
+            ComboBox1.SelectedIndex = Effects.MenuFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? 0 : 1;
+
+            CheckBox5.Checked = Effects.MenuSelectionFade;
+            Trackbar1.Value = (int)Effects.MenuShowDelay;
+            CheckBox8.Checked = Effects.ComboBoxAnimation;
+            CheckBox7.Checked = Effects.ListBoxSmoothScrolling;
+            CheckBox9.Checked = Effects.TooltipAnimation;
+            ComboBox2.SelectedIndex = Effects.TooltipFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? 0 : 1;
+
+            CheckBox4.Checked = Effects.IconsShadow;
+            CheckBox10.Checked = Effects.IconsDesktopTranslSel;
+            CheckBox11.Checked = Effects.ShowWinContentDrag;
+            CheckBox12.Checked = Effects.KeyboardUnderline;
+            Trackbar5.Value = Effects.NotificationDuration;
+            Trackbar2.Value = (int)Effects.FocusRectWidth;
+            Trackbar3.Value = (int)Effects.FocusRectHeight;
+            Trackbar4.Value = (int)Effects.Caret;
+            CheckBox13.Checked = Effects.AWT_Enabled;
+            CheckBox14.Checked = Effects.AWT_BringActivatedWindowToTop;
+            Trackbar6.Value = Effects.AWT_Delay;
+            CheckBox15.Checked = Effects.SnapCursorToDefButton;
+            CheckBox16.Checked = Effects.Win11ClassicContextMenu;
+            CheckBox17.Checked = Effects.BalloonNotifications;
+            CheckBox20.Checked = Effects.SysListView32;
+            CheckBox19.Checked = Effects.ShowSecondsInSystemClock;
+            CheckBox18.Checked = Effects.PaintDesktopVersion;
+            CheckBox21.Checked = Effects.ShakeToMinimize;
+            CheckBox22.Checked = Effects.Win11BootDots;
+            CheckBox26.Checked = Effects.ClassicVolMixer;
+
+            RadioButton1.Checked = Effects.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Default;
+            RadioButton2.Checked = Effects.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Ribbon;
+            RadioButton3.Checked = Effects.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Bar;
+            CheckBox23.Checked = Effects.DisableNavBar;
+            CheckBox24.Checked = Effects.AutoHideScrollBars;
+            CheckBox25.Checked = Effects.FullScreenStartMenu;
+            checkBox28.Checked = Effects.EnableAeroPeek;
+            checkBox29.Checked = Effects.AlwaysHibernateThumbnails;
+
+            if (!Effects.ColorFilter_Enabled)
             {
-                ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
-                AspectEnabled = Effects.Enabled;
-                CheckBox1.Checked = Effects.WindowAnimation;
-                CheckBox2.Checked = Effects.WindowShadow;
-                CheckBox3.Checked = Effects.WindowUIEffects;
-                CheckBox6.Checked = Effects.MenuAnimation;
-                CheckBox27.Checked = Effects.AnimateControlsInsideWindow;
-                if (Effects.MenuFade == Theme.Structures.WinEffects.MenuAnimType.Fade)
-                    ComboBox1.SelectedIndex = 0;
-                else
-                    ComboBox1.SelectedIndex = 1;
-                CheckBox5.Checked = Effects.MenuSelectionFade;
-                Trackbar1.Value = (int)Effects.MenuShowDelay;
-                CheckBox8.Checked = Effects.ComboBoxAnimation;
-                CheckBox7.Checked = Effects.ListBoxSmoothScrolling;
-                CheckBox9.Checked = Effects.TooltipAnimation;
-                if (Effects.TooltipFade == Theme.Structures.WinEffects.MenuAnimType.Fade)
-                    ComboBox2.SelectedIndex = 0;
-                else
-                    ComboBox2.SelectedIndex = 1;
-                CheckBox4.Checked = Effects.IconsShadow;
-                CheckBox10.Checked = Effects.IconsDesktopTranslSel;
-                CheckBox11.Checked = Effects.ShowWinContentDrag;
-                CheckBox12.Checked = Effects.KeyboardUnderline;
-                Trackbar5.Value = Effects.NotificationDuration;
-                Trackbar2.Value = (int)Effects.FocusRectWidth;
-                Trackbar3.Value = (int)Effects.FocusRectHeight;
-                Trackbar4.Value = (int)Effects.Caret;
-                CheckBox13.Checked = Effects.AWT_Enabled;
-                CheckBox14.Checked = Effects.AWT_BringActivatedWindowToTop;
-                Trackbar6.Value = Effects.AWT_Delay;
-                CheckBox15.Checked = Effects.SnapCursorToDefButton;
-                CheckBox16.Checked = Effects.Win11ClassicContextMenu;
-                CheckBox17.Checked = Effects.BalloonNotifications;
-                CheckBox20.Checked = Effects.SysListView32;
-                CheckBox19.Checked = Effects.ShowSecondsInSystemClock;
-                CheckBox18.Checked = Effects.PaintDesktopVersion;
-                CheckBox21.Checked = Effects.ShakeToMinimize;
-                CheckBox22.Checked = Effects.Win11BootDots;
-                CheckBox26.Checked = Effects.ClassicVolMixer;
-
-                RadioButton1.Checked = Effects.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Default;
-                RadioButton2.Checked = Effects.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Ribbon;
-                RadioButton3.Checked = Effects.Win11ExplorerBar == Theme.Structures.WinEffects.ExplorerBar.Bar;
-                CheckBox23.Checked = Effects.DisableNavBar;
-                CheckBox24.Checked = Effects.AutoHideScrollBars;
-                CheckBox25.Checked = Effects.FullScreenStartMenu;
-                checkBox28.Checked = Effects.EnableAeroPeek;
-                checkBox29.Checked = Effects.AlwaysHibernateThumbnails;
-
-                if (!Effects.ColorFilter_Enabled)
-                {
-                    RadioImage1.Checked = true;
-                }
-                else
-                {
-                    switch (Effects.ColorFilter)
-                    {
-                        case Theme.Structures.WinEffects.ColorFilters.Grayscale:
-                            {
-                                RadioImage5.Checked = true;
-                                break;
-                            }
-
-                        case Theme.Structures.WinEffects.ColorFilters.Inverted:
-                            {
-                                RadioImage7.Checked = true;
-                                break;
-                            }
-
-                        case Theme.Structures.WinEffects.ColorFilters.GrayscaleInverted:
-                            {
-                                RadioImage6.Checked = true;
-                                break;
-                            }
-
-                        case Theme.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia:
-                            {
-                                RadioImage2.Checked = true;
-                                break;
-                            }
-
-                        case Theme.Structures.WinEffects.ColorFilters.RedGreen_protanopia:
-                            {
-                                RadioImage3.Checked = true;
-                                break;
-                            }
-
-                        case Theme.Structures.WinEffects.ColorFilters.BlueYellow:
-                            {
-                                RadioImage4.Checked = true;
-                                break;
-                            }
-
-                        default:
-                            {
-                                RadioImage1.Checked = true;
-                                break;
-                            }
-
-                    }
-                }
-
-                Panel2.Width = (int)Effects.Caret;
+                RadioImage1.Checked = true;
             }
+            else
+            {
+                switch (Effects.ColorFilter)
+                {
+                    case Theme.Structures.WinEffects.ColorFilters.Grayscale:
+                        {
+                            RadioImage5.Checked = true;
+                            break;
+                        }
+
+                    case Theme.Structures.WinEffects.ColorFilters.Inverted:
+                        {
+                            RadioImage7.Checked = true;
+                            break;
+                        }
+
+                    case Theme.Structures.WinEffects.ColorFilters.GrayscaleInverted:
+                        {
+                            RadioImage6.Checked = true;
+                            break;
+                        }
+
+                    case Theme.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia:
+                        {
+                            RadioImage2.Checked = true;
+                            break;
+                        }
+
+                    case Theme.Structures.WinEffects.ColorFilters.RedGreen_protanopia:
+                        {
+                            RadioImage3.Checked = true;
+                            break;
+                        }
+
+                    case Theme.Structures.WinEffects.ColorFilters.BlueYellow:
+                        {
+                            RadioImage4.Checked = true;
+                            break;
+                        }
+
+                    default:
+                        {
+                            RadioImage1.Checked = true;
+                            break;
+                        }
+
+                }
+            }
+
+            Panel2.Width = (int)Effects.Caret;
         }
 
         public void ApplyToTM(Theme.Manager TM)
         {
+            ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
+            Effects.Enabled = AspectEnabled;
+            Effects.WindowAnimation = CheckBox1.Checked;
+            Effects.WindowShadow = CheckBox2.Checked;
+            Effects.WindowUIEffects = CheckBox3.Checked;
+            Effects.AnimateControlsInsideWindow = CheckBox27.Checked;
+            Effects.MenuAnimation = CheckBox6.Checked;
+            Effects.MenuFade = ComboBox1.SelectedIndex == 0 ? Theme.Structures.WinEffects.MenuAnimType.Fade : Theme.Structures.WinEffects.MenuAnimType.Scroll;
+
+            Effects.MenuSelectionFade = CheckBox5.Checked;
+            Effects.MenuShowDelay = (uint)Trackbar1.Value;
+            Effects.ComboBoxAnimation = CheckBox8.Checked;
+            Effects.ListBoxSmoothScrolling = CheckBox7.Checked;
+            Effects.TooltipAnimation = CheckBox9.Checked;
+            Effects.TooltipFade = ComboBox2.SelectedIndex == 0 ? Theme.Structures.WinEffects.MenuAnimType.Fade : Theme.Structures.WinEffects.MenuAnimType.Scroll;
+
+            Effects.IconsShadow = CheckBox4.Checked;
+            Effects.IconsDesktopTranslSel = CheckBox10.Checked;
+            Effects.ShowWinContentDrag = CheckBox11.Checked;
+            Effects.KeyboardUnderline = CheckBox12.Checked;
+            Effects.NotificationDuration = Trackbar5.Value;
+            Effects.FocusRectWidth = (uint)Trackbar2.Value;
+            Effects.FocusRectHeight = (uint)Trackbar3.Value;
+            Effects.Caret = (uint)Trackbar4.Value;
+            Effects.AWT_Enabled = CheckBox13.Checked;
+            Effects.AWT_BringActivatedWindowToTop = CheckBox14.Checked;
+            Effects.AWT_Delay = Trackbar6.Value;
+            Effects.SnapCursorToDefButton = CheckBox15.Checked;
+            Effects.Win11ClassicContextMenu = CheckBox16.Checked;
+            Effects.BalloonNotifications = CheckBox17.Checked;
+            Effects.SysListView32 = CheckBox20.Checked;
+            Effects.ShowSecondsInSystemClock = CheckBox19.Checked;
+            Effects.PaintDesktopVersion = CheckBox18.Checked;
+            Effects.ShakeToMinimize = CheckBox21.Checked;
+            Effects.Win11BootDots = CheckBox22.Checked;
+            Effects.ClassicVolMixer = CheckBox26.Checked;
+            Effects.EnableAeroPeek = checkBox28.Checked;
+            Effects.AlwaysHibernateThumbnails = checkBox29.Checked;
+
+            if (RadioButton1.Checked)
             {
-                ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
-                Effects.Enabled = AspectEnabled;
-                Effects.WindowAnimation = CheckBox1.Checked;
-                Effects.WindowShadow = CheckBox2.Checked;
-                Effects.WindowUIEffects = CheckBox3.Checked;
-                Effects.AnimateControlsInsideWindow = CheckBox27.Checked;
-                Effects.MenuAnimation = CheckBox6.Checked;
-                if (ComboBox1.SelectedIndex == 0)
-                    Effects.MenuFade = Theme.Structures.WinEffects.MenuAnimType.Fade;
-                else
-                    Effects.MenuFade = Theme.Structures.WinEffects.MenuAnimType.Scroll;
-                Effects.MenuSelectionFade = CheckBox5.Checked;
-                Effects.MenuShowDelay = (uint)Trackbar1.Value;
-                Effects.ComboBoxAnimation = CheckBox8.Checked;
-                Effects.ListBoxSmoothScrolling = CheckBox7.Checked;
-                Effects.TooltipAnimation = CheckBox9.Checked;
-                if (ComboBox2.SelectedIndex == 0)
-                    Effects.TooltipFade = Theme.Structures.WinEffects.MenuAnimType.Fade;
-                else
-                    Effects.TooltipFade = Theme.Structures.WinEffects.MenuAnimType.Scroll;
-                Effects.IconsShadow = CheckBox4.Checked;
-                Effects.IconsDesktopTranslSel = CheckBox10.Checked;
-                Effects.ShowWinContentDrag = CheckBox11.Checked;
-                Effects.KeyboardUnderline = CheckBox12.Checked;
-                Effects.NotificationDuration = Trackbar5.Value;
-                Effects.FocusRectWidth = (uint)Trackbar2.Value;
-                Effects.FocusRectHeight = (uint)Trackbar3.Value;
-                Effects.Caret = (uint)Trackbar4.Value;
-                Effects.AWT_Enabled = CheckBox13.Checked;
-                Effects.AWT_BringActivatedWindowToTop = CheckBox14.Checked;
-                Effects.AWT_Delay = Trackbar6.Value;
-                Effects.SnapCursorToDefButton = CheckBox15.Checked;
-                Effects.Win11ClassicContextMenu = CheckBox16.Checked;
-                Effects.BalloonNotifications = CheckBox17.Checked;
-                Effects.SysListView32 = CheckBox20.Checked;
-                Effects.ShowSecondsInSystemClock = CheckBox19.Checked;
-                Effects.PaintDesktopVersion = CheckBox18.Checked;
-                Effects.ShakeToMinimize = CheckBox21.Checked;
-                Effects.Win11BootDots = CheckBox22.Checked;
-                Effects.ClassicVolMixer = CheckBox26.Checked;
-                Effects.EnableAeroPeek = checkBox28.Checked;
-                Effects.AlwaysHibernateThumbnails = checkBox29.Checked;
+                Effects.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Default;
+            }
 
-                if (RadioButton1.Checked)
-                {
-                    Effects.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Default;
-                }
+            else if (RadioButton2.Checked)
+            {
+                Effects.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Ribbon;
+            }
 
-                else if (RadioButton2.Checked)
-                {
-                    Effects.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Ribbon;
-                }
+            else if (RadioButton3.Checked)
+            {
+                Effects.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Bar;
 
-                else if (RadioButton3.Checked)
-                {
-                    Effects.Win11ExplorerBar = Theme.Structures.WinEffects.ExplorerBar.Bar;
+            }
 
-                }
+            Effects.DisableNavBar = CheckBox23.Checked;
+            Effects.AutoHideScrollBars = CheckBox24.Checked;
+            Effects.FullScreenStartMenu = CheckBox25.Checked;
 
-                Effects.DisableNavBar = CheckBox23.Checked;
-                Effects.AutoHideScrollBars = CheckBox24.Checked;
-                Effects.FullScreenStartMenu = CheckBox25.Checked;
+            if (RadioImage1.Checked)
+            {
+                Effects.ColorFilter_Enabled = false;
+            }
 
-                if (RadioImage1.Checked)
-                {
-                    Effects.ColorFilter_Enabled = false;
-                }
+            else if (RadioImage5.Checked)
+            {
+                Effects.ColorFilter_Enabled = true;
+                Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.Grayscale;
+            }
 
-                else if (RadioImage5.Checked)
-                {
-                    Effects.ColorFilter_Enabled = true;
-                    Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.Grayscale;
-                }
+            else if (RadioImage7.Checked)
+            {
+                Effects.ColorFilter_Enabled = true;
+                Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.Inverted;
+            }
 
-                else if (RadioImage7.Checked)
-                {
-                    Effects.ColorFilter_Enabled = true;
-                    Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.Inverted;
-                }
+            else if (RadioImage6.Checked)
+            {
+                Effects.ColorFilter_Enabled = true;
+                Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.GrayscaleInverted;
+            }
 
-                else if (RadioImage6.Checked)
-                {
-                    Effects.ColorFilter_Enabled = true;
-                    Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.GrayscaleInverted;
-                }
+            else if (RadioImage2.Checked)
+            {
+                Effects.ColorFilter_Enabled = true;
+                Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia;
+            }
 
-                else if (RadioImage2.Checked)
-                {
-                    Effects.ColorFilter_Enabled = true;
-                    Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.RedGreen_deuteranopia;
-                }
+            else if (RadioImage3.Checked)
+            {
+                Effects.ColorFilter_Enabled = true;
+                Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.RedGreen_protanopia;
+            }
 
-                else if (RadioImage3.Checked)
-                {
-                    Effects.ColorFilter_Enabled = true;
-                    Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.RedGreen_protanopia;
-                }
-
-                else if (RadioImage4.Checked)
-                {
-                    Effects.ColorFilter_Enabled = true;
-                    Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.BlueYellow;
-
-                }
+            else if (RadioImage4.Checked)
+            {
+                Effects.ColorFilter_Enabled = true;
+                Effects.ColorFilter = Theme.Structures.WinEffects.ColorFilters.BlueYellow;
 
             }
         }
@@ -872,8 +860,8 @@ namespace WinPaletter
 
         private void WinEffecter_AspectEnabledChanged(object sender, EventArgs e)
         {
-            if ((sender as UI.WP.Toggle).Checked 
-                && Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert 
+            if ((sender as UI.WP.Toggle).Checked
+                && Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert
                 && Forms.WinEffectsAlert.ShowDialog() != DialogResult.OK)
             {
                 AspectEnabled = false;

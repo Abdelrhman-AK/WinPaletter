@@ -57,6 +57,8 @@ namespace WinPaletter
                 ApplyToTM(TMx);
                 TMx.Windows11.Apply("11");
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
+
             }
 
             Cursor = Cursors.Default;

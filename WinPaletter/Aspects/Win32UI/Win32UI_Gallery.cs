@@ -17,7 +17,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.Win32UI.Icon;
+            using (Win32UI formIcon = new()) { Icon = formIcon.Icon; }
 
             LoadGallery();
         }

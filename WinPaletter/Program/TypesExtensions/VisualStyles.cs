@@ -178,6 +178,12 @@ namespace WinPaletter.TypesExtensions
                 SmCaptionWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.SMCAPTIONBARWIDTH).FirstOrDefault().GetValue(),
                 MenuWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.MENUBARWIDTH).FirstOrDefault().GetValue(),
                 MenuHeight = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.MENUBARHEIGHT).FirstOrDefault().GetValue(),
+                DesktopIconSize = Program.TM.MetricsFonts.DesktopIconSize,
+                IconSpacing = Program.TM.MetricsFonts.IconSpacing,
+                IconVerticalSpacing = Program.TM.MetricsFonts.IconVerticalSpacing,
+                ShellIconSize = Program.TM.MetricsFonts.ShellIconSize,
+                ShellSmallIconSize = Program.TM.MetricsFonts.ShellSmallIconSize,
+                Fonts_SingleBitPP = Program.TM.MetricsFonts.Fonts_SingleBitPP,
             };
 
             StyleProperty p = state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.CAPTIONFONT).FirstOrDefault();

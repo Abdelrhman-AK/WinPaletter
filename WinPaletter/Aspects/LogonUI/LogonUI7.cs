@@ -71,6 +71,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
 
                 if (Program.WindowStyle == WindowStyle.W81)
                 {
@@ -111,7 +112,7 @@ namespace WinPaletter
 
             LoadFromTM(Program.TM);
             ApplyPreview();
-            Icon = Forms.LogonUI.Icon;
+            using (LogonUI formIcon = new()) { Icon = formIcon.Icon; }
 
             if (Program.WindowStyle == WindowStyle.W81)
             {

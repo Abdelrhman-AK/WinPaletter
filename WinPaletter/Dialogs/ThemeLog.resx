@@ -121,7 +121,7 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button1.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="button1.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAWtJREFUOE/V
         ks8rRFEUx4dS1spCspLGz72SJllMFqwsJRtZSDIiJWlCLIhSiqVs/RsWJmvKgpWNjbIQ4vmcc8+dedd7
@@ -133,7 +133,7 @@
         dcYOrQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Button25.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button25.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAIFJREFUOE/t
         lDsKgDAQRHOOiCe0CFa2Kb2ulZ8mzsBAFCJkwUIhD16zk50u6/5FSsnDAOdK+dZr/Q6CHi5wg0elfMud
@@ -141,7 +141,7 @@
         3AkGKMsuV5cN0wAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Button22.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button22.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAANxJREFUOE/V
         lDEKwjAYRoMIjoLg4AFcXbyBd/AIOooKbg5ew81VR0XwAN6hiLg5iIOjjvWl/aVBQ9pAQH3wKCTf/0Fo
@@ -150,7 +150,7 @@
         +L2XgmE/GxlxQzDsr6chHO5y0BB+XV8nixH6XV8/iFJPx5H1WK0K6mEAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Button14.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button14.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAARFJREFUOE+9
         lF1qAjEUhYdp37XrsHQDrUKfOl1YEYqPleqT7kZsoa6ifxso+DR+J7lhZjSOow794GBycu+BTGKSfyXP
@@ -160,7 +160,7 @@
         hfb+egEK2nscAhS293yVoUknev4DezpJsgEH88D8xsS7wAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Button8.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Button8.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAQtJREFUOE+9
         lD9uwjAUh6McAAUxwg2oOACCgYl0YGSq2oWZnQMgVUI9Uw/AwtSpC0v5cwMqtUq/Z7+QOkpCFFl80ic5

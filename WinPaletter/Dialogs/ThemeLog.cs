@@ -27,7 +27,7 @@ namespace WinPaletter.Dialogs
                 {
                     try
                     {
-                        Icon = Forms.MainForm.Icon;
+                        using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
                     }
                     catch { } // Ignore this exception when form or icon is disposed
                 });

@@ -16,7 +16,7 @@ namespace WinPaletter.Dialogs
 
         private void RescueTools_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainForm.Icon;
+            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
             this.LoadLanguage();
             ApplyStyle(this);
         }

@@ -36,10 +36,10 @@ namespace WinPaletter
         private void AspectsTemplate_Load(object sender, EventArgs e)
         {
             IsShown = false;
+            CheckForIllegalCrossThreadCalls = false;
+
             this.LoadLanguage();
             ApplyStyle(this);
-
-            CheckForIllegalCrossThreadCalls = false;
         }
 
         public void LoadData(DesignerData data)

@@ -113,8 +113,8 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = 255; }
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
         }

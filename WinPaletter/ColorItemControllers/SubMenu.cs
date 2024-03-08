@@ -133,7 +133,7 @@ namespace WinPaletter
 
         private void SubMenu_Load(object sender, EventArgs e)
         {
-            this.Icon = Forms.MainForm.Icon;
+            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
 
             Point p = MousePosition;
 

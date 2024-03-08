@@ -19,7 +19,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.WindowsTerminal.Icon;
+            using (WindowsTerminal formIcon = new()) { Icon = formIcon.Icon; }
         }
 
         public DialogResult OpenDialog(bool IsDefault = false)

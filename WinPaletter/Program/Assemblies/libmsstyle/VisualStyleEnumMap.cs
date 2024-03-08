@@ -187,7 +187,7 @@ namespace libmsstyle
             {
                 return VisualStyleEnums.ENUM_ICONEFFECT;
             }
-            else if(nameID == (int)IDENTIFIER.TEXTSHADOWTYPE)
+            else if (nameID == (int)IDENTIFIER.TEXTSHADOWTYPE)
             {
                 return VisualStyleEnums.ENUM_TEXTSHADOW;
             }

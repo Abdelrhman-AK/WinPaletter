@@ -70,7 +70,7 @@ namespace WinPaletter
         /// <summary>
         /// First visual styles file to be used in WinPaletter (Loaded at application startup)
         /// </summary>
-        public static string FirstVisualStyles = SysPaths.Windows + "\\Resources\\Themes\\aero\\aero.msstyles";
+        public static string FirstVisualStyles = $"{SysPaths.Windows}\\Resources\\Themes\\aero\\aero.msstyles";
 
         /// <summary>
         /// A class that represents WinPaletter's Language Strings (Loaded at application startup)

@@ -16,7 +16,8 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.CMD.Icon;
+            using (CMD formIcon = new()) { Icon = formIcon.Icon; }
+
             PictureBox1.Image = OS.W10 ? Assets.WinLogos.Win10 : Assets.WinLogos.Win11;
 
             Size targetSize = Size;

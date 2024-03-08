@@ -708,7 +708,7 @@ namespace WinPaletter
                 catch (Exception ex) // Couldn't set the access control.
                 {
                     Forms.BugReport.ThrowError(ex);
-                } 
+                }
             }
         }
 

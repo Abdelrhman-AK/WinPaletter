@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -19,13 +17,13 @@ namespace libmsstyle
 
         public IEnumerable<StyleProperty> GetImageProperties()
         {
-            foreach (var state in States)
+            foreach (KeyValuePair<int, StyleState> state in States)
             {
-                var imgProps = state.Value.Properties.FindAll((p) =>
+                List<StyleProperty> imgProps = state.Value.Properties.FindAll((p) =>
                     p.IsImageProperty()
                 );
 
-                foreach(var imgProp in imgProps)
+                foreach (StyleProperty imgProp in imgProps)
                 {
                     yield return imgProp;
                 }

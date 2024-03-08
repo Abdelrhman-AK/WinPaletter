@@ -39,7 +39,6 @@ namespace WinPaletter
             this.Cursor_Timer = new System.Windows.Forms.Timer(this.components);
             this.Status_pnl = new System.Windows.Forms.Panel();
             this.Status_lbl = new System.Windows.Forms.Label();
-            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.Tabs = new WinPaletter.UI.WP.TablessControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.store_container = new System.Windows.Forms.FlowLayoutPanel();
@@ -97,7 +96,9 @@ namespace WinPaletter
             this.cur_anim_btn = new WinPaletter.UI.WP.Button();
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.search_results = new System.Windows.Forms.FlowLayoutPanel();
+            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.search_panel = new System.Windows.Forms.Panel();
             this.search_btn = new WinPaletter.UI.WP.Button();
@@ -120,6 +121,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).BeginInit();
             this.TabPage5.SuspendLayout();
             this.titlebarExtender1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.search_panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -159,21 +161,6 @@ namespace WinPaletter
             this.Status_lbl.Size = new System.Drawing.Size(1095, 18);
             this.Status_lbl.TabIndex = 39;
             this.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ProgressBar1
-            // 
-            this.ProgressBar1.AnimationDuration = 1000;
-            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
-            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ProgressBar1.Location = new System.Drawing.Point(1098, 3);
-            this.ProgressBar1.Name = "ProgressBar1";
-            this.ProgressBar1.Size = new System.Drawing.Size(228, 18);
-            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
-            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-            this.ProgressBar1.TabIndex = 43;
-            this.ProgressBar1.TaskbarBroadcast = true;
-            this.ProgressBar1.Visible = false;
             // 
             // Tabs
             // 
@@ -322,8 +309,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(193, 234);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(156, 34);
@@ -375,8 +362,8 @@ namespace WinPaletter
             this.author_url_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.author_url_button.ForeColor = System.Drawing.Color.White;
             this.author_url_button.Image = null;
-            this.author_url_button.ImageGlyphEnabled = false;
             this.author_url_button.ImageGlyph = null;
+            this.author_url_button.ImageGlyphEnabled = false;
             this.author_url_button.Location = new System.Drawing.Point(342, 537);
             this.author_url_button.Name = "author_url_button";
             this.author_url_button.Size = new System.Drawing.Size(24, 24);
@@ -393,8 +380,8 @@ namespace WinPaletter
             this.RestartExplorer.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RestartExplorer.ForeColor = System.Drawing.Color.White;
             this.RestartExplorer.Image = null;
-            this.RestartExplorer.ImageGlyphEnabled = false;
             this.RestartExplorer.ImageGlyph = null;
+            this.RestartExplorer.ImageGlyphEnabled = false;
             this.RestartExplorer.Location = new System.Drawing.Point(31, 274);
             this.RestartExplorer.Name = "RestartExplorer";
             this.RestartExplorer.Size = new System.Drawing.Size(318, 34);
@@ -466,8 +453,8 @@ namespace WinPaletter
             this.Apply_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Apply_btn.ForeColor = System.Drawing.Color.White;
             this.Apply_btn.Image = null;
-            this.Apply_btn.ImageGlyphEnabled = false;
             this.Apply_btn.ImageGlyph = null;
+            this.Apply_btn.ImageGlyphEnabled = false;
             this.Apply_btn.Location = new System.Drawing.Point(31, 194);
             this.Apply_btn.Name = "Apply_btn";
             this.Apply_btn.Size = new System.Drawing.Size(318, 34);
@@ -498,8 +485,8 @@ namespace WinPaletter
             this.Edit_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Edit_btn.ForeColor = System.Drawing.Color.White;
             this.Edit_btn.Image = ((System.Drawing.Image)(resources.GetObject("Edit_btn.Image")));
-            this.Edit_btn.ImageGlyphEnabled = false;
             this.Edit_btn.ImageGlyph = null;
+            this.Edit_btn.ImageGlyphEnabled = false;
             this.Edit_btn.Location = new System.Drawing.Point(31, 234);
             this.Edit_btn.Name = "Edit_btn";
             this.Edit_btn.Size = new System.Drawing.Size(156, 34);
@@ -642,6 +629,7 @@ namespace WinPaletter
             this.windowsDesktop1.Win7Noise = 1F;
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
+            this.windowsDesktop1.Windows_10x_Theme = WinPaletter.Theme.Structures.Windows10x.Themes.Aero;
             this.windowsDesktop1.Windows_7_8_Theme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W11;
             this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
@@ -1599,8 +1587,8 @@ namespace WinPaletter
             this.cur_anim_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
             this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
-            this.cur_anim_btn.ImageGlyphEnabled = false;
             this.cur_anim_btn.ImageGlyph = null;
+            this.cur_anim_btn.ImageGlyphEnabled = false;
             this.cur_anim_btn.Location = new System.Drawing.Point(360, 265);
             this.cur_anim_btn.Name = "cur_anim_btn";
             this.cur_anim_btn.Size = new System.Drawing.Size(160, 24);
@@ -1630,11 +1618,25 @@ namespace WinPaletter
             this.search_results.Size = new System.Drawing.Size(1301, 597);
             this.search_results.TabIndex = 4;
             // 
+            // ProgressBar1
+            // 
+            this.ProgressBar1.AnimationDuration = 1000;
+            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ProgressBar1.Location = new System.Drawing.Point(1098, 3);
+            this.ProgressBar1.Name = "ProgressBar1";
+            this.ProgressBar1.Size = new System.Drawing.Size(228, 18);
+            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.ProgressBar1.TabIndex = 43;
+            this.ProgressBar1.TaskbarBroadcast = true;
+            this.ProgressBar1.Visible = false;
+            // 
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
-            this.titlebarExtender1.Controls.Add(this.pin_button);
-            this.titlebarExtender1.Controls.Add(this.search_panel);
+            this.titlebarExtender1.Controls.Add(this.flowLayoutPanel2);
             this.titlebarExtender1.Controls.Add(this.Titlebar_lbl);
             this.titlebarExtender1.Controls.Add(this.back_btn);
             this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1645,6 +1647,17 @@ namespace WinPaletter
             this.titlebarExtender1.TabIndex = 116;
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.flowLayoutPanel2.Controls.Add(this.pin_button);
+            this.flowLayoutPanel2.Controls.Add(this.search_panel);
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(930, 8);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(395, 36);
+            this.flowLayoutPanel2.TabIndex = 129;
+            // 
             // pin_button
             // 
             this.pin_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -1653,11 +1666,11 @@ namespace WinPaletter
             this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pin_button.ForeColor = System.Drawing.Color.White;
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageGlyphEnabled = false;
             this.pin_button.ImageGlyph = null;
-            this.pin_button.Location = new System.Drawing.Point(938, 10);
+            this.pin_button.ImageGlyphEnabled = false;
+            this.pin_button.Location = new System.Drawing.Point(358, 6);
             this.pin_button.Name = "pin_button";
-            this.pin_button.Size = new System.Drawing.Size(34, 34);
+            this.pin_button.Size = new System.Drawing.Size(34, 24);
             this.pin_button.TabIndex = 128;
             this.pin_button.UseVisualStyleBackColor = false;
             this.pin_button.Visible = false;
@@ -1670,7 +1683,7 @@ namespace WinPaletter
             this.search_panel.Controls.Add(this.search_btn);
             this.search_panel.Controls.Add(this.search_box);
             this.search_panel.Controls.Add(this.search_filter_btn);
-            this.search_panel.Location = new System.Drawing.Point(978, 12);
+            this.search_panel.Location = new System.Drawing.Point(9, 3);
             this.search_panel.Name = "search_panel";
             this.search_panel.Size = new System.Drawing.Size(343, 30);
             this.search_panel.TabIndex = 42;
@@ -1683,8 +1696,8 @@ namespace WinPaletter
             this.search_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_btn.ForeColor = System.Drawing.Color.White;
             this.search_btn.Image = null;
-            this.search_btn.ImageGlyphEnabled = true;
             this.search_btn.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Search;
+            this.search_btn.ImageGlyphEnabled = true;
             this.search_btn.Location = new System.Drawing.Point(308, 3);
             this.search_btn.Name = "search_btn";
             this.search_btn.Size = new System.Drawing.Size(32, 24);
@@ -1721,8 +1734,8 @@ namespace WinPaletter
             this.search_filter_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_filter_btn.ForeColor = System.Drawing.Color.White;
             this.search_filter_btn.Image = null;
+            this.search_filter_btn.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("search_filter_btn.ImageGlyph")));
             this.search_filter_btn.ImageGlyphEnabled = true;
-            this.search_filter_btn.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("search_filter_btn.ImageVector")));
             this.search_filter_btn.Location = new System.Drawing.Point(270, 3);
             this.search_filter_btn.Name = "search_filter_btn";
             this.search_filter_btn.Size = new System.Drawing.Size(32, 24);
@@ -1739,7 +1752,7 @@ namespace WinPaletter
             this.Titlebar_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Titlebar_lbl.Location = new System.Drawing.Point(57, 6);
             this.Titlebar_lbl.Name = "Titlebar_lbl";
-            this.Titlebar_lbl.Size = new System.Drawing.Size(871, 40);
+            this.Titlebar_lbl.Size = new System.Drawing.Size(867, 40);
             this.Titlebar_lbl.TabIndex = 38;
             this.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Titlebar_lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
@@ -1753,8 +1766,8 @@ namespace WinPaletter
             this.back_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.back_btn.ForeColor = System.Drawing.Color.White;
             this.back_btn.Image = null;
+            this.back_btn.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("back_btn.ImageGlyph")));
             this.back_btn.ImageGlyphEnabled = true;
-            this.back_btn.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("back_btn.ImageVector")));
             this.back_btn.Location = new System.Drawing.Point(7, 6);
             this.back_btn.Name = "back_btn";
             this.back_btn.Size = new System.Drawing.Size(40, 40);
@@ -1799,6 +1812,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).EndInit();
             this.TabPage5.ResumeLayout(false);
             this.titlebarExtender1.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
             this.search_panel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1873,5 +1887,6 @@ namespace WinPaletter
         private Templates.WindowsDesktop windowsDesktop1;
         public Tabs.TitlebarExtender titlebarExtender1;
         internal UI.WP.Button pin_button;
+        private FlowLayoutPanel flowLayoutPanel2;
     }
 }

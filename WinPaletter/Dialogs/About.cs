@@ -33,7 +33,7 @@ namespace WinPaletter
 
         private void About_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainForm.Icon;
+            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
             this.LoadLanguage();
             ApplyStyle(this);
             Label2.Text = Program.Version;
@@ -46,7 +46,7 @@ namespace WinPaletter
             // Get the AssemblyCopyrightAttribute
             AssemblyCopyrightAttribute copyrightAttribute = (AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCopyrightAttribute));
 
-            Label3.Text = copyrightAttribute.Copyright + ", " + Application.CompanyName;
+            Label3.Text = $"{copyrightAttribute.Copyright}, {Application.CompanyName}";
         }
 
         private void Button3_Click(object sender, EventArgs e)

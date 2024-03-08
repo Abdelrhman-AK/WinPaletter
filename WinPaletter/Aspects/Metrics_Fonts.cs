@@ -205,6 +205,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
                 TMx.MetricsFonts.Apply();
             }
 
@@ -524,6 +525,8 @@ namespace WinPaletter
 
                 LoadFromTM(TMx);
             }
+
+            CheckBox1.Checked = comboBox1.SelectedIndex >= 4;
         }
 
         private void Button1_Click(object sender, EventArgs e)

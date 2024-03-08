@@ -18,7 +18,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.BugReport.Icon;
+            using (BugReport formIcon = new()) { Icon = formIcon.Icon; }
 
             TreeView1.ImageList = ImageLists.ThemeLog;
             TreeView1.Nodes.Clear();

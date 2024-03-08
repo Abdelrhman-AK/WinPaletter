@@ -146,12 +146,11 @@ namespace WinPaletter
             this.PictureBox18 = new System.Windows.Forms.PictureBox();
             this.CheckBox13 = new WinPaletter.UI.WP.CheckBox();
             this.TabPage11 = new System.Windows.Forms.TabPage();
+            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.button22 = new WinPaletter.UI.WP.Button();
             this.button19 = new WinPaletter.UI.WP.Button();
             this.button20 = new WinPaletter.UI.WP.Button();
             this.AlertBox3 = new WinPaletter.UI.WP.AlertBox();
-            this.AlertBox2 = new WinPaletter.UI.WP.AlertBox();
-            this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.RadioButton3 = new WinPaletter.UI.WP.RadioButton();
             this.PictureBox30 = new System.Windows.Forms.PictureBox();
             this.PictureBox26 = new System.Windows.Forms.PictureBox();
@@ -1852,12 +1851,11 @@ namespace WinPaletter
             // TabPage11
             // 
             this.TabPage11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage11.Controls.Add(this.alertBox1);
             this.TabPage11.Controls.Add(this.button22);
             this.TabPage11.Controls.Add(this.button19);
             this.TabPage11.Controls.Add(this.button20);
             this.TabPage11.Controls.Add(this.AlertBox3);
-            this.TabPage11.Controls.Add(this.AlertBox2);
-            this.TabPage11.Controls.Add(this.AlertBox1);
             this.TabPage11.Controls.Add(this.RadioButton3);
             this.TabPage11.Controls.Add(this.PictureBox30);
             this.TabPage11.Controls.Add(this.PictureBox26);
@@ -1874,6 +1872,24 @@ namespace WinPaletter
             this.TabPage11.TabIndex = 10;
             this.TabPage11.Text = "Explorer (controls options)";
             // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox1.CenterText = false;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = null;
+            this.alertBox1.Location = new System.Drawing.Point(39, 213);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(544, 24);
+            this.alertBox1.TabIndex = 242;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = "You should restart Windows Explorer after applying a new style to avoid UI glitch" +
+    "es.";
+            // 
             // button22
             // 
             this.button22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1884,7 +1900,7 @@ namespace WinPaletter
             this.button22.Image = null;
             this.button22.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button22.ImageGlyph")));
             this.button22.ImageGlyphEnabled = true;
-            this.button22.Location = new System.Drawing.Point(549, 235);
+            this.button22.Location = new System.Drawing.Point(549, 36);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(34, 24);
             this.button22.TabIndex = 241;
@@ -1901,7 +1917,7 @@ namespace WinPaletter
             this.button19.Image = null;
             this.button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button19.ImageGlyph")));
             this.button19.ImageGlyphEnabled = true;
-            this.button19.Location = new System.Drawing.Point(549, 36);
+            this.button19.Location = new System.Drawing.Point(549, 96);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(34, 24);
             this.button19.TabIndex = 240;
@@ -1935,49 +1951,13 @@ namespace WinPaletter
             this.AlertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox3.Image = null;
-            this.AlertBox3.Location = new System.Drawing.Point(73, 265);
+            this.AlertBox3.Location = new System.Drawing.Point(39, 66);
             this.AlertBox3.Name = "AlertBox3";
-            this.AlertBox3.Size = new System.Drawing.Size(510, 48);
+            this.AlertBox3.Size = new System.Drawing.Size(544, 24);
             this.AlertBox3.TabIndex = 238;
             this.AlertBox3.TabStop = false;
             this.AlertBox3.Text = "This will disable the navigation bar in Open/Save dialogs; anywhere else will req" +
     "uire ExplorerPatcher.";
-            // 
-            // AlertBox2
-            // 
-            this.AlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox2.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox2.CenterText = false;
-            this.AlertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AlertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox2.Image = null;
-            this.AlertBox2.Location = new System.Drawing.Point(73, 181);
-            this.AlertBox2.Name = "AlertBox2";
-            this.AlertBox2.Size = new System.Drawing.Size(510, 48);
-            this.AlertBox2.TabIndex = 237;
-            this.AlertBox2.TabStop = false;
-            this.AlertBox2.Text = "Due to limitations in Windows 11, styles cannot be changed by renaming UIRibbon.d" +
-    "ll. Therefore, you should utilize ExplorerPatcher or StartAllBack to forcibly ap" +
-    "ply the bar style.";
-            // 
-            // AlertBox1
-            // 
-            this.AlertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox1.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox1.CenterText = false;
-            this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(73, 154);
-            this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(510, 24);
-            this.AlertBox1.TabIndex = 236;
-            this.AlertBox1.TabStop = false;
-            this.AlertBox1.Text = "Default* is Command bar in Windows 11, Ribbon in Windows 10 and 8.1";
             // 
             // RadioButton3
             // 
@@ -1986,9 +1966,9 @@ namespace WinPaletter
             this.RadioButton3.Checked = false;
             this.RadioButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton3.ForeColor = System.Drawing.Color.White;
-            this.RadioButton3.Location = new System.Drawing.Point(48, 123);
+            this.RadioButton3.Location = new System.Drawing.Point(36, 183);
             this.RadioButton3.Name = "RadioButton3";
-            this.RadioButton3.Size = new System.Drawing.Size(528, 24);
+            this.RadioButton3.Size = new System.Drawing.Size(547, 24);
             this.RadioButton3.TabIndex = 233;
             this.RadioButton3.Text = "Windows 7 Explorer bar style";
             // 
@@ -1996,7 +1976,7 @@ namespace WinPaletter
             // 
             this.PictureBox30.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox30.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox30.Image")));
-            this.PictureBox30.Location = new System.Drawing.Point(6, 235);
+            this.PictureBox30.Location = new System.Drawing.Point(6, 36);
             this.PictureBox30.Name = "PictureBox30";
             this.PictureBox30.Size = new System.Drawing.Size(24, 24);
             this.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2021,9 +2001,9 @@ namespace WinPaletter
             this.RadioButton2.Checked = false;
             this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton2.ForeColor = System.Drawing.Color.White;
-            this.RadioButton2.Location = new System.Drawing.Point(48, 93);
+            this.RadioButton2.Location = new System.Drawing.Point(36, 153);
             this.RadioButton2.Name = "RadioButton2";
-            this.RadioButton2.Size = new System.Drawing.Size(528, 24);
+            this.RadioButton2.Size = new System.Drawing.Size(547, 24);
             this.RadioButton2.TabIndex = 232;
             this.RadioButton2.Text = "Ribbon";
             // 
@@ -2047,7 +2027,7 @@ namespace WinPaletter
             this.CheckBox23.Checked = false;
             this.CheckBox23.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox23.ForeColor = System.Drawing.Color.White;
-            this.CheckBox23.Location = new System.Drawing.Point(36, 235);
+            this.CheckBox23.Location = new System.Drawing.Point(36, 36);
             this.CheckBox23.Name = "CheckBox23";
             this.CheckBox23.Size = new System.Drawing.Size(500, 24);
             this.CheckBox23.TabIndex = 227;
@@ -2060,17 +2040,17 @@ namespace WinPaletter
             this.RadioButton1.Checked = false;
             this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
-            this.RadioButton1.Location = new System.Drawing.Point(48, 63);
+            this.RadioButton1.Location = new System.Drawing.Point(36, 123);
             this.RadioButton1.Name = "RadioButton1";
-            this.RadioButton1.Size = new System.Drawing.Size(528, 24);
+            this.RadioButton1.Size = new System.Drawing.Size(547, 24);
             this.RadioButton1.TabIndex = 231;
-            this.RadioButton1.Text = "Default*";
+            this.RadioButton1.Text = "Default";
             // 
             // PictureBox29
             // 
             this.PictureBox29.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox29.Image")));
-            this.PictureBox29.Location = new System.Drawing.Point(6, 36);
+            this.PictureBox29.Location = new System.Drawing.Point(6, 96);
             this.PictureBox29.Name = "PictureBox29";
             this.PictureBox29.Size = new System.Drawing.Size(24, 24);
             this.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2083,7 +2063,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label8.BackColor = System.Drawing.Color.Transparent;
             this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label8.Location = new System.Drawing.Point(36, 36);
+            this.Label8.Location = new System.Drawing.Point(36, 96);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(500, 24);
             this.Label8.TabIndex = 230;
@@ -2968,8 +2948,6 @@ namespace WinPaletter
         internal PictureBox PictureBox30;
         internal UI.WP.CheckBox CheckBox23;
         internal TabPage TabPage11;
-        internal UI.WP.AlertBox AlertBox1;
-        internal UI.WP.AlertBox AlertBox2;
         internal UI.WP.AlertBox AlertBox3;
         internal PictureBox PictureBox31;
         internal UI.WP.CheckBox CheckBox24;
@@ -3067,5 +3045,6 @@ namespace WinPaletter
         internal PictureBox pictureBox37;
         internal PictureBox pictureBox38;
         private TabPage tabPage10;
+        internal UI.WP.AlertBox alertBox1;
     }
 }

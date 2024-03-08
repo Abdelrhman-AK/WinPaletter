@@ -97,8 +97,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseDown(MouseEventArgs e)
         {
             State = MouseState.Down;
-            FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
 
             base.OnMouseDown(e);
         }
@@ -106,7 +107,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseClick(MouseEventArgs e)
         {
             Checked = true;
-            FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha2 = Checked ? 255 : 0; }
 
             base.OnMouseClick(e);
         }
@@ -114,8 +117,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
-            FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
         }
@@ -123,8 +127,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
-            FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 255; }
 
             base.OnMouseEnter(e);
         }
@@ -132,8 +137,9 @@ namespace WinPaletter.UI.WP
         protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
-            FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            Invalidate();
+
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 0; }
 
             base.OnMouseLeave(e);
         }

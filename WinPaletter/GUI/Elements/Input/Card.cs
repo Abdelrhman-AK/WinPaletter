@@ -25,6 +25,7 @@ namespace WinPaletter.UI.WP
         Rectangle rect => new(rect_all.X + shadowSize, rect_all.Y + shadowSize, rect_all.Width - shadowSize * 2, rect_all.Height - shadowSize * 2);
         Rectangle rect_margin => new(rect_all.X + shadowSize - margin, rect_all.Y + shadowSize - margin, rect_all.Width - shadowSize * 2 + margin * 2, rect_all.Height - shadowSize * 2 + margin * 2);
 
+        private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
 
         public MouseState State = MouseState.None;
 
@@ -132,12 +133,12 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
             else
             {
-                alpha = 0;
+                alpha = 128;
                 HoverSize = (int)(Math.Min(Width, Height) * 1.5) * 5;
             }
 
@@ -152,13 +153,13 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
-                alpha = 255;
-                HoverSize = (int)(Math.Min(Width, Height) * 1.5);
+                alpha = ContainsFocus ? 255 : 0;
+                HoverSize = ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0;
             }
 
             Animate();
@@ -332,6 +333,11 @@ namespace WinPaletter.UI.WP
                         G.FillRectangle(br1G, rect_margin);
                     }
 
+                    if (State != MouseState.None)
+                    {
+                        G.FillRectangle(Noise, rect_margin);
+                    }
+
                     if (CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)
                     {
                         gp.AddEllipse(hoverRect);
@@ -366,6 +372,11 @@ namespace WinPaletter.UI.WP
                 using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back_Checked)))
                 {
                     G.FillRoundedRect(br, rect_margin, radius);
+                }
+
+                if (State != MouseState.None)
+                {
+                    G.FillRectangle(Noise, rect_margin);
                 }
 
                 if (CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)

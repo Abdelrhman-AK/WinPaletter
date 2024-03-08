@@ -22,10 +22,9 @@ namespace WinPaletter
         private bool FinishedLoadingInitialTMs;
         private Dictionary<string, Theme.Manager> TMList = new();
 
-        private readonly int w = (int)Math.Round(528d * 0.6d);
-        private readonly int h = (int)Math.Round(297d * 0.6d);
+        private readonly int w = 365;
+        private readonly int h = 150;
 
-        private UI.Controllers.StoreItem hoveredItem;
         public UI.Controllers.StoreItem selectedItem;
 
         private bool _Shown = false;
@@ -33,7 +32,7 @@ namespace WinPaletter
         private float Angle = 180f;
         private readonly float Increment = 5f;
         private int Cycles = 0;
-        private DownloadManager DM = new();
+        private readonly DownloadManager DM = new();
 
         private bool ApplyOrEditToggle = true;
         private Settings.Structures.Appearance oldAppearance;
@@ -481,8 +480,6 @@ namespace WinPaletter
 
                                 ctrl.Click += StoreItem_Clicked;
                                 ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
-                                ctrl.MouseEnter += StoreItem_MouseEnter;
-                                ctrl.MouseLeave += StoreItem_MouseLeave;
 
                                 BeginInvoke(new Action(() => store_container.Controls.Add(ctrl)));
                             }
@@ -585,8 +582,6 @@ namespace WinPaletter
 
                 ctrl.Click += StoreItem_Clicked;
                 ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
-                ctrl.MouseEnter += StoreItem_MouseEnter;
-                ctrl.MouseLeave += StoreItem_MouseLeave;
 
                 BeginInvoke(new Action(() => store_container.Controls.Add(ctrl)));
 
@@ -867,17 +862,6 @@ namespace WinPaletter
             }
         }
 
-        public void StoreItem_MouseEnter(object sender, EventArgs e)
-        {
-            hoveredItem = (UI.Controllers.StoreItem)sender;
-
-        }
-
-        public void StoreItem_MouseLeave(object sender, EventArgs e)
-        {
-
-        }
-
         public void StoreItem_ThemeManagerChanged(object sender, EventArgs e)
         {
             if (FinishedLoadingInitialTMs)
@@ -958,8 +942,6 @@ namespace WinPaletter
                 {
                     storeItem.MouseClick -= StoreItem_Clicked;
                     storeItem.ThemeManagerChanged -= StoreItem_ThemeManagerChanged;
-                    storeItem.MouseEnter -= StoreItem_MouseEnter;
-                    storeItem.MouseLeave -= StoreItem_MouseLeave;
                 }
 
                 Container.Controls[0].Dispose();
@@ -1007,8 +989,6 @@ namespace WinPaletter
 
                     ctrl.Click += StoreItem_Clicked;
                     ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
-                    ctrl.MouseEnter += StoreItem_MouseEnter;
-                    ctrl.MouseLeave += StoreItem_MouseLeave;
 
                     BeginInvoke(new Action(() => search_results.Controls.Add(ctrl)));
 

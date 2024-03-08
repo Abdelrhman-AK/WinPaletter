@@ -88,6 +88,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
                 TMx.Sounds.Apply();
             }
 

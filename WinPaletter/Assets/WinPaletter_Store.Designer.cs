@@ -143,6 +143,16 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Folder {
+            get {
+                object obj = ResourceManager.GetObject("Folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Pattern1 {
             get {
                 object obj = ResourceManager.GetObject("Pattern1", resourceCulture);
@@ -236,16 +246,6 @@ namespace WinPaletter.Assets {
         internal static System.Drawing.Bitmap Pattern9 {
             get {
                 object obj = ResourceManager.GetObject("Pattern9", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ThemeVersion {
-            get {
-                object obj = ResourceManager.GetObject("ThemeVersion", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

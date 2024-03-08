@@ -5,11 +5,8 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
-using System.Windows.Media.Media3D;
 using WinPaletter.NativeMethods;
-using WinPaletter.UI.Retro;
 using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.Theme.Structures

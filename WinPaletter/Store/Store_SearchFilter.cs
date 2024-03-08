@@ -13,7 +13,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.Store.Icon;
+            using (Store formIcon = new()) { Icon = formIcon.Icon; }
 
             CheckBox1.Checked = Program.Settings.Store.Search_ThemeNames;
             CheckBox2.Checked = Program.Settings.Store.Search_AuthorsNames;

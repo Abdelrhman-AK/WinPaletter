@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using WinPaletter.UI.Simulation;
 
 namespace WinPaletter.UI.Style
 {
@@ -238,6 +237,9 @@ namespace WinPaletter.UI.Style
                             DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
                         }
 
+                        // Refresh the main groupbox to avoid bugged UI after switching dark mode
+                        if (form is Home home) home.groupBox1.Invalidate();
+
                         if (FormWasVisible)
                         {
                             //form.ResumeLayout();
@@ -275,6 +277,9 @@ namespace WinPaletter.UI.Style
                     int argpvAttribute3 = (int)DWMAPI.FormCornersType.Rectangular;
                     DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute3, Marshal.SizeOf(typeof(int)));
                 }
+
+                // Refresh the main groupbox to avoid bugged UI after switching dark mode
+                if (Form is Home home) home.groupBox1.Invalidate();
 
                 if (Form.Visible)
                     Form.Invalidate();
@@ -320,6 +325,8 @@ namespace WinPaletter.UI.Style
 
         private static void ApplyStyleToSubControls(Control ctrl, bool DarkMode)
         {
+            if (ctrl == null) return;
+
             bool b = false;
             if (ctrl is UI.Retro.ButtonR)
                 b = true;
@@ -479,8 +486,7 @@ namespace WinPaletter.UI.Style
                 }
             }
 
-            if (ctrl.FindForm().Visible)
-                ctrl.Invalidate();
+            ctrl.Invalidate();
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace WinPaletter
             CheckBox1.Checked = Program.Settings.Store.ShowTips;
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.Store.Icon;
+            using (Store formIcon = new()) { Icon = formIcon.Icon; }
         }
 
         private void Button1_Click(object sender, EventArgs e)

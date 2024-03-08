@@ -73,7 +73,7 @@ namespace WinPaletter
                         Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
                 }
 
-                try { System.IO.Directory.Delete(SysPaths.appData, true); } 
+                try { System.IO.Directory.Delete(SysPaths.appData, true); }
                 catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
 
             }
@@ -82,7 +82,7 @@ namespace WinPaletter
 
             if (System.IO.Directory.Exists(SysPaths.ProgramFilesData))
             {
-                try { System.IO.Directory.Delete(SysPaths.ProgramFilesData, true); } 
+                try { System.IO.Directory.Delete(SysPaths.ProgramFilesData, true); }
                 catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
             }
 

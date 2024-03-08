@@ -492,6 +492,8 @@ namespace WinPaletter.Theme.Structures
                         EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton ? 1 : 0);
                     }
 
+                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
+
                     try
                     {
                         if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
@@ -518,12 +520,10 @@ namespace WinPaletter.Theme.Structures
                         Microsoft.Win32.Registry.CurrentUser.Close();
                     }
 
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
-
                     if (OS.W12 || OS.W11)
                         EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots) ? 1 : 0);
 
-                    if (OS.W8x || OS.W10)
+                    if (OS.W8x || OS.W10 || OS.W11 || OS.W12)
                     {
                         switch (Win11ExplorerBar)
                         {
@@ -553,6 +553,78 @@ namespace WinPaletter.Theme.Structures
                                 }
 
                                 break;
+                        }
+
+                        if (OS.W11 || OS.W12)
+                        {
+                            if (Win11ExplorerBar != ExplorerBar.Default)
+                            {
+                                // Windows 11 22H2 and higher
+                                try
+                                {
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > (default)", "reg_add");
+                                    Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", true).SetValue(string.Empty, "CLSID_ItemsViewAdapter", Microsoft.Win32.RegistryValueKind.String);
+
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > (default)", "reg_add");
+                                    Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", true).SetValue(string.Empty, "File Explorer Xaml Island View Adapter", Microsoft.Win32.RegistryValueKind.String);
+
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > InprocServer32", "reg_add");
+                                    using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", true).CreateSubKey("InprocServer32", true))
+                                    {
+                                        key.SetValue(string.Empty, "C:\\Windows\\System32\\Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
+                                        key.SetValue("ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
+                                    }
+
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > InprocServer32", "reg_add");
+                                    using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", true).CreateSubKey("InprocServer32", true))
+                                    {
+                                        key.SetValue(string.Empty, $"{SysPaths.System32}\\Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
+                                        key.SetValue("ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
+                                    }
+                                }
+                                catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
+                                finally
+                                {
+                                    Microsoft.Win32.Registry.CurrentUser.Close();
+                                }
+
+                                // Windows 11 lower than 22H2
+                                try
+                                {
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked > {e2bf9676-5f8f-435c-97eb-11607a5bedf7}"), "reg_delete");
+                                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked", true).DeleteValue("{e2bf9676-5f8f-435c-97eb-11607a5bedf7}", false);
+                                }
+                                catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
+                                finally
+                                {
+                                    Microsoft.Win32.Registry.CurrentUser.Close();
+                                }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}"), "reg_delete");
+                                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", false);
+
+                                    if (TreeView is not null)
+                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}"), "reg_delete");
+                                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", false);
+                                }
+                                catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
+                                finally
+                                {
+                                    Microsoft.Win32.Registry.CurrentUser.Close();
+                                }
+
+                                EditReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                            }
                         }
                     }
 

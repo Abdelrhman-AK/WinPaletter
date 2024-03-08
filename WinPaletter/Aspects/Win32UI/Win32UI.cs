@@ -120,6 +120,7 @@ namespace WinPaletter
             Theme.Manager TMx = new(Theme.Manager.Source.Registry);
             ApplyToTM(TMx);
             ApplyToTM(Program.TM);
+            ApplyToTM(Program.TM_Original);
 
             TMx.Win32.Apply();
             TMx.Win32.Broadcast_UPM_ToDefUsers();

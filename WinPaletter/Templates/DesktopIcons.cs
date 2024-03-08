@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 
@@ -133,9 +131,9 @@ namespace WinPaletter.Templates
                 FakeIcon3.EnableEditingSpacingH = true;
                 FakeIcon2.EnableEditingSpacingV = true;
 
-                FakeIcon1.Icon = Forms.MainForm.Icon;                  // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
-                FakeIcon2.Icon = Properties.Resources.fileextension;    // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-                FakeIcon3.Icon = Properties.Resources.ThemesResIcon;    // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+                using (MainForm formIcon = new()) { FakeIcon1.Icon = formIcon.Icon; } // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+                FakeIcon2.Icon = Properties.Resources.fileextension;                  // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
+                FakeIcon3.Icon = Properties.Resources.ThemesResIcon;                  // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
                 foreach (WinIcon icon in Controls.OfType<WinIcon>()) { icon.EnableEditingMetrics = true; }
 

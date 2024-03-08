@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
@@ -10,7 +9,6 @@ using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.UI.Simulation.Window;
-using static WinPaletter.WinTerminal;
 
 namespace WinPaletter.Templates
 {

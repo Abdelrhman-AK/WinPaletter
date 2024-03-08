@@ -81,20 +81,23 @@ namespace WinPaletter
 
             if (!Forms.MainForm.LoggingOff && !closeSignalReceivedFromHomePage)
             {
-                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
-                {
-                    bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
-                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
-                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
-                                                                                //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
-                                                                                //);
-
-                    e.Cancel = !result;
-                }
-
                 if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
                 {
                     if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                }
+
+                if (!e.Cancel)
+                {
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    {
+                        bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
+                                                                                    //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
+                                                                                    //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
+                                                                                    //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
+                                                                                    //);
+
+                        e.Cancel = !result;
+                    }
                 }
             }
 

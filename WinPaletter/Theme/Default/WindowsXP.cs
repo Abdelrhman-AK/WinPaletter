@@ -147,7 +147,7 @@ namespace WinPaletter.Theme
                 MetricsFonts.IconVerticalSpacing = 75;
                 MetricsFonts.MenuHeight = 19;
                 MetricsFonts.MenuWidth = 18;
-                MetricsFonts.PaddedBorderWidth = 4;
+                MetricsFonts.PaddedBorderWidth = 0;
                 MetricsFonts.ScrollHeight = 17;
                 MetricsFonts.ScrollWidth = 17;
                 MetricsFonts.SmCaptionHeight = 17;

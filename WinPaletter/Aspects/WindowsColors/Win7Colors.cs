@@ -61,6 +61,8 @@ namespace WinPaletter
                 ApplyToTM(TMx);
                 TMx.Windows7.Apply(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
+
             }
 
             Cursor = Cursors.Default;

@@ -498,7 +498,7 @@ namespace WinPaletter.UI.Simulation
             if (Radius == -1) Radius = 6;
 
             if (Graphics is null) return;
-               
+
             if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
             {
                 using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))

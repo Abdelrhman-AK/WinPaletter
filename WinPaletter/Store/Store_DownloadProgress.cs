@@ -51,7 +51,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.Store.Icon;
+            using (Store formIcon = new()) { Icon = formIcon.Icon; }
 
             Label1.Text = string.Format(Program.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion);
             Label2.Text = string.Empty;

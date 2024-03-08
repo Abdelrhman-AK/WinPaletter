@@ -15,7 +15,7 @@ namespace WinPaletter.Dialogs
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.MainForm.Icon;
+            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
 
             TextBox1.Font = Fonts.ConsoleMedium;
             SystemSounds.Exclamation.Play();

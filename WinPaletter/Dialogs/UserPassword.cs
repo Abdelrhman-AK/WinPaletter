@@ -40,7 +40,7 @@ namespace WinPaletter.Dialogs
 
         private void UserPassword_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainForm.Icon;
+            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
             this.LoadLanguage();
             ApplyStyle(this);
             panel1.BackColor = Color.Black;

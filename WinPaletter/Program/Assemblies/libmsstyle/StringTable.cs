@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -12,11 +9,11 @@ namespace libmsstyle
         // Find entries that look like a font. That is, they are of format: "Name, Size, [Style], [Quality]"
         public static Dictionary<int, string> FilterFonts(Dictionary<int, string> table)
         {
-            var fonts = new Dictionary<int, string>();
-            foreach(var entry in table)
+            Dictionary<int, string> fonts = new Dictionary<int, string>();
+            foreach (KeyValuePair<int, string> entry in table)
             {
                 // Need at least "Name, Size"
-                var elem = entry.Value.Split(new char[] { ',' });
+                string[] elem = entry.Value.Split(new char[] { ',' });
                 if (elem.Length < 2)
                 {
                     continue;
@@ -24,13 +21,13 @@ namespace libmsstyle
 
                 // Need a valid "Size"
                 int fontSize;
-                if(!Int32.TryParse(elem[1], out fontSize))
+                if (!Int32.TryParse(elem[1], out fontSize))
                 {
                     continue;
                 }
 
                 // "Style" and "Quality" indicates a font
-                var lower = entry.Value.ToLower();
+                string lower = entry.Value.ToLower();
                 if (lower.Contains("bold") ||
                    lower.Contains("italic") ||
                    lower.Contains("underline") ||

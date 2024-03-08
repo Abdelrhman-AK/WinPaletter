@@ -95,6 +95,8 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
+
                 ApplyWT();
 
                 TMx.Wallpaper.Apply(source_wallpapertone.Checked);

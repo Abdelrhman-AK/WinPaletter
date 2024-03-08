@@ -1,15 +1,11 @@
 ﻿using Microsoft.VisualBasic;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.NativeMethods.GDI32;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -27,7 +23,7 @@ namespace WinPaletter
         public Home()
         {
             InitializeComponent();
-            Icon = Forms.MainForm.Icon;
+            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -75,20 +71,23 @@ namespace WinPaletter
 
             if (!Forms.MainForm.LoggingOff)
             {
-                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
-                {
-                    bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
-                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
-                                                                                //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
-                                                                                //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
-                                                                                //);
-
-                    e.Cancel = !result;
-                }
-
                 if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
                 {
                     if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                }
+
+                if (!e.Cancel)
+                {
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    {
+                        bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
+                                                                                    //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
+                                                                                    //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
+                                                                                    //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
+                                                                                    //);
+
+                        e.Cancel = !result;
+                    }
                 }
             }
 
@@ -192,7 +191,7 @@ namespace WinPaletter
                         ver = string.Empty;
 
                         string result = await DM.ReadStringAsync(Links.Updates);
-                        Updates_ls = result.Split(new char[] { '\r' , '\n' }).ToList();
+                        Updates_ls = result.Split(new char[] { '\r', '\n' }).ToList();
 
                         foreach (string updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                         {
@@ -601,21 +600,6 @@ namespace WinPaletter
         private void Home_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Process.Start(Links.Wiki.WikiURL);
-        }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
 
         //private void button1_Click(object sender, EventArgs e)

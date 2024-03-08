@@ -21,6 +21,7 @@ namespace WinPaletter.UI.Controllers
             Rect = new(0, 0, Width - 1, Height - 1);
             RectInner = new(1, 1, Width - 3, Height - 3);
             Rect_DefColor = new(7, (Height - 7) / 2, 7, 7);
+            Rect_DefColor_MouseHoverFixer = new(Rect_DefColor.X - 3, Rect_DefColor.Y - 3, Rect_DefColor.Width + 6, Rect_DefColor.Height + 6);
             Timer2 = new() { Enabled = false, Interval = 1 };
 
             alpha = 0;
@@ -42,6 +43,8 @@ namespace WinPaletter.UI.Controllers
         private Rectangle Rect;
         private Rectangle RectInner;
         private Rectangle Rect_DefColor;
+        private Rectangle Rect_DefColor_MouseHoverFixer;
+
 
         public MouseState State = MouseState.None;
 
@@ -336,7 +339,7 @@ namespace WinPaletter.UI.Controllers
 
         public bool CanRaiseEventsForDefColorDot()
         {
-            return Program.Settings.NerdStats.DotDefaultChangedIndicator && Rect_DefColor.Contains(PointToClient(MousePosition)) && BackColor != DefaultBackColor;
+            return Program.Settings.NerdStats.DotDefaultChangedIndicator && Rect_DefColor_MouseHoverFixer.Contains(PointToClient(MousePosition)) && BackColor != DefaultBackColor;
         }
 
         #endregion
@@ -348,6 +351,7 @@ namespace WinPaletter.UI.Controllers
             Rect = new(0, 0, Width - 1, Height - 1);
             RectInner = new(1, 1, Width - 3, Height - 3);
             Rect_DefColor = new(7, (Height - 7) / 2, 7, 7);
+            Rect_DefColor_MouseHoverFixer = new(Rect_DefColor.X - 3, Rect_DefColor.Y - 3, Rect_DefColor.Width + 6, Rect_DefColor.Height + 6);
 
             base.OnSizeChanged(e);
         }
@@ -376,8 +380,8 @@ namespace WinPaletter.UI.Controllers
             InitializeDrag = false;
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = 255; }
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
         }
@@ -418,7 +422,6 @@ namespace WinPaletter.UI.Controllers
 
             parentLevel = this.Level();
         }
-
 
         #endregion
 
@@ -462,8 +465,6 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -474,7 +475,7 @@ namespace WinPaletter.UI.Controllers
 
             if (Enabled)
             {
-                using (Config.Colors_Collection colors = new(BackColor, default, BackColor.IsDark()))
+                using (Config.Colors_Collection colors = new(BackColor, BackColor, BackColor.IsDark()))
                 {
                     switch (State)
                     {
@@ -486,7 +487,7 @@ namespace WinPaletter.UI.Controllers
 
                         case MouseState.Over:
                             {
-                                LineColor = Color.FromArgb(255, colors.Line_Checked_Hover);
+                                LineColor = Color.FromArgb(255, colors.Line(0));
                                 break;
                             }
 
@@ -512,47 +513,46 @@ namespace WinPaletter.UI.Controllers
                 if (!DesignMode && MakeAfterDropEffect && CanAnimate)
                 {
                     // Make ripple effect on dropping a color
-
                     using (SolidBrush br = new(BeforeDropColor))
                     {
                         G.FillRoundedRect(br, RectInner);
                     }
 
-                    GraphicsPath path = Program.Style.RoundedCorners ? RectInner.Round(Program.Style.Radius) : new GraphicsPath();
-                    if (!Program.Style.RoundedCorners) { path.AddRectangle(RectInner); }
+                    using (GraphicsPath path = Program.Style.RoundedCorners ? RectInner.Round(Program.Style.Radius) : new GraphicsPath())
                     {
-                        Region reg = new(path);
-                        G.Clip = reg;
-                        int i = Math.Max(Width, Height) + Timer2_factor;
-                        Point px = BeforeDropMousePosition;
-                        Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
-                        GraphicsPath gp = new();
-                        gp.AddEllipse(MouseCircle);
-                        PathGradientBrush pgb = new(gp)
+                        if (!Program.Style.RoundedCorners) { path.AddRectangle(RectInner); }
                         {
-                            CenterPoint = px,
-                            CenterColor = BackColor,
-                            SurroundColors = new Color[] { Color.Transparent }
-                        };
-                        G.FillEllipse(pgb, MouseCircle);
+                            int i = Math.Max(Width, Height) + Timer2_factor;
 
-                        G.ResetClip();
+                            using (Region reg = new(path))
+                            using (GraphicsPath gp = new())
+                            {
+                                G.Clip = reg;
+                                Point px = BeforeDropMousePosition;
+                                Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
+                                gp.AddEllipse(MouseCircle);
+                                using (PathGradientBrush pgb = new(gp)
+                                {
+                                    CenterPoint = px,
+                                    CenterColor = BackColor,
+                                    SurroundColors = new Color[] { Color.Transparent }
+                                })
+                                { G.FillEllipse(pgb, MouseCircle); }
+                                G.ResetClip();
+                            }
 
-                        if (i / 2d > Width * Height)
-                        {
-                            Timer2.Enabled = false;
-                            Timer2.Stop();
-                            Timer2_factor = 0;
-                            MakeAfterDropEffect = false;
-                            Invalidate();
+                            if (i / 2d > Width * Height)
+                            {
+                                Timer2.Enabled = false;
+                                Timer2.Stop();
+                                Timer2_factor = 0;
+                                MakeAfterDropEffect = false;
+                                Invalidate();
+                            }
                         }
                     }
-                    path.Dispose();
 
-                    using (Pen P = new(LineColor))
-                    {
-                        G.DrawRoundedRect_LikeW11(P, RectInner);
-                    }
+                    using (Pen P = new(LineColor)) { G.DrawRoundedRect_LikeW11(P, RectInner); }
                 }
 
                 else if (!DesignMode && DragDropMouseHovering && CanAnimate)
@@ -562,21 +562,23 @@ namespace WinPaletter.UI.Controllers
                     using (SolidBrush br = new(BackColor)) { G.FillRoundedRect(br, Rect); }
 
                     using (GraphicsPath path = Rect.Round(Program.Style.Radius))
+                    using (Region reg = new(path))
+                    using (GraphicsPath gp = new())
                     {
-                        Region reg = new(path);
                         G.Clip = reg;
                         int i = Math.Max(Width, Height);
                         Point px = PointToClient(MousePosition);
                         Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
-                        GraphicsPath gp = new();
                         gp.AddEllipse(MouseCircle);
-                        PathGradientBrush pgb = new(gp)
+                        using (PathGradientBrush pgb = new(gp)
                         {
                             CenterPoint = px,
                             CenterColor = DraggedColor,
                             SurroundColors = new Color[] { Color.Transparent }
-                        };
-                        G.FillEllipse(pgb, MouseCircle);
+                        })
+                        {
+                            G.FillEllipse(pgb, MouseCircle);
+                        }
                         G.ResetClip();
                     }
 
@@ -589,11 +591,11 @@ namespace WinPaletter.UI.Controllers
 
                     using (SolidBrush br = new(BackColor)) { G.FillRoundedRect(br, RectInner); }
 
-                    using (SolidBrush br = new(Color.FromArgb((int)Math.Round(alpha / 255d * BackColor.A), BackColor))) { G.FillRoundedRect(br, Rect); }
+                    using (SolidBrush br = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), BackColor))) { G.FillRoundedRect(br, Rect); }
 
-                    using (Pen P = new(Color.FromArgb((int)Math.Round((255 - alpha) / 255d * BackColor.A), LineColor))) { G.DrawRoundedRect_LikeW11(P, RectInner); }
+                    using (Pen P = new(Color.FromArgb((int)((255f - alpha) / 255f * BackColor.A), LineColor))) { G.DrawRoundedRect_LikeW11(P, RectInner); }
 
-                    using (Pen P = new(Color.FromArgb((int)Math.Round(alpha / 255d * BackColor.A), LineColor))) { G.DrawRoundedRect_LikeW11(P, Rect); }
+                    using (Pen P = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), LineColor))) { G.DrawRoundedRect_LikeW11(P, Rect); }
                 }
 
                 if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)

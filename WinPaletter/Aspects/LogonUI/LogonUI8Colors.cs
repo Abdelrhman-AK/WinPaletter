@@ -48,8 +48,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-
-            Icon = Forms.Start8Selector.Icon;
+            using (Start8Selector formIcon = new()) { Icon = formIcon.Icon; }
 
             color0.Image = Color.FromArgb(34, 34, 34).ToBitmap(new Size(32, 32));
             color1.Image = Color.FromArgb(34, 34, 34).ToBitmap(new Size(32, 32));

@@ -26,7 +26,7 @@ namespace WinPaletter
 
         private void BugReport_Load(object sender, EventArgs e)
         {
-            Icon = Forms.SettingsX.Icon;
+            using (SettingsX formIcon = new()) { Icon = formIcon.Icon; }
             this.LoadLanguage();
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;

@@ -59,10 +59,29 @@ namespace WinPaletter.UI.Controllers
                     _TM = value;
                     UpdateBadges();
                     UpdatePattern(_TM.Info.Pattern);
-                    ThemeManagerChanged?.Invoke(this, new EventArgs());
+
+                    sameTheme = TM is not null &&
+                                TM.Info.ThemeName.Trim().ToLower() == Program.TM.Info.ThemeName.Trim().ToLower() &&
+                                TM.Info.Author.Trim().ToLower() == Program.TM.Info.Author.Trim().ToLower();
+
+                    hasUpdate = TM is not null &&
+                                sameTheme && new Version(TM.Info.ThemeVersion) > new Version(Program.TM.Info.ThemeVersion);
                 }
+                else
+                {
+                    _TM = null;
+                    pattern?.Dispose();
+                    sameTheme = false;
+                    hasUpdate = false;
+                }
+
+                ThemeManagerChanged?.Invoke(this, new EventArgs());
             }
         }
+
+        bool sameTheme = false;
+
+        bool hasUpdate = false;
 
         public string MD5_ThemeFile { get; set; }
         public string MD5_PackFile { get; set; }
@@ -83,8 +102,8 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Down;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = 0; }
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = 128; }
 
             base.OnMouseDown(e);
         }
@@ -93,8 +112,8 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = 255; }
+            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
         }
@@ -242,12 +261,14 @@ namespace WinPaletter.UI.Controllers
                 using (ImageFactory imgF = new())
                 {
                     imgF.Load(bmp);
-                    imgF.Contrast(50);
-                    bmp = (imgF.Image as Bitmap).Invert().Fade(0.8f);
+                    imgF.Contrast(40);
+                    bmp = (imgF.Image as Bitmap).Invert().Fade(0.7f);
                 }
             }
 
             if (bmp != null) pattern = new(bmp); else pattern = null;
+
+            bmp?.Dispose();
 
             Refresh();
         }
@@ -273,7 +294,7 @@ namespace WinPaletter.UI.Controllers
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
-            G.SmoothingMode = SmoothingMode.HighQuality;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
 
             G.TextRenderingHint = TM is not null ?
                                  (TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit)
@@ -283,115 +304,131 @@ namespace WinPaletter.UI.Controllers
             InvokePaintBackground(this, e);
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+            Config.Scheme scheme_tertiary = Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
             Rectangle rect_outer = new(0, 0, Width - 1, Height - 1);
             Rectangle rect_inner = new(1, 1, Width - 3, Height - 3);
 
-            Color bkC = Color.FromArgb(255 - alpha, scheme.Colors.Back(parentLevel));
-            Color bkCC = bkC;
+            Color back0 = scheme.Colors.Back(parentLevel);
+            Color back1 = scheme.Colors.Back_Hover(parentLevel + 5);
+            Color back_hover0 = back0;
 
             if (TM is not null)
             {
                 using (Colors_Collection colorsCollection = new(TM.Info.Color1, TM.Info.Color1, Program.Style.DarkMode))
                 {
-                    bkCC = Color.FromArgb(alpha, colorsCollection.Back_Checked_Hover);
+                    back_hover0 = Color.FromArgb(alpha, colorsCollection.Back_Checked);
                 }
             }
 
-            using (SolidBrush br = new(bkC)) { G.FillRoundedRect(br, rect_inner); }
-            using (SolidBrush br = new(bkCC)) { G.FillRoundedRect(br, rect_outer); }
-
-            if (pattern is not null) G.FillRoundedRect(pattern, rect_inner);
-
-            float factor_max = 20f;
-            float factor1 = (float)((double)factor_max * (alpha / 255d));
-            float factor2 = (float)((double)factor_max * ((255 - alpha) / 255d));
-            int CircleR = (int)Math.Round(rect_inner.Height * 0.4d);
-
-            Rectangle Circle1 = new((int)Math.Round(rect_inner.X + 10 + factor_max - factor1), (int)Math.Round(rect_inner.Y + (rect_inner.Height - CircleR) / 2d), CircleR, CircleR);
-            Rectangle Circle2 = new((int)Math.Round(rect_inner.X + 10 + CircleR + CircleR * 0.4d - (double)factor2), (int)Math.Round(rect_inner.Y + (rect_inner.Height - CircleR) / 2d), CircleR, CircleR);
-
-            if (TM is not null)
-            {
-                using (SolidBrush br = new(Color.FromArgb(125, TM.Info.Color2)))
-                using (Pen P = new(TM.Info.Color2.CB(0.3f * (Program.Style.DarkMode ? +1f : +2f)), 1.75f))
-                {
-                    G.FillEllipse(br, Circle2);
-                    G.DrawEllipse(P, Circle2);
-                }
-
-                using (SolidBrush br = new(Color.FromArgb(125, TM.Info.Color1)))
-                using (Pen P = new(TM.Info.Color1.CB(0.3f * (Program.Style.DarkMode ? +1f : +2f)), 1.75f))
-                {
-                    G.FillEllipse(br, Circle1);
-                    G.DrawEllipse(P, Circle1);
-                }
-            }
-
-            if (BackgroundImage is not null) G.DrawRoundImage(BackgroundImage, State == MouseState.Over ? rect_outer : rect_inner);
+            using (LinearGradientBrush br = new(rect_outer, back1, back0, LinearGradientMode.ForwardDiagonal)) { G.FillRoundedRect(br, rect_inner); }
+            using (LinearGradientBrush br = new(rect_outer, back_hover0, Color.Transparent, 0f)) { G.FillRoundedRect(br, rect_outer); }
 
             if (State != MouseState.None) G.FillRoundedRect(Noise, rect_inner);
+            if (pattern is not null) G.FillRoundedRect(pattern, rect_inner);
+            if (BackgroundImage is not null) G.DrawRoundImage(BackgroundImage, State == MouseState.Over ? rect_outer : rect_inner);
 
-            Color lC, lCC;
+            Color line, line_hover0;
             if (TM is not null)
             {
                 using (Colors_Collection colorsCollection = new(TM.Info.Color1, TM.Info.Color1, Program.Style.DarkMode))
                 {
-                    bkCC = Color.FromArgb(alpha, colorsCollection.Back_Checked_Hover);
-
-                    lC = Color.FromArgb(255 - alpha, State != MouseState.None ? colorsCollection.Line_Checked : scheme.Colors.Line(parentLevel));
-                    lCC = Color.FromArgb(alpha, colorsCollection.Line_Checked_Hover);
+                    line = Color.FromArgb(255 - alpha, State != MouseState.None ? colorsCollection.Line_Checked : scheme.Colors.Line(parentLevel));
+                    line_hover0 = Color.FromArgb(alpha, colorsCollection.Line_Checked_Hover);
                 }
             }
             else
             {
-                lC = Color.FromArgb(255 - alpha, State != MouseState.None ? scheme.Colors.Line_Checked : scheme.Colors.Line(parentLevel));
-                lCC = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
+                line = Color.FromArgb(255 - alpha, State != MouseState.None ? scheme.Colors.Line_Checked : scheme.Colors.Line(parentLevel));
+                line_hover0 = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
             }
 
-            using (Pen P = new(lC)) { G.DrawRoundedRect_LikeW11(P, rect_inner); }
-            using (Pen P = new(lCC)) { G.DrawRoundedRect_LikeW11(P, rect_outer); }
-
-            Rectangle ThemeName_Rect = new(rect_inner.X, rect_inner.Y, rect_inner.Width - 10, 25);
-            Rectangle Author_Rect = new(ThemeName_Rect.X, ThemeName_Rect.Bottom, ThemeName_Rect.Width - 20, 15);
-            Rectangle OS_Rect = new(0, Author_Rect.Bottom + 7, 16, 16);
-            Rectangle Version_Rect = new(ThemeName_Rect.X, OS_Rect.Bottom + 6, ThemeName_Rect.Width - 20, 15);
+            using (Pen P = new(line)) { G.DrawRoundedRect_LikeW11(P, rect_inner); }
+            using (Pen P = new(line_hover0)) { G.DrawRoundedRect_LikeW11(P, rect_outer); }
 
             if (TM is not null)
             {
-                Color FC = Color.FromArgb(Math.Max(125, alpha), bkC.IsDark() ? Color.White : Color.Black);
+                float CircleR = rect_inner.Height * 0.4f;
+                float factor = CircleR * (alpha / 255f) / 4f;
 
-                using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
-                using (SolidBrush br = new(FC))
+                int rowsNumber = System.IO.File.Exists(URL_ThemeFile) ? 4 : 3;
+                if (DesignedFor_Badges.Count > 0) rowsNumber++;
+                int titleHeight = 26;
+                int itemsHeight = 18;
+                int startingY = rect_inner.Y + (rect_inner.Height - (titleHeight + (itemsHeight * (rowsNumber - 1)))) / 2 + 2;
+
+                RectangleF Circle1 = new(rect_inner.Right - CircleR * 1.35f + factor, rect_inner.Y + (rect_inner.Height - CircleR) / 2f - factor, CircleR, CircleR);
+                RectangleF Circle2 = new(rect_inner.Right - CircleR * 1.35f - factor, rect_inner.Y + (rect_inner.Height - CircleR) / 2f + factor, CircleR, CircleR);
+                RectangleF Circle1_gradientFix = new(Circle1.X - 2, Circle1.Y - 2, Circle1.Width + 4, Circle1.Height + 4);
+                RectangleF Circle2_gradientFix = new(Circle2.X - 2, Circle2.Y - 2, Circle2.Width + 4, Circle2.Height + 4);
+
+                Rectangle ThemeName_Rect = Rectangle.FromLTRB(rect_inner.X + 10, startingY, rect_inner.Right - 10, startingY + titleHeight);
+                Rectangle Author_Rect = new(ThemeName_Rect.X + 16 + 4, ThemeName_Rect.Bottom + 5, ThemeName_Rect.Width - 20, itemsHeight);
+                Rectangle OS_Rect = new(ThemeName_Rect.X + 2, Author_Rect.Bottom + 8, 16, itemsHeight);
+                Rectangle File_Rect = new(ThemeName_Rect.X + 16 + 6, DesignedFor_Badges.Count > 0 ? OS_Rect.Bottom + 9 : Author_Rect.Bottom + 9, ThemeName_Rect.Width - 20, itemsHeight);
+                Rectangle lowerRect = new(rect_inner.X + 7, rect_inner.Bottom - 20, rect_inner.Width - 14, itemsHeight);
+                Rectangle BadgeRect = new(ThemeName_Rect.Left + 2, Author_Rect.Y, 16, 16);
+                Rectangle FileRect_Img = new(ThemeName_Rect.Left + 2, File_Rect.Y - 1, 18, 18);
+
+                Color foreColor = Color.FromArgb(Math.Max(Program.Style.DarkMode ? 125 : 175, alpha), back0.IsDark() ? Color.White : Color.Black);
+
+                Color circle1_normal_color = Color.FromArgb(125, TM.Info.Color1);
+                Color circle2_normal_color = Color.FromArgb(125, TM.Info.Color2);
+                Color circle1_normal_pen_color = circle1_normal_color.CB(0.3f * (Program.Style.DarkMode ? +1f : -1f));
+                Color circle2_normal_pen_color = circle2_normal_color.CB(0.3f * (Program.Style.DarkMode ? +1f : -0.25f));
+
+                using (LinearGradientBrush circle1_lgb = new(Circle1_gradientFix, circle1_normal_color, Color.Transparent, 90f + (alpha / 255f) * 360f))
+                using (LinearGradientBrush circle1_lgb_P = new(Circle1_gradientFix, circle1_normal_pen_color, Color.Transparent, 90f + (alpha / 255f) * 360f))
+                using (LinearGradientBrush circle2_lgb = new(Circle2_gradientFix, Color.Transparent, circle2_normal_color, 90f + (alpha / 255f) * 360f))
+                using (LinearGradientBrush circle2_lgb_P = new(Circle2_gradientFix, Color.Transparent, circle2_normal_pen_color, 90f + (alpha / 255f) * 360f))
+                using (Pen circle1_P = new(circle1_lgb_P, 1.75f))
+                using (Pen circle2_P = new(circle2_lgb_P, 1.75f))
+                using (SolidBrush foreBrush = new(foreColor))
+                using (SolidBrush verBrush = new(Color.FromArgb(alpha, foreColor)))
+                using (Font fontTitle = new(TM.MetricsFonts.CaptionFont.Name, 11f, FontStyle.Bold))
+                using (Font font = new(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular))
+                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                using (StringFormat sf_version = ContentAlignment.MiddleRight.ToStringFormat())
                 {
-                    G.DrawString(TM.Info.ThemeName, new Font(TM.MetricsFonts.CaptionFont.Name, 11f, FontStyle.Bold), br, ThemeName_Rect, sf);
+                    G.DrawString(TM.Info.ThemeName, fontTitle, foreBrush, ThemeName_Rect, sf);
+
+                    if (DoneByWinPaletter)
+                    {
+                        G.DrawImage(Assets.WinPaletter_Store.DoneByWinPaletter, BadgeRect);
+                    }
+                    else
+                    {
+                        G.DrawImage(Assets.WinPaletter_Store.DoneByUser, BadgeRect);
+                    }
+
+                    G.DrawString($"{Program.Lang.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
+
+                    if (System.IO.File.Exists(URL_ThemeFile))
+                    {
+                        G.DrawImage(Assets.WinPaletter_Store.Folder, FileRect_Img);
+                        G.DrawString(System.IO.Path.GetFileName(URL_ThemeFile), Fonts.Console, foreBrush, File_Rect, sf);
+                    }
+
+                    if (hasUpdate)
+                    {
+                        G.DrawString(Program.Lang.NewUpdate, Fonts.Console, verBrush, lowerRect, sf);
+                        G.DrawString(TM.Info.ThemeVersion, Fonts.Console, verBrush, lowerRect, sf_version);
+                        G.DrawRoundedRect_LikeW11(scheme_tertiary.Pens.Line_Checked_Hover, rect_inner);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(TM.Info.ThemeVersion))
+                    {
+                        G.DrawString(TM.Info.ThemeVersion, Fonts.Console, verBrush, lowerRect, sf_version);
+                    }
+
+                    for (int i = 0; i <= DesignedFor_Badges.Count - 1; i++)
+                        G.DrawImage(DesignedFor_Badges[i], new Rectangle(OS_Rect.Left + 20 * i, OS_Rect.Y, 16, 16));
+
+                    G.FillEllipse(circle2_lgb, Circle2);
+                    G.DrawEllipse(circle2_P, Circle2);
+
+                    G.FillEllipse(circle1_lgb, Circle1);
+                    G.DrawEllipse(circle1_P, Circle1);
                 }
-
-                Rectangle BadgeRect = new(Author_Rect.Right + 2, Author_Rect.Y, 16, 16);
-                Rectangle VerRect = new(Version_Rect.Right + 2, Version_Rect.Y - 2, 18, 18);
-
-                if (DoneByWinPaletter)
-                {
-                    G.DrawImage(Assets.WinPaletter_Store.DoneByWinPaletter, BadgeRect);
-                }
-                else
-                {
-                    G.DrawImage(Assets.WinPaletter_Store.DoneByUser, BadgeRect);
-                }
-
-                string author = DoneByWinPaletter ? Application.ProductName : TM.Info.Author;
-                using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
-                using (Font f = new(TM.MetricsFonts.CaptionFont.Name, 9f, FontStyle.Regular))
-                using (SolidBrush br = new(FC))
-                {
-                    G.DrawString($"{Program.Lang.By} {author}", f, br, Author_Rect, sf);
-
-                    G.DrawImage(Assets.WinPaletter_Store.ThemeVersion, VerRect);
-                    G.DrawString(TM.Info.ThemeVersion, Fonts.Console, br, Version_Rect, sf);
-                }
-
-                for (int i = 0; i <= DesignedFor_Badges.Count - 1; i++)
-                    G.DrawImage(DesignedFor_Badges[i], new Rectangle(BadgeRect.Right - 16 - 18 * i, OS_Rect.Y, OS_Rect.Width, OS_Rect.Height));
             }
 
             base.OnPaint(e);

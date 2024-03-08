@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -19,7 +18,7 @@ namespace WinPaletter
 
         private void Store_Hover_Load(object sender, EventArgs e)
         {
-            Icon = Forms.Store.Icon;
+            using (Store formIcon = new()) { Icon = formIcon.Icon; }
 
             Point p;
             if (Forms.Store.selectedItem is not null)

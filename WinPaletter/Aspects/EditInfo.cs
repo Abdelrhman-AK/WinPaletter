@@ -87,6 +87,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
                 Forms.Home.LoadFromTM(TMx);
 
                 TMx.Info.Apply();

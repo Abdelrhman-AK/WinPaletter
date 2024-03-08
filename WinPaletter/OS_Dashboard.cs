@@ -14,7 +14,7 @@ namespace WinPaletter
 
         private void OS_Dashboard_Load(object sender, EventArgs e)
         {
-            Icon = Forms.MainForm.Icon;
+            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
 
             switch (Program.WindowStyle)
             {

@@ -68,7 +68,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.ExternalTerminal.Icon;
+            using (ExternalTerminal formIcon = new()) { Icon = formIcon.Icon; }
         }
     }
 }

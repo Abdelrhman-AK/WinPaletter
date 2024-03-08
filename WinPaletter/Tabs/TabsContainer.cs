@@ -36,9 +36,14 @@ namespace WinPaletter.Tabs
 
         UI.WP.Button helpButton = new()
         {
-            Visible = false, Text = "", Size = new(20, 20), Anchor = AnchorStyles.Right,
-            ImageGlyphEnabled = true, ImageGlyph = Assets.Tabs.Help,
-            Flag = UI.WP.Button.Flags.CustomColorOnHover, CustomColor = Color.FromArgb(193, 156, 0),
+            Visible = false,
+            Text = string.Empty,
+            Size = new(20, 20),
+            Anchor = AnchorStyles.Right,
+            ImageGlyphEnabled = true,
+            ImageGlyph = Assets.Tabs.Help,
+            Flag = UI.WP.Button.Flags.CustomColorOnHover,
+            CustomColor = Color.FromArgb(193, 156, 0),
         };
 
         private bool CanAnimate_Global => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;

@@ -485,17 +485,17 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus ? Math.Max(Width, Height) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 }
             }
             else
             {
-                alpha = 255;
-                HoverSize = Math.Max(Width, Height);
+                alpha = ContainsFocus ? 255 : 0;
+                HoverSize = ContainsFocus ? Math.Max(Width, Height) : 0;
             }
 
             base.OnMouseUp(e);

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -43,12 +42,12 @@ namespace libmsstyle
 
         public static ushort GetFirstLanguageId(IntPtr moduleHandle, string type, uint name)
         {
-            return GetFirstLanguageId(moduleHandle, type, "#" + name);
+            return GetFirstLanguageId(moduleHandle, type, $"#{name}");
         }
 
         public static ushort GetFirstLanguageId(IntPtr moduleHandle, string type, string name)
         {
-            var list = GetAllLanguageIds(moduleHandle, type, name, Win32Api.EnumResourceFlags.RESOURCE_ENUM_LN);
+            List<ushort> list = GetAllLanguageIds(moduleHandle, type, name, Win32Api.EnumResourceFlags.RESOURCE_ENUM_LN);
             if (list.Count > 0)
                 return list.First();
             else return 0xFFFF;
@@ -57,18 +56,18 @@ namespace libmsstyle
 
         public static List<ushort> GetAllLanguageIds(IntPtr moduleHandle, string type, uint name, Win32Api.EnumResourceFlags flags)
         {
-            return GetAllLanguageIds(moduleHandle, type, "#" + name, flags);
+            return GetAllLanguageIds(moduleHandle, type, $"#{name}", flags);
         }
 
         public static List<ushort> GetAllLanguageIds(IntPtr moduleHandle, string type, string name, Win32Api.EnumResourceFlags flags)
         {
-            var ctx = new EnumLanguagesCallbackContext();
-            Win32Api.EnumResourceLanguagesEx(moduleHandle, 
-                type, 
+            EnumLanguagesCallbackContext ctx = new EnumLanguagesCallbackContext();
+            Win32Api.EnumResourceLanguagesEx(moduleHandle,
+                type,
                 name,
                 ctx.Callback,
                 IntPtr.Zero,
-                flags, 
+                flags,
                 0);
 
             return ctx.langIds;
@@ -120,7 +119,7 @@ namespace libmsstyle
 
             public static void Load(IntPtr moduleHandle, ushort langId, Dictionary<int, string> stringTable)
             {
-                var ctx = new ReadStringsCallbackContext();
+                ReadStringsCallbackContext ctx = new ReadStringsCallbackContext();
                 ctx.langId = langId;
                 ctx.stringTable = stringTable;
 
@@ -146,7 +145,7 @@ namespace libmsstyle
 
                 List<int> bucketsTouched = new List<int>();
 
-                foreach (var item in table)
+                foreach (KeyValuePair<int, string> item in table)
                 {
                     // get current bucket
                     FLAT_TO_BUCKETED(item.Key, ref currentBucket, ref currentBucketIndex);
@@ -218,7 +217,7 @@ namespace libmsstyle
                 // So we just check the most common buckets in a brute-force manner.
                 for (int b = 7; b <= 100; ++b)
                 {
-                    var resHandle = Win32Api.FindResourceEx(moduleHandle, Win32Api.RT_STRING, (uint)b, langId);
+                    IntPtr resHandle = Win32Api.FindResourceEx(moduleHandle, Win32Api.RT_STRING, (uint)b, langId);
                     if (resHandle != IntPtr.Zero)
                     {
                         if (!bucketsTouched.Contains(b))
@@ -247,13 +246,13 @@ namespace libmsstyle
 
                 public bool Callback(IntPtr hModule, IntPtr lpType, IntPtr lpName, IntPtr lParam)
                 {
-                    var resHandle = Win32Api.FindResourceEx(hModule, Win32Api.RT_STRING, (uint)lpName.ToInt32(), langId);
+                    IntPtr resHandle = Win32Api.FindResourceEx(hModule, Win32Api.RT_STRING, (uint)lpName.ToInt32(), langId);
                     if (resHandle != IntPtr.Zero)
                     {
-                        var dataHandle = Win32Api.LoadResource(hModule, resHandle);
+                        IntPtr dataHandle = Win32Api.LoadResource(hModule, resHandle);
                         if (dataHandle != IntPtr.Zero)
                         {
-                            var dataPtr = Win32Api.LockResource(dataHandle);
+                            IntPtr dataPtr = Win32Api.LockResource(dataHandle);
                             if (dataPtr != IntPtr.Zero)
                             {
                                 for (int i = 0; i < BUCKET_SIZE; ++i)
@@ -280,5 +279,5 @@ namespace libmsstyle
         }
     }
 
-    
+
 }

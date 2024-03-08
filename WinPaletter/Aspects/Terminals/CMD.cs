@@ -104,6 +104,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx, _Edition);
                 ApplyToTM(Program.TM, _Edition);
+                ApplyToTM(Program.TM_Original, _Edition);
 
                 switch (_Edition)
                 {

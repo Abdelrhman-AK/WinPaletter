@@ -287,7 +287,6 @@
             this.groupBox1.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox1.Size = new System.Drawing.Size(1176, 70);
             this.groupBox1.TabIndex = 161;
-            this.groupBox1.Text = "groupBox1";
             // 
             // flowLayoutPanel3
             // 
@@ -934,11 +933,11 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private UI.WP.SeparatorV separatorV2;
         internal UI.WP.Button winEdition;
-        private UI.WP.GroupBox groupBox1;
         private System.Windows.Forms.Panel panel1;
         private UI.WP.LabelAlt labelAlt1;
         private UI.WP.LabelAlt labelAlt2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private UI.WP.LabelAlt labelAlt3;
+        public UI.WP.GroupBox groupBox1;
     }
 }

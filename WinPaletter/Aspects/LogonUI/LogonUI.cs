@@ -73,6 +73,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
                 TMx.LogonUI10x.Apply();
             }
 

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using WinPaletter.Tabs;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -701,7 +700,7 @@ namespace WinPaletter
         {
             CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
 
-            Icon = Forms.Lang_JSON_Manage.Icon;
+            using (Lang_JSON_Manage formIcon = new()) { Icon = formIcon.Icon; }
             LangFile = string.Empty;
             AlertBox1.Visible = true;
             GroupBox8.Visible = false;

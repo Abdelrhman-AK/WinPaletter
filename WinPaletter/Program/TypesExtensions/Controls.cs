@@ -113,7 +113,7 @@ namespace WinPaletter.TypesExtensions
 
             lock (lockObject)
             {
-                using (Graphics g = Graphics.FromImage(bmp))
+                using (Graphics.FromImage(bmp))
                 {
                     // Temporarily make visible child controls not visible
                     foreach (Control childControl in childControls)

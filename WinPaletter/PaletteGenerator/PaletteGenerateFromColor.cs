@@ -24,7 +24,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.PaletteGenerateFromImage.Icon;
+            using (PaletteGenerateFromImage formIcon = new()) { Icon = formIcon.Icon; }
 
             actions.Clear();
             listBox1.Items.Clear();

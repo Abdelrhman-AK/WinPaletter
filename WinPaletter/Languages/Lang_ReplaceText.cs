@@ -11,7 +11,7 @@ namespace WinPaletter
         }
         private void Lang_ReplaceText_Load(object sender, EventArgs e)
         {
-            Icon = Forms.Lang_JSON_Manage.Icon;
+            using (Lang_JSON_Manage formIcon = new()) { Icon = formIcon.Icon; }
             this.LoadLanguage();
             ApplyStyle(this);
 

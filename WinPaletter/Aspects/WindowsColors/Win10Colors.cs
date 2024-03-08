@@ -57,6 +57,8 @@ namespace WinPaletter
                 ApplyToTM(TMx);
                 TMx.Windows10.Apply("10");
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
+
             }
 
             Cursor = Cursors.Default;
@@ -797,18 +799,6 @@ namespace WinPaletter
         private void easy_inactivetitle_BackColorChanged(object sender, EventArgs e)
         {
             TInactive.BackColor = easy_inactivetitle.BackColor;
-        }
-
-        private void copycat_Click(object sender, EventArgs e)
-        {
-            // Copycat from Windows 11 colors
-            using (Theme.Manager TMx = new(Manager.Source.Empty))
-            {
-                TMx.Windows10 = (Theme.Structures.Windows10x)Program.TM.Windows11.Clone();
-                LoadFromTM((Theme.Manager)TMx.Clone());
-
-                Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Done, string.Empty, null, new Point(2, ((UI.WP.Button)sender).Height + 2));
-            }
         }
 
         private void Button8_Click(object sender, EventArgs e)

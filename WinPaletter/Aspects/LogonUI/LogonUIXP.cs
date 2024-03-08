@@ -69,6 +69,7 @@ namespace WinPaletter
             {
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
                 TMx.LogonUIXP.Apply();
             }
 
@@ -102,7 +103,7 @@ namespace WinPaletter
 
             LoadData(data);
 
-            Icon = Forms.LogonUI.Icon;
+            using (LogonUI formIcon = new()) { Icon = formIcon.Icon; }
             LoadFromTM(Program.TM);
         }
 

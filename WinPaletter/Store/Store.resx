@@ -257,7 +257,7 @@
         lPFO8WiPWAcFJ0sYO8R2/0j3sEJ2tvUrsj8MRb0DI9UEYV5S9bYAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="search_filter_btn.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="search_filter_btn.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAJ1JREFUOE/N
         jDEOgkAURLeis+Qi1nR6AcN5OIetrVwBT8AJTLTmFIb1fXbIRoLkl7zkJZv5Mxv2Q4yxRy+9ZhnCMd1c
@@ -265,7 +265,7 @@
         izOtYj82StuJu2I/jOYP3nhU7IfRFW94ULRLQvgCIv1ZvO1ctsYAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="back_btn.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="back_btn.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAcZJREFUWEft
         lztLA0EURlMqpPHRiygiEo2FtZrK2Os/UMROsBYtRRH159jYCBYGQbC38oUWNooP0Hi+yQ2sutmd3SQu

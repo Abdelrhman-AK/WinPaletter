@@ -860,7 +860,6 @@ namespace WinPaletter.UI.Retro
                 }
             }
 
-            StringFormat ButtonString = new() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
             int imgX = default, imgY = default;
 
             if (Image is not null)
@@ -869,98 +868,96 @@ namespace WinPaletter.UI.Retro
                 imgY = (int)Math.Round((Height - Image.Height) / 2d);
             }
 
-            Color FColor = Enabled ? ForeColor : base.BackColor.CB((float)-0.2d);
-
-            if (Image is null)
+            using (SolidBrush foreBrush = new(Enabled ? ForeColor : base.BackColor.CB((float)-0.2d)))
             {
-                if (TextAlign == ContentAlignment.MiddleCenter)
+                if (Image is null)
                 {
-                    RectangleF r = rect;
-
-                    Parent.Text = Font.Size.ToString();
-
-                    // Resetting positions to fix layout misadjust
-                    if (Font.Name == "Marlett" & Text.Count() == 1)
+                    if (TextAlign == ContentAlignment.MiddleCenter)
                     {
-                        SizeF textSize = Text.Measure(Font);
-                        float x = rect.X + (rect.Width - textSize.Width) / 2f;
-                        float y = rect.Y + (rect.Height - textSize.Height) / 2f;
-                        float w = textSize.Width;
-                        float h = textSize.Height;
+                        RectangleF r = rect;
 
-                        r = new(x + 0.5f, y + 1f, w, h);
+                        // Resetting positions to fix layout misadjust
+                        if (Font.Name == "Marlett" & Text.Count() == 1)
+                        {
+                            SizeF textSize = Text.Measure(Font);
+                            float x = rect.X + (rect.Width - textSize.Width) / 2f;
+                            float y = rect.Y + (rect.Height - textSize.Height) / 2f;
+                            float w = textSize.Width;
+                            float h = textSize.Height;
+
+                            r = new(x + 0.5f, y + 1f, w, h);
+                        }
+
+                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                        {
+                            G.DrawString(Text, Font, foreBrush, r, sf);
+                        }
                     }
-
-                    if (!Enabled)
+                    else
                     {
-                        G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), r, ContentAlignment.MiddleCenter.ToStringFormat());
+                        using (StringFormat sf = base.TextAlign.ToStringFormat())
+                        {
+                            G.DrawString(Text, Font, foreBrush, new Rectangle(0, 0, Width - 1, Height - 1), sf);
+                        }
                     }
-                       
-                    G.DrawString(Text, Font, new SolidBrush(FColor), r, ContentAlignment.MiddleCenter.ToStringFormat());
                 }
+
                 else
                 {
-                    if (!Enabled)
-                        G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), new Rectangle(1, 1, Width, Height), base.TextAlign.ToStringFormat());
-                    G.DrawString(Text, Font, new SolidBrush(FColor), new Rectangle(0, 0, Width - 1, Height - 1), base.TextAlign.ToStringFormat());
-                }
-            }
-
-            else
-            {
-                switch (ImageAlign)
-                {
-                    case ContentAlignment.MiddleCenter:
+                    using (StringFormat ButtonString = new() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+                    {
+                        switch (ImageAlign)
                         {
-                            ButtonString.Alignment = StringAlignment.Center;
-                            ButtonString.LineAlignment = StringAlignment.Near;
+                            case ContentAlignment.MiddleCenter:
+                                {
+                                    ButtonString.Alignment = StringAlignment.Center;
+                                    ButtonString.LineAlignment = StringAlignment.Near;
 
-                            int alx = (int)Math.Round((Height - (Image.Height + 4 + base.Text.Measure(base.Font).Height)) / 2f);
-                            if (string.IsNullOrEmpty(Text))
-                            {
-                                G.DrawImage(Image, new Rectangle(imgX, imgY, Image.Width, Image.Height));
-                            }
-                            else
-                            {
-                                G.DrawImage(Image, new Rectangle(imgX, alx, Image.Width, Image.Height));
-                            }
+                                    int alx = (int)Math.Round((Height - (Image.Height + 4 + base.Text.Measure(base.Font).Height)) / 2f);
+                                    if (string.IsNullOrEmpty(Text))
+                                    {
+                                        G.DrawImage(Image, new Rectangle(imgX, imgY, Image.Width, Image.Height));
+                                    }
+                                    else
+                                    {
+                                        G.DrawImage(Image, new Rectangle(imgX, alx, Image.Width, Image.Height));
+                                    }
 
-                            if (!Enabled)
-                                G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), new Rectangle(1, alx + 10 + Image.Height, Width, Height), ButtonString);
-                            G.DrawString(Text, Font, new SolidBrush(FColor), new Rectangle(0, alx + 9 + Image.Height, Width, Height), ButtonString);
-                            break;
+                                    G.DrawString(Text, Font, foreBrush, new Rectangle(0, alx + 9 + Image.Height, Width, Height), ButtonString);
+                                    break;
+                                }
+
+                            case ContentAlignment.MiddleLeft:
+                                {
+                                    ButtonString.Alignment = StringAlignment.Near;
+                                    ButtonString.LineAlignment = StringAlignment.Center;
+                                    int alx = (int)Math.Round((Width - (Image.Width + 4 + base.Text.Measure(base.Font).Width)) / 2f);
+                                    G.DrawImage(Image, new Rectangle(alx, imgY - 1, Image.Width, Image.Height));
+                                    G.DrawString(Text, Font, foreBrush, new Rectangle(alx + Image.Width, 0, Width, Height), ButtonString);
+                                    break;
+                                }
+
+                            case ContentAlignment.MiddleRight:
+                                {
+                                    G.DrawImage(Image, new Rectangle(1, imgY - 1, Image.Width, Image.Height));
+                                    using (StringFormat sf = base.TextAlign.ToStringFormat())
+                                    {
+                                        G.DrawString(Text, Font, foreBrush, new Rectangle(7, 0, Width, Height), sf);
+                                    }
+                                    break;
+                                }
+
+                            case ContentAlignment.BottomLeft:
+                                {
+                                    G.DrawImage(Image, new Rectangle(1, imgY, Image.Width, Image.Height));
+                                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                                    {
+                                        G.DrawString(Text, Font, foreBrush, new Rectangle(Image.Width + 1, 0, Width, Height), sf);
+                                    }
+                                    break;
+                                }
                         }
-
-                    case ContentAlignment.MiddleLeft:
-                        {
-                            ButtonString.Alignment = StringAlignment.Near;
-                            ButtonString.LineAlignment = StringAlignment.Center;
-                            int alx = (int)Math.Round((Width - (Image.Width + 4 + base.Text.Measure(base.Font).Width)) / 2f);
-                            G.DrawImage(Image, new Rectangle(alx, imgY - 1, Image.Width, Image.Height));
-                            if (!Enabled)
-                                G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), new Rectangle(alx + 1 + Image.Width, 1, Width, Height), ButtonString);
-                            G.DrawString(Text, Font, new SolidBrush(FColor), new Rectangle(alx + Image.Width, 0, Width, Height), ButtonString);
-                            break;
-                        }
-
-                    case ContentAlignment.MiddleRight:
-                        {
-                            G.DrawImage(Image, new Rectangle(1, imgY - 1, Image.Width, Image.Height));
-                            if (!Enabled)
-                                G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), new Rectangle(8, 1, Width, Height), base.TextAlign.ToStringFormat());
-                            G.DrawString(Text, Font, new SolidBrush(FColor), new Rectangle(7, 0, Width, Height), base.TextAlign.ToStringFormat());
-                            break;
-                        }
-
-                    case ContentAlignment.BottomLeft:
-                        {
-                            G.DrawImage(Image, new Rectangle(1, imgY, Image.Width, Image.Height));
-                            if (!Enabled)
-                                G.DrawString(Text, Font, new SolidBrush(base.BackColor.CB(0.8f)), new Rectangle(1 + Image.Width + 2, 1, Width, Height), ContentAlignment.MiddleLeft.ToStringFormat());
-                            G.DrawString(Text, Font, new SolidBrush(FColor), new Rectangle(Image.Width + 1, 0, Width, Height), ContentAlignment.MiddleLeft.ToStringFormat());
-                            break;
-                        }
-
+                    }
                 }
             }
             #endregion
@@ -969,6 +966,5 @@ namespace WinPaletter.UI.Retro
             G.Dispose();
             B.Dispose();
         }
-
     }
 }

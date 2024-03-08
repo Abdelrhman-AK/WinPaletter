@@ -15,7 +15,8 @@ namespace WinPaletter.Dialogs
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Forms.WinEffecter.Icon;
+            using (WinEffecter formIcon = new()) { Icon = formIcon.Icon; }
+
             checkBox1.Checked = !Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
             Forms.GlassWindow.Show();
 

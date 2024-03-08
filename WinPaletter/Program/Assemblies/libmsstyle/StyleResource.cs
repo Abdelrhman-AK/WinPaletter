@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -15,30 +12,24 @@ namespace libmsstyle
 
     public class StyleResource
     {
-        private byte[] m_data;
-        public byte[] Data { get => m_data; }
-
-        private int m_resId;
-        public int ResourceId { get => m_resId; }
-
-        private StyleResourceType m_type;
-        public StyleResourceType Type { get => m_type; }
+        public byte[] Data { get; }
+        public int ResourceId { get; }
+        public StyleResourceType Type { get; }
 
         public StyleResource(byte[] data, int resId, StyleResourceType type)
         {
-            m_data = data;
-            m_resId = resId;
-            m_type = type;
+            Data = data;
+            ResourceId = resId;
+            Type = type;
         }
 
         public override bool Equals(object obj)
         {
             if (obj is StyleResource other)
             {
-                return
-                    this.m_resId == other.m_resId &&
-                    this.m_type == other.m_type &&
-                    object.ReferenceEquals(this.m_data, other.m_data);
+                return ResourceId == other.ResourceId &&
+                    Type == other.Type &&
+                    object.ReferenceEquals(Data, other.Data);
             }
             else return false;
         }
@@ -46,9 +37,9 @@ namespace libmsstyle
         public override int GetHashCode()
         {
             int hash = 1337;
-            hash = (hash * 4) ^ m_resId;
-            hash = (hash * 4) ^ (int)m_type;
-            hash = (hash * 4) ^ (m_data != null ? m_data.Length : 0);
+            hash = (hash * 4) ^ ResourceId;
+            hash = (hash * 4) ^ (int)Type;
+            hash = (hash * 4) ^ (Data != null ? Data.Length : 0);
             return hash;
         }
     }

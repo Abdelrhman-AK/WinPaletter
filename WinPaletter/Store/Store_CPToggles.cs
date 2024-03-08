@@ -19,7 +19,7 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             Opacity = 0d;
-            Icon = Forms.Store.Icon;
+            using (Store formIcon = new()) { Icon = formIcon.Icon; }
 
             CheckedListBox1.Items.Clear();
 
