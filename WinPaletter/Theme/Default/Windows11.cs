@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 
 namespace WinPaletter.Theme
 {
@@ -88,6 +89,18 @@ namespace WinPaletter.Theme
                 WinEffects.ShowSecondsInSystemClock = false;
                 WinEffects.Win11ClassicContextMenu = false;
                 WinEffects.SysListView32 = false;
+            }
+
+            {
+                ref Structures.Icons Icons = ref TM.Icons;
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(0).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(0).Item3);
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(1).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(1).Item3);
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(2).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(2).Item3);
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(3).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(3).Item3);
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(4).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(4).Item3);
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(5).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(5).Item3);
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(6).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(7).Item3); // <- Windows 11 has this set as default !!
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(7).Item1, ""); // <- Windows 11 has this set as default !!
             }
 
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);

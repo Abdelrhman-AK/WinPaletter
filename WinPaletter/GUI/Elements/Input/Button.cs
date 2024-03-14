@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static WinPaletter.UI.Style.Config;
 
@@ -84,7 +86,7 @@ namespace WinPaletter.UI.WP
                         if (!_imageGlyphEnabled) _color = Colorize();
                     }
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -134,7 +136,7 @@ namespace WinPaletter.UI.WP
                         _imageGlyphDown = ((Bitmap)value)?.Tint(colors.ForeColor_Accent);
                     }
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -152,7 +154,7 @@ namespace WinPaletter.UI.WP
                 {
                     _color = value;
                     _lineColor = LineColor(value);
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -169,7 +171,7 @@ namespace WinPaletter.UI.WP
                     _customColor = value;
                     _color = Colorize();
                     _lineColor = LineColor(value);
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -361,7 +363,7 @@ namespace WinPaletter.UI.WP
                     _flag = value;
                     _color = Colorize();
                     _lineColor = LineColor(_color);
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -395,7 +397,7 @@ namespace WinPaletter.UI.WP
                 {
                     _imageGlyphEnabled = value;
                     _color = Colorize();
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -582,7 +584,7 @@ namespace WinPaletter.UI.WP
             base.OnLeave(e);
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override async void OnMouseMove(MouseEventArgs e)
         {
             isMouseOverMenuSplitter = Menu.Items.Count > 0 && MenuSplitterRectangle.Contains(PointToClient(MousePosition));
 
@@ -591,7 +593,9 @@ namespace WinPaletter.UI.WP
                 hoverPosition = this.PointToClient(MousePosition);
                 hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
                 hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
-                Refresh();
+
+                await Task.Delay(10);
+                Invalidate();
             }
 
             base.OnMouseMove(e);
@@ -621,10 +625,12 @@ namespace WinPaletter.UI.WP
             base.OnLostFocus(e);
         }
 
-        protected override void OnEnabledChanged(EventArgs e)
+        protected override async void OnEnabledChanged(EventArgs e)
         {
             UpdateStyleSchemes();
-            Refresh();
+
+            await Task.Delay(10);
+            Invalidate();
 
             base.OnEnabledChanged(e);
         }
@@ -649,52 +655,6 @@ namespace WinPaletter.UI.WP
             ForceUpdateImageGlyph = false;
 
             Animate();
-        }
-
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            if (FindForm() != null)
-            {
-                FindForm().Activated += Form_Activated;
-                FindForm().Deactivate += Form_Deactivate; ;
-            }
-
-            base.OnHandleCreated(e);
-        }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            if (FindForm() != null)
-            {
-                FindForm().Activated -= Form_Activated;
-                FindForm().Deactivate -= Form_Deactivate; ;
-            }
-
-            base.OnHandleDestroyed(e);
-        }
-
-        private void Form_Activated(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 255;
-            }
-        }
-
-        private void Form_Deactivate(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 100).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 100;
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -741,22 +701,8 @@ namespace WinPaletter.UI.WP
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
-
-        private int _focusAlpha = 255;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public int FocusAlpha
-        {
-            get => _focusAlpha;
-            set
-            {
-                _focusAlpha = value;
-                Refresh();
-            }
-        }
-
 
         private int _hoverSize;
 
@@ -782,7 +728,7 @@ namespace WinPaletter.UI.WP
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -807,18 +753,18 @@ namespace WinPaletter.UI.WP
             {
                 if (Flag == Flags.None || Flag == Flags.TintedOnHover || Flag == Flags.ErrorOnHover || Flag == Flags.TertiaryOnHover || Flag == Flags.CustomColorOnHover)
                 {
-                    using (SolidBrush br = new(Color.FromArgb(FocusAlpha, Color))) { G.FillRoundedRect(br, RectInner); }
+                    using (SolidBrush br = new(Color.FromArgb(255, Color))) { G.FillRoundedRect(br, RectInner); }
                 }
                 else
                 {
                     using (Colors_Collection colors = new(Color, Color, Program.Style.DarkMode))
-                    using (LinearGradientBrush br = new(Rect, Color.FromArgb(FocusAlpha, Color), colors.Back_Checked, LinearGradientMode.ForwardDiagonal))
+                    using (LinearGradientBrush br = new(Rect, Color.FromArgb(255, Color), colors.Back_Checked, LinearGradientMode.ForwardDiagonal))
                     {
                         G.FillRoundedRect(br, RectInner);
                     }
                 }
 
-                using (Pen P = new(Color.FromArgb(FocusAlpha, _lineColor)))
+                using (Pen P = new(Color.FromArgb(255, _lineColor)))
                 {
                     if (State != MouseState.Down) G.DrawRoundedRect_LikeW11(P, RectInner);
                     else G.DrawRoundedRect(P, RectInner);
@@ -861,7 +807,7 @@ namespace WinPaletter.UI.WP
             // contextMenu split button
             if (Menu.Items.Count > 0 && isMouseOverMenuSplitter && State != MouseState.None)
             {
-                using (SolidBrush br = new(Color.FromArgb(FocusAlpha, scheme1.Colors.Back_Checked))) { G.FillRoundedRect(br, Rect_Menu); }
+                using (SolidBrush br = new(Color.FromArgb(255, scheme1.Colors.Back_Checked))) { G.FillRoundedRect(br, Rect_Menu); }
             }
 
             // contextMenu split button line

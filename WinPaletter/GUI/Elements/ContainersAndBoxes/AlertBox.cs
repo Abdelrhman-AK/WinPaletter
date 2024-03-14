@@ -101,7 +101,7 @@ namespace WinPaletter.UI.WP
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             bool RTL = (int)RightToLeft == 1;
             bool DarkMode = Program.Style.DarkMode;

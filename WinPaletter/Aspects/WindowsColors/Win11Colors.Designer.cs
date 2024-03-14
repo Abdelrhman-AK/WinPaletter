@@ -1041,7 +1041,7 @@
             this.tip.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tip.ForeColor = System.Drawing.Color.White;
             this.tip.Image = null;
-            this.tip.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Help;
+            this.tip.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
             this.tip.ImageGlyphEnabled = true;
             this.tip.Location = new System.Drawing.Point(512, 8);
             this.tip.Name = "tip";

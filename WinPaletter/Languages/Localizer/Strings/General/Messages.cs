@@ -36,5 +36,7 @@
         public string SaveDialog_Question { get; set; } = "Do you want to save the current WinPaletter theme as a file?";
         public string ApplyingMode_ErrorDialog { get; set; } = "You can continue; the theme has been applied without these elements";
         public string LoadingMode_ErrorDialog { get; set; } = "You can continue; the theme has been loaded without these elements";
+        public string IconsImport_Shell32_1 { get; set; } = "Practice this feature with caution. Another shell32.dll may have different icons and indexes (IDs), which could lead to incorrect results.";
+        public string IconsImport_Shell32_2 { get; set; } = "The best practice is to change every icon one by one manually. Would you like to proceed?";
     }
 }

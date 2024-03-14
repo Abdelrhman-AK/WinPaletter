@@ -93,19 +93,6 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
-        private int _focusAlpha = 255;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public int FocusAlpha
-        {
-            get => _focusAlpha;
-            set
-            {
-                _focusAlpha = value;
-                Refresh();
-            }
-        }
-
         #endregion
 
         #region Events/Overrides
@@ -214,7 +201,7 @@ namespace WinPaletter.UI.WP
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
         #endregion
 
@@ -230,7 +217,7 @@ namespace WinPaletter.UI.WP
 
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
             bool RTL = (int)RightToLeft == 1;
 
             //Makes background drawn properly, and transparent
@@ -260,11 +247,11 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.FillRoundedRect(br, SideRect); }
 
-            using (Pen P = new(Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line(parentLevel)))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+            using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.Line(parentLevel)))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
 
             using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
 
-            using (SolidBrush SignBrush = new(Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Checked_Hover)))
+            using (SolidBrush SignBrush = new(Color.FromArgb(255 - alpha, scheme.Colors.Line_Checked_Hover)))
             {
                 using (Font SignFont = new("Marlett", 11f))
                 {

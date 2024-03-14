@@ -68,6 +68,11 @@ namespace WinPaletter
                         Forms.AltTabEditor.pnl_preview1.BackgroundImage = wall;
                         Forms.AltTabEditor.Classic_Preview1.BackgroundImage = wall;
                     }
+
+                    if (Application.OpenForms.OfType<IconsStudio>().Count() > 0)
+                    {
+                        Forms.IconsStudio.pnl_preview.BackgroundImage = wall;
+                    }
                 });
             });
 

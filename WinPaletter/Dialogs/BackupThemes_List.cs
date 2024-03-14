@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,36 +52,43 @@ namespace WinPaletter
             if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply"))
                 System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply");
 
+            if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply"))
+                System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply");
+
             if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen"))
                 System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen");
 
             if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen"))
                 System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen");
 
-            string[] themes_onThemeApply = Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
-            string[] themes_onThemeOpen = Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
-            string[] themes_onAppOpen = Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime).ToArray();
+            string[] themes_onThemeApply = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
+            string[] themes_onAspectApply = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
+            string[] themes_onThemeOpen = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
+            string[] themes_onAppOpen = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
 
             // Create three groups
-            ListViewGroup group1 = new(Program.Lang.Backup_Group_AppOpen, HorizontalAlignment.Center);
-            ListViewGroup group2 = new(Program.Lang.Backup_Group_ThemeApply, HorizontalAlignment.Center);
-            ListViewGroup group3 = new(Program.Lang.Backup_Group_ThemeOpen, HorizontalAlignment.Center);
+            ListViewGroup group1 = new(Program.Lang.Backup_Group_ThemeApply, HorizontalAlignment.Center);
+            ListViewGroup group2 = new(Program.Lang.Backup_Group_AspectApply, HorizontalAlignment.Center);
+            ListViewGroup group3 = new(Program.Lang.Backup_Group_AppOpen, HorizontalAlignment.Center);
+            ListViewGroup group4 = new(Program.Lang.Backup_Group_ThemeOpen, HorizontalAlignment.Center);
 
             // Add groups to the ListView
-            listView1.Groups.Add(group2);
             listView1.Groups.Add(group1);
+            listView1.Groups.Add(group2);
             listView1.Groups.Add(group3);
+            listView1.Groups.Add(group4);
 
-            IEnumerable<string> backups = Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", SearchOption.AllDirectories);
-            label3.Text = backups.Sum(fileInfo => new FileInfo(fileInfo).Length).SizeString();
+            IEnumerable<string> backups = System.IO.Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", System.IO.SearchOption.AllDirectories);
+            label3.Text = backups.Sum(fileInfo => new System.IO.FileInfo(fileInfo).Length).SizeString();
             label4.Text = $"{backups.Count()} {Program.Lang.Backup_NO}";
 
             Task.Run(() =>
             {
                 // Populate the ListView
-                AddBackups(listView1, imageList1, themes_onAppOpen, group1);
-                AddBackups(listView1, imageList1, themes_onThemeApply, group2);
-                AddBackups(listView1, imageList1, themes_onThemeOpen, group3);
+                AddBackups(listView1, imageList1, themes_onThemeApply, group1);
+                AddBackups(listView1, imageList1, themes_onAspectApply, group2);
+                AddBackups(listView1, imageList1, themes_onAppOpen, group3);
+                AddBackups(listView1, imageList1, themes_onThemeOpen, group4);
 
                 // Resize the columns
                 listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -102,7 +108,7 @@ namespace WinPaletter
                         string name = TMx.Info.ThemeName;
                         ListViewItem item = new(name);
                         item.SubItems.Add(file);
-                        item.SubItems.Add(File.GetCreationTime(file).ToString());
+                        item.SubItems.Add(System.IO.File.GetCreationTime(file).ToString());
                         item.ImageKey = name;
                         item.Group = group;
 
@@ -126,7 +132,7 @@ namespace WinPaletter
 
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Forms.Home.LoadFromTM(Program.TM);
-                    Forms.Home.Text = Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text);
+                    Forms.Home.Text = System.IO.Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text);
                 }
             }
         }
@@ -212,6 +218,11 @@ namespace WinPaletter
 
         private void listView1_SizeChanged(object sender, EventArgs e)
         {
+            RefreshSize();
+        }
+
+        private void RefreshSize()
+        {
             if (listView1.Columns.Count >= 3)
             {
                 listView1.Columns[1].Width = listView1.Width - listView1.Columns[0].Width - listView1.Columns[2].Width;
@@ -232,10 +243,13 @@ namespace WinPaletter
             {
                 Program.Animator.HideSync(windowsDesktop1);
                 System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", true);
+                System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", true);
                 System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", true);
                 System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", true);
                 PopulateThemesBackups();
             }
+
+            RefreshSize();
         }
 
         private void listView1_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -267,7 +281,7 @@ namespace WinPaletter
 
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Forms.Home.LoadFromTM(Program.TM);
-                    Forms.Home.Text = Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text);
+                    Forms.Home.Text = System.IO.Path.GetFileName(listView1.SelectedItems[0].SubItems[1].Text);
                 }
             }
         }

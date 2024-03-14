@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Simulation
@@ -95,7 +96,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Titlebar)
                 {
                     _color_Titlebar = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -109,7 +110,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Titlebar_Unfocused)
                 {
                     _color_Titlebar_Unfocused = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -123,7 +124,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_TabFocused)
                 {
                     _color_TabFocused = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -137,7 +138,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_TabUnFocused)
                 {
                     _color_TabUnFocused = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -151,7 +152,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Background)
                 {
                     _color_Background = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -165,7 +166,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Foreground)
                 {
                     _color_Foreground = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -179,7 +180,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Selection)
                 {
                     _color_Selection = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -193,7 +194,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Cursor)
                 {
                     _color_Cursor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -207,7 +208,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _cursorType)
                 {
                     _cursorType = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -221,7 +222,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _cursorHeight)
                 {
                     _cursorHeight = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -235,7 +236,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _light)
                 {
                     _light = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -249,7 +250,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _useAcrylicOnTitlebar)
                 {
                     _useAcrylicOnTitlebar = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -263,7 +264,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _useAcrylic)
                 {
                     _useAcrylic = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -277,7 +278,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _tabTitle)
                 {
                     _tabTitle = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -291,7 +292,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _tabColor)
                 {
                     _tabColor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -305,7 +306,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _previewVersion)
                 {
                     _previewVersion = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -319,7 +320,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _tabIconButItIsString)
                 {
                     _tabIconButItIsString = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -333,7 +334,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _isFocused)
                 {
                     _isFocused = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -348,7 +349,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _tabIcon)
                 {
                     _tabIcon = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -388,19 +389,21 @@ namespace WinPaletter.UI.Simulation
             base.OnSizeChanged(e);
         }
 
-        protected override void OnFontChanged(EventArgs e)
+        protected override async void OnFontChanged(EventArgs e)
         {
-            Refresh();
+            await Task.Delay(10);
+            Invalidate();
 
             base.OnFontChanged(e);
         }
 
-        private void UpdateOpacityBackImageChanged()
+        private async void UpdateOpacityBackImageChanged()
         {
             if (BackImage is not null)
             {
                 img = BackImage.Fade(OpacityBackImage / 100f);
-                Refresh();
+                await Task.Delay(10);
+                Invalidate();
             }
         }
 
@@ -533,9 +536,9 @@ namespace WinPaletter.UI.Simulation
 
         #region Animator
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private async void Timer_Tick(object sender, EventArgs e)
         {
-            if (IsFocused) { tick = !tick; Refresh(); }
+            if (IsFocused) { tick = !tick; await Task.Delay(10); Invalidate(); }
         }
 
         #endregion
@@ -544,7 +547,7 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             if (PreviewVersion)
             {

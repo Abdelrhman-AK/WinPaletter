@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -52,7 +53,7 @@ namespace WinPaletter.UI.WP
                 if (_image != value)
                 {
                     _image = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -93,7 +94,7 @@ namespace WinPaletter.UI.WP
                 if (_color != value)
                 {
                     _color = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -175,7 +176,7 @@ namespace WinPaletter.UI.WP
                 hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
 
                 await Task.Delay(10);
-                Refresh();
+                Invalidate();
             }
 
             base.OnMouseMove(e);
@@ -248,7 +249,7 @@ namespace WinPaletter.UI.WP
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
 
         private int _hoverSize;
@@ -280,12 +281,11 @@ namespace WinPaletter.UI.WP
             parentLevel = this.Level();
         }
 
-
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -328,14 +328,14 @@ namespace WinPaletter.UI.WP
                     {
                         G.FillRectangle(br0G, rect_margin);
 
+                        if (State != MouseState.None)
+                        {
+                            G.FillRectangle(Noise, rect_margin);
+                        }
+
                         G.DrawImage(Image, imageRect);
 
                         G.FillRectangle(br1G, rect_margin);
-                    }
-
-                    if (State != MouseState.None)
-                    {
-                        G.FillRectangle(Noise, rect_margin);
                     }
 
                     if (CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)

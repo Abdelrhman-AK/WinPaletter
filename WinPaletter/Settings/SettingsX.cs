@@ -197,6 +197,7 @@ namespace WinPaletter
             toggle31.Checked = Sets.BackupTheme.Enabled;
             toggle33.Checked = Sets.BackupTheme.AutoBackupOnAppOpen;
             toggle32.Checked = Sets.BackupTheme.AutoBackupOnApply;
+            toggle36.Checked = Sets.BackupTheme.AutoBackupOnApplySingleAspect;
             toggle34.Checked = Sets.BackupTheme.AutoBackupOnThemeLoad;
             textBox4.Text = Sets.BackupTheme.BackupPath;
 
@@ -447,6 +448,7 @@ namespace WinPaletter
             Sets.BackupTheme.Enabled = toggle31.Checked;
             Sets.BackupTheme.AutoBackupOnAppOpen = toggle33.Checked;
             Sets.BackupTheme.AutoBackupOnApply = toggle32.Checked;
+            Sets.BackupTheme.AutoBackupOnApplySingleAspect = toggle36.Checked;
             Sets.BackupTheme.AutoBackupOnThemeLoad = toggle34.Checked;
             Sets.BackupTheme.BackupPath = textBox4.Text;
 
@@ -535,7 +537,6 @@ namespace WinPaletter
             Sets.AspectsControl.Cursors_Advanced = radioImage6.Checked;
             Sets.AspectsControl.MetricsFonts_Advanced = radioImage8.Checked;
             Sets.AspectsControl.Wallpaper_Advanced = radioImage10.Checked;
-
 
             Sets.Save(Mode, File);
         }
@@ -707,6 +708,8 @@ namespace WinPaletter
                 if (Settings.BackupTheme.AutoBackupOnAppOpen != toggle33.Checked)
                     Changed = true;
                 if (Settings.BackupTheme.AutoBackupOnApply != toggle32.Checked)
+                    Changed = true;
+                if (Settings.BackupTheme.AutoBackupOnApplySingleAspect != toggle36.Checked)
                     Changed = true;
                 if (Settings.BackupTheme.AutoBackupOnThemeLoad != toggle34.Checked)
                     Changed = true;

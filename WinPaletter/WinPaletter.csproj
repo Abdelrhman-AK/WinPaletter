@@ -259,6 +259,12 @@
     <None Include="Resources\luna.zip" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aspects\IconsStudio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Aspects\IconsStudio.Designer.cs">
+      <DependentUpon>IconsStudio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Assets\Accessibility_Vision.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -324,10 +330,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WinLogos.resx</DependentUpon>
     </Compile>
-    <Compile Include="Assets\WinPaletter_Store.Designer.cs">
+    <Compile Include="Assets\Store.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WinPaletter_Store.resx</DependentUpon>
+      <DependentUpon>Store.resx</DependentUpon>
     </Compile>
     <Compile Include="Assets\WinVistaPreview.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -349,6 +355,7 @@
     <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -648,6 +655,7 @@
     <Compile Include="Theme\Default\Windows81.cs" />
     <Compile Include="Theme\Default\WindowsVista.cs" />
     <Compile Include="Theme\Default\WindowsXP.cs" />
+    <Compile Include="Theme\Structures\Others\Icons.cs" />
     <Compile Include="Theme\Support\CloneSupport.cs" />
     <Compile Include="Theme\Support\CursorsRender.cs" />
     <Compile Include="Theme\Support\DisposeSupport.cs" />
@@ -1190,6 +1198,9 @@
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Aspects\IconsStudio.resx">
+      <DependentUpon>IconsStudio.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
@@ -1242,9 +1253,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WinLogos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\WinPaletter_Store.resx">
+    <EmbeddedResource Include="Assets\Store.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WinPaletter_Store.Designer.cs</LastGenOutput>
+      <LastGenOutput>Store.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\WinVistaPreview.resx">
       <Generator>ResXFileCodeGenerator</Generator>

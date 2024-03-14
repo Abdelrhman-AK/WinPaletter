@@ -48,7 +48,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_File)
                 {
                     _prop_File = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_UseFromFile)
                 {
                     _prop_UseFromFile = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Cursor)
                 {
                     _prop_Cursor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_ArrowStyle)
                 {
                     _prop_ArrowStyle = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_CircleStyle)
                 {
                     _prop_CircleStyle = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_PrimaryColor1)
                 {
                     _prop_PrimaryColor1 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_PrimaryColor2)
                 {
                     _prop_PrimaryColor2 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_PrimaryColorGradient)
                 {
                     _prop_PrimaryColorGradient = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_PrimaryColorGradientMode)
                 {
                     _prop_PrimaryColorGradientMode = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -174,7 +174,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_PrimaryNoise)
                 {
                     _prop_PrimaryNoise = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -188,7 +188,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_PrimaryNoiseOpacity)
                 {
                     _prop_PrimaryNoiseOpacity = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -202,7 +202,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_SecondaryColor1)
                 {
                     _prop_SecondaryColor1 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -216,7 +216,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_SecondaryColor2)
                 {
                     _prop_SecondaryColor2 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_SecondaryColorGradient)
                 {
                     _prop_SecondaryColorGradient = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -244,7 +244,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_SecondaryColorGradientMode)
                 {
                     _prop_SecondaryColorGradientMode = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -258,7 +258,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_SecondaryNoise)
                 {
                     _prop_SecondaryNoise = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -272,7 +272,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_SecondaryNoiseOpacity)
                 {
                     _prop_SecondaryNoiseOpacity = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -286,7 +286,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleBack1)
                 {
                     _prop_LoadingCircleBack1 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -300,7 +300,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleBack2)
                 {
                     _prop_LoadingCircleBack2 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -314,7 +314,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleBackGradient)
                 {
                     _prop_LoadingCircleBackGradient = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -328,7 +328,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleBackGradientMode)
                 {
                     _prop_LoadingCircleBackGradientMode = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -342,7 +342,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleBackNoise)
                 {
                     _prop_LoadingCircleBackNoise = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -356,7 +356,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleBackNoiseOpacity)
                 {
                     _prop_LoadingCircleBackNoiseOpacity = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -370,7 +370,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleHot1)
                 {
                     _prop_LoadingCircleHot1 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -384,7 +384,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleHot2)
                 {
                     _prop_LoadingCircleHot2 = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -398,7 +398,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleHotGradient)
                 {
                     _prop_LoadingCircleHotGradient = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -412,7 +412,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleHotGradientMode)
                 {
                     _prop_LoadingCircleHotGradientMode = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -426,7 +426,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleHotNoise)
                 {
                     _prop_LoadingCircleHotNoise = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -440,7 +440,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_LoadingCircleHotNoiseOpacity)
                 {
                     _prop_LoadingCircleHotNoiseOpacity = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -454,7 +454,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Shadow_Enabled)
                 {
                     _prop_Shadow_Enabled = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -468,7 +468,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Shadow_Color)
                 {
                     _prop_Shadow_Color = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -482,7 +482,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Shadow_Blur)
                 {
                     _prop_Shadow_Blur = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -496,7 +496,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Shadow_Opacity)
                 {
                     _prop_Shadow_Opacity = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -510,7 +510,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Shadow_OffsetX)
                 {
                     _prop_Shadow_OffsetX = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -524,7 +524,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Shadow_OffsetY)
                 {
                     _prop_Shadow_OffsetY = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -538,7 +538,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _prop_Scale)
                 {
                     _prop_Scale = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -559,18 +559,6 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        private int _focusAlpha = 255;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public int FocusAlpha
-        {
-            get => _focusAlpha;
-            set
-            {
-                _focusAlpha = value;
-                Refresh();
-            }
-        }
         #endregion
 
         #region Events/Overrides
@@ -641,52 +629,6 @@ namespace WinPaletter.UI.Controllers
             base.OnClick(e);
         }
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            if (FindForm() != null)
-            {
-                FindForm().Activated += Form_Activated;
-                FindForm().Deactivate += Form_Deactivate; ;
-            }
-
-            base.OnHandleCreated(e);
-        }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            if (FindForm() != null)
-            {
-                FindForm().Activated -= Form_Activated;
-                FindForm().Deactivate -= Form_Deactivate; ;
-            }
-
-            base.OnHandleDestroyed(e);
-        }
-
-        private void Form_Activated(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 255;
-            }
-        }
-
-        private void Form_Deactivate(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 100).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 100;
-            }
-        }
-
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -711,7 +653,7 @@ namespace WinPaletter.UI.Controllers
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
 
         private int _alpha2 = 0;
@@ -720,7 +662,7 @@ namespace WinPaletter.UI.Controllers
         public int alpha2
         {
             get => _alpha2;
-            set { _alpha2 = value; Refresh(); }
+            set { _alpha2 = value; Invalidate(); }
         }
         #endregion
 
@@ -797,7 +739,7 @@ namespace WinPaletter.UI.Controllers
 
             using (SolidBrush br = new(Color.FromArgb(_alpha2, scheme.Colors.Back_Checked))) { G.FillRoundedRect(br, MainRect); }
 
-            using (SolidBrush br = new(Color.FromArgb(Math.Max(FocusAlpha - _alpha2, 0), scheme.Colors.Back(parentLevel)))) { G.FillRoundedRect(br, MainRectInner); }
+            using (SolidBrush br = new(Color.FromArgb(Math.Max(255 - _alpha2, 0), scheme.Colors.Back(parentLevel)))) { G.FillRoundedRect(br, MainRectInner); }
 
             using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
 

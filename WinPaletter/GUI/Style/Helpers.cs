@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -188,7 +189,11 @@ namespace WinPaletter.UI.Style
                 CustomR = false;
             }
 
-            Program.Style = new(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners, Animations);
+            TextRenderingHint textRenderingHint = Program.Style is not null ? Program.Style.TextRenderingHint : TextRenderingHint.SystemDefault;
+            Program.Style = new(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners, Animations)
+            {
+                TextRenderingHint = textRenderingHint
+            };
 
             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
             {
@@ -449,31 +454,28 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is DataGridView)
             {
-                Color ColumnBack;
-                Color CellBack;
+                Color Back = Program.Style.Schemes.Main.Colors.Back(ctrl.Level());
+                Color BackHover = Program.Style.Schemes.Main.Colors.Back_Hover(ctrl.Level());
+                Color Grid = Program.Style.Schemes.Main.Colors.Line_Hover(ctrl.Level());
 
-                switch (DarkMode)
+                (ctrl as DataGridView).EnableHeadersVisualStyles = false;
+
+                foreach (DataGridViewColumn col in (ctrl as DataGridView).Columns)
                 {
-                    case true:
-                        {
-                            ColumnBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level()).Light(0.05f);
-                            CellBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level());
-                            break;
-                        }
-
-                    case false:
-                        {
-                            ColumnBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level()).Dark(0.05f);
-                            CellBack = Program.Style.Schemes.Main.Colors.Back(ctrl.Level());
-                            break;
-                        }
-
+                    col.HeaderCell.Style.BackColor = BackHover;
+                    col.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
                 }
-                (ctrl as DataGridView).ColumnHeadersDefaultCellStyle.BackColor = ColumnBack;
+
+                foreach (DataGridViewRow row in (ctrl as DataGridView).Rows)
+                {
+                    row.HeaderCell.Style.BackColor = BackHover;
+                    row.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
+                }
+               
                 (ctrl as DataGridView).BackColor = ctrl.Parent.BackColor;
                 (ctrl as DataGridView).BackgroundColor = ctrl.Parent.BackColor;
-                (ctrl as DataGridView).DefaultCellStyle.BackColor = CellBack;
-
+                (ctrl as DataGridView).DefaultCellStyle.BackColor = Back;
+                (ctrl as DataGridView).GridColor = Grid;
             }
 
             if (ctrl.HasChildren)

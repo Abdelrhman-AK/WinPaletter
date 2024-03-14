@@ -144,6 +144,8 @@ namespace WinPaletter.UI.Controllers
             pattern?.Dispose();
             Noise?.Dispose();
 
+            foreach (Bitmap bmp in DesignedFor_Badges) { bmp?.Dispose(); }
+
             base.Dispose(disposing);
         }
 
@@ -160,24 +162,28 @@ namespace WinPaletter.UI.Controllers
         #region Methods
         public void UpdateBadges()
         {
+            foreach (Bitmap bmp in DesignedFor_Badges) { bmp?.Dispose(); }
+
             DesignedFor_Badges.Clear();
+
             if (_TM is not null)
             {
-                //if (_TM.Info.DesignedFor_Win12) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor12);
+                //if (_TM.Info.DesignedFor_Win12) DesignedFor_Badges.Add(Assets.Store.DesignedFor12);
 
-                if (_TM.Info.DesignedFor_Win11) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor11);
+                if (_TM.Info.DesignedFor_Win11) DesignedFor_Badges.Add(Assets.Store.DesignedFor11);
 
-                if (_TM.Info.DesignedFor_Win10) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor10);
+                if (_TM.Info.DesignedFor_Win10) DesignedFor_Badges.Add(Assets.Store.DesignedFor10);
 
-                if (_TM.Info.DesignedFor_Win81) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor8);
+                if (_TM.Info.DesignedFor_Win81) DesignedFor_Badges.Add(Assets.Store.DesignedFor8);
 
-                if (_TM.Info.DesignedFor_Win7) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedFor7);
+                if (_TM.Info.DesignedFor_Win7) DesignedFor_Badges.Add(Assets.Store.DesignedFor7);
 
-                if (_TM.Info.DesignedFor_WinVista) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForVista);
+                if (_TM.Info.DesignedFor_WinVista) DesignedFor_Badges.Add(Assets.Store.DesignedForVista);
 
-                if (_TM.Info.DesignedFor_WinXP) DesignedFor_Badges.Add(Assets.WinPaletter_Store.DesignedForXP);
+                if (_TM.Info.DesignedFor_WinXP) DesignedFor_Badges.Add(Assets.Store.DesignedForXP);
             }
-            Refresh();
+
+            Invalidate();
         }
 
         public void UpdatePattern(int val)
@@ -194,60 +200,89 @@ namespace WinPaletter.UI.Controllers
 
                 case 1:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern1;
+                        bmp = Assets.Store.Pattern1;
                         break;
                     }
                 case 2:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern2;
+                        bmp = Assets.Store.Pattern2;
                         break;
                     }
                 case 3:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern3;
+                        bmp = Assets.Store.Pattern3;
                         break;
                     }
                 case 4:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern4;
+                        bmp = Assets.Store.Pattern4;
                         break;
                     }
                 case 5:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern5;
+                        bmp = Assets.Store.Pattern5;
                         break;
                     }
                 case 6:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern6;
+                        bmp = Assets.Store.Pattern6;
                         break;
                     }
                 case 7:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern7;
+                        bmp = Assets.Store.Pattern7;
                         break;
                     }
                 case 8:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern8;
+                        bmp = Assets.Store.Pattern8;
                         break;
                     }
                 case 9:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern9;
+                        bmp = Assets.Store.Pattern9;
                         break;
                     }
                 case 10:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern10;
+                        bmp = Assets.Store.Pattern10;
                         break;
                     }
                 case 11:
                     {
-                        bmp = Properties.Resources.Noise;
+                        bmp = Assets.Store.Pattern11;
                         break;
                     }
-
+                case 12:
+                    {
+                        bmp = Assets.Store.Pattern12;
+                        break;
+                    }
+                case 13:
+                    {
+                        bmp = Assets.Store.Pattern13;
+                        break;
+                    }
+                case 14:
+                    {
+                        bmp = Assets.Store.Pattern14;
+                        break;
+                    }
+                case 15:
+                    {
+                        bmp = Assets.Store.Pattern15;
+                        break;
+                    }
+                case 16:
+                    {
+                        bmp = Assets.Store.Pattern16;
+                        break;
+                    }
+                case 17:
+                    {
+                        bmp = Assets.Store.Pattern17;
+                        break;
+                    }
                 default:
                     {
                         bmp = null;
@@ -270,7 +305,7 @@ namespace WinPaletter.UI.Controllers
 
             bmp?.Dispose();
 
-            Refresh();
+            Invalidate();
         }
 
         #endregion
@@ -281,7 +316,7 @@ namespace WinPaletter.UI.Controllers
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
         #endregion
 
@@ -298,7 +333,7 @@ namespace WinPaletter.UI.Controllers
 
             G.TextRenderingHint = TM is not null ?
                                  (TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit)
-                                : Program.Style.RenderingHint;
+                                : Program.Style.TextRenderingHint;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -324,8 +359,8 @@ namespace WinPaletter.UI.Controllers
             using (LinearGradientBrush br = new(rect_outer, back1, back0, LinearGradientMode.ForwardDiagonal)) { G.FillRoundedRect(br, rect_inner); }
             using (LinearGradientBrush br = new(rect_outer, back_hover0, Color.Transparent, 0f)) { G.FillRoundedRect(br, rect_outer); }
 
-            if (State != MouseState.None) G.FillRoundedRect(Noise, rect_inner);
-            if (pattern is not null) G.FillRoundedRect(pattern, rect_inner);
+            if (Noise is not null && State != MouseState.None) G.FillRoundedRect(Noise, rect_inner);
+            if (!DesignMode && pattern is not null) G.FillRoundedRect(pattern, rect_inner);
             if (BackgroundImage is not null) G.DrawRoundImage(BackgroundImage, State == MouseState.Over ? rect_outer : rect_inner);
 
             Color line, line_hover0;
@@ -394,18 +429,18 @@ namespace WinPaletter.UI.Controllers
 
                     if (DoneByWinPaletter)
                     {
-                        G.DrawImage(Assets.WinPaletter_Store.DoneByWinPaletter, BadgeRect);
+                        G.DrawImage(Assets.Store.DoneByWinPaletter, BadgeRect);
                     }
                     else
                     {
-                        G.DrawImage(Assets.WinPaletter_Store.DoneByUser, BadgeRect);
+                        G.DrawImage(Assets.Store.DoneByUser, BadgeRect);
                     }
 
                     G.DrawString($"{Program.Lang.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
 
                     if (System.IO.File.Exists(URL_ThemeFile))
                     {
-                        G.DrawImage(Assets.WinPaletter_Store.Folder, FileRect_Img);
+                        G.DrawImage(Assets.Store.Folder, FileRect_Img);
                         G.DrawString(System.IO.Path.GetFileName(URL_ThemeFile), Fonts.Console, foreBrush, File_Rect, sf);
                     }
 

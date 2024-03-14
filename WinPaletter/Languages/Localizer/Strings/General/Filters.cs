@@ -26,6 +26,7 @@
         public string Filter_PaintNet { get; set; } = "paint.net palette files";
         public string Filter_RawRGB { get; set; } = "Raw RGB Triplets palette files";
         public string Filter_Palettes { get; set; } = "Palettes";
+        public string Filter_DLL { get; set; } = "Windows dynamic-link library file";
         public string Filter_OpenWinPaletterTheme { get; set; } = "Open a WinPaletter theme file";
         public string Filter_SaveWinPaletterTheme { get; set; } = "Save this WinPaletter theme as a file";
         public string Filter_OpenWinPaletterSettings { get; set; } = "Open a WinPaletter settings file";
@@ -47,5 +48,6 @@
         public string Filter_SaveUpdateEXE { get; set; } = $"Save this WinPaletter update as a Windows executable file";
         public string Filter_OpenPalette { get; set; } = $"Open a palette file";
         public string Filter_OpenWinImage { get; set; } = $"Open a Windows image file";
+        public string Filter_OpenDLL { get; set; } = $"Open a Windows dynamic-link library (DLL) file";
     }
 }

@@ -268,7 +268,7 @@ namespace WinPaletter
             this.Button21.ForeColor = System.Drawing.Color.White;
             this.Button21.Image = null;
             this.Button21.ImageGlyphEnabled = true;
-            this.Button21.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Copycat;
+            this.Button21.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copycat;
             this.Button21.Location = new System.Drawing.Point(39, 65);
             this.Button21.Name = "Button21";
             this.Button21.Size = new System.Drawing.Size(89, 24);
@@ -287,7 +287,7 @@ namespace WinPaletter
             this.Button19.ForeColor = System.Drawing.Color.White;
             this.Button19.Image = null;
             this.Button19.ImageGlyphEnabled = true;
-            this.Button19.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Copy;
+            this.Button19.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
             this.Button19.Location = new System.Drawing.Point(134, 65);
             this.Button19.Name = "Button19";
             this.Button19.Size = new System.Drawing.Size(70, 24);
@@ -306,7 +306,7 @@ namespace WinPaletter
             this.TerEditThemeName.ForeColor = System.Drawing.Color.White;
             this.TerEditThemeName.Image = null;
             this.TerEditThemeName.ImageGlyphEnabled = true;
-            this.TerEditThemeName.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Edit;
+            this.TerEditThemeName.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Edit;
             this.TerEditThemeName.Location = new System.Drawing.Point(210, 65);
             this.TerEditThemeName.Name = "TerEditThemeName";
             this.TerEditThemeName.Size = new System.Drawing.Size(70, 24);
@@ -325,7 +325,7 @@ namespace WinPaletter
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
             this.Button3.ImageGlyphEnabled = true;
-            this.Button3.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Add;
+            this.Button3.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.Button3.Location = new System.Drawing.Point(286, 65);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(70, 24);
@@ -714,7 +714,7 @@ namespace WinPaletter
             this.Button16.ForeColor = System.Drawing.Color.White;
             this.Button16.Image = null;
             this.Button16.ImageGlyphEnabled = true;
-            this.Button16.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button16.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button16.Location = new System.Drawing.Point(317, 63);
             this.Button16.Name = "Button16";
             this.Button16.Size = new System.Drawing.Size(39, 25);
@@ -1942,7 +1942,7 @@ namespace WinPaletter
             this.Button23.ForeColor = System.Drawing.Color.White;
             this.Button23.Image = null;
             this.Button23.ImageGlyphEnabled = true;
-            this.Button23.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
+            this.Button23.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Menu;
             this.Button23.Location = new System.Drawing.Point(326, 30);
             this.Button23.Name = "Button23";
             this.Button23.Size = new System.Drawing.Size(30, 24);

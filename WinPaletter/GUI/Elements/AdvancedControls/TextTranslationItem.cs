@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Controllers
@@ -107,7 +108,7 @@ namespace WinPaletter.UI.Controllers
                 if (value != _SearchHighlight)
                 {
                     _SearchHighlight = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -165,7 +166,7 @@ namespace WinPaletter.UI.Controllers
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
             Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);

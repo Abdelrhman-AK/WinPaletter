@@ -72,20 +72,6 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; }
 
-
-        private int _focusAlpha = 255;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public int FocusAlpha
-        {
-            get => _focusAlpha;
-            set
-            {
-                _focusAlpha = value;
-                Refresh();
-            }
-        }
-
         #endregion
 
         #region Events/Overrides
@@ -144,63 +130,6 @@ namespace WinPaletter.UI.WP
             base.OnMouseLeave(e);
         }
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            if (FindForm() != null)
-            {
-                FindForm().Activated += Form_Activated;
-                FindForm().Deactivate += Form_Deactivate; ;
-            }
-
-            base.OnHandleCreated(e);
-        }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            if (FindForm() != null)
-            {
-                FindForm().Activated -= Form_Activated;
-                FindForm().Deactivate -= Form_Deactivate; ;
-            }
-
-            base.OnHandleDestroyed(e);
-        }
-
-        private void Form_Activated(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 255;
-            }
-        }
-
-        private void Form_Deactivate(object sender, EventArgs e)
-        {
-            if (CanAnimate)
-            {
-                FluentTransitions.Transition.With(this, nameof(FocusAlpha), 100).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                FocusAlpha = 100;
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (FindForm() != null)
-            {
-                FindForm().Activated -= Form_Activated;
-                FindForm().Deactivate -= Form_Deactivate; ;
-            }
-        }
-
         int parentLevel = 0;
         protected override void OnParentChanged(EventArgs e)
         {
@@ -208,7 +137,6 @@ namespace WinPaletter.UI.WP
 
             parentLevel = this.Level();
         }
-
 
         #endregion
 
@@ -239,7 +167,7 @@ namespace WinPaletter.UI.WP
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
 
 
@@ -247,7 +175,7 @@ namespace WinPaletter.UI.WP
         public int alpha2
         {
             get => _alpha2;
-            set { _alpha2 = value; Refresh(); }
+            set { _alpha2 = value; Invalidate(); }
         }
 
         #endregion
@@ -262,7 +190,7 @@ namespace WinPaletter.UI.WP
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -298,7 +226,7 @@ namespace WinPaletter.UI.WP
             // #################################################################################
 
             using (LinearGradientBrush lgb0 = new(InnerCircle_GradienceFix, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line_Hover(parentLevel)), Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line(parentLevel)), LinearGradientMode.Vertical))
+            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line_Hover(parentLevel)), Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line(parentLevel)), LinearGradientMode.Vertical))
             using (LinearGradientBrush lgb2 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
             using (Pen P0 = new(lgb1))
             using (Pen P1 = new(lgb2))

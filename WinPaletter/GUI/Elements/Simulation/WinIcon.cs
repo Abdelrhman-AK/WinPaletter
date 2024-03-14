@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
 using WinPaletter.UI.Retro;
@@ -46,7 +48,20 @@ namespace WinPaletter.UI.Simulation
 
         public Color ColorText { get; set; } = Color.White;
         public Color ColorGlow { get; set; } = Color.FromArgb(50, 0, 0, 0);
-        public Icon Icon { get; set; }
+
+        private Icon _icon = null;
+        public Icon Icon
+        {
+            get => _icon;
+            set
+            {
+                if (value != _icon)
+                {
+                    _icon = value;
+                    Invalidate();
+                }
+            }
+        }
 
         private int _IconSize = 32;
         public int IconSize
@@ -64,7 +79,7 @@ namespace WinPaletter.UI.Simulation
                     if (EnableEditingMetrics && _sizing)
                         EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(IconSize)));
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -102,7 +117,7 @@ namespace WinPaletter.UI.Simulation
             base.OnSizeChanged(e);
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override async void OnMouseMove(MouseEventArgs e)
         {
             if (!DesignMode && EnableEditingMetrics)
             {
@@ -162,7 +177,8 @@ namespace WinPaletter.UI.Simulation
 
                 CursorOnLabel = LabelRect.Contains(e.Location);
 
-                Refresh();
+                await Task.Delay(10);
+                Invalidate();
             }
             base.OnMouseMove(e);
         }
@@ -192,7 +208,7 @@ namespace WinPaletter.UI.Simulation
             base.OnMouseUp(e);
         }
 
-        protected override void OnMouseLeave(EventArgs e)
+        protected override async void OnMouseLeave(EventArgs e)
         {
             if (EnableEditingMetrics)
             {
@@ -202,12 +218,13 @@ namespace WinPaletter.UI.Simulation
                 CursorOnLabel = false;
                 Cursor = Cursors.Default;
 
-                Refresh();
+                await Task.Delay(10);
+                Invalidate();
             }
             base.OnMouseLeave(e);
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
+        protected override async void OnMouseClick(MouseEventArgs e)
         {
             if (!DesignMode && EnableEditingMetrics)
             {
@@ -218,7 +235,8 @@ namespace WinPaletter.UI.Simulation
                         if (fd.ShowDialog() == DialogResult.OK)
                         {
                             Font = fd.Font;
-                            Refresh();
+                            await Task.Delay(10);
+                            Invalidate();
                             EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(DesktopIcons.IconFont)));
                         }
                     }
@@ -250,7 +268,7 @@ namespace WinPaletter.UI.Simulation
                 SizeF labelSize = Text.Measure(Font);
                 Rectangle labelContainer = new(0, Height - 35, Width - 1, 30);
                 LabelRect = new(labelContainer.X + (labelContainer.Width - (int)labelSize.Width) / 2, labelContainer.Y + (labelContainer.Height - (int)labelSize.Height) / 2, (int)labelSize.Width, (int)labelSize.Height);
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -272,11 +290,9 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             Rectangle IconRect = new(0, 0, Width - 1, Height - 30);
 
@@ -285,11 +301,18 @@ namespace WinPaletter.UI.Simulation
 
             Rectangle IconRectX = new((int)Math.Round(IconRect.X + (IconRect.Width - _IconSize) / 2d), (int)Math.Round(IconRect.Y + (IconRect.Height - _IconSize) / 2d), _IconSize, _IconSize);
 
-            if (Icon is not null)
+            if (_icon is not null)
             {
-                Icon ico = new(Icon, _IconSize, _IconSize);
-                G.DrawIcon(ico, IconRectX);
-                ico.Dispose();
+                using (Icon ico = new(_icon, _IconSize, _IconSize))
+                {
+                    if (ico is not null)
+                    {
+                        using (Bitmap bmp = ico.ToBitmap())
+                        {
+                            if (bmp is not null) G.DrawImage(bmp, IconRectX);
+                        }
+                    }
+                }
             }
 
             if (_MetricsEdit_Label)

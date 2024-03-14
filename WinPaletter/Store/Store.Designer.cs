@@ -39,6 +39,7 @@ namespace WinPaletter
             this.Cursor_Timer = new System.Windows.Forms.Timer(this.components);
             this.Status_pnl = new System.Windows.Forms.Panel();
             this.Status_lbl = new System.Windows.Forms.Label();
+            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.Tabs = new WinPaletter.UI.WP.TablessControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.store_container = new System.Windows.Forms.FlowLayoutPanel();
@@ -96,7 +97,6 @@ namespace WinPaletter
             this.cur_anim_btn = new WinPaletter.UI.WP.Button();
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.search_results = new System.Windows.Forms.FlowLayoutPanel();
-            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
@@ -161,6 +161,21 @@ namespace WinPaletter
             this.Status_lbl.Size = new System.Drawing.Size(1095, 18);
             this.Status_lbl.TabIndex = 39;
             this.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ProgressBar1
+            // 
+            this.ProgressBar1.AnimationDuration = 1000;
+            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ProgressBar1.Location = new System.Drawing.Point(1098, 3);
+            this.ProgressBar1.Name = "ProgressBar1";
+            this.ProgressBar1.Size = new System.Drawing.Size(228, 18);
+            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.ProgressBar1.TabIndex = 43;
+            this.ProgressBar1.TaskbarBroadcast = true;
+            this.ProgressBar1.Visible = false;
             // 
             // Tabs
             // 
@@ -1618,21 +1633,6 @@ namespace WinPaletter
             this.search_results.Size = new System.Drawing.Size(1301, 597);
             this.search_results.TabIndex = 4;
             // 
-            // ProgressBar1
-            // 
-            this.ProgressBar1.AnimationDuration = 1000;
-            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
-            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ProgressBar1.Location = new System.Drawing.Point(1098, 3);
-            this.ProgressBar1.Name = "ProgressBar1";
-            this.ProgressBar1.Size = new System.Drawing.Size(228, 18);
-            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
-            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-            this.ProgressBar1.TabIndex = 43;
-            this.ProgressBar1.TaskbarBroadcast = true;
-            this.ProgressBar1.Visible = false;
-            // 
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
@@ -1696,7 +1696,7 @@ namespace WinPaletter
             this.search_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_btn.ForeColor = System.Drawing.Color.White;
             this.search_btn.Image = null;
-            this.search_btn.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Search;
+            this.search_btn.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Search;
             this.search_btn.ImageGlyphEnabled = true;
             this.search_btn.Location = new System.Drawing.Point(308, 3);
             this.search_btn.Name = "search_btn";
@@ -1794,6 +1794,7 @@ namespace WinPaletter
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter Store";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Store_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_FormClosed);
             this.Load += new System.EventHandler(this.Store_Load);
             this.Shown += new System.EventHandler(this.Store_Shown);
             this.ParentChanged += new System.EventHandler(this.Store_ParentChanged);

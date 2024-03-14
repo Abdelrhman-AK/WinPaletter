@@ -379,7 +379,7 @@ namespace WinPaletter
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
             this.Button4.ImageGlyphEnabled = true;
-            this.Button4.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button4.Location = new System.Drawing.Point(482, 33);
             this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";

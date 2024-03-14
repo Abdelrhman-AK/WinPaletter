@@ -176,7 +176,7 @@ namespace WinPaletter
             this.Button11.ForeColor = System.Drawing.Color.White;
             this.Button11.Image = null;
             this.Button11.ImageGlyphEnabled = true;
-            this.Button11.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button11.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button11.Location = new System.Drawing.Point(449, 72);
             this.Button11.Name = "Button11";
             this.Button11.Size = new System.Drawing.Size(32, 24);

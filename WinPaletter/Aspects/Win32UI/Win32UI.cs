@@ -117,15 +117,22 @@ namespace WinPaletter
         private void Apply(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            ApplyToTM(TMx);
-            ApplyToTM(Program.TM);
-            ApplyToTM(Program.TM_Original);
+            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            {
+                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                {
+                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    TMx.Save(Theme.Manager.Source.File, filename);
+                }
 
-            TMx.Win32.Apply();
-            TMx.Win32.Broadcast_UPM_ToDefUsers();
+                ApplyToTM(TMx);
+                ApplyToTM(Program.TM);
+                ApplyToTM(Program.TM_Original);
 
-            TMx.Dispose();
+                TMx.Win32.Apply();
+                TMx.Win32.Broadcast_UPM_ToDefUsers();
+            }
+
             Cursor = Cursors.Default;
         }
 
@@ -750,14 +757,14 @@ namespace WinPaletter
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
-                return;
+            if (string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString())) return;
 
             bool condition0 = ComboBox1.SelectedIndex <= 7;
             bool condition1 = ComboBox1.SelectedItem.ToString().StartsWith("Windows Classic (3.1)");
             bool condition2 = ComboBox1.SelectedItem.ToString().StartsWith("Windows 3.1 - ");
 
             Toggle1.Checked = condition0 | condition1 | condition2;
+            Toggle2.Checked = true;
 
             retroDesktopColors1.LoadFromWinThemeString(Theme.Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
 

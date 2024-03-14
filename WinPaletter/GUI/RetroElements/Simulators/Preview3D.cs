@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
@@ -122,7 +123,7 @@ namespace WinPaletter.UI.Retro
             Bitmap B = new(Width, Height);
             Graphics G = Graphics.FromImage(B);
             G.SmoothingMode = SmoothingMode.HighSpeed;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             // ################################################################################# Customizer
             SolidBrush BrushDkShadow = new(ButtonDkShadow);

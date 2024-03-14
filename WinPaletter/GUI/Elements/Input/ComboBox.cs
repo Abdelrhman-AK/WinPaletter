@@ -32,18 +32,6 @@ namespace WinPaletter.UI.WP
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public override Color BackColor { get; set; }
 
-        private int _focusAlpha = 255;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public int FocusAlpha
-        {
-            get => _focusAlpha;
-            set
-            {
-                _focusAlpha = value;
-                Refresh();
-            }
-        }
         #endregion
 
         #region Variables
@@ -160,7 +148,7 @@ namespace WinPaletter.UI.WP
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
 
 
@@ -168,7 +156,7 @@ namespace WinPaletter.UI.WP
         public int alpha2
         {
             get => _alpha2;
-            set { _alpha2 = value; Refresh(); }
+            set { _alpha2 = value; Invalidate(); }
         }
         #endregion
 
@@ -182,7 +170,7 @@ namespace WinPaletter.UI.WP
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
@@ -228,7 +216,7 @@ namespace WinPaletter.UI.WP
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
@@ -240,7 +228,7 @@ namespace WinPaletter.UI.WP
             Rectangle TextRect = new(5, 0, Width - 1, Height - 1);
 
             Color FadeInColor = Color.FromArgb(alpha, scheme.Colors.Line_Checked);
-            Color FadeOutColor = Color.FromArgb(Math.Max(FocusAlpha - alpha, 0), scheme.Colors.Line(parentLevel));
+            Color FadeOutColor = Color.FromArgb(255 - alpha, scheme.Colors.Line(parentLevel));
 
             Color BackColor0 = Program.Style.DarkMode ? scheme.Colors.Back(parentLevel) : scheme.Colors.Back_Hover(parentLevel);
             Color BackColor1 = Program.Style.DarkMode ? scheme.Colors.Back_Hover(parentLevel) : scheme.Colors.Back(parentLevel);
@@ -276,7 +264,7 @@ namespace WinPaletter.UI.WP
 
             if (Focused) { G.DrawRoundedRect(scheme.Pens.Line_Checked, InnerRect); }
 
-            Color Triangle1 = Color.FromArgb(Math.Max(FocusAlpha - alpha2, 0), !Focused ? ForeColor : scheme.Colors.Line_Checked_Hover);
+            Color Triangle1 = Color.FromArgb(255 - alpha2, !Focused ? ForeColor : scheme.Colors.Line_Checked_Hover);
             DrawTriangle(Triangle1, point_TopRight, point_CenterBottom, point_TopLeft, G);
 
             Color Triangle2 = Color.FromArgb(alpha2, scheme.Colors.Line_Checked_Hover);

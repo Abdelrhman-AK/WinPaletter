@@ -36,7 +36,7 @@ namespace WinPaletter.UI.WP
                 if (value != colorBar1.AccentColor)
                 {
                     colorBar1.AccentColor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }

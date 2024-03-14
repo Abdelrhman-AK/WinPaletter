@@ -77,7 +77,7 @@ namespace WinPaletter.NativeMethods
             SPI_LANGDRIVER = 0x000C,
 
             /// <summary>
-            /// <b>Sets or retrieves the width, in pixels, of an icon cell. The system uses this rectangle to arrange icons in large icon view.</b>
+            /// <b>Sets or retrieves the width, in pixels, of an icon cell. The system uses this rectangle to arrange icons in large icon regView.</b>
             /// <br></br>
             /// <br></br> • To set this value, set <b><c>uiParam</c></b> to the new value and set <b><c>pvParam</c></b> to null. You cannot set this value to less than <c>SM_CXICON</c>.
             /// <br></br> • To retrieve this value, <b><c>pvParam</c></b> must point to an <b><c>integer</c></b> that receives the current value.
@@ -974,8 +974,8 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// <b>Retrieves the full path of the bitmap file for the desktop wallpaper.</b>
             /// <br></br>
-            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a buffer that receives a null-terminated path string.
-            /// <br></br> • Set the <b><c>uiParam</c></b> parameter to the size, in characters, of the <b><c>pvParam</c></b> buffer.
+            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a Buffer that receives a null-terminated path string.
+            /// <br></br> • Set the <b><c>uiParam</c></b> parameter to the size, in characters, of the <b><c>pvParam</c></b> Buffer.
             /// <br></br> • The returned string will not exceed MAX_PATH characters. If there is no desktop wallpaper, the returned string is empty.
             /// <br></br>
             /// <br></br> • <i> (!) Windows NT, Windows Me/98/95: This value is not supported.</i>

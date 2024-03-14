@@ -56,60 +56,89 @@ namespace WinPaletter.UI.WP
 
                 case 1:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern1;
+                        bmp = Assets.Store.Pattern1;
                         break;
                     }
                 case 2:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern2;
+                        bmp = Assets.Store.Pattern2;
                         break;
                     }
                 case 3:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern3;
+                        bmp = Assets.Store.Pattern3;
                         break;
                     }
                 case 4:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern4;
+                        bmp = Assets.Store.Pattern4;
                         break;
                     }
                 case 5:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern5;
+                        bmp = Assets.Store.Pattern5;
                         break;
                     }
                 case 6:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern6;
+                        bmp = Assets.Store.Pattern6;
                         break;
                     }
                 case 7:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern7;
+                        bmp = Assets.Store.Pattern7;
                         break;
                     }
                 case 8:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern8;
+                        bmp = Assets.Store.Pattern8;
                         break;
                     }
                 case 9:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern9;
+                        bmp = Assets.Store.Pattern9;
                         break;
                     }
                 case 10:
                     {
-                        bmp = Assets.WinPaletter_Store.Pattern10;
+                        bmp = Assets.Store.Pattern10;
                         break;
                     }
                 case 11:
                     {
-                        bmp = Properties.Resources.Noise;
+                        bmp = Assets.Store.Pattern11;
                         break;
                     }
-
+                case 12:
+                    {
+                        bmp = Assets.Store.Pattern12;
+                        break;
+                    }
+                case 13:
+                    {
+                        bmp = Assets.Store.Pattern13;
+                        break;
+                    }
+                case 14:
+                    {
+                        bmp = Assets.Store.Pattern14;
+                        break;
+                    }
+                case 15:
+                    {
+                        bmp = Assets.Store.Pattern15;
+                        break;
+                    }
+                case 16:
+                    {
+                        bmp = Assets.Store.Pattern16;
+                        break;
+                    }
+                case 17:
+                    {
+                        bmp = Assets.Store.Pattern17;
+                        break;
+                    }
                 default:
                     {
                         bmp = null;
@@ -130,7 +159,7 @@ namespace WinPaletter.UI.WP
 
             if (bmp != null) pattern = new(bmp); else pattern = null;
 
-            Refresh();
+            Invalidate();
         }
 
 

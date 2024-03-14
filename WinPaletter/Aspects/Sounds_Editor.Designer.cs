@@ -12998,7 +12998,7 @@ namespace WinPaletter
             this.button346.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button346.ForeColor = System.Drawing.Color.White;
             this.button346.Image = null;
-            this.button346.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
+            this.button346.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Reset;
             this.button346.ImageGlyphEnabled = true;
             this.button346.Location = new System.Drawing.Point(549, 3);
             this.button346.Name = "button346";
@@ -13017,7 +13017,7 @@ namespace WinPaletter
             this.Button208.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button208.ForeColor = System.Drawing.Color.White;
             this.Button208.Image = null;
-            this.Button208.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Stop;
+            this.Button208.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Stop;
             this.Button208.ImageGlyphEnabled = true;
             this.Button208.Location = new System.Drawing.Point(587, 3);
             this.Button208.Name = "Button208";
@@ -13046,7 +13046,7 @@ namespace WinPaletter
             this.Button209.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button209.ForeColor = System.Drawing.Color.White;
             this.Button209.Image = null;
-            this.Button209.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Play;
+            this.Button209.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Play;
             this.Button209.ImageGlyphEnabled = true;
             this.Button209.Location = new System.Drawing.Point(625, 3);
             this.Button209.Name = "Button209";
@@ -13075,7 +13075,7 @@ namespace WinPaletter
             this.Button210.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button210.ForeColor = System.Drawing.Color.White;
             this.Button210.Image = null;
-            this.Button210.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button210.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button210.ImageGlyphEnabled = true;
             this.Button210.Location = new System.Drawing.Point(663, 3);
             this.Button210.Name = "Button210";

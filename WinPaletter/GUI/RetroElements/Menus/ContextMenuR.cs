@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
@@ -388,7 +389,7 @@ namespace WinPaletter.UI.Retro
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             G.Clear(BackColor);
 

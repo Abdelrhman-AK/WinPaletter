@@ -1,6 +1,9 @@
 ﻿using Ressy;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -146,6 +149,126 @@ namespace WinPaletter
         }
     }
 
+    internal class Icons
+    {
+        public static Icon PEIconGroup_ToIcon(PortableExecutable PE, ResourceIdentifier iconGroupResourceIdentifier)
+        {
+            int structureSize = 14;
+            byte[] iconBytes = PE.GetResource(iconGroupResourceIdentifier).Data.Skip(6).ToArray();
+
+            List<IconInfo> icons = new();
+            icons.Clear();
+
+            for (int i = 0; i < iconBytes.Length; i += structureSize)
+            {
+                int iconWidth = iconBytes[i];                                   // Byte 0
+                int iconHeight = iconBytes[i + 1];                              // Byte 1
+                int iconIndex = BitConverter.ToInt16(iconBytes, i + 12);        // Byte 12 and 13
+                int iconColors = iconBytes[i + 6];                              // Byte 6
+
+                if (iconWidth == 0 && iconHeight == 0) continue;
+
+                iconWidth = iconWidth == 0 ? 256 : iconWidth;
+                iconHeight = iconHeight == 0 ? 256 : iconHeight;
+
+                Ressy.Resource resource = PE.TryGetResource(new Ressy.ResourceIdentifier(Ressy.ResourceType.Icon, Ressy.ResourceName.FromCode(iconIndex)));
+                if (resource is not null) icons.Add(new() { Width = iconWidth, Height = iconHeight, ColorCount = iconColors, Buffer = resource.Data });
+            }
+
+            using (MemoryStream stream = new())
+            using (BinaryWriter writer = new(stream))
+            {
+                BytesToIcon(icons, writer);
+
+                // Reset the stream position before reading the icon data
+                stream.Seek(0, SeekOrigin.Begin);
+                return new Icon(stream);
+            }
+        }
+
+        public class IconInfo
+        {
+            public int Width;
+            public int Height;
+            public byte[] Buffer;
+            public int ColorCount;
+
+            public IconInfo() { }
+        }
+
+        public const int MaxIconWidth = 256;
+        public const int MaxIconHeight = 256;
+
+        private const ushort HeaderReserved = 0;
+        private const ushort HeaderIconType = 1;
+        private const byte HeaderLength = 6;
+
+        private const byte EntryReserved = 0;
+        private const byte EntryLength = 16;
+
+        private const byte PngColorsInPalette = 0;
+        private const ushort PngColorPlanes = 1;
+
+        private static void BytesToIcon(IEnumerable<IconInfo> imageBuffers, BinaryWriter writer)
+        {
+            if (imageBuffers == null)
+                throw new ArgumentNullException(nameof(imageBuffers));
+            if (writer == null)
+                throw new ArgumentNullException(nameof(writer));
+
+            ThrowForInvalidImages(imageBuffers);
+
+            IconInfo[] orderedBuffers = imageBuffers.OrderBy(b => b.Buffer.Length).ToArray();
+
+            writer.Write(HeaderReserved);
+            writer.Write(HeaderIconType);
+            writer.Write((ushort)orderedBuffers.Length);
+
+            Dictionary<uint, byte[]> buffers = new();
+            uint lengthSum = 0;
+            uint baseOffset = (uint)(HeaderLength + EntryLength * orderedBuffers.Length);
+
+            for (int i = 0; i < orderedBuffers.Length; i++)
+            {
+                byte[] buffer = orderedBuffers[i].Buffer;
+                byte width = (byte)orderedBuffers[i].Width;
+                byte height = (byte)orderedBuffers[i].Height;
+                byte colorCount = (byte)orderedBuffers[i].ColorCount;
+
+                uint offset = (baseOffset + lengthSum);
+
+                writer.Write(width);
+                writer.Write(height);
+                writer.Write(PngColorsInPalette);
+                writer.Write(EntryReserved);
+                writer.Write(PngColorPlanes);
+                writer.Write((ushort)colorCount);
+                writer.Write((uint)buffer.Length);
+                writer.Write(offset);
+
+                lengthSum += (uint)buffer.Length;
+                buffers.Add(offset, buffer);
+            }
+
+            foreach (var kvp in buffers)
+            {
+                writer.BaseStream.Seek(kvp.Key, SeekOrigin.Begin);
+                writer.Write(kvp.Value);
+            }
+        }
+
+        private static void ThrowForInvalidImages(IEnumerable<IconInfo> imageBuffers)
+        {
+            foreach (var buffer in imageBuffers)
+            {
+                if (buffer.Buffer.Length == 0)
+                {
+                    throw new InvalidOperationException("Image buffer cannot be empty.");
+                }
+            }
+        }
+    }
+
     public static class PE_Functions
     {
         public static Bitmap GetPNGFromDLL(string File, int ResourceID, string ResourceType = "IMAGE", int UnfoundW = 50, int UnfoundH = 50)
@@ -170,5 +293,9 @@ namespace WinPaletter
             }
         }
 
+        public static Icon GetIconFromIconGroup(PortableExecutable PE, ResourceIdentifier iconGroupResourceIdentifier)
+        {
+            return Icons.PEIconGroup_ToIcon(PE, iconGroupResourceIdentifier);
+        }
     }
 }

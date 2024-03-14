@@ -172,7 +172,7 @@ namespace libmsstyle
                         // remember bucket
                         bucketsTouched.Add(previousBucket);
 
-                        // reset bucket buffer
+                        // reset bucket Buffer
                         previousBucket = currentBucket;
                         ms = new MemoryStream();
                         bw = new BinaryWriter(ms, Encoding.Unicode);

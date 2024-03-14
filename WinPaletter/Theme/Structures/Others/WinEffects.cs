@@ -533,10 +533,10 @@ namespace WinPaletter.Theme.Structures
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
 
-                                    Takeown_File($@"{SysPaths.System32}\UIRibbon.dll");
+                                    TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");
                                     Move_File($@"{SysPaths.System32}\UIRibbon.dll", $@"{SysPaths.System32}\UIRibbon.dll_bak");
 
-                                    // DelReg_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
+                                    // DelValue_AdministratorDeflector("HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID", "{926749fa-2615-4987-8845-c33e65f2b957}")
                                 }
 
                                 break;
@@ -547,8 +547,8 @@ namespace WinPaletter.Theme.Structures
                                     if (TreeView is not null)
                                         Manager.AddNode(TreeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
 
-                                    Takeown_File($@"{SysPaths.System32}\UIRibbon.dll_bak");
-                                    Takeown_File($@"{SysPaths.System32}\UIRibbon.dll");
+                                    TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll_bak");
+                                    TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");
                                     Move_File($@"{SysPaths.System32}\UIRibbon.dll_bak", $@"{SysPaths.System32}\UIRibbon.dll");
                                 }
 

@@ -94,7 +94,7 @@ namespace WinPaletter
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
             this.button2.ImageGlyphEnabled = true;
-            this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Menu;
+            this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Menu;
             this.button2.Location = new System.Drawing.Point(360, 30);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(34, 24);
@@ -151,7 +151,7 @@ namespace WinPaletter
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
             this.Button1.ImageGlyphEnabled = true;
-            this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button1.Location = new System.Drawing.Point(401, 30);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";

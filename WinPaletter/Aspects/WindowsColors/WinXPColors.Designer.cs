@@ -300,7 +300,7 @@
             this.WXP_VS_Browse.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.WXP_VS_Browse.ForeColor = System.Drawing.Color.White;
             this.WXP_VS_Browse.Image = null;
-            this.WXP_VS_Browse.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.WXP_VS_Browse.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.WXP_VS_Browse.ImageGlyphEnabled = true;
             this.WXP_VS_Browse.Location = new System.Drawing.Point(483, 43);
             this.WXP_VS_Browse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

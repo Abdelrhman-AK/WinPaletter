@@ -186,7 +186,7 @@ namespace WinPaletter
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Play;
+            this.Button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Play;
             this.Button6.Location = new System.Drawing.Point(202, 2);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
@@ -302,7 +302,7 @@ namespace WinPaletter
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
             this.Button4.ImageGlyphEnabled = true;
-            this.Button4.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button4.Location = new System.Drawing.Point(243, 33);
             this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";
@@ -694,7 +694,7 @@ namespace WinPaletter
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
             this.Button7.ImageGlyphEnabled = true;
-            this.Button7.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button7.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button7.Location = new System.Drawing.Point(247, 36);
             this.Button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button7.Name = "Button7";

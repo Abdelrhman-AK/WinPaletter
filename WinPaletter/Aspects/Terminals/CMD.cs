@@ -102,6 +102,12 @@ namespace WinPaletter
 
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
+                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                {
+                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    TMx.Save(Theme.Manager.Source.File, filename);
+                }
+
                 ApplyToTM(TMx, _Edition);
                 ApplyToTM(Program.TM, _Edition);
                 ApplyToTM(Program.TM_Original, _Edition);
@@ -134,6 +140,7 @@ namespace WinPaletter
 
                 }
             }
+
             Cursor = Cursors.Default;
         }
 

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -109,7 +110,7 @@ namespace WinPaletter.UI.WP
                     InvalidateLayout();
                     InvalidatePosition();
                     Scroll?.Invoke(this);
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -312,10 +313,11 @@ namespace WinPaletter.UI.WP
             InvalidatePosition();
         }
 
-        private void InvalidatePosition()
+        private async void InvalidatePosition()
         {
             Thumb.Width = (int)Math.Round(Value / (double)Maximum * Width);
-            Refresh();
+            await Task.Delay(10);
+            Invalidate();
         }
 
         #endregion
@@ -326,7 +328,7 @@ namespace WinPaletter.UI.WP
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
         #endregion
 

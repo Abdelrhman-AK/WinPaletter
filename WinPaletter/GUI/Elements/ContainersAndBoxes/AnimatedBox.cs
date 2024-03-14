@@ -134,7 +134,7 @@ namespace WinPaletter.UI.WP
 
                 else { _Angle += 2f; }
 
-                Refresh();
+                Invalidate();
             }
             else
             {

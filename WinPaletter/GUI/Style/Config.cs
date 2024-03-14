@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Text;
+using System.Windows.Forms;
 
 namespace WinPaletter.UI.Style
 {
@@ -37,8 +38,23 @@ namespace WinPaletter.UI.Style
         /// <summary>
         /// Used to make custom controls follow Manager's font smoothing
         /// </summary>
-        public TextRenderingHint RenderingHint { get; set; } = TextRenderingHint.SystemDefault;
+        public TextRenderingHint TextRenderingHint
+        {
+            get => _renderingHint;
+            set
+            {
+                if (_renderingHint != value)
+                {
+                    _renderingHint = value;
+                    foreach (Form form in Application.OpenForms)
+                    {
+                        form.Refresh();
+                    }
 
+                }
+            }
+        }
+        private TextRenderingHint _renderingHint = TextRenderingHint.SystemDefault;
         public bool DarkMode { get; set; } = true;
 
         public bool RoundedCorners { get; set; } = true;

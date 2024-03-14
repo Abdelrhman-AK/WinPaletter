@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -81,7 +82,7 @@ namespace WinPaletter.UI.WP
                 if (value != _AccentColor)
                 {
                     _AccentColor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -90,21 +91,21 @@ namespace WinPaletter.UI.WP
         public float H
         {
             get => _H;
-            set { if (value != _H) { _H = value; Refresh(); } }
+            set { if (value != _H) { _H = value; Invalidate(); } }
         }
 
         private float _S = 1f;
         public float S
         {
             get => _S;
-            set { if (value != _S) { _S = value; Refresh(); } }
+            set { if (value != _S) { _S = value; Invalidate(); } }
         }
 
         private float _L = 0.5f;
         public float L
         {
             get => _L;
-            set { if (value != _L) { _L = value; Refresh(); } }
+            set { if (value != _L) { _L = value; Invalidate(); } }
         }
 
         private int _Minimum;
@@ -297,10 +298,11 @@ namespace WinPaletter.UI.WP
             InvalidatePosition();
         }
 
-        private void InvalidatePosition()
+        private async void InvalidatePosition()
         {
             Thumb.Width = (int)Math.Round(Value / (double)Maximum * Width);
-            Refresh();
+            await Task.Delay(10);
+            Invalidate();
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -378,7 +380,7 @@ namespace WinPaletter.UI.WP
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
         #endregion
 

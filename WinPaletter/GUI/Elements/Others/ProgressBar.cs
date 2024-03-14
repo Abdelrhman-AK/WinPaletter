@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -69,7 +70,7 @@ namespace WinPaletter.UI.WP
             base.OnHandleDestroyed(e);
         }
 
-        protected virtual void OnStyleChanged(EventArgs e)
+        protected virtual async void OnStyleChanged(EventArgs e)
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
@@ -81,7 +82,9 @@ namespace WinPaletter.UI.WP
             }
 
             DoMarqueeAnimation1();
-            Refresh();
+
+            await Task.Delay(10);
+            Invalidate();
             StyleChanged?.Invoke(this, e);
 
             base.OnStyleChanged(e);
@@ -113,7 +116,7 @@ namespace WinPaletter.UI.WP
         private void ProgressBar_StyleChanged(object sender, EventArgs e)
         {
             UpdateTaskbar();
-            Refresh();
+            Invalidate();
         }
 
         protected override void Dispose(bool disposing)
@@ -208,7 +211,7 @@ namespace WinPaletter.UI.WP
                     else { StateColor = color; }
 
                     UpdateTaskbar();
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -223,7 +226,7 @@ namespace WinPaletter.UI.WP
                 if (value != _appearance)
                 {
                     _appearance = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -281,7 +284,7 @@ namespace WinPaletter.UI.WP
                 if (value != _animatedValue)
                 {
                     _animatedValue = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -300,7 +303,7 @@ namespace WinPaletter.UI.WP
                 if (value != _StateColor)
                 {
                     _StateColor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }

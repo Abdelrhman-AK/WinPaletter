@@ -22,14 +22,14 @@ namespace WinPaletter.Assets {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class WinPaletter_Store {
+    internal class Store {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal WinPaletter_Store() {
+        internal Store() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WinPaletter.Assets {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinPaletter.Assets.WinPaletter_Store", typeof(WinPaletter_Store).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinPaletter.Assets.Store", typeof(Store).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -166,6 +166,76 @@ namespace WinPaletter.Assets {
         internal static System.Drawing.Bitmap Pattern10 {
             get {
                 object obj = ResourceManager.GetObject("Pattern10", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pattern11 {
+            get {
+                object obj = ResourceManager.GetObject("Pattern11", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pattern12 {
+            get {
+                object obj = ResourceManager.GetObject("Pattern12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pattern13 {
+            get {
+                object obj = ResourceManager.GetObject("Pattern13", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pattern14 {
+            get {
+                object obj = ResourceManager.GetObject("Pattern14", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pattern15 {
+            get {
+                object obj = ResourceManager.GetObject("Pattern15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pattern16 {
+            get {
+                object obj = ResourceManager.GetObject("Pattern16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pattern17 {
+            get {
+                object obj = ResourceManager.GetObject("Pattern17", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

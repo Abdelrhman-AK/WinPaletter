@@ -60,7 +60,7 @@
             this.reset.ForeColor = System.Drawing.Color.White;
             this.reset.Image = null;
             this.reset.ImageGlyphEnabled = true;
-            this.reset.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
+            this.reset.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Reset;
             this.reset.Location = new System.Drawing.Point(266, 0);
             this.reset.Name = "reset";
             this.reset.Size = new System.Drawing.Size(34, 31);

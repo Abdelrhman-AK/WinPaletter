@@ -60,6 +60,8 @@
 
             if (AppTheme != TMx.AppTheme) _Equals = false;
 
+            if (Icons != TMx.Icons) _Equals = false;
+
 
             if (Cursor_Enabled != TMx.Cursor_Enabled) _Equals = false;
 

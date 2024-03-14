@@ -56,6 +56,7 @@ namespace WinPaletter.Theme
                                 ScreenSaver.Load(@default.ScreenSaver);
                                 Sounds.Load(@default.Sounds);
                                 AppTheme.Load(@default.AppTheme);
+                                Icons.Load(@default.Icons);
 
                                 WallpaperTone_W12.Load("Win12");
                                 WallpaperTone_W11.Load("Win11");
@@ -414,6 +415,7 @@ namespace WinPaletter.Theme
                                         def.Sounds.Enabled = true;
                                         def.AppTheme.Enabled = true;
                                         def.Wallpaper.Enabled = false;
+                                        def.Icons.Enabled = true;
                                         def.Save(Source.Registry);
                                     }
                                 }, TreeView, Program.Lang.TM_ThemeReset, Program.Lang.TM_ThemeReset_Error, Program.Lang.TM_Time, sw_all);
@@ -866,6 +868,15 @@ namespace WinPaletter.Theme
                                 Program.Lang.TM_Error_Cursors,
                                 Program.Lang.TM_Time_Cursors,
                                 sw_all);
+
+                            // Icons
+                            Execute(new(() => Icons.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Program.Lang.TM_Applying_Icons,
+                                Program.Lang.TM_Error_Icons,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !Icons.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Icons),
+                                Program.Lang.TM_Skip_Icons);
 
                             // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
                             if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)

@@ -491,6 +491,7 @@ namespace WinPaletter
                 public bool Enabled;
                 public bool AutoBackupOnAppOpen;
                 public bool AutoBackupOnApply;
+                public bool AutoBackupOnApplySingleAspect;
                 public bool AutoBackupOnThemeLoad;
                 public string BackupPath;
 
@@ -499,6 +500,7 @@ namespace WinPaletter
                     Enabled = Conversions.ToBoolean(GetReg(REG_Backup, "Enabled", true));
                     AutoBackupOnAppOpen = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnAppOpen", false));
                     AutoBackupOnApply = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApply", true));
+                    AutoBackupOnApplySingleAspect = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApplySingleAspect", true));
                     AutoBackupOnThemeLoad = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnThemeLoad", false));
                     BackupPath = GetReg(REG_Backup, "BackupPath", $"{SysPaths.appData}\\Backup\\Themes").ToString();
                 }
@@ -508,6 +510,7 @@ namespace WinPaletter
                     EditReg(REG_Backup, "Enabled", Enabled, RegistryValueKind.DWord);
                     EditReg(REG_Backup, "AutoBackupOnAppOpen", AutoBackupOnAppOpen, RegistryValueKind.DWord);
                     EditReg(REG_Backup, "AutoBackupOnApply", AutoBackupOnApply, RegistryValueKind.DWord);
+                    EditReg(REG_Backup, "AutoBackupOnApplySingleAspect", AutoBackupOnApplySingleAspect, RegistryValueKind.DWord);
                     EditReg(REG_Backup, "AutoBackupOnThemeLoad", AutoBackupOnThemeLoad, RegistryValueKind.DWord);
                     EditReg(REG_Backup, "BackupPath", BackupPath, RegistryValueKind.String);
                 }
@@ -533,6 +536,7 @@ namespace WinPaletter
                 public bool Sounds;
                 public bool ScreenSaver;
                 public bool AltTab;
+                public bool Icons;
 
                 public void Load()
                 {
@@ -554,6 +558,7 @@ namespace WinPaletter
                     Sounds = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Sounds", true));
                     ScreenSaver = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ScreenSaver", true));
                     AltTab = Conversions.ToBoolean(GetReg(REG_AspectsControl, "AltTab", true));
+                    Icons = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Icons", true));
                 }
 
                 public void Save()
@@ -576,6 +581,7 @@ namespace WinPaletter
                     EditReg(REG_AspectsControl, "Sounds", Sounds, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "ScreenSaver", ScreenSaver, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "AltTab", AltTab, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Icons", Icons, RegistryValueKind.DWord);
                 }
             }
         }
@@ -712,6 +718,7 @@ namespace WinPaletter
             Enabled = true,
             AutoBackupOnAppOpen = false,
             AutoBackupOnApply = true,
+            AutoBackupOnApplySingleAspect = true,
             AutoBackupOnThemeLoad = false,
             BackupPath = $"{SysPaths.appData}\\Backup\\Themes"
         };
@@ -735,7 +742,8 @@ namespace WinPaletter
             Effects = true,
             Sounds = true,
             ScreenSaver = true,
-            AltTab = true
+            AltTab = true,
+            Icons = true,
         };
 
         public enum Mode

@@ -11,6 +11,52 @@ namespace WinPaletter.NativeMethods
     public class Shell32
     {
         /// <summary>
+        /// Extracts the icon associated with a file.
+        /// </summary>
+        /// <param name="szFileName"></param>
+        /// <param name="nIconIndex"></param>
+        /// <param name="phiconLarge"></param>
+        /// <param name="phiconSmall"></param>
+        /// <param name="nIcons"></param>
+        /// <returns></returns>
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIcons);
+
+        /// <summary>
+        /// Retrieves information about icons or icon-sized images from a specified file.
+        /// </summary>
+        /// <param name="lpszFile">The name of the file that contains the icon or icon-sized image.</param>
+        /// <param name="nIconIndex">The zero-based index of the icon or image.</param>
+        /// <param name="cxIcon">The width of the icon or image in pixels. This value is ignored if the <paramref name="flags"/> parameter specifies <see cref="IEI.GIL_ASYNC"/>.</param>
+        /// <param name="cyIcon">The height of the icon or image in pixels. This value is ignored if the <paramref name="flags"/> parameter specifies <see cref="IEI.GIL_ASYNC"/>.</param>
+        /// <param name="phicon">An array of icon or image handles to be filled by this function. The array should be pre-allocated to hold at least <paramref name="nIcons"/> elements.</param>
+        /// <param name="piconid">An array of icon IDs. This parameter can be <see langword="null"/>.</param>
+        /// <param name="nIcons">The number of icons to extract. This value is limited to the number of image bits in the icon resource.</param>
+        /// <param name="flags">A combination of flags that specify the dimensions and behavior of the function.</param>
+        /// <returns>The number of icons successfully extracted, or zero if the function fails.</returns>
+        [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern uint PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, IntPtr[] phicon, uint[] piconid, uint nIcons, uint flags);
+
+        /// <summary>
+        /// Dispose (destroy) an icon handle.
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool DestroyIcon(IntPtr handle);
+
+        /// <summary>
+        /// Show default Windows icon picker dialog.
+        /// </summary>
+        /// <param name="hwndOwner"></param>
+        /// <param name="lpstrFile"></param>
+        /// <param name="nMaxFile"></param>
+        /// <param name="lpdwIconIndex"></param>
+        /// <returns></returns>
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        public static extern int PickIconDlg(IntPtr hwndOwner, StringBuilder lpstrFile, int nMaxFile, ref int lpdwIconIndex);
+
+        /// <summary>
         /// Notifies the system of an event that an application has performed.
         /// </summary>
         /// <param name="wEventId">The event that has occurred.</param>
@@ -49,7 +95,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="username">The username of the user. Use null for the current user.</param>
         /// <param name="whatever">Reserved. Must be 0x80000000.</param>
         /// <param name="picpath">A StringBuilder that receives the path to the user's account picture.</param>
-        /// <param name="maxLength">The maximum length of the buffer pointed to by picpath.</param>
+        /// <param name="maxLength">The maximum length of the Buffer pointed to by picpath.</param>
         [DllImport("shell32.dll", EntryPoint = "#261", CharSet = CharSet.Unicode, PreserveSig = false)]
         public static extern void GetUserTilePath(string username, UInt32 whatever, StringBuilder picpath, int maxLength);
 

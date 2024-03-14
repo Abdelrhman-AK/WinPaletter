@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme
@@ -456,6 +457,29 @@ namespace WinPaletter.Theme
             Enabled = true,
             Style = AltTab.Styles.Default,
             Win10Opacity = 95
+        };
+
+        /// <summary>
+        /// Object derived of structure that has data about Windows Icons, and it can be customized.
+        /// </summary>
+        public Structures.Icons Icons = new()
+        {
+            Enabled = false,
+            Shell32Wrapper = new(),
+            ControlPanelWrapper = new(),
+            ExplorerWrapper = new(),
+            Computer = Structures.Icons.DesktopCLSIDs.ElementAt(0).Item3,
+            ControlPanel = Structures.Icons.DesktopCLSIDs.ElementAt(1).Item3,
+            Network = Structures.Icons.DesktopCLSIDs.ElementAt(2).Item3,
+            User = Structures.Icons.DesktopCLSIDs.ElementAt(3).Item3,
+            RecycleBinEmpty = Structures.Icons.DesktopCLSIDs.ElementAt(4).Item3.Split('|')[0],
+            RecycleBinFull = Structures.Icons.DesktopCLSIDs.ElementAt(4).Item3.Split('|')[1],
+            Computer_HideInDesktop = true,
+            ControlPanel_HideInDesktop = true,
+            Network_HideInDesktop = true,
+            User_HideInDesktop = true,
+            RecycleBin_HideInDesktop = false,
+            SystemDriveIcon = "",
         };
 
         /// <summary>Object derived of structure that has data about Command Prompt, and it can be customized.</summary>

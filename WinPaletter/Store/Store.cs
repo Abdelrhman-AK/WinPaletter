@@ -16,7 +16,6 @@ namespace WinPaletter
 {
     public partial class Store
     {
-
         #region Variables
         private bool StartedAsOnlineOrOffline = true;
         private bool FinishedLoadingInitialTMs;
@@ -223,6 +222,8 @@ namespace WinPaletter
 
         private void Store_Load(object sender, EventArgs e)
         {
+            CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
+
             RemoveAllStoreItems(store_container);
 
             Tabs.SelectedIndex = 0;
@@ -248,8 +249,6 @@ namespace WinPaletter
 
             ThemesFetcher.RunWorkerAsync();
 
-            CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
-
             this.DoubleBuffer();
 
             Apply_btn.Image = Forms.Home.apply_btn.Image;
@@ -272,30 +271,33 @@ namespace WinPaletter
 
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Visible = false;
-
             // To prevent effect of a store theme on the other forms
-            Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-
+            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             Program.Settings.Appearance = new();
             Program.Settings.Appearance.Load();
 
             GetRoundedCorners();
             GetDarkMode();
             ApplyStyle(this, true);
-
             Program.Settings.Appearance.CustomColors = oldAppearance.CustomColors;
 
             Status_pnl.Visible = true;
 
             ThemesFetcher.CancelAsync();
-            store_container.Visible = false;
             RemoveAllStoreItems(store_container);
-            store_container.Visible = true;
             Tabs.SelectedIndex = 0;
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+
             Status_lbl.SetText(string.Empty);
+        }
+
+        private void Store_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            foreach (Manager TMx in TMList.Values) TMx?.Dispose();
+            TMList.Clear();
+            selectedItem?.Dispose();
+            foreach (UI.Controllers.CursorControl i in AnimateList) i?.Dispose();
+            AnimateList.Clear();
+            DM?.Dispose();
         }
 
         private void Store_ParentChanged(object sender, EventArgs e)
@@ -344,13 +346,11 @@ namespace WinPaletter
                 {
                     Status_lbl.SetText(string.Format(Program.Lang.Store_PingFailed, var));
                 }
-
             }
 
             // Loop through all valid repos DBs
             foreach (string DB in repos_list)
             {
-
                 // Try to generate a folder name dependent on the URL
                 string reposName;
                 if (DB.ToUpper().Contains("GITHUB.COM"))
@@ -390,13 +390,11 @@ namespace WinPaletter
                         valid = false;
                     }
 
-                    if (valid)
-                        items.Add(item);
-
+                    if (valid) items.Add(item);
                 }
 
                 ThemesFetcher.ReportProgress(0);
-                BeginInvoke(new Action(() => ProgressBar1.Visible = true));
+                BeginInvoke(() => ProgressBar1.Visible = true);
 
                 int i = 0;
                 int allProgress = items.Count * 2;
@@ -409,9 +407,7 @@ namespace WinPaletter
                     string MD5_ThemeFile = item_splitted[0].ToUpper();
                     string MD5_PackFile = item_splitted[1].ToUpper();
                     string URL_ThemeFile = item_splitted[2];
-                    string URL_PackFile = string.Empty;
-                    if (item_splitted.Count() == 4)
-                        URL_PackFile = item_splitted[3];
+                    string URL_PackFile = item_splitted.Count() == 4 ? item_splitted[3] : string.Empty;
 
                     // Create a folder inside AppData folder
                     string temp = URL_ThemeFile.Replace("?raw=true", string.Empty);
@@ -419,10 +415,8 @@ namespace WinPaletter
                     temp = temp.Replace($"/{FileName}", string.Empty);
                     string FolderName = temp.Split('/').Last();
                     string Dir = SysPaths.StoreCache;
-                    if (!string.IsNullOrWhiteSpace(FolderName))
-                        Dir += $@"\{reposName}\{FolderName}";
-                    if (!System.IO.Directory.Exists(Dir))
-                        System.IO.Directory.CreateDirectory(Dir);
+                    if (!string.IsNullOrWhiteSpace(FolderName)) Dir += $@"\{reposName}\{FolderName}";
+                    if (!System.IO.Directory.Exists(Dir)) System.IO.Directory.CreateDirectory(Dir);
 
                     Status_lbl.SetText(string.Empty);
 
@@ -461,9 +455,9 @@ namespace WinPaletter
                         {
                             Status_lbl.SetText(string.Format(Program.Lang.Store_LoadingTheme, FileName));
 
-                            using (Theme.Manager TM = new(Theme.Manager.Source.File, $@"{Dir}\{FileName}", true, true))
+                            using (Manager TM = new(Manager.Source.File, $"{Dir}\\{FileName}", true, true))
                             {
-                                UI.Controllers.StoreItem ctrl = new()
+                                StoreItem ctrl = new()
                                 {
                                     FileName = $@"{Dir}\{FileName}",
                                     TM = TM,
@@ -475,8 +469,7 @@ namespace WinPaletter
                                     URL_PackFile = URL_PackFile
                                 };
 
-                                if (ctrl.DoneByWinPaletter)
-                                    ctrl.TM.Info.Author = Application.ProductName;
+                                if (ctrl.DoneByWinPaletter) ctrl.TM.Info.Author = Application.ProductName;
 
                                 ctrl.Click += StoreItem_Clicked;
                                 ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
@@ -491,13 +484,11 @@ namespace WinPaletter
 
                     i += 1;
 
-                    if (allProgress > 0)
-                        ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
-
+                    if (allProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
                 }
 
                 // Finalizing
-                BeginInvoke(new Action(() => ProgressBar1.Visible = false));
+                BeginInvoke(() => ProgressBar1.Visible = false);
 
                 TMList.Clear();
             }
@@ -507,11 +498,11 @@ namespace WinPaletter
 
         public void OfflineMode()
         {
-            BeginInvoke(new Action(() =>
+            BeginInvoke(() =>
                 {
                     ProgressBar1.Visible = true;
                     store_container.Visible = false;
-                }));
+                });
 
             int i = 0;
             int allProgress = 0;
@@ -519,26 +510,21 @@ namespace WinPaletter
 
             foreach (string folder in Program.Settings.Store.Offline_Directories)
             {
-
                 if (System.IO.Directory.Exists(folder))
                 {
                     Status_lbl.SetText($"Accessing themes from folder \"{folder}\"");
                     allProgress += System.IO.Directory.GetFiles(folder, "*.wpth", Program.Settings.Store.Offline_SubFolders ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly).Count();
                 }
-
             }
 
             allProgress *= 2;
 
             foreach (string folder in Program.Settings.Store.Offline_Directories)
             {
-
                 if (System.IO.Directory.Exists(folder))
                 {
-
                     foreach (string file in System.IO.Directory.GetFiles(folder, "*.wpth", Program.Settings.Store.Offline_SubFolders ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly))
                     {
-
                         try
                         {
                             if (!TMList.ContainsKey(file))
@@ -562,12 +548,11 @@ namespace WinPaletter
                 }
             }
 
-
             foreach (KeyValuePair<string, Manager> StoreItem in TMList)
             {
                 Status_lbl.SetText($"Loading theme \"{StoreItem.Value.Info.ThemeName}\"");
 
-                UI.Controllers.StoreItem ctrl = new()
+                StoreItem ctrl = new()
                 {
                     FileName = StoreItem.Key,
                     TM = StoreItem.Value,
@@ -587,15 +572,14 @@ namespace WinPaletter
 
                 i += 1;
 
-                if (allProgress > 0)
-                    ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                if (allProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
             }
 
-            BeginInvoke(new Action(() =>
+            BeginInvoke(() =>
                 {
                     ProgressBar1.Visible = false;
                     store_container.Visible = true;
-                }));
+                });
 
             Status_lbl.SetText(string.Empty);
 
@@ -631,9 +615,6 @@ namespace WinPaletter
                 StartedAsOnlineOrOffline = false;
                 OfflineMode();
             }
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
 
             Program.Animator.HideSync(Status_pnl);
         }
@@ -739,7 +720,7 @@ namespace WinPaletter
                             ApplyCMDPreview(CMD2, StoreItem.TM.PowerShellx86, true);
                             ApplyCMDPreview(CMD3, StoreItem.TM.PowerShellx64, true);
                             LoadCursorsFromTM(StoreItem.TM);
-                            Program.Style.RenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                            Program.Style.TextRenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                             foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls.OfType<CursorControl>()
                                 .Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
@@ -866,13 +847,12 @@ namespace WinPaletter
         {
             if (FinishedLoadingInitialTMs)
             {
-                {
-                    StoreItem temp = (UI.Controllers.StoreItem)sender;
-                    Adjust_Preview(temp.TM);
-                    temp.Refresh();
-                }
+                StoreItem temp = (UI.Controllers.StoreItem)sender;
+                Adjust_Preview(temp.TM);
+                temp.Refresh();
             }
         }
+      
         #endregion
 
         #region Methods\Functions
@@ -942,10 +922,12 @@ namespace WinPaletter
                 {
                     storeItem.MouseClick -= StoreItem_Clicked;
                     storeItem.ThemeManagerChanged -= StoreItem_ThemeManagerChanged;
-                }
 
-                Container.Controls[0].Dispose();
+                    Container.Controls.Remove(storeItem);
+                    storeItem?.Dispose();
+                }
             }
+
             Container.Controls.Clear();
         }
 
@@ -1096,7 +1078,7 @@ namespace WinPaletter
         private void Back_btn_Click(object sender, EventArgs e)
         {
             Program.Animator.HideSync(Tabs);
-            Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {

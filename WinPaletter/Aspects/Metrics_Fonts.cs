@@ -203,6 +203,12 @@ namespace WinPaletter
 
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
+                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                {
+                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    TMx.Save(Theme.Manager.Source.File, filename);
+                }
+
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
                 ApplyToTM(Program.TM_Original);
@@ -523,10 +529,10 @@ namespace WinPaletter
                     TMx.MetricsFonts.IconFont = icm.lfFont.ToFont();
                 }
 
+                TMx.MetricsFonts.Fonts_SingleBitPP = comboBox1.SelectedIndex >= 4;
+
                 LoadFromTM(TMx);
             }
-
-            CheckBox1.Checked = comboBox1.SelectedIndex >= 4;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -614,7 +620,7 @@ namespace WinPaletter
 
         private void Metrics_Fonts_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Program.Style.RenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             Program.Settings.AspectsControl.MetricsFonts_Advanced = AdvancedMode;
             Program.Settings.AspectsControl.Save();
@@ -709,7 +715,7 @@ namespace WinPaletter
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Program.Style.RenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            Program.Style.TextRenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             windowMetrics1.Refresh();
         }
 

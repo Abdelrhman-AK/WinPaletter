@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -11,7 +12,7 @@ namespace WinPaletter.UI.WP
         {
             Graphics G = e.Graphics;
 
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             using (SolidBrush br = new(BackColor))
             {

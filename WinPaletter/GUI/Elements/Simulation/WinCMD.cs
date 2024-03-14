@@ -77,7 +77,7 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
             Rectangle RectCMD = new(Rect.X + 1, Rect.Y + 5, Rect.Width - 2, Rect.Height - 10);

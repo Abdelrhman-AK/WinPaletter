@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -70,7 +71,7 @@ namespace WinPaletter.UI.WP
         public int CheckerX
         {
             get => _checkerX;
-            set { _checkerX = value; Refresh(); }
+            set { _checkerX = value; Invalidate(); }
         }
         #endregion
 
@@ -86,14 +87,14 @@ namespace WinPaletter.UI.WP
             else
             {
                 _checkerX = Checked ? Width - 17 : 4;
-                Refresh();
+                Invalidate();
             }
 
             if (DarkLight_Toggler)
             {
                 CheckC.Width = DarkLight_TogglerSize;
                 CheckC.Height = DarkLight_TogglerSize;
-                Refresh();
+                Invalidate();
             }
 
             CheckedChanged?.Invoke(this, EventArgs.Empty);
@@ -107,7 +108,7 @@ namespace WinPaletter.UI.WP
             base.OnMouseClick(e);
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override async void OnResize(EventArgs e)
         {
             Height = 20;
             if (Width < 40) Width = 40;
@@ -118,12 +119,13 @@ namespace WinPaletter.UI.WP
                 CheckC.Height = DarkLight_TogglerSize;
             }
 
-            Refresh();
+            await Task.Delay(10);
+            Invalidate();
 
             base.OnResize(e);
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override async void OnMouseMove(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -146,13 +148,15 @@ namespace WinPaletter.UI.WP
 
                 CheckC.X = CheckerX;
                 CheckC.Y = 4;
-                Refresh();
+
+                await Task.Delay(10);
+                Invalidate();
             }
 
             base.OnMouseMove(e);
         }
 
-        protected override void OnMouseUp(MouseEventArgs e)
+        protected override async void OnMouseUp(MouseEventArgs e)
         {
             MouseState = 0;
             CheckC.Width = 11;
@@ -171,17 +175,20 @@ namespace WinPaletter.UI.WP
 
                 WasMoving = false;
             }
-            Refresh();
+
+            await Task.Delay(10);
+            Invalidate();
 
             base.OnMouseUp(e);
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
+        protected override async void OnMouseDown(MouseEventArgs e)
         {
             MouseState = 1;
             CheckC.Width = 13;
 
-            Refresh();
+            await Task.Delay(10);
+            Invalidate();
 
             base.OnMouseDown(e);
         }

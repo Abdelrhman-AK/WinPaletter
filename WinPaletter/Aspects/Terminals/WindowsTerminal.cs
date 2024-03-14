@@ -122,6 +122,12 @@ namespace WinPaletter
 
             if (AspectEnabled)
             {
+                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                {
+                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    Program.TM.Save(Theme.Manager.Source.File, filename);
+                }
+
                 if (OS.W12 || OS.W11 || OS.W10)
                 {
                     Cursor = Cursors.WaitCursor;

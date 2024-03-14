@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,7 +42,7 @@ namespace WinPaletter.Tabs
             Size = new(20, 20),
             Anchor = AnchorStyles.Right,
             ImageGlyphEnabled = true,
-            ImageGlyph = Assets.Tabs.Help,
+            ImageGlyph = Properties.Resources.Glyph_Help,
             Flag = UI.WP.Button.Flags.CustomColorOnHover,
             CustomColor = Color.FromArgb(193, 156, 0),
         };
@@ -1200,7 +1201,7 @@ namespace WinPaletter.Tabs
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             // Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);

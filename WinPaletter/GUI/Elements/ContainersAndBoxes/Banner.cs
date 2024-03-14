@@ -32,7 +32,7 @@ namespace WinPaletter.UI.WP
                 {
                     _image = value;
                     if (value != null) ImageColor = _image.AverageColor(); else ImageColor = Color.Empty;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace WinPaletter.UI.WP
             set
             {
                 base.Text = value;
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -72,7 +72,7 @@ namespace WinPaletter.UI.WP
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = TextRenderingHint.SystemDefault;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
             Rectangle Rect_Fix = new(-2, -2, Width + 4, Height + 4);

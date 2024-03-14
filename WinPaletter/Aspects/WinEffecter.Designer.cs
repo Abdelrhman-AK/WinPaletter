@@ -2100,7 +2100,7 @@ namespace WinPaletter
             this.button25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button25.ForeColor = System.Drawing.Color.White;
             this.button25.Image = null;
-            this.button25.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Reset;
+            this.button25.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Reset;
             this.button25.ImageGlyphEnabled = true;
             this.button25.Location = new System.Drawing.Point(441, 7);
             this.button25.Name = "button25";

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
@@ -444,7 +445,7 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             Rectangle OuterRect = new(0, 0, Width - 1, Height - 1);
             Rectangle InnerRect = new(1, 1, Width - 3, Height - 3);

@@ -44,9 +44,9 @@ namespace WinPaletter.NativeMethods
         /// <param name="key">The name of the key whose associated value is to be retrieved.</param>
         /// <param name="def">A default value.</param>
         /// <param name="retVal">A StringBuilder that receives the retrieved string.</param>
-        /// <param name="size">The size of the buffer pointed to by the retVal parameter, in characters.</param>
+        /// <param name="size">The size of the Buffer pointed to by the retVal parameter, in characters.</param>
         /// <param name="filePath">The name of the initialization file.</param>
-        /// <returns>Returns the number of characters copied to the buffer, excluding the null-terminating character.</returns>
+        /// <returns>Returns the number of characters copied to the Buffer, excluding the null-terminating character.</returns>
         [DllImport("kernel32.dll")]
         public static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
 
@@ -75,8 +75,8 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hProcess">A handle to the process.</param>
         /// <param name="dwFlags">This parameter is reserved for future use. It must be zero.</param>
-        /// <param name="lpExeName">A pointer to a buffer that receives the null-terminated string specifying the executable file for the process.</param>
-        /// <param name="lpdwSize">On input, specifies the size of the lpExeName buffer, in characters. On success, receives the number of characters written to the buffer, excluding the null-terminating character.</param>
+        /// <param name="lpExeName">A pointer to a Buffer that receives the null-terminated string specifying the executable file for the process.</param>
+        /// <param name="lpdwSize">On input, specifies the size of the lpExeName Buffer, in characters. On success, receives the number of characters written to the Buffer, excluding the null-terminating character.</param>
         /// <returns>Returns true if the function succeeds; otherwise, false.</returns>
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool QueryFullProcessImageName(
@@ -138,5 +138,26 @@ namespace WinPaletter.NativeMethods
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FreeLibrary(IntPtr hModule);
+
+        /// <summary>
+        /// Enumerates resource types within a binary module.
+        /// </summary>
+        /// <param name="hModule"></param>
+        /// <param name="lpszType"></param>
+        /// <param name="lpEnumFunc"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool EnumResourceNames(IntPtr hModule, IntPtr lpszType, EnumResNameProcDelegate lpEnumFunc, IntPtr lParam);
+
+        /// <summary>
+        /// Delegate for the EnumResourceNames function.
+        /// </summary>
+        /// <param name="hModule"></param>
+        /// <param name="lpszType"></param>
+        /// <param name="lpszName"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        public delegate bool EnumResNameProcDelegate(IntPtr hModule, IntPtr lpszType, IntPtr lpszName, IntPtr lParam);
     }
 }

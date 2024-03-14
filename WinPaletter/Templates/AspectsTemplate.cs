@@ -378,7 +378,8 @@ namespace WinPaletter
                     if (_data != null && _data.Enabled != value)
                     {
                         _data.Enabled = value;
-                        if (Toggle != null) Toggle.Checked = value;
+                        UI.WP.Toggle toggle = this.GetAllControls().OfType<UI.WP.Toggle>().Where(t => t.Name.StartsWith("checker")).FirstOrDefault() ?? null;
+                        if (toggle is not null) toggle.Checked = value;
                     }
                 }
             }

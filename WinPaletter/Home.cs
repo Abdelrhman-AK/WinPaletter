@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -222,7 +224,7 @@ namespace WinPaletter
                     {
                         Forms.Updates.ls = Updates_ls;
                         NotifyUpdates.Visible = true;
-                        Button5.ImageGlyph = Properties.Resources.Update_Dot;
+                        Button5.ImageGlyph = Properties.Resources.Glyph_Update_Dot;
                         NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
                     }
                 });
@@ -274,7 +276,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
-            Button5.ImageGlyph = Properties.Resources.Update;
+            Button5.ImageGlyph = Properties.Resources.Glyph_Update;
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -600,6 +602,11 @@ namespace WinPaletter
         private void Home_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Process.Start(Links.Wiki.WikiURL);
+        }
+
+        private void card13_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.IconsStudio);
         }
 
         //private void button1_Click(object sender, EventArgs e)

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
@@ -98,7 +99,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Style = value;
                     ProcessBack();
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -113,7 +114,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _BackColorAlpha)
                 {
                     _BackColorAlpha = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -129,7 +130,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _NoisePower = value;
                     NoiseBack();
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -146,7 +147,7 @@ namespace WinPaletter.UI.Simulation
                     _BlurPower = value;
 
                     BlurBack();
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -162,7 +163,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Transparency = value;
                     ProcessBack();
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -177,7 +178,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _DarkMode)
                 {
                     _DarkMode = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -193,7 +194,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _AppUnderline = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -209,7 +210,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _AppBackground = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -225,7 +226,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _ActionCenterButton_Normal = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -241,7 +242,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _ActionCenterButton_Hover = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -257,7 +258,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _ActionCenterButton_Pressed = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -272,7 +273,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _StartColor)
                 {
                     _StartColor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -288,7 +289,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _LinkColor = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -303,7 +304,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _Background)
                 {
                     _Background = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -319,7 +320,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Background2 = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -335,7 +336,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Win7ColorBal = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -351,7 +352,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Win7GlowBal = value;
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -368,39 +369,6 @@ namespace WinPaletter.UI.Simulation
         public void SetStyles()
         {
             rect = new(0, 0, Width - 1, Height - 1);
-        }
-
-        public void CopycatFrom(WinElement element)
-        {
-            Style = element.Style;
-            _NoisePower = element.NoisePower;
-            _BlurPower = element.BlurPower;
-            _Transparency = element.Transparency;
-            _DarkMode = element.DarkMode;
-            _AppUnderline = element.AppUnderline;
-            _AppBackground = element.AppBackground;
-            _ActionCenterButton_Normal = element.ActionCenterButton_Normal;
-            _ActionCenterButton_Hover = element.ActionCenterButton_Hover;
-            _ActionCenterButton_Pressed = element.ActionCenterButton_Pressed;
-            _StartColor = element.StartColor;
-            _LinkColor = element.LinkColor;
-            _BackColorAlpha = (byte)element.BackColorAlpha;
-            BackColor = element.BackColor;
-            _Background2 = element.Background2;
-            _Win7ColorBal = element.Win7ColorBal;
-            _Win7GlowBal = element.Win7GlowBal;
-            UseWin11ORB_WithWin10 = element.UseWin11ORB_WithWin10;
-            UseWin11RoundedCorners_WithWin10_Level1 = element.UseWin11RoundedCorners_WithWin10_Level1;
-            UseWin11RoundedCorners_WithWin10_Level2 = element.UseWin11RoundedCorners_WithWin10_Level2;
-            Shadow = element.Shadow;
-
-            Dock = element.Dock;
-            Size = element.Size;
-            Location = element.Location;
-            Text = element.Text;
-
-            ProcessBack();
-            Refresh();
         }
 
         public void ProcessBack()
@@ -517,7 +485,7 @@ namespace WinPaletter.UI.Simulation
                 CursorOverTaskbar = !CursorOverTaskbarApp && !CursorOverTaskbarAppUnderline && !CursorOverStartButton && rect.Contains(e.Location) && (Style == Styles.Taskbar11 || Style == Styles.Taskbar10);
 
                 await Task.Delay(10);
-                Refresh();
+                Invalidate();
             }
 
             base.OnMouseMove(e);
@@ -531,7 +499,7 @@ namespace WinPaletter.UI.Simulation
                 _State_Btn2 = MouseState.Normal;
 
                 await Task.Delay(10);
-                Refresh();
+                Invalidate();
             }
 
             if (!DesignMode && EnableEditingColors)
@@ -547,7 +515,7 @@ namespace WinPaletter.UI.Simulation
                 CursorOverStartButton = false;
 
                 await Task.Delay(10);
-                Refresh();
+                Invalidate();
             }
             base.OnMouseLeave(e);
         }
@@ -615,14 +583,14 @@ namespace WinPaletter.UI.Simulation
                         _State_Btn1 = MouseState.Pressed;
 
                     await Task.Delay(10);
-                    Refresh();
+                    Invalidate();
                 }
                 else if (_State_Btn1 != MouseState.Normal)
                 {
                     _State_Btn1 = MouseState.Normal;
 
                     await Task.Delay(10);
-                    Refresh();
+                    Invalidate();
                 }
 
                 if (Button2.Contains(PointToClient(MousePosition)))
@@ -633,14 +601,14 @@ namespace WinPaletter.UI.Simulation
                         _State_Btn2 = MouseState.Pressed;
 
                     await Task.Delay(10);
-                    Refresh();
+                    Invalidate();
                 }
                 else if (!(_State_Btn2 == MouseState.Normal))
                 {
                     _State_Btn2 = MouseState.Normal;
 
                     await Task.Delay(10);
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -745,7 +713,7 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
             Rectangle Rect = new(-1, -1, Width + 2, Height + 2);
             Rectangle RRect = new(0, 0, Width - 1, Height - 1);
             int Radius = 5;

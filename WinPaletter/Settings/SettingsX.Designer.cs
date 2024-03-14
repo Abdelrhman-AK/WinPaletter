@@ -484,6 +484,9 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
+            this.label40 = new System.Windows.Forms.Label();
+            this.toggle36 = new WinPaletter.UI.WP.Toggle();
+            this.pictureBox47 = new System.Windows.Forms.PictureBox();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -658,6 +661,7 @@ namespace WinPaletter
             this.groupBox52.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
             this.bottom_buttons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox47)).BeginInit();
             this.SuspendLayout();
             // 
             // ImageList1
@@ -1085,7 +1089,7 @@ namespace WinPaletter
             this.Button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button8.ForeColor = System.Drawing.Color.White;
             this.Button8.Image = null;
-            this.Button8.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Help;
+            this.Button8.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
             this.Button8.ImageGlyphEnabled = true;
             this.Button8.Location = new System.Drawing.Point(500, 10);
             this.Button8.Name = "Button8";
@@ -1429,7 +1433,7 @@ namespace WinPaletter
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
-            this.Button7.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button7.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button7.ImageGlyphEnabled = true;
             this.Button7.Location = new System.Drawing.Point(772, 12);
             this.Button7.Name = "Button7";
@@ -1487,7 +1491,7 @@ namespace WinPaletter
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
             this.Button10.Image = null;
-            this.Button10.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Down;
+            this.Button10.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Down;
             this.Button10.ImageGlyphEnabled = true;
             this.Button10.Location = new System.Drawing.Point(583, 12);
             this.Button10.Name = "Button10";
@@ -4647,7 +4651,7 @@ namespace WinPaletter
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
             this.Button9.Image = null;
-            this.Button9.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button9.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button9.ImageGlyphEnabled = true;
             this.Button9.Location = new System.Drawing.Point(772, 76);
             this.Button9.Name = "Button9";
@@ -4675,7 +4679,7 @@ namespace WinPaletter
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
             this.Button16.Image = null;
-            this.Button16.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.Button16.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button16.ImageGlyphEnabled = true;
             this.Button16.Location = new System.Drawing.Point(772, 46);
             this.Button16.Name = "Button16";
@@ -6178,7 +6182,7 @@ namespace WinPaletter
             this.groupBox51.Controls.Add(this.pictureBox79);
             this.groupBox51.Controls.Add(this.button23);
             this.groupBox51.Controls.Add(this.textBox4);
-            this.groupBox51.Location = new System.Drawing.Point(3, 268);
+            this.groupBox51.Location = new System.Drawing.Point(3, 300);
             this.groupBox51.Name = "groupBox51";
             this.groupBox51.Size = new System.Drawing.Size(817, 48);
             this.groupBox51.TabIndex = 202;
@@ -6213,7 +6217,7 @@ namespace WinPaletter
             this.button23.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button23.ForeColor = System.Drawing.Color.White;
             this.button23.Image = null;
-            this.button23.ImageGlyph = global::WinPaletter.Properties.Resources.Vector_Browse;
+            this.button23.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button23.ImageGlyphEnabled = true;
             this.button23.Location = new System.Drawing.Point(772, 12);
             this.button23.Name = "button23";
@@ -6246,6 +6250,9 @@ namespace WinPaletter
             this.groupBox50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox50.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox50.Controls.Add(this.label40);
+            this.groupBox50.Controls.Add(this.toggle36);
+            this.groupBox50.Controls.Add(this.pictureBox47);
             this.groupBox50.Controls.Add(this.label94);
             this.groupBox50.Controls.Add(this.toggle34);
             this.groupBox50.Controls.Add(this.label93);
@@ -6259,7 +6266,7 @@ namespace WinPaletter
             this.groupBox50.Controls.Add(this.pictureBox77);
             this.groupBox50.Location = new System.Drawing.Point(3, 109);
             this.groupBox50.Name = "groupBox50";
-            this.groupBox50.Size = new System.Drawing.Size(817, 155);
+            this.groupBox50.Size = new System.Drawing.Size(817, 185);
             this.groupBox50.TabIndex = 201;
             // 
             // label94
@@ -6267,7 +6274,7 @@ namespace WinPaletter
             this.label94.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label94.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label94.Location = new System.Drawing.Point(71, 112);
+            this.label94.Location = new System.Drawing.Point(71, 146);
             this.label94.Name = "label94";
             this.label94.Size = new System.Drawing.Size(689, 34);
             this.label94.TabIndex = 35;
@@ -6279,7 +6286,7 @@ namespace WinPaletter
             this.toggle34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toggle34.Checked = false;
             this.toggle34.DarkLight_Toggler = false;
-            this.toggle34.Location = new System.Drawing.Point(766, 119);
+            this.toggle34.Location = new System.Drawing.Point(766, 153);
             this.toggle34.Name = "toggle34";
             this.toggle34.Size = new System.Drawing.Size(40, 20);
             this.toggle34.TabIndex = 34;
@@ -6294,7 +6301,8 @@ namespace WinPaletter
             this.label93.Name = "label93";
             this.label93.Size = new System.Drawing.Size(689, 34);
             this.label93.TabIndex = 32;
-            this.label93.Text = "Before applying a WinPaletter theme";
+            this.label93.Text = "Before applying a WinPaletter theme after pressing \'Apply\' in main form and WinPa" +
+    "letter Store";
             this.label93.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toggle32
@@ -6323,7 +6331,7 @@ namespace WinPaletter
             // pictureBox78
             // 
             this.pictureBox78.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox78.Image")));
-            this.pictureBox78.Location = new System.Drawing.Point(41, 117);
+            this.pictureBox78.Location = new System.Drawing.Point(41, 151);
             this.pictureBox78.Name = "pictureBox78";
             this.pictureBox78.Size = new System.Drawing.Size(24, 24);
             this.pictureBox78.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -6570,6 +6578,39 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
+            // label40
+            // 
+            this.label40.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label40.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.Location = new System.Drawing.Point(71, 112);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(689, 34);
+            this.label40.TabIndex = 38;
+            this.label40.Text = "Before applying a single Windows aspect after pressing \'Apply\' in its form";
+            this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toggle36
+            // 
+            this.toggle36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.toggle36.Checked = false;
+            this.toggle36.DarkLight_Toggler = false;
+            this.toggle36.Location = new System.Drawing.Point(766, 119);
+            this.toggle36.Name = "toggle36";
+            this.toggle36.Size = new System.Drawing.Size(40, 20);
+            this.toggle36.TabIndex = 37;
+            this.toggle36.Text = "toggle36";
+            // 
+            // pictureBox47
+            // 
+            this.pictureBox47.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox47.Image")));
+            this.pictureBox47.Location = new System.Drawing.Point(41, 117);
+            this.pictureBox47.Name = "pictureBox47";
+            this.pictureBox47.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox47.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox47.TabIndex = 36;
+            this.pictureBox47.TabStop = false;
+            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -6766,6 +6807,7 @@ namespace WinPaletter
             this.groupBox52.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
             this.bottom_buttons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox47)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -7216,5 +7258,8 @@ namespace WinPaletter
         internal Label label30;
         private UI.WP.Toggle toggle12;
         internal PictureBox pictureBox14;
+        internal Label label40;
+        private UI.WP.Toggle toggle36;
+        internal PictureBox pictureBox47;
     }
 }

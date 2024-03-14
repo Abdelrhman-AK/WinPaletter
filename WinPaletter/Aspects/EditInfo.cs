@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
 {
@@ -85,6 +86,12 @@ namespace WinPaletter
 
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
+                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                {
+                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    TMx.Save(Theme.Manager.Source.File, filename);
+                }
+
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
                 ApplyToTM(Program.TM_Original);
@@ -118,8 +125,6 @@ namespace WinPaletter
 
             LoadData(data);
 
-            this.LoadLanguage();
-            ApplyStyle(this);
             LoadFromTM(Program.TM);
             TextBox3.Font = Fonts.ConsoleMedium;
             TextBox6.Font = Fonts.ConsoleMedium;

@@ -42,6 +42,7 @@
         public string TM_Applying_ScreenSaver { get; set; } = "Applying Screen Saver";
         public string TM_ApplyingCursors { get; set; } = "Applying Windows Cursors";
         public string TM_Applying_Sounds { get; set; } = "Applying Sounds";
+        public string TM_Applying_Icons { get; set; } = "Applying Windows Icons";
         public string TM_RenderingCustomLogonUI_MayNotRespond { get; set; } = "WinPaletter may not respond while rendering custom LogonUI";
         public string TM_RenderingCustomLogonUI_Progress { get; set; } = "Rendering custom LogonUI:";
         public string TM_RenderingCustomLogonUI { get; set; } = "Rendering custom LogonUI";

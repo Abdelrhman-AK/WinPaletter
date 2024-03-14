@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -202,7 +203,7 @@ namespace WinPaletter.UI.WP
         private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)
         {
             Graphics G = e.Graphics;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             Config.Scheme scheme;
 

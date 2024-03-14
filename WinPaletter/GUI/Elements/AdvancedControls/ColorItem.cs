@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Controllers
@@ -93,7 +94,7 @@ namespace WinPaletter.UI.Controllers
             Mix
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override async void OnMouseMove(MouseEventArgs e)
         {
             mousePosition_afterDrag = MousePosition;
 
@@ -106,7 +107,8 @@ namespace WinPaletter.UI.Controllers
             if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
             {
                 HoverOverDefColorDot = CanRaiseEventsForDefColorDot();
-                Refresh();
+                await Task.Delay(10);
+                Invalidate();
             }
 
             base.OnMouseMove(e);
@@ -210,11 +212,11 @@ namespace WinPaletter.UI.Controllers
             }
 
             DragDropMouseHovering = false;
-            Refresh();
+            Invalidate();
 
         }
 
-        protected override void OnDragEnter(DragEventArgs e)
+        protected override async void OnDragEnter(DragEventArgs e)
         {
             if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
             {
@@ -283,7 +285,9 @@ namespace WinPaletter.UI.Controllers
             else
             {
                 DragDropMouseHovering = false;
-                Refresh();
+
+                await Task.Delay(10);
+                Invalidate();
 
                 e.Effect = DragDropEffects.None;
             }
@@ -291,19 +295,22 @@ namespace WinPaletter.UI.Controllers
             base.OnDragEnter(e);
         }
 
-        protected override void OnDragLeave(EventArgs e)
+        protected override async void OnDragLeave(EventArgs e)
         {
             base.OnDragLeave(e);
             DragDropMouseHovering = false;
-            Refresh();
+
+            await Task.Delay(10);
+            Invalidate();
         }
 
-        protected override void OnDragOver(DragEventArgs e)
+        protected override async void OnDragOver(DragEventArgs e)
         {
             if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
             {
                 DragDropMouseHovering = true;
-                Refresh();
+                await Task.Delay(10);
+                Invalidate();
                 base.OnDragOver(e);
             }
             else
@@ -432,25 +439,26 @@ namespace WinPaletter.UI.Controllers
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Refresh(); }
+            set { _alpha = value; Invalidate(); }
         }
 
         private Timer Timer2;
         private int Timer2_factor = 0;
 
-        private void Timer2_Tick(object sender, EventArgs e)
+        private async void Timer2_Tick(object sender, EventArgs e)
         {
             if (!DesignMode && MakeAfterDropEffect)
             {
                 Timer2_factor = (int)Math.Round(Timer2_factor + Math.Min(Width, Height) * 3.5d);
-                System.Threading.Thread.Sleep(1);
-                Refresh();
+                await Task.Delay(1);
+                Invalidate();
             }
             else
             {
                 Timer2_factor = 0;
                 MakeAfterDropEffect = false;
-                Refresh();
+                await Task.Delay(1);
+                Invalidate();
                 Timer2.Enabled = false;
                 Timer2.Stop();
             }
@@ -626,7 +634,7 @@ namespace WinPaletter.UI.Controllers
             {
                 if (Program.Settings.NerdStats.Enabled & !DontShowInfo)
                 {
-                    G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.SystemDefault;
+                    G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
                     Color TargetColor = Enabled ? (!HoverOverDefColorDot | !Program.Settings.NerdStats.DotDefaultChangedIndicator ? BackColor : DefaultBackColor) : Program.Style.Schemes.Disabled.Colors.Line(parentLevel);
                     Color FC0 = TargetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);

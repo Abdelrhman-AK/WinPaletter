@@ -23,6 +23,7 @@
         public string TM_Skip_WallpaperTone { get; set; } = "Skipping WinPaletter Wallpaper Tone as it is disabled";
         public string TM_Skip_AppTheme { get; set; } = "Skipping WinPaletter application theme as it is disabled";
         public string TM_Skip_Sounds { get; set; } = "Skipping Sounds as its toggle is disabled";
+        public string TM_Skip_Icons { get; set; } = "Skipping Icons as its toggle is disabled";
         public string TM_Skip_ScreenSaver { get; set; } = "Skipping Screen Saver as its toggle is disabled";
         public string TM_Skip_Cursors { get; set; } = "Skipping Windows Cursors as it is disabled";
     }

@@ -33,6 +33,7 @@
         public string TM_Error_TerminalStable { get; set; } = "Error occurred during applying Windows Terminal Stable";
         public string TM_Error_ScreenSaver { get; set; } = "Error occurred during applying Screen Saver";
         public string TM_Error_Sounds { get; set; } = "Error occurred during applying Sounds";
+        public string TM_Error_Icons { get; set; } = "Error occurred during applying Windows Icons";
         public string TM_RenderingCursors_Error { get; set; } = "Error occurred during rendering Windows Cursors";
         public string TM_CursorsApplying_Error { get; set; } = "Error occurred during applying Windows Cursors";
         public string TM_RestoreCursorsError { get; set; } = "Error occurred during resetting cursors to aero. Anyway, process will continue.";

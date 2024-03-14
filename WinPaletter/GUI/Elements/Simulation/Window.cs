@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
 using WinPaletter.UI.Retro;
@@ -77,7 +79,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _shadow)
                 {
                     _shadow = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -92,7 +94,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _radius)
                 {
                     _radius = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -107,7 +109,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _accentColor_Active)
                 {
                     _accentColor_Active = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -122,7 +124,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _accentColor_Inactive)
                 {
                     _accentColor_Inactive = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -137,7 +139,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _accentColor2_Active)
                 {
                     _accentColor2_Active = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -152,7 +154,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _accentColor2_Inactive)
                 {
                     _accentColor2_Inactive = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -167,7 +169,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _active)
                 {
                     _active = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -182,7 +184,7 @@ namespace WinPaletter.UI.Simulation
                 if (_preview != value)
                 {
                     _preview = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -197,7 +199,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _win7Alpha)
                 {
                     _win7Alpha = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -212,7 +214,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _win7ColorBal)
                 {
                     _win7ColorBal = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -227,7 +229,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _win7GlowBal)
                 {
                     _win7GlowBal = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -242,7 +244,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _toolWindow)
                 {
                     _toolWindow = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -257,7 +259,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _winVista)
                 {
                     _winVista = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -272,7 +274,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _DarkMode)
                 {
                     _DarkMode = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -287,7 +289,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _AccentColor_Enabled)
                 {
                     _AccentColor_Enabled = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -308,7 +310,7 @@ namespace WinPaletter.UI.Simulation
                         Noise7 = Assets.Win7Preview.AeroGlass.Fade(Win7Noise / 100f);
                     }
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -330,7 +332,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Metrics_CaptionHeight = value;
                     AdjustPadding();
-                    Refresh();
+                    Invalidate();
                     MetricsChanged?.Invoke();
 
                     if (!DesignMode && EnableEditingMetrics && isMoving_Grip_topCenter) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_CaptionHeight)));
@@ -355,7 +357,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Metrics_BorderWidth = value;
                     AdjustPadding();
-                    Refresh();
+                    Invalidate();
                     MetricsChanged?.Invoke();
 
                     if (!DesignMode && EnableEditingMetrics && (isMoving_Grip_borderWidth_left || isMoving_Grip_borderWidth_right || isMoving_Grip_borderWidth_bottom))
@@ -381,7 +383,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     _Metrics_PaddedBorderWidth = value;
                     AdjustPadding();
-                    Refresh();
+                    Invalidate();
                     MetricsChanged?.Invoke();
 
                     if (!DesignMode && EnableEditingMetrics && (isMoving_Grip_padding_right || isMoving_Grip_padding_left || isMoving_Grip_padding_bottom))
@@ -757,7 +759,7 @@ namespace WinPaletter.UI.Simulation
         [Browsable(false)]
         public bool EnableEditingMetrics { get; set; } = false;
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override async void OnMouseMove(MouseEventArgs e)
         {
             if (!DesignMode && EnableEditingColors)
             {
@@ -767,6 +769,7 @@ namespace WinPaletter.UI.Simulation
                 CursorOverWindowAccent = (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite || Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque) &&
                   Active && Rect.Contains(e.Location) && !ClientRect.Contains(e.Location);
 
+                await Task.Delay(10);
                 /* Don't make it controlled by conditions, they may be false and graphics won't be updated.
                    For high performance, we need to update graphics only in specified rectangle. */
                 Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
@@ -818,19 +821,22 @@ namespace WinPaletter.UI.Simulation
                     else if (Grip_rightCenter.Contains(e.Location)) Cursor = Cursors.SizeWE;
                     else Cursor = Cursors.Default;
 
-                    Refresh();
+                    await Task.Delay(10);
+                    Invalidate();
                 }
             }
 
             base.OnMouseMove(e);
         }
 
-        protected override void OnMouseLeave(EventArgs e)
+        protected override async void OnMouseLeave(EventArgs e)
         {
             if (!DesignMode && EnableEditingColors)
             {
                 CursorOverTitlebar = false;
                 CursorOverWindowAccent = false;
+
+                await Task.Delay(10);
                 Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
             }
             else if (!DesignMode && EnableEditingMetrics)
@@ -846,7 +852,9 @@ namespace WinPaletter.UI.Simulation
                 CursorOverTitlebar = false;
 
                 Cursor = Cursors.Default;
-                Refresh();
+
+                await Task.Delay(10);
+                Invalidate();
             }
 
             base.OnMouseLeave(e);
@@ -996,7 +1004,7 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.Style.RenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             //Draw window itself
             if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)

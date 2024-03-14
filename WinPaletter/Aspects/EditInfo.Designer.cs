@@ -606,7 +606,7 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(167, 66);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 11;
+            this.trackBarX1.Maximum = 17;
             this.trackBarX1.Minimum = 0;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(508, 24);
@@ -641,7 +641,7 @@ namespace WinPaletter
             // PictureBox16
             // 
             this.PictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox16.Image = global::WinPaletter.Assets.WinPaletter_Store.DoneByWinPaletter;
+            this.PictureBox16.Image = global::WinPaletter.Assets.Store.DoneByWinPaletter;
             this.PictureBox16.Location = new System.Drawing.Point(6, 325);
             this.PictureBox16.Name = "PictureBox16";
             this.PictureBox16.Size = new System.Drawing.Size(24, 24);
@@ -702,7 +702,7 @@ namespace WinPaletter
             // PictureBox15
             // 
             this.PictureBox15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox15.Image = global::WinPaletter.Assets.WinPaletter_Store.DoneByUser;
+            this.PictureBox15.Image = global::WinPaletter.Assets.Store.DoneByUser;
             this.PictureBox15.Location = new System.Drawing.Point(6, 355);
             this.PictureBox15.Name = "PictureBox15";
             this.PictureBox15.Size = new System.Drawing.Size(24, 24);
@@ -741,7 +741,7 @@ namespace WinPaletter
             // PictureBox14
             // 
             this.PictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox14.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedForXP;
+            this.PictureBox14.Image = global::WinPaletter.Assets.Store.DesignedForXP;
             this.PictureBox14.Location = new System.Drawing.Point(42, 284);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);
@@ -752,7 +752,7 @@ namespace WinPaletter
             // PictureBox13
             // 
             this.PictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox13.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedForVista;
+            this.PictureBox13.Image = global::WinPaletter.Assets.Store.DesignedForVista;
             this.PictureBox13.Location = new System.Drawing.Point(42, 254);
             this.PictureBox13.Name = "PictureBox13";
             this.PictureBox13.Size = new System.Drawing.Size(24, 24);
@@ -763,7 +763,7 @@ namespace WinPaletter
             // PictureBox12
             // 
             this.PictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox12.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor7;
+            this.PictureBox12.Image = global::WinPaletter.Assets.Store.DesignedFor7;
             this.PictureBox12.Location = new System.Drawing.Point(42, 224);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
@@ -774,7 +774,7 @@ namespace WinPaletter
             // PictureBox11
             // 
             this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox11.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor8;
+            this.PictureBox11.Image = global::WinPaletter.Assets.Store.DesignedFor8;
             this.PictureBox11.Location = new System.Drawing.Point(42, 194);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
@@ -785,7 +785,7 @@ namespace WinPaletter
             // PictureBox10
             // 
             this.PictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox10.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor10;
+            this.PictureBox10.Image = global::WinPaletter.Assets.Store.DesignedFor10;
             this.PictureBox10.Location = new System.Drawing.Point(42, 164);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
@@ -796,7 +796,7 @@ namespace WinPaletter
             // PictureBox9
             // 
             this.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox9.Image = global::WinPaletter.Assets.WinPaletter_Store.DesignedFor11;
+            this.PictureBox9.Image = global::WinPaletter.Assets.Store.DesignedFor11;
             this.PictureBox9.Location = new System.Drawing.Point(42, 134);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
@@ -1003,8 +1003,8 @@ namespace WinPaletter
             this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pin_button.ForeColor = System.Drawing.Color.White;
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageGlyphEnabled = false;
             this.pin_button.ImageGlyph = null;
+            this.pin_button.ImageGlyphEnabled = false;
             this.pin_button.Location = new System.Drawing.Point(89, 372);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);
@@ -1022,7 +1022,6 @@ namespace WinPaletter
             this.ClientSize = new System.Drawing.Size(864, 535);
             this.Controls.Add(this.TabControl1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;

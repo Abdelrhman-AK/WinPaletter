@@ -43,6 +43,7 @@
             this.card7 = new WinPaletter.UI.WP.Card();
             this.card11 = new WinPaletter.UI.WP.Card();
             this.card12 = new WinPaletter.UI.WP.Card();
+            this.card13 = new WinPaletter.UI.WP.Card();
             this.card10 = new WinPaletter.UI.WP.Card();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
@@ -108,6 +109,7 @@
             this.flowLayoutPanel1.Controls.Add(this.card7);
             this.flowLayoutPanel1.Controls.Add(this.card11);
             this.flowLayoutPanel1.Controls.Add(this.card12);
+            this.flowLayoutPanel1.Controls.Add(this.card13);
             this.flowLayoutPanel1.Controls.Add(this.card10);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 122);
@@ -254,11 +256,24 @@
             this.card12.Text = "Windows Switcher";
             this.card12.Click += new System.EventHandler(this.card12_Click);
             // 
+            // card13
+            // 
+            this.card13.Color = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(25)))), ((int)(((byte)(40)))));
+            this.card13.Image = ((System.Drawing.Image)(resources.GetObject("card13.Image")));
+            this.card13.Location = new System.Drawing.Point(855, 280);
+            this.card13.Name = "card13";
+            this.card13.Size = new System.Drawing.Size(277, 130);
+            this.card13.TabIndex = 132;
+            this.card13.Tag = "Replace common Windows icons without patching system files; this process involves" +
+    " modifying the registry exclusively.";
+            this.card13.Text = "Windows Icons";
+            this.card13.Click += new System.EventHandler(this.card13_Click);
+            // 
             // card10
             // 
             this.card10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
             this.card10.Image = ((System.Drawing.Image)(resources.GetObject("card10.Image")));
-            this.card10.Location = new System.Drawing.Point(855, 280);
+            this.card10.Location = new System.Drawing.Point(6, 416);
             this.card10.Name = "card10";
             this.card10.Size = new System.Drawing.Size(277, 130);
             this.card10.TabIndex = 131;
@@ -939,5 +954,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private UI.WP.LabelAlt labelAlt3;
         public UI.WP.GroupBox groupBox1;
+        private UI.WP.Card card13;
     }
 }

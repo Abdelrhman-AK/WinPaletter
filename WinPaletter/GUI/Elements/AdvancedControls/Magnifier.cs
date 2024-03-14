@@ -64,7 +64,7 @@ namespace WinPaletter.UI.Controllers
                         NativeMethods.User32.UnhookWindowsHookEx(mouseHook);
                     }
 
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace WinPaletter.UI.Controllers
                 if (value > 0)
                 {
                     _zoom = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
