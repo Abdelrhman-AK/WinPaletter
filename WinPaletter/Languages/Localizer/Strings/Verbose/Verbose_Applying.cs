@@ -9,6 +9,7 @@
         public string TM_Admin_Msg0 { get; set; } = "Writing to registry without administrator rights by deflection";
         public string TM_Admin_Msg1 { get; set; } = "This deflection will take time more than if started as administrator";
         public string TM_Applying_Started { get; set; } = "Applying started";
+        public string TM_SavingToggles { get; set; } = "Saving aspects toggles states into registry";
         public string TM_Time { get; set; } = "It took {0} seconds";
         public string TM_Time_They { get; set; } = "They took {0} seconds";
         public string TM_SavingInfo { get; set; } = "Saving theme info into registry";

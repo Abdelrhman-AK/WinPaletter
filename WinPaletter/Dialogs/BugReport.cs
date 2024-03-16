@@ -66,11 +66,11 @@ namespace WinPaletter
             Center();
         }
 
-        public void AddData(string str, Exception ex, TreeView treeview)
+        public void AddData(string str, Exception ex, TreeView treeView)
         {
             if (ex is not null && ex.Data is not null && ex.Data.Keys is not null && ex.Data.Keys.Count > 0)
             {
-                TreeNodeCollection temp = treeview?.Nodes?.Add($"{str} data").Nodes;
+                TreeNodeCollection temp = treeView?.Nodes?.Add($"{str} data").Nodes;
 
                 foreach (DictionaryEntry x in ex.Data) temp?.Add($"{x.Key} = {x.Value}");
             }
@@ -132,7 +132,7 @@ namespace WinPaletter
         {
             if (win32Error == -1) { win32Error = Marshal.GetLastWin32Error(); }
 
-            Label7.Text = string.Format(Program.Lang.BugReport_Title, ex?.GetType().ToString());
+            Label7.Text = string.Format(Program.Lang.BugReport_Format, ex?.Message ?? ex.GetType().FullName);
 
             Label2.Text = $"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}";
 

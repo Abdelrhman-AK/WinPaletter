@@ -21,7 +21,7 @@ namespace WinPaletter.UI.WP
             ForeColor = Color.White;
             Text = string.Empty;
 
-            _alpha = 0; _alpha2 = _Checked ? 255 : 0;
+            _alpha = 0; _alpha2 = _checked ? 255 : 0;
         }
 
         #region Variables
@@ -42,20 +42,20 @@ namespace WinPaletter.UI.WP
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public new Color BackColor { get => Color.Transparent; set {; } }
 
-        private bool _Checked;
+        private bool _checked;
         public bool Checked
         {
-            get => _Checked;
+            get => _checked;
             set
             {
-                if (value != _Checked)
+                if (value != _checked)
                 {
-                    _Checked = value;
-                    if (_Checked) { UncheckOthersOnChecked(); }
+                    _checked = value;
+                    if (_checked) { UncheckOthersOnChecked(); }
 
                     if (CanAnimate)
                     {
-                        FluentTransitions.Transition.With(this, nameof(alpha2), _Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        FluentTransitions.Transition.With(this, nameof(alpha2), _checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
                     else { alpha2 = Checked ? 255 : 0; }
 
@@ -230,7 +230,7 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             Color back = Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
-            Color line = Color.FromArgb(255 - alpha, _Checked ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line(parentLevel) : scheme.Colors.Line_Checked_Hover);
+            Color line = Color.FromArgb(255 - alpha, _checked ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line(parentLevel) : scheme.Colors.Line_Checked_Hover);
             Color line_hover = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
 
             using (LinearGradientBrush br = new(MainRect, Color.FromArgb(_alpha2, scheme.Colors.Back_Checked), Color.FromArgb(_alpha2, scheme.Colors.Back_Checked_Hover), LinearGradientMode.ForwardDiagonal))

@@ -356,11 +356,11 @@ namespace WinPaletter
         public void LoadColors(VisualStyleMetrics vs)
         {
             Forms.Win32UI.Toggle1.Checked = vs.FlatMenus;
-            //Forms.Win32UI.ActiveBorder_pick.BackColor = vs.Colors.ActiveBorder;
+            //Forms.Win32UI.ActiveBorder_pick.BackColor = vs.Palette.ActiveBorder;
             Forms.Win32UI.activetitle_pick.BackColor = vs.Colors.ActiveCaption;
             Forms.Win32UI.AppWorkspace_pick.BackColor = vs.Colors.AppWorkspace;
             Forms.Win32UI.background_pick.BackColor = vs.Colors.Background;
-            //Forms.Win32UI.btnaltface_pick.BackColor = vs.Colors.ButtonAlternativeFace;
+            //Forms.Win32UI.btnaltface_pick.BackColor = vs.Palette.ButtonAlternativeFace;
             Forms.Win32UI.btndkshadow_pick.BackColor = vs.Colors.DkShadow3d;
             Forms.Win32UI.btnface_pick.BackColor = vs.Colors.Btnface;
             Forms.Win32UI.btnhilight_pick.BackColor = vs.Colors.BtnHighlight;
@@ -372,18 +372,18 @@ namespace WinPaletter
             Forms.Win32UI.GrayText_pick.BackColor = vs.Colors.GrayText;
             Forms.Win32UI.hilighttext_pick.BackColor = vs.Colors.HighlightText;
             Forms.Win32UI.hottracking_pick.BackColor = vs.Colors.HotTracking;
-            //Forms.Win32UI.InactiveBorder_pick.BackColor = vs.Colors.InactiveBorder;
+            //Forms.Win32UI.InactiveBorder_pick.BackColor = vs.Palette.InactiveBorder;
             Forms.Win32UI.InactiveTitle_pick.BackColor = vs.Colors.InactiveCaption;
             Forms.Win32UI.InactivetitleText_pick.BackColor = vs.Colors.InactiveCaptionText;
-            //Forms.Win32UI.InfoText_pick.BackColor = vs.Colors.InfoText;
-            //Forms.Win32UI.InfoWindow_pick.BackColor = vs.Colors.InfoBk;
+            //Forms.Win32UI.InfoText_pick.BackColor = vs.Palette.InfoText;
+            //Forms.Win32UI.InfoWindow_pick.BackColor = vs.Palette.InfoBk;
             Forms.Win32UI.menu_pick.BackColor = vs.Colors.Menu;
             Forms.Win32UI.menubar_pick.BackColor = vs.Colors.MenuBar;
             Forms.Win32UI.menutext_pick.BackColor = vs.Colors.MenuText;
-            //Forms.Win32UI.Scrollbar_pick.BackColor = vs.Colors.ScrollBar;
+            //Forms.Win32UI.Scrollbar_pick.BackColor = vs.Palette.ScrollBar;
             Forms.Win32UI.TitleText_pick.BackColor = vs.Colors.CaptionText;
             Forms.Win32UI.Window_pick.BackColor = vs.Colors.Window;
-            //Forms.Win32UI.Frame_pick.BackColor = vs.Colors.WindowFrame;
+            //Forms.Win32UI.Frame_pick.BackColor = vs.Palette.WindowFrame;
             Forms.Win32UI.WindowText_pick.BackColor = vs.Colors.WindowText;
             Forms.Win32UI.hilight_pick.BackColor = vs.Colors.Highlight;
             Forms.Win32UI.menuhilight_pick.BackColor = vs.Colors.MenuHilight;
@@ -945,6 +945,7 @@ namespace WinPaletter
         private void button1_Click(object sender, EventArgs e)
         {
             string result = Forms.Win32UI_Gallery.PickATheme();
+
             if (!string.IsNullOrWhiteSpace(result) && ComboBox1.Items.Contains(result))
             {
                 ComboBox1.SelectedItem = result;

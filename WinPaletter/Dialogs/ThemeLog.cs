@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinPaletter.Dialogs
+namespace WinPaletter
 {
     public partial class ThemeLog : Form
     {
@@ -15,6 +15,30 @@ namespace WinPaletter.Dialogs
         {
             InitializeComponent();
             FormClosing += ThemeLog_Closing;
+        }
+
+        /// <summary>
+        /// Add node to treeView (Theme log)
+        /// </summary>
+        /// <param name="treeView">treeView used as a theme log</param>
+        /// <param name="Text">Log node text</param>
+        /// <param name="ImageKey">ImageKey used for icon for log node</param>
+        public static void AddNode(TreeView treeView, string Text, string ImageKey)
+        {
+            if (treeView is not null)
+            {
+                treeView?.Invoke(() =>
+                {
+                    TreeNode temp = treeView?.Nodes.Add(Text);
+                    if (temp is not null)
+                    {
+                        temp.ImageKey = ImageKey;
+                        temp.SelectedImageKey = ImageKey;
+                    }
+
+                    treeView.SelectedNode = treeView.Nodes[treeView.Nodes.Count - 1];
+                });
+            }
         }
 
         private async void ThemeLog_Load(object sender, EventArgs e)
@@ -119,14 +143,14 @@ namespace WinPaletter.Dialogs
                     TM.Save(Theme.Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
 
                     if (LogEnabled)
-                        Theme.Manager.AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_AllDone}", "info");
+                        AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_AllDone}", "info");
 
                     if (AdditionalStoreTips)
-                        Theme.Manager.AddNode(TreeView1, Program.Lang.Store_LogoffRecommended, "info");
+                        AddNode(TreeView1, Program.Lang.Store_LogoffRecommended, "info");
                 }
                 catch (Exception ex)
                 {
-                    Theme.Manager.AddNode(TreeView1, Program.Lang.TM_FatalErrorHappened, "error");
+                    AddNode(TreeView1, Program.Lang.TM_FatalErrorHappened, "error");
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
@@ -205,11 +229,11 @@ namespace WinPaletter.Dialogs
                     }
                     else
                     {
-                        Theme.Manager.AddNode(TreeView1, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
+                        AddNode(TreeView1, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
                     }
                 }
 
-                else if (LogEnabled) { Theme.Manager.AddNode(TreeView1, Program.Lang.NoDefResExplorer, "warning"); }
+                else if (LogEnabled) { AddNode(TreeView1, Program.Lang.NoDefResExplorer, "warning"); }
             });
 
             Apply_Thread.Start();

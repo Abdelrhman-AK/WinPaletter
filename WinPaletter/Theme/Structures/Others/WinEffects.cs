@@ -425,10 +425,10 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves WinEffects data into registry
         /// </summary>
-        /// <param name="TreeView">TreeView used as theme log</param>
-        public async void Apply(TreeView TreeView = null, bool silent = false)
+        /// <param name="treeView">treeView used as theme log</param>
+        public async void Apply(TreeView treeView = null, bool silent = false)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, Enabled);
+            SaveToggleState(treeView);
 
             if (Enabled)
             {
@@ -442,63 +442,63 @@ namespace WinPaletter.Theme.Structures
                         anim.cbSize = (uint)Marshal.SizeOf(anim);
                         anim.IMinAnimate = WE.WindowAnimation ? 1 : 0;
 
-                        SystemParametersInfo(TreeView, SPI.SPI_SETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETDROPSHADOW, 0, WE.WindowShadow, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETUIEFFECTS, 0, WE.WindowUIEffects, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETDROPSHADOW, 0, WE.WindowShadow, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETUIEFFECTS, 0, WE.WindowUIEffects, SPIF.SPIF_UPDATEINIFILE);
 
-                        if (!OS.WXP) SystemParametersInfo(TreeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, WE.AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
+                        if (!OS.WXP) SystemParametersInfo(treeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, WE.AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
 
-                        SystemParametersInfo(TreeView, SPI.SPI_SETDRAGFULLWINDOWS, WE.ShowWinContentDrag, 0, SPIF.SPIF_UPDATEINIFILE);        // use uiParam not pvParam
-                        SystemParametersInfo(TreeView, SPI.SPI_SETMENUANIMATION, 0, WE.MenuAnimation, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETMENUFADE, 0, WE.MenuFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETMENUSHOWDELAY, WE.MenuShowDelay, 0, SPIF.SPIF_UPDATEINIFILE);               // use uiParam not pvParam
-                        SystemParametersInfo(TreeView, SPI.SPI_SETSELECTIONFADE, 0, WE.MenuSelectionFade, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETCOMBOBOXANIMATION, 0, WE.ComboBoxAnimation, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETLISTBOXSMOOTHSCROLLING, 0, WE.ListBoxSmoothScrolling, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETTOOLTIPANIMATION, 0, WE.TooltipAnimation, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETTOOLTIPFADE, 0, WE.TooltipFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETMENUUNDERLINES, 0, WE.KeyboardUnderline, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETFOCUSBORDERWIDTH, 0, WE.FocusRectWidth, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETFOCUSBORDERHEIGHT, 0, WE.FocusRectHeight, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETCARETWIDTH, 0, WE.Caret, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWINDOWTRACKING, 0, WE.AWT_Enabled, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWNDTRKZORDER, 0, WE.AWT_BringActivatedWindowToTop, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETACTIVEWNDTRKTIMEOUT, 0, WE.AWT_Delay, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(TreeView, SPI.SPI_SETSNAPTODEFBUTTON, WE.SnapCursorToDefButton, 0, SPIF.SPIF_UPDATEINIFILE);     // use uiParam not pvParam
+                        SystemParametersInfo(treeView, SPI.SPI_SETDRAGFULLWINDOWS, WE.ShowWinContentDrag, 0, SPIF.SPIF_UPDATEINIFILE);        // use uiParam not pvParam
+                        SystemParametersInfo(treeView, SPI.SPI_SETMENUANIMATION, 0, WE.MenuAnimation, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETMENUFADE, 0, WE.MenuFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETMENUSHOWDELAY, WE.MenuShowDelay, 0, SPIF.SPIF_UPDATEINIFILE);               // use uiParam not pvParam
+                        SystemParametersInfo(treeView, SPI.SPI_SETSELECTIONFADE, 0, WE.MenuSelectionFade, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETCOMBOBOXANIMATION, 0, WE.ComboBoxAnimation, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETLISTBOXSMOOTHSCROLLING, 0, WE.ListBoxSmoothScrolling, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETTOOLTIPANIMATION, 0, WE.TooltipAnimation, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETTOOLTIPFADE, 0, WE.TooltipFade == MenuAnimType.Fade, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETMENUUNDERLINES, 0, WE.KeyboardUnderline, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETFOCUSBORDERWIDTH, 0, WE.FocusRectWidth, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETFOCUSBORDERHEIGHT, 0, WE.FocusRectHeight, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETCARETWIDTH, 0, WE.Caret, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETACTIVEWINDOWTRACKING, 0, WE.AWT_Enabled, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETACTIVEWNDTRKZORDER, 0, WE.AWT_BringActivatedWindowToTop, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETACTIVEWNDTRKTIMEOUT, 0, WE.AWT_Delay, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETSNAPTODEFBUTTON, WE.SnapCursorToDefButton, 0, SPIF.SPIF_UPDATEINIFILE);     // use uiParam not pvParam
                     });
 
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow ? 1 : 0);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel ? 1 : 0);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, Microsoft.Win32.RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", NotificationDuration);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (!ShakeToMinimize) ? 1 : 0);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock ? 1 : 0);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion ? 1 : 0);
-                    EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", !ClassicVolMixer);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow ? 1 : 0);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel ? 1 : 0);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, Microsoft.Win32.RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", NotificationDuration);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (!ShakeToMinimize) ? 1 : 0);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock ? 1 : 0);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion ? 1 : 0);
+                    EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", !ClassicVolMixer);
 
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", AutoHideScrollBars);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", AutoHideScrollBars);
 
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, Microsoft.Win32.RegistryValueKind.String);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
 
                     if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
                     {
-                        EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion ? 1 : 0);
-                        EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret);
-                        EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay);
-                        EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton ? 1 : 0);
+                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "PaintDesktopVersion", PaintDesktopVersion ? 1 : 0);
+                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "CaretWidth", Caret);
+                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay);
+                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "SnapToDefaultButton", SnapCursorToDefButton ? 1 : 0);
                     }
 
-                    EditReg(TreeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
 
                     try
                     {
                         if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
                         {
-                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar);
                         }
                     }
                     catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
@@ -511,7 +511,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\StartIsBack") is not null)
                         {
-                            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar);
                         }
                     }
                     catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
@@ -521,7 +521,7 @@ namespace WinPaletter.Theme.Structures
                     }
 
                     if (OS.W12 || OS.W11)
-                        EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots) ? 1 : 0);
+                        EditReg(treeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots) ? 1 : 0);
 
                     if (OS.W8x || OS.W10 || OS.W11 || OS.W12)
                     {
@@ -530,8 +530,8 @@ namespace WinPaletter.Theme.Structures
                             case ExplorerBar.Bar:
                                 if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll"))
                                 {
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
 
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");
                                     Move_File($@"{SysPaths.System32}\UIRibbon.dll", $@"{SysPaths.System32}\UIRibbon.dll_bak");
@@ -544,8 +544,8 @@ namespace WinPaletter.Theme.Structures
                             default:
                                 if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll_bak"))
                                 {
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
 
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll_bak");
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");
@@ -562,24 +562,24 @@ namespace WinPaletter.Theme.Structures
                                 // Windows 11 22H2 and higher
                                 try
                                 {
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > (default)", "reg_add");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > (default)", "reg_add");
                                     Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", true).SetValue(string.Empty, "CLSID_ItemsViewAdapter", Microsoft.Win32.RegistryValueKind.String);
 
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > (default)", "reg_add");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > (default)", "reg_add");
                                     Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", true).SetValue(string.Empty, "File Explorer Xaml Island View Adapter", Microsoft.Win32.RegistryValueKind.String);
 
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > InprocServer32", "reg_add");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > InprocServer32", "reg_add");
                                     using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", true).CreateSubKey("InprocServer32", true))
                                     {
                                         key.SetValue(string.Empty, "C:\\Windows\\System32\\Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
                                         key.SetValue("ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
                                     }
 
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > InprocServer32", "reg_add");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > InprocServer32", "reg_add");
                                     using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", true).CreateSubKey("InprocServer32", true))
                                     {
                                         key.SetValue(string.Empty, $"{SysPaths.System32}\\Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
@@ -595,8 +595,8 @@ namespace WinPaletter.Theme.Structures
                                 // Windows 11 lower than 22H2
                                 try
                                 {
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked > {e2bf9676-5f8f-435c-97eb-11607a5bedf7}"), "reg_delete");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked > {e2bf9676-5f8f-435c-97eb-11607a5bedf7}"), "reg_delete");
                                     Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked", true).DeleteValue("{e2bf9676-5f8f-435c-97eb-11607a5bedf7}", false);
                                 }
                                 catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
@@ -609,12 +609,12 @@ namespace WinPaletter.Theme.Structures
                             {
                                 try
                                 {
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}"), "reg_delete");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}"), "reg_delete");
                                     Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", false);
 
-                                    if (TreeView is not null)
-                                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}"), "reg_delete");
+                                    if (treeView is not null)
+                                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}"), "reg_delete");
                                     Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", false);
                                 }
                                 catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
@@ -631,21 +631,21 @@ namespace WinPaletter.Theme.Structures
                     // Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
                     try
                     {
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications ? 1 : 0);
+                        EditReg(treeView, @"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications ? 1 : 0);
                     }
                     catch
                     {
-                        EditReg_CMD(TreeView, @"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications ? 1 : 0);
+                        EditReg_CMD(treeView, @"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", BalloonNotifications ? 1 : 0);
                     }
 
                     // Try ... Catch is used as sometimes access to HKEY_CURRENT_USER\Software\Policies is denied
                     try
                     {
-                        EditReg(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", FullScreenStartMenu ? 2 : 0);
+                        EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", FullScreenStartMenu ? 2 : 0);
                     }
                     catch
                     {
-                        EditReg_CMD(TreeView, @"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", FullScreenStartMenu ? 2 : 0);
+                        EditReg_CMD(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", FullScreenStartMenu ? 2 : 0);
                     }
 
                     if (OS.W12 || OS.W11)
@@ -654,14 +654,14 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (Win11ClassicContextMenu)
                             {
-                                if (TreeView is not null)
-                                    Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2} > InprocServer32", "reg_add");
+                                if (treeView is not null)
+                                    ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2} > InprocServer32", "reg_add");
                                 Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
                             }
                             else
                             {
-                                if (TreeView is not null)
-                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"), "reg_delete");
+                                if (treeView is not null)
+                                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"), "reg_delete");
                                 Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", false);
                             }
                         }
@@ -678,14 +678,14 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (SysListView32)
                             {
-                                if (TreeView is not null)
-                                    Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39} > InprocServer32", "reg_add");
+                                if (treeView is not null)
+                                    ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39} > InprocServer32", "reg_add");
                                 Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
                             }
                             else
                             {
-                                if (TreeView is not null)
-                                    Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}"), "reg_delete");
+                                if (treeView is not null)
+                                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}"), "reg_delete");
                                 Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", false);
                             }
                         }
@@ -700,14 +700,14 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (DisableNavBar)
                         {
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}, InprocServer32", "reg_add");
+                            if (treeView is not null)
+                                ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}, InprocServer32", "reg_add");
                             Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
                         }
                         else
                         {
-                            if (TreeView is not null)
-                                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}"), "reg_delete");
+                            if (treeView is not null)
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}"), "reg_delete");
                             Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", false);
                         }
                     }
@@ -718,6 +718,15 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Saves WinEffects toggle state into registry
+        /// </summary>
+        /// <param name="treeView"></param>
+        public void SaveToggleState(TreeView treeView = null)
+        {
+            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two WinEffects structures are equal</summary>

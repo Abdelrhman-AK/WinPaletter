@@ -100,7 +100,7 @@ namespace WinPaletter.Theme
                 Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(4).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(4).Item3);
                 Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(5).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(5).Item3);
                 Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(6).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(7).Item3); // <- Windows 11 has this set as default !!
-                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(7).Item1, ""); // <- Windows 11 has this set as default !!
+                Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(7).Item1, string.Empty); // <- Windows 11 has this set as default !!
             }
 
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);

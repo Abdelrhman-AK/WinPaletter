@@ -442,7 +442,7 @@ namespace WinPaletter
             this.Separator4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator4.BackColor = System.Drawing.Color.Transparent;
-            this.Separator4.Location = new System.Drawing.Point(6, 106);
+            this.Separator4.Location = new System.Drawing.Point(6, 90);
             this.Separator4.Name = "Separator4";
             this.Separator4.Size = new System.Drawing.Size(670, 1);
             this.Separator4.TabIndex = 143;
@@ -461,7 +461,7 @@ namespace WinPaletter
             this.AlertBox21.Image = null;
             this.AlertBox21.Location = new System.Drawing.Point(40, 36);
             this.AlertBox21.Name = "AlertBox21";
-            this.AlertBox21.Size = new System.Drawing.Size(636, 64);
+            this.AlertBox21.Size = new System.Drawing.Size(636, 48);
             this.AlertBox21.TabIndex = 142;
             this.AlertBox21.TabStop = false;
             this.AlertBox21.Text = resources.GetString("AlertBox21.Text");
@@ -514,19 +514,19 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label14.BackColor = System.Drawing.Color.Transparent;
             this.Label14.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label14.Location = new System.Drawing.Point(36, 113);
+            this.Label14.Location = new System.Drawing.Point(36, 97);
             this.Label14.Name = "Label14";
             this.Label14.Size = new System.Drawing.Size(640, 24);
             this.Label14.TabIndex = 18;
             this.Label14.Text = "Type here the credits or license\\s of any resource you used in the theme (images," +
-    " audios, screensavers, ...)";
+    " audios, icons, screensavers, ...)";
             this.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox18
             // 
             this.PictureBox18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox18.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox18.Image")));
-            this.PictureBox18.Location = new System.Drawing.Point(6, 113);
+            this.PictureBox18.Location = new System.Drawing.Point(6, 97);
             this.PictureBox18.Name = "PictureBox18";
             this.PictureBox18.Size = new System.Drawing.Size(24, 24);
             this.PictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -539,7 +539,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox6.ForeColor = System.Drawing.Color.White;
-            this.TextBox6.Location = new System.Drawing.Point(6, 143);
+            this.TextBox6.Location = new System.Drawing.Point(6, 128);
             this.TextBox6.MaxLength = 32767;
             this.TextBox6.Multiline = true;
             this.TextBox6.Name = "TextBox6";
@@ -548,7 +548,7 @@ namespace WinPaletter
             this.TextBox6.SelectedText = "";
             this.TextBox6.SelectionLength = 0;
             this.TextBox6.SelectionStart = 0;
-            this.TextBox6.Size = new System.Drawing.Size(670, 233);
+            this.TextBox6.Size = new System.Drawing.Size(669, 249);
             this.TextBox6.TabIndex = 19;
             this.TextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox6.UseSystemPasswordChar = false;

@@ -20,7 +20,7 @@ namespace WinPaletter.UI.Style
         public static string ShowIconPicker(IntPtr windowHandle, string PEfileName, int index = 0)
         {
             int retval;
-            var sb = new StringBuilder(PEfileName, MAX_PATH);
+            StringBuilder sb = new StringBuilder(PEfileName, MAX_PATH);
             retval = NativeMethods.Shell32.PickIconDlg(windowHandle, sb, sb.MaxCapacity, ref index);
 
             if (retval != 0)

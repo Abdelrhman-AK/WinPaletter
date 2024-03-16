@@ -37,13 +37,23 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves ScreenSaver data into registry
         /// </summary>
-        /// <param name="TreeView">TreeView used as theme log</param>
-        public void Apply(TreeView TreeView = null)
+        /// <param name="treeView">treeView used as theme log</param>
+        public void Apply(TreeView treeView = null)
         {
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled ? 1 : 0, RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", IsSecure ? 1 : 0, RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", TimeOut, RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", File, RegistryValueKind.String);
+            SaveToggleState(treeView);
+
+            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", IsSecure ? 1 : 0, RegistryValueKind.String);
+            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", TimeOut, RegistryValueKind.String);
+            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", File, RegistryValueKind.String);
+        }
+
+        /// <summary>
+        /// Saves ScreenSaver toggle into registry
+        /// </summary>
+        /// <param name="treeView"></param>
+        public void SaveToggleState(TreeView treeView = null)
+        {
+            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled ? 1 : 0, RegistryValueKind.String);
         }
 
         /// <summary>Operator to check if two ScreenSaver structures are equal</summary>

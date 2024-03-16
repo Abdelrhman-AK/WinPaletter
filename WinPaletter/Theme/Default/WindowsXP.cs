@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 
 namespace WinPaletter.Theme
 {
@@ -580,6 +581,16 @@ namespace WinPaletter.Theme
                 WinEffects.ShowSecondsInSystemClock = false;
                 WinEffects.Win11ClassicContextMenu = false;
                 WinEffects.SysListView32 = true;
+            }
+
+            {
+                ref Structures.Icons Icons = ref TM.Icons;
+                Icons.Computer = $"{SysPaths.Explorer},0";
+                Icons.User = $"{SysPaths.System32}\\mydocs.dll,0";
+                Icons.Network = $"{SysPaths.System32}\\shell32.dll,17";
+                Icons.RecycleBinEmpty = $"{SysPaths.System32}\\shell32.dll,31";
+                Icons.RecycleBinFull = $"{SysPaths.System32}\\shell32.dll,32";
+                Icons.ControlPanel = $"{SysPaths.System32}\\shell32.dll,21";
             }
 
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);

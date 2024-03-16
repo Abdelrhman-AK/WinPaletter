@@ -214,43 +214,43 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         /// <param name="subKey">Subkey of cursor inside registry key HKEY_CURRENT_USER\Software\WinPaletter\Cursors</param>
         /// <param name="Cursor">WinPaletter themed cursor structure</param>
-        /// <param name="TreeView">TreeView used for theme log</param>
-        public static void Save_Cursors_To_Registry(string subKey, Cursor Cursor, TreeView TreeView = null)
+        /// <param name="treeView">TreeView used for theme log</param>
+        public static void Save_Cursors_To_Registry(string subKey, Cursor Cursor, TreeView treeView = null)
         {
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", Cursor.UseFromFile);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", Cursor.File, RegistryValueKind.String);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "ArrowStyle", (int)Cursor.ArrowStyle);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "CircleStyle", (int)Cursor.CircleStyle);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor1", Cursor.PrimaryColor1.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor2", Cursor.PrimaryColor2.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradient", Cursor.PrimaryColorGradient ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.PrimaryColorGradientMode), RegistryValueKind.String);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoise", Cursor.PrimaryColorNoise ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoiseOpacity", Cursor.PrimaryColorNoiseOpacity * 100f);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor1", Cursor.SecondaryColor1.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor2", Cursor.SecondaryColor2.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradient", Cursor.SecondaryColorGradient ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.SecondaryColorGradientMode), RegistryValueKind.String);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoise", Cursor.SecondaryColorNoise ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", Cursor.SecondaryColorNoiseOpacity * 100f);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack1", Cursor.LoadingCircleBack1.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack2", Cursor.LoadingCircleBack2.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradient", Cursor.LoadingCircleBackGradient ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradientMode", Paths.ReturnStringFromGradientMode(Cursor.LoadingCircleBackGradientMode), RegistryValueKind.String);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoise", Cursor.LoadingCircleBackNoise ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoiseOpacity", Cursor.LoadingCircleBackNoiseOpacity * 100f);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot1", Cursor.LoadingCircleHot1.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot2", Cursor.LoadingCircleHot2.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradient", Cursor.LoadingCircleHotGradient ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradientMode", Paths.ReturnStringFromGradientMode(Cursor.LoadingCircleHotGradientMode), RegistryValueKind.String);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoise", Cursor.LoadingCircleHotNoise ? 1 : 0);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoiseOpacity", Cursor.LoadingCircleHotNoiseOpacity * 100f);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", Cursor.Shadow_Enabled);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Cursor.Shadow_Color.ToArgb());
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Blur", Cursor.Shadow_Blur);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Opacity", (int)Math.Round(Cursor.Shadow_Opacity * 100f));
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetX", Cursor.Shadow_OffsetX);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetY", Cursor.Shadow_OffsetY);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", Cursor.UseFromFile);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", Cursor.File, RegistryValueKind.String);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "ArrowStyle", (int)Cursor.ArrowStyle);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "CircleStyle", (int)Cursor.CircleStyle);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor1", Cursor.PrimaryColor1.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor2", Cursor.PrimaryColor2.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradient", Cursor.PrimaryColorGradient ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.PrimaryColorGradientMode), RegistryValueKind.String);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoise", Cursor.PrimaryColorNoise ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoiseOpacity", Cursor.PrimaryColorNoiseOpacity * 100f);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor1", Cursor.SecondaryColor1.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor2", Cursor.SecondaryColor2.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradient", Cursor.SecondaryColorGradient ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.SecondaryColorGradientMode), RegistryValueKind.String);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoise", Cursor.SecondaryColorNoise ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", Cursor.SecondaryColorNoiseOpacity * 100f);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack1", Cursor.LoadingCircleBack1.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack2", Cursor.LoadingCircleBack2.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradient", Cursor.LoadingCircleBackGradient ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradientMode", Paths.ReturnStringFromGradientMode(Cursor.LoadingCircleBackGradientMode), RegistryValueKind.String);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoise", Cursor.LoadingCircleBackNoise ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoiseOpacity", Cursor.LoadingCircleBackNoiseOpacity * 100f);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot1", Cursor.LoadingCircleHot1.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot2", Cursor.LoadingCircleHot2.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradient", Cursor.LoadingCircleHotGradient ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradientMode", Paths.ReturnStringFromGradientMode(Cursor.LoadingCircleHotGradientMode), RegistryValueKind.String);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoise", Cursor.LoadingCircleHotNoise ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoiseOpacity", Cursor.LoadingCircleHotNoiseOpacity * 100f);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", Cursor.Shadow_Enabled);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Cursor.Shadow_Color.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Blur", Cursor.Shadow_Blur);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Opacity", (int)Math.Round(Cursor.Shadow_Opacity * 100f));
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetX", Cursor.Shadow_OffsetX);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetY", Cursor.Shadow_OffsetY);
         }
 
         /// <summary>Operator to check if two Cursor structures are equal</summary>

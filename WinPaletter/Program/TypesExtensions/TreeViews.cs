@@ -13,32 +13,32 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Serialize from a JSON file to TreeView Nodes
         /// </summary>
-        public static void FromJSON(this TreeView TreeView, string JSON_File, string rootName)
+        public static void FromJSON(this TreeView treeView, string JSON_File, string rootName)
         {
             StreamReader reader = new(JSON_File);
             JsonTextReader jsonReader = new(reader);
             JToken root = JToken.Load(jsonReader);
             reader.Close();
 
-            TreeView.BeginUpdate();
+            treeView.BeginUpdate();
             try
             {
-                TreeView.Nodes.Clear();
+                treeView.Nodes.Clear();
 
                 {
-                    TreeNode temp = TreeView.Nodes.Add(rootName);
+                    TreeNode temp = treeView.Nodes.Add(rootName);
                     temp.ImageKey = "json";
                     temp.SelectedImageKey = "json";
                     temp.Tag = root;
                 }
 
-                AddNode(root, TreeView.Nodes[0]);
+                AddNode(root, treeView.Nodes[0]);
 
-                TreeView.CollapseAll();
+                treeView.CollapseAll();
             }
             finally
             {
-                TreeView.EndUpdate();
+                treeView.EndUpdate();
             }
         }
 

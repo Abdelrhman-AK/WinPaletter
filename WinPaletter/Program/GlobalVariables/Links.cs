@@ -198,7 +198,7 @@ namespace WinPaletter.GlobalVariables
             public readonly static string Wallpaper = $"{WikiURL}/Edit-Wallpaper";
 
             /// <summary>
-            /// Link to WinPaletter Windows Classic Colors wiki.
+            /// Link to WinPaletter Windows Classic Palette wiki.
             /// </summary>
             public readonly static string ClassicColors = $"{WikiURL}/Edit-Windows-classic-colors";
 

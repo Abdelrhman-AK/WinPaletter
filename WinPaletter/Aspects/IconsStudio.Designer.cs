@@ -87,6 +87,32 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox10 = new WinPaletter.UI.WP.GroupBox();
             this.button15 = new WinPaletter.UI.WP.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.alertBox4 = new WinPaletter.UI.WP.AlertBox();
+            this.groupBox13 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button23 = new WinPaletter.UI.WP.Button();
+            this.textBox8 = new WinPaletter.UI.WP.TextBox();
+            this.button24 = new WinPaletter.UI.WP.Button();
+            this.groupBox12 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.button21 = new WinPaletter.UI.WP.Button();
+            this.textBox9 = new WinPaletter.UI.WP.TextBox();
+            this.button22 = new WinPaletter.UI.WP.Button();
+            this.groupBox11 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button17 = new WinPaletter.UI.WP.Button();
+            this.textBox7 = new WinPaletter.UI.WP.TextBox();
+            this.button18 = new WinPaletter.UI.WP.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cpData = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -114,32 +140,6 @@
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.button2 = new WinPaletter.UI.WP.Button();
             this.button1 = new WinPaletter.UI.WP.Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.alertBox4 = new WinPaletter.UI.WP.AlertBox();
-            this.groupBox13 = new WinPaletter.UI.WP.GroupBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.button23 = new WinPaletter.UI.WP.Button();
-            this.textBox8 = new WinPaletter.UI.WP.TextBox();
-            this.button24 = new WinPaletter.UI.WP.Button();
-            this.groupBox12 = new WinPaletter.UI.WP.GroupBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.button21 = new WinPaletter.UI.WP.Button();
-            this.textBox9 = new WinPaletter.UI.WP.TextBox();
-            this.button22 = new WinPaletter.UI.WP.Button();
-            this.groupBox11 = new WinPaletter.UI.WP.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button17 = new WinPaletter.UI.WP.Button();
-            this.textBox7 = new WinPaletter.UI.WP.TextBox();
-            this.button18 = new WinPaletter.UI.WP.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -154,12 +154,6 @@
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.explorerData)).BeginInit();
             this.groupBox10.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpData)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.shell32Data)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
@@ -173,6 +167,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpData)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.shell32Data)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -1057,370 +1057,6 @@
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage2.Controls.Add(this.cpData);
-            this.tabPage2.Controls.Add(this.panel2);
-            this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Location = new System.Drawing.Point(144, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(802, 553);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Control Panel page";
-            // 
-            // cpData
-            // 
-            this.cpData.AllowUserToAddRows = false;
-            this.cpData.AllowUserToDeleteRows = false;
-            this.cpData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.cpData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.cpData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.cpData.ColumnHeadersHeight = 28;
-            this.cpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.cpData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column2,
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewImageColumn1,
-            this.dataGridViewImageColumn2,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewLinkColumn1});
-            this.cpData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cpData.EnableHeadersVisualStyles = false;
-            this.cpData.Location = new System.Drawing.Point(3, 48);
-            this.cpData.MultiSelect = false;
-            this.cpData.Name = "cpData";
-            this.cpData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.cpData.RowHeadersVisible = false;
-            this.cpData.RowHeadersWidth = 55;
-            this.cpData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.cpData.ShowCellErrors = false;
-            this.cpData.ShowCellToolTips = false;
-            this.cpData.ShowEditingIcon = false;
-            this.cpData.ShowRowErrors = false;
-            this.cpData.Size = new System.Drawing.Size(796, 502);
-            this.cpData.TabIndex = 3;
-            this.cpData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cpData_CellContentClick);
-            this.cpData.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.cpData_CellValueChanged);
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column2.HeaderText = "Name";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 63;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewTextBoxColumn1.HeaderText = "CLSID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.Width = 62;
-            // 
-            // dataGridViewImageColumn1
-            // 
-            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn1.HeaderText = "Stock";
-            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-            this.dataGridViewImageColumn1.ReadOnly = true;
-            this.dataGridViewImageColumn1.Width = 41;
-            // 
-            // dataGridViewImageColumn2
-            // 
-            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewImageColumn2.HeaderText = "Target";
-            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-            this.dataGridViewImageColumn2.ReadOnly = true;
-            this.dataGridViewImageColumn2.Width = 44;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn2.HeaderText = "New icon path";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewLinkColumn1
-            // 
-            this.dataGridViewLinkColumn1.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(50)))), ((int)(((byte)(0)))));
-            this.dataGridViewLinkColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewLinkColumn1.HeaderText = "";
-            this.dataGridViewLinkColumn1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.dataGridViewLinkColumn1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
-            this.dataGridViewLinkColumn1.Name = "dataGridViewLinkColumn1";
-            this.dataGridViewLinkColumn1.ReadOnly = true;
-            this.dataGridViewLinkColumn1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(100)))));
-            this.dataGridViewLinkColumn1.Width = 5;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Transparent;
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(3, 43);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(796, 5);
-            this.panel2.TabIndex = 6;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.Controls.Add(this.button16);
-            this.groupBox2.Controls.Add(this.alertBox2);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(796, 40);
-            this.groupBox2.TabIndex = 5;
-            // 
-            // button16
-            // 
-            this.button16.CustomColor = System.Drawing.Color.Empty;
-            this.button16.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
-            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button16.Image = ((System.Drawing.Image)(resources.GetObject("button16.Image")));
-            this.button16.ImageGlyph = null;
-            this.button16.ImageGlyphEnabled = false;
-            this.button16.Location = new System.Drawing.Point(4, 4);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(170, 32);
-            this.button16.TabIndex = 7;
-            this.button16.Text = "Clear all modifications";
-            this.button16.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
-            // 
-            // alertBox2
-            // 
-            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox2.CenterText = false;
-            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(180, 5);
-            this.alertBox2.Name = "alertBox2";
-            this.alertBox2.Size = new System.Drawing.Size(610, 30);
-            this.alertBox2.TabIndex = 6;
-            this.alertBox2.TabStop = false;
-            this.alertBox2.Text = "These icons appear on the Control Panel page, not the applet icon itself.";
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage1.Controls.Add(this.shell32Data);
-            this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(144, 4);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(802, 553);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "System icons (shell32)";
-            // 
-            // shell32Data
-            // 
-            this.shell32Data.AllowUserToAddRows = false;
-            this.shell32Data.AllowUserToDeleteRows = false;
-            this.shell32Data.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.shell32Data.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.shell32Data.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.shell32Data.ColumnHeadersHeight = 28;
-            this.shell32Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.shell32Data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.StockIcon,
-            this.SelectedImage,
-            this.Path,
-            this.Column1});
-            this.shell32Data.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.shell32Data.EnableHeadersVisualStyles = false;
-            this.shell32Data.Location = new System.Drawing.Point(3, 87);
-            this.shell32Data.MultiSelect = false;
-            this.shell32Data.Name = "shell32Data";
-            this.shell32Data.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.shell32Data.RowHeadersVisible = false;
-            this.shell32Data.RowHeadersWidth = 55;
-            this.shell32Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.shell32Data.ShowCellErrors = false;
-            this.shell32Data.ShowCellToolTips = false;
-            this.shell32Data.ShowEditingIcon = false;
-            this.shell32Data.ShowRowErrors = false;
-            this.shell32Data.Size = new System.Drawing.Size(796, 463);
-            this.shell32Data.TabIndex = 2;
-            this.shell32Data.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.shell32Data_CellContentClick);
-            this.shell32Data.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.shell32Data_CellValueChanged);
-            // 
-            // ID
-            // 
-            this.ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ID.Width = 42;
-            // 
-            // StockIcon
-            // 
-            this.StockIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.StockIcon.HeaderText = "Stock";
-            this.StockIcon.Name = "StockIcon";
-            this.StockIcon.ReadOnly = true;
-            this.StockIcon.Width = 41;
-            // 
-            // SelectedImage
-            // 
-            this.SelectedImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.SelectedImage.HeaderText = "Target";
-            this.SelectedImage.Name = "SelectedImage";
-            this.SelectedImage.ReadOnly = true;
-            this.SelectedImage.Width = 44;
-            // 
-            // Path
-            // 
-            this.Path.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Path.HeaderText = "New icon path";
-            this.Path.Name = "Path";
-            // 
-            // Column1
-            // 
-            this.Column1.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(50)))), ((int)(((byte)(0)))));
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column1.HeaderText = "";
-            this.Column1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.Column1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(100)))));
-            this.Column1.Width = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 82);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(796, 5);
-            this.panel1.TabIndex = 5;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox1.Controls.Add(this.button20);
-            this.groupBox1.Controls.Add(this.button19);
-            this.groupBox1.Controls.Add(this.alertBox1);
-            this.groupBox1.Controls.Add(this.separatorH1);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(796, 79);
-            this.groupBox1.TabIndex = 4;
-            // 
-            // button20
-            // 
-            this.button20.CustomColor = System.Drawing.Color.Empty;
-            this.button20.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button20.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button20.Image = ((System.Drawing.Image)(resources.GetObject("button20.Image")));
-            this.button20.ImageGlyph = null;
-            this.button20.ImageGlyphEnabled = false;
-            this.button20.Location = new System.Drawing.Point(587, 4);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(180, 32);
-            this.button20.TabIndex = 8;
-            this.button20.Text = "Remove shared arrow";
-            this.button20.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button20.UseVisualStyleBackColor = true;
-            this.button20.Click += new System.EventHandler(this.button20_Click);
-            // 
-            // button19
-            // 
-            this.button19.CustomColor = System.Drawing.Color.Empty;
-            this.button19.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button19.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button19.Image = ((System.Drawing.Image)(resources.GetObject("button19.Image")));
-            this.button19.ImageGlyph = null;
-            this.button19.ImageGlyphEnabled = false;
-            this.button19.Location = new System.Drawing.Point(401, 4);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(180, 32);
-            this.button19.TabIndex = 7;
-            this.button19.Text = "Remove shortcut arrow";
-            this.button19.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button19.UseVisualStyleBackColor = true;
-            this.button19.Click += new System.EventHandler(this.button19_Click);
-            // 
-            // alertBox1
-            // 
-            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox1.CenterText = false;
-            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.alertBox1.Image = null;
-            this.alertBox1.Location = new System.Drawing.Point(4, 46);
-            this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(787, 28);
-            this.alertBox1.TabIndex = 6;
-            this.alertBox1.TabStop = false;
-            this.alertBox1.Text = "This feature is experimental; don\'t waste your time changing every icon. Instead," +
-    " focus on replacing the most common icons.";
-            // 
-            // separatorH1
-            // 
-            this.separatorH1.AlternativeLook = false;
-            this.separatorH1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorH1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH1.Location = new System.Drawing.Point(6, 40);
-            this.separatorH1.Name = "separatorH1";
-            this.separatorH1.Size = new System.Drawing.Size(785, 1);
-            this.separatorH1.TabIndex = 5;
-            this.separatorH1.TabStop = false;
-            this.separatorH1.Text = "separatorH1";
-            // 
-            // button2
-            // 
-            this.button2.CustomColor = System.Drawing.Color.Empty;
-            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageGlyph = null;
-            this.button2.ImageGlyphEnabled = false;
-            this.button2.Location = new System.Drawing.Point(225, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(170, 32);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Clear all modifications";
-            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.CustomColor = System.Drawing.Color.Empty;
-            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageGlyph = null;
-            this.button1.ImageGlyphEnabled = false;
-            this.button1.Location = new System.Drawing.Point(4, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(215, 32);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Import from another shell32.dll";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -1797,6 +1433,370 @@
             this.button18.UseVisualStyleBackColor = false;
             this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage2.Controls.Add(this.cpData);
+            this.tabPage2.Controls.Add(this.panel2);
+            this.tabPage2.Controls.Add(this.groupBox2);
+            this.tabPage2.Location = new System.Drawing.Point(144, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(802, 553);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Control Panel page";
+            // 
+            // cpData
+            // 
+            this.cpData.AllowUserToAddRows = false;
+            this.cpData.AllowUserToDeleteRows = false;
+            this.cpData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.cpData.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.cpData.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.cpData.ColumnHeadersHeight = 28;
+            this.cpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.cpData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewImageColumn1,
+            this.dataGridViewImageColumn2,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewLinkColumn1});
+            this.cpData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cpData.EnableHeadersVisualStyles = false;
+            this.cpData.Location = new System.Drawing.Point(3, 48);
+            this.cpData.MultiSelect = false;
+            this.cpData.Name = "cpData";
+            this.cpData.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.cpData.RowHeadersVisible = false;
+            this.cpData.RowHeadersWidth = 55;
+            this.cpData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.cpData.ShowCellErrors = false;
+            this.cpData.ShowCellToolTips = false;
+            this.cpData.ShowEditingIcon = false;
+            this.cpData.ShowRowErrors = false;
+            this.cpData.Size = new System.Drawing.Size(796, 502);
+            this.cpData.TabIndex = 3;
+            this.cpData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cpData_CellContentClick);
+            this.cpData.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.cpData_CellValueChanged);
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column2.HeaderText = "Name";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 63;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewTextBoxColumn1.HeaderText = "CLSID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn1.Width = 62;
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn1.HeaderText = "Stock";
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.ReadOnly = true;
+            this.dataGridViewImageColumn1.Width = 41;
+            // 
+            // dataGridViewImageColumn2
+            // 
+            this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewImageColumn2.HeaderText = "Target";
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.ReadOnly = true;
+            this.dataGridViewImageColumn2.Width = 44;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.HeaderText = "New icon path";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewLinkColumn1
+            // 
+            this.dataGridViewLinkColumn1.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(50)))), ((int)(((byte)(0)))));
+            this.dataGridViewLinkColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dataGridViewLinkColumn1.HeaderText = "";
+            this.dataGridViewLinkColumn1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.dataGridViewLinkColumn1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.dataGridViewLinkColumn1.Name = "dataGridViewLinkColumn1";
+            this.dataGridViewLinkColumn1.ReadOnly = true;
+            this.dataGridViewLinkColumn1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(100)))));
+            this.dataGridViewLinkColumn1.Width = 5;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(3, 43);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(796, 5);
+            this.panel2.TabIndex = 6;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.button16);
+            this.groupBox2.Controls.Add(this.alertBox2);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(796, 40);
+            this.groupBox2.TabIndex = 5;
+            // 
+            // button16
+            // 
+            this.button16.CustomColor = System.Drawing.Color.Empty;
+            this.button16.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
+            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button16.Image = ((System.Drawing.Image)(resources.GetObject("button16.Image")));
+            this.button16.ImageGlyph = null;
+            this.button16.ImageGlyphEnabled = false;
+            this.button16.Location = new System.Drawing.Point(4, 4);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(170, 32);
+            this.button16.TabIndex = 7;
+            this.button16.Text = "Clear all modifications";
+            this.button16.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(180, 5);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(610, 30);
+            this.alertBox2.TabIndex = 6;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "These icons appear on the Control Panel page, not the applet icon itself.";
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage1.Controls.Add(this.shell32Data);
+            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Location = new System.Drawing.Point(144, 4);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(802, 553);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "System icons (shell32)";
+            // 
+            // shell32Data
+            // 
+            this.shell32Data.AllowUserToAddRows = false;
+            this.shell32Data.AllowUserToDeleteRows = false;
+            this.shell32Data.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.shell32Data.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.shell32Data.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.shell32Data.ColumnHeadersHeight = 28;
+            this.shell32Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.shell32Data.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.StockIcon,
+            this.SelectedImage,
+            this.Path,
+            this.Column1});
+            this.shell32Data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.shell32Data.EnableHeadersVisualStyles = false;
+            this.shell32Data.Location = new System.Drawing.Point(3, 87);
+            this.shell32Data.MultiSelect = false;
+            this.shell32Data.Name = "shell32Data";
+            this.shell32Data.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.shell32Data.RowHeadersVisible = false;
+            this.shell32Data.RowHeadersWidth = 55;
+            this.shell32Data.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.shell32Data.ShowCellErrors = false;
+            this.shell32Data.ShowCellToolTips = false;
+            this.shell32Data.ShowEditingIcon = false;
+            this.shell32Data.ShowRowErrors = false;
+            this.shell32Data.Size = new System.Drawing.Size(796, 463);
+            this.shell32Data.TabIndex = 2;
+            this.shell32Data.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.shell32Data_CellContentClick);
+            this.shell32Data.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.shell32Data_CellValueChanged);
+            // 
+            // ID
+            // 
+            this.ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ID.Width = 42;
+            // 
+            // StockIcon
+            // 
+            this.StockIcon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.StockIcon.HeaderText = "Stock";
+            this.StockIcon.Name = "StockIcon";
+            this.StockIcon.ReadOnly = true;
+            this.StockIcon.Width = 41;
+            // 
+            // SelectedImage
+            // 
+            this.SelectedImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.SelectedImage.HeaderText = "Target";
+            this.SelectedImage.Name = "SelectedImage";
+            this.SelectedImage.ReadOnly = true;
+            this.SelectedImage.Width = 44;
+            // 
+            // Path
+            // 
+            this.Path.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Path.HeaderText = "New icon path";
+            this.Path.Name = "Path";
+            // 
+            // Column1
+            // 
+            this.Column1.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(50)))), ((int)(((byte)(0)))));
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column1.HeaderText = "";
+            this.Column1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.Column1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(100)))));
+            this.Column1.Width = 5;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(3, 82);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(796, 5);
+            this.panel1.TabIndex = 5;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.button20);
+            this.groupBox1.Controls.Add(this.button19);
+            this.groupBox1.Controls.Add(this.alertBox1);
+            this.groupBox1.Controls.Add(this.separatorH1);
+            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(796, 79);
+            this.groupBox1.TabIndex = 4;
+            // 
+            // button20
+            // 
+            this.button20.CustomColor = System.Drawing.Color.Empty;
+            this.button20.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button20.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button20.Image = ((System.Drawing.Image)(resources.GetObject("button20.Image")));
+            this.button20.ImageGlyph = null;
+            this.button20.ImageGlyphEnabled = false;
+            this.button20.Location = new System.Drawing.Point(587, 4);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(180, 32);
+            this.button20.TabIndex = 8;
+            this.button20.Text = "Remove shared arrow";
+            this.button20.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
+            // 
+            // button19
+            // 
+            this.button19.CustomColor = System.Drawing.Color.Empty;
+            this.button19.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button19.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button19.Image = ((System.Drawing.Image)(resources.GetObject("button19.Image")));
+            this.button19.ImageGlyph = null;
+            this.button19.ImageGlyphEnabled = false;
+            this.button19.Location = new System.Drawing.Point(401, 4);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(180, 32);
+            this.button19.TabIndex = 7;
+            this.button19.Text = "Remove shortcut arrow";
+            this.button19.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox1.CenterText = false;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = null;
+            this.alertBox1.Location = new System.Drawing.Point(4, 46);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(787, 28);
+            this.alertBox1.TabIndex = 6;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = "This feature is experimental; don\'t waste your time changing every icon. Instead," +
+    " focus on replacing the most common icons.";
+            // 
+            // separatorH1
+            // 
+            this.separatorH1.AlternativeLook = false;
+            this.separatorH1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorH1.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH1.Location = new System.Drawing.Point(6, 40);
+            this.separatorH1.Name = "separatorH1";
+            this.separatorH1.Size = new System.Drawing.Size(785, 1);
+            this.separatorH1.TabIndex = 5;
+            this.separatorH1.TabStop = false;
+            this.separatorH1.Text = "separatorH1";
+            // 
+            // button2
+            // 
+            this.button2.CustomColor = System.Drawing.Color.Empty;
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.ImageGlyph = null;
+            this.button2.ImageGlyphEnabled = false;
+            this.button2.Location = new System.Drawing.Point(225, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(170, 32);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Clear all modifications";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.CustomColor = System.Drawing.Color.Empty;
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageGlyph = null;
+            this.button1.ImageGlyphEnabled = false;
+            this.button1.Location = new System.Drawing.Point(4, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(215, 32);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Import from another shell32.dll";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // IconsStudio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1806,6 +1806,7 @@
             this.IsShown = true;
             this.Name = "IconsStudio";
             this.Text = "Windows Icons";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IconsStudio_FormClosing);
             this.Load += new System.EventHandler(this.IconsStudio_Load);
             this.Controls.SetChildIndex(this.tabControl1, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
@@ -1823,12 +1824,6 @@
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.explorerData)).EndInit();
             this.groupBox10.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cpData)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.shell32Data)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.groupBox13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
@@ -1842,6 +1837,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cpData)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.shell32Data)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

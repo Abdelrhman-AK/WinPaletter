@@ -58,22 +58,34 @@ namespace WinPaletter.Theme.Structures
         /// Registry subkey in 'HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone' into which data will be saved.
         /// <br><b>This is to save different data, as WinPaletter loads and saves data of multiple WallpaperTone object, each object is made for each version of Windows</b></br>
         /// </param>
-        /// <param name="TreeView">TreeView used as theme log</param>
-        public static void Save_To_Registry(WallpaperTone WT, string SubKey, TreeView TreeView = null)
+        /// <param name="treeView">treeView used as theme log</param>
+        public static void Save_To_Registry(WallpaperTone WT, string SubKey, TreeView treeView = null)
         {
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", WT.Enabled);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", WT.Image, RegistryValueKind.String);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", WT.H);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", WT.S);
-            EditReg(TreeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", WT.L);
+            SaveToggleState(WT, SubKey, treeView);
+
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", WT.Image, RegistryValueKind.String);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", WT.H);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", WT.S);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", WT.L);
+        }
+
+        /// <summary>
+        /// Save WallpaperTone toggle state to registry
+        /// </summary>
+        /// <param name="WT"></param>
+        /// <param name="SubKey"></param>
+        /// <param name="treeView"></param>
+        public static void SaveToggleState(WallpaperTone WT, string SubKey, TreeView treeView = null)
+        {
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", WT.Enabled);
         }
 
         /// <summary>
         /// Processes the image by modifying its HSL filter and applies it.
         /// </summary>
-        /// <param name="TreeView">TreeView used as theme log</param>
+        /// <param name="treeView">treeView used as theme log</param>
         /// <exception cref="IOException"></exception>
-        public void Apply(TreeView TreeView = null)
+        public void Apply(TreeView treeView = null)
         {
             if (!File.Exists(Image))
                 throw new IOException("Couldn't Find image");
@@ -88,8 +100,8 @@ namespace WinPaletter.Theme.Structures
                 path = Path.Combine(SysPaths.Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
             }
 
-            if (TreeView is not null)
-                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_SettingHSLImage, path), "pe_patch");
+            if (treeView is not null)
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_SettingHSLImage, path), "pe_patch");
 
             using (ImageProcessor.ImageFactory ImgF = new())
             {
@@ -100,9 +112,9 @@ namespace WinPaletter.Theme.Structures
                 ImgF.Image.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
             }
 
-            SystemParametersInfo(TreeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
-            EditReg(TreeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
+            SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
+            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
+            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
         }
 
         /// <summary>Operator to check if two WallpaperTone structures are equal</summary>

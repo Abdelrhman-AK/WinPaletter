@@ -2,7 +2,6 @@
 {
     public partial class Localizer
     {
-        public string OpenTabs_Close { get; set; } = "There are open forms in tabs. Do you want to exit WinPaletter anyway?";
         public string Bug_NoReport { get; set; } = "There are no saved reports located in '{0}'";
         public string InvalidTheme { get; set; } = "Error: Invalid theme file.";
         public string ThemeNotExist { get; set; } = "Theme file doesn't exist.";
@@ -19,7 +18,7 @@
         public string ShutdownQuestion { get; set; } = "Are you sure you want to shut down your Windows?";
         public string LogoffAlert1 { get; set; } = "This will close all open files and applications.";
         public string LogoffAlert2 { get; set; } = "Logoff equals 'Sign out' in Windows 8.1, 10 & 11.";
-        public string LogoffNotFound { get; set; } = "Couldn't find the logoff process in '{0}' directory. You should log off your Windows profile manually.";
+        public string LogoffNotFound { get; set; } = "Couldn't find the logoff.exe in '{0}' directory. You should log off your Windows profile manually.";
         public string ShutdownNotFound { get; set; } = "Couldn't find shutdown.exe in '{0}' directory. You should restart or shut down your Windows manually.";
         public string ScalingTip { get; set; } = "The scaling option is only a preview; the cursor will be saved with different sizes, and the suitable size will be loaded according to your DPI settings.";
         public string RemoveExtMsg { get; set; } = "Are you sure you want to remove file associations (*.wpth, *.wptp, *.wpsf) from the registry?";

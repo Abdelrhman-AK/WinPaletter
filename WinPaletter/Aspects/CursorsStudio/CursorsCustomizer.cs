@@ -2114,10 +2114,13 @@ namespace WinPaletter
 
                     default:
                         {
+                            string fontName;
 
-                            if (OS.WXP) { F = new("Tahoma"); }
-                            else if (OS.W7 | OS.WVista) { F = new("Segoe UI"); }
-                            else { F = new("Segoe UI Black"); }
+                            if (OS.WXP) { fontName = "Tahoma"; }
+                            else if (OS.W7 | OS.WVista) { fontName = "Segoe UI"; }
+                            else { fontName = Fonts.Exists("Segoe UI Black") ? "Segoe UI Black" : "Segoe UI"; }
+
+                            F = new(Fonts.Exists(fontName) ? fontName : "Arial");
 
                             using (Font Fx = new(F, 15f, FontStyle.Bold)) { path.AddString("?", Fx.FontFamily, (int)Fx.Style, Fx.Size, Rectangle, StringFormat.GenericDefault); }
 

@@ -129,12 +129,8 @@ namespace WinPaletter.Theme
             StartColor = Color.FromArgb(30, 0, 84),
             AccentColor = Color.FromArgb(72, 29, 178),
             Theme = Windows7.Themes.Aero,
-            LogonUI = 0,
             PersonalColors_Background = Color.FromArgb(30, 0, 84),
             PersonalColors_Accent = Color.FromArgb(72, 29, 178),
-            NoLockScreen = false,
-            LockScreenType = Structures.LogonUI7.Sources.Default,
-            LockScreenSystemID = 0
         };
 
         /// <summary>Object derived of structure that has data about Windows 7 colors and appearance, and it can be customized.</summary>
@@ -216,6 +212,24 @@ namespace WinPaletter.Theme
             NoLockScreen = false
         };
 
+        /// <summary>Object derived of structure that has data about Windows 8.1 LogonUI appearance, and it can be customized.</summary>
+        public Structures.LogonUI7 LogonUI81 = new()
+        {
+            Enabled = false,
+            Mode = Structures.LogonUI7.Sources.Default,
+            ImagePath = @"C:\Windows\Web\Wallpaper\Windows\img0.jpg",
+            Color = Color.Black,
+            Blur = false,
+            Blur_Intensity = 0,
+            Grayscale = false,
+            Noise = false,
+            Noise_Mode = BitmapExtensions.NoiseMode.Acrylic,
+            Noise_Intensity = 0,
+            LogonUI_ID = 0,
+            NoLockScreen = false,
+            LockScreenSystemID = 0
+        };
+
         /// <summary>Object derived of structure that has data about Windows 7 LogonUI appearance, and it can be customized.</summary>
         public Structures.LogonUI7 LogonUI7 = new()
         {
@@ -228,7 +242,10 @@ namespace WinPaletter.Theme
             Grayscale = false,
             Noise = false,
             Noise_Mode = BitmapExtensions.NoiseMode.Acrylic,
-            Noise_Intensity = 0
+            Noise_Intensity = 0,
+            LogonUI_ID = 0,
+            NoLockScreen = false,
+            LockScreenSystemID = 0
         };
 
         /// <summary>Object derived of structure that has data about Windows XP LogonUI appearance, and it can be customized.</summary>
@@ -479,7 +496,7 @@ namespace WinPaletter.Theme
             Network_HideInDesktop = true,
             User_HideInDesktop = true,
             RecycleBin_HideInDesktop = false,
-            SystemDriveIcon = "",
+            SystemDriveIcon = string.Empty,
         };
 
         /// <summary>Object derived of structure that has data about Command Prompt, and it can be customized.</summary>

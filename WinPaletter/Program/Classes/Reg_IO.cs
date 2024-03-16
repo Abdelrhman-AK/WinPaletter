@@ -261,9 +261,9 @@ namespace WinPaletter
             return skip;
         }
 
-        private static void AddVerboseItem(TreeView TreeView, bool Skipped, string Key, string ValueName, object Value, RegistryValueKind RegType)
+        private static void AddVerboseItem(TreeView treeView, bool Skipped, string Key, string ValueName, object Value, RegistryValueKind RegType)
         {
-            if (TreeView is null)
+            if (treeView is null)
                 return;
 
             if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
@@ -300,13 +300,13 @@ namespace WinPaletter
                     v2 = string.Format(Program.Lang.Verbose_RegSkipped, string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString()));
                     v3 = "reg_skip";
                 }
-                Theme.Manager.AddNode(TreeView, v2, v3);
+                ThemeLog.AddNode(treeView, v2, v3);
             }
         }
 
-        private static void AddVerboseItem_DelValue(TreeView TreeView, string Key, string ValueName)
+        private static void AddVerboseItem_DelValue(TreeView treeView, string Key, string ValueName)
         {
-            if (TreeView is null)
+            if (treeView is null)
                 return;
 
             if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
@@ -316,22 +316,22 @@ namespace WinPaletter
                 if (string.IsNullOrWhiteSpace(v0))
                     v0 = "(default)";
 
-                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, Key + ": " + v0), "reg_delete");
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, $"{Key}: {v0}"), "reg_delete");
             }
         }
 
-        private static void AddVerboseItem_DelKey(TreeView TreeView, string Key)
+        private static void AddVerboseItem_DelKey(TreeView treeView, string Key)
         {
-            if (TreeView is null)
+            if (treeView is null)
                 return;
 
             if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
-                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_RegDelete, Key), "reg_delete");
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, Key), "reg_delete");
             }
         }
 
-        private static void AddVerboseException(TreeView TreeView, Exception ex, string Key, string ValueName, object Value, RegistryValueKind RegType)
+        private static void AddVerboseException(TreeView treeView, Exception ex, string Key, string ValueName, object Value, RegistryValueKind RegType)
         {
             if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
@@ -354,14 +354,14 @@ namespace WinPaletter
                 if (string.IsNullOrWhiteSpace(v1))
                     v1 = "null";
                 string v2 = $"{ex.Message} - CMD: {(string.Format(Program.Lang.Verbose_RegAdd, Key, v0, v1, RegType.ToString()))}";
-                if (TreeView is not null)
-                    Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {v2}", "error");
+                if (treeView is not null)
+                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {v2}", "error");
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(v2, ex));
             }
             else
             {
-                if (TreeView is not null)
-                    Theme.Manager.AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {ex.Message}", "error");
+                if (treeView is not null)
+                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {ex.Message}", "error");
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
         }
@@ -369,27 +369,27 @@ namespace WinPaletter
         /// <summary>
         /// Edit registry, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
         /// </summary>
-        /// <param name="TreeView">TreeView used as a theme log</param>
+        /// <param name="treeView">TreeView used as a theme log</param>
         /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
         /// <param name="ValueName">Name of value to be edited</param>
         /// <param name="Value">Value</param>
         /// <param name="RegType">Kind of value to be edited to avoid errors exceptions</param>
-        public static void EditReg(TreeView TreeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord)
+        public static void EditReg(TreeView treeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord)
         {
-            EditReg(Key, ValueName, Value, RegType, TreeView);
+            EditReg(Key, ValueName, Value, RegType, treeView);
         }
 
         /// <summary>
         /// Edit registry, show it in theme log with using elevated Command Prompt to try to solve security access issues or administrator issues.
         /// </summary>
-        /// <param name="TreeView">TreeView used as a theme log</param>
+        /// <param name="treeView">TreeView used as a theme log</param>
         /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
         /// <param name="ValueName">Name of value to be edited</param>
         /// <param name="Value">Value</param>
         /// <param name="RegType">Kind of value to be edited to avoid errors</param>
-        public static void EditReg_CMD(TreeView TreeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord)
+        public static void EditReg_CMD(TreeView treeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord)
         {
-            EditReg_CMD(Key, ValueName, Value, RegType, TreeView);
+            EditReg_CMD(Key, ValueName, Value, RegType, treeView);
         }
 
         /// <summary>
@@ -399,8 +399,8 @@ namespace WinPaletter
         /// <param name="ValueName">Name of value to be edited</param>
         /// <param name="Value">Value</param>
         /// <param name="RegType">Kind of value to be edited to avoid errors exceptions</param>
-        /// <param name="TreeView">TreeView used as a theme log</param>
-        public static void EditReg(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView TreeView = null)
+        /// <param name="treeView">TreeView used as a theme log</param>
+        public static void EditReg(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView treeView = null)
         {
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
 
@@ -427,7 +427,7 @@ namespace WinPaletter
             object existingValue = GetReg(Key_BeforeModification, ValueName, null);
             if (existingValue is not null && CanSkip(existingValue, Value, RegType))
             {
-                AddVerboseItem(TreeView, true, Key_BeforeModification, ValueName, Value, RegType);
+                AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
                 return;
             }
 
@@ -439,26 +439,26 @@ namespace WinPaletter
                     {
                         subKey.SetValue(ValueName, Value, RegType);
                     }
-                    AddVerboseItem(TreeView, false, Key_BeforeModification, ValueName, Value, RegType);
+                    AddVerboseItem(treeView, false, Key_BeforeModification, ValueName, Value, RegType);
                 }
-                else if (scope == RegScope.HKEY_LOCAL_MACHINE) { EditReg_CMD(TreeView, $@"HKEY_LOCAL_MACHINE\{Key}", ValueName, Value, RegType); }
+                else if (scope == RegScope.HKEY_LOCAL_MACHINE) { EditReg_CMD(treeView, $@"HKEY_LOCAL_MACHINE\{Key}", ValueName, Value, RegType); }
 
-                else if (scope == RegScope.HKEY_USERS) { EditReg_CMD(TreeView, $@"HKEY_USERS\{Key}", ValueName, Value, RegType); }
+                else if (scope == RegScope.HKEY_USERS) { EditReg_CMD(treeView, $@"HKEY_USERS\{Key}", ValueName, Value, RegType); }
             }
             catch (SecurityException @PermissionEx)
             {
-                try { EditReg_CMD(TreeView, Key_BeforeModification, ValueName, Value, RegType); }
-                catch { AddVerboseException(TreeView, @PermissionEx, Key, ValueName, Value, RegType); }
+                try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
+                catch { AddVerboseException(treeView, @PermissionEx, Key, ValueName, Value, RegType); }
             }
             catch (UnauthorizedAccessException @UnauthorizedAccessEx)
             {
-                try { EditReg_CMD(TreeView, Key_BeforeModification, ValueName, Value, RegType); }
-                catch { AddVerboseException(TreeView, @UnauthorizedAccessEx, Key, ValueName, Value, RegType); }
+                try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
+                catch { AddVerboseException(treeView, @UnauthorizedAccessEx, Key, ValueName, Value, RegType); }
             }
             catch (Exception ex)
             {
-                try { EditReg_CMD(TreeView, Key_BeforeModification, ValueName, Value, RegType); }
-                catch { AddVerboseException(TreeView, ex, Key, ValueName, Value, RegType); }
+                try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
+                catch { AddVerboseException(treeView, ex, Key, ValueName, Value, RegType); }
             }
 
             try
@@ -477,8 +477,8 @@ namespace WinPaletter
         /// <param name="ValueName">Name of value to be edited</param>
         /// <param name="Value">Value</param>
         /// <param name="RegType">Kind of value to be edited to avoid errors</param>
-        /// <param name="TreeView">TreeView used as a theme log</param>
-        public static void EditReg_CMD(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView TreeView = null)
+        /// <param name="treeView">TreeView used as a theme log</param>
+        public static void EditReg_CMD(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView treeView = null)
         {
             string regTemplate;
 
@@ -573,11 +573,11 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                AddVerboseException(TreeView, ex, Key, ValueName, Value, RegType);
+                AddVerboseException(treeView, ex, Key, ValueName, Value, RegType);
             }
             finally
             {
-                AddVerboseItem(TreeView, false, $"CMD: {Key_BeforeModification}", ValueName, Value, RegType);
+                AddVerboseItem(treeView, false, $"CMD: {Key_BeforeModification}", ValueName, Value, RegType);
             }
 
         }
@@ -845,9 +845,9 @@ namespace WinPaletter
         /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
         /// </summary>
         /// <param name="Key"></param>
-        /// <param name="TreeView"></param>
+        /// <param name="treeView"></param>
         /// <param name="deleteSubKeysAndValuesOnly">Delete only subkeys and values</param>
-        public static void DelKey(string Key, bool deleteSubKeysAndValuesOnly = false, TreeView TreeView = null)
+        public static void DelKey(string Key, bool deleteSubKeysAndValuesOnly = false, TreeView treeView = null)
         {
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
 
@@ -862,12 +862,12 @@ namespace WinPaletter
             {
                 R.DeleteSubKeyTree(Key, true);
                 if (deleteSubKeysAndValuesOnly) R.CreateSubKey(Key, true);
-                AddVerboseItem_DelKey(TreeView, Key_BeforeModification);
+                AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
             catch
             {
                 DelKey_AdministratorDeflector(Key);
-                AddVerboseItem_DelKey(TreeView, Key_BeforeModification);
+                AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
             finally
             {
@@ -884,21 +884,21 @@ namespace WinPaletter
         /// <summary>
         /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
         /// </summary>
-        /// <param name="TreeView"></param>
+        /// <param name="treeView"></param>
         /// <param name="Key"></param>
         /// <param name="deleteSubKeysAndValuesOnly">Delete only subkeys and values</param>
-        public static void DelKey(TreeView TreeView, string Key, bool deleteSubKeysAndValuesOnly = false)
+        public static void DelKey(TreeView treeView, string Key, bool deleteSubKeysAndValuesOnly = false)
         {
-            DelKey(Key, deleteSubKeysAndValuesOnly, TreeView);
+            DelKey(Key, deleteSubKeysAndValuesOnly, treeView);
         }
 
         /// <summary>
         /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
         /// </summary>
         /// <param name="Key"></param>
-        /// <param name="TreeView"></param>
+        /// <param name="treeView"></param>
         /// <param name="ValueName">Name of value to be edited</param>
-        public static void DelValue(string Key, string ValueName, TreeView TreeView = null)
+        public static void DelValue(string Key, string ValueName, TreeView treeView = null)
         {
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
 
@@ -915,13 +915,13 @@ namespace WinPaletter
                 {
                     subR?.DeleteValue(ValueName, true);
                     subR?.Close();
-                    AddVerboseItem_DelValue(TreeView, Key_BeforeModification, ValueName);
+                    AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
                 }
             }
             catch
             {
                 DelValue_AdministratorDeflector(Key, ValueName);
-                AddVerboseItem_DelValue(TreeView, Key_BeforeModification, ValueName);
+                AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
             }
             finally
             {
@@ -938,12 +938,12 @@ namespace WinPaletter
         /// <summary>
         /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
         /// </summary>
-        /// <param name="TreeView"></param>
+        /// <param name="treeView"></param>
         /// <param name="Key"></param>
         /// <param name="ValueName">Name of value to be edited</param>
-        public static void DelValue(TreeView TreeView, string Key, string ValueName)
+        public static void DelValue(TreeView treeView, string Key, string ValueName)
         {
-            DelValue(Key, ValueName, TreeView);
+            DelValue(Key, ValueName, treeView);
         }
 
         /// <summary>
@@ -1056,7 +1056,7 @@ namespace WinPaletter
         public static void DelValue_AdministratorDeflector(string Key, string ValueName)
         {
             // /f = Disable prompt
-            Program.SendCommand($"reg {string.Format(@"delete ""{0}\{1}"" /f", ProcessKey_CMD(Key), ValueName)}");
+            Program.SendCommand($"reg {$@"delete ""{ProcessKey_CMD(Key)}\{ValueName}"" /f"}");
         }
 
         /// <summary>
@@ -1066,7 +1066,7 @@ namespace WinPaletter
         public static void DelKey_AdministratorDeflector(string Key)
         {
             // /f = Disable prompt
-            Program.SendCommand($"reg {string.Format(@"delete ""{0}"" /f", ProcessKey_CMD(Key))}");
+            Program.SendCommand($"reg {$@"delete ""{ProcessKey_CMD(Key)}"" /f"}");
         }
 
         /// <summary>

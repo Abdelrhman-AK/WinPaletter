@@ -18,7 +18,7 @@ namespace WinPaletter.NativeMethods
             public static extern bool SetSystemCursor(IntPtr hcur, int id);
         }
 
-        static void Verboser_Cursors(TreeView TreeView, bool result, string file, OCR_SYSTEM_CURSORS id)
+        static void Verboser_Cursors(TreeView treeView, bool result, string file, OCR_SYSTEM_CURSORS id)
         {
             if (!result)
             {
@@ -28,8 +28,8 @@ namespace WinPaletter.NativeMethods
                 {
                     Win32Exception ex = new(Error);
 
-                    if (TreeView != null)
-                        Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
+                    if (treeView != null)
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
 
@@ -37,8 +37,8 @@ namespace WinPaletter.NativeMethods
                 }
             }
 
-            if (TreeView != null)
-                Theme.Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()), "dll");
+            if (treeView != null)
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()), "dll");
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="file">The path to the cursor file.</param>
         /// <param name="id">The ID of the system cursor to set.</param>
-        /// <param name="TreeView">Optional TreeView for logging or user feedback.</param>
+        /// <param name="treeView">Optional TreeView for logging or user feedback.</param>
         /// <returns>True if the operation succeeds, otherwise false.</returns>
-        public static bool SetSystemCursor(string file, OCR_SYSTEM_CURSORS id, TreeView TreeView = null)
+        public static bool SetSystemCursor(string file, OCR_SYSTEM_CURSORS id, TreeView treeView = null)
         {
             bool result = false;
 
@@ -75,7 +75,7 @@ namespace WinPaletter.NativeMethods
             }
 
             // Log the result and details
-            Verboser_Cursors(TreeView, result, file, id);
+            Verboser_Cursors(treeView, result, file, id);
 
             return result;
         }
@@ -83,14 +83,14 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Sets a system cursor from a file with the specified ID.
         /// </summary>
-        /// <param name="TreeView">Optional TreeView for logging or user feedback.</param>
+        /// <param name="treeView">Optional TreeView for logging or user feedback.</param>
         /// <param name="file">The path to the cursor file.</param>
         /// <param name="id">The ID of the system cursor to set.</param>
         /// <returns>True if the operation succeeds, otherwise false.</returns>
-        public static bool SetSystemCursor(TreeView TreeView, string file, OCR_SYSTEM_CURSORS id)
+        public static bool SetSystemCursor(TreeView treeView, string file, OCR_SYSTEM_CURSORS id)
         {
             // Delegate to the main method for consistency.
-            return SetSystemCursor(file, id, TreeView);
+            return SetSystemCursor(file, id, treeView);
         }
 
         /// <summary>
@@ -98,9 +98,9 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hcur">The handle to the cursor.</param>
         /// <param name="id">The ID of the system cursor to set.</param>
-        /// <param name="TreeView">Optional TreeView for logging or user feedback.</param>
+        /// <param name="treeView">Optional TreeView for logging or user feedback.</param>
         /// <returns>True if the operation succeeds, otherwise false.</returns>
-        public static bool SetSystemCursor(IntPtr hcur, OCR_SYSTEM_CURSORS id, TreeView TreeView = null)
+        public static bool SetSystemCursor(IntPtr hcur, OCR_SYSTEM_CURSORS id, TreeView treeView = null)
         {
             bool result = false;
 
@@ -127,7 +127,7 @@ namespace WinPaletter.NativeMethods
             }
 
             // Log the result and details
-            Verboser_Cursors(TreeView, result, hcur.ToInt32().ToString(), id);
+            Verboser_Cursors(treeView, result, hcur.ToInt32().ToString(), id);
 
             return result;
         }
@@ -135,14 +135,14 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Sets a system cursor from a handle with the specified ID.
         /// </summary>
-        /// <param name="TreeView">Optional TreeView for logging or user feedback.</param>
+        /// <param name="treeView">Optional TreeView for logging or user feedback.</param>
         /// <param name="hcur">The handle to the cursor.</param>
         /// <param name="id">The ID of the system cursor to set.</param>
         /// <returns>True if the operation succeeds, otherwise false.</returns>
-        public static bool SetSystemCursor(TreeView TreeView, IntPtr hcur, OCR_SYSTEM_CURSORS id)
+        public static bool SetSystemCursor(TreeView treeView, IntPtr hcur, OCR_SYSTEM_CURSORS id)
         {
             // Delegate to the main method for consistency.
-            return SetSystemCursor(hcur, id, TreeView);
+            return SetSystemCursor(hcur, id, treeView);
         }
 
     }

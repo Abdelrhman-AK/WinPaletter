@@ -57,6 +57,7 @@ namespace WinPaletter.UI.Simulation
             {
                 if (value != _icon)
                 {
+                    _icon?.Dispose();
                     _icon = value;
                     Invalidate();
                 }

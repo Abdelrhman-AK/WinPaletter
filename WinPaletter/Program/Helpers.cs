@@ -409,7 +409,7 @@ namespace WinPaletter
             {
                 if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                 {
-                    if (treeView is not null) { Theme.Manager.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info"); }
+                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info"); }
 
                     Stopwatch sw = new();
                     sw.Reset();
@@ -421,7 +421,7 @@ namespace WinPaletter
 
                     sw.Stop();
 
-                    if (treeView is not null) { Theme.Manager.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time"); }
+                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time"); }
 
                     sw.Reset();
                 }
@@ -429,7 +429,7 @@ namespace WinPaletter
                 {
                     if (treeView is not null)
                     {
-                        Theme.Manager.AddNode(treeView, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
+                        ThemeLog.AddNode(treeView, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
                     }
                     else
                     {
@@ -441,7 +441,7 @@ namespace WinPaletter
             {
                 if (treeView is not null)
                 {
-                    Theme.Manager.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
+                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
                 }
                 else
@@ -449,7 +449,6 @@ namespace WinPaletter
                     Forms.BugReport.ThrowError(ex);
                 }
             }
-
         }
 
         /// <summary>

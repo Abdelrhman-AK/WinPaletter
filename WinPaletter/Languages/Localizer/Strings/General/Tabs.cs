@@ -9,5 +9,6 @@
         public string Tab_Context_Detach { get; set; } = "Detach";
         public string Tab_Context_DetachAll { get; set; } = "Detach all";
         public string Tab_Context_DetachOthers { get; set; } = "Detach all but this";
+        public string OpenTabs_Close { get; set; } = "There are open forms in tabs. Do you want to exit WinPaletter anyway?";
     }
 }

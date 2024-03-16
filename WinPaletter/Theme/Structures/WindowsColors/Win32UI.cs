@@ -208,7 +208,7 @@ namespace WinPaletter.Theme.Structures
                         ButtonHilight = vs.Colors.BtnHighlight;
                         ButtonLight = vs.Colors.Light3d;
                         ButtonShadow = vs.Colors.BtnShadow;
-                        // ButtonText = vs.Colors.MenuText
+                        // ButtonText = vs.Palette.MenuText
                         GradientActiveTitle = vs.Colors.GradientActiveCaption;
                         GradientInactiveTitle = vs.Colors.GradientInactiveCaption;
                         GrayText = vs.Colors.GrayText;
@@ -342,7 +342,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, Enabled);
+            SaveToggleState(treeView);
 
             if (Enabled)
             {
@@ -666,10 +666,18 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
+        /// Saves ClassicColors toggle state into registry
+        /// </summary>
+        public void SaveToggleState(TreeView treeView = null)
+        {
+            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, Enabled);
+        }
+
+        /// <summary>
         /// Broadcast user preference mask from current user to all users (and LogonUI screen)
         /// </summary>
-        /// <param name="TreeView">treeView used as theme log</param>
-        public void Broadcast_UPM_ToDefUsers(TreeView TreeView = null)
+        /// <param name="treeView">treeView used as theme log</param>
+        public void Broadcast_UPM_ToDefUsers(TreeView treeView = null)
         {
             if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
             {
@@ -689,7 +697,7 @@ namespace WinPaletter.Theme.Structures
                     }
                     finally
                     {
-                        if (bytes is not null && bytes.Length > 0) EditReg(TreeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", bytes, RegistryValueKind.Binary);
+                        if (bytes is not null && bytes.Length > 0) EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "UserPreferencesMask", bytes, RegistryValueKind.Binary);
                     }
                 }
             }

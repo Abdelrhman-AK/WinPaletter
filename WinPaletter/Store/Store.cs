@@ -449,7 +449,7 @@ namespace WinPaletter
                     if (allProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
 
                     // Convert themes managers into StoreItems, and exclude the old formats of OldFormat
-                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && Manager.GetFormat($@"{Dir}\{FileName}") == Manager.Format.JSON)
+                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && Manager.GetEdition($@"{Dir}\{FileName}") == Manager.Editions.JSON)
                     {
                         try
                         {
@@ -852,7 +852,7 @@ namespace WinPaletter
                 temp.Refresh();
             }
         }
-      
+
         #endregion
 
         #region Methods\Functions

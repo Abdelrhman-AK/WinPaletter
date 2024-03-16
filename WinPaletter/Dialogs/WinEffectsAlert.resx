@@ -121,8 +121,9 @@
     <value>1. Back up third-party tool settings.
 2. Back up the WinPaletter theme file.
 3. Create a Windows restore point (optional).
-4. Use WinPaletter on Windows without any mods (avoid other third-party tools).
-5. If you insist on using another third-party tool, don't use Windows Effects (disable it).</value>
+4. Use WinPaletter on Windows without any mods (avoid other third-party tools) (optional).
+5. Do some tests in a virtual machine (optional).
+6. If you insist on using another third-party tool, don't use Windows Effects (disable it).</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

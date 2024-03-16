@@ -362,7 +362,7 @@ namespace WinPaletter.UI.WP
             else
             {
                 ////Disabled for better performance
-                //G.DrawGlow(rect_margin, Color.FromArgb(alpha_hover, scheme.Colors.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
+                //G.DrawGlow(rect_margin, Color.FromArgb(alpha_hover, scheme.Palette.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
 
                 using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
                 {

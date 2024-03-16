@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -48,7 +49,8 @@ namespace WinPaletter.Theme
                                 WindowsXP.Load(@default.WindowsXP);
                                 WindowsEffects.Load(@default.WindowsEffects);
                                 LogonUI10x.Load(@default.LogonUI10x);
-                                LogonUI7.Load(@default.LogonUI7);
+                                LogonUI81.Load("8.1", @default.LogonUI7);
+                                LogonUI7.Load("7", @default.LogonUI7);
                                 LogonUIXP.Load(@default.LogonUIXP);
                                 Win32.Load();
                                 MetricsFonts.Load(@default.MetricsFonts);
@@ -206,7 +208,7 @@ namespace WinPaletter.Theme
                                 // Prepare variables for theme resources pack extraction
                                 List<string> txt = new();
                                 string packPath = $"{new FileInfo(File).DirectoryName}\\{Path.GetFileNameWithoutExtension(File)}.wptp";
-                                bool packIsValid = System.IO.File.Exists(packPath) && new FileInfo(packPath).Length > 0L && Manager.GetFormat(File) == Manager.Format.JSON;
+                                bool packIsValid = System.IO.File.Exists(packPath) && new FileInfo(packPath).Length > 0L && Manager.GetEdition(File) == Manager.Editions.JSON;
                                 string cache = $"{SysPaths.ThemeResPackCache}\\{(string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}";
 
                                 // Extract theme resources pack
@@ -295,7 +297,7 @@ namespace WinPaletter.Theme
                                         }
                                     }
                                 }
-                                else if (Manager.GetFormat(File) == Manager.Format.OldFormat)
+                                else if (Manager.GetEdition(File) == Manager.Editions.OldFormat)
                                 {
                                     // Display a message box for old format themes
                                     MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Convert_Detect_Old_OnLoadingTip);
@@ -330,13 +332,14 @@ namespace WinPaletter.Theme
         /// <summary>
         /// ApplyToTM or apply WinPaletter theme
         /// </summary>
-        /// <param name="Destination">Destination into which WinPaletter will write theme data. It can be registry or file.</param>
-        /// <param name="File">If selected destination is file, this will specify WinPaletter theme file</param>
-        /// <param name="TreeView">Specify TreeView to write theme applying log (Registry destination only)</param>
-        /// <param name="ResetToDefault">Restore Windows theme to default before applying WinPaletter theme</param>
-        public void Save(Source Destination, string File = "", TreeView TreeView = null, bool ResetToDefault = false, bool silent = false)
+        /// <param name="destination">destination into which WinPaletter will write theme data. It can be registry or file.</param>
+        /// <param name="file">If selected destination is file, this will specify WinPaletter theme file</param>
+        /// <param name="treeView">Specify treeView to write theme applying log (Registry destination only)</param>
+        /// <param name="resetToDefault">Restore Windows theme to default before applying a WinPaletter theme</param>
+        /// <param name="silent">Don't show alerts on applying a WinPaletter theme</param>
+        public void Save(Source destination, string file = "", TreeView treeView = null, bool resetToDefault = false, bool silent = false)
         {
-            switch (Destination)
+            switch (destination)
             {
                 case Source.Registry:
                     {
@@ -348,8 +351,9 @@ namespace WinPaletter.Theme
                                 Save(Source.File, filename);
                             }
 
-                            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && TreeView is not null;
+                            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
                             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
+                            TreeView tv = ReportProgress_Detailed ? treeView : null;
 
                             _ErrorHappened = false;
 
@@ -358,9 +362,9 @@ namespace WinPaletter.Theme
                             if (ReportProgress)
                             {
                                 Exceptions.ThemeApply.Clear();
-                                TreeView.Visible = false;
-                                TreeView.Nodes.Clear();
-                                TreeView.Visible = true;
+                                treeView.Visible = false;
+                                treeView.Nodes.Clear();
+                                treeView.Visible = true;
                                 string OS_str;
 
                                 if (OS.W12) { OS_str = Program.Lang.OS_Win12; }
@@ -381,28 +385,28 @@ namespace WinPaletter.Theme
 
                                 else { OS_str = Program.Lang.OS_WinUndefined; }
 
-                                AddNode(TreeView, $"{(string.Format(Program.Lang.TM_ApplyFrom, OS_str))}", "info");
+                                ThemeLog.AddNode(treeView, $"{(string.Format(Program.Lang.TM_ApplyFrom, OS_str))}", "info");
 
-                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_Started}", "info");
+                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_Started}", "info");
 
                                 if (!Program.Elevated)
                                 {
-                                    AddNode(TreeView, $"{Program.Lang.TM_Admin_Msg0}", "admin");
-                                    AddNode(TreeView, $"{Program.Lang.TM_Admin_Msg1}", "admin");
+                                    ThemeLog.AddNode(treeView, $"{Program.Lang.TM_Admin_Msg0}", "admin");
+                                    ThemeLog.AddNode(treeView, $"{Program.Lang.TM_Admin_Msg1}", "admin");
                                 }
 
                             }
 
                             // Reset to default Windows theme
-                            if (ResetToDefault)
+                            if (resetToDefault)
                             {
                                 Execute(() =>
                                 {
                                     using (Manager def = Theme.Default.Get())
                                     {
                                         def.LogonUI10x.NoLockScreen = false;
+                                        def.LogonUI81.Enabled = false;
                                         def.LogonUI7.Enabled = false;
-                                        def.Windows81.NoLockScreen = false;
                                         def.LogonUIXP.Enabled = true;
                                         if (OS.WXP) ResetCursorsToNone_XP(); else ResetCursorsToAero();
                                         def.CommandPrompt.Enabled = true;
@@ -418,26 +422,63 @@ namespace WinPaletter.Theme
                                         def.Icons.Enabled = true;
                                         def.Save(Source.Registry);
                                     }
-                                }, TreeView, Program.Lang.TM_ThemeReset, Program.Lang.TM_ThemeReset_Error, Program.Lang.TM_Time, sw_all);
+                                }, treeView, Program.Lang.TM_ThemeReset, Program.Lang.TM_ThemeReset_Error, Program.Lang.TM_Time, sw_all);
                             }
 
+                            // Save toggles states
+                            ThemeLog.AddNode(treeView, $"{Program.Lang.TM_SavingToggles}", "info");
+                            AppTheme.SaveToggleState(tv);
+                            Wallpaper.SaveToggleState(tv);
+                            Windows12.SaveToggleState("12", tv);
+                            Windows11.SaveToggleState("11", tv);
+                            Windows10.SaveToggleState("10", tv);
+                            Windows81.SaveToggleState("8.1", tv);
+                            Windows7.SaveToggleState(tv);
+                            WindowsVista.SaveToggleState(tv);
+                            WindowsXP.SaveToggleState(tv);
+                            Win32.SaveToggleState(tv);
+                            LogonUI10x.SaveToggleState(tv);
+                            LogonUI81.SaveToggleState("8.1", tv);
+                            LogonUI7.SaveToggleState("7", tv);
+                            LogonUIXP.SaveToggleState(tv);
+                            MetricsFonts.SaveToggleState(tv);
+                            Wallpaper.SaveToggleState(tv);
+                            WallpaperTone.SaveToggleState(WallpaperTone_W12, "Win12", tv);
+                            WallpaperTone.SaveToggleState(WallpaperTone_W11, "Win11", tv);
+                            WallpaperTone.SaveToggleState(WallpaperTone_W10, "Win10", tv);
+                            WallpaperTone.SaveToggleState(WallpaperTone_W81, "Win8.1", tv);
+                            WallpaperTone.SaveToggleState(WallpaperTone_W7, "Win7", tv);
+                            WallpaperTone.SaveToggleState(WallpaperTone_WVista, "WinVista", tv);
+                            WallpaperTone.SaveToggleState(WallpaperTone_WXP, "WinXP", tv);
+                            WindowsEffects.SaveToggleState(tv);
+                            AltTab.SaveToggleState(tv);
+                            ScreenSaver.SaveToggleState(tv);
+                            Sounds.SaveToggleState(tv);
+                            Icons.SaveToggleState(tv);
+
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, Cursor_Enabled);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_32_Enabled", PowerShellx86.Enabled);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_64_Enabled", PowerShellx64.Enabled);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
+
                             // Theme info
-                            Execute(() => Info.Apply(ReportProgress_Detailed ? TreeView : null), TreeView, Program.Lang.TM_SavingInfo, Program.Lang.TM_SavingInfo_Error, Program.Lang.TM_Time, sw_all);
+                            Execute(() => Info.Apply(tv), treeView, Program.Lang.TM_SavingInfo, Program.Lang.TM_SavingInfo_Error, Program.Lang.TM_Time, sw_all);
 
                             // WinPaletter application theme
-                            Execute(() => AppTheme.Apply(ReportProgress_Detailed ? TreeView : null), TreeView,
+                            Execute(() => AppTheme.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_AppTheme,
                                 Program.Lang.TM_Error_AppTheme,
                                 Program.Lang.TM_Time,
                                 sw_all,
                                 !AppTheme.Enabled,
-                                Program.Lang.TM_Skip_AppTheme,
-                                true);
+                                Program.Lang.TM_Skip_AppTheme);
 
                             // Wallpaper
                             // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct file
-                            Execute(new(() => Wallpaper.Apply(false, ReportProgress_Detailed ? TreeView : null)),
-                                TreeView,
+                            Execute(() => Wallpaper.Apply(false, tv),
+                                treeView,
                                 Program.Lang.TM_Applying_Wallpaper,
                                 Program.Lang.TM_Error_Wallpaper,
                                 Program.Lang.TM_Time,
@@ -447,7 +488,7 @@ namespace WinPaletter.Theme
 
                             if (OS.W12)
                             {
-                                Execute(new(() => Windows12.Apply("12", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => Windows12.Apply("12", tv), treeView,
                                     Program.Lang.TM_Applying_Win12,
                                     Program.Lang.TM_W12_Error,
                                     Program.Lang.TM_Time,
@@ -455,7 +496,7 @@ namespace WinPaletter.Theme
                                     !Windows12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                     Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => LogonUI10x.Apply(tv), treeView,
                                     Program.Lang.TM_Applying_LogonUI12,
                                     Program.Lang.TM_LogonUI12_Error,
                                     Program.Lang.TM_Time,
@@ -466,7 +507,7 @@ namespace WinPaletter.Theme
 
                             if (OS.W11)
                             {
-                                Execute(new(() => Windows11.Apply("11", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => Windows11.Apply("11", tv), treeView,
                                     Program.Lang.TM_Applying_Win11,
                                     Program.Lang.TM_W11_Error,
                                     Program.Lang.TM_Time,
@@ -474,7 +515,7 @@ namespace WinPaletter.Theme
                                     !Windows11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                     Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => LogonUI10x.Apply(tv), treeView,
                                     Program.Lang.TM_Applying_LogonUI11,
                                     Program.Lang.TM_LogonUI11_Error,
                                     Program.Lang.TM_Time,
@@ -485,7 +526,7 @@ namespace WinPaletter.Theme
 
                             if (OS.W10)
                             {
-                                Execute(new(() => Windows10.Apply("10", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => Windows10.Apply("10", tv), treeView,
                                     Program.Lang.TM_Applying_Win10,
                                     Program.Lang.TM_W10_Error,
                                     Program.Lang.TM_Time,
@@ -493,7 +534,7 @@ namespace WinPaletter.Theme
                                     !Windows10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                     Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUI10x.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => LogonUI10x.Apply(tv), treeView,
                                     Program.Lang.TM_Applying_LogonUI10,
                                     Program.Lang.TM_LogonUI10_Error,
                                     Program.Lang.TM_Time,
@@ -504,7 +545,7 @@ namespace WinPaletter.Theme
 
                             if (OS.W8x)
                             {
-                                Execute(new(() => Windows81.Apply(this, "8.1", ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => Windows81.Apply(this, "8.1", tv), treeView,
                                     Program.Lang.TM_Applying_Win81,
                                     Program.Lang.TM_W81_Error,
                                     Program.Lang.TM_Time,
@@ -512,18 +553,18 @@ namespace WinPaletter.Theme
                                     !Windows81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                     Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => Apply_LogonUI_8(TreeView)), TreeView,
+                                Execute(() => LogonUI81.Apply("8.1", false, treeView), treeView,
                                     Program.Lang.TM_Applying_LogonUI8,
                                     Program.Lang.TM_LogonUI8_Error,
                                     Program.Lang.TM_Time,
                                     sw_all,
-                                    !LogonUI7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
+                                    !LogonUI81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
                                     Program.Lang.TM_Skip_LogonUI);
                             }
 
                             if (OS.W7)
                             {
-                                Execute(new(() => Windows7.Apply(this, ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => Windows7.Apply(this, tv), treeView,
                                     Program.Lang.TM_Applying_Win7,
                                     Program.Lang.TM_W7_Error,
                                     Program.Lang.TM_Time,
@@ -531,7 +572,7 @@ namespace WinPaletter.Theme
                                     !Windows7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                     Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => Apply_LogonUI7(LogonUI7, "LogonUI", TreeView)), TreeView,
+                                Execute(() => LogonUI7.Apply("7", false, treeView), treeView,
                                     Program.Lang.TM_Applying_LogonUI7,
                                     Program.Lang.TM_LogonUI7_Error,
                                     Program.Lang.TM_Time,
@@ -542,11 +583,11 @@ namespace WinPaletter.Theme
 
                             if (OS.WVista)
                             {
-                                Execute(new(() =>
+                                Execute(() =>
                                 {
-                                    WindowsVista.Apply(ReportProgress_Detailed ? TreeView : null);
+                                    WindowsVista.Apply(tv);
                                     Program.RefreshDWM(this);
-                                }), TreeView,
+                                }, treeView,
                                 Program.Lang.TM_Applying_WinVista,
                                 Program.Lang.TM_WVista_Error,
                                 Program.Lang.TM_Time,
@@ -557,7 +598,7 @@ namespace WinPaletter.Theme
 
                             if (OS.WXP)
                             {
-                                Execute(new(() => WindowsXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => WindowsXP.Apply(tv), treeView,
                                     Program.Lang.TM_Applying_WinXP,
                                     Program.Lang.TM_WXP_Error,
                                     Program.Lang.TM_Time,
@@ -565,7 +606,7 @@ namespace WinPaletter.Theme
                                     !WindowsXP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                     Program.Lang.TM_Skip_WinColors);
 
-                                Execute(new(() => LogonUIXP.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                                Execute(() => LogonUIXP.Apply(tv), treeView,
                                     Program.Lang.TM_Applying_LogonUIXP,
                                     Program.Lang.TM_LogonUIXP_Error,
                                     Program.Lang.TM_Time,
@@ -575,7 +616,7 @@ namespace WinPaletter.Theme
                             }
 
                             // Win32UI
-                            Execute(new(() => Win32.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => Win32.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_Win32UI,
                                 Program.Lang.TM_WIN32UI_Error,
                                 Program.Lang.TM_Time,
@@ -584,7 +625,7 @@ namespace WinPaletter.Theme
                                 Program.Lang.TM_Skip_ClassicColors);
 
                             // WindowsEffects
-                            Execute(new(() => WindowsEffects.Apply(ReportProgress_Detailed ? TreeView : null, silent)), TreeView,
+                            Execute(() => WindowsEffects.Apply(tv, silent), treeView,
                                 Program.Lang.TM_Applying_WinEffects,
                                 Program.Lang.TM_WinEffects_Error,
                                 Program.Lang.TM_Time,
@@ -593,7 +634,7 @@ namespace WinPaletter.Theme
                                 Program.Lang.TM_Skip_WinEffects);
 
                             // Metrics\Fonts
-                            Execute(new(() => MetricsFonts.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => MetricsFonts.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_Metrics,
                                 Program.Lang.TM_Error_Metrics,
                                 Program.Lang.TM_Time_They,
@@ -602,51 +643,50 @@ namespace WinPaletter.Theme
                                 Program.Lang.TM_Skip_Metrics);
 
                             // AltTab
-                            Execute(new(() => AltTab.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => AltTab.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_AltTab,
                                 Program.Lang.TM_Error_AltTab,
                                 Program.Lang.TM_Time,
                                 sw_all,
                                 !AltTab.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.AltTab),
-                                Program.Lang.TM_Skip_AltTab,
-                                true);
+                                Program.Lang.TM_Skip_AltTab);
 
                             // WallpaperTone
-                            Execute(new(() =>
+                            Execute(() =>
                             {
-                                WallpaperTone.Save_To_Registry(WallpaperTone_W12, "Win12", ReportProgress_Detailed ? TreeView : null);
-                                WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11", ReportProgress_Detailed ? TreeView : null);
-                                WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10", ReportProgress_Detailed ? TreeView : null);
-                                WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1", ReportProgress_Detailed ? TreeView : null);
-                                WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7", ReportProgress_Detailed ? TreeView : null);
-                                WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista", ReportProgress_Detailed ? TreeView : null);
-                                WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP", ReportProgress_Detailed ? TreeView : null);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W12, "Win12", tv);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11", tv);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10", tv);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1", tv);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7", tv);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista", tv);
+                                WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP", tv);
 
                                 if (Wallpaper.Enabled)
                                 {
                                     if (OS.W12 & WallpaperTone_W12.Enabled)
-                                        WallpaperTone_W12.Apply(ReportProgress_Detailed ? TreeView : null);
+                                        WallpaperTone_W12.Apply(tv);
 
                                     if (OS.W11 & WallpaperTone_W11.Enabled)
-                                        WallpaperTone_W11.Apply(ReportProgress_Detailed ? TreeView : null);
+                                        WallpaperTone_W11.Apply(tv);
 
                                     if (OS.W10 & WallpaperTone_W10.Enabled)
-                                        WallpaperTone_W10.Apply(ReportProgress_Detailed ? TreeView : null);
+                                        WallpaperTone_W10.Apply(tv);
 
                                     if (OS.W81 & WallpaperTone_W81.Enabled)
-                                        WallpaperTone_W81.Apply(ReportProgress_Detailed ? TreeView : null);
+                                        WallpaperTone_W81.Apply(tv);
 
                                     if (OS.W7 & WallpaperTone_W7.Enabled)
-                                        WallpaperTone_W7.Apply(ReportProgress_Detailed ? TreeView : null);
+                                        WallpaperTone_W7.Apply(tv);
 
                                     if (OS.WVista & WallpaperTone_WVista.Enabled)
-                                        WallpaperTone_WVista.Apply(ReportProgress_Detailed ? TreeView : null);
+                                        WallpaperTone_WVista.Apply(tv);
 
                                     if (OS.WXP & WallpaperTone_WXP.Enabled)
-                                        WallpaperTone_WXP.Apply(ReportProgress_Detailed ? TreeView : null);
+                                        WallpaperTone_WXP.Apply(tv);
                                 }
 
-                            }), TreeView,
+                            }, treeView,
                             Program.Lang.TM_Applying_WallpaperTone,
                             Program.Lang.TM_WallpaperTone_Error,
                             Program.Lang.TM_Time,
@@ -655,13 +695,8 @@ namespace WinPaletter.Theme
                             Program.Lang.TM_Skip_WallpaperTone);
 
                             #region Consoles
-                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
-                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_32_Enabled", PowerShellx86.Enabled);
-                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_64_Enabled", PowerShellx64.Enabled);
-                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
-                            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
 
-                            Execute(new(() => Apply_CommandPrompt(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => Apply_CommandPrompt(tv), treeView,
                                 Program.Lang.TM_Applying_CMD,
                                 Program.Lang.TM_CMD_Error,
                                 Program.Lang.TM_Time,
@@ -669,7 +704,7 @@ namespace WinPaletter.Theme
                                 !CommandPrompt.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
                                 Program.Lang.TM_Skip_CMD);
 
-                            Execute(new(() => Apply_PowerShell86(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => Apply_PowerShell86(tv), treeView,
                                 Program.Lang.TM_Applying_PS32,
                                 Program.Lang.TM_PS32_Error,
                                 Program.Lang.TM_Time,
@@ -677,7 +712,7 @@ namespace WinPaletter.Theme
                                 !PowerShellx86.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
                                 Program.Lang.TM_Skip_PS32);
 
-                            Execute(new(() => Apply_PowerShell64(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => Apply_PowerShell64(tv), treeView,
                                 Program.Lang.TM_Applying_PS64,
                                 Program.Lang.TM_PS64_Error,
                                 Program.Lang.TM_Time,
@@ -696,29 +731,29 @@ namespace WinPaletter.Theme
                                 {
                                     if (Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals)
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals}", "skip");
                                     }
 
                                     else if (Terminal.Enabled & TerminalPreview.Enabled)
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_Terminals}", "info");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_Terminals}", "info");
                                     }
 
                                     else if (Terminal.Enabled)
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview}", "skip");
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_TerminalStable}", "info");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_TerminalStable}", "info");
                                     }
 
                                     else if (TerminalPreview.Enabled)
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable}", "skip");
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_TerminalPreview}", "info");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Check_TerminalPreview}", "info");
                                     }
 
                                     else
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals}", "skip");
                                     }
 
                                 }
@@ -758,10 +793,10 @@ namespace WinPaletter.Theme
                                     {
                                         try
                                         {
-                                            AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_TerminalStable}", "info");
+                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_TerminalStable}", "info");
                                             Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
                                             if (ReportProgress)
-                                                AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
                                         }
                                         catch (Exception ex)
                                         {
@@ -770,7 +805,7 @@ namespace WinPaletter.Theme
                                             _ErrorHappened = true;
                                             if (ReportProgress)
                                             {
-                                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Error_TerminalStable}", "error");
+                                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Error_TerminalStable}", "error");
                                                 AddException(Program.Lang.TM_Error_TerminalStable, ex);
                                             }
                                             else
@@ -786,11 +821,11 @@ namespace WinPaletter.Theme
 
                                     else if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable_NotInstalled}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable_NotInstalled}", "skip");
                                     }
                                     else
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalStable_DeflectionNotFound}", "skip");
                                     }
                                 }
 
@@ -801,10 +836,10 @@ namespace WinPaletter.Theme
 
                                         try
                                         {
-                                            AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_TerminalPreview}", "info");
+                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Applying_TerminalPreview}", "info");
                                             TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                                             if (ReportProgress)
-                                                AddNode(TreeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
                                         }
                                         catch (Exception ex)
                                         {
@@ -813,7 +848,7 @@ namespace WinPaletter.Theme
                                             _ErrorHappened = true;
                                             if (ReportProgress)
                                             {
-                                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Error_TerminalPreview}", "error");
+                                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Error_TerminalPreview}", "error");
                                                 AddException(Program.Lang.TM_Error_TerminalPreview, ex);
                                             }
                                             else
@@ -828,24 +863,24 @@ namespace WinPaletter.Theme
 
                                     else if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview_NotInstalled}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview_NotInstalled}", "skip");
                                     }
                                     else
                                     {
-                                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview_DeflectionNotFound}", "skip");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_TerminalPreview_DeflectionNotFound}", "skip");
                                     }
                                 }
                             }
 
                             else
                             {
-                                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals_NotSupported}", "skip");
+                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_Skip_Terminals_NotSupported}", "skip");
                             }
                             sw.Stop();
                             #endregion
 
                             // ScreenSaver
-                            Execute(new(() => ScreenSaver.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => ScreenSaver.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_ScreenSaver,
                                 Program.Lang.TM_Error_ScreenSaver,
                                 Program.Lang.TM_Time,
@@ -854,7 +889,7 @@ namespace WinPaletter.Theme
                                 Program.Lang.TM_Skip_ScreenSaver);
 
                             // Sounds
-                            Execute(new(() => Sounds.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => Sounds.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_Sounds,
                                 Program.Lang.TM_Error_Sounds,
                                 Program.Lang.TM_Time,
@@ -863,14 +898,16 @@ namespace WinPaletter.Theme
                                 Program.Lang.TM_Skip_Sounds);
 
                             // Cursors
-                            Execute(new(() => Apply_Cursors(TreeView)), TreeView,
+                            Execute(() => Apply_Cursors(treeView), treeView,
                                 string.Empty,
                                 Program.Lang.TM_Error_Cursors,
                                 Program.Lang.TM_Time_Cursors,
-                                sw_all);
+                                sw_all,
+                                !Cursor_Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Cursors),
+                                Program.Lang.TM_Skip_Cursors);
 
                             // Icons
-                            Execute(new(() => Icons.Apply(ReportProgress_Detailed ? TreeView : null)), TreeView,
+                            Execute(() => Icons.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_Icons,
                                 Program.Lang.TM_Error_Icons,
                                 Program.Lang.TM_Time,
@@ -881,29 +918,29 @@ namespace WinPaletter.Theme
                             // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
                             if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                             {
-                                Execute(new(() =>
+                                Execute(() =>
                                 {
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty), RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", string.Empty), RegistryValueKind.String);
-                                }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty), RegistryValueKind.String);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "2"), RegistryValueKind.String);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", string.Empty), RegistryValueKind.String);
+                                }, treeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
                             }
 
                             else if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
                             {
-                                Execute(new(() =>
+                                Execute(() =>
                                 {
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", string.Empty, RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
-                                    EditReg(ReportProgress_Detailed ? TreeView : null, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", string.Empty, RegistryValueKind.String);
-                                }), TreeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Wallpaper", string.Empty, RegistryValueKind.String);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "WallpaperStyle", "2", RegistryValueKind.String);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
+                                    EditReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", string.Empty, RegistryValueKind.String);
+                                }, treeView, Program.Lang.TM_Applying_DesktopAllUsers, Program.Lang.TM_Error_SetDesktop, Program.Lang.TM_Time);
                             }
 
                             // Update User Preference Mask for HKEY_USERS\.DEFAULT
                             // Always make it the last operation
-                            Win32.Broadcast_UPM_ToDefUsers(ReportProgress_Detailed ? TreeView : null);
+                            if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT) Win32.Broadcast_UPM_ToDefUsers(tv);
 
                             //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
                             //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
@@ -917,11 +954,11 @@ namespace WinPaletter.Theme
                             {
                                 if (!_ErrorHappened && Exceptions.ThemeApply.Count == 0)
                                 {
-                                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d))}", "success");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.TM_Applied, sw_all.ElapsedMilliseconds / 1000d))}", "success");
                                 }
                                 else
                                 {
-                                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d))}", "warning");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.TM_AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d))}", "warning");
                                 }
                             }
 
@@ -934,11 +971,18 @@ namespace WinPaletter.Theme
 
                 case Source.File:
                     {
-                        if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(File))) System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(File));
+                        if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(file))) System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(file));
 
-                        if (Info.ExportResThemePack) { PackThemeResources(Clone() as Manager, File, $@"{new FileInfo(File).DirectoryName}\{Path.GetFileNameWithoutExtension(File)}.wptp"); }
+                        if (Info.ExportResThemePack)
+                        {
+                            // Clone as PackThemeResources will modify the theme manager
+                            using (Theme.Manager TMx = Clone() as Manager)
+                            {
+                                PackThemeResources(TMx, file, $"{new FileInfo(file).DirectoryName}\\{Path.GetFileNameWithoutExtension(file)}.wptp");
+                            }
+                        }
 
-                        else { System.IO.File.WriteAllText(File, ToString()); }
+                        else { System.IO.File.WriteAllText(file, ToString()); }
 
                         break;
                     }
@@ -997,15 +1041,29 @@ namespace WinPaletter.Theme
             string ZipEntry;
 
             if (System.IO.File.Exists(Pack)) System.IO.File.Delete(Pack);
+            if (!System.IO.Directory.Exists($"{SysPaths.appData}\\Temp")) System.IO.Directory.CreateDirectory($"{SysPaths.appData}\\Temp");
+            foreach (string file_to_delete in System.IO.Directory.GetFiles($"{SysPaths.appData}\\Temp")) System.IO.File.Delete(file_to_delete);
 
             using (ZipArchive archive = ZipFile.Open(Pack, ZipArchiveMode.Create))
             {
-                if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.CustomImage || !TM.Windows81.NoLockScreen && TM.Windows81.LockScreenType == Theme.Structures.LogonUI7.Sources.CustomImage)
+                if (TM.LogonUI81.Enabled && TM.LogonUI81.Mode == Theme.Structures.LogonUI7.Sources.CustomImage)
+                {
+                    x = TM.LogonUI81.ImagePath;
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $"{cache}LogonUI81{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                            TM.LogonUI81.ImagePath = ZipEntry;
+                        filesList.Add(ZipEntry, x);
+                    }
+                }
+
+                if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.CustomImage)
                 {
                     x = TM.LogonUI7.ImagePath;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
-                        ZipEntry = $"{cache}LogonUI{Path.GetExtension(x)}";
+                        ZipEntry = $"{cache}LogonUI7{Path.GetExtension(x)}";
                         if (System.IO.File.Exists(x))
                             TM.LogonUI7.ImagePath = ZipEntry;
                         filesList.Add(ZipEntry, x);
@@ -2163,6 +2221,402 @@ namespace WinPaletter.Theme
                 }
                 #endregion
 
+                if (TM.Icons.Enabled)
+                {
+                    if (!string.IsNullOrWhiteSpace(TM.Icons.Computer))
+                    {
+                        ref string TargetProperty = ref TM.Icons.Computer;
+
+                        bool exit = TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                         || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase);
+
+                        if (!exit)
+                        {
+                            string iconName = "computer.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TargetProperty = ZipEntry;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(TM.Icons.User))
+                    {
+                        ref string TargetProperty = ref TM.Icons.User;
+                        bool exit = TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                         || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase);
+
+                        if (!exit)
+                        {
+                            string iconName = "user.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TargetProperty = ZipEntry;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(TM.Icons.Network))
+                    {
+                        ref string TargetProperty = ref TM.Icons.Network;
+                        bool exit = TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                         || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase);
+
+                        if (!exit)
+                        {
+                            string iconName = "network.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TargetProperty = ZipEntry;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(TM.Icons.ControlPanel))
+                    {
+                        ref string TargetProperty = ref TM.Icons.ControlPanel;
+                        bool exit = TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                                 || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase);
+
+                        if (!exit)
+                        {
+                            string iconName = "controlpanel.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TargetProperty = ZipEntry;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(TM.Icons.RecycleBinEmpty))
+                    {
+                        ref string TargetProperty = ref TM.Icons.RecycleBinEmpty;
+                        bool exit = TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                                 || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase);
+
+                        if (!exit)
+                        {
+                            string iconName = "recyclebinempty.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TargetProperty = ZipEntry;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(TM.Icons.RecycleBinFull))
+                    {
+                        ref string TargetProperty = ref TM.Icons.RecycleBinFull;
+                        bool exit = TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                                 || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase);
+
+                        if (!exit)
+                        {
+                            string iconName = "recyclebinfull.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TargetProperty = ZipEntry;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(TM.Icons.SystemDriveIcon))
+                    {
+                        ref string TargetProperty = ref TM.Icons.SystemDriveIcon;
+                        bool exit = TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                                 || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase);
+
+                        if (!exit)
+                        {
+                            string iconName = "systemdriveicon.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TargetProperty = ZipEntry;
+                            }
+                        }
+                    }
+
+                    foreach (KeyValuePair<string, string> entry in TM.Icons.Shell32Wrapper.ToArray())
+                    {
+                        if (!string.IsNullOrWhiteSpace(entry.Value))
+                        {
+                            string TargetProperty = entry.Value;
+                            if (TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                             || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+
+                            string shell32Index = entry.Key;
+                            string iconName = $"shell32_{shell32Index}.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TM.Icons.Shell32Wrapper[entry.Key] = ZipEntry;
+                            }
+                        }
+                    }
+
+                    foreach (KeyValuePair<string, string> entry in TM.Icons.ControlPanelWrapper.ToArray())
+                    {
+                        if (!string.IsNullOrWhiteSpace(entry.Value))
+                        {
+                            string TargetProperty = entry.Value;
+                            if (TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                             || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+
+                            string controlPanelIndex = entry.Key;
+                            string iconName = $"controlpanel_{controlPanelIndex}.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TM.Icons.ControlPanelWrapper[entry.Key] = ZipEntry;
+                            }
+                        }
+                    }
+
+                    foreach (KeyValuePair<string, string> entry in TM.Icons.ExplorerWrapper.ToArray())
+                    {
+                        if (!string.IsNullOrWhiteSpace(entry.Value))
+                        {
+                            string TargetProperty = entry.Value;
+                            if (TargetProperty.StartsWith(SysPaths.imageres, StringComparison.OrdinalIgnoreCase)
+                             || TargetProperty.StartsWith($"{SysPaths.System32}\\shell32.dll", StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+
+                            string explorerIndex = entry.Key;
+                            string iconName = $"explorer_{explorerIndex}.ico";
+
+                            ZipEntry = $"{cache}icons\\{iconName}";
+                            string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
+
+                            string iconFile = TargetProperty.Split(',')[0];
+                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+
+                            if (File.Exists(iconFile))
+                            {
+                                if (Path.GetExtension(iconFile).ToLower() != ".ico")
+                                {
+                                    using (Icon icon = PE.GetIcon(iconFile, iconIndex))
+                                    using (FileStream fs = new(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                                    {
+                                        icon.Save(fs);
+                                        fs.Close();
+                                    }
+                                    filesList.Add(ZipEntry, tempFile);
+                                }
+                                else
+                                {
+                                    filesList.Add(ZipEntry, iconFile);
+                                }
+
+                                TM.Icons.ExplorerWrapper[entry.Key] = ZipEntry;
+                            }
+                        }
+                    }
+                }
+
                 if (TM.Wallpaper.Enabled && TM.Wallpaper.WallpaperType == Wallpaper.WallpaperTypes.Picture)
                 {
                     x = TM.Wallpaper.ImageFile;
@@ -2252,6 +2706,7 @@ namespace WinPaletter.Theme
                 System.IO.File.WriteAllText(ThemeFile, TM.ToString());
             }
 
+            foreach (string file_to_delete in System.IO.Directory.GetFiles($"{SysPaths.appData}\\Temp")) System.IO.File.Delete(file_to_delete);
         }
     }
 }

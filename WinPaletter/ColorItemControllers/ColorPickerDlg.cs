@@ -96,7 +96,7 @@ namespace WinPaletter
 
             PaletteContainer.Controls.Clear();
 
-            foreach (Color c in TM.Colors())
+            foreach (Color c in TM.Palette)
             {
 
                 ColorItem MiniColorItem = new();
@@ -477,7 +477,7 @@ namespace WinPaletter
 
             if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
             {
-                List<Color> colors = Theme.Manager.GetPaletteFromString(Theme.Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
+                List<Color> colors = Theme.Manager.ListColorsFromString(Theme.Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
                 if (colors is not null && colors.Count > 0)
                 {
                     foreach (Color C in colors)
@@ -516,7 +516,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        colors = Theme.Manager.GetPaletteFromMSTheme(TextBox2.Text);
+                        colors = Theme.Manager.ListColorsFromMSTheme(TextBox2.Text);
                         if (colors is not null && colors.Count > 0)
                         {
                             foreach (Color C in colors)

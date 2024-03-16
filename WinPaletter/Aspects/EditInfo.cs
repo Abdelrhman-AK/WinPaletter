@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
 {
@@ -194,6 +193,7 @@ namespace WinPaletter
         {
             StoreItem1.TM.Info.Color1 = color1.BackColor;
             StoreItem1.TM.Info.Color2 = color2.BackColor;
+            StoreItem1.Invalidate();
         }
 
         private void Color1_Click(object sender, EventArgs e)

@@ -196,6 +196,9 @@ namespace WinPaletter
         private static Whatsnew _Whatsnew;
         public static Whatsnew Whatsnew => (_Whatsnew == null || _Whatsnew.IsDisposed) ? (_Whatsnew = CreateInstance(_Whatsnew)) : _Whatsnew;
 
+        private static Welcome _Welcome;
+        public static Welcome Welcome => (_Welcome == null || _Welcome.IsDisposed) ? (_Welcome = CreateInstance(_Welcome)) : _Welcome;
+
         private static Win32UI_Fullscreen _Win32UI_Fullscreen;
         public static Win32UI_Fullscreen Win32UI_Fullscreen => (_Win32UI_Fullscreen == null || _Win32UI_Fullscreen.IsDisposed) ? (_Win32UI_Fullscreen = CreateInstance(_Win32UI_Fullscreen)) : _Win32UI_Fullscreen;
 
@@ -245,7 +248,6 @@ namespace WinPaletter
                 try
                 {
                     instance = new T();
-                    instance.FormClosed += FormClosed;
                     return instance;
                 }
                 catch (System.Reflection.TargetInvocationException ex) when (ex.InnerException is not null)
@@ -264,18 +266,11 @@ namespace WinPaletter
             }
         }
 
-        private static void FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Form form = (Form)sender;
-            form.FormClosed -= FormClosed;
-            DisposeInstance(ref form);
-        }
-
-        private static void DisposeInstance<T>(ref T instance) where T : Form
-        {
-            instance?.Dispose();
-            instance = null;
-        }
+        //private static void DisposeInstance<T>(ref T instance) where T : Form
+        //{
+        //    instance?.Dispose();
+        //    instance = null;
+        //}
 
         #endregion
     }

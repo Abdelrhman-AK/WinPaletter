@@ -199,12 +199,12 @@
 </value>
   </data>
   <data name="AlertBox21.Text" xml:space="preserve">
-    <value>By checking this, you are responsible for the copyrights of included resources (images, sounds, and screensavers). The WinPaletter developer is not responsible for the copyright of themes uploaded by users in the WinPaletter Store.</value>
+    <value>By checking this, you are responsible for the copyrights of included resources (images, sounds, icons and screensavers). The WinPaletter developer is not responsible for the copyright of themes uploaded by users in the WinPaletter Store.</value>
   </data>
   <data name="PictureBox42.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAABVVJREFUSEvtlHlQlHUYx9d0cpxy/KOaAksb8wJNDazUmvEs7ysE7ytNxYu8wyPU
+        wgAADsIBFShKgAAABVVJREFUSEvtlHlQlHUYx9d0cpxy/KOaAksb8wJNDazUmvEs7ysE7ytNxYu8wyPU
         QjzyQkRWRVBhJRcXlZRDZFkWkBsFFxFEScUGdb3QSWT3/fTs8kajf/V30zPznd3fu+/v833e7/N7V/N/
         /avCqGlWH/Nu//pYl8F/qzq222DPuOtzPWL/2Kje1lh9jTTzPk5TddlYeHs3vddnRUt1+U/Zj7tstOld
         cMiq70zYibX0M1gYdvIePlH3uBozbJfjvj4Zj3v3yXqQPCC3rLZnqvVh94Sag51OXmkEWj9dHljhPqs+

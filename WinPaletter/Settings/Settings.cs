@@ -473,17 +473,19 @@ namespace WinPaletter
             public struct Miscellaneous
             {
                 public bool Win7LivePreview;
+                public bool ShowWelcomeDialog;
 
                 public void Load()
                 {
                     Win7LivePreview = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "Win7LivePreview", true));
+                    ShowWelcomeDialog = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "ShowWelcomeDialog", true));
                 }
 
                 public void Save()
                 {
                     EditReg(REG_Miscellaneous, "Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord);
+                    EditReg(REG_Miscellaneous, "ShowWelcomeDialog", ShowWelcomeDialog, RegistryValueKind.DWord);
                 }
-
             }
 
             public struct BackupTheme
@@ -711,6 +713,7 @@ namespace WinPaletter
         public Structures.Miscellaneous Miscellaneous = new()
         {
             Win7LivePreview = true,
+            ShowWelcomeDialog = true
         };
 
         public Structures.BackupTheme BackupTheme = new()

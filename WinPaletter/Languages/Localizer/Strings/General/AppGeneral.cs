@@ -23,7 +23,7 @@
         public string InputThemeRepos { get; set; } = "Type a URL to a WinPaletter themes database";
         public string InputThemeRepos_Notice { get; set; } = "This database must follow the guidelines demonstrated in WinPaletter Store documentation";
         public string ItMustBeNumerical { get; set; } = "It must be a numerical value";
-        public string BugReport_Title { get; set; } = "There is a {0} error. Please try again or report this in GitHub issues";
+        public string BugReport_Format { get; set; } = "{0} Please try again or report this in GitHub issues";
         public string MyTheme { get; set; } = "My theme";
         public string SaveMsg { get; set; } = "Do you want to save settings?";
         public string SettingsSaved { get; set; } = "Settings are saved";

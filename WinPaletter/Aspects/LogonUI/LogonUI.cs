@@ -138,6 +138,8 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
+            AspectEnabled = TM.LogonUI10x.Enabled;
+
             LogonUI_Acrylic_Toggle.Checked = !TM.LogonUI10x.DisableAcrylicBackgroundOnLogon;
             LogonUI_Background_Toggle.Checked = !TM.LogonUI10x.DisableLogonBackgroundImage;
             LogonUI_Lockscreen_Toggle.Checked = TM.LogonUI10x.NoLockScreen;
@@ -145,6 +147,8 @@ namespace WinPaletter
 
         public void ApplyToTM(Theme.Manager TM)
         {
+            TM.LogonUI10x.Enabled = AspectEnabled;
+
             TM.LogonUI10x.DisableAcrylicBackgroundOnLogon = !LogonUI_Acrylic_Toggle.Checked;
             TM.LogonUI10x.DisableLogonBackgroundImage = !LogonUI_Background_Toggle.Checked;
             TM.LogonUI10x.NoLockScreen = LogonUI_Lockscreen_Toggle.Checked;

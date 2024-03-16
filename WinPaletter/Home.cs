@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -80,7 +78,7 @@ namespace WinPaletter
 
                 if (!e.Cancel)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    using (new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
                     {
                         bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
                                                                                     //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),

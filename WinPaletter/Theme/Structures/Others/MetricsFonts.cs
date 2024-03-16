@@ -215,7 +215,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public async void Apply(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Metrics", string.Empty, Enabled);
+            SaveToggleState(treeView);
 
             if (Enabled)
             {
@@ -354,6 +354,15 @@ namespace WinPaletter.Theme.Structures
                 EditReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", OldDPI);
             }
 
+        }
+
+        /// <summary>
+        /// Saves MetricsFonts toggle state into registry
+        /// </summary>
+        /// <param name="treeView"></param>
+        public void SaveToggleState(TreeView treeView = null)
+        {
+            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Metrics", string.Empty, Enabled);
         }
 
         /// <summary>Checks if two MetricsFonts structures are equal or not</summary>

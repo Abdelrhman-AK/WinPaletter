@@ -62,7 +62,7 @@ namespace WinPaletter
         {
             if (ShowDialog() == DialogResult.OK)
             {
-                string result = schemes.Controls.Cast<Control>().Where(f => f is RadioImage && ((RadioImage)f).Checked).FirstOrDefault()?.Text;
+                string result = schemes.Controls.Cast<Control>().FirstOrDefault(f => f is RadioImage radioImage && radioImage.Checked)?.Text;
                 schemes.Controls.Cast<Control>().Where(f => f is RadioImage).ToList().ForEach(f => f.Dispose());
                 return result;
             }

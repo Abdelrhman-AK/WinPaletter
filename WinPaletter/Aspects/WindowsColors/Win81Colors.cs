@@ -134,9 +134,6 @@ namespace WinPaletter
             personalcls_background_pick.BackColor = TM.Windows81.PersonalColors_Background;
             personalcolor_accent_pick.BackColor = TM.Windows81.PersonalColors_Accent;
 
-            EnableAeroPeek_toggle.Checked = TM.Windows81.EnableAeroPeek;
-            AlwaysHibernateThumbnails_Toggle.Checked = TM.Windows81.AlwaysHibernateThumbnails;
-
             switch (TM.Windows81.Theme)
             {
                 case Theme.Structures.Windows7.Themes.Aero:
@@ -169,8 +166,6 @@ namespace WinPaletter
             TM.Windows81.Enabled = AspectEnabled;
             TM.Windows81.ColorizationColor = ColorizationColor_pick.BackColor;
             TM.Windows81.ColorizationColorBalance = ColorizationColorBalance_bar.Value;
-            TM.Windows81.EnableAeroPeek = EnableAeroPeek_toggle.Checked;
-            TM.Windows81.AlwaysHibernateThumbnails = AlwaysHibernateThumbnails_Toggle.Checked;
 
             TM.Windows81.StartColor = start_pick.BackColor;
             TM.Windows81.AccentColor = accent_pick.BackColor;

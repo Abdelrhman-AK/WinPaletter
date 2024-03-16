@@ -661,7 +661,7 @@ namespace WinPaletter.UI.Retro
 
                     else
                     {
-                        CursorOnMetricsGrip = true;
+                        CursorOnMetricsGrip = !TitlebarRect.Contains(e.Location);
 
                         if (Grip_topLeft.Contains(e.Location)) Cursor = Cursors.SizeNWSE;
                         else if (Grip_topRight.Contains(e.Location)) Cursor = Cursors.SizeNESW;

@@ -6,29 +6,6 @@ namespace WinPaletter.Theme
 {
     public partial class Manager
     {
-        /// <summary>
-        /// Add node to treeView (Theme log)
-        /// </summary>
-        /// <param name="treeView">treeView used as a theme log</param>
-        /// <param name="Text">Log node text</param>
-        /// <param name="ImageKey">ImageKey used for icon for log node</param>
-        public static void AddNode(TreeView treeView, string Text, string ImageKey)
-        {
-            if (treeView is not null)
-            {
-                treeView?.Invoke(() =>
-                {
-                    TreeNode temp = treeView?.Nodes.Add(Text);
-                    if (temp is not null)
-                    {
-                        temp.ImageKey = ImageKey;
-                        temp.SelectedImageKey = ImageKey;
-                    }
-
-                    treeView.SelectedNode = treeView.Nodes[treeView.Nodes.Count - 1];
-                });
-            }
-        }
         private void AddException(string Label, Exception Exception)
         {
             Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Label, Exception));
@@ -37,40 +14,32 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Helps in executing apply Methods for WinPaletter theme structures, and counts execution time
         /// </summary>
-        /// <param name="Void">Void that executes apply for a WinPaletter theme structure (feature)</param>
-        /// <param name="TreeView">treeView used as a theme log</param>
-        /// <param name="StartStr">String used to inform user that applying feature has started</param>
-        /// <param name="ErrorStr">String used to inform user that applying feature threw an error</param>
+        /// <param name="method">method that executes apply for a WinPaletter theme structure (feature)</param>
+        /// <param name="treeView">treeView used as a theme log</param>
+        /// <param name="statingStr">String used to inform user that applying feature has started</param>
+        /// <param name="errorStr">String used to inform user that applying feature threw an error</param>
         /// <param name="TimeStr">String used to inform user about applying feature execution time</param>
         /// <param name="overallStopwatch">A stopwatch used to collect all milliseconds for other themes structures (To calculate whole theme applying duration)</param>
-        /// <param name="Skip">Skip execution</param>
-        /// <param name="SkipStr">String used to inform user that feature has been skipped</param>
-        /// <param name="ExecuteEvenIfSkip">Execute even if skipped or structure is disabled</param>
-        public void Execute(MethodInvoker Void, TreeView TreeView = null, string StartStr = "", string ErrorStr = "", string TimeStr = "", Stopwatch overallStopwatch = null, bool Skip = false, string SkipStr = "", bool ExecuteEvenIfSkip = false)
+        /// <param name="skip">skip execution</param>
+        /// <param name="skipStr">String used to inform user that feature has been skipped</param>
+        public void Execute(MethodInvoker method, TreeView treeView = null, string statingStr = "", string errorStr = "", string TimeStr = "", Stopwatch overallStopwatch = null, bool skip = false, string skipStr = "")
         {
-
-            bool ReportProgress = TreeView is not null;
+            bool ReportProgress = treeView is not null;
             Stopwatch sw = new();
 
             sw.Reset();
             sw.Stop();
             sw.Start();
 
-            if (!Skip | ExecuteEvenIfSkip)
+            if (!skip)
             {
-                if (!ExecuteEvenIfSkip)
-                {
-                    if (!string.IsNullOrWhiteSpace(StartStr))
-                        AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {StartStr}", "apply");
-                }
-                else if (!string.IsNullOrWhiteSpace(ErrorStr))
-                    AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {SkipStr}", "skip");
+                if (!string.IsNullOrWhiteSpace(statingStr)) ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {statingStr}", "apply");
 
                 try
                 {
-                    Void();
+                    method();
                     if (ReportProgress & !string.IsNullOrWhiteSpace(TimeStr))
-                        AddNode(TreeView, string.Format(TimeStr, sw.ElapsedMilliseconds / 1000d), "time");
+                        ThemeLog.AddNode(treeView, string.Format(TimeStr, sw.ElapsedMilliseconds / 1000d), "time");
                 }
                 catch (Exception ex)
                 {
@@ -79,9 +48,9 @@ namespace WinPaletter.Theme
                     _ErrorHappened = true;
                     if (ReportProgress)
                     {
-                        if (!string.IsNullOrWhiteSpace(ErrorStr))
-                            AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {ErrorStr}", "error");
-                        AddException(ErrorStr, ex);
+                        if (!string.IsNullOrWhiteSpace(errorStr))
+                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {errorStr}", "error");
+                        AddException(errorStr, ex);
                     }
                     else
                     {
@@ -91,8 +60,7 @@ namespace WinPaletter.Theme
                     overallStopwatch.Start();
                 }
             }
-            else if (!string.IsNullOrWhiteSpace(ErrorStr))
-                AddNode(TreeView, $"{DateTime.Now.ToLongTimeString()}: {SkipStr}", "skip");
+            else if (!string.IsNullOrWhiteSpace(errorStr)) ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {skipStr}", "skip");
 
             sw.Stop();
         }

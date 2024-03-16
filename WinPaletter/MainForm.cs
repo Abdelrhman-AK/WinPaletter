@@ -29,6 +29,7 @@ namespace WinPaletter
             tabControl1.Visible = false;
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
+            if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.Welcome.ShowDialog();
             Program.Animator.ShowSync(tabControl1);
         }
 
@@ -88,7 +89,7 @@ namespace WinPaletter
 
                 if (!e.Cancel)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    using (new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
                     {
                         bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
                                                                                     //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),

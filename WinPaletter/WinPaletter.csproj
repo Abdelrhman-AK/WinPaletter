@@ -346,6 +346,12 @@
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Welcome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\Welcome.Designer.cs">
+      <DependentUpon>Welcome.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\WinEffectsAlert.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -659,7 +665,7 @@
     <Compile Include="Theme\Support\CloneSupport.cs" />
     <Compile Include="Theme\Support\CursorsRender.cs" />
     <Compile Include="Theme\Support\DisposeSupport.cs" />
-    <Compile Include="Theme\Support\Format.cs" />
+    <Compile Include="Theme\Support\Editions.cs" />
     <Compile Include="Theme\Support\Functions.cs" />
     <Compile Include="Theme\Support\JSON_Helpers.cs" />
     <Compile Include="Theme\Support\Operators.cs" />
@@ -1263,6 +1269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\Welcome.resx">
+      <DependentUpon>Welcome.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\WinEffectsAlert.resx">
       <DependentUpon>WinEffectsAlert.cs</DependentUpon>

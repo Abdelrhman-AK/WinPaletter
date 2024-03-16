@@ -1,4 +1,4 @@
-namespace WinPaletter.Dialogs
+namespace WinPaletter
 {
     partial class ThemeLog
     {

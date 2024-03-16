@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using WinPaletter.NativeMethods;
-using static WinPaletter.Theme.Manager;
 using System.Linq;
+using System.Windows.Forms;
 using WinPaletter.UI.Simulation;
-using System.Windows.Markup;
+using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
 {
@@ -110,22 +107,27 @@ namespace WinPaletter
             winIcon1.Text = OS.W8x || OS.W10 || OS.W11 || OS.W12 ? "This PC" : "Computer";
             label3.Text = winIcon1.Text;
 
-            using (Icon sysdrv = ResExtractor.GetIconFromDll(SysPaths.imageres, -36))
+            using (Icon sysdrv = PE.GetIcon(SysPaths.imageres, -36))
             {
                 if (sysdrv != null) pictureBox1.Image = sysdrv.ToBitmap();
             }
 
-            using (Icon drv = ResExtractor.GetIconFromDll($"{SysPaths.System32}\\shell32.dll", -9))
+            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -9))
             {
                 if (drv != null) pictureBox6.Image = drv.ToBitmap();
             }
 
-            using (Icon drv = ResExtractor.GetIconFromDll($"{SysPaths.System32}\\shell32.dll", -8))
+            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -8))
             {
                 if (drv != null) pictureBox9.Image = drv.ToBitmap();
             }
 
             LoadFromTM(Program.TM);
+        }
+
+        private void IconsStudio_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CleanUp();
         }
 
         void PopulateShell32Icons()
@@ -135,22 +137,22 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            string shell32 = SysPaths.System32 + "\\shell32.dll";
+            string shell32 = $"{SysPaths.System32}\\shell32.dll";
 
             List<DataGridViewRow> rowsToAdd = new();
             rowsToAdd.Clear();
 
-            for (int i = 0, count = ResExtractor.GetIconGroupCount(shell32); i < count; i++)
+            for (int i = 0, count = PE.GetIconGroupCount(shell32); i < count; i++)
             {
                 DataGridViewRow row = new();
-                row.CreateCells(shell32Data, i, ResExtractor.GetIconFromDll(shell32, i), null, string.Empty, Program.Lang.Browse);
+                row.CreateCells(shell32Data, i, PE.GetIcon(shell32, i), null, string.Empty, Program.Lang.Browse);
                 rowsToAdd.Add(row);
             }
 
             shell32Data.Rows.AddRange(rowsToAdd.ToArray());
 
             // remove default [x] image for data DataGridViewImageColumn columns
-            foreach (var column in shell32Data.Columns)
+            foreach (DataGridViewColumn column in shell32Data.Columns)
             {
                 if (column is DataGridViewImageColumn) (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
             }
@@ -182,7 +184,7 @@ namespace WinPaletter
                 if (defaultIconPath != null && defaultIconPath.Contains(",") && System.IO.File.Exists(defaultIconPath.Split(',')[0]))
                 {
                     string[] parts = defaultIconPath.Split(',');
-                    icon = ResExtractor.GetIconFromDll(parts[0], int.Parse(parts[1]));
+                    icon = PE.GetIcon(parts[0], int.Parse(parts[1]));
                 }
                 else if (defaultIconPath != null && System.IO.File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
                 {
@@ -201,7 +203,7 @@ namespace WinPaletter
             cpData.Rows.AddRange(rowsToAdd.ToArray());
 
             // remove default [x] image for data DataGridViewImageColumn columns
-            foreach (var column in cpData.Columns)
+            foreach (DataGridViewColumn column in cpData.Columns)
             {
                 if (column is DataGridViewImageColumn) (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
             }
@@ -233,7 +235,7 @@ namespace WinPaletter
                 if (defaultIconPath != null && defaultIconPath.Contains(",") && System.IO.File.Exists(defaultIconPath.Split(',')[0]))
                 {
                     string[] parts = defaultIconPath.Split(',');
-                    icon = ResExtractor.GetIconFromDll(parts[0], int.Parse(parts[1]));
+                    icon = PE.GetIcon(parts[0], int.Parse(parts[1]));
                 }
                 else if (defaultIconPath != null && System.IO.File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
                 {
@@ -252,7 +254,7 @@ namespace WinPaletter
             explorerData.Rows.AddRange(rowsToAdd.ToArray());
 
             // remove default [x] image for data DataGridViewImageColumn columns
-            foreach (var column in explorerData.Columns)
+            foreach (DataGridViewColumn column in explorerData.Columns)
             {
                 if (column is DataGridViewImageColumn) (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
             }
@@ -260,6 +262,56 @@ namespace WinPaletter
             explorerData.Visible = true;
 
             Cursor = Cursors.Default;
+        }
+
+        void CleanUp()
+        {
+            if (explorerData != null)
+            {
+                for (int i = 0; i < explorerData.Rows.Count; i++)
+                {
+                    if (explorerData[2, i].Value is Icon icon0) icon0?.Dispose();
+                    if (explorerData[3, i].Value is Icon icon1) icon1?.Dispose();
+                }
+
+                explorerData.Rows.Clear();
+            }
+
+            if (cpData != null)
+            {
+                for (int i = 0; i < cpData.Rows.Count; i++)
+                {
+                    if (cpData[2, i].Value is Icon icon0) icon0?.Dispose();
+                    if (cpData[3, i].Value is Icon icon1) icon1?.Dispose();
+                }
+
+                cpData.Rows.Clear();
+            }
+
+            if (shell32Data != null)
+            {
+                for (int i = 0; i < shell32Data.Rows.Count; i++)
+                {
+                    if (shell32Data[1, i].Value is Icon icon0) icon0?.Dispose();
+                    if (shell32Data[2, i].Value is Icon icon1) icon1?.Dispose();
+                }
+
+                shell32Data.Rows.Clear();
+            }
+
+            //winIcon1?.Icon?.Dispose();
+            //winIcon2?.Icon?.Dispose();
+            //winIcon3?.Icon?.Dispose();
+            //winIcon4?.Icon?.Dispose();
+            //winIcon5?.Icon?.Dispose();
+            //winIcon6?.Icon?.Dispose();
+
+            pictureBox1?.Image?.Dispose();
+            pictureBox6?.Image?.Dispose();
+            pictureBox9?.Image?.Dispose();
+            pictureBox2?.Image?.Dispose();
+            pictureBox5?.Image?.Dispose();
+            pictureBox8?.Image?.Dispose();
         }
 
         public void LoadFromTM(Theme.Manager TM)
@@ -285,7 +337,7 @@ namespace WinPaletter
             {
                 foreach (KeyValuePair<string, string> entry in TM.Icons.Shell32Wrapper)
                 {
-                    foreach (var item in shell32Data.Rows)
+                    foreach (DataGridViewRow item in shell32Data.Rows)
                     {
                         if (item is DataGridViewRow row && row.Cells[0].Value.ToString() == entry.Key)
                         {
@@ -296,7 +348,7 @@ namespace WinPaletter
             }
             else
             {
-                foreach (var item in shell32Data.Rows)
+                foreach (DataGridViewRow item in shell32Data.Rows)
                 {
                     if (item is DataGridViewRow row)
                     {
@@ -311,7 +363,7 @@ namespace WinPaletter
             {
                 foreach (KeyValuePair<string, string> entry in TM.Icons.ControlPanelWrapper)
                 {
-                    foreach (var item in cpData.Rows)
+                    foreach (DataGridViewRow item in cpData.Rows)
                     {
                         if (item is DataGridViewRow row && row.Cells[1].Value.ToString() == entry.Key)
                         {
@@ -322,7 +374,7 @@ namespace WinPaletter
             }
             else
             {
-                foreach (var item in cpData.Rows)
+                foreach (DataGridViewRow item in cpData.Rows)
                 {
                     if (item is DataGridViewRow row)
                     {
@@ -337,7 +389,7 @@ namespace WinPaletter
             {
                 foreach (KeyValuePair<string, string> entry in TM.Icons.ExplorerWrapper)
                 {
-                    foreach (var item in explorerData.Rows)
+                    foreach (DataGridViewRow item in explorerData.Rows)
                     {
                         if (item is DataGridViewRow row && row.Cells[1].Value.ToString() == entry.Key)
                         {
@@ -348,7 +400,7 @@ namespace WinPaletter
             }
             else
             {
-                foreach (var item in explorerData.Rows)
+                foreach (DataGridViewRow item in explorerData.Rows)
                 {
                     if (item is DataGridViewRow row)
                     {
@@ -381,7 +433,7 @@ namespace WinPaletter
             TM.Icons.ControlPanelWrapper.Clear();
             TM.Icons.ExplorerWrapper.Clear();
 
-            foreach (var item in shell32Data.Rows)
+            foreach (DataGridViewRow item in shell32Data.Rows)
             {
                 if (item is DataGridViewRow row && row.Cells[3].Value is not null && !string.IsNullOrWhiteSpace(row.Cells[3].Value.ToString()))
                 {
@@ -389,7 +441,7 @@ namespace WinPaletter
                 }
             }
 
-            foreach (var item in cpData.Rows)
+            foreach (DataGridViewRow item in cpData.Rows)
             {
                 if (item is DataGridViewRow row && row.Cells[4].Value is not null && !string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString()))
                 {
@@ -397,7 +449,7 @@ namespace WinPaletter
                 }
             }
 
-            foreach (var item in explorerData.Rows)
+            foreach (DataGridViewRow item in explorerData.Rows)
             {
                 if (item is DataGridViewRow row && row.Cells[4].Value is not null && !string.IsNullOrWhiteSpace(row.Cells[4].Value.ToString()))
                 {
@@ -406,76 +458,11 @@ namespace WinPaletter
             }
         }
 
-        public class ResExtractor
-        {
-            const uint RT_GROUP_ICON = 14;
-
-            public static int GetIconGroupCount(string dllPath)
-            {
-                int count = 0;
-
-                IntPtr hModule = Kernel32.LoadLibrary(dllPath);
-                if (hModule == IntPtr.Zero)
-                {
-                    int error = Marshal.GetLastWin32Error();
-                    return 0;
-                }
-
-                try
-                {
-                    Kernel32.EnumResourceNames(hModule, (IntPtr)RT_GROUP_ICON, (h, t, name, l) =>
-                    {
-                        count++;
-                        return true; // Continue enumeration
-                    }, IntPtr.Zero);
-                }
-                finally
-                {
-                    Kernel32.FreeLibrary(hModule);
-                }
-
-                return count;
-            }
-
-            public static Icon GetIconFromDll(string dllPath, int iconIndex = 0)
-            {
-                IntPtr[] largeIcons = new IntPtr[1];
-                IntPtr[] smallIcons = new IntPtr[1];
-
-                uint result;
-
-                if (iconIndex >= 0)
-                {
-                    // Positive index, extract icon by index
-                    result = Shell32.ExtractIconEx(dllPath, iconIndex, largeIcons, smallIcons, 1);
-                }
-                else
-                {
-                    // Negative index, extract icon by resource name
-                    result = Shell32.PrivateExtractIcons(dllPath, iconIndex, 32, 32, largeIcons, null, 1, 0);
-                }
-
-                if (result > 0)
-                {
-                    IntPtr iconHandle = largeIcons[0]; // Use smallIcons[0] for small icons
-
-                    Icon extractedIcon = Icon.FromHandle(iconHandle).Clone() as Icon;
-
-                    // Clean up the icon handle
-                    Shell32.DestroyIcon(iconHandle);
-
-                    return extractedIcon;
-                }
-
-                return null;
-            }
-        }
-
         private void shell32Data_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 4)
             {
-                string path = (shell32Data.Rows[e.RowIndex].Cells[3].Value ?? "").ToString();
+                string path = (shell32Data.Rows[e.RowIndex].Cells[3].Value ?? string.Empty).ToString();
                 string filename;
                 int index = 0;
 
@@ -490,7 +477,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    filename = SysPaths.System32 + "\\shell32.dll";
+                    filename = $"{SysPaths.System32}\\shell32.dll";
                 }
 
                 string result = IconPicker.ShowIconPicker(shell32Data.Handle, filename, index);
@@ -504,7 +491,7 @@ namespace WinPaletter
             {
                 if (shell32Data.Rows.Count == 0) return;
 
-                string data = (shell32Data.Rows[e.RowIndex].Cells[3].Value ?? "").ToString();
+                string data = (shell32Data.Rows[e.RowIndex].Cells[3].Value ?? string.Empty).ToString();
 
                 string path;
                 int index;
@@ -525,7 +512,7 @@ namespace WinPaletter
 
                 if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
                 {
-                    shell32Data.Rows[e.RowIndex].Cells[2].Value = ResExtractor.GetIconFromDll(path, index);
+                    shell32Data.Rows[e.RowIndex].Cells[2].Value = PE.GetIcon(path, index);
                 }
                 else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
@@ -545,7 +532,7 @@ namespace WinPaletter
         {
             if (e.ColumnIndex == 5)
             {
-                string path = (cpData.Rows[e.RowIndex].Cells[3].Value ?? "").ToString();
+                string path = (cpData.Rows[e.RowIndex].Cells[3].Value ?? string.Empty).ToString();
                 string filename;
                 int index = 0;
 
@@ -560,7 +547,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    filename = SysPaths.System32 + "\\shell32.dll";
+                    filename = $"{SysPaths.System32}\\shell32.dll";
                 }
 
                 string result = IconPicker.ShowIconPicker(cpData.Handle, filename, index);
@@ -574,7 +561,7 @@ namespace WinPaletter
             {
                 if (cpData.Rows.Count == 0) return;
 
-                string data = (cpData.Rows[e.RowIndex].Cells[4].Value ?? "").ToString();
+                string data = (cpData.Rows[e.RowIndex].Cells[4].Value ?? string.Empty).ToString();
 
                 string path;
                 int index;
@@ -595,7 +582,7 @@ namespace WinPaletter
 
                 if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
                 {
-                    cpData.Rows[e.RowIndex].Cells[3].Value = ResExtractor.GetIconFromDll(path, index);
+                    cpData.Rows[e.RowIndex].Cells[3].Value = PE.GetIcon(path, index);
                 }
                 else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
@@ -612,7 +599,7 @@ namespace WinPaletter
         {
             if (e.ColumnIndex == 5)
             {
-                string path = (explorerData.Rows[e.RowIndex].Cells[3].Value ?? "").ToString();
+                string path = (explorerData.Rows[e.RowIndex].Cells[3].Value ?? string.Empty).ToString();
                 string filename;
                 int index = 0;
 
@@ -641,7 +628,7 @@ namespace WinPaletter
             {
                 if (explorerData.Rows.Count == 0) return;
 
-                string data = (explorerData.Rows[e.RowIndex].Cells[4].Value ?? "").ToString();
+                string data = (explorerData.Rows[e.RowIndex].Cells[4].Value ?? string.Empty).ToString();
 
                 string path;
                 int index;
@@ -662,7 +649,7 @@ namespace WinPaletter
 
                 if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
                 {
-                    explorerData.Rows[e.RowIndex].Cells[3].Value = ResExtractor.GetIconFromDll(path, index);
+                    explorerData.Rows[e.RowIndex].Cells[3].Value = PE.GetIcon(path, index);
                 }
                 else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
@@ -685,7 +672,7 @@ namespace WinPaletter
                     {
                         Cursor = Cursors.WaitCursor;
 
-                        int count = ResExtractor.GetIconGroupCount(dlg.FileName);
+                        int count = PE.GetIconGroupCount(dlg.FileName);
 
                         if (count == 0)
                         {
@@ -799,7 +786,7 @@ namespace WinPaletter
 
             if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
-                iconControl.Icon = ResExtractor.GetIconFromDll(path, index);
+                iconControl.Icon = PE.GetIcon(path, index);
             }
             else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
             {
@@ -944,7 +931,7 @@ namespace WinPaletter
 
             if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
-                using (Icon ico = ResExtractor.GetIconFromDll(path, index))
+                using (Icon ico = PE.GetIcon(path, index))
                 {
                     pictureBox2.Image = ico.ToBitmap();
                 }
@@ -994,7 +981,7 @@ namespace WinPaletter
 
             if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
-                using (Icon ico = ResExtractor.GetIconFromDll(path, index))
+                using (Icon ico = PE.GetIcon(path, index))
                 {
                     pictureBox5.Image = ico.ToBitmap();
                 }
@@ -1036,7 +1023,7 @@ namespace WinPaletter
 
             if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
-                using (Icon ico = ResExtractor.GetIconFromDll(path, index))
+                using (Icon ico = PE.GetIcon(path, index))
                 {
                     pictureBox8.Image = ico.ToBitmap();
                 }

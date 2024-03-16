@@ -227,8 +227,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="scopeReg">It can be HKEY_CURRENT_USER or HKEY_USERS\...</param>
         /// <param name="RegKey">Registry key name under HKEY_CURRENT_USER\Console or HKEY_USERS\...\Console</param>
         /// <param name="Console">Console structure to be saved into registry</param>
-        /// <param name="TreeView">TreeView used as a theme log</param>
-        public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView TreeView = null)
+        /// <param name="treeView">TreeView used as a theme log</param>
+        public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView treeView = null)
         {
             string RegAddress = $@"{scopeReg}\Console{((string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}"))}";
 
@@ -241,53 +241,52 @@ namespace WinPaletter.Theme.Structures
             }
             catch { } // Ignore creating a registry key
 
-            EditReg(TreeView, RegAddress, "EnableColorSelection", 1);
-            EditReg(TreeView, RegAddress, "ColorTable00", Color.FromArgb(0, Console.ColorTable00.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable01", Color.FromArgb(0, Console.ColorTable01.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable02", Color.FromArgb(0, Console.ColorTable02.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable03", Color.FromArgb(0, Console.ColorTable03.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable04", Color.FromArgb(0, Console.ColorTable04.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable05", Color.FromArgb(0, Console.ColorTable05.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable06", Color.FromArgb(0, Console.ColorTable06.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable07", Color.FromArgb(0, Console.ColorTable07.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable08", Color.FromArgb(0, Console.ColorTable08.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable09", Color.FromArgb(0, Console.ColorTable09.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable10", Color.FromArgb(0, Console.ColorTable10.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable11", Color.FromArgb(0, Console.ColorTable11.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable12", Color.FromArgb(0, Console.ColorTable12.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable13", Color.FromArgb(0, Console.ColorTable13.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable14", Color.FromArgb(0, Console.ColorTable14.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "ColorTable15", Color.FromArgb(0, Console.ColorTable15.Reverse()).ToArgb());
-            EditReg(TreeView, RegAddress, "PopupColors", Convert.ToInt32($"{Console.PopupBackground:X}{Console.PopupForeground:X}", 16));
-            EditReg(TreeView, RegAddress, "ScreenColors", Convert.ToInt32($"{Console.ScreenColorsBackground:X}{Console.ScreenColorsForeground:X}", 16));
-            EditReg(TreeView, RegAddress, "CursorSize", Console.CursorSize);
+            EditReg(treeView, RegAddress, "EnableColorSelection", 1);
+            EditReg(treeView, RegAddress, "ColorTable00", Color.FromArgb(0, Console.ColorTable00.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable01", Color.FromArgb(0, Console.ColorTable01.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable02", Color.FromArgb(0, Console.ColorTable02.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable03", Color.FromArgb(0, Console.ColorTable03.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable04", Color.FromArgb(0, Console.ColorTable04.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable05", Color.FromArgb(0, Console.ColorTable05.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable06", Color.FromArgb(0, Console.ColorTable06.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable07", Color.FromArgb(0, Console.ColorTable07.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable08", Color.FromArgb(0, Console.ColorTable08.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable09", Color.FromArgb(0, Console.ColorTable09.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable10", Color.FromArgb(0, Console.ColorTable10.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable11", Color.FromArgb(0, Console.ColorTable11.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable12", Color.FromArgb(0, Console.ColorTable12.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable13", Color.FromArgb(0, Console.ColorTable13.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable14", Color.FromArgb(0, Console.ColorTable14.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "ColorTable15", Color.FromArgb(0, Console.ColorTable15.Reverse()).ToArgb());
+            EditReg(treeView, RegAddress, "PopupColors", Convert.ToInt32($"{Console.PopupBackground:X}{Console.PopupForeground:X}", 16));
+            EditReg(treeView, RegAddress, "ScreenColors", Convert.ToInt32($"{Console.ScreenColorsBackground:X}{Console.ScreenColorsForeground:X}", 16));
+            EditReg(treeView, RegAddress, "CursorSize", Console.CursorSize);
 
             if (Console.FontRaster)
             {
-                EditReg(TreeView, RegAddress, "FaceName", "Terminal", RegistryValueKind.String);
-                EditReg(TreeView, RegAddress, "FontFamily", 48);
+                EditReg(treeView, RegAddress, "FaceName", "Terminal", RegistryValueKind.String);
+                EditReg(treeView, RegAddress, "FontFamily", 48);
             }
             else
             {
-                EditReg(TreeView, RegAddress, "FaceName", Console.FaceName, RegistryValueKind.String);
-                EditReg(TreeView, RegAddress, "FontFamily", Console.FontRaster ? 1 : 54);
+                EditReg(treeView, RegAddress, "FaceName", Console.FaceName, RegistryValueKind.String);
+                EditReg(treeView, RegAddress, "FontFamily", Console.FontRaster ? 1 : 54);
             }
 
-            EditReg(TreeView, RegAddress, "FontSize", Console.FontSize);
-            EditReg(TreeView, RegAddress, "FontWeight", Console.FontWeight);
+            EditReg(treeView, RegAddress, "FontSize", Console.FontSize);
+            EditReg(treeView, RegAddress, "FontWeight", Console.FontWeight);
 
             if (OS.W10_1909)
             {
-                EditReg(TreeView, RegAddress, "CursorColor", Color.FromArgb(0, Console.W10_1909_CursorColor.Reverse()).ToArgb());
-                EditReg(TreeView, RegAddress, "CursorType", Console.W10_1909_CursorType);
-                EditReg(TreeView, RegAddress, "WindowAlpha", Console.W10_1909_WindowAlpha);
-                EditReg(TreeView, RegAddress, "ForceV2", Console.W10_1909_ForceV2 ? 1 : 0);
-                EditReg(TreeView, RegAddress, "LineSelection", Console.W10_1909_LineSelection ? 1 : 0);
-                EditReg(TreeView, RegAddress, "TerminalScrolling", Console.W10_1909_TerminalScrolling ? 1 : 0);
+                EditReg(treeView, RegAddress, "CursorColor", Color.FromArgb(0, Console.W10_1909_CursorColor.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "CursorType", Console.W10_1909_CursorType);
+                EditReg(treeView, RegAddress, "WindowAlpha", Console.W10_1909_WindowAlpha);
+                EditReg(treeView, RegAddress, "ForceV2", Console.W10_1909_ForceV2 ? 1 : 0);
+                EditReg(treeView, RegAddress, "LineSelection", Console.W10_1909_LineSelection ? 1 : 0);
+                EditReg(treeView, RegAddress, "TerminalScrolling", Console.W10_1909_TerminalScrolling ? 1 : 0);
             }
 
-            EditReg(TreeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", Console.FaceName, RegistryValueKind.String);
-
+            EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", Console.FaceName, RegistryValueKind.String);
         }
 
         /// <summary>

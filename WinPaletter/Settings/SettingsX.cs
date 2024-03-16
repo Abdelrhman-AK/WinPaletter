@@ -55,6 +55,7 @@ namespace WinPaletter
 
             toggle1.Checked = Sets.Updates.AutoCheck;
             toggle35.Checked = Sets.Miscellaneous.Win7LivePreview;
+            toggle37.Checked = Sets.Miscellaneous.ShowWelcomeDialog;
 
             ComboBox2.SelectedIndex = Sets.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? 0 : 1;
             toggle9.Checked = Sets.ThemeApplyingBehavior.ShowSaveConfirmation;
@@ -214,6 +215,8 @@ namespace WinPaletter
             checkBox9.Checked = Sets.AspectsControl.Sounds;
             checkBox10.Checked = Sets.AspectsControl.ScreenSaver;
             checkBox12.Checked = Sets.AspectsControl.AltTab;
+            checkBox14.Checked = Sets.AspectsControl.Icons;
+
             checker_mode_advanced.Checked = Sets.AspectsControl.WinColors_Advanced;
             checker_mode_simple.Checked = !Sets.AspectsControl.WinColors_Advanced;
             radioImage4.Checked = Sets.AspectsControl.ClassicColors_Advanced;
@@ -398,6 +401,7 @@ namespace WinPaletter
 
             Sets.Updates.AutoCheck = toggle1.Checked;
             Sets.Miscellaneous.Win7LivePreview = toggle35.Checked;
+            Sets.Miscellaneous.ShowWelcomeDialog = toggle37.Checked;
             Sets.Updates.Channel = (Settings.Structures.Updates.Channels)ComboBox2.SelectedIndex;
 
             Sets.Appearance.DarkMode = toggle3.Checked;
@@ -532,6 +536,7 @@ namespace WinPaletter
             Sets.AspectsControl.Sounds = checkBox9.Checked;
             Sets.AspectsControl.ScreenSaver = checkBox10.Checked;
             Sets.AspectsControl.AltTab = checkBox12.Checked;
+            Sets.AspectsControl.Icons = checkBox14.Checked;
             Sets.AspectsControl.WinColors_Advanced = checker_mode_advanced.Checked;
             Sets.AspectsControl.ClassicColors_Advanced = radioImage4.Checked;
             Sets.AspectsControl.Cursors_Advanced = radioImage6.Checked;
@@ -564,6 +569,9 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.Miscellaneous.Win7LivePreview != toggle35.Checked)
                     Changed = true;
+                if (Settings.Miscellaneous.ShowWelcomeDialog != toggle37.Checked)
+                    Changed = true;
+
                 if (Settings.NerdStats.Classic_Color_Picker != toggle30.Checked)
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation != toggle9.Checked)
@@ -741,6 +749,8 @@ namespace WinPaletter
                 if (Settings.AspectsControl.ScreenSaver != checkBox10.Checked)
                     Changed = true;
                 if (Settings.AspectsControl.AltTab != checkBox12.Checked)
+                    Changed = true;
+                if (Settings.AspectsControl.Icons != checkBox14.Checked)
                     Changed = true;
                 if (Settings.AspectsControl.WinColors_Advanced != checker_mode_advanced.Checked)
                     Changed = true;

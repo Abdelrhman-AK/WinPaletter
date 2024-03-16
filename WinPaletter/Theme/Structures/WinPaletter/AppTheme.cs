@@ -63,19 +63,20 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves AppTheme data into registry
         /// </summary>
-        /// <param name="TreeView">TreeView used as theme log</param>
-        public void Apply(TreeView TreeView = null)
+        /// <param name="treeView">treeView used as theme log</param>
+        public void Apply(TreeView treeView = null)
         {
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "CustomColors", Enabled);
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "BackColor", BackColor.ToArgb());
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "AccentColor", AccentColor.ToArgb());
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "CustomTheme", DarkMode);
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "RoundedCorners", RoundCorners);
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "Animations", Animations);
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb());
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb());
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "DisabledColor", DisabledColor.ToArgb());
-            EditReg(TreeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
+            SaveToggleState(treeView);
+
+            EditReg(treeView, Settings.Structures.REG_Appearance, "BackColor", BackColor.ToArgb());
+            EditReg(treeView, Settings.Structures.REG_Appearance, "AccentColor", AccentColor.ToArgb());
+            EditReg(treeView, Settings.Structures.REG_Appearance, "CustomTheme", DarkMode);
+            EditReg(treeView, Settings.Structures.REG_Appearance, "RoundedCorners", RoundCorners);
+            EditReg(treeView, Settings.Structures.REG_Appearance, "Animations", Animations);
+            EditReg(treeView, Settings.Structures.REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb());
+            EditReg(treeView, Settings.Structures.REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb());
+            EditReg(treeView, Settings.Structures.REG_Appearance, "DisabledColor", DisabledColor.ToArgb());
+            EditReg(treeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
 
             {
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
@@ -92,6 +93,14 @@ namespace WinPaletter.Theme.Structures
             }
 
             ApplyStyle();
+        }
+
+        /// <summary>
+        /// Saves WinPaletterApplicationTheme toggle state into registry
+        /// </summary>
+        public void SaveToggleState(TreeView treeView = null)
+        {
+            EditReg(treeView, Settings.Structures.REG_Appearance, "CustomColors", Enabled);
         }
 
         /// <summary>Operator to check if two AppTheme structures are equal</summary>

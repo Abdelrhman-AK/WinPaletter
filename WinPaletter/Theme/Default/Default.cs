@@ -5,24 +5,6 @@ namespace WinPaletter.Theme
     public static partial class Default
     {
         /// <summary>
-        /// Alias to Get() function
-        /// </summary>
-        /// <returns>Default Windows theme, based on current Windows edition</returns>
-        public static Manager From()
-        {
-            return Get();
-        }
-
-        /// <summary>
-        /// Alias to Get(WindowStyle) function
-        /// </summary>
-        /// <returns>Default Windows theme, based on your selection</returns>
-        public static Manager From(WindowStyle PreviewStyle)
-        {
-            return Get(PreviewStyle);
-        }
-
-        /// <summary>
         /// Get default Windows theme, based on your selection
         /// </summary>
         /// <param name="PreviewStyle">Windows edition</param>
@@ -70,7 +52,7 @@ namespace WinPaletter.Theme
                 return WindowsXP();
 
             else
-                return Windows11();
+                return Windows12();
         }
     }
 }

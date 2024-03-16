@@ -78,7 +78,7 @@ namespace WinPaletter
 
             foreach (UI.WP.RadioImage ri in Controls.OfType<UI.WP.RadioImage>())
             {
-                if (Program.TM.Windows81.LogonUI == Conversions.ToDouble(ri.Name.Replace("color", string.Empty)))
+                if (Program.TM.LogonUI81.LogonUI_ID == Conversions.ToDouble(ri.Name.Replace("color", string.Empty)))
                     ri.Checked = true;
                 else
                     ri.Checked = false;
@@ -99,7 +99,7 @@ namespace WinPaletter
             {
                 if (ri.Checked)
                 {
-                    Program.TM.Windows81.LogonUI = Conversions.ToInteger(ri.Name.Replace("color", string.Empty));
+                    Program.TM.LogonUI81.LogonUI_ID = Conversions.ToInteger(ri.Name.Replace("color", string.Empty));
                     break;
                 }
             }

@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
-using WinPaletter.Theme;
 
 namespace WinPaletter.NativeMethods
 {
@@ -26,7 +25,7 @@ namespace WinPaletter.NativeMethods
             public static extern int GetCurrentThemeName(StringBuilder stringThemeName, int lengthThemeName, StringBuilder stringColorName, int lengthColorName, StringBuilder stringSizeName, int lengthSizeName);
         }
 
-        static void Verboser_SetSystemVisualStyle(TreeView TreeView, bool result, string pszFilename, string pszColor, string pszSize, int dwReserved)
+        static void Verboser_SetSystemVisualStyle(TreeView treeView, bool result, string pszFilename, string pszColor, string pszSize, int dwReserved)
         {
             if (!result)
             {
@@ -36,8 +35,8 @@ namespace WinPaletter.NativeMethods
                 {
                     Win32Exception ex = new(Error);
 
-                    if (TreeView != null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), "dll");
+                    if (treeView != null)
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), "dll");
 
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), ex));
 
@@ -45,11 +44,11 @@ namespace WinPaletter.NativeMethods
                 }
             }
 
-            if (TreeView != null)
-                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()), "dll");
+            if (treeView != null)
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_UxTheme_SSVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()), "dll");
         }
 
-        static void Verboser_EnableTheming(TreeView TreeView, bool result, int fEnable)
+        static void Verboser_EnableTheming(TreeView treeView, bool result, int fEnable)
         {
             if (!result)
             {
@@ -59,8 +58,8 @@ namespace WinPaletter.NativeMethods
                 {
                     Win32Exception ex = new(Error);
 
-                    if (TreeView != null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), "dll");
+                    if (treeView != null)
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), "dll");
 
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), ex));
 
@@ -68,11 +67,11 @@ namespace WinPaletter.NativeMethods
                 }
             }
 
-            if (TreeView != null)
-                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "EnableTheming", fEnable, result.ToString().ToLower()), "dll");
+            if (treeView != null)
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "EnableTheming", fEnable, result.ToString().ToLower()), "dll");
         }
 
-        static void Verboser_GetCurrentThemeName(TreeView TreeView, bool result, string themename, string colorname, string sizename)
+        static void Verboser_GetCurrentThemeName(TreeView treeView, bool result, string themename, string colorname, string sizename)
         {
             if (!result)
             {
@@ -82,8 +81,8 @@ namespace WinPaletter.NativeMethods
                 {
                     Win32Exception ex = new(Error);
 
-                    if (TreeView != null)
-                        Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), "dll");
+                    if (treeView != null)
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), "dll");
 
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), ex));
 
@@ -91,8 +90,8 @@ namespace WinPaletter.NativeMethods
                 }
             }
 
-            if (TreeView != null)
-                Manager.AddNode(TreeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"\"{themename}\", {colorname}, {sizename}"), "dll");
+            if (treeView != null)
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_UxTheme_ET, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"\"{themename}\", {colorname}, {sizename}"), "dll");
         }
 
         /// <summary>
@@ -102,9 +101,9 @@ namespace WinPaletter.NativeMethods
         /// <param name="pszColor">The color of the visual style.</param>
         /// <param name="pszSize">The size of the visual style.</param>
         /// <param name="dwReserved">Reserved parameter for future use.</param>
-        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <param name="treeView">Optional TreeView control for verbose logging.</param>
         /// <returns>True if the operation is successful, otherwise false.</returns>
-        public static bool SetSystemVisualStyle(string pszFilename, string pszColor, string pszSize, int dwReserved, TreeView TreeView = null)
+        public static bool SetSystemVisualStyle(string pszFilename, string pszColor, string pszSize, int dwReserved, TreeView treeView = null)
         {
             bool result = false;
 
@@ -134,7 +133,7 @@ namespace WinPaletter.NativeMethods
             }
 
             // Log details of the operation using Verboser_SetSystemVisualStyle function
-            Verboser_SetSystemVisualStyle(TreeView, result, pszFilename, pszColor, pszSize, dwReserved);
+            Verboser_SetSystemVisualStyle(treeView, result, pszFilename, pszColor, pszSize, dwReserved);
 
             return result;
         }
@@ -142,24 +141,24 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Calls the SetSystemVisualStyle function with parameters reordered for convenience.
         /// </summary>
-        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <param name="treeView">Optional TreeView control for verbose logging.</param>
         /// <param name="pszFilename">The filename of the visual style.</param>
         /// <param name="pszColor">The color of the visual style.</param>
         /// <param name="pszSize">The size of the visual style.</param>
         /// <param name="dwReserved">Reserved parameter for future use.</param>
         /// <returns>True if the operation is successful, otherwise false.</returns>
-        public static bool SetSystemVisualStyle(TreeView TreeView, string pszFilename, string pszColor, string pszSize, int dwReserved)
+        public static bool SetSystemVisualStyle(TreeView treeView, string pszFilename, string pszColor, string pszSize, int dwReserved)
         {
-            return SetSystemVisualStyle(pszFilename, pszColor, pszSize, dwReserved, TreeView);
+            return SetSystemVisualStyle(pszFilename, pszColor, pszSize, dwReserved, treeView);
         }
 
         /// <summary>
         /// Enables or disables theming based on the specified flag, handling UAC elevation if required.
         /// </summary>
         /// <param name="fEnable">The flag indicating whether theming should be enabled (1) or disabled (0).</param>
-        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <param name="treeView">Optional TreeView control for verbose logging.</param>
         /// <returns>True if the operation is successful, otherwise false.</returns>
-        public static bool EnableTheming(int fEnable, TreeView TreeView = null)
+        public static bool EnableTheming(int fEnable, TreeView treeView = null)
         {
             bool result = false;
 
@@ -189,7 +188,7 @@ namespace WinPaletter.NativeMethods
             }
 
             // Log details of the operation using Verboser_EnableTheming function
-            Verboser_EnableTheming(TreeView, result, fEnable);
+            Verboser_EnableTheming(treeView, result, fEnable);
 
             return result;
         }
@@ -197,12 +196,12 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Calls the EnableTheming function with parameters reordered for convenience.
         /// </summary>
-        /// <param name="TreeView">Optional TreeView control for verbose logging.</param>
+        /// <param name="treeView">Optional TreeView control for verbose logging.</param>
         /// <param name="fEnable">The flag indicating whether theming should be enabled (1) or disabled (0).</param>
         /// <returns>True if the operation is successful, otherwise false.</returns>
-        public static bool EnableTheming(TreeView TreeView, int fEnable)
+        public static bool EnableTheming(TreeView treeView, int fEnable)
         {
-            return EnableTheming(fEnable, TreeView);
+            return EnableTheming(fEnable, treeView);
         }
 
         /// <summary>
@@ -213,7 +212,7 @@ namespace WinPaletter.NativeMethods
         /// Item2: Color name
         /// Item3: Size name
         /// </code></returns>
-        public static Tuple<string, string, string> GetCurrentVS(TreeView TreeView = null)
+        public static Tuple<string, string, string> GetCurrentVS(TreeView treeView = null)
         {
             bool result = false;
             StringBuilder vsFile = new(260);
@@ -243,7 +242,7 @@ namespace WinPaletter.NativeMethods
                 }
             }
 
-            Verboser_GetCurrentThemeName(TreeView, result, vsFile.ToString(), colorName.ToString(), sizeName.ToString());
+            Verboser_GetCurrentThemeName(treeView, result, vsFile.ToString(), colorName.ToString(), sizeName.ToString());
 
             if (result)
             {
