@@ -11,25 +11,25 @@ namespace WinPaletter.Theme.Structures
     public struct Windows7 : ICloneable
     {
         /// <summary> Controls if Windows 7 colors editing is enabled or not </summary> 
-        public bool Enabled;
+        public bool Enabled = true;
 
         /// <summary>Main Windows color</summary>
-        public Color ColorizationColor;
+        public Color ColorizationColor = Color.FromArgb(116, 184, 252);
 
         /// <summary>Glow or blur color</summary>
-        public Color ColorizationAfterglow;
+        public Color ColorizationAfterglow = Color.FromArgb(116, 184, 252);
 
         /// <summary>Control amount of main Windows color</summary>
-        public int ColorizationColorBalance;
+        public int ColorizationColorBalance = 8;
 
         /// <summary>Control amount of glow color</summary>
-        public int ColorizationAfterglowBalance;
+        public int ColorizationAfterglowBalance = 43;
 
         /// <summary>Control amount of blur power for aero glass</summary>
-        public int ColorizationBlurBalance;
+        public int ColorizationBlurBalance = 49;
 
         /// <summary>Control amount of aero glass reflection</summary>
-        public int ColorizationGlassReflectionIntensity;
+        public int ColorizationGlassReflectionIntensity = 0;
 
         /// <summary>
         /// Theme used for Windows 7
@@ -40,7 +40,12 @@ namespace WinPaletter.Theme.Structures
         /// Classic
         /// </code>
         /// </summary>
-        public Themes Theme;
+        public Themes Theme = Themes.Aero;
+
+        /// <summary>
+        /// Creates Windows7 data structure with default values
+        /// </summary>
+        public Windows7() { }
 
         /// <summary>
         /// Enumeration of Windows stock themes.

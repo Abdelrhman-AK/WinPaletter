@@ -14,16 +14,16 @@ namespace WinPaletter.Theme.Structures
     public struct Wallpaper : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>
         /// - If true, slideshow source will be a folder
         /// <br>- If false, slideshow source will be a list of images</br>
         /// </summary>
-        public bool SlideShow_Folder_or_ImagesList;
+        public bool SlideShow_Folder_or_ImagesList = true;
 
         /// <summary>Wallpaper file path</summary>
-        public string ImageFile;
+        public string ImageFile = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
 
         /// <summary>
         /// It is how the image will be previewed in desktop
@@ -35,7 +35,7 @@ namespace WinPaletter.Theme.Structures
         /// Fill
         /// </code>
         /// </summary>
-        public WallpaperStyles WallpaperStyle;
+        public WallpaperStyles WallpaperStyle = WallpaperStyles.Fill;
 
         /// <summary>
         /// ButtonOverlay of wallpaper
@@ -45,22 +45,27 @@ namespace WinPaletter.Theme.Structures
         /// SlideShow
         /// </code>
         /// </summary>
-        public WallpaperTypes WallpaperType;
+        public WallpaperTypes WallpaperType = WallpaperTypes.Picture;
 
         /// <summary>Folder that has images for wallpaper slide show, (if SlideShow_Folder_or_ImagesList = true;)</summary>
-        public string Wallpaper_Slideshow_ImagesRootPath;
+        public string Wallpaper_Slideshow_ImagesRootPath = string.Empty;
 
         /// <summary>
         /// String array that has pathes of images files, (if SlideShow_Folder_or_ImagesList = false;)
         /// <br><b><i>(!) Important note: array items (files) must be from the same folder, or slideshow won't load them.</i></b></br>
         /// </summary>
-        public string[] Wallpaper_Slideshow_Images;
+        public string[] Wallpaper_Slideshow_Images = new string[] { };
 
         /// <summary>Interval of wallpaper changing in slideshow</summary>
-        public int Wallpaper_Slideshow_Interval;
+        public int Wallpaper_Slideshow_Interval = 60000;
 
         /// <summary>Shuffle slideshow images (don't preview them in their order)</summary>
-        public bool Wallpaper_Slideshow_Shuffle;
+        public bool Wallpaper_Slideshow_Shuffle = false;
+
+        /// <summary>
+        /// Creates a new instance of Wallpaper structure with default values
+        /// </summary>
+        public Wallpaper() { }
 
         /// <summary>
         /// Enumeration for the ways the wallpaper can be rendered on desktop

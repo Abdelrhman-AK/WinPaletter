@@ -11,28 +11,28 @@ namespace WinPaletter.Theme.Structures
     public struct Cursor : ICloneable
     {
         /// <summary>Use a cursor file instead of rendering</summary>
-        public bool UseFromFile;
+        public bool UseFromFile = false;
 
         /// <summary>Used cursor file</summary>
-        public string File;
+        public string File = string.Empty;
 
         /// <summary>Style of main arrow</summary>
-        public Paths.ArrowStyle ArrowStyle;
+        public Paths.ArrowStyle ArrowStyle = Paths.ArrowStyle.Aero;
 
         /// <summary>Style of appwait/busy cursors</summary>
-        public Paths.CircleStyle CircleStyle;
+        public Paths.CircleStyle CircleStyle = Paths.CircleStyle.Aero;
 
         /// <summary>BackColor for cursor</summary>
-        public Color PrimaryColor1;
+        public Color PrimaryColor1 = Color.White;
 
         /// <summary>
         /// Second BackColor for cursor
-        /// <br>- Used as gradience, when PrimaryColorGradient=true;</br>
+        /// <br>- Used as gradience, when <c>PrimaryColorGradient=true;</c></br>
         /// </summary>
-        public Color PrimaryColor2;
+        public Color PrimaryColor2 = Color.White;
 
         /// <summary>Enable BackColor gradience for cursor</summary>
-        public bool PrimaryColorGradient;
+        public bool PrimaryColorGradient = false;
 
         /// <summary>
         /// BackColor gradience effect for cursor
@@ -44,28 +44,28 @@ namespace WinPaletter.Theme.Structures
         /// Circle (Animated with loading when cursor is appwait or busy)
         /// </code>
         /// </summary>
-        public Paths.GradientMode PrimaryColorGradientMode;
+        public Paths.GradientMode PrimaryColorGradientMode = Paths.GradientMode.Vertical;
 
         /// <summary>Enable BackColor noise for cursor</summary>
-        public bool PrimaryColorNoise;
+        public bool PrimaryColorNoise = false;
 
         /// <summary>Opacity of BackColor noise for cursor</summary>
-        public float PrimaryColorNoiseOpacity;
+        public float PrimaryColorNoiseOpacity = 0.25f;
 
         /// <summary>Line color for cursor</summary>
-        public Color SecondaryColor1;
+        public Color SecondaryColor1 = Color.Black;
 
         /// <summary>
         /// Second line color for cursor
-        /// <br>- Used as gradience, when SecondaryColorGradient=true;</br>
+        /// <br>- Used as gradience, when <c>SecondaryColorGradient=true;</c></br>
         /// </summary>
-        public Color SecondaryColor2;
+        public Color SecondaryColor2 = Color.Black;
 
         /// <summary>Enable line color gradience for cursor</summary>
-        public bool SecondaryColorGradient;
+        public bool SecondaryColorGradient = false;
 
         /// <summary>
-        /// line color gradience effect for cursor
+        /// Line color gradience effect for cursor
         /// <code>
         /// Vertical
         /// Horizontal
@@ -74,28 +74,28 @@ namespace WinPaletter.Theme.Structures
         /// Circle (Animated with loading when cursor is appwait or busy)
         /// </code>
         /// </summary>
-        public Paths.GradientMode SecondaryColorGradientMode;
+        public Paths.GradientMode SecondaryColorGradientMode = Paths.GradientMode.Vertical;
 
         /// <summary>Enable line noise for cursor</summary>
-        public bool SecondaryColorNoise;
+        public bool SecondaryColorNoise = false;
 
         /// <summary>Opacity of line noise for cursor</summary>
-        public float SecondaryColorNoiseOpacity;
+        public float SecondaryColorNoiseOpacity = 0.25f;
 
         /// <summary>BackColor of spinning circle (if cursor is appwait or busy)</summary>
-        public Color LoadingCircleBack1;
+        public Color LoadingCircleBack1 = Color.FromArgb(42, 151, 243);
 
         /// <summary>
         /// Second BackColor of spinning circle (if cursor is appwait or busy)
-        /// <br>- Used as gradience, when LoadingCircleBackGradient=true;</br>
+        /// <br>- Used as gradience, when <c>LoadingCircleBackGradient=true;</c></br>
         /// </summary>
-        public Color LoadingCircleBack2;
+        public Color LoadingCircleBack2 = Color.FromArgb(42, 151, 243);
 
         /// <summary>Enable gradience in background of spinning circle (if cursor is appwait or busy)</summary>
-        public bool LoadingCircleBackGradient;
+        public bool LoadingCircleBackGradient = false;
 
         /// <summary>
-        /// Gradience in background of spinning circle (if cursor is appwait or busy)
+        /// Gradience in the background of spinning circle (if cursor is appwait or busy)
         /// <code>
         /// Vertical
         /// Horizontal
@@ -104,25 +104,25 @@ namespace WinPaletter.Theme.Structures
         /// Circle (Animated with loading when cursor is appwait or busy)
         /// </code>
         /// </summary>
-        public Paths.GradientMode LoadingCircleBackGradientMode;
+        public Paths.GradientMode LoadingCircleBackGradientMode = Paths.GradientMode.Circle;
 
         /// <summary>Enable noise in background of spinning circle (if cursor is appwait or busy)</summary>
-        public bool LoadingCircleBackNoise;
+        public bool LoadingCircleBackNoise = false;
 
         /// <summary>Opacity noise in background of spinning circle (if cursor is appwait or busy)</summary>
-        public float LoadingCircleBackNoiseOpacity;
+        public float LoadingCircleBackNoiseOpacity = 0.25f;
 
         /// <summary>Color of rotating part of circle (if cursor is appwait or busy)</summary>
-        public Color LoadingCircleHot1;
+        public Color LoadingCircleHot1 = Color.FromArgb(37, 204, 255);
 
         /// <summary>
         /// Second color of rotating part of circle (if cursor is appwait or busy)
         /// <br>- Used as gradience, when LoadingCircleHotGradient=true;</br>
         /// </summary>
-        public Color LoadingCircleHot2;
+        public Color LoadingCircleHot2 = Color.FromArgb(37, 204, 255);
 
         /// <summary>Enable gradience in rotating part of circle (if cursor is appwait or busy)</summary>
-        public bool LoadingCircleHotGradient;
+        public bool LoadingCircleHotGradient = false;
 
         /// <summary>
         /// Gradience in background of spinning circle (if cursor is appwait or busy)
@@ -134,31 +134,36 @@ namespace WinPaletter.Theme.Structures
         /// Circle (Animated with loading when cursor is appwait or busy)
         /// </code>
         /// </summary>
-        public Paths.GradientMode LoadingCircleHotGradientMode;
+        public Paths.GradientMode LoadingCircleHotGradientMode = Paths.GradientMode.Circle;
 
         /// <summary>Enable noise in rotating part of circle (if cursor is appwait or busy)</summary>
-        public bool LoadingCircleHotNoise;
+        public bool LoadingCircleHotNoise = false;
 
         /// <summary>Opacity noise in rotating part of circle (if cursor is appwait or busy</summary>
-        public float LoadingCircleHotNoiseOpacity;
+        public float LoadingCircleHotNoiseOpacity = 0.25f;
 
         /// <summary>Enable custom cursor shadow (rendered by WinPaletter not Windows)</summary>
-        public bool Shadow_Enabled;
+        public bool Shadow_Enabled = false;
 
         /// <summary>Custom cursor shadow color</summary>
-        public Color Shadow_Color;
+        public Color Shadow_Color = Color.Black;
 
         /// <summary>Custom cursor shadow blur intensity</summary>
-        public int Shadow_Blur;
+        public int Shadow_Blur = 5;
 
         /// <summary>Custom cursor shadow opacity</summary>
-        public float Shadow_Opacity;
+        public float Shadow_Opacity = 0.3f;
 
         /// <summary>Custom cursor shadow x offset in coordinates (location)</summary>
-        public int Shadow_OffsetX;
+        public int Shadow_OffsetX = 2;
 
         /// <summary>Custom cursor shadow y offset in coordinates (location)</summary>
-        public int Shadow_OffsetY;
+        public int Shadow_OffsetY = 2;
+
+        /// <summary>
+        /// Create a new of Cursors with default values
+        /// </summary>
+        public Cursor() { }
 
         /// <summary>
         /// Loads WinPaletter themed cursors data from registry

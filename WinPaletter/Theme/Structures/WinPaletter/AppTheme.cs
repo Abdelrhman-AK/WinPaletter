@@ -10,34 +10,39 @@ namespace WinPaletter.Theme.Structures
     public struct AppTheme : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Back color of forms</summary>
-        public Color BackColor;
+        public Color BackColor = DefaultColors.BackColor_Dark;
 
         /// <summary>Accent color for controls</summary>
-        public Color AccentColor;
+        public Color AccentColor = DefaultColors.PrimaryColor_Dark;
 
         /// <summary> Secondary color for controls </summary>
-        public Color SecondaryColor;
+        public Color SecondaryColor = DefaultColors.SecondaryColor_Dark;
 
         /// <summary> Tertiary color for controls </summary>
-        public Color TertiaryColor;
+        public Color TertiaryColor = DefaultColors.TertiaryColor_Dark;
 
         /// <summary> Disabled color for controls </summary>
-        public Color DisabledColor;
+        public Color DisabledColor = DefaultColors.DisabledColor_Dark;
 
         /// <summary> Disabled back color for controls </summary>
-        public Color DisabledBackColor;
+        public Color DisabledBackColor = DefaultColors.DisabledBackColor_Dark;
 
         /// <summary>Make WinPaletter in dark mode</summary>
-        public bool DarkMode;
+        public bool DarkMode = true;
 
         /// <summary>Make controls have rounded corners</summary>
-        public bool RoundCorners;
+        public bool RoundCorners = OS.WXP || OS.WVista || OS.W7 || OS.W11 || OS.W12;
 
         /// <summary>Enable animations</summary>
-        public bool Animations;
+        public bool Animations = true;
+
+        /// <summary>
+        /// Creates a new AppTheme structure
+        /// </summary>
+        public AppTheme() { }
 
         /// <summary>
         /// Loads AppTheme data from registry
@@ -55,9 +60,6 @@ namespace WinPaletter.Theme.Structures
             DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "DisabledBackColor", @default.DisabledBackColor.ToArgb())));
             DarkMode = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "CustomTheme", @default.DarkMode));
             RoundCorners = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "RoundedCorners", @default.RoundCorners));
-
-
-
         }
 
         /// <summary>

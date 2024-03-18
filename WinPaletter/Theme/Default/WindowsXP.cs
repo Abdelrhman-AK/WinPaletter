@@ -164,9 +164,9 @@ namespace WinPaletter.Theme
                 MetricsFonts.StatusFont = new("Tahoma", 8.25f, FontStyle.Regular);
             }
 
-            TM.Cursor_Shadow = true;
+            TM.Cursors.Shadow = true;
             {
-                ref Structures.Cursor Arrow = ref TM.Cursor_Arrow;
+                ref Structures.Cursor Arrow = ref TM.Cursors.Cursor_Arrow;
                 Arrow.ArrowStyle = Paths.ArrowStyle.Classic;
                 Arrow.CircleStyle = Paths.CircleStyle.Classic;
                 Arrow.PrimaryColor1 = Color.White;
@@ -190,7 +190,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Help = ref TM.Cursor_Help;
+                ref Structures.Cursor Help = ref TM.Cursors.Cursor_Help;
                 Help.ArrowStyle = Paths.ArrowStyle.Classic;
                 Help.CircleStyle = Paths.CircleStyle.Classic;
                 Help.PrimaryColor1 = Color.White;
@@ -214,7 +214,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor AppLoading = ref TM.Cursor_AppLoading;
+                ref Structures.Cursor AppLoading = ref TM.Cursors.Cursor_AppLoading;
                 AppLoading.ArrowStyle = Paths.ArrowStyle.Classic;
                 AppLoading.CircleStyle = Paths.CircleStyle.Classic;
                 AppLoading.PrimaryColor1 = Color.White;
@@ -238,7 +238,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Busy = ref TM.Cursor_Busy;
+                ref Structures.Cursor Busy = ref TM.Cursors.Cursor_Busy;
                 Busy.ArrowStyle = Paths.ArrowStyle.Classic;
                 Busy.CircleStyle = Paths.CircleStyle.Classic;
                 Busy.PrimaryColor1 = Color.White;
@@ -262,7 +262,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Up = ref TM.Cursor_Up;
+                ref Structures.Cursor Up = ref TM.Cursors.Cursor_Up;
                 Up.ArrowStyle = Paths.ArrowStyle.Classic;
                 Up.CircleStyle = Paths.CircleStyle.Classic;
                 Up.PrimaryColor1 = Color.White;
@@ -286,7 +286,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor NS = ref TM.Cursor_NS;
+                ref Structures.Cursor NS = ref TM.Cursors.Cursor_NS;
                 NS.ArrowStyle = Paths.ArrowStyle.Classic;
                 NS.CircleStyle = Paths.CircleStyle.Classic;
                 NS.PrimaryColor1 = Color.White;
@@ -310,7 +310,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor EW = ref TM.Cursor_EW;
+                ref Structures.Cursor EW = ref TM.Cursors.Cursor_EW;
                 EW.ArrowStyle = Paths.ArrowStyle.Classic;
                 EW.CircleStyle = Paths.CircleStyle.Classic;
                 EW.PrimaryColor1 = Color.White;
@@ -334,7 +334,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor NESW = ref TM.Cursor_NESW;
+                ref Structures.Cursor NESW = ref TM.Cursors.Cursor_NESW;
                 NESW.ArrowStyle = Paths.ArrowStyle.Classic;
                 NESW.CircleStyle = Paths.CircleStyle.Classic;
                 NESW.PrimaryColor1 = Color.White;
@@ -358,7 +358,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor NWSE = ref TM.Cursor_NWSE;
+                ref Structures.Cursor NWSE = ref TM.Cursors.Cursor_NWSE;
                 NWSE.ArrowStyle = Paths.ArrowStyle.Classic;
                 NWSE.CircleStyle = Paths.CircleStyle.Classic;
                 NWSE.PrimaryColor1 = Color.White;
@@ -382,7 +382,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Move = ref TM.Cursor_Move;
+                ref Structures.Cursor Move = ref TM.Cursors.Cursor_Move;
                 Move.ArrowStyle = Paths.ArrowStyle.Classic;
                 Move.CircleStyle = Paths.CircleStyle.Classic;
                 Move.PrimaryColor1 = Color.White;
@@ -406,7 +406,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor None = ref TM.Cursor_None;
+                ref Structures.Cursor None = ref TM.Cursors.Cursor_None;
                 None.ArrowStyle = Paths.ArrowStyle.Classic;
                 None.CircleStyle = Paths.CircleStyle.Classic;
                 None.PrimaryColor1 = Color.Transparent;
@@ -430,7 +430,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Pen = ref TM.Cursor_Pen;
+                ref Structures.Cursor Pen = ref TM.Cursors.Cursor_Pen;
                 Pen.ArrowStyle = Paths.ArrowStyle.Classic;
                 Pen.CircleStyle = Paths.CircleStyle.Classic;
                 Pen.PrimaryColor1 = Color.White;
@@ -454,7 +454,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor IBeam = ref TM.Cursor_IBeam;
+                ref Structures.Cursor IBeam = ref TM.Cursors.Cursor_IBeam;
                 IBeam.ArrowStyle = Paths.ArrowStyle.Classic;
                 IBeam.CircleStyle = Paths.CircleStyle.Classic;
                 IBeam.PrimaryColor1 = Color.White;
@@ -478,7 +478,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Cross = ref TM.Cursor_Cross;
+                ref Structures.Cursor Cross = ref TM.Cursors.Cursor_Cross;
                 Cross.ArrowStyle = Paths.ArrowStyle.Classic;
                 Cross.CircleStyle = Paths.CircleStyle.Classic;
                 Cross.PrimaryColor1 = Color.White;
@@ -502,7 +502,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Link = ref TM.Cursor_Link;
+                ref Structures.Cursor Link = ref TM.Cursors.Cursor_Link;
                 Link.ArrowStyle = Paths.ArrowStyle.Classic;
                 Link.CircleStyle = Paths.CircleStyle.Classic;
                 Link.PrimaryColor1 = Color.White;
@@ -526,7 +526,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Pin = ref TM.Cursor_Pin;
+                ref Structures.Cursor Pin = ref TM.Cursors.Cursor_Pin;
                 Pin.ArrowStyle = Paths.ArrowStyle.Classic;
                 Pin.CircleStyle = Paths.CircleStyle.Classic;
                 Pin.PrimaryColor1 = Color.White;
@@ -550,7 +550,7 @@ namespace WinPaletter.Theme
             }
 
             {
-                ref Structures.Cursor Person = ref TM.Cursor_Person;
+                ref Structures.Cursor Person = ref TM.Cursors.Cursor_Person;
                 Person.ArrowStyle = Paths.ArrowStyle.Classic;
                 Person.CircleStyle = Paths.CircleStyle.Classic;
                 Person.PrimaryColor1 = Color.White;
@@ -596,42 +596,42 @@ namespace WinPaletter.Theme
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
             TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
-            TM.Cursor_Enabled = true;
-            TM.Cursor_Shadow = true;
-            TM.Cursor_Arrow.UseFromFile = false;
-            TM.Cursor_AppLoading.UseFromFile = false;
-            TM.Cursor_Busy.UseFromFile = false;
-            TM.Cursor_Help.UseFromFile = false;
-            TM.Cursor_Pen.UseFromFile = false;
-            TM.Cursor_None.UseFromFile = false;
-            TM.Cursor_Move.UseFromFile = false;
-            TM.Cursor_Up.UseFromFile = false;
-            TM.Cursor_NS.UseFromFile = false;
-            TM.Cursor_EW.UseFromFile = false;
-            TM.Cursor_NESW.UseFromFile = false;
-            TM.Cursor_NWSE.UseFromFile = false;
-            TM.Cursor_Link.UseFromFile = false;
-            TM.Cursor_Pin.UseFromFile = false;
-            TM.Cursor_Person.UseFromFile = false;
-            TM.Cursor_IBeam.UseFromFile = false;
-            TM.Cursor_Cross.UseFromFile = false;
-            TM.Cursor_Arrow.File = string.Empty;
-            TM.Cursor_AppLoading.File = string.Empty;
-            TM.Cursor_Busy.File = string.Empty;
-            TM.Cursor_Help.File = string.Empty;
-            TM.Cursor_Pen.File = string.Empty;
-            TM.Cursor_None.File = string.Empty;
-            TM.Cursor_Move.File = string.Empty;
-            TM.Cursor_Up.File = string.Empty;
-            TM.Cursor_NS.File = string.Empty;
-            TM.Cursor_EW.File = string.Empty;
-            TM.Cursor_NESW.File = string.Empty;
-            TM.Cursor_NWSE.File = string.Empty;
-            TM.Cursor_Link.File = string.Empty;
-            TM.Cursor_Pin.File = string.Empty;
-            TM.Cursor_Person.File = string.Empty;
-            TM.Cursor_IBeam.File = string.Empty;
-            TM.Cursor_Cross.File = string.Empty;
+            TM.Cursors.Enabled = true;
+            TM.Cursors.Shadow = true;
+            TM.Cursors.Cursor_Arrow.UseFromFile = false;
+            TM.Cursors.Cursor_AppLoading.UseFromFile = false;
+            TM.Cursors.Cursor_Busy.UseFromFile = false;
+            TM.Cursors.Cursor_Help.UseFromFile = false;
+            TM.Cursors.Cursor_Pen.UseFromFile = false;
+            TM.Cursors.Cursor_None.UseFromFile = false;
+            TM.Cursors.Cursor_Move.UseFromFile = false;
+            TM.Cursors.Cursor_Up.UseFromFile = false;
+            TM.Cursors.Cursor_NS.UseFromFile = false;
+            TM.Cursors.Cursor_EW.UseFromFile = false;
+            TM.Cursors.Cursor_NESW.UseFromFile = false;
+            TM.Cursors.Cursor_NWSE.UseFromFile = false;
+            TM.Cursors.Cursor_Link.UseFromFile = false;
+            TM.Cursors.Cursor_Pin.UseFromFile = false;
+            TM.Cursors.Cursor_Person.UseFromFile = false;
+            TM.Cursors.Cursor_IBeam.UseFromFile = false;
+            TM.Cursors.Cursor_Cross.UseFromFile = false;
+            TM.Cursors.Cursor_Arrow.File = string.Empty;
+            TM.Cursors.Cursor_AppLoading.File = string.Empty;
+            TM.Cursors.Cursor_Busy.File = string.Empty;
+            TM.Cursors.Cursor_Help.File = string.Empty;
+            TM.Cursors.Cursor_Pen.File = string.Empty;
+            TM.Cursors.Cursor_None.File = string.Empty;
+            TM.Cursors.Cursor_Move.File = string.Empty;
+            TM.Cursors.Cursor_Up.File = string.Empty;
+            TM.Cursors.Cursor_NS.File = string.Empty;
+            TM.Cursors.Cursor_EW.File = string.Empty;
+            TM.Cursors.Cursor_NESW.File = string.Empty;
+            TM.Cursors.Cursor_NWSE.File = string.Empty;
+            TM.Cursors.Cursor_Link.File = string.Empty;
+            TM.Cursors.Cursor_Pin.File = string.Empty;
+            TM.Cursors.Cursor_Person.File = string.Empty;
+            TM.Cursors.Cursor_IBeam.File = string.Empty;
+            TM.Cursors.Cursor_Cross.File = string.Empty;
 
             {
                 ref Structures.ScreenSaver ScreenSaver = ref TM.ScreenSaver;

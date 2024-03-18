@@ -161,23 +161,23 @@ namespace WinPaletter
 
         public void LoadCursorsFromTM(Theme.Manager TM)
         {
-            CursorTM_to_Cursor(Arrow, TM.Cursor_Arrow);
-            CursorTM_to_Cursor(Help, TM.Cursor_Help);
-            CursorTM_to_Cursor(AppLoading, TM.Cursor_AppLoading);
-            CursorTM_to_Cursor(Busy, TM.Cursor_Busy);
-            CursorTM_to_Cursor(Move_Cur, TM.Cursor_Move);
-            CursorTM_to_Cursor(NS, TM.Cursor_NS);
-            CursorTM_to_Cursor(EW, TM.Cursor_EW);
-            CursorTM_to_Cursor(NESW, TM.Cursor_NESW);
-            CursorTM_to_Cursor(NWSE, TM.Cursor_NWSE);
-            CursorTM_to_Cursor(Up, TM.Cursor_Up);
-            CursorTM_to_Cursor(Pen, TM.Cursor_Pen);
-            CursorTM_to_Cursor(None, TM.Cursor_None);
-            CursorTM_to_Cursor(Link, TM.Cursor_Link);
-            CursorTM_to_Cursor(Pin, TM.Cursor_Pin);
-            CursorTM_to_Cursor(Person, TM.Cursor_Person);
-            CursorTM_to_Cursor(IBeam, TM.Cursor_IBeam);
-            CursorTM_to_Cursor(Cross, TM.Cursor_Cross);
+            CursorTM_to_Cursor(Arrow, TM.Cursors.Cursor_Arrow);
+            CursorTM_to_Cursor(Help, TM.Cursors.Cursor_Help);
+            CursorTM_to_Cursor(AppLoading, TM.Cursors.Cursor_AppLoading);
+            CursorTM_to_Cursor(Busy, TM.Cursors.Cursor_Busy);
+            CursorTM_to_Cursor(Move_Cur, TM.Cursors.Cursor_Move);
+            CursorTM_to_Cursor(NS, TM.Cursors.Cursor_NS);
+            CursorTM_to_Cursor(EW, TM.Cursors.Cursor_EW);
+            CursorTM_to_Cursor(NESW, TM.Cursors.Cursor_NESW);
+            CursorTM_to_Cursor(NWSE, TM.Cursors.Cursor_NWSE);
+            CursorTM_to_Cursor(Up, TM.Cursors.Cursor_Up);
+            CursorTM_to_Cursor(Pen, TM.Cursors.Cursor_Pen);
+            CursorTM_to_Cursor(None, TM.Cursors.Cursor_None);
+            CursorTM_to_Cursor(Link, TM.Cursors.Cursor_Link);
+            CursorTM_to_Cursor(Pin, TM.Cursors.Cursor_Pin);
+            CursorTM_to_Cursor(Person, TM.Cursors.Cursor_Person);
+            CursorTM_to_Cursor(IBeam, TM.Cursors.Cursor_IBeam);
+            CursorTM_to_Cursor(Cross, TM.Cursors.Cursor_Cross);
         }
 
         public void CursorTM_to_Cursor(UI.Controllers.CursorControl CursorControl, Theme.Structures.Cursor Cursor)
@@ -828,7 +828,7 @@ namespace WinPaletter
                             CMD1.Visible = StoreItem.TM.CommandPrompt.Enabled;
                             CMD2.Visible = StoreItem.TM.PowerShellx86.Enabled;
                             CMD3.Visible = StoreItem.TM.PowerShellx64.Enabled;
-                            Panel1.Visible = StoreItem.TM.Cursor_Enabled;
+                            Panel1.Visible = StoreItem.TM.Cursors.Enabled;
                             author_url_button.Visible = !string.IsNullOrWhiteSpace(StoreItem.TM.Info.AuthorSocialMediaLink);
 
                             Tabs.SelectedIndex = 1;

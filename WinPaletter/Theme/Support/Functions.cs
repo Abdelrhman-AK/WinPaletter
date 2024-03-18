@@ -279,23 +279,23 @@ namespace WinPaletter.Theme
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
-                        CL.Add((Color)field.GetValue(Cursor_Arrow));
-                        CL.Add((Color)field.GetValue(Cursor_Help));
-                        CL.Add((Color)field.GetValue(Cursor_AppLoading));
-                        CL.Add((Color)field.GetValue(Cursor_Busy));
-                        CL.Add((Color)field.GetValue(Cursor_Pen));
-                        CL.Add((Color)field.GetValue(Cursor_None));
-                        CL.Add((Color)field.GetValue(Cursor_Move));
-                        CL.Add((Color)field.GetValue(Cursor_Up));
-                        CL.Add((Color)field.GetValue(Cursor_NS));
-                        CL.Add((Color)field.GetValue(Cursor_EW));
-                        CL.Add((Color)field.GetValue(Cursor_NESW));
-                        CL.Add((Color)field.GetValue(Cursor_NWSE));
-                        CL.Add((Color)field.GetValue(Cursor_Link));
-                        CL.Add((Color)field.GetValue(Cursor_Pin));
-                        CL.Add((Color)field.GetValue(Cursor_Person));
-                        CL.Add((Color)field.GetValue(Cursor_IBeam));
-                        CL.Add((Color)field.GetValue(Cursor_Cross));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Arrow));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Help));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_AppLoading));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Busy));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Pen));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_None));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Move));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Up));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_NS));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_EW));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_NESW));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_NWSE));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Link));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Pin));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Person));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_IBeam));
+                        CL.Add((Color)field.GetValue(Cursors.Cursor_Cross));
                     }
                 }
 

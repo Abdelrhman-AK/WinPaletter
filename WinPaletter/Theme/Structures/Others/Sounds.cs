@@ -11,166 +11,166 @@ namespace WinPaletter.Theme.Structures
     public struct Sounds : ICloneable, IDisposable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Windows default beep WAV sound file path</summary>
-        public string Snd_Win_Default;
+        public string Snd_Win_Default = string.Empty;
 
         /// <summary>Windows application GP fault WAV sound file path<br>???</br></summary>
-        public string Snd_Win_AppGPFault;
+        public string Snd_Win_AppGPFault = string.Empty;
 
         /// <summary>Windows CC select WAV sound file path<br>???</br></summary>
-        public string Snd_Win_CCSelect;
+        public string Snd_Win_CCSelect = string.Empty;
 
         /// <summary>Windows theme change WAV sound file path</summary>
-        public string Snd_Win_ChangeTheme;
+        public string Snd_Win_ChangeTheme = string.Empty;
 
         /// <summary>Window close WAV sound file path</summary>
-        public string Snd_Win_Close;
+        public string Snd_Win_Close = string.Empty;
 
         /// <summary>Critical battery alarm WAV sound file path</summary>
-        public string Snd_Win_CriticalBatteryAlarm;
+        public string Snd_Win_CriticalBatteryAlarm = string.Empty;
 
         /// <summary>Device (USB) connection WAV sound file path</summary>
-        public string Snd_Win_DeviceConnect;
+        public string Snd_Win_DeviceConnect = string.Empty;
 
         /// <summary>Device (USB) disconnection WAV sound file path</summary>
-        public string Snd_Win_DeviceDisconnect;
+        public string Snd_Win_DeviceDisconnect = string.Empty;
 
         /// <summary>Device (USB) failure WAV sound file path</summary>
-        public string Snd_Win_DeviceFail;
+        public string Snd_Win_DeviceFail = string.Empty;
 
         /// <summary>Fax beep WAV sound file path</summary>
-        public string Snd_Win_FaxBeep;
+        public string Snd_Win_FaxBeep = string.Empty;
 
         /// <summary>Low battery alarm WAV sound file path</summary>
-        public string Snd_Win_LowBatteryAlarm;
+        public string Snd_Win_LowBatteryAlarm = string.Empty;
 
         /// <summary>Mail received beep WAV sound file path</summary>
-        public string Snd_Win_MailBeep;
+        public string Snd_Win_MailBeep = string.Empty;
 
         /// <summary>Window maximize WAV sound file path</summary>
-        public string Snd_Win_Maximize;
+        public string Snd_Win_Maximize = string.Empty;
 
         /// <summary>contextMenu item click WAV sound file path</summary>
-        public string Snd_Win_MenuCommand;
+        public string Snd_Win_MenuCommand = string.Empty;
 
         /// <summary>contextMenu popup WAV sound file path</summary>
-        public string Snd_Win_MenuPopup;
+        public string Snd_Win_MenuPopup = string.Empty;
 
         /// <summary>Message nudge WAV sound file path</summary>
-        public string Snd_Win_MessageNudge;
+        public string Snd_Win_MessageNudge = string.Empty;
 
         /// <summary>Window minimize WAV sound file path</summary>
-        public string Snd_Win_Minimize;
+        public string Snd_Win_Minimize = string.Empty;
 
         /// <summary>Windows notification WAV sound file path</summary>
-        public string Snd_Win_Notification_Default;
+        public string Snd_Win_Notification_Default = string.Empty;
 
         /// <summary>Instant message notification WAV sound file path</summary>
-        public string Snd_Win_Notification_IM;
+        public string Snd_Win_Notification_IM = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 0 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm;
+        public string Snd_Win_Notification_Looping_Alarm = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 10 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm10;
+        public string Snd_Win_Notification_Looping_Alarm10 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 2 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm2;
+        public string Snd_Win_Notification_Looping_Alarm2 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 3 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm3;
+        public string Snd_Win_Notification_Looping_Alarm3 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 4 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm4;
+        public string Snd_Win_Notification_Looping_Alarm4 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 5 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm5;
+        public string Snd_Win_Notification_Looping_Alarm5 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 6 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm6;
+        public string Snd_Win_Notification_Looping_Alarm6 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 7 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm7;
+        public string Snd_Win_Notification_Looping_Alarm7 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 8 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm8;
+        public string Snd_Win_Notification_Looping_Alarm8 = string.Empty;
 
         /// <summary>Windows 8 (and later) alarm 9 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Alarm9;
+        public string Snd_Win_Notification_Looping_Alarm9 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 0 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call;
+        public string Snd_Win_Notification_Looping_Call = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 10 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call10;
+        public string Snd_Win_Notification_Looping_Call10 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 2 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call2;
+        public string Snd_Win_Notification_Looping_Call2 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 3 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call3;
+        public string Snd_Win_Notification_Looping_Call3 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 4 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call4;
+        public string Snd_Win_Notification_Looping_Call4 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 5 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call5;
+        public string Snd_Win_Notification_Looping_Call5 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 6 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call6;
+        public string Snd_Win_Notification_Looping_Call6 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 7 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call7;
+        public string Snd_Win_Notification_Looping_Call7 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 8 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call8;
+        public string Snd_Win_Notification_Looping_Call8 = string.Empty;
 
         /// <summary>Windows 8 (and later) ring tone 9 WAV sound file path</summary>
-        public string Snd_Win_Notification_Looping_Call9;
+        public string Snd_Win_Notification_Looping_Call9 = string.Empty;
 
         /// <summary>Mail notification WAV sound file path</summary>
-        public string Snd_Win_Notification_Mail;
+        public string Snd_Win_Notification_Mail = string.Empty;
 
         /// <summary>Proximity notification WAV sound file path</summary>
-        public string Snd_Win_Notification_Proximity;
+        public string Snd_Win_Notification_Proximity = string.Empty;
 
         /// <summary>Notification reminder WAV sound file path</summary>
-        public string Snd_Win_Notification_Reminder;
+        public string Snd_Win_Notification_Reminder = string.Empty;
 
         /// <summary>SMS notification WAV sound file path</summary>
-        public string Snd_Win_Notification_SMS;
+        public string Snd_Win_Notification_SMS = string.Empty;
 
         /// <summary>Application open WAV sound file path</summary>
-        public string Snd_Win_Open;
+        public string Snd_Win_Open = string.Empty;
 
         /// <summary>Print job completed WAV sound file path</summary>
-        public string Snd_Win_PrintComplete;
+        public string Snd_Win_PrintComplete = string.Empty;
 
         /// <summary>Proximity connection WAV sound file path</summary>
-        public string Snd_Win_ProximityConnection;
+        public string Snd_Win_ProximityConnection = string.Empty;
 
         /// <summary>Window restore down WAV sound file path</summary>
-        public string Snd_Win_RestoreDown;
+        public string Snd_Win_RestoreDown = string.Empty;
 
         /// <summary>Window restore up WAV sound file path</summary>
-        public string Snd_Win_RestoreUp;
+        public string Snd_Win_RestoreUp = string.Empty;
 
         /// <summary>Windows Explorer/Internet Explorer band showed WAV sound file path</summary>
-        public string Snd_Win_ShowBand;
+        public string Snd_Win_ShowBand = string.Empty;
 
         /// <summary>System asterisk WAV sound file path</summary>
-        public string Snd_Win_SystemAsterisk;
+        public string Snd_Win_SystemAsterisk = string.Empty;
 
         /// <summary>Exclamation WAV sound file path</summary>
-        public string Snd_Win_SystemExclamation;
+        public string Snd_Win_SystemExclamation = string.Empty;
 
         /// <summary>Windows shutdown sound (not working for Windows 8 and later)</summary>
-        public string Snd_Win_SystemExit;
+        public string Snd_Win_SystemExit = string.Empty;
 
         /// <summary>Windows start up sound (not working for Windows Vista and later)</summary>
-        public string Snd_Win_SystemStart;
+        public string Snd_Win_SystemStart = string.Empty;
 
         /// <summary>
         /// Syntax or path of WAV file that will be patched in imageres.dll to be used as Windows start up sound
@@ -183,133 +183,138 @@ namespace WinPaletter.Theme.Structures
         ///  Empty string (""):  Will disable startup sound
         /// </code>
         /// </summary>
-        public string Snd_Imageres_SystemStart;
+        public string Snd_Imageres_SystemStart = (OS.W12 || OS.W11) ? "Default" : string.Empty;
 
         /// <summary>Hyperlink clicked WAV sound file path</summary>
-        public string Snd_Win_SystemHand;
+        public string Snd_Win_SystemHand = string.Empty;
 
         /// <summary>Information message WAV sound file path</summary>
-        public string Snd_Win_SystemNotification;
+        public string Snd_Win_SystemNotification = string.Empty;
 
         /// <summary>Question message WAV sound file path</summary>
-        public string Snd_Win_SystemQuestion;
+        public string Snd_Win_SystemQuestion = string.Empty;
 
         /// <summary>Windows logoff WAV sound file path (not working for Windows 8 and later)</summary>
-        public string Snd_Win_WindowsLogoff;
+        public string Snd_Win_WindowsLogoff = string.Empty;
 
         /// <summary>Windows logon WAV sound file path (not working for Windows 8 and later)</summary>
-        public string Snd_Win_WindowsLogon;
+        public string Snd_Win_WindowsLogon = string.Empty;
 
         /// <summary>User accound control (UAC) dialog WAV sound file path (for Windows Vista and later)</summary>
-        public string Snd_Win_WindowsUAC;
+        public string Snd_Win_WindowsUAC = string.Empty;
 
         /// <summary>Windows unlock WAV sound file path (targeting Windows 8 and later, but not working)</summary>
-        public string Snd_Win_WindowsUnlock;
+        public string Snd_Win_WindowsUnlock = string.Empty;
 
         /// <summary>Activating document WAV sound file path</summary>
-        public string Snd_Explorer_ActivatingDocument;
+        public string Snd_Explorer_ActivatingDocument = string.Empty;
 
         /// <summary>Popup blocked WAV sound file path</summary>
-        public string Snd_Explorer_BlockedPopup;
+        public string Snd_Explorer_BlockedPopup = string.Empty;
 
         /// <summary>Recycle bin eptied WAV sound file path</summary>
-        public string Snd_Explorer_EmptyRecycleBin;
+        public string Snd_Explorer_EmptyRecycleBin = string.Empty;
 
         /// <summary>Feed discovered WAV sound file path</summary>
-        public string Snd_Explorer_FeedDiscovered;
+        public string Snd_Explorer_FeedDiscovered = string.Empty;
 
         /// <summary>contextMenu item moved WAV sound file path</summary>
-        public string Snd_Explorer_MoveMenuItem;
+        public string Snd_Explorer_MoveMenuItem = string.Empty;
 
         /// <summary>Folders navigation WAV sound file path</summary>
-        public string Snd_Explorer_Navigating;
+        public string Snd_Explorer_Navigating = string.Empty;
 
         /// <summary>Security band appeared WAV sound file path</summary>
-        public string Snd_Explorer_SecurityBand;
+        public string Snd_Explorer_SecurityBand = string.Empty;
 
         /// <summary>Search provider discovered WAV sound file path</summary>
-        public string Snd_Explorer_SearchProviderDiscovered;
+        public string Snd_Explorer_SearchProviderDiscovered = string.Empty;
 
         /// <summary>Fax error WAV sound file path</summary>
-        public string Snd_Explorer_FaxError;
+        public string Snd_Explorer_FaxError = string.Empty;
 
         /// <summary>Fax line ringing WAV sound file path</summary>
-        public string Snd_Explorer_FaxLineRings;
+        public string Snd_Explorer_FaxLineRings = string.Empty;
 
         /// <summary>New fax received WAV sound file path</summary>
-        public string Snd_Explorer_FaxNew;
+        public string Snd_Explorer_FaxNew = string.Empty;
 
         /// <summary>Fax sent WAV sound file path</summary>
-        public string Snd_Explorer_FaxSent;
+        public string Snd_Explorer_FaxSent = string.Empty;
 
         /// <summary>NetMeeting application (Windows XP): person joins WAV sound file path</summary>
-        public string Snd_NetMeeting_PersonJoins;
+        public string Snd_NetMeeting_PersonJoins = string.Empty;
 
         /// <summary>NetMeeting application (Windows XP): person leaved WAV sound file path</summary>
-        public string Snd_NetMeeting_PersonLeaves;
+        public string Snd_NetMeeting_PersonLeaves = string.Empty;
 
         /// <summary>NetMeeting application (Windows XP): receive call WAV sound file path</summary>
-        public string Snd_NetMeeting_ReceiveCall;
+        public string Snd_NetMeeting_ReceiveCall = string.Empty;
 
         /// <summary>NetMeeting application (Windows XP): receive request to join WAV sound file path</summary>
-        public string Snd_NetMeeting_ReceiveRequestToJoin;
+        public string Snd_NetMeeting_ReceiveRequestToJoin = string.Empty;
 
         /// <summary>Speech recognition (Windows Vista and later): disambiguation numbers WAV sound file path</summary>
-        public string Snd_SpeechRec_DisNumbersSound;
+        public string Snd_SpeechRec_DisNumbersSound = string.Empty;
 
         /// <summary>Speech recognition (Windows Vista and later): Hub off WAV sound file path</summary>
-        public string Snd_SpeechRec_HubOffSound;
+        public string Snd_SpeechRec_HubOffSound = string.Empty;
 
         /// <summary>Speech recognition (Windows Vista and later): Hub on WAV sound file path</summary>
-        public string Snd_SpeechRec_HubOnSound;
+        public string Snd_SpeechRec_HubOnSound = string.Empty;
 
         /// <summary>Speech recognition (Windows Vista and later): Hub sleep WAV sound file path</summary>
-        public string Snd_SpeechRec_HubSleepSound;
+        public string Snd_SpeechRec_HubSleepSound = string.Empty;
 
         /// <summary>Speech recognition (Windows Vista and later): Misrecognition WAV sound file path</summary>
-        public string Snd_SpeechRec_MisrecoSound;
+        public string Snd_SpeechRec_MisrecoSound = string.Empty;
 
         /// <summary>Speech recognition (Windows Vista and later): disambiguation panel WAV sound file path</summary>
-        public string Snd_SpeechRec_PanelSound;
+        public string Snd_SpeechRec_PanelSound = string.Empty;
 
         /// <summary>Windows unlock WAV sound file path 
         /// <br></br>- Targeting Windows 8 and later
         /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
-        public string Snd_Win_WindowsLock;
+        public string Snd_Win_WindowsLock = string.Empty;
 
         /// <summary>Charger connected WAV sound file path 
         /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
         /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
-        public string Snd_ChargerConnected;
+        public string Snd_ChargerConnected = string.Empty;
 
         /// <summary>Charger disconnected WAV sound file path 
         /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
         /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
-        public string Snd_ChargerDisconnected;
+        public string Snd_ChargerDisconnected = string.Empty;
 
         /// <summary>
         /// Wi-Fi connected WAV sound file path
         /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
         /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
-        public string Snd_WiFiConnected;
+        public string Snd_WiFiConnected = string.Empty;
 
         /// <summary>
         /// Wi-Fi disconnected WAV sound file path
         /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
         /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
-        public string Snd_WiFiDisconnected;
+        public string Snd_WiFiDisconnected = string.Empty;
 
         /// <summary>
         /// Wi-Fi connection failure WAV sound file path
         /// <br><b><i>(!) It is not an official sound in Windows</i></b></br>
         /// <br></br>- Deflected by service that listens to Windows events (WinPaletter.SysEventsSounds)
         /// </summary>
-        public string Snd_WiFiConnectionFailed;
+        public string Snd_WiFiConnectionFailed = string.Empty;
+
+        /// <summary>
+        /// Creates new Sounds structure with default values
+        /// </summary>
+        public Sounds() { }
 
         /// <summary>
         /// Loads Sounds data from registry

@@ -12,100 +12,105 @@ namespace WinPaletter.Theme.Structures
     public struct Console : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Color table 0</summary>
-        public Color ColorTable00;
+        public Color ColorTable00 = Color.FromArgb(12, 12, 12);
 
         /// <summary>Color table 1</summary>
-        public Color ColorTable01;
+        public Color ColorTable01 = Color.FromArgb(0, 55, 218);
 
         /// <summary>Color table 2</summary>
-        public Color ColorTable02;
+        public Color ColorTable02 = Color.FromArgb(19, 161, 14);
 
         /// <summary>Color table 3</summary>
-        public Color ColorTable03;
+        public Color ColorTable03 = Color.FromArgb(58, 150, 221);
 
         /// <summary>Color table 4</summary>
-        public Color ColorTable04;
+        public Color ColorTable04 = Color.FromArgb(197, 15, 31);
 
         /// <summary>Color table 5</summary>
-        public Color ColorTable05;
+        public Color ColorTable05 = Color.FromArgb(136, 23, 152);
 
         /// <summary>Color table 6</summary>
-        public Color ColorTable06;
+        public Color ColorTable06 = Color.FromArgb(193, 156, 0);
 
         /// <summary>Color table 7</summary>
-        public Color ColorTable07;
+        public Color ColorTable07 = Color.FromArgb(204, 204, 204);
 
         /// <summary>Color table 8</summary>
-        public Color ColorTable08;
+        public Color ColorTable08 = Color.FromArgb(118, 118, 118);
 
         /// <summary>Color table 9</summary>
-        public Color ColorTable09;
+        public Color ColorTable09 = Color.FromArgb(59, 120, 255);
 
         /// <summary>Color table A</summary>
-        public Color ColorTable10;
+        public Color ColorTable10 = Color.FromArgb(22, 198, 12);
 
         /// <summary>Color table B</summary>
-        public Color ColorTable11;
+        public Color ColorTable11 = Color.FromArgb(97, 214, 214);
 
         /// <summary>Color table C</summary>
-        public Color ColorTable12;
+        public Color ColorTable12 = Color.FromArgb(231, 72, 86);
 
         /// <summary>Color table D</summary>
-        public Color ColorTable13;
+        public Color ColorTable13 = Color.FromArgb(180, 0, 158);
 
         /// <summary>Color table E</summary>
-        public Color ColorTable14;
+        public Color ColorTable14 = Color.FromArgb(249, 241, 165);
 
         /// <summary>Color table F</summary>
-        public Color ColorTable15;
+        public Color ColorTable15 = Color.FromArgb(242, 242, 242);
 
         /// <summary>Selected color table number as a popup foreground</summary>
-        public int PopupForeground;
+        public int PopupForeground = 5;
 
         /// <summary>Selected color table number as a popup background</summary>
-        public int PopupBackground;
+        public int PopupBackground = 15;
 
         /// <summary>Selected color table number as a screen foreground</summary>
-        public int ScreenColorsForeground;
+        public int ScreenColorsForeground = 7;
 
         /// <summary>Selected color table number as a screen foreground</summary>
-        public int ScreenColorsBackground;
+        public int ScreenColorsBackground = 0;
 
         /// <summary>Console carret size</summary>
-        public int CursorSize;
+        public int CursorSize = 19;
 
         /// <summary>Console font name</summary>
-        public string FaceName;
+        public string FaceName = "Consolas";
 
         /// <summary>Use raster (pixelated/retro) font</summary>
-        public bool FontRaster;
+        public bool FontRaster = false;
 
         /// <summary>Console font size or raster console screen size</summary>
-        public int FontSize;
+        public int FontSize = 18 * 65536;
 
         /// <summary>Console font weight</summary>
-        public int FontWeight;
+        public int FontWeight = 400;
 
         /// <summary>Cursor type<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public int W10_1909_CursorType;
+        public int W10_1909_CursorType = 0;
 
         /// <summary>Cursor color<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public Color W10_1909_CursorColor;
+        public Color W10_1909_CursorColor = Color.White;
 
         /// <summary>Use enhanced terminal<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public bool W10_1909_ForceV2;
+        public bool W10_1909_ForceV2 = true;
 
         /// <summary>Use line selection<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public bool W10_1909_LineSelection;
+        public bool W10_1909_LineSelection = false;
 
         /// <summary>Use terminal scrolling<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public bool W10_1909_TerminalScrolling;
+        public bool W10_1909_TerminalScrolling = false;
 
         /// <summary>Console window opacity<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public int W10_1909_WindowAlpha;
+        public int W10_1909_WindowAlpha = 255;
+
+        /// <summary>
+        /// Create console structure with default data
+        /// </summary>
+        public Console() { }
 
         /// <summary>
         /// Load console structure data from registry

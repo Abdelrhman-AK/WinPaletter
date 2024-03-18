@@ -9,16 +9,21 @@ namespace WinPaletter.Theme.Structures
     public struct LogonUI10x : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = true;
 
         /// <summary>If true, it will disable acrylic effect on LogonUI background</summary>
-        public bool DisableAcrylicBackgroundOnLogon;
+        public bool DisableAcrylicBackgroundOnLogon = false;
 
         /// <summary>If true, it will disable background on LogonUI</summary>
-        public bool DisableLogonBackgroundImage;
+        public bool DisableLogonBackgroundImage = false;
 
         /// <summary>If true, it will disable lock screen</summary>
-        public bool NoLockScreen;
+        public bool NoLockScreen = false;
+
+        /// <summary>
+        /// Creates a new Windows 10/11 LogonUI data structure with default values
+        /// </summary>
+        public LogonUI10x() { }
 
         /// <summary>Operator to check if two LogonUI10x structures are equal</summary>
         public static bool operator ==(LogonUI10x First, LogonUI10x Second)

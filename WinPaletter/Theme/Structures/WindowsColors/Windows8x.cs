@@ -13,22 +13,22 @@ namespace WinPaletter.Theme.Structures
     public struct Windows8x : ICloneable
     {
         /// <summary> Controls if Windows 8x colors editing is enabled or not </summary> 
-        public bool Enabled;
+        public bool Enabled = true;
 
         /// <summary>Start screen background ID. It can be any number from 1 to 20.</summary>
         public int Start;
 
         /// <summary>Main Windows color</summary>
-        public Color ColorizationColor;
+        public Color ColorizationColor = Color.FromArgb(246, 195, 74);
 
         /// <summary>Control amount of main Windows color</summary>
-        public int ColorizationColorBalance;
+        public int ColorizationColorBalance = 78;
 
         /// <summary>Start screen background color</summary>
-        public Color StartColor;
+        public Color StartColor = Color.FromArgb(30, 0, 84);
 
         /// <summary>Accent color for start screen and UWP apps</summary>
-        public Color AccentColor;
+        public Color AccentColor = Color.FromArgb(72, 29, 178);
 
         /// <summary>
         /// Theme used for Windows 8.1
@@ -39,13 +39,18 @@ namespace WinPaletter.Theme.Structures
         /// Classic
         /// </code>
         /// </summary>
-        public Windows7.Themes Theme;
+        public Windows7.Themes Theme = Windows7.Themes.Aero;
 
         /// <summary>Start screen background color (secondary)</summary>
-        public Color PersonalColors_Background;
+        public Color PersonalColors_Background = Color.FromArgb(30, 0, 84);
 
         /// <summary>Accent color for start screen and UWP apps (secondary)</summary>
-        public Color PersonalColors_Accent;
+        public Color PersonalColors_Accent = Color.FromArgb(72, 29, 178);
+
+        /// <summary>
+        /// Creates new Windows8x data structure
+        /// </summary>
+        public Windows8x() { }
 
         /// <summary>
         /// Loads Windows8x data from registry

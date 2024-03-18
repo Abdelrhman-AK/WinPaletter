@@ -11,7 +11,7 @@ namespace WinPaletter.Theme.Structures
     public struct WindowsXP : ICloneable
     {
         /// <summary> Controls if Windows XP themes editing is enabled or not </summary> 
-        public bool Enabled;
+        public bool Enabled = true;
 
         /// <summary>
         /// Theme used for Windows XP
@@ -23,13 +23,18 @@ namespace WinPaletter.Theme.Structures
         /// Custom
         /// </code>
         /// </summary>
-        public Themes Theme;
+        public Themes Theme = Themes.LunaBlue;
 
         /// <summary>Visual styles file used when 'Theme' selected as 'Custom'</summary>
-        public string ThemeFile;
+        public string ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles";
 
         /// <summary>Color scheme of visual styles file 'WindowsXPThemePath' when 'Theme' selected as 'Custom'</summary>
-        public string ColorScheme;
+        public string ColorScheme = "NormalColor";
+
+        /// <summary>
+        /// Creates WindowsXP data structure with default values
+        /// </summary>
+        public WindowsXP() { }
 
         /// <summary>Enumeration of Windows XP stock themes.</summary>
         public enum Themes

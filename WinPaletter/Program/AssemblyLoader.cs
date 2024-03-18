@@ -16,35 +16,28 @@ namespace WinPaletter
         {
             Name = new AssemblyName(Name).Name;
 
-            if (Name.StartsWith("WinPaletter.resources", StringComparison.OrdinalIgnoreCase))
-                return null;
+            if (Name.StartsWith("WinPaletter.resources", StringComparison.OrdinalIgnoreCase)) return null;
 
             byte[] b = null;
 
             using (System.IO.MemoryStream ms = new(Properties.Resources.Assemblies))
+            using (ZipArchive zip = new(ms))
             {
-                using (ZipArchive zip = new(ms))
+                if (zip.Entries.Any(entry => entry.Name.EndsWith($"{Name}.dll", StringComparison.OrdinalIgnoreCase)))
                 {
-                    if (zip.Entries.Any(entry => entry.Name.EndsWith($"{Name}.dll", StringComparison.OrdinalIgnoreCase)))
+                    using (System.IO.MemoryStream _as = new())
                     {
-                        using (System.IO.MemoryStream _as = new())
-                        {
-                            zip.GetEntry($"{Name}.dll").Open().CopyTo(_as);
-                            _as.Seek(0L, System.IO.SeekOrigin.Begin);
-                            b = _as.ToArray();
-                        }
+                        zip.GetEntry($"{Name}.dll").Open().CopyTo(_as);
+                        _as.Seek(0L, System.IO.SeekOrigin.Begin);
+                        b = _as.ToArray();
+                        _as.Close();
                     }
                 }
+
+                ms.Close();
             }
 
-            if (b is not null)
-            {
-                return Assembly.Load(b);
-            }
-            else
-            {
-                return null;
-            }
+            return b is not null ? Assembly.Load(b) : null;
         }
     }
 }

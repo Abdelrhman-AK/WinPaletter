@@ -93,25 +93,25 @@ namespace WinPaletter.Theme
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
             TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
-            TM.Cursor_Enabled = true;
-            TM.Cursor_Shadow = false;
-            TM.Cursor_Arrow.UseFromFile = false;
-            TM.Cursor_AppLoading.UseFromFile = false;
-            TM.Cursor_Busy.UseFromFile = false;
-            TM.Cursor_Help.UseFromFile = false;
-            TM.Cursor_Pen.UseFromFile = false;
-            TM.Cursor_None.UseFromFile = false;
-            TM.Cursor_Move.UseFromFile = false;
-            TM.Cursor_Up.UseFromFile = false;
-            TM.Cursor_NS.UseFromFile = false;
-            TM.Cursor_EW.UseFromFile = false;
-            TM.Cursor_NESW.UseFromFile = false;
-            TM.Cursor_NWSE.UseFromFile = false;
-            TM.Cursor_Link.UseFromFile = false;
-            TM.Cursor_Pin.UseFromFile = false;
-            TM.Cursor_Person.UseFromFile = false;
-            TM.Cursor_IBeam.UseFromFile = false;
-            TM.Cursor_Cross.UseFromFile = false;
+            TM.Cursors.Enabled = true;
+            TM.Cursors.Shadow = false;
+            TM.Cursors.Cursor_Arrow.UseFromFile = false;
+            TM.Cursors.Cursor_AppLoading.UseFromFile = false;
+            TM.Cursors.Cursor_Busy.UseFromFile = false;
+            TM.Cursors.Cursor_Help.UseFromFile = false;
+            TM.Cursors.Cursor_Pen.UseFromFile = false;
+            TM.Cursors.Cursor_None.UseFromFile = false;
+            TM.Cursors.Cursor_Move.UseFromFile = false;
+            TM.Cursors.Cursor_Up.UseFromFile = false;
+            TM.Cursors.Cursor_NS.UseFromFile = false;
+            TM.Cursors.Cursor_EW.UseFromFile = false;
+            TM.Cursors.Cursor_NESW.UseFromFile = false;
+            TM.Cursors.Cursor_NWSE.UseFromFile = false;
+            TM.Cursors.Cursor_Link.UseFromFile = false;
+            TM.Cursors.Cursor_Pin.UseFromFile = false;
+            TM.Cursors.Cursor_Person.UseFromFile = false;
+            TM.Cursors.Cursor_IBeam.UseFromFile = false;
+            TM.Cursors.Cursor_Cross.UseFromFile = false;
 
             {
                 ref Structures.Sounds Sounds = ref TM.Sounds;

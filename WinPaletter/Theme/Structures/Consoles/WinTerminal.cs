@@ -47,7 +47,7 @@ namespace WinPaletter
         /// <summary>
         /// Controls if this feature is enabled or not
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty("enabled")]
         public bool Enabled { get; set; } = false;
 
         /// <summary>
@@ -1125,6 +1125,7 @@ namespace WinPaletter
                             if (!string.IsNullOrEmpty(JSON_String)) result = JsonConvert.DeserializeObject<WinTerminal>(JSON_String);
                         }
 
+                        Enabled = result.Enabled;
                         Theme = result.Theme;
                         DefaultProfile = result.DefaultProfile;
                         Profiles = result.Profiles;

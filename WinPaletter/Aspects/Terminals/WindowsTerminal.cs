@@ -250,6 +250,8 @@ namespace WinPaletter
 
         public void Load_FromTerminal()
         {
+            AspectEnabled = _Terminal.Enabled;
+
             FillTerminalSchemes(_Terminal, TerSchemes);
             FillTerminalThemes(_Terminal, TerThemes);
             FillTerminalProfiles(_Terminal, TerProfiles);

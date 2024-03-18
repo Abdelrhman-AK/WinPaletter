@@ -17,97 +17,102 @@ namespace WinPaletter.Theme.Structures
     public struct MetricsFonts : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Window border width</summary>
-        public int BorderWidth;
+        public int BorderWidth = 1;
 
         /// <summary>Titlebar (caption) height</summary>
-        public int CaptionHeight;
+        public int CaptionHeight = 22;
 
         /// <summary>Buttons in classic titlebar (caption) width</summary>
-        public int CaptionWidth;
+        public int CaptionWidth = 22;
 
         /// <summary>Horizontal spacing between desktop icons</summary>
-        public int IconSpacing;
+        public int IconSpacing = 75;
 
         /// <summary>Vertical spacing between desktop icons</summary>
-        public int IconVerticalSpacing;
+        public int IconVerticalSpacing = 75;
 
         /// <summary>Context menu height (if it is a horizontal menu)</summary>
-        public int MenuHeight;
+        public int MenuHeight = 19;
 
         /// <summary>Context menu width (if it is a vertical menu)</summary>
-        public int MenuWidth;
+        public int MenuWidth = 19;
 
         /// <summary>Padding width of a Window border</summary>
-        public int PaddedBorderWidth;
+        public int PaddedBorderWidth = 4;
 
         /// <summary>Scroll bar height (if it is a horizontal scroll bar)</summary>
-        public int ScrollHeight;
+        public int ScrollHeight = 19;
 
         /// <summary>Scroll bar width (if it is a vertical scroll bar)</summary>
-        public int ScrollWidth;
+        public int ScrollWidth = 19;
 
         /// <summary>Titlebar (caption) height of a tool box window</summary>
-        public int SmCaptionHeight;
+        public int SmCaptionHeight = 22;
 
         /// <summary>Width of Buttons in classic titlebar (caption) of a tool box window</summary>
-        public int SmCaptionWidth;
+        public int SmCaptionWidth = 22;
 
         /// <summary>Size of desktop icons <c>(size x size)</c></summary>
-        public int DesktopIconSize;
+        public int DesktopIconSize = 48;
 
         /// <summary>
         /// Size of shell icons (used in Windows XP)
         /// <br>Default: <b>32</b></br>
         /// </summary>
-        public int ShellIconSize;
+        public int ShellIconSize = 32;
 
         /// <summary>
         /// Size of small icons (used in Windows XP)
         /// <br>Default: <b>16</b></br>
         /// </summary>
-        public int ShellSmallIconSize;
+        public int ShellSmallIconSize = 16;
 
         /// <summary>Make fonts pixelated like old versions of Windows (not ClearType)</summary>
-        public bool Fonts_SingleBitPP;
+        public bool Fonts_SingleBitPP = false;
 
         /// <summary>Titlebar (caption) font</summary>
-        public Font CaptionFont;
+        public Font CaptionFont = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Icons font</summary>
-        public Font IconFont;
+        public Font IconFont = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>contextMenu font</summary>
-        public Font MenuFont;
+        public Font MenuFont = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Message box font</summary>
-        public Font MessageFont;
+        public Font MessageFont = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Titlebar (caption) font of a tool box window</summary>
-        public Font SmCaptionFont;
+        public Font SmCaptionFont = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Status bar (in the lower part of a window) font</summary>
-        public Font StatusFont;
+        public Font StatusFont = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>
         /// Font name that should substitutes MSShellDlg
         /// <br>Default value: <b>Microsoft Sans Serif</b></br>
         /// </summary>
-        public string FontSubstitute_MSShellDlg;
+        public string FontSubstitute_MSShellDlg = "Microsoft Sans Serif";
 
         /// <summary>
         /// Font name that should substitutes MSShellDlg2
         /// <br>Default value: <b>Tahoma</b></br>
         /// </summary>
-        public string FontSubstitute_MSShellDlg2;
+        public string FontSubstitute_MSShellDlg2 = "Tahoma";
 
         /// <summary>
         /// Font name that should substitutes Segoe UI
         /// <br><b>Has no default value, it is empty</b></br>
         /// </summary>
-        public string FontSubstitute_SegoeUI;
+        public string FontSubstitute_SegoeUI = string.Empty;
+
+        /// <summary>
+        /// Create a new MetricsFonts structure with default values
+        /// </summary>
+        public MetricsFonts() { }
 
         /// <summary>Operator to check if two MetricsFonts structures are equal</summary>
         public static bool operator ==(MetricsFonts First, MetricsFonts Second)

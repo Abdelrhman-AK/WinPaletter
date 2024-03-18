@@ -11,10 +11,10 @@ namespace WinPaletter.Theme.Structures
     public struct WindowsVista : ICloneable
     {
         /// <summary> Controls if Windows Vista colors editing is enabled or not </summary> 
-        public bool Enabled;
+        public bool Enabled = true;
 
         /// <summary>Main Windows color</summary>
-        public Color ColorizationColor;
+        public Color ColorizationColor = Color.FromArgb(64, 158, 254);
 
         /// <summary>Control amount of main Windows color</summary>
         public byte Alpha;
@@ -28,7 +28,12 @@ namespace WinPaletter.Theme.Structures
         /// Classic
         /// </code>
         /// </summary>
-        public Windows7.Themes Theme;
+        public Windows7.Themes Theme = Windows7.Themes.Aero;
+
+        /// <summary>
+        /// Creates new WindowsVista data structure with default values
+        /// </summary>
+        public WindowsVista() { }
 
         /// <summary>
         /// Loads WindowsVista data from registry

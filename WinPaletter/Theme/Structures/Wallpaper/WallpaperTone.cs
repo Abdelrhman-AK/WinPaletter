@@ -13,22 +13,27 @@ namespace WinPaletter.Theme.Structures
     public struct WallpaperTone : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>
         /// Image file used
         /// <br><b>- It is better to use a stock Windows wallpaper in '%windir%\Web\Wallpaper', but sure you can use other images.</b></br>
         /// </summary>
-        public string Image;
+        public string Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
 
         /// <summary>Hue</summary>
-        public int H;
+        public int H = 0;
 
         /// <summary>Saturation</summary>
-        public int S;
+        public int S = 50;
 
         /// <summary>Lightness</summary>
-        public int L;
+        public int L = 50;
+
+        /// <summary>
+        /// Creates a new WallpaperTone structure with default values
+        /// </summary>
+        public WallpaperTone() { }
 
         /// <summary>
         /// Loads Wallpaper data from registry

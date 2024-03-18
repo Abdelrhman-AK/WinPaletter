@@ -38,7 +38,7 @@ namespace WinPaletter
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_LogonUI, true);
             if (TM.LogonUIXP.Enabled & OS.WXP)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_LogonUI, true);
-            if (TM.Cursor_Enabled)
+            if (TM.Cursors.Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_Cursors, true);
             if (TM.Wallpaper.Enabled)
                 CheckedListBox1.Items.Add(Program.Lang.Store_Toggle_Wallpaper, true);
@@ -116,7 +116,7 @@ namespace WinPaletter
                 }
 
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_Cursors)
-                    TM.Cursor_Enabled = CheckedListBox1.GetItemChecked(i);
+                    TM.Cursors.Enabled = CheckedListBox1.GetItemChecked(i);
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_CMD)
                     TM.CommandPrompt.Enabled = CheckedListBox1.GetItemChecked(i);
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Store_Toggle_PS86)

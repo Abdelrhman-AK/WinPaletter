@@ -12,16 +12,16 @@ namespace WinPaletter.Theme.Structures
     public struct LogonUIXP : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Windows XP LogonUI mode</summary>
-        public Modes Mode;
+        public Modes Mode = Modes.Default;
 
         /// <summary>Windows XP LogonUI background color if selected 'Mode' is 'Win2000'</summary>
-        public Color BackColor;
+        public Color BackColor = Color.Black;
 
         /// <summary>Controls if 'More options' button is visible if selected 'Mode' is 'Win2000'</summary>
-        public bool ShowMoreOptions;
+        public bool ShowMoreOptions = false;
 
         /// <summary>
         /// Enumeration for Windows XP LogonUI modes
@@ -33,6 +33,11 @@ namespace WinPaletter.Theme.Structures
             /// <summary>Default welcome blue screen</summary>
             Default
         }
+
+        /// <summary>
+        /// Creates a new Windows XP LogonUI structure with default values
+        /// </summary>
+        public LogonUIXP() { }
 
         /// <summary>
         /// Loads Windows XP LogonUI data from registry

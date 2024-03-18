@@ -12,77 +12,77 @@ namespace WinPaletter.Theme.Structures
     public struct WinEffects : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Windows animation (open app, close, minimize, maximize, ...)</summary>
-        public bool WindowAnimation;
+        public bool WindowAnimation = true;
 
-        /// <summary>Shadow arround window border</summary>
-        public bool WindowShadow;
+        /// <summary>Shadow around window border</summary>
+        public bool WindowShadow = true;
 
         /// <summary>Controls all Windows effects, including WindowAnimation and WindowShadow</summary>
-        public bool WindowUIEffects;
+        public bool WindowUIEffects = true;
 
         /// <summary>Show contents of a window while dragging</summary>
-        public bool ShowWinContentDrag;
+        public bool ShowWinContentDrag = true;
 
         /// <summary>Enable animation for controls inside window</summary>
-        public bool AnimateControlsInsideWindow;
+        public bool AnimateControlsInsideWindow = true;
 
         /// <summary>Enable menu show animation</summary>
-        public bool MenuAnimation;
+        public bool MenuAnimation = true;
 
         /// <summary>contextMenu animation type. It can be fade or scroll</summary>
-        public MenuAnimType MenuFade;
+        public MenuAnimType MenuFade = MenuAnimType.Fade;
 
         /// <summary>Fade selection after clicking on a menu item</summary>
-        public bool MenuSelectionFade;
+        public bool MenuSelectionFade = true;
 
         /// <summary>
         /// Delay menu show in milliseconds
         /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
         /// </summary>
-        public uint MenuShowDelay;
+        public uint MenuShowDelay = 400U;
 
         /// <summary>Animate combo box control</summary>
-        public bool ComboBoxAnimation;
+        public bool ComboBoxAnimation = true;
 
         /// <summary>Smooth scrolling animation for list box</summary>
-        public bool ListBoxSmoothScrolling;
+        public bool ListBoxSmoothScrolling = true;
 
         /// <summary>Enable tooltip animation</summary>
-        public bool TooltipAnimation;
+        public bool TooltipAnimation = true;
 
         /// <summary>ToolTip appearance animation. It can be fade or scroll</summary>
-        public MenuAnimType TooltipFade;
+        public MenuAnimType TooltipFade = MenuAnimType.Fade;
 
         /// <summary>Show shadow in icons labels at desktop</summary>
-        public bool IconsShadow;
+        public bool IconsShadow = true;
 
         /// <summary>
         /// - If true, desktop icons selection will be colored transparent rectangle
         /// <br></br>- If false, desktop icons selection will be rectangle with dotted border
         /// </summary>
-        public bool IconsDesktopTranslSel;
+        public bool IconsDesktopTranslSel = true;
 
         /// <summary>
         /// Make every menu item has an underline to inform the user that this menu item can be triggered by clicking on ALT+LETTER.
         /// <br>For example: when menu item 'EȢit' with letter 'x' has an underline, clicking on ALT+X will trigger this menu item.</br>
         /// <br>If false, 'EȢit' will be 'Exit'.</br>
         /// </summary>
-        public bool KeyboardUnderline;
+        public bool KeyboardUnderline = false;
 
         /// <summary>
         /// Width of dotted rectangle on focused classic button
         /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
         /// </summary>
-        public uint FocusRectWidth;
+        public uint FocusRectWidth = 1U;
 
         /// <summary>
         /// Height of dotted rectangle on focused classic button
         /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
         /// </summary>
-        public uint FocusRectHeight;
+        public uint FocusRectHeight = 1U;
 
         /// <summary>
         /// Width of text cursor (carret)
@@ -90,96 +90,101 @@ namespace WinPaletter.Theme.Structures
         /// <br></br>   1: Hello world! ▓
         /// <br></br>   5: Hello world! ▓▓▓▓▓
         /// </summary>
-        public uint Caret;
+        public uint Caret = 1U;
 
         /// <summary>Show ballon or notification for milliseconds</summary>
-        public int NotificationDuration;
+        public int NotificationDuration = 5;
 
         /// <summary>
         /// Shake a window from its titlebar to minimize rest windows
         /// <br></br><b>- Targets Windows 7 and later</b>
         /// </summary>
-        public bool ShakeToMinimize;
+        public bool ShakeToMinimize = true;
 
         /// <summary>Enable active window tracking feature</summary>
-        public bool AWT_Enabled;
+        public bool AWT_Enabled = false;
 
         /// <summary>Active window tracking: bring window to top when mouse enters it</summary>
-        public bool AWT_BringActivatedWindowToTop;
+        public bool AWT_BringActivatedWindowToTop = false;
 
         /// <summary>Active window tracking: delay bringing window to top for milliseconds</summary>
-        public int AWT_Delay;
+        public int AWT_Delay = 0;
 
-        /// <summary>Move cusror to the default button when a window or a dialog appears</summary>
-        public bool SnapCursorToDefButton;
+        /// <summary>Move cursor to the default button when a window or a dialog appears</summary>
+        public bool SnapCursorToDefButton = false;
 
         /// <summary>
         /// Enable classic context menus for Windows 11
         /// <br></br><b>- Requires Explorer restart</b>
         /// </summary>
-        public bool Win11ClassicContextMenu;
+        public bool Win11ClassicContextMenu = false;
 
         /// <summary>
         /// Make Windows Explorer shows items in SysListView32 style (that looks like Windows XP and Vista) in higher editions of Windows
         /// <br></br><b>- Targets Windows 7 and later</b>
         /// </summary>
-        public bool SysListView32;
+        public bool SysListView32 = false;
 
         /// <summary>
         /// Show seconds in taskbar clock
         /// <br></br><b>- Targets Windows 10, and 11 with Moment 3 update</b>
         /// </summary>
-        public bool ShowSecondsInSystemClock;
+        public bool ShowSecondsInSystemClock = false;
 
         /// <summary>
-        /// Replace rectangle notifications by classic ballons
+        /// Replace rectangle notifications by classic balloons
         /// <br></br><b>- Targets Windows 8 and 8.1</b>
         /// </summary>
-        public bool BalloonNotifications;
+        public bool BalloonNotifications = false;
 
         /// <summary>Paint Windows edition on desktop</summary>
-        public bool PaintDesktopVersion;
+        public bool PaintDesktopVersion = false;
 
         /// <summary>Replace Windows 11 boot solid circle by spinning dots (of Windows 8/8.1/10)</summary>
-        public bool Win11BootDots;
+        public bool Win11BootDots = !OS.W12 && !OS.W11;
 
         /// <summary>
         /// Controls Windows Explorer bar/ribbon
         /// <br></br><b>- It is be better to be modified with ExplorerPatcher installed</b>
         /// </summary>
-        public ExplorerBar Win11ExplorerBar;
+        public ExplorerBar Win11ExplorerBar = ExplorerBar.Default;
 
         /// <summary>Disable navigation bar in open\save dialogs. Requires ExplorerPatcher</summary>
-        public bool DisableNavBar;
+        public bool DisableNavBar = false;
 
         /// <summary>Automatically hide scroll bars in modern apps (UWP/WinUI3) in Windows 10/11</summary>
-        public bool AutoHideScrollBars;
+        public bool AutoHideScrollBars = true;
 
         /// <summary>
-        /// Full screen start menu
+        /// Full-screen start menu
         /// <br></br><b>- Targets Windows 10</b>
         /// </summary>
-        public bool FullScreenStartMenu;
+        public bool FullScreenStartMenu = false;
 
         /// <summary>Enable accessibility feature: color filter</summary>
-        public bool ColorFilter_Enabled;
+        public bool ColorFilter_Enabled = false;
 
         /// <summary>Color filter type</summary>
-        public ColorFilters ColorFilter;
+        public ColorFilters ColorFilter = ColorFilters.Grayscale;
 
         /// <summary>
         /// Enable classic volume mixer
         /// <br></br><b>- Targets Windows 10</b>
         /// </summary>
-        public bool ClassicVolMixer;
+        public bool ClassicVolMixer = false;
 
         /// <summary>
-        /// Enable aero peek feature: hovering on taskbar right corner will show apps with aero transparent glass rectangles on desktop.
+        /// Enable Aero Peek feature: hovering on taskbar right corner will show apps with Aero transparent glass rectangles on desktop.
         /// </summary>
-        public bool EnableAeroPeek;
+        public bool EnableAeroPeek = false;
 
         ///
-        public bool AlwaysHibernateThumbnails;
+        public bool AlwaysHibernateThumbnails = false;
+
+        /// <summary>
+        /// Creates an instance of WinEffects structure with default values
+        /// </summary>
+        public WinEffects() { }
 
         /// <summary>
         /// Enumeration for Windows Explorer bar types

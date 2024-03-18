@@ -11,16 +11,21 @@ namespace WinPaletter.Theme.Structures
     public struct ScreenSaver : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Lock Windows after closure of screen saver</summary>
-        public bool IsSecure;
+        public bool IsSecure = false;
 
-        /// <summary>Inactivity (idle) time after which the screen save will start</summary>
-        public int TimeOut;
+        /// <summary>Inactivity (idle) time after which the screen saver will start</summary>
+        public int TimeOut = 60;
 
         /// <summary>Screen saver file</summary>
-        public string File;
+        public string File = string.Empty;
+
+        /// <summary>
+        /// Creates new ScreenSaver structure with default values
+        /// </summary>
+        public ScreenSaver() { }
 
         /// <summary>
         /// Loads ScreenSaver data from registry

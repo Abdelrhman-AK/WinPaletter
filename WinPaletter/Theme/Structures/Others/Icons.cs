@@ -11,30 +11,6 @@ namespace WinPaletter.Theme.Structures
     /// </summary>
     public struct Icons : ICloneable
     {
-        /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
-
-        /// <summary>
-        /// List of Shell32 wrapper data: (value, data)
-        /// <br><c>value</c> is the index of icon in real <c>shell32.dll</c> in your system</br>
-        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
-        /// </summary>
-        public Dictionary<string, string> Shell32Wrapper;
-
-        /// <summary>
-        /// List of Control Panel wrapper data: (value, data)
-        /// <br><c>value</c> is the CLSID of Control Panel item</br>
-        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
-        /// </summary>
-        public Dictionary<string, string> ControlPanelWrapper;
-
-        /// <summary>
-        /// List of Explorer icons wrapper data: (value, data)
-        /// <br><c>value</c> is the CLSID of Explorer item</br>
-        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
-        /// </summary>
-        public Dictionary<string, string> ExplorerWrapper;
-
         /// <summary>
         /// List of Control Panel CLSIDs and their icons (used as helpers)
         /// </summary>
@@ -110,65 +86,94 @@ namespace WinPaletter.Theme.Structures
             Tuple.Create("{679f85cb-0220-4080-b29b-5540cc05aab6}", "Quick Access", $"{SysPaths.System32}\\shell32.dll,-51380"),
         };
 
+        /// <summary>Controls if this feature is enabled or not</summary>
+        public bool Enabled = false;
+
+        /// <summary>
+        /// List of Shell32 wrapper data: (value, data)
+        /// <br><c>value</c> is the index of icon in real <c>shell32.dll</c> in your system</br>
+        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
+        /// </summary>
+        public Dictionary<string, string> Shell32Wrapper = new();
+
+        /// <summary>
+        /// List of Control Panel wrapper data: (value, data)
+        /// <br><c>value</c> is the CLSID of Control Panel item</br>
+        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
+        /// </summary>
+        public Dictionary<string, string> ControlPanelWrapper = new();
+
+        /// <summary>
+        /// List of Explorer icons wrapper data: (value, data)
+        /// <br><c>value</c> is the CLSID of Explorer item</br>
+        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
+        /// </summary>
+        public Dictionary<string, string> ExplorerWrapper = new();
+
         /// <summary>
         /// Path to Computer icon
         /// </summary>
-        public string Computer;
+        public string Computer = Structures.Icons.DesktopCLSIDs.ElementAt(0).Item3;
 
         /// <summary>
         /// Path to Control Panel icon
         /// </summary>
-        public string ControlPanel;
+        public string ControlPanel = Structures.Icons.DesktopCLSIDs.ElementAt(1).Item3;
 
         /// <summary>
         /// Path to Network icon
         /// </summary>
-        public string Network;
+        public string Network = Structures.Icons.DesktopCLSIDs.ElementAt(2).Item3;
 
         /// <summary>
         /// Path to User icon
         /// </summary>
-        public string User;
+        public string User = Structures.Icons.DesktopCLSIDs.ElementAt(3).Item3;
 
         /// <summary>
         /// Path to Recycle Bin empty icon
         /// </summary>
-        public string RecycleBinEmpty;
+        public string RecycleBinEmpty = Structures.Icons.DesktopCLSIDs.ElementAt(4).Item3.Split('|')[0];
 
         /// <summary>
         /// Path to Recycle Bin full icon
         /// </summary>
-        public string RecycleBinFull;
+        public string RecycleBinFull = Structures.Icons.DesktopCLSIDs.ElementAt(4).Item3.Split('|')[1];
 
         /// <summary>
         /// Hide Computer icon in desktop
         /// </summary>
-        public bool Computer_HideInDesktop;
+        public bool Computer_HideInDesktop = true;
 
         /// <summary>
         /// Hide Control Panel icon in desktop
         /// </summary>
-        public bool ControlPanel_HideInDesktop;
+        public bool ControlPanel_HideInDesktop = true;
 
         /// <summary>
         /// Hide Network icon in desktop
         /// </summary>
-        public bool Network_HideInDesktop;
+        public bool Network_HideInDesktop = true;
 
         /// <summary>
         /// Hide User icon in desktop
         /// </summary>
-        public bool User_HideInDesktop;
+        public bool User_HideInDesktop = true;
 
         /// <summary>
         /// Hide Recycle Bin icon in desktop
         /// </summary>
-        public bool RecycleBin_HideInDesktop;
+        public bool RecycleBin_HideInDesktop = false;
 
         /// <summary>
         /// Icon used for system drive
         /// </summary>
-        public string SystemDriveIcon;
+        public string SystemDriveIcon = string.Empty;
+
+        /// <summary>
+        /// Creates a new Icons structure with default values
+        /// </summary>
+        public Icons() { }
 
         /// <summary>
         /// Loads Icons data from registry

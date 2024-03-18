@@ -14,71 +14,75 @@ namespace WinPaletter.Theme.Structures
     public struct Windows10x : ICloneable
     {
         /// <summary> Controls if Windows 10x colors editing is enabled or not </summary> 
-        public bool Enabled;
+        public bool Enabled = true;
 
-        public Themes Theme;
+        /// <summary>Theme used for Windows 10/11</summary>
+        public Themes Theme = Windows10x.Themes.Aero;
 
         /// <summary>Color index 0 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index0;
+        public Color Color_Index0 = Color.FromArgb(153, 235, 255);
 
         /// <summary>Color index 1 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index1;
+        public Color Color_Index1 = Color.FromArgb(76, 194, 255);
 
         /// <summary>Color index 2 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index2;
+        public Color Color_Index2 = Color.FromArgb(0, 145, 248);
 
         /// <summary>Color index 3 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index3;
+        public Color Color_Index3 = Color.FromArgb(0, 120, 212);
 
         /// <summary>Color index 4 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index4;
+        public Color Color_Index4 = Color.FromArgb(0, 103, 192);
 
         /// <summary>Color index 5 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index5;
+        public Color Color_Index5 = Color.FromArgb(0, 62, 146);
 
         /// <summary>Color index 6 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index6;
+        public Color Color_Index6 = Color.FromArgb(0, 26, 104);
 
         /// <summary>Color index 7 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index7;
+        public Color Color_Index7 = Color.FromArgb(247, 99, 12);
 
         /// <summary>Light mode for Windows</summary>
-        public bool WinMode_Light;
+        public bool WinMode_Light = true;
 
         /// <summary>Light mode for applications</summary>
-        public bool AppMode_Light;
+        public bool AppMode_Light = true;
 
         /// <summary>Transparency effects (Mica/Acrylic)</summary>
-        public bool Transparency;
+        public bool Transparency = true;
 
         /// <summary>Active titlebar color</summary>
-        public Color Titlebar_Active;
+        public Color Titlebar_Active = Color.FromArgb(0, 120, 212);
 
         /// <summary>Inactive titlebar color</summary>
-        public Color Titlebar_Inactive;
+        public Color Titlebar_Inactive = Color.FromArgb(32, 32, 32);
 
         /// <summary>Start menu accent color. It is a <b>misnomer</b> as it may not be responsible for start menu if 'Transparency'/'WinMode_Light' are changed.</summary>
-        public Color StartMenu_Accent;
+        public Color StartMenu_Accent = Color.FromArgb(0, 103, 192);
 
         /// <summary>Make accent can be applied on titlebars</summary>
-        public bool ApplyAccentOnTitlebars;
+        public bool ApplyAccentOnTitlebars = false;
 
         /// <summary>Choices to apply accents on taskbar alone, taskbar with start and action center, or finally with nothing.</summary>
-        public AccentTaskbarLevels ApplyAccentOnTaskbar;
+        public AccentTaskbarLevels ApplyAccentOnTaskbar = Windows10x.AccentTaskbarLevels.None;
 
         /// <summary>
         /// Increase transparency of taskbar (and removes blur)
         /// <br></br>- Targeting Windows 10 only
         /// </summary>
-        public bool IncreaseTBTransparency;
+        public bool IncreaseTBTransparency = false;
 
         /// <summary>
         /// Make taskbar blur. If false, it will reduce blur power.
         /// <br></br>- Targeting Windows 10 only
         /// </summary>
-        public bool TB_Blur;
+        public bool TB_Blur = true;
 
-        //public Color Border;
+        /// <summary>
+        /// Creates a new Windows10x data structure with default values
+        /// </summary>
+        public Windows10x() { }
 
         /// <summary>
         /// Enumeration for levels of accent applying
@@ -112,6 +116,7 @@ namespace WinPaletter.Theme.Structures
         /// Loads Windows10x data from registry
         /// </summary>
         /// <param name="default">Default Windows10x data structure</param>
+        /// <param name="Edition">String edition mark</param>
         public void Load(string Edition, Windows10x @default)
         {
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{Edition}", string.Empty, @default.Enabled));

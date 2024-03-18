@@ -14,7 +14,7 @@ namespace WinPaletter.Theme.Structures
     public struct LogonUI7 : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>
         /// Source of LogonUI background image
@@ -25,40 +25,40 @@ namespace WinPaletter.Theme.Structures
         /// SolidColor
         /// </code>
         /// </summary>
-        public Sources Mode;
+        public Sources Mode = Sources.Default;
 
         /// <summary>LogonUI background image path. Used if 'Mode' is 'CustomImage'</summary>
-        public string ImagePath;
+        public string ImagePath = @"C:\Windows\Web\Wallpaper\Windows\img0.jpg";
 
         /// <summary>LogonUI background color. Used if 'Mode' is 'SolidColor'</summary>
-        public Color Color;
+        public Color Color = Color.Black;
 
         /// <summary>LogonUI background blur enabled or not</summary>
-        public bool Blur;
+        public bool Blur = false;
 
         /// <summary>LogonUI background blur intensity</summary>
-        public int Blur_Intensity;
+        public int Blur_Intensity = 0;
 
         /// <summary>LogonUI background grayscale effect enabled or not</summary>
-        public bool Grayscale;
+        public bool Grayscale = false;
 
         /// <summary>LogonUI background noise effect enabled or not</summary>
-        public bool Noise;
+        public bool Noise = false;
 
         /// <summary>LogonUI background noise type. It can be acrylic noise or Aero glass reflection</summary>
-        public BitmapExtensions.NoiseMode Noise_Mode;
+        public BitmapExtensions.NoiseMode Noise_Mode = BitmapExtensions.NoiseMode.Acrylic;
 
         /// <summary>LogonUI background noise intensity</summary>
-        public int Noise_Intensity;
+        public int Noise_Intensity = 0;
 
         /// <summary>Disable lock screen for Windows 8x</summary>
-        public bool NoLockScreen;
+        public bool NoLockScreen = false;
 
         /// <summary>Lock screen stock background image ID for Windows 8x</summary>
-        public int LockScreenSystemID;
+        public int LockScreenSystemID = 0;
 
         /// <summary>LogonUI background color ID for Windows 8 only. It can be any number from 0 to 24.</summary>
-        public int LogonUI_ID;
+        public int LogonUI_ID = 0;
 
         /// <summary>
         /// Enumeration for LogonUI background sources
@@ -80,6 +80,11 @@ namespace WinPaletter.Theme.Structures
             ///
             SolidColor
         }
+
+        /// <summary>
+        /// Creates a new Windows 7/8.1 LogonUI data structure with default values
+        /// </summary>
+        public LogonUI7() { }
 
         /// <summary>
         /// Loads Windows 7/8.1 LogonUI data from registry

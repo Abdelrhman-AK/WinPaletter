@@ -9,13 +9,18 @@ namespace WinPaletter.Theme.Structures
     public struct AltTab : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled;
+        public bool Enabled = false;
 
         /// <summary>Controls Windows switcher appearance</summary>
-        public Styles Style;
+        public Styles Style = AltTab.Styles.Default;
 
         /// <summary>Controls Windows switcher opacity for Windows 10 (or Windows 11 when ExplorerPatcher is installed with changing Alt+Tab appearance into Windows 10</summary>
-        public int Win10Opacity;
+        public int Win10Opacity = 95;
+
+        /// <summary>
+        /// Creates new AltTab structure with default values
+        /// </summary>
+        public AltTab() { }
 
         /// <summary>
         /// Enumeration for Windows switcher appearance styles

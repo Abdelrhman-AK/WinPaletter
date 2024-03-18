@@ -19,110 +19,115 @@ namespace WinPaletter.Theme.Structures
     /// </summary>
     public struct Win32UI : ICloneable
     {
-        /// <summary> Controls if Windows 10x colors editing is enabled or not </summary> 
-        public bool Enabled;
+        /// <summary> Controls if Classic Colors editing is enabled or not </summary> 
+        public bool Enabled = true;
 
         /// <summary>If disabled, classic 3D effects will be made to menus and menu items selection</summary>
-        public bool EnableTheming;
+        public bool EnableTheming = true;
 
         /// <summary>Enable titlebar gradience</summary>
-        public bool EnableGradient;
+        public bool EnableGradient = true;
 
         /// <summary>Color of active window border</summary>
-        public Color ActiveBorder;
+        public Color ActiveBorder = Color.FromArgb(180, 180, 180);
 
         /// <summary>Active titlebar main color</summary>
-        public Color ActiveTitle;
+        public Color ActiveTitle = Color.FromArgb(153, 180, 209);
 
         ///
-        public Color AppWorkspace;
+        public Color AppWorkspace = Color.FromArgb(171, 171, 171);
 
         ///
-        public Color Background;
+        public Color Background = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color ButtonAlternateFace;
+        public Color ButtonAlternateFace = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color ButtonDkShadow;
+        public Color ButtonDkShadow = Color.FromArgb(105, 105, 105);
 
         ///
-        public Color ButtonFace;
+        public Color ButtonFace = Color.FromArgb(240, 240, 240);
 
         ///
-        public Color ButtonHilight;
+        public Color ButtonHilight = Color.FromArgb(255, 255, 255);
 
         ///
-        public Color ButtonLight;
+        public Color ButtonLight = Color.FromArgb(227, 227, 227);
 
         ///
-        public Color ButtonShadow;
+        public Color ButtonShadow = Color.FromArgb(160, 160, 160);
 
         ///
-        public Color ButtonText;
+        public Color ButtonText = Color.FromArgb(0, 0, 0);
 
         /// <summary>Second color for gradience in active titlebar</summary>
-        public Color GradientActiveTitle;
+        public Color GradientActiveTitle = Color.FromArgb(185, 209, 234);
 
         /// <summary>Second color for gradience in inactive titlebar</summary>
-        public Color GradientInactiveTitle;
+        public Color GradientInactiveTitle = Color.FromArgb(215, 228, 242);
 
         /// <summary>Used in disabled items</summary>
-        public Color GrayText;
+        public Color GrayText = Color.FromArgb(109, 109, 109);
 
         ///
-        public Color HilightText;
+        public Color HilightText = Color.FromArgb(255, 255, 255);
 
         /// <summary>Color of selection rectangles and hyperlinks</summary>
-        public Color HotTrackingColor;
+        public Color HotTrackingColor = Color.FromArgb(0, 102, 204);
 
         /// <summary>Color of inactive window border</summary>
-        public Color InactiveBorder;
+        public Color InactiveBorder = Color.FromArgb(244, 247, 252);
 
         /// <summary>Inactive titlebar main color</summary>
-        public Color InactiveTitle;
+        public Color InactiveTitle = Color.FromArgb(191, 205, 219);
 
         /// <summary>Inactive titlebar text</summary>
-        public Color InactiveTitleText;
+        public Color InactiveTitleText = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color InfoText;
+        public Color InfoText = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color InfoWindow;
+        public Color InfoWindow = Color.FromArgb(255, 255, 225);
 
         /// <summary>Color of cascaded menu</summary>
-        public Color Menu;
+        public Color Menu = Color.FromArgb(240, 240, 240);
 
         /// <summary>Color of menu bar</summary>
-        public Color MenuBar;
+        public Color MenuBar = Color.FromArgb(240, 240, 240);
 
         ///
-        public Color MenuText;
+        public Color MenuText = Color.FromArgb(0, 0, 0);
 
         /// <summary>Obsolete: was used in Windows 9x</summary>
-        public Color Scrollbar;
+        public Color Scrollbar = Color.FromArgb(200, 200, 200);
 
         /// <summary>Active titlebar text</summary>
-        public Color TitleText;
+        public Color TitleText = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color Window;
+        public Color Window = Color.FromArgb(255, 255, 255);
 
         /// <summary>Color of rectangle surrounding a pressed button</summary>
-        public Color WindowFrame;
+        public Color WindowFrame = Color.FromArgb(100, 100, 100);
 
         ///
-        public Color WindowText;
+        public Color WindowText = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color Hilight;
+        public Color Hilight = Color.FromArgb(0, 120, 215);
 
         ///
-        public Color MenuHilight;
+        public Color MenuHilight = Color.FromArgb(0, 120, 215);
 
         ///
-        public Color Desktop;
+        public Color Desktop = Color.FromArgb(0, 0, 0);
+
+        /// <summary>
+        /// Creates a new instance of Win32UI structure with default values
+        /// </summary>
+        public Win32UI() { }
 
         /// <summary>
         /// Enumeration of sources, from/to which data will be loaded or saved
@@ -140,6 +145,7 @@ namespace WinPaletter.Theme.Structures
             string result = GetReg(registryKey, valueName, defaultValue) as string;
             if (result.Contains(' ') && result.Split(' ').Count() == 3) targetColor = Color.FromArgb(255, result.FromWin32RegToColor());
         }
+
 
         /// <summary>
         /// Loads Win32UI data from registry

@@ -26,7 +26,8 @@ namespace WinPaletter.UI.WP
         Rectangle rect => new(rect_all.X + shadowSize, rect_all.Y + shadowSize, rect_all.Width - shadowSize * 2, rect_all.Height - shadowSize * 2);
         Rectangle rect_margin => new(rect_all.X + shadowSize - margin, rect_all.Y + shadowSize - margin, rect_all.Width - shadowSize * 2 + margin * 2, rect_all.Height - shadowSize * 2 + margin * 2);
 
-        private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
+        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.45f));
+        private readonly TextureBrush NoiseHover = new(Properties.Resources.Noise.Fade(0.9f));
 
         public MouseState State = MouseState.None;
 
@@ -328,10 +329,7 @@ namespace WinPaletter.UI.WP
                     {
                         G.FillRectangle(br0G, rect_margin);
 
-                        if (State != MouseState.None)
-                        {
-                            G.FillRectangle(Noise, rect_margin);
-                        }
+                        G.FillRectangle(State == MouseState.None ? Noise : NoiseHover, rect_margin);
 
                         G.DrawImage(Image, imageRect);
 
@@ -375,6 +373,10 @@ namespace WinPaletter.UI.WP
                 }
 
                 if (State != MouseState.None)
+                {
+                    G.FillRectangle(NoiseHover, rect_margin);
+                }
+                else
                 {
                     G.FillRectangle(Noise, rect_margin);
                 }

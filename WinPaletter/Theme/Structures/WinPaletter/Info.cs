@@ -11,79 +11,84 @@ namespace WinPaletter.Theme.Structures
     public struct Info : ICloneable
     {
         /// <summary>WinPaletter version that designed this theme</summary>
-        public string AppVersion;
+        public string AppVersion = Program.Version;
 
         /// <summary>Name of current WinPaletter theme</summary>
-        public string ThemeName;
+        public string ThemeName = Program.Lang.MyTheme;
 
         /// <summary>Description of current WinPaletter theme. It can include tags.</summary>
-        public string Description;
+        public string Description = string.Empty;
 
         /// <summary>Make saving this theme export theme resources pack that has sounds and images used in theme and are not located in system directories.</summary>
-        public bool ExportResThemePack;
+        public bool ExportResThemePack = false;
 
         /// <summary>License/credits of included sounds and images. Keep it empty if there are no license or credits or didn't use files.</summary>
-        public string License;
+        public string License = string.Empty;
 
         /// <summary>WinPaletter theme version</summary>
-        public string ThemeVersion;
+        public string ThemeVersion = "1.0.0.0";
 
         /// <summary>Person's name that designed this theme</summary>
-        public string Author;
+        public string Author = User.UserName;
 
         /// <summary>Person's social media link that designed this theme</summary>
-        public string AuthorSocialMediaLink;
+        public string AuthorSocialMediaLink = string.Empty;
 
         /// <summary>Descriptive color 1. It should give the user a figure about your theme.</summary>
-        public Color Color1;
+        public Color Color1 = Color.FromArgb(0, 102, 204);
 
         /// <summary>Descriptive color 2. It should give the user a figure about your theme.</summary>
-        public Color Color2;
+        public Color Color2 = Color.FromArgb(122, 9, 9);
 
         /// <summary>Decorative pattern for your theme displayed in WinPaletter Store. It can be any value from 0 to 10</summary>
-        public int Pattern;
+        public int Pattern = 1;
 
         ///// <summary>
         ///// This theme is designed especially for Windows 12
         ///// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         ///// </summary>
-        //public bool DesignedFor_Win12;
+        //public bool DesignedFor_Win12 = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 11
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win11;
+        public bool DesignedFor_Win11 = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 10
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win10;
+        public bool DesignedFor_Win10 = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 8.1
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win81;
+        public bool DesignedFor_Win81 = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 7
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win7;
+        public bool DesignedFor_Win7 = true;
 
         /// <summary>
         /// This theme is designed especially for Windows Vista
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_WinVista;
+        public bool DesignedFor_WinVista = true;
 
         /// <summary>
         /// This theme is designed especially for Windows XP
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_WinXP;
+        public bool DesignedFor_WinXP = true;
+
+        /// <summary>
+        /// Creates a new instance of Info structure
+        /// </summary>
+        public Info() { }
 
         /// <summary>
         /// Loads theme info from registry

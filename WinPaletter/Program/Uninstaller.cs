@@ -61,16 +61,16 @@ namespace WinPaletter
             {
                 if (!OS.WXP)
                 {
-                    Theme.Manager.ResetCursorsToAero();
+                    Theme.Structures.Cursors.ResetCursorsToAero();
                     if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                        Theme.Manager.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
+                        Theme.Structures.Cursors.ResetCursorsToAero(@"HKEY_USERS\.DEFAULT");
                 }
 
                 else
                 {
-                    Theme.Manager.ResetCursorsToNone_XP();
+                    Theme.Structures.Cursors.ResetCursorsToNone_XP();
                     if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                        Theme.Manager.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
+                        Theme.Structures.Cursors.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
                 }
 
                 try { System.IO.Directory.Delete(SysPaths.appData, true); }

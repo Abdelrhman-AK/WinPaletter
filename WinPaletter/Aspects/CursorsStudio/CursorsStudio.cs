@@ -107,7 +107,7 @@ namespace WinPaletter
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
                 ApplyToTM(Program.TM_Original);
-                TMx.Apply_Cursors();
+                TMx.Cursors.Apply();
             }
 
             Cursor = Cursors.Default;
@@ -199,27 +199,27 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
-            AspectEnabled = TM.Cursor_Enabled;
-            CheckBox9.Checked = TM.Cursor_Shadow;
-            trackBarX9.Value = TM.Cursor_Trails;
-            CheckBox10.Checked = TM.Cursor_Sonar;
-            CursorTM_to_Cursor(Arrow, TM.Cursor_Arrow);
-            CursorTM_to_Cursor(Help, TM.Cursor_Help);
-            CursorTM_to_Cursor(AppLoading, TM.Cursor_AppLoading);
-            CursorTM_to_Cursor(Busy, TM.Cursor_Busy);
-            CursorTM_to_Cursor(Move_Cur, TM.Cursor_Move);
-            CursorTM_to_Cursor(NS, TM.Cursor_NS);
-            CursorTM_to_Cursor(EW, TM.Cursor_EW);
-            CursorTM_to_Cursor(NESW, TM.Cursor_NESW);
-            CursorTM_to_Cursor(NWSE, TM.Cursor_NWSE);
-            CursorTM_to_Cursor(Up, TM.Cursor_Up);
-            CursorTM_to_Cursor(Pen, TM.Cursor_Pen);
-            CursorTM_to_Cursor(None, TM.Cursor_None);
-            CursorTM_to_Cursor(Link, TM.Cursor_Link);
-            CursorTM_to_Cursor(Pin, TM.Cursor_Pin);
-            CursorTM_to_Cursor(Person, TM.Cursor_Person);
-            CursorTM_to_Cursor(IBeam, TM.Cursor_IBeam);
-            CursorTM_to_Cursor(Cross, TM.Cursor_Cross);
+            AspectEnabled = TM.Cursors.Enabled;
+            CheckBox9.Checked = TM.Cursors.Shadow;
+            trackBarX9.Value = TM.Cursors.Trails;
+            CheckBox10.Checked = TM.Cursors.Sonar;
+            CursorTM_to_Cursor(Arrow, TM.Cursors.Cursor_Arrow);
+            CursorTM_to_Cursor(Help, TM.Cursors.Cursor_Help);
+            CursorTM_to_Cursor(AppLoading, TM.Cursors.Cursor_AppLoading);
+            CursorTM_to_Cursor(Busy, TM.Cursors.Cursor_Busy);
+            CursorTM_to_Cursor(Move_Cur, TM.Cursors.Cursor_Move);
+            CursorTM_to_Cursor(NS, TM.Cursors.Cursor_NS);
+            CursorTM_to_Cursor(EW, TM.Cursors.Cursor_EW);
+            CursorTM_to_Cursor(NESW, TM.Cursors.Cursor_NESW);
+            CursorTM_to_Cursor(NWSE, TM.Cursors.Cursor_NWSE);
+            CursorTM_to_Cursor(Up, TM.Cursors.Cursor_Up);
+            CursorTM_to_Cursor(Pen, TM.Cursors.Cursor_Pen);
+            CursorTM_to_Cursor(None, TM.Cursors.Cursor_None);
+            CursorTM_to_Cursor(Link, TM.Cursors.Cursor_Link);
+            CursorTM_to_Cursor(Pin, TM.Cursors.Cursor_Pin);
+            CursorTM_to_Cursor(Person, TM.Cursors.Cursor_Person);
+            CursorTM_to_Cursor(IBeam, TM.Cursors.Cursor_IBeam);
+            CursorTM_to_Cursor(Cross, TM.Cursors.Cursor_Cross);
 
             foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
             {
@@ -229,27 +229,27 @@ namespace WinPaletter
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            TM.Cursor_Enabled = AspectEnabled;
-            TM.Cursor_Shadow = CheckBox9.Checked;
-            TM.Cursor_Trails = trackBarX9.Value;
-            TM.Cursor_Sonar = CheckBox10.Checked;
-            TM.Cursor_Arrow = Cursor_to_CursorTM(Arrow);
-            TM.Cursor_Help = Cursor_to_CursorTM(Help);
-            TM.Cursor_AppLoading = Cursor_to_CursorTM(AppLoading);
-            TM.Cursor_Busy = Cursor_to_CursorTM(Busy);
-            TM.Cursor_Move = Cursor_to_CursorTM(Move_Cur);
-            TM.Cursor_NS = Cursor_to_CursorTM(NS);
-            TM.Cursor_EW = Cursor_to_CursorTM(EW);
-            TM.Cursor_NESW = Cursor_to_CursorTM(NESW);
-            TM.Cursor_NWSE = Cursor_to_CursorTM(NWSE);
-            TM.Cursor_Up = Cursor_to_CursorTM(Up);
-            TM.Cursor_Pen = Cursor_to_CursorTM(Pen);
-            TM.Cursor_None = Cursor_to_CursorTM(None);
-            TM.Cursor_Link = Cursor_to_CursorTM(Link);
-            TM.Cursor_Pin = Cursor_to_CursorTM(Pin);
-            TM.Cursor_Person = Cursor_to_CursorTM(Person);
-            TM.Cursor_IBeam = Cursor_to_CursorTM(IBeam);
-            TM.Cursor_Cross = Cursor_to_CursorTM(Cross);
+            TM.Cursors.Enabled = AspectEnabled;
+            TM.Cursors.Shadow = CheckBox9.Checked;
+            TM.Cursors.Trails = trackBarX9.Value;
+            TM.Cursors.Sonar = CheckBox10.Checked;
+            TM.Cursors.Cursor_Arrow = Cursor_to_CursorTM(Arrow);
+            TM.Cursors.Cursor_Help = Cursor_to_CursorTM(Help);
+            TM.Cursors.Cursor_AppLoading = Cursor_to_CursorTM(AppLoading);
+            TM.Cursors.Cursor_Busy = Cursor_to_CursorTM(Busy);
+            TM.Cursors.Cursor_Move = Cursor_to_CursorTM(Move_Cur);
+            TM.Cursors.Cursor_NS = Cursor_to_CursorTM(NS);
+            TM.Cursors.Cursor_EW = Cursor_to_CursorTM(EW);
+            TM.Cursors.Cursor_NESW = Cursor_to_CursorTM(NESW);
+            TM.Cursors.Cursor_NWSE = Cursor_to_CursorTM(NWSE);
+            TM.Cursors.Cursor_Up = Cursor_to_CursorTM(Up);
+            TM.Cursors.Cursor_Pen = Cursor_to_CursorTM(Pen);
+            TM.Cursors.Cursor_None = Cursor_to_CursorTM(None);
+            TM.Cursors.Cursor_Link = Cursor_to_CursorTM(Link);
+            TM.Cursors.Cursor_Pin = Cursor_to_CursorTM(Pin);
+            TM.Cursors.Cursor_Person = Cursor_to_CursorTM(Person);
+            TM.Cursors.Cursor_IBeam = Cursor_to_CursorTM(IBeam);
+            TM.Cursors.Cursor_Cross = Cursor_to_CursorTM(Cross);
 
         }
 
@@ -264,7 +264,7 @@ namespace WinPaletter
             DesignerData data = new(this)
             {
                 AspectName = Program.Lang.Store_Toggle_Cursors,
-                Enabled = Program.TM.Cursor_Enabled,
+                Enabled = Program.TM.Cursors.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
                 GeneratePalette = false,

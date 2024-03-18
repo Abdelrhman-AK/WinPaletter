@@ -63,45 +63,45 @@
             if (Icons != TMx.Icons) _Equals = false;
 
 
-            if (Cursor_Enabled != TMx.Cursor_Enabled) _Equals = false;
+            if (Cursors.Enabled != TMx.Cursors.Enabled) _Equals = false;
 
-            if (Cursor_Trails != TMx.Cursor_Trails) _Equals = false;
+            if (Cursors.Trails != TMx.Cursors.Trails) _Equals = false;
 
-            if (Cursor_Shadow != TMx.Cursor_Shadow) _Equals = false;
+            if (Cursors.Shadow != TMx.Cursors.Shadow) _Equals = false;
 
-            if (Cursor_Arrow != TMx.Cursor_Arrow) _Equals = false;
+            if (Cursors.Cursor_Arrow != TMx.Cursors.Cursor_Arrow) _Equals = false;
 
-            if (Cursor_Help != TMx.Cursor_Help) _Equals = false;
+            if (Cursors.Cursor_Help != TMx.Cursors.Cursor_Help) _Equals = false;
 
-            if (Cursor_AppLoading != TMx.Cursor_AppLoading) _Equals = false;
+            if (Cursors.Cursor_AppLoading != TMx.Cursors.Cursor_AppLoading) _Equals = false;
 
-            if (Cursor_Busy != TMx.Cursor_Busy) _Equals = false;
+            if (Cursors.Cursor_Busy != TMx.Cursors.Cursor_Busy) _Equals = false;
 
-            if (Cursor_Move != TMx.Cursor_Move) _Equals = false;
+            if (Cursors.Cursor_Move != TMx.Cursors.Cursor_Move) _Equals = false;
 
-            if (Cursor_NS != TMx.Cursor_NS) _Equals = false;
+            if (Cursors.Cursor_NS != TMx.Cursors.Cursor_NS) _Equals = false;
 
-            if (Cursor_EW != TMx.Cursor_EW) _Equals = false;
+            if (Cursors.Cursor_EW != TMx.Cursors.Cursor_EW) _Equals = false;
 
-            if (Cursor_NESW != TMx.Cursor_NESW) _Equals = false;
+            if (Cursors.Cursor_NESW != TMx.Cursors.Cursor_NESW) _Equals = false;
 
-            if (Cursor_NWSE != TMx.Cursor_NWSE) _Equals = false;
+            if (Cursors.Cursor_NWSE != TMx.Cursors.Cursor_NWSE) _Equals = false;
 
-            if (Cursor_Up != TMx.Cursor_Up) _Equals = false;
+            if (Cursors.Cursor_Up != TMx.Cursors.Cursor_Up) _Equals = false;
 
-            if (Cursor_Pen != TMx.Cursor_Pen) _Equals = false;
+            if (Cursors.Cursor_Pen != TMx.Cursors.Cursor_Pen) _Equals = false;
 
-            if (Cursor_None != TMx.Cursor_None) _Equals = false;
+            if (Cursors.Cursor_None != TMx.Cursors.Cursor_None) _Equals = false;
 
-            if (Cursor_Link != TMx.Cursor_Link) _Equals = false;
+            if (Cursors.Cursor_Link != TMx.Cursors.Cursor_Link) _Equals = false;
 
-            if (Cursor_Pin != TMx.Cursor_Pin) _Equals = false;
+            if (Cursors.Cursor_Pin != TMx.Cursors.Cursor_Pin) _Equals = false;
 
-            if (Cursor_Person != TMx.Cursor_Person) _Equals = false;
+            if (Cursors.Cursor_Person != TMx.Cursors.Cursor_Person) _Equals = false;
 
-            if (Cursor_IBeam != TMx.Cursor_IBeam) _Equals = false;
+            if (Cursors.Cursor_IBeam != TMx.Cursors.Cursor_IBeam) _Equals = false;
 
-            if (Cursor_Cross != TMx.Cursor_Cross) _Equals = false;
+            if (Cursors.Cursor_Cross != TMx.Cursors.Cursor_Cross) _Equals = false;
 
 
             if (CommandPrompt != TMx.CommandPrompt) _Equals = false;
