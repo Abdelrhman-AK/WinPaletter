@@ -2,6 +2,67 @@
 
 ---
 
+### 1.0.8.8
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Beta`   | 19 Mar 2024  |
+
+⚠️ **Warning**
+If you are using command lines, type `WinPaletter -?` in any terminal to know new commands formats
+
+# The same as 1.0.8.5, 1.0.8.6, and 1.0.8.7 except for a new feature, some application improvements and bugs fixes:
+
+### New feature: Windows Icons
+
+- This new feature will allow you to modify desktop icons, certain explorer icons, control panel icons on the main page, and shell32.dll.
+- It won't patch system files; this process involves modifying the registry exclusively.
+
+### Application improvements
+1- Welcome dialog: it will give you quick tips about editing aspects, themes backup and finally an alert (#212) about using third-party tools.
+2- New automatic backup timing: after pressing 'Apply' in a single Windows aspect form.
+3- Parital support for Rectify11 (by fixing an issue in the last release of reapplying aero.msstyles instead of the previous msstyles) #210.
+4- Metrics and Fonts: Now, you can import preferences from a classic .theme file.
+5- Metrics and Fonts: Presets (like Classic Colors) from different Windows editions are introduced.
+6- Ability to generate .theme files including classic colors, metrics and fonts.
+7- Minor changes in Windows Effects layout: new section: Taskbar including show seconds, enable win 7 sndvol. and Win 11 spinning dots boot screen is moved to Miscellaneous.
+8- Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects > Taskbar for all Windows editions.
+9- Making Windows Effect's toggle enabled will display confirmation alert.
+10- Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
+11- Store item redesign, and new patterns are introduced in theme edit form.
+12- Making close with tabs open dialog is shown first before saving theme dialog.
+13- Making bug report shows error message instead of error type in bug report title. (indirect issue in #224)
+14- UI improvements
+
+### Bug fixes
+1- Fix Terminal two exception errors in a list on loading a WinPaletter theme file due to the inability to deserialize the current JSON array into type 'WinPaletter.WinTerminal+Types+Profiles' because the type requires a JSON object to deserialize.
+2- Fix merging user preference mask (UPM) to default account even if this is disabled in settings.
+3- Fix issues related to toggles, where Windows Switcher (Alt+Tab) and LogonUI (Windows 10/11) are not saveable #212.
+4- Fix the problem where pressing "apply" in Windows color doesn't load edited preferences in the current theme; apply should apply edited preferences and load them into the current open theme.
+5- Fix the absence of "Classic Colors" in the WinPaletter Store aspects check dialog.
+6- Fix in metrics and fonts: caption font not synced with menu and misc previews.
+7- Fix in metrics and fonts: icons font not synced with icons previews.
+8- Fix Windows XP metrics loading padded border width with 4 as a default value to fix the wrong classic theme preview.
+9- Fix cursor render (help) when font "Segoe UI Black" doesn't exist #224.
+10- Fix misc. section preview in metrics and fonts with classic mode is on due to wrong WindowText colors.
+11- Fix window caption buttons preview with classic mode is on and maladjusted close content 'x' and other control box buttons using the 'Marlett' font.
+12- Fix the issue of System.OutOfMemoryException: 'Out of memory.' occurring when a new theme is applied, followed by opening a new tab or form with a combo box in it.
+13- Fix the app crash that occurs when starting with the classic theme enabled.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.4`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.4...v1.0.8.8) |
+| Previous Beta   | `1.0.8.7`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.7...v1.0.8.8) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.8) |
+
+---
+
 ### 1.0.8.7
 
 > **Info:**
