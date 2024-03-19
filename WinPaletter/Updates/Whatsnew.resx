@@ -186,6 +186,41 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="label39.Text" xml:space="preserve">
+    <value>● Fix Terminal two exception errors in a list on loading a WinPaletter theme file due to the inability to deserialize the current JSON array into type 'WinPaletter.WinTerminal+Types+Profiles' because the type requires a JSON object to deserialize.
+● Fix merging user preference mask (UPM) to default account even if this is disabled in settings.
+● Fix issues related to toggles, where Windows Switcher (Alt+Tab) and LogonUI (Windows 10/11) are not saveable.
+● Fix the problem where pressing "apply" in Windows color doesn't load edited preferences in the current theme; apply should apply edited preferences and load them into the current open theme.
+● Fix the absence of "Classic Colors" in the WinPaletter Store aspects check dialog.
+● Fix in metrics and fonts: caption font not synced with menu and misc previews.
+● Fix in metrics and fonts: icons font not synced with icons previews.
+● Fix Windows XP metrics loading padded border width with 4 as a default value to fix the wrong classic theme preview.
+● Fix cursor render (help) when font "Segoe UI Black" doesn't exist.
+● Fix miscellaneous section preview in metrics and fonts with classic mode is on due to wrong WindowText colors.
+● Fix window caption buttons preview with classic mode is on and maladjusted close content 'x' and other control box buttons using the 'Marlett' font.
+● Fix the issue of System.OutOfMemoryException: 'Out of memory.' occurring when a new theme is applied, followed by opening a new tab or form with a combo box in it.
+● Fix the app crash that occurs when starting with the classic theme enabled.</value>
+  </data>
+  <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA1ZJREFUSEvt
+        lV9IU1Ecx8/FFMOiP28JaqkP2UuJRUwiNKcznc79cdp0m25uzm3+yaXTrFh/iFCpUHtQqehFH1IDpUiL
+        BLEnywzNMtRE11DSVaKmRZ3O2T2jpfc6td7qCx92z/2e3+fA7v6Afzv6gqIKtcEQQJZuk6HT7dYXmivI
+        cv2Rq7PrJKny0TiRyHFocXHxVmNRiTj3VInZgalUpNdbtuAuLk4UIJYp3sm1ObV4vdFQUbH8mqORXKtC
+        o7ueZcifQcBlTCuzsq8diYiyRscnVuMZenSDSVEqg6TpGfa0TA1cDWm60i6WqQLJ2MaSlJSxXZgiGxNK
+        ZXAtiKSy0eTk5G1kfP3RqKL7YhOEcD1o1VF9ZNx99CdLgtGL4xks9XgIHtb5QrU8HEZweWsiC+1tr/eF
+        i889ErADhSLOldFqtZ5Z+jxr8glFXyQvTva1G3R9ewogZqjJB9686A9LdSFQKQ2FAv4hB/ga37t1yQ8O
+        Nfs49mLQbGdUzPE07FLr8yYsFssmcszvQe+/F18oUUiSOCNLT9BgJzO2NhqmDrOIZsWC8GHswk6iZ8/s
+        Aw/NYjsaZMHaQsPUOUEOFdG5z0IruPGlFUA2xhtpmDonyFFFdO4zfxe0zDcByMbYHRqmzoUmonOfuQbw
+        CAHZGK2nYepc6CC6lck3m/1VObn9Epl8hBvLH+k4v2Nu9jZ6DiwM19AwdU7akQO7sBO79YVlfuQ4ANDH
+        1itTZzyGfny5XF48d7Dc+/7nWgDZeHuVhqlzMlC+uQ27sBO78deOHLcy9mqg+1hNQTbeXKFh6px8qgIa
+        onOfmUqwz15JQTZeX6Bh6pxMV4K9ROc+YWFhnoNnvd9PX0aDDAyU0TB1mFdnvK3YQXSrJ1GcGor+2wbO
+        SfZMfrBQkIn+YhqmDlMmCZzEDuwiWubo8k28VIVqgRef2MDjcHZOlVJdCLicl/k0TB3iMQfNxsQLGpFr
+        HjuJfmUKik4fyMw2CMgS2ApAyJSJsk+aKOjKCx3N8vuIGZvp17PDrtxC836yXFsmDeCwzYhERgo66VXR
+        uN5DTNuM4CAZ+7OMq4DvhJa6Z9VSPxCwJ50GXyO+I5rHtGAX2f73MqEGwRMZoKQ3lep+lkJ1o2vzuBIE
+        kfp/UAD4CRp4YiYir2WiAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>● In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.
 
@@ -298,7 +333,11 @@
 </value>
   </data>
   <data name="label16.Text" xml:space="preserve">
-    <value>● Per-element modifier: Click on an element in the preview to alter its font and drag-and-drop to adjust its sizes.
+    <value>● Now, you can import preferences from a classic .theme file.
+
+● Presets (like Classic Colors) from different Windows editions are introduced.
+
+● Per-element modifier: Click on an element in the preview to alter its font and drag-and-drop to adjust its sizes.
 
 ● Resolved a visual bug related to applying fonts with high DPI settings, preventing issues such as small or large fonts and irregular icon sizes not aligned with the selected DPI (scaling) value.</value>
   </data>
@@ -376,7 +415,9 @@
 </value>
   </data>
   <data name="label47.Text" xml:space="preserve">
-    <value>● LogonUI now supports preview for Windows 10 and 11.
+    <value>● In the Windows Effects layout, a new section has been added for the Taskbar, encompassing options such as displaying seconds and enabling Win 7 sndvol, while the Win 11 spinning dots boot screen has been relocated to Miscellaneous.
+
+● LogonUI now supports preview for Windows 10 and 11.
 
 ● Screen Saver: Lists installed screensavers on the system to assist users in selecting one.
 
@@ -403,6 +444,8 @@
     <value>● WinPaletter now introduces a new feature that allows you to automatically backup your themes.
 
 ● Backing up before applying themes is enabled by default in WinPaletter.
+
+● New automatic backup timing: after pressing 'Apply' in a single Windows aspect form.
 
 ● You can also back up upon application startup or when opening a theme file (these options are not enabled by default).
 
@@ -492,14 +535,17 @@
 </value>
   </data>
   <data name="label34.Text" xml:space="preserve">
-    <value>● Double-click on a tab to detach it, middle click to close it.
-● Aero Lite theme for Windows 10/11.
-● New 4 Classic Colors schemes: Windows 11 Contrast themes: Aquatic, Desert, Dusk, and Night Sky.
-● New sounds (Wi-Fi connection\disconnection\connection failure) in Devices section.
-● Help button for the current active tab (won't be visible if a tab doesn't provide a help link).
-● Changed message box of Windows Effects alert to another dialog with important tips, with a choice for not showing this dialog again.
-● Command argument: Silent apply (For example: `WinPaletter -a Theme.wpth -s` or `WinPaletter --apply Theme.wpth --silent`).
-● Minor UI improvements.</value>
+    <value>● Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects &gt; Taskbar for all Windows editions.
+
+● Making Windows Effect's toggle enabled will display confirmation alert.
+
+● Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
+
+● Making close with tabs open dialog is shown first before saving theme dialog.
+
+● Making bug report shows error message instead of error type in bug report title.
+
+● UI improvements</value>
   </data>
   <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -520,39 +566,34 @@
         i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="label39.Text" xml:space="preserve">
-    <value>● Fix bug of Windows 11/10 colors are not applicable.
-● Refix bug #214 when WinPaletter store is opened and closed, the bug reoccurs (home form is closed while the app is not closed, leaving a white rectangle).
-● Fix bug of Windows Terminal exception error (ex error on returning null to be set as a color for background and unfocusedBackground in tabSettings in themes).
-● Fix sounds not included in themes resources pack (Charger connected, Charger disconnected, Windows lock).
-● Fix Classic Colors Gallery scheme picker not showing the background color in thumbnails.
-● Fix per element modifier: clicking on the menu with flat menu enabled modified button face instead.
-● Fix ex error on starting WinPaletter with a desktop with slideshow and directory of images doesn't exist.
-● Fix visual styles import if using a msstyles newer than Windows XP in Metrics and Fonts.
-● Fix ex error on importing a visual styles (*.msstyles) if a .theme file is selected from the open file dialog.
-● Fix press edit button in the store doesn't fully apply WinPaletter theme in open forms.
-● Fix dragging area below store tab moves the form with glitches.
-● Fix exception error when adding a form into tabs (inaccessible form icon).
-● Fix browse for wav wrong titles in sounds.</value>
+  <data name="label4.Text" xml:space="preserve">
+    <value>● This new feature will allow you to modify desktop icons, certain explorer icons, control panel icons on the main page, and shell32.dll.
+
+● It won't patch system files; this process involves modifying the registry exclusively.</value>
   </data>
-  <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="banner14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA1ZJREFUSEvt
-        lV9IU1Ecx8/FFMOiP28JaqkP2UuJRUwiNKcznc79cdp0m25uzm3+yaXTrFh/iFCpUHtQqehFH1IDpUiL
-        BLEnywzNMtRE11DSVaKmRZ3O2T2jpfc6td7qCx92z/2e3+fA7v6Afzv6gqIKtcEQQJZuk6HT7dYXmivI
-        cv2Rq7PrJKny0TiRyHFocXHxVmNRiTj3VInZgalUpNdbtuAuLk4UIJYp3sm1ObV4vdFQUbH8mqORXKtC
-        o7ueZcifQcBlTCuzsq8diYiyRscnVuMZenSDSVEqg6TpGfa0TA1cDWm60i6WqQLJ2MaSlJSxXZgiGxNK
-        ZXAtiKSy0eTk5G1kfP3RqKL7YhOEcD1o1VF9ZNx99CdLgtGL4xks9XgIHtb5QrU8HEZweWsiC+1tr/eF
-        i889ErADhSLOldFqtZ5Z+jxr8glFXyQvTva1G3R9ewogZqjJB9686A9LdSFQKQ2FAv4hB/ga37t1yQ8O
-        Nfs49mLQbGdUzPE07FLr8yYsFssmcszvQe+/F18oUUiSOCNLT9BgJzO2NhqmDrOIZsWC8GHswk6iZ8/s
-        Aw/NYjsaZMHaQsPUOUEOFdG5z0IruPGlFUA2xhtpmDonyFFFdO4zfxe0zDcByMbYHRqmzoUmonOfuQbw
-        CAHZGK2nYepc6CC6lck3m/1VObn9Epl8hBvLH+k4v2Nu9jZ6DiwM19AwdU7akQO7sBO79YVlfuQ4ANDH
-        1itTZzyGfny5XF48d7Dc+/7nWgDZeHuVhqlzMlC+uQ27sBO78deOHLcy9mqg+1hNQTbeXKFh6px8qgIa
-        onOfmUqwz15JQTZeX6Bh6pxMV4K9ROc+YWFhnoNnvd9PX0aDDAyU0TB1mFdnvK3YQXSrJ1GcGor+2wbO
-        SfZMfrBQkIn+YhqmDlMmCZzEDuwiWubo8k28VIVqgRef2MDjcHZOlVJdCLicl/k0TB3iMQfNxsQLGpFr
-        HjuJfmUKik4fyMw2CMgS2ApAyJSJsk+aKOjKCx3N8vuIGZvp17PDrtxC836yXFsmDeCwzYhERgo66VXR
-        uN5DTNuM4CAZ+7OMq4DvhJa6Z9VSPxCwJ50GXyO+I5rHtGAX2f73MqEGwRMZoKQ3lep+lkJ1o2vzuBIE
-        kfp/UAD4CRp4YiYir2WiAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAARmSURBVEhL7ZRrTJtlGIarzt8mmybSYejGaaWcRkE5UxhsEOWg2yKJ2Q+dc25xZiYb0cw4kyEi
+        R8FRxsZJQU6BsQy2qWMCGcsmMstQoIxABhTo+QQF29Ldvu/XjwBbIQT5p3dypf3avs+V++nXcv67Kd+t
+        iiLkXPJV1hXzFZWFbtPHMrbLtrFvb16qX9M414SoO2pDNPgxWIMfgtQo81ei2EuOArcpfQ5P9iH70X+f
+        2iDNK/VhWlljlA6XRXrQx7owLSMlTXHecxo5vEnk8ibPskeYVANBmSqcYi/Xn5oQTWeTSIeWOAOu7TPi
+        aqyBkdKmZL0Qk5Z5O6eo9HE2b0JEz7QDWypt6Dv90Gb56hGcmEHrSWWQMpK2aY7R43qCEW1Js4z0crQe
+        taEaVASoUCxQIN+VESJnx2QbPVdhw4mKBeCjfis+HV24ywxbTyqFyozaUC2zyta9BtwgUtq0iTQkzRnh
+        sobIcZm0XvptfkepFYYyK3C0z4z3JGZ8Pr6QxI5cO6X+qipyw6AhnEhJK9qUrreeXFe9qkapH/kOd8nt
+        MsI3Lo8gnrI2l5iBiwQqO9T9N471mXUc4Bl27Oq56K0opi2olDal66WrpDL6/V0g6yxwt9802TwZ0g+M
+        oGgOj4vmATHh0O/zSL07h7cJJx9a8tmxq6fQY+pIibcCZWR4pVCF7wPVqBAqccFvHGLBFAo97DJKhusI
+        cvvmrQWzQKEJ+I6Qes+E/V2zeItAni+kSU1cdrTj5DlPbCVD9WK+HEVeMpQIunHL/xR6PSPQ7bMf1fxy
+        fO0ygizeONLPTCDXCOTNAPksB+7MIqlzBokddt6VzHWzo1dPNu/Pj1t80nHfay8kXC9InHat4MHOQHQK
+        30dha7ctQ2VBlh7INgA5RJ7caUT8LcMSvxrwwYAphR29MsMJCS8NBUa39rkGmJ+UOGS7F+5EvoHy81VI
+        Vy0gUwcktBuw5xc9QccQ87MOKbeNjm+gQVGKSBrxumrQP2qkz3W31aHEAV3uQpydtuCcGoht0yHyhtbO
+        dS0iWFJ7TGJWsxQqHIpOBkNUkk0aHDc04Bsu73V+eq3L6XIT4ozMgi8UQORPWoS0qBmCl0GktnfuzTmz
+        KntWCJdBWk/0C0LGHMkoVJg2ZsFn00DoNQ0Cr6gYhIs0KxFAiO/U/8Gq7FlNSPnLO3TYkYxChZ+MWnBa
+        Rv69r6rg16SAL6VxCR9CUIvakthufJHVbVx4mwhPDFtwcgzwJ028GuTg11OmGQKuqMzxHYY8UTu2sCp7
+        Nix0FeLokAXHRwEBkbnXTMGN4NOkmI9p02c+JVrMRoU9zoKZwwPW9iPDgHvdNASNclP4Td05TgOeY0c7
+        zkaFEi6f+Z0dHkZi2E19lrAHz7Mj185I7MEXpKLkbGl0smm9wl4n/ux9Lj+NHbGx9O87uHUoJuVLItKv
+        KuTytRKux3H2yOZkcM+b21ixYVHYy/XUbbroyUjjkrgPvEO+lbzMzwKH8yz78v9ZIxzOP7YkOioAzzDM
+        AAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

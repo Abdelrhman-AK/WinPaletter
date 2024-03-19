@@ -107,14 +107,21 @@ namespace WinPaletter
             winIcon1.Text = OS.W8x || OS.W10 || OS.W11 || OS.W12 ? "This PC" : "Computer";
             label3.Text = winIcon1.Text;
 
-            using (Icon sysdrv = PE.GetIcon(SysPaths.imageres, -36))
+            if (!OS.WXP)
             {
-                if (sysdrv != null) pictureBox1.Image = sysdrv.ToBitmap();
+                using (Icon sysdrv = PE.GetIcon(SysPaths.imageres, -36))
+                {
+                    if (sysdrv != null) pictureBox1.Image = sysdrv.ToBitmap();
+                }
             }
 
             using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -9))
             {
-                if (drv != null) pictureBox6.Image = drv.ToBitmap();
+                if (drv != null)
+                {
+                    pictureBox6.Image = drv.ToBitmap();
+                    if (OS.WXP) pictureBox1.Image = drv.ToBitmap();
+                }
             }
 
             using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -8))

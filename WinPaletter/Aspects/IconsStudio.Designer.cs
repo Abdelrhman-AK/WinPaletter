@@ -286,7 +286,7 @@
             this.checkBox4.Checked = false;
             this.checkBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox4.ForeColor = System.Drawing.Color.White;
-            this.checkBox4.Location = new System.Drawing.Point(4, 90);
+            this.checkBox4.Location = new System.Drawing.Point(4, 119);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(236, 23);
             this.checkBox4.TabIndex = 236;
@@ -299,7 +299,7 @@
             this.checkBox3.Checked = false;
             this.checkBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox3.ForeColor = System.Drawing.Color.White;
-            this.checkBox3.Location = new System.Drawing.Point(4, 119);
+            this.checkBox3.Location = new System.Drawing.Point(4, 61);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(236, 23);
             this.checkBox3.TabIndex = 236;
@@ -312,7 +312,7 @@
             this.checkBox5.Checked = false;
             this.checkBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox5.ForeColor = System.Drawing.Color.White;
-            this.checkBox5.Location = new System.Drawing.Point(4, 61);
+            this.checkBox5.Location = new System.Drawing.Point(4, 90);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(236, 23);
             this.checkBox5.TabIndex = 236;
@@ -327,7 +327,7 @@
             this.groupBox8.Controls.Add(this.button13);
             this.groupBox8.Controls.Add(this.textBox6);
             this.groupBox8.Controls.Add(this.button14);
-            this.groupBox8.Location = new System.Drawing.Point(6, 336);
+            this.groupBox8.Location = new System.Drawing.Point(6, 204);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(248, 60);
             this.groupBox8.TabIndex = 241;
@@ -517,7 +517,7 @@
             this.groupBox6.Controls.Add(this.label4);
             this.groupBox6.Controls.Add(this.button10);
             this.groupBox6.Controls.Add(this.textBox4);
-            this.groupBox6.Location = new System.Drawing.Point(6, 204);
+            this.groupBox6.Location = new System.Drawing.Point(6, 336);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(248, 60);
             this.groupBox6.TabIndex = 239;
@@ -600,7 +600,7 @@
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.button6);
             this.groupBox4.Controls.Add(this.textBox2);
-            this.groupBox4.Location = new System.Drawing.Point(6, 270);
+            this.groupBox4.Location = new System.Drawing.Point(6, 138);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(248, 60);
             this.groupBox4.TabIndex = 227;
@@ -683,7 +683,7 @@
             this.groupBox7.Controls.Add(this.label5);
             this.groupBox7.Controls.Add(this.button12);
             this.groupBox7.Controls.Add(this.textBox5);
-            this.groupBox7.Location = new System.Drawing.Point(6, 138);
+            this.groupBox7.Location = new System.Drawing.Point(6, 270);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(248, 60);
             this.groupBox7.TabIndex = 238;
