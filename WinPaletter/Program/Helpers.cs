@@ -84,8 +84,6 @@ namespace WinPaletter
 
         private static void LoadThemeManager()
         {
-            FirstVisualStyles = UxTheme.GetCurrentVS().Item1 ?? SysPaths.Windows + "\\Resources\\Themes\\aero\\aero.msstyles";
-
             if (OS.W12)
                 WindowStyle = PreviewHelpers.WindowStyle.W12;
 
@@ -190,6 +188,8 @@ namespace WinPaletter
 
         private static void StartMonitors()
         {
+            FirstVisualStyles = UxTheme.GetCurrentVS().Item1 ?? SysPaths.Windows + "\\Resources\\Themes\\aero\\aero.msstyles";
+
             if (!OS.WXP)
             {
                 try { Monitor(); }

@@ -121,19 +121,22 @@ namespace WinPaletter
                     shouldExit = true;
                 }
 
-                if (o.Apply != null && System.IO.File.Exists(o.Apply))
+                if (o.Apply != null)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply, false, o.SilentApply))
+                    if (System.IO.File.Exists(o.Apply))
                     {
-                        Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
-                        TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
-                        if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
+                        using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply, false, o.SilentApply))
+                        {
+                            Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
+                            TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
+                            if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
 
-                        ExternalLink = true;
-                        ExternalLink_File = o.Apply;
-
-                        shouldExit = true;
+                            ExternalLink = true;
+                            ExternalLink_File = o.Apply;
+                        }
                     }
+
+                    shouldExit = true;
                 }
 
                 if (o.Edit != null && System.IO.File.Exists(o.Edit))

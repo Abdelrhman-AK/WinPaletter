@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
 
 namespace WinPaletter.Tabs
 {
@@ -181,21 +182,74 @@ namespace WinPaletter.Tabs
 
                 if (p != Padding.Empty)
                 {
+                    Form form = FindForm();
+
+                    if (form is not null) Forms.MainForm.Text = form.Text;
+
+                    if (form is not null && form.Parent is not null) form = form.Parent.FindForm();
+
+
                     if (DWMAPI.IsCompositionEnabled())
                     {
-                        BackColor = Color.Black;
-                        if (OS.W10)
+                        if (OS.WVista || OS.W7 || OS.W8x)
                         {
-                            FindForm()?.DropEffect(p, true, DWM.FormStyle.Aero);
+                            BackColor = Color.Black;
                         }
                         else
                         {
-                            FindForm()?.DropEffect(p);
+                            bool transparency = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1)) == 1;
+                            bool accentOnTitlebars = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1)) == 1;
+
+                            if (transparency)
+                            {
+                                BackColor = Color.Black;
+
+                                if (OS.W10)
+                                {
+                                    if (form is not null) form?.DropEffect(p, true, DWM.FormStyle.Aero);
+                                }
+                                else
+                                {
+                                    if (form is not null) form?.DropEffect(p);
+                                }
+                            }
+                            else if (accentOnTitlebars)
+                            {
+                                if (form is not null)
+                                {
+                                    Color activeTtl, inactiveTtl;
+
+                                    object y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse().ToArgb());
+                                    activeTtl = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+
+                                    y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse().ToArgb());
+                                    inactiveTtl = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+
+                                    BackColor = _formFocused ? activeTtl : inactiveTtl;
+
+                                    form?.ResetEffect();
+                                }
+                            }
+                            else
+                            {
+                                bool appUseLightMode = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0)) == 1;
+
+                                if (appUseLightMode)
+                                {
+                                    BackColor = Color.White;
+                                }
+                                else
+                                {
+                                    BackColor = Color.FromArgb(32, 32, 32);
+                                }
+
+                                form?.ResetEffect();
+                            }
                         }
                     }
                     else
                     {
-                        if (FindForm() != null)
+                        if (form is not null)
                         {
                             if (!Program.ClassicThemeRunning)
                             {

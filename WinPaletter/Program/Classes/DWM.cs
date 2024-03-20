@@ -112,6 +112,15 @@ namespace WinPaletter
         }
 
         /// <summary>
+        /// Reset a DWM effect applied on a form
+        /// </summary>
+        public static void ResetEffect(this Form Form)
+        {
+            DWMAPI.MARGINS DWM_Margins = new();
+            DWMAPI.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
+        }
+
+        /// <summary>
         /// Draws mica/tabbed effect (Windows 11 and later - Tabbed Style is for Windows 11 Build 22523 and Higher, if not, Mica will be used instead)
         /// </summary>
         public static void DrawMica(IntPtr Handle, Padding Margins, MicaStyle Style = MicaStyle.Mica)
