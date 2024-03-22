@@ -138,8 +138,8 @@ namespace WinPaletter
             }
 
             string guidText = Application.ProductName;
-            string RegPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
-            Registry.CurrentUser.OpenSubKey(RegPath, true).DeleteSubKeyTree(guidText, false);
+
+            DelKey($"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{guidText}");
 
             Program.UninstallDone = true;
 

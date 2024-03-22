@@ -37,5 +37,11 @@
         public string LoadingMode_ErrorDialog { get; set; } = "You can continue; the theme has been loaded without these elements";
         public string IconsImport_Shell32_1 { get; set; } = "Practice this feature with caution. Another shell32.dll may have different icons and indexes (IDs), which could lead to incorrect results.";
         public string IconsImport_Shell32_2 { get; set; } = "The best practice is to change every icon one by one manually. Would you like to proceed?";
+        public string SecureUxTheme_HookExplorerWarning { get; set; } = "Hooking explorer on Windows 10 is rather pointless, and can cause instability, high memory usage and bad performance in explorer. Do you want to continue?";
+        public string SecureUxTheme_Installed { get; set; } = "SecureUxTheme has been installed successfully.";
+        public string SecureUxTheme_Uninstalled { get; set; } = "SecureUxTheme has been uninstalled successfully.";
+        public string SecureUxTheme_Restart { get; set; } = "Please restart your Windows to apply the changes.";
+        public string SecureUxThemeNotInstalled0 { get; set; } = "SecureUxTheme is not installed. Please use the official tool from its GitHub repository instead.";
+        public string SecureUxThemeNotInstalled1 { get; set; } = "If it still doesn't work, please visit SecureUxTheme's GitHub repository and follow the instructions provided there. Alternatively, you can report any issues directly in the SecureUxTheme repository, rather than the WinPaletter repository.";
     }
 }

@@ -70,6 +70,9 @@ namespace WinPaletter
         private static Saving_ex_list _Saving_ex_list;
         public static Saving_ex_list Saving_ex_list => (_Saving_ex_list == null || _Saving_ex_list.IsDisposed) ? (_Saving_ex_list = CreateInstance(_Saving_ex_list)) : _Saving_ex_list;
 
+        private static SecureUxTheme_Setup _SecureUxTheme_Setup;
+        public static SecureUxTheme_Setup SecureUxTheme_Setup => (_SecureUxTheme_Setup == null || _SecureUxTheme_Setup.IsDisposed) ? (_SecureUxTheme_Setup = CreateInstance(_SecureUxTheme_Setup)) : _SecureUxTheme_Setup;
+
         private static AltTabEditor _AltTabEditor;
         public static AltTabEditor AltTabEditor => (_AltTabEditor == null || _AltTabEditor.IsDisposed) ? (_AltTabEditor = CreateInstance(_AltTabEditor)) : _AltTabEditor;
 

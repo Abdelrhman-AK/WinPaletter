@@ -46,7 +46,8 @@ namespace WinPaletter
 
                 public void Load()
                 {
-                    LicenseAccepted = Conversions.ToBoolean(GetReg(REG_General, "LicenseAccepted", false));
+                    // Renamed: LicenseAccepted_0, to avoid conflicts with the old version, as new license is MIT/LGPL Dual License
+                    LicenseAccepted = Conversions.ToBoolean(GetReg(REG_General, "LicenseAccepted_0", false));
                     WhatsNewRecord = (string[])GetReg(REG_General, "WhatsNewRecord", new[] { string.Empty });
                     MainFormWidth = GetReg(REG_General_MainForm, "MainFormWidth", 1110);
                     MainFormHeight = GetReg(REG_General_MainForm, "MainFormHeight", 725);
@@ -55,7 +56,7 @@ namespace WinPaletter
 
                 public void Save()
                 {
-                    EditReg(REG_General, "LicenseAccepted", LicenseAccepted, RegistryValueKind.DWord);
+                    EditReg(REG_General, "LicenseAccepted_0", LicenseAccepted, RegistryValueKind.DWord);
                     EditReg(REG_General, "WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString);
                     EditReg(REG_General_MainForm, "MainFormWidth", MainFormWidth, RegistryValueKind.DWord);
                     EditReg(REG_General_MainForm, "MainFormHeight", MainFormHeight, RegistryValueKind.DWord);

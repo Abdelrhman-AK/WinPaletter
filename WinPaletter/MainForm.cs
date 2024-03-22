@@ -29,7 +29,7 @@ namespace WinPaletter
             tabControl1.Visible = false;
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
-            if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.Welcome.ShowDialog();
+            if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Welcome);
             Program.Animator.ShowSync(tabControl1);
         }
 

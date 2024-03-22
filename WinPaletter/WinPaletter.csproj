@@ -385,10 +385,17 @@
     </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Filters.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
+    <Compile Include="SecureUxTheme\SecureUxTheme.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\GlobalVariables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
+    <Compile Include="SecureUxTheme\SecureUxTheme_Setup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SecureUxTheme\SecureUxTheme_Setup.Designer.cs">
+      <DependentUpon>SecureUxTheme_Setup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tabs\TabData.cs" />
     <Compile Include="Tabs\TabsContainer.cs">
       <SubType>Component</SubType>
@@ -1201,6 +1208,7 @@
     <Content Include="Icon.ico" />
     <Content Include="Resources\LICENSE.txt" />
     <None Include="Resources\MetricsFontsDB" />
+    <None Include="Resources\SecureUxTheme.zip" />
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
   <ItemGroup>
@@ -1399,6 +1407,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\BackupThemes_List.resx">
       <DependentUpon>BackupThemes_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SecureUxTheme\SecureUxTheme_Setup.resx">
+      <DependentUpon>SecureUxTheme_Setup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.cs</DependentUpon>

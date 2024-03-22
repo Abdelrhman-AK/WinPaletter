@@ -307,7 +307,15 @@ namespace WinPaletter.UI.Style
         #region Events/Overrides
         private static void TD_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
         {
-            // Process.Start(e.Href)
+            // Check if e.Href is a valid URL
+            Uri uriResult;
+            bool isValidUrl = Uri.TryCreate(e.Href, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+            if (isValidUrl)
+            {
+                // e.Href is a valid URL, proceed with opening it
+                System.Diagnostics.Process.Start(e.Href);
+            }
         }
 
         private static void TD_RadioButtonClicked(object sender, TaskDialogItemClickedEventArgs e)

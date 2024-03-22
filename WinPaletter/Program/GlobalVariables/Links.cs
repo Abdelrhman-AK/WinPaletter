@@ -78,6 +78,16 @@ namespace WinPaletter.GlobalVariables
         public readonly static string Store_2ndDB = $"{Store_RepositoryURL}/{branch_store}/store.wpdb{getRaw}";
 
         /// <summary>
+        /// Link to the SecureUxTheme repository's page.
+        /// </summary>
+        public readonly static string SecureUxThemeRepository = $"{GitHub}/namazso/SecureUxTheme";
+
+        /// <summary>
+        /// Link to the SecureUxTheme releases page.
+        /// </summary>
+        public readonly static string SecureUxThemeReleases = $"{GitHub}/namazso/SecureUxTheme/releases";
+
+        /// <summary>
         /// Links to WinPaletter Wiki pages.
         /// </summary>
         public static class Wiki

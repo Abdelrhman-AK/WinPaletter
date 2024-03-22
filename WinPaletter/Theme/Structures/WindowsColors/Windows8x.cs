@@ -133,21 +133,8 @@ namespace WinPaletter.Theme.Structures
                         {
                             UxTheme.EnableTheming(1);
                             UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
-                            try
-                            {
-                                Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast", true).DeleteSubKeyTree("Pre-High Contrast Scheme", false);
-                                if (treeView is not null)
-                                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_DeletingHighContrastThemes, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast"), "reg_del");
-                            }
-                            catch
-                            {
-                                // Do nothing
-                                Microsoft.Win32.Registry.CurrentUser.Close();
-                            }
-                            finally
-                            {
-                                Microsoft.Win32.Registry.CurrentUser.Close();
-                            }
+
+                            DelKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
 
                             EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
                             EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);

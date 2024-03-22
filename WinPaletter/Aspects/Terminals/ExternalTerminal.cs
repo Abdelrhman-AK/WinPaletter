@@ -32,7 +32,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -53,7 +53,7 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -67,7 +67,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -82,7 +82,7 @@ namespace WinPaletter
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -93,7 +93,7 @@ namespace WinPaletter
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -104,7 +104,7 @@ namespace WinPaletter
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -115,7 +115,7 @@ namespace WinPaletter
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -126,7 +126,7 @@ namespace WinPaletter
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -137,7 +137,7 @@ namespace WinPaletter
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(ComboBox1.SelectedItem.ToString())))
+            if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -336,7 +336,7 @@ namespace WinPaletter
         {
             ListBox.Items.Clear();
 
-            foreach (string x in Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames())
+            foreach (string x in GetSubKeys("HKEY_CURRENT_USER\\Console"))
             {
                 bool startupCondition = (x.ToLower() ?? string.Empty) == "%%Startup".ToLower();
                 bool systemRootCondition = (x.ToLower() ?? string.Empty) == "%SystemRoot%".ToLower();
@@ -354,7 +354,7 @@ namespace WinPaletter
         public void GetFromExtTerminal(string RegKey)
         {
 
-            if (!Registry.CurrentUser.OpenSubKey("Console", true).GetSubKeyNames().Contains(RegKey))
+            if (!GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(RegKey))
             {
                 MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

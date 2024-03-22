@@ -23,40 +23,25 @@ namespace WinPaletter
 
             try
             {
-                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
-                {
-                    IsInstalled = true;
-                }
-                else
-                {
-                    IsInstalled = false;
-                }
+                IsInstalled = RegKeyExists("HKEY_CURRENT_USER\\Software\\ExplorerPatcher");
             }
             catch
             {
                 IsInstalled = false;
-            }
-            finally
-            {
-                Microsoft.Win32.Registry.CurrentUser.Close();
             }
 
             if (!Program.Settings.ExplorerPatcher.Enabled_Force)
             {
                 if (IsInstalled && (OS.W12 || OS.W11))
                 {
-                    UseStart10 = Convert.ToBoolean(Reg_IO.GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
+                    UseStart10 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
                     try
                     {
-                        RegistryKey temp = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher");
-                        UseTaskbar10 = Convert.ToBoolean(temp.GetValue("OldTaskbar", true));
-                        TaskbarButton10 = (int)temp.GetValue("OrbStyle", 0) == 0;
-                        StartStyle = (StartStyles)Convert.ToInt32(temp.GetValue("StartUI_EnableRoundedCorners", StartStyles.NotRounded));
+                        UseTaskbar10 = Convert.ToBoolean(GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OldTaskbar", true));
+                        TaskbarButton10 = (int)GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OrbStyle", 0) == 0;
+                        StartStyle = (StartStyles)Convert.ToInt32(GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "StartUI_EnableRoundedCorners", StartStyles.NotRounded));
                     }
-                    finally
-                    {
-                        Microsoft.Win32.Registry.CurrentUser.Close();
-                    }
+                    catch { }
                 }
                 else
                 {

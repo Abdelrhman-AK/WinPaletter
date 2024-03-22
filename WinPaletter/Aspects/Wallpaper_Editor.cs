@@ -462,12 +462,7 @@ namespace WinPaletter
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            RegistryKey R1 = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-            string WallpaperPath = R1.GetValue("Wallpaper", null).ToString();
-            if (R1 is not null)
-                R1.Close();
-
-            TextBox1.Text = WallpaperPath;
+            TextBox1.Text = GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
         }
 
         private void Button4_Click(object sender, EventArgs e)

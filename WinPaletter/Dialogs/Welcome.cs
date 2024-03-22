@@ -19,8 +19,6 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
 
-            Forms.GlassWindow.Show();
-
             checkBox1.Checked = Program.Settings.Miscellaneous.ShowWelcomeDialog;
         }
 
@@ -58,9 +56,18 @@ namespace WinPaletter
 
         private void Welcome_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Forms.GlassWindow.Close();
             Program.Settings.Miscellaneous.ShowWelcomeDialog = checkBox1.Checked;
             Program.Settings.Miscellaneous.Save();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Links.SecureUxThemeReleases);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Forms.SecureUxTheme_Setup.ShowDialog();
         }
     }
 }

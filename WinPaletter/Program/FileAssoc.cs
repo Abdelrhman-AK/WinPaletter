@@ -52,29 +52,13 @@ namespace WinPaletter
         /// <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.WindowsXPThemePath")</param>
         public static void DeleteFileAssociation(string extension, string className)
         {
+            if (extension.Substring(0, 1) != ".") extension = $".{extension}";
 
-            if (extension.Substring(0, 1) != ".")
-                extension = $".{extension}";
-
-            RegistryKey mainKey, descriptionKey;
-            mainKey = Registry.CurrentUser.OpenSubKey(@"Software\Classes", true);
-            descriptionKey = Registry.CurrentUser.OpenSubKey(@"Software\WinPaletter", true);
-
-            try
-            {
-                mainKey.DeleteSubKeyTree(extension, false);
-                mainKey.DeleteSubKeyTree(className, false);
-
-                descriptionKey.DeleteValue("DisplayName", false);
-                descriptionKey.DeleteValue("Publisher", false);
-                descriptionKey.DeleteValue("Version", false);
-            }
-            catch { } // Ignore errors, we are just cleaning up
-            finally
-            {
-                if (mainKey is not null) mainKey.Close();
-                if (descriptionKey is not null) descriptionKey.Close();
-            }
+            DelKey($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}");
+            DelKey($"HKEY_CURRENT_USER\\Software\\Classes\\{className}");
+            DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName");
+            DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher");
+            DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Version");
 
             // Notify Windows that file associations have changed
             NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);

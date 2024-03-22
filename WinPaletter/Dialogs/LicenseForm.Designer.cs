@@ -94,7 +94,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(640, 400);
+            this.TextBox1.Size = new System.Drawing.Size(640, 490);
             this.TextBox1.TabIndex = 0;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -106,7 +106,7 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.Button2);
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 423);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 513);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(664, 48);
             this.bottom_buttons.TabIndex = 119;
@@ -116,7 +116,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(664, 471);
+            this.ClientSize = new System.Drawing.Size(664, 561);
             this.Controls.Add(this.TextBox1);
             this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -127,7 +127,7 @@ namespace WinPaletter
             this.MinimizeBox = false;
             this.Name = "LicenseForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MIT License";
+            this.Text = "MIT/LGPL Dual License";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.LicenseForm_Load);
             this.bottom_buttons.ResumeLayout(false);

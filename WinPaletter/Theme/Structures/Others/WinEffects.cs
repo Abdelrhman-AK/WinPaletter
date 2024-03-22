@@ -337,42 +337,20 @@ namespace WinPaletter.Theme.Structures
 
             try
             {
-                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32") is not null)
-                {
-                    Win11ClassicContextMenu = true;
-                }
-                else
-                {
-                    Win11ClassicContextMenu = false;
-                }
+                Win11ClassicContextMenu = RegKeyExists("HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32");
             }
             catch
             {
                 Win11ClassicContextMenu = @default.Win11ClassicContextMenu;
             }
-            finally
-            {
-                Microsoft.Win32.Registry.CurrentUser.Close();
-            }
 
             try
             {
-                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32") is not null)
-                {
-                    SysListView32 = true;
-                }
-                else
-                {
-                    SysListView32 = false;
-                }
+                SysListView32 = RegKeyExists("HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\\InprocServer32");
             }
             catch
             {
                 SysListView32 = @default.SysListView32;
-            }
-            finally
-            {
-                Microsoft.Win32.Registry.CurrentUser.Close();
             }
 
             if (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", null) is null)
@@ -403,22 +381,11 @@ namespace WinPaletter.Theme.Structures
 
             try
             {
-                if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID").OpenSubKey(@"{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32") is not null)
-                {
-                    DisableNavBar = true;
-                }
-                else
-                {
-                    DisableNavBar = false;
-                }
+                DisableNavBar = RegKeyExists("HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{056440FD-8568-48e7-A632-72157243B55B}\\InprocServer32");
             }
             catch
             {
                 DisableNavBar = @default.DisableNavBar;
-            }
-            finally
-            {
-                Microsoft.Win32.Registry.CurrentUser.Close();
             }
 
             AutoHideScrollBars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", @default.AutoHideScrollBars));
@@ -501,7 +468,7 @@ namespace WinPaletter.Theme.Structures
 
                     try
                     {
-                        if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\ExplorerPatcher") is not null)
+                        if (RegKeyExists("HKEY_CURRENT_USER\\Software\\ExplorerPatcher"))
                         {
                             EditReg(treeView, @"HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar);
                         }
@@ -514,7 +481,7 @@ namespace WinPaletter.Theme.Structures
 
                     try
                     {
-                        if (Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\StartIsBack") is not null)
+                        if (RegKeyExists("HKEY_CURRENT_USER\\Software\\StartIsBack"))
                         {
                             EditReg(treeView, @"HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar);
                         }
@@ -598,35 +565,13 @@ namespace WinPaletter.Theme.Structures
                                 }
 
                                 // Windows 11 lower than 22H2
-                                try
-                                {
-                                    if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked > {e2bf9676-5f8f-435c-97eb-11607a5bedf7}"), "reg_delete");
-                                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked", true).DeleteValue("{e2bf9676-5f8f-435c-97eb-11607a5bedf7}", false);
-                                }
-                                catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
-                                finally
-                                {
-                                    Microsoft.Win32.Registry.CurrentUser.Close();
-                                }
+                                DelValue(treeView, "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}");
+
                             }
                             else
                             {
-                                try
-                                {
-                                    if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}"), "reg_delete");
-                                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", false);
-
-                                    if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}"), "reg_delete");
-                                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", false);
-                                }
-                                catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
-                                finally
-                                {
-                                    Microsoft.Win32.Registry.CurrentUser.Close();
-                                }
+                                DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}");
+                                DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}");
 
                                 EditReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}", string.Empty, Microsoft.Win32.RegistryValueKind.String);
                             }
@@ -665,9 +610,7 @@ namespace WinPaletter.Theme.Structures
                             }
                             else
                             {
-                                if (treeView is not null)
-                                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}"), "reg_delete");
-                                Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", false);
+                                DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}");
                             }
                         }
                         catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
@@ -689,9 +632,7 @@ namespace WinPaletter.Theme.Structures
                             }
                             else
                             {
-                                if (treeView is not null)
-                                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}"), "reg_delete");
-                                Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", false);
+                                DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}");
                             }
                         }
                         catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
@@ -711,9 +652,7 @@ namespace WinPaletter.Theme.Structures
                         }
                         else
                         {
-                            if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RegDelete, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}"), "reg_delete");
-                            Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Classes\CLSID", true).DeleteSubKeyTree("{056440FD-8568-48e7-A632-72157243B55B}", false);
+                            DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}");
                         }
                     }
                     catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.

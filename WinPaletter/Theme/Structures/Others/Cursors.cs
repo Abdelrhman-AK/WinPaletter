@@ -670,14 +670,7 @@ namespace WinPaletter.Theme.Structures
 
                 if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
                 {
-                    if (Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", false) is not null)
-                    {
-                        if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_DelCursorWPFromReg, @"HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete");
-                        RegistryKey rx = Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", true);
-                        rx.DeleteValue("WinPaletter", false);
-                        rx.Close();
-                    }
+                    DelValue(treeView, "HKEY_CURRENT_USER\\Control Panel\\Cursors\\Schemes", "WinPaletter");
                 }
 
                 EditReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);
@@ -816,21 +809,7 @@ namespace WinPaletter.Theme.Structures
             {
                 if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
                 {
-                    try
-                    {
-                        if (Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", false) is not null)
-                        {
-                            if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_DelCursorWPFromReg, @"HKEY_CURRENT_USER\Control Panel\Cursors\Schemes"), "reg_delete");
-                            RegistryKey rx = Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors\Schemes", true);
-                            rx.DeleteValue("WinPaletter", false);
-                            rx.Close();
-                        }
-                    }
-                    finally
-                    {
-                        Registry.CurrentUser.Close();
-                    }
+                    DelValue(treeView, "HKEY_CURRENT_USER\\Control Panel\\Cursors\\Schemes", "WinPaletter");
                 }
 
                 EditReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);

@@ -161,7 +161,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAQ4AAAGpCAYAAAB8qNjzAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAA6vRJREFUeF7snQV43Eb6h2U7bGZmhjh2HGZmxoaZmRumhpmhgYYZGmZOmbk9bnt8
+        vAAADrwBlbxySQAA6vRJREFUeF7snQV43Eb6h2U7bGZmhjh2HGZmxoaZmRumhpmhgYYZGmZOmbk9bnt8
         17se9+7+9/t/36xmrZVn12sItavneR9Jo9GIZt79RtLuajS4Ee6EB1GWKE9UICqVAM9SwusJ4e3CRTFQ
         1aXSRtVOioOq3ZphD7AP2AvsB/YE+4IRM2WIckRFgnfOl/A3EFAMAk2o0owEFZHgUiDkKSLURbFQncsn
         iaqeFQdVnbeHqj05wtxWjRjbvQ/BPmAvsB/YE1Ie1iiDDcMZuWC+IJFElIHoIhBTRGIdEFcE4otBgo55
@@ -1166,6 +1166,28 @@
         H1Qlf4VaIKhOcENVShdULWwcPI3B54OHkioOOwSC6go3VEH1ws7ODv8fDJiqkz/l/oIAAAAASUVORK5C
         YII=
 </value>
+  </data>
+  <data name="banner13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAkpJREFUSEvt
+        lM1qE1EYhgfbmUmiaSE4iOIFyKSbbkJ+CPnTnW56B7rQja4E14pu9AoitNIWxFqtUKTpTFy4USnBjVB0
+        EdSK6EJc2C7EGpLX78x8k85kjrWtCSj0hQcmOee8DzNzzij7+SeCp8qwgH8ONrCURKeurxHvxTX/Pbi0
+        69osySBo29oM/z2YwNZPebKO7QIrcpKH+xu8UKIkavplLlpTjPG0/qVtR24EZVoXerTXeVp/AktLkmRT
+        iNqWjs/zI0ScrrvSTTGHp/9dcFU5QIUr3p2tVI+iUqmgVCqhUTW6dynmiLm8bO9BXb/gyURxo3oE5XIZ
+        xWIRL28f9gsBWz3Py/YW1GPHSLTuyQSvpgzn7gqFAlbvJAJC4ptYw8t3H9ooc36Z4M10wpHl83k0Z0cD
+        Yx16p7SB7vHy3YXO3JlemeDd3VFHlsvl8HEuvjUmNhBDa09zzc5C38lDVPKhW+bj0/04stksMpkMvjyM
+        hWTMGmzlINf9OfRYbvWKPL4uxJBOp5FKpbCxGJXJHOjI3OS67YMn6jgVt3pFHj+WIjg7YeLcxAm0avTI
+        JTKmhZo6zrXyYF4Z6tS1hkwUQC6QoDZEJ9eHQy/7klTgY3VyBPn0GLIpE6+naNNIRQLVAZZ6keuDQS16
+        nAo3egUBqOjBNQPJZBKmadI1HfyQSODKmHXRzZqtUOGjkMAPl/1c0jF5xUD1soHvj2Xv0Cdb9hheYI0b
+        2NqYVOIRKv0dMplL4OOORSVOxc+JtyGWd4q6Hc/E2Wbdfv7rKMovZnQP/rf01ukAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>WinPaletter has a feature that enables user to change Windows theme (visual styles).
+
+- There was an obstacle: modified, patched, or unsigned visual styles cannot be applied to Windows.
+
+- This is solvable by using SecureUxTheme. It requires a setup then a Windows restart.</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
     <value>- Themes are automatically backed up before applying a new theme or making changes to a single Windows aspect.

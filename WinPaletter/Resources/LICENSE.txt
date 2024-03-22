@@ -1,4 +1,4 @@
-MIT License
+MIT/LGPL Dual License
 
 Copyright (c) 2022-2024 Abdelrhman-AK
 
@@ -11,6 +11,8 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+Additionally, if you include any portion of the LGPL-licensed code from SecureUxTheme, the terms of the GNU Lesser General Public License (LGPL) version 2.1 or later shall also apply to that portion of the Software. You must ensure that the LGPL-licensed portion of the Software is properly attributed and that any modifications made to it are made available under the LGPL or a compatible license.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

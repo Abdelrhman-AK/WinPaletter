@@ -1282,5 +1282,15 @@ namespace WinPaletter
         {
             Panel12.Enabled = toggle16.Checked;
         }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            Forms.SecureUxTheme_Setup.ShowDialog();
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.SecureUxThemeReleases);
+        }
     }
 }
