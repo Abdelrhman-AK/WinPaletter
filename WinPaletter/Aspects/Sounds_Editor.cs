@@ -70,7 +70,7 @@ namespace WinPaletter
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            Program.Settings.Save(Settings.Mode.Registry);
+            Program.Settings.Save(Settings.Source.Registry);
 
             ApplyToTM(Program.TM);
 
@@ -79,10 +79,16 @@ namespace WinPaletter
 
         private void Apply(object sender, EventArgs e)
         {
+            if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Sounds)
+            {
+                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                return;
+            }
+
             Cursor = Cursors.WaitCursor;
 
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
-            Program.Settings.Save(Settings.Mode.Registry);
+            Program.Settings.Save(Settings.Source.Registry);
 
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {

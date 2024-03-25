@@ -68,14 +68,14 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            Program.Settings.Save(Settings.Mode.Registry);
+            Program.Settings.Save(Settings.Source.Registry);
             DialogResult = DialogResult.Cancel;
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            Program.Settings.Save(Settings.Mode.Registry);
+            Program.Settings.Save(Settings.Source.Registry);
             Close();
             DialogResult = DialogResult.OK;
         }
@@ -89,7 +89,7 @@ namespace WinPaletter
         {
             Forms.GlassWindow.Close();
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
-            Program.Settings.Save(Settings.Mode.Registry);
+            Program.Settings.Save(Settings.Source.Registry);
         }
 
         private void Button3_Click(object sender, EventArgs e)

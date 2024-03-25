@@ -497,6 +497,7 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
+            this.checkBox15 = new WinPaletter.UI.WP.CheckBox();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -3640,6 +3641,7 @@ namespace WinPaletter
             this.groupBox67.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox67.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox67.Controls.Add(this.checkBox15);
             this.groupBox67.Controls.Add(this.checkBox14);
             this.groupBox67.Controls.Add(this.checkBox13);
             this.groupBox67.Controls.Add(this.alertBox13);
@@ -3669,7 +3671,7 @@ namespace WinPaletter
             this.checkBox14.Enabled = false;
             this.checkBox14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox14.ForeColor = System.Drawing.Color.White;
-            this.checkBox14.Location = new System.Drawing.Point(44, 226);
+            this.checkBox14.Location = new System.Drawing.Point(395, 226);
             this.checkBox14.Name = "checkBox14";
             this.checkBox14.Size = new System.Drawing.Size(345, 23);
             this.checkBox14.TabIndex = 213;
@@ -3681,7 +3683,7 @@ namespace WinPaletter
             this.checkBox13.Enabled = false;
             this.checkBox13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox13.ForeColor = System.Drawing.Color.White;
-            this.checkBox13.Location = new System.Drawing.Point(44, 81);
+            this.checkBox13.Location = new System.Drawing.Point(395, 81);
             this.checkBox13.Name = "checkBox13";
             this.checkBox13.Size = new System.Drawing.Size(345, 23);
             this.checkBox13.TabIndex = 212;
@@ -3723,7 +3725,7 @@ namespace WinPaletter
             this.checkBox10.Enabled = false;
             this.checkBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox10.ForeColor = System.Drawing.Color.White;
-            this.checkBox10.Location = new System.Drawing.Point(44, 197);
+            this.checkBox10.Location = new System.Drawing.Point(44, 226);
             this.checkBox10.Name = "checkBox10";
             this.checkBox10.Size = new System.Drawing.Size(345, 23);
             this.checkBox10.TabIndex = 209;
@@ -3747,7 +3749,7 @@ namespace WinPaletter
             this.checkBox8.Enabled = false;
             this.checkBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox8.ForeColor = System.Drawing.Color.White;
-            this.checkBox8.Location = new System.Drawing.Point(44, 168);
+            this.checkBox8.Location = new System.Drawing.Point(44, 197);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(345, 23);
             this.checkBox8.TabIndex = 207;
@@ -3783,7 +3785,7 @@ namespace WinPaletter
             this.checkBox5.Enabled = false;
             this.checkBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox5.ForeColor = System.Drawing.Color.White;
-            this.checkBox5.Location = new System.Drawing.Point(395, 110);
+            this.checkBox5.Location = new System.Drawing.Point(44, 168);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(345, 23);
             this.checkBox5.TabIndex = 204;
@@ -3795,7 +3797,7 @@ namespace WinPaletter
             this.checkBox4.Enabled = false;
             this.checkBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox4.ForeColor = System.Drawing.Color.White;
-            this.checkBox4.Location = new System.Drawing.Point(395, 81);
+            this.checkBox4.Location = new System.Drawing.Point(44, 110);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(345, 23);
             this.checkBox4.TabIndex = 203;
@@ -3807,7 +3809,7 @@ namespace WinPaletter
             this.checkBox3.Enabled = false;
             this.checkBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox3.ForeColor = System.Drawing.Color.White;
-            this.checkBox3.Location = new System.Drawing.Point(44, 110);
+            this.checkBox3.Location = new System.Drawing.Point(395, 110);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(345, 23);
             this.checkBox3.TabIndex = 202;
@@ -3819,7 +3821,7 @@ namespace WinPaletter
             this.checkBox2.Enabled = false;
             this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox2.ForeColor = System.Drawing.Color.White;
-            this.checkBox2.Location = new System.Drawing.Point(395, 52);
+            this.checkBox2.Location = new System.Drawing.Point(44, 81);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(345, 23);
             this.checkBox2.TabIndex = 201;
@@ -6757,6 +6759,18 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
+            // checkBox15
+            // 
+            this.checkBox15.Checked = true;
+            this.checkBox15.Enabled = false;
+            this.checkBox15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox15.ForeColor = System.Drawing.Color.White;
+            this.checkBox15.Location = new System.Drawing.Point(395, 52);
+            this.checkBox15.Name = "checkBox15";
+            this.checkBox15.Size = new System.Drawing.Size(345, 23);
+            this.checkBox15.TabIndex = 214;
+            this.checkBox15.Text = "Visual Styles";
+            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -7421,5 +7435,6 @@ namespace WinPaletter
         internal Label label52;
         internal PictureBox pictureBox60;
         private UI.WP.Button button29;
+        internal UI.WP.CheckBox checkBox15;
     }
 }

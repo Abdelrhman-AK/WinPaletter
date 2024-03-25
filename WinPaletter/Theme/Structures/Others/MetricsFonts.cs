@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.User32;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -224,6 +225,73 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
+                #region Metrics/Fonts override by msstyles
+
+                VisualStyles _vs = new();
+                switch (Program.WindowStyle)
+                {
+                    case WindowStyle.W12:
+                        _vs = Program.TM.VisualStyles_12;
+                        break;
+                    case WindowStyle.W11:
+                        _vs = Program.TM.VisualStyles_11;
+                        break;
+                    case WindowStyle.W10:
+                        _vs = Program.TM.VisualStyles_10;
+                        break;
+                    case WindowStyle.W81:
+                        _vs = Program.TM.VisualStyles_81;
+                        break;
+                    case WindowStyle.W7:
+                        _vs = Program.TM.VisualStyles_7;
+                        break;
+                    case WindowStyle.WVista:
+                        _vs = Program.TM.VisualStyles_Vista;
+                        break;
+                    case WindowStyle.WXP:
+                        _vs = Program.TM.VisualStyles_XP;
+                        break;
+                }
+
+                if (_vs.Enabled && _vs.OverrideSizes)
+                {
+                    if (System.IO.File.Exists(_vs.ThemeFile))
+                    {
+                        try
+                        {
+                            using (libmsstyle.VisualStyle vs = new(_vs.ThemeFile))
+                            {
+                                this = vs.MetricsFonts();
+                                Enabled = true;
+                            }
+                        }
+                        catch
+                        {
+                            string theme = _vs.ThemeFile;
+                            if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                            {
+                                System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
+                            }
+
+                            if (System.IO.File.Exists(theme))
+                            {
+                                using (VisualStyleFile vs = new(theme))
+                                {
+                                    try
+                                    {
+                                        Overwrite_Metrics(vs.Metrics);
+                                        Overwrite_Fonts(vs.Metrics);
+                                    }
+                                    catch { } // Couldn't load visual styles file.
+                                }
+                            }
+                        }
+                    }
+                }
+
+                #endregion
+
                 int OldDPI = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor()));
                 EditReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
 

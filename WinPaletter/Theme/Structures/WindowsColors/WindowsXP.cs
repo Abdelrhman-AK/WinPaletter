@@ -164,17 +164,13 @@ namespace WinPaletter.Theme.Structures
 
                     case Themes.Custom:
                         {
-
                             if (System.IO.File.Exists(ThemeFile) && System.IO.Path.GetExtension(ThemeFile) == ".theme" | System.IO.Path.GetExtension(ThemeFile) == ".msstyles")
                             {
                                 UxTheme.EnableTheming(1);
-
                                 UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, "NormalSize", 0);
                             }
-
                             break;
                         }
-
                 }
 
                 Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();

@@ -2,6 +2,7 @@
 {
     public partial class Localizer
     {
+        public string TM_Skip_VS { get; set; } = "Skipping applying Windows visual styles as it is disabled";
         public string TM_Skip_WinColors { get; set; } = "Skipping applying Windows colors as it is disabled";
         public string TM_Skip_ClassicColors { get; set; } = "Skipping applying Classic Colors as it is disabled";
         public string TM_Skip_LogonUI { get; set; } = "Skipping applying LogonUI as it is disabled";

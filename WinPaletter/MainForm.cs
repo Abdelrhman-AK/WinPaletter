@@ -122,7 +122,7 @@ namespace WinPaletter
                 }
                 Program.Settings.General.Save();
 
-                Settings old = new(Settings.Mode.Registry);
+                Settings old = new(Settings.Source.Registry);
                 {
                     ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                     Appearance.CustomColors = old.Appearance.CustomColors;

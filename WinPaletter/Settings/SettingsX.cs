@@ -28,7 +28,7 @@ namespace WinPaletter
             if (!_External)
                 sets = Program.Settings;
             else
-                sets = new(Settings.Mode.File, _File);
+                sets = new(Settings.Source.File, _File);
 
             Read(sets);
 
@@ -216,6 +216,7 @@ namespace WinPaletter
             checkBox10.Checked = Sets.AspectsControl.ScreenSaver;
             checkBox12.Checked = Sets.AspectsControl.AltTab;
             checkBox14.Checked = Sets.AspectsControl.Icons;
+            checkBox15.Checked = Sets.AspectsControl.VisualStyles;
 
             checker_mode_advanced.Checked = Sets.AspectsControl.WinColors_Advanced;
             checker_mode_simple.Checked = !Sets.AspectsControl.WinColors_Advanced;
@@ -292,7 +293,7 @@ namespace WinPaletter
                 //    ch_WPElevator = true;
             }
 
-            Write(Program.Settings, Settings.Mode.Registry);
+            Write(Program.Settings, Settings.Source.Registry);
 
             if (ch_appearance)
             {
@@ -392,7 +393,7 @@ namespace WinPaletter
             MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void Write(Settings Sets, Settings.Mode Mode, string File = "")
+        public void Write(Settings Sets, Settings.Source Mode, string File = "")
         {
             Sets.FileTypeManagement.AutoAddExt = toggle6.Checked;
             Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt = RadioButton1.Checked;
@@ -542,13 +543,14 @@ namespace WinPaletter
             Sets.AspectsControl.Cursors_Advanced = radioImage6.Checked;
             Sets.AspectsControl.MetricsFonts_Advanced = radioImage8.Checked;
             Sets.AspectsControl.Wallpaper_Advanced = radioImage10.Checked;
+            Sets.AspectsControl.VisualStyles = checkBox15.Checked;
 
             Sets.Save(Mode, File);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Settings NewSets = new(Settings.Mode.Empty);
+            Settings NewSets = new(Settings.Source.Empty);
 
             Changed = false;
 
@@ -762,7 +764,8 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.AspectsControl.Wallpaper_Advanced != radioImage10.Checked)
                     Changed = true;
-
+                if (Settings.AspectsControl.VisualStyles != checkBox15.Checked)
+                    Changed = true;
             }
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)
@@ -939,8 +942,8 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Settings sets = new(Settings.Mode.Empty);
-                    Write(sets, Settings.Mode.File, dlg.FileName);
+                    Settings sets = new(Settings.Source.Empty);
+                    Write(sets, Settings.Source.File, dlg.FileName);
                 }
             }
         }
@@ -951,7 +954,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    Settings sets = new(Settings.Mode.File, dlg.FileName);
+                    Settings sets = new(Settings.Source.File, dlg.FileName);
                     Read(sets);
                 }
             }
@@ -1222,7 +1225,7 @@ namespace WinPaletter
 
         private void button27_Click(object sender, EventArgs e)
         {
-            Read(new Settings(Settings.Mode.Empty));
+            Read(new Settings(Settings.Source.Empty));
         }
 
         private void SettingsX_ParentChanged(object sender, EventArgs e)

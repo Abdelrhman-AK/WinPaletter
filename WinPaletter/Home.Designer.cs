@@ -33,6 +33,7 @@
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.card1 = new WinPaletter.UI.WP.Card();
+            this.card14 = new WinPaletter.UI.WP.Card();
             this.card2 = new WinPaletter.UI.WP.Card();
             this.card3 = new WinPaletter.UI.WP.Card();
             this.card6 = new WinPaletter.UI.WP.Card();
@@ -58,6 +59,7 @@
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.restartExplorer_btn = new WinPaletter.UI.WP.Button();
             this.Button28 = new WinPaletter.UI.WP.Button();
+            this.button1 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender2 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
@@ -79,7 +81,6 @@
             this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
             this.tip_label = new System.Windows.Forms.Label();
             this.userButton = new WinPaletter.UI.WP.Button();
-            this.card14 = new WinPaletter.UI.WP.Card();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -123,6 +124,7 @@
             // card1
             // 
             this.card1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(39)))), ((int)(((byte)(84)))));
+            this.card1.Compact = false;
             this.card1.Image = null;
             this.card1.Location = new System.Drawing.Point(6, 8);
             this.card1.Name = "card1";
@@ -133,9 +135,24 @@
             this.card1.Text = "Windows Colors";
             this.card1.Click += new System.EventHandler(this.card1_Click);
             // 
+            // card14
+            // 
+            this.card14.Color = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(41)))), ((int)(((byte)(123)))));
+            this.card14.Compact = false;
+            this.card14.Image = ((System.Drawing.Image)(resources.GetObject("card14.Image")));
+            this.card14.Location = new System.Drawing.Point(289, 8);
+            this.card14.Name = "card14";
+            this.card14.Size = new System.Drawing.Size(277, 130);
+            this.card14.TabIndex = 133;
+            this.card14.Tag = "Embark on a revolutionary journey to transform your Windows interface with the vi" +
+    "sual styles you adore";
+            this.card14.Text = "Visual Styles";
+            this.card14.Click += new System.EventHandler(this.card14_Click);
+            // 
             // card2
             // 
             this.card2.Color = System.Drawing.Color.Teal;
+            this.card2.Compact = false;
             this.card2.Image = ((System.Drawing.Image)(resources.GetObject("card2.Image")));
             this.card2.Location = new System.Drawing.Point(572, 8);
             this.card2.Name = "card2";
@@ -149,6 +166,7 @@
             // card3
             // 
             this.card3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(102)))), ((int)(((byte)(183)))));
+            this.card3.Compact = false;
             this.card3.Image = ((System.Drawing.Image)(resources.GetObject("card3.Image")));
             this.card3.Location = new System.Drawing.Point(855, 8);
             this.card3.Name = "card3";
@@ -161,6 +179,7 @@
             // card6
             // 
             this.card6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(193)))), ((int)(((byte)(241)))));
+            this.card6.Compact = false;
             this.card6.Image = ((System.Drawing.Image)(resources.GetObject("card6.Image")));
             this.card6.Location = new System.Drawing.Point(6, 144);
             this.card6.Name = "card6";
@@ -174,6 +193,7 @@
             // card5
             // 
             this.card5.Color = System.Drawing.Color.DarkOliveGreen;
+            this.card5.Compact = false;
             this.card5.Image = ((System.Drawing.Image)(resources.GetObject("card5.Image")));
             this.card5.Location = new System.Drawing.Point(289, 144);
             this.card5.Name = "card5";
@@ -187,6 +207,7 @@
             // card4
             // 
             this.card4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(77)))), ((int)(((byte)(77)))));
+            this.card4.Compact = false;
             this.card4.Image = ((System.Drawing.Image)(resources.GetObject("card4.Image")));
             this.card4.Location = new System.Drawing.Point(572, 144);
             this.card4.Name = "card4";
@@ -200,6 +221,7 @@
             // card8
             // 
             this.card8.Color = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(175)))), ((int)(((byte)(234)))));
+            this.card8.Compact = false;
             this.card8.Image = ((System.Drawing.Image)(resources.GetObject("card8.Image")));
             this.card8.Location = new System.Drawing.Point(855, 144);
             this.card8.Name = "card8";
@@ -213,6 +235,7 @@
             // card9
             // 
             this.card9.Color = System.Drawing.Color.DodgerBlue;
+            this.card9.Compact = false;
             this.card9.Image = ((System.Drawing.Image)(resources.GetObject("card9.Image")));
             this.card9.Location = new System.Drawing.Point(6, 280);
             this.card9.Name = "card9";
@@ -225,6 +248,7 @@
             // card7
             // 
             this.card7.Color = System.Drawing.Color.OrangeRed;
+            this.card7.Compact = false;
             this.card7.Image = ((System.Drawing.Image)(resources.GetObject("card7.Image")));
             this.card7.Location = new System.Drawing.Point(289, 280);
             this.card7.Name = "card7";
@@ -237,6 +261,7 @@
             // card11
             // 
             this.card11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(14)))), ((int)(((byte)(12)))));
+            this.card11.Compact = false;
             this.card11.Image = ((System.Drawing.Image)(resources.GetObject("card11.Image")));
             this.card11.Location = new System.Drawing.Point(572, 280);
             this.card11.Name = "card11";
@@ -249,6 +274,7 @@
             // card12
             // 
             this.card12.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(82)))), ((int)(((byte)(0)))));
+            this.card12.Compact = false;
             this.card12.Image = ((System.Drawing.Image)(resources.GetObject("card12.Image")));
             this.card12.Location = new System.Drawing.Point(855, 280);
             this.card12.Name = "card12";
@@ -261,6 +287,7 @@
             // card13
             // 
             this.card13.Color = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(25)))), ((int)(((byte)(40)))));
+            this.card13.Compact = false;
             this.card13.Image = ((System.Drawing.Image)(resources.GetObject("card13.Image")));
             this.card13.Location = new System.Drawing.Point(6, 416);
             this.card13.Name = "card13";
@@ -274,6 +301,7 @@
             // card10
             // 
             this.card10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
+            this.card10.Compact = false;
             this.card10.Image = ((System.Drawing.Image)(resources.GetObject("card10.Image")));
             this.card10.Location = new System.Drawing.Point(289, 416);
             this.card10.Name = "card10";
@@ -488,6 +516,25 @@
             this.Button28.UseVisualStyleBackColor = false;
             this.Button28.Click += new System.EventHandler(this.Button28_Click);
             // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(84)))), ((int)(((byte)(204)))));
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Image = null;
+            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageGlyph")));
+            this.button1.ImageGlyphEnabled = true;
+            this.button1.Location = new System.Drawing.Point(489, 3);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(32, 35);
+            this.button1.TabIndex = 36;
+            this.button1.Tag = "Compact\\Expand layout";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // titlebarExtender2
             // 
             this.titlebarExtender2.BackColor = System.Drawing.Color.Black;
@@ -521,6 +568,7 @@
             this.flowLayoutPanel2.Controls.Add(this.Button5);
             this.flowLayoutPanel2.Controls.Add(this.Button31);
             this.flowLayoutPanel2.Controls.Add(this.button8);
+            this.flowLayoutPanel2.Controls.Add(this.button1);
             this.flowLayoutPanel2.Controls.Add(this.Button39);
             this.flowLayoutPanel2.Controls.Add(this.Button6);
             this.flowLayoutPanel2.Controls.Add(this.Button12);
@@ -780,7 +828,7 @@
             this.Button39.Image = null;
             this.Button39.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button39.ImageGlyph")));
             this.Button39.ImageGlyphEnabled = true;
-            this.Button39.Location = new System.Drawing.Point(489, 3);
+            this.Button39.Location = new System.Drawing.Point(529, 3);
             this.Button39.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button39.Name = "Button39";
             this.Button39.Size = new System.Drawing.Size(32, 35);
@@ -799,7 +847,7 @@
             this.Button6.Image = null;
             this.Button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button6.ImageGlyph")));
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.Location = new System.Drawing.Point(529, 3);
+            this.Button6.Location = new System.Drawing.Point(569, 3);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(32, 35);
@@ -818,7 +866,7 @@
             this.Button12.Image = null;
             this.Button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button12.ImageGlyph")));
             this.Button12.ImageGlyphEnabled = true;
-            this.Button12.Location = new System.Drawing.Point(569, 3);
+            this.Button12.Location = new System.Drawing.Point(609, 3);
             this.Button12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button12.Name = "Button12";
             this.Button12.Size = new System.Drawing.Size(32, 35);
@@ -832,7 +880,7 @@
             this.separatorV2.AlternativeLook = false;
             this.separatorV2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV2.Location = new System.Drawing.Point(608, 3);
+            this.separatorV2.Location = new System.Drawing.Point(648, 3);
             this.separatorV2.Name = "separatorV2";
             this.separatorV2.Size = new System.Drawing.Size(1, 35);
             this.separatorV2.TabIndex = 156;
@@ -845,7 +893,7 @@
             this.tip_label.AutoSize = true;
             this.tip_label.BackColor = System.Drawing.Color.Transparent;
             this.tip_label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tip_label.Location = new System.Drawing.Point(615, 13);
+            this.tip_label.Location = new System.Drawing.Point(655, 13);
             this.tip_label.Name = "tip_label";
             this.tip_label.Size = new System.Drawing.Size(0, 15);
             this.tip_label.TabIndex = 154;
@@ -869,18 +917,6 @@
             this.userButton.Tag = "";
             this.userButton.UseVisualStyleBackColor = false;
             this.userButton.Click += new System.EventHandler(this.userButton_Click);
-            // 
-            // card14
-            // 
-            this.card14.Color = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(39)))), ((int)(((byte)(84)))));
-            this.card14.Image = null;
-            this.card14.Location = new System.Drawing.Point(289, 8);
-            this.card14.Name = "card14";
-            this.card14.Size = new System.Drawing.Size(277, 130);
-            this.card14.TabIndex = 133;
-            this.card14.Tag = "Personalize your Windows color scheme for a visually pleasing, tailored environme" +
-    "nt.";
-            this.card14.Text = "Visual Styles";
             // 
             // Home
             // 
@@ -970,5 +1006,6 @@
         public UI.WP.GroupBox groupBox1;
         private UI.WP.Card card13;
         private UI.WP.Card card14;
+        internal UI.WP.Button button1;
     }
 }

@@ -8,6 +8,7 @@
         public string AspectDisabledTip { get; set; } = "WinPaletter will skip it and it won't be applied";
         public string ThemeInfo { get; set; } = "Theme info";
         public string WindowsIcons { get; set; } = "Windows Icons";
+        public string VisualStyles { get; set; } = "Visual Styles";
         public string WindowsColors { get; set; } = "{0} colors";
         public string ClassicColors { get; set; } = "Classic colors";
         public string MetricsFonts { get; set; } = "Metrics and fonts";
@@ -32,5 +33,7 @@
         public string Store_Toggle_Wallpaper { get; set; } = "Wallpaper";
         public string Store_Toggle_Sounds { get; set; } = "Sounds";
         public string Store_Toggle_ScreenSaver { get; set; } = "Screen Saver";
+        public string AspectDisabled_Apply_0 { get; set; } = "This aspect is disabled in aspects control feature in settings";
+        public string AspectDisabled_Apply_1 { get; set; } = "To apply it, open Settings > Aspects control and make this aspect checked, or disable the main toggle of aspects control";
     }
 }

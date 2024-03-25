@@ -12,7 +12,7 @@ namespace WinPaletter
         /// <summary>
         /// A class that represents WinPaletter's Settings
         /// </summary>
-        public static Settings Settings = new(Settings.Mode.Registry);
+        public static Settings Settings = new(Settings.Source.Registry);
 
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)

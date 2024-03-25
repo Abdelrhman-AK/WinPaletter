@@ -214,7 +214,7 @@ namespace WinPaletter.Theme.Structures
                         ButtonHilight = vs.Colors.BtnHighlight;
                         ButtonLight = vs.Colors.Light3d;
                         ButtonShadow = vs.Colors.BtnShadow;
-                        // ButtonText = vs.Palette.MenuText
+                        // ButtonText = _vs.Palette.MenuText
                         GradientActiveTitle = vs.Colors.GradientActiveCaption;
                         GradientInactiveTitle = vs.Colors.GradientInactiveCaption;
                         GrayText = vs.Colors.GrayText;
@@ -352,6 +352,72 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
+                #region Colors override by msstyles
+
+                VisualStyles _vs = new();
+                switch (Program.WindowStyle)
+                {
+                    case WindowStyle.W12:
+                        _vs = Program.TM.VisualStyles_12;
+                        break;
+                    case WindowStyle.W11:
+                        _vs = Program.TM.VisualStyles_11;
+                        break;
+                    case WindowStyle.W10:
+                        _vs = Program.TM.VisualStyles_10;
+                        break;
+                    case WindowStyle.W81:
+                        _vs = Program.TM.VisualStyles_81;
+                        break;
+                    case WindowStyle.W7:
+                        _vs = Program.TM.VisualStyles_7;
+                        break;
+                    case WindowStyle.WVista:
+                        _vs = Program.TM.VisualStyles_Vista;
+                        break;
+                    case WindowStyle.WXP:
+                        _vs = Program.TM.VisualStyles_XP;
+                        break;
+                }
+
+                if (_vs.Enabled && _vs.OverrideColors)
+                {
+                    if (System.IO.File.Exists(_vs.ThemeFile))
+                    {
+                        try
+                        {
+                            using (libmsstyle.VisualStyle vs = new(_vs.ThemeFile))
+                            {
+                                this = vs.ClassicColors();
+                                Enabled = true;
+                            }
+                        }
+                        catch
+                        {
+                            string theme = _vs.ThemeFile;
+                            if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                            {
+                                System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
+                            }
+
+                            if (System.IO.File.Exists(theme))
+                            {
+                                using (VisualStyleFile vs = new(theme))
+                                {
+                                    try
+                                    {
+                                        Load(Sources.VisualStyles, vs.Metrics);
+                                    }
+                                    catch { } // Couldn't load visual styles file.
+                                }
+                            }
+                        }
+                    }
+                }
+
+                #endregion
+
                 bool isClassic = string.IsNullOrEmpty(NativeMethods.UxTheme.GetCurrentVS().Item1);
 
                 List<Form> fl = new();

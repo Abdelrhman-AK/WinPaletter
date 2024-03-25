@@ -28,6 +28,18 @@
 
             if (WindowsXP != TMx.WindowsXP) _Equals = false;
 
+            if (VisualStyles_12 != TMx.VisualStyles_12) _Equals = false;
+
+            if (VisualStyles_11 != TMx.VisualStyles_11) _Equals = false;
+
+            if (VisualStyles_10 != TMx.VisualStyles_10) _Equals = false;
+
+            if (VisualStyles_81 != TMx.VisualStyles_81) _Equals = false;
+
+            if (VisualStyles_7 != TMx.VisualStyles_7) _Equals = false;
+
+            if (VisualStyles_Vista != TMx.VisualStyles_Vista) _Equals = false;
+
             if (LogonUI7 != TMx.LogonUI7) _Equals = false;
 
             if (LogonUIXP != TMx.LogonUIXP) _Equals = false;

@@ -21,9 +21,19 @@ namespace WinPaletter.Theme
         public Windows10x Windows12 = new();
 
         /// <summary>
+        /// Visual styles structure instance that contains data about Windows 12, and it can be customized.
+        /// </summary>
+        public Theme.Structures.VisualStyles VisualStyles_12 = new();
+
+        /// <summary>
         /// Structure instance that contains data about Windows 11 colors and appearance, and it can be customized.
         /// </summary>
         public Windows10x Windows11 = new();
+
+        /// <summary>
+        /// Visual styles structure instance that contains data about Windows 11, and it can be customized.
+        /// </summary>
+        public Theme.Structures.VisualStyles VisualStyles_11 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 10 colors and appearance, and it can be customized.
@@ -45,9 +55,19 @@ namespace WinPaletter.Theme
         };
 
         /// <summary>
+        /// Visual styles structure instance that contains data about Windows 10, and it can be customized.
+        /// </summary>
+        public Theme.Structures.VisualStyles VisualStyles_10 = new();
+
+        /// <summary>
         /// Structure instance that contains data about Windows 8.1 colors and appearance, and it can be customized.
         /// </summary>
         public Windows8x Windows81 = new();
+
+        /// <summary>
+        /// Visual styles structure instance that contains data about Windows 8.1, and it can be customized.
+        /// </summary>
+        public Theme.Structures.VisualStyles VisualStyles_81 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 7 colors and appearance, and it can be customized.
@@ -55,14 +75,29 @@ namespace WinPaletter.Theme
         public Windows7 Windows7 = new();
 
         /// <summary>
+        /// Visual styles structure instance that contains data about Windows 7, and it can be customized.
+        /// </summary>
+        public Theme.Structures.VisualStyles VisualStyles_7 = new();
+
+        /// <summary>
         /// Structure instance that contains data about Windows Vista colors and appearance, and it can be customized.
         /// </summary>
         public WindowsVista WindowsVista = new();
 
         /// <summary>
+        /// Visual styles structure instance that contains data about Windows Vista, and it can be customized.
+        /// </summary>
+        public Theme.Structures.VisualStyles VisualStyles_Vista = new();
+
+        /// <summary>
         /// Structure instance that contains data about Windows XP colors and appearance, and it can be customized.
         /// </summary>
         public WindowsXP WindowsXP = new();
+
+        /// <summary>
+        /// Visual styles structure instance that contains data about Windows XP, and it can be customized.
+        /// </summary>
+        public Theme.Structures.VisualStyles VisualStyles_XP = new() { ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", SizeScheme = "Normal" };
 
         /// <summary>
         /// Structure instance that contains data about classic Windows colors, and it can be customized.

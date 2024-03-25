@@ -1,6 +1,6 @@
 ﻿namespace WinPaletter
 {
-    partial class Win11Colors
+    partial class Win12Colors
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Win11Colors));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Win12Colors));
             this.GroupBox13 = new WinPaletter.UI.WP.GroupBox();
             this.Label42 = new System.Windows.Forms.Label();
             this.PictureBox10 = new System.Windows.Forms.PictureBox();
@@ -148,13 +148,13 @@
             this.tips_box = new WinPaletter.UI.WP.AlertBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.theme_skip = new WinPaletter.UI.WP.RadioImage();
             this.theme_aerolite = new WinPaletter.UI.WP.RadioImage();
             this.theme_aero = new WinPaletter.UI.WP.RadioImage();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.label20 = new System.Windows.Forms.Label();
             this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
-            this.theme_skip = new WinPaletter.UI.WP.RadioImage();
             this.GroupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).BeginInit();
@@ -1988,6 +1988,24 @@
             this.groupBox4.Size = new System.Drawing.Size(534, 95);
             this.groupBox4.TabIndex = 226;
             // 
+            // theme_skip
+            // 
+            this.theme_skip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.theme_skip.Checked = false;
+            this.theme_skip.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.theme_skip.ForeColor = System.Drawing.Color.White;
+            this.theme_skip.Image = ((System.Drawing.Image)(resources.GetObject("theme_skip.Image")));
+            this.theme_skip.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_skip.Location = new System.Drawing.Point(234, 3);
+            this.theme_skip.Name = "theme_skip";
+            this.theme_skip.Size = new System.Drawing.Size(95, 88);
+            this.theme_skip.TabIndex = 45;
+            this.theme_skip.Text = "Don\'t modify";
+            this.theme_skip.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_skip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.theme_skip.CheckedChanged += new System.EventHandler(this.theme_skip_CheckedChanged);
+            // 
             // theme_aerolite
             // 
             this.theme_aerolite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2083,25 +2101,7 @@
             this.alertBox2.Text = "If Visual Styles aspect is enabled, theme (default\\aero lite) will be overriden";
             this.alertBox2.Visible = false;
             // 
-            // theme_skip
-            // 
-            this.theme_skip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.theme_skip.Checked = false;
-            this.theme_skip.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.theme_skip.ForeColor = System.Drawing.Color.White;
-            this.theme_skip.Image = ((System.Drawing.Image)(resources.GetObject("theme_skip.Image")));
-            this.theme_skip.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_skip.Location = new System.Drawing.Point(234, 3);
-            this.theme_skip.Name = "theme_skip";
-            this.theme_skip.Size = new System.Drawing.Size(95, 88);
-            this.theme_skip.TabIndex = 45;
-            this.theme_skip.Text = "Don\'t modify";
-            this.theme_skip.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_skip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.theme_skip.CheckedChanged += new System.EventHandler(this.theme_skip_CheckedChanged);
-            // 
-            // Win11Colors
+            // Win12Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.ClientSize = new System.Drawing.Size(1104, 701);
@@ -2112,8 +2112,8 @@
             this.Controls.Add(this.tablessControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
-            this.Name = "Win11Colors";
-            this.Text = "Windows 11 colors";
+            this.Name = "Win12Colors";
+            this.Text = "Windows 12 colors";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Win11Colors_HelpButtonClicked);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Win11Colors_FormClosed);
             this.Load += new System.EventHandler(this.Win11Colors_Load);

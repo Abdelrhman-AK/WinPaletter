@@ -259,11 +259,23 @@
     <None Include="Resources\luna.zip" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aspects\WindowsColors\VisualStyles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Aspects\WindowsColors\VisualStyles.Designer.cs">
+      <DependentUpon>VisualStyles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Aspects\IconsStudio.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Aspects\IconsStudio.Designer.cs">
       <DependentUpon>IconsStudio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Aspects\WindowsColors\Win12Colors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Aspects\WindowsColors\Win12Colors.Designer.cs">
+      <DependentUpon>Win12Colors.cs</DependentUpon>
     </Compile>
     <Compile Include="Assets\Accessibility_Vision.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -385,6 +397,7 @@
     </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Filters.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
+    <Compile Include="Program\TypesExtensions\Types.cs" />
     <Compile Include="SecureUxTheme\SecureUxTheme.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
@@ -671,6 +684,7 @@
     <Compile Include="Theme\Save.cs" />
     <Compile Include="Theme\Structures\Others\Cursors.cs" />
     <Compile Include="Theme\Structures\Others\Icons.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\VisualStyles.cs" />
     <Compile Include="Theme\Support\CloneSupport.cs" />
     <Compile Include="Theme\Support\DisposeSupport.cs" />
     <Compile Include="Theme\Support\Editions.cs" />
@@ -1212,8 +1226,14 @@
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Aspects\WindowsColors\VisualStyles.resx">
+      <DependentUpon>VisualStyles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Aspects\IconsStudio.resx">
       <DependentUpon>IconsStudio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Aspects\WindowsColors\Win12Colors.resx">
+      <DependentUpon>Win12Colors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
       <Generator>ResXFileCodeGenerator</Generator>

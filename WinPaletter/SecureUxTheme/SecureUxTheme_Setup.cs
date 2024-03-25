@@ -23,9 +23,9 @@ namespace WinPaletter
         {
             label14.Text = SecureUxTheme.Wrapper.IsSecureUxThemeInstalled ? Program.Lang.Yes : Program.Lang.No;
             label13.Text = SecureUxTheme.Wrapper.IsSecureUxThemeRunning ? Program.Lang.Yes : Program.Lang.No;
-            label12.Text = SecureUxTheme.Wrapper.IsExplorerHooked ? Program.Lang.Yes : Program.Lang.No;
-            label11.Text = SecureUxTheme.Wrapper.IsSystemSettingsHooked ? Program.Lang.Yes : Program.Lang.No;
-            label10.Text = SecureUxTheme.Wrapper.IsLogonUIHooked ? Program.Lang.Yes : Program.Lang.No;
+            pictureBox9.Image = SecureUxTheme.Wrapper.IsExplorerHooked ? Properties.Resources.on : Properties.Resources.off;
+            pictureBox10.Image = SecureUxTheme.Wrapper.IsSystemSettingsHooked ? Properties.Resources.on : Properties.Resources.off;
+            pictureBox11.Image = SecureUxTheme.Wrapper.IsLogonUIHooked ? Properties.Resources.on : Properties.Resources.off;
         }
 
         void LoadHooks()
@@ -73,6 +73,11 @@ namespace WinPaletter
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(Links.SecureUxThemeReleases);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

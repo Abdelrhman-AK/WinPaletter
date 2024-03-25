@@ -63,6 +63,12 @@ namespace WinPaletter
 
         private void Apply(object sender, EventArgs e)
         {
+            if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI)
+            {
+                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                return;
+            }
+
             Cursor = Cursors.WaitCursor;
 
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))

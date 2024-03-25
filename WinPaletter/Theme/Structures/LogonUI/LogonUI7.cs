@@ -27,10 +27,10 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public Sources Mode = Sources.Default;
 
-        /// <summary>LogonUI background image path. Used if 'Mode' is 'CustomImage'</summary>
+        /// <summary>LogonUI background image path. Used if 'Source' is 'CustomImage'</summary>
         public string ImagePath = @"C:\Windows\Web\Wallpaper\Windows\img0.jpg";
 
-        /// <summary>LogonUI background color. Used if 'Mode' is 'SolidColor'</summary>
+        /// <summary>LogonUI background color. Used if 'Source' is 'SolidColor'</summary>
         public Color Color = Color.Black;
 
         /// <summary>LogonUI background blur enabled or not</summary>

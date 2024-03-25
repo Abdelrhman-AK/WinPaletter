@@ -261,6 +261,7 @@ namespace WinPaletter.Tabs
             Shown = true;
             tabsContainer.OnFormShown(_form, new(this));
             tabsContainer.Refresh();
+            if (Forms.MainForm is not null) Forms.MainForm.BackgroundImage = null;
         }
 
         /// <summary>

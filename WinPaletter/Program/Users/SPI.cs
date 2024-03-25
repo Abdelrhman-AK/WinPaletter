@@ -366,10 +366,10 @@ namespace WinPaletter.NativeMethods
             /// <br></br> • <i> (!) Windows NT: This value is not supported.</i>
             /// </summary>
             /// <remarks>
-            /// There is a difference between the High Contrast color scheme and the High Contrast Mode.
+            /// There is a difference between the High Contrast color scheme and the High Contrast Source.
             /// The High Contrast color scheme changes the system colors to colors that have obvious contrast;
             /// you switch to this color scheme by using the Display Options in the control panel.
-            /// The High Contrast Mode, which uses <c>SPI_GETHIGHCONTRAST</c> and <c>SPI_SETHIGHCONTRAST</c>, advises applications
+            /// The High Contrast Source, which uses <c>SPI_GETHIGHCONTRAST</c> and <c>SPI_SETHIGHCONTRAST</c>, advises applications
             /// to modify their appearance for visually-impaired users. It involves such things as audible warning to users
             /// and customized color scheme (using the Accessibility Options in the control panel).
             /// For more information, see <c>HIGHCONTRAST</c> on MSDN.

@@ -87,7 +87,7 @@ namespace WinPaletter
             {
                 case User.UserChangeEventArgs.Timings.BeforeChange:
                     {
-                        Program.Settings.Save(Settings.Mode.Registry);
+                        Program.Settings.Save(Settings.Source.Registry);
                         break;
                     }
 
@@ -110,7 +110,7 @@ namespace WinPaletter
                             }
 
                             User.UpdatePathsFromSID(User.SID);
-                            Program.Settings = new(Settings.Mode.Registry);
+                            Program.Settings = new(Settings.Source.Registry);
 
                             if (MainFormIsOpened)
                             {
@@ -462,7 +462,7 @@ namespace WinPaletter
             Dictionary<string, string> UsersList = GetUsers();
 
             // ApplyToTM settings into current user before reloading settings for new user
-            if (!SkipToCurrentUser) Program.Settings.Save(Settings.Mode.Registry);
+            if (!SkipToCurrentUser) Program.Settings.Save(Settings.Source.Registry);
 
             if (SkipToCurrentUser) { User.SID = GetActiveSessionSID(); }
 

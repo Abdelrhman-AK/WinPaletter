@@ -50,6 +50,12 @@ namespace WinPaletter
 
         private void Apply(object sender, EventArgs e)
         {
+            if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors)
+            {
+                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                return;
+            }
+
             Cursor = Cursors.WaitCursor;
 
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
@@ -143,6 +149,8 @@ namespace WinPaletter
             AspectEnabled = TM.Windows11.Enabled;
             theme_aero.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.Aero;
             theme_aerolite.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.AeroLite;
+            theme_skip.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.Skip;
+
             WinMode_Toggle.Checked = !TM.Windows11.WinMode_Light;
             AppMode_Toggle.Checked = !TM.Windows11.AppMode_Light;
             Transparency_Toggle.Checked = TM.Windows11.Transparency;
@@ -183,7 +191,11 @@ namespace WinPaletter
         public void ApplyToTM(Theme.Manager TM)
         {
             TM.Windows11.Enabled = AspectEnabled;
-            TM.Windows11.Theme = theme_aero.Checked ? Theme.Structures.Windows10x.Themes.Aero : Theme.Structures.Windows10x.Themes.AeroLite;
+
+            if (theme_skip.Checked) TM.Windows11.Theme = Theme.Structures.Windows10x.Themes.Skip;
+            else if (theme_aero.Checked) TM.Windows11.Theme = Theme.Structures.Windows10x.Themes.Aero;
+            else if (theme_aerolite.Checked) TM.Windows11.Theme = Theme.Structures.Windows10x.Themes.AeroLite;
+
             TM.Windows11.WinMode_Light = !WinMode_Toggle.Checked;
             TM.Windows11.AppMode_Light = !AppMode_Toggle.Checked;
             TM.Windows11.Transparency = Transparency_Toggle.Checked;
@@ -1120,6 +1132,11 @@ namespace WinPaletter
         private void Win11Colors_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Diagnostics.Process.Start(Links.Wiki.Win10xColors);
+        }
+
+        private void theme_skip_CheckedChanged(object sender, EventArgs e)
+        {
+            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
         }
     }
 }

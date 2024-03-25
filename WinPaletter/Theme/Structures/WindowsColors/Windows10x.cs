@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -110,21 +111,30 @@ namespace WinPaletter.Theme.Structures
             Aero,
             /// <summary>Accessibility theme for Windows 8/8.1/10/11</summary>
             AeroLite,
+            /// <summary> Skip setting theme </summary>
+            Skip
         }
 
         /// <summary>
         /// Loads Windows10x data from registry
         /// </summary>
         /// <param name="default">Default Windows10x data structure</param>
-        /// <param name="Edition">String edition mark</param>
-        public void Load(string Edition, Windows10x @default)
+        /// <param name="edition">String edition mark</param>
+        public void Load(string edition, Windows10x @default)
         {
-            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{Edition}", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled));
 
             if (OS.W12 || OS.W11 || OS.W10)
             {
-                string stringThemeName = NativeMethods.UxTheme.GetCurrentVS().Item1;
-                Theme = stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" || !System.IO.File.Exists(stringThemeName) ? Themes.AeroLite : Themes.Aero;
+                if (Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", false)))
+                {
+                    Theme = Themes.Skip;
+                }
+                else
+                {
+                    string stringThemeName = NativeMethods.UxTheme.GetCurrentVS().Item1;
+                    Theme = stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" || !System.IO.File.Exists(stringThemeName) ? Themes.AeroLite : Themes.Aero;
+                }
 
                 List<Color> Colors = new();
                 Colors.Clear();
@@ -244,6 +254,8 @@ namespace WinPaletter.Theme.Structures
                 {
                     case Themes.Aero:
                         {
+                            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", false);
+
                             UxTheme.EnableTheming(1);
                             //User32.SetHighContrast(false);
 
@@ -261,6 +273,8 @@ namespace WinPaletter.Theme.Structures
 
                     case Themes.AeroLite:
                         {
+                            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", false);
+
                             UxTheme.EnableTheming(1);
                             UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
 
@@ -270,6 +284,12 @@ namespace WinPaletter.Theme.Structures
                             EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
                             //User32.SetHighContrast(true);
 
+                            break;
+                        }
+
+                    default:
+                        {
+                            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", true);
                             break;
                         }
                 }

@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -19,6 +22,8 @@ namespace WinPaletter
         private int ChannelFixer;
         private List<string> Updates_ls = new();
         public string file = string.Empty;
+
+        public Size oldMainFormMinSize;
 
         public Home()
         {
@@ -39,9 +44,12 @@ namespace WinPaletter
             labelAlt2.Font = new(Fonts.Title, labelAlt2.Font.Size, labelAlt2.Font.Style);
             labelAlt3.Font = Fonts.Console;
 
+            oldMainFormMinSize = Forms.MainForm.MinimumSize;
+
             if (!Program.Elevated) apply_btn.Image = Properties.Resources.WP_Admin;
             flowLayoutPanel3.DoubleBuffer();
 
+            processCompactMode();
             LoadOSData();
             LoadData();
             LoadFromTM(Program.TM);
@@ -63,6 +71,25 @@ namespace WinPaletter
                 card.MouseEnter += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as UI.WP.Card).Color.Dark(0.7f) : (s as UI.WP.Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 card.MouseLeave += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Program.Settings.General.CompactAspects = !Program.Settings.General.CompactAspects;
+            processCompactMode();
+        }
+
+        private void processCompactMode()
+        {
+            foreach (UI.WP.Card card in flowLayoutPanel1.Controls)
+            {
+                card.Compact = Program.Settings.General.CompactAspects;
+                card.Size = card.Compact ? new(144, 130) : new(277, 130);
+            }
+
+            Forms.MainForm.MinimumSize = Program.Settings.General.CompactAspects ? new(925, 660) : oldMainFormMinSize;
+
+            button1.ImageGlyph = Program.Settings.General.CompactAspects ? Properties.Resources.Glyph_Expand : Properties.Resources.Glyph_Compact;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -162,6 +189,9 @@ namespace WinPaletter
                     break;
             }
 
+            card12.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista;
+            card3.Visible = Program.WindowStyle != WindowStyle.WVista;
+            //card14.Visible = Program.WindowStyle != WindowStyle.WXP;
         }
 
         public void LoadFromTM(Theme.Manager TM)
@@ -319,26 +349,32 @@ namespace WinPaletter
                 form = Forms.Win11Colors;
             }
 
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(form);
         }
 
         private void card2_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Win32UI);
         }
 
         private void card3_Click(object sender, EventArgs e)
         {
+
             if (Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11 || Program.WindowStyle == WindowStyle.W10)
             {
+                Forms.MainForm.BackgroundImage = (sender as Card).Image;
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
             }
             else if (Program.WindowStyle == WindowStyle.W81 | Program.WindowStyle == WindowStyle.W7)
             {
+                Forms.MainForm.BackgroundImage = (sender as Card).Image;
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI7);
             }
             else if (Program.WindowStyle == WindowStyle.WXP)
             {
+                Forms.MainForm.BackgroundImage = (sender as Card).Image;
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUIXP);
             }
             else if (Program.WindowStyle == WindowStyle.WVista)
@@ -347,22 +383,26 @@ namespace WinPaletter
             }
             else
             {
+                Forms.MainForm.BackgroundImage = (sender as Card).Image;
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
             }
         }
 
         private void card6_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CursorsStudio);
         }
 
         private void card5_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Metrics_Fonts);
         }
 
         private void card4_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.TerminalsDashboard.ShowDialog();
         }
 
@@ -401,21 +441,25 @@ namespace WinPaletter
                 Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W12;
             }
 
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Wallpaper_Editor);
         }
 
         private void card9_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WinEffecter);
         }
 
         private void card7_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Sounds_Editor);
         }
 
         private void card11_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ScreenSaver_Editor);
         }
 
@@ -423,6 +467,7 @@ namespace WinPaletter
         {
             if (Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista)
             {
+                Forms.MainForm.BackgroundImage = (sender as Card).Image;
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.AltTabEditor);
             }
             else
@@ -436,6 +481,7 @@ namespace WinPaletter
 
         private void card10_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.ApplicationThemer.FixLanguageDarkModeBug = false;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ApplicationThemer);
         }
@@ -604,7 +650,14 @@ namespace WinPaletter
 
         private void card13_Click(object sender, EventArgs e)
         {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.IconsStudio);
+        }
+
+        private void card14_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.VisualStyles);
         }
 
         //private void button1_Click(object sender, EventArgs e)

@@ -13,7 +13,7 @@ namespace WinPaletter.UI.WP
     {
         public ComboBox()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 

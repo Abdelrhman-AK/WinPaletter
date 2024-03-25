@@ -42,20 +42,26 @@ namespace WinPaletter.Theme
                                 Windows7.Load(@default.Windows7);
                                 WindowsVista.Load(@default.WindowsVista);
                                 WindowsXP.Load(@default.WindowsXP);
-                                WindowsEffects.Load(@default.WindowsEffects);
+                                VisualStyles_12.Load("12", @default.VisualStyles_12);
+                                VisualStyles_11.Load("11", @default.VisualStyles_11);
+                                VisualStyles_10.Load("10", @default.VisualStyles_10);
+                                VisualStyles_81.Load("8.1", @default.VisualStyles_81);
+                                VisualStyles_7.Load("7", @default.VisualStyles_7);
+                                VisualStyles_Vista.Load("Vista", @default.VisualStyles_Vista);
+                                VisualStyles_XP.Load("XP", @default.VisualStyles_Vista);
                                 LogonUI10x.Load(@default.LogonUI10x);
                                 LogonUI81.Load("8.1", @default.LogonUI7);
                                 LogonUI7.Load("7", @default.LogonUI7);
                                 LogonUIXP.Load(@default.LogonUIXP);
                                 Win32.Load();
-                                MetricsFonts.Load(@default.MetricsFonts);
                                 Cursors.Load(@default.Cursors);
+                                MetricsFonts.Load(@default.MetricsFonts);
+                                WindowsEffects.Load(@default.WindowsEffects);
                                 AltTab.Load(@default.AltTab);
                                 ScreenSaver.Load(@default.ScreenSaver);
                                 Sounds.Load(@default.Sounds);
                                 AppTheme.Load(@default.AppTheme);
                                 Icons.Load(@default.Icons);
-
                                 WallpaperTone_W12.Load("Win12");
                                 WallpaperTone_W11.Load("Win11");
                                 WallpaperTone_W10.Load("Win10");
@@ -164,7 +170,7 @@ namespace WinPaletter.Theme
                                     ReplaceWPAppData(ref content_list);
 
                                     // reset content as content_list has been modified
-                                    content = string.Join("\r\n", content_list); 
+                                    content = string.Join("\r\n", content_list);
 
                                     // Parse the decompressed content_list as JSON
                                     JObject json = JObject.Parse(content);

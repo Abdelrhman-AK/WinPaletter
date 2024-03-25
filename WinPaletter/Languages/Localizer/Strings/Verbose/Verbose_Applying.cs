@@ -14,6 +14,7 @@
         public string TM_Time_They { get; set; } = "They took {0} seconds";
         public string TM_SavingInfo { get; set; } = "Saving theme info into registry";
         public string TM_ThemeReset { get; set; } = "Resetting theme to default Windows to apply new theme correctly";
+        public string TM_Applying_VS { get; set; } = "Applying Windows visual styles";
         public string TM_Applying_Win12 { get; set; } = "Applying Windows 12 scheme";
         public string TM_Applying_Win11 { get; set; } = "Applying Windows 11 scheme";
         public string TM_Applying_Win10 { get; set; } = "Applying Windows 10 scheme";

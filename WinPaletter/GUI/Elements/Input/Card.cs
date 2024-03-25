@@ -59,6 +59,20 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        private bool _compact = false;
+        public bool Compact
+        {
+            get => _compact;
+            set
+            {
+                if (_compact != value)
+                {
+                    _compact = value;
+                    Invalidate();
+                }
+            }
+        }
+
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             //Leave it empty to make control background transparent
@@ -307,7 +321,17 @@ namespace WinPaletter.UI.WP
 
             if (Image is not null)
             {
-                Rectangle imageRect = new(rect.X + rect.Width - Image.Width - 5 - (int)(alpha * 5f / 255f), rect.Y + (rect.Height - Image.Height) / 2, Image.Width, Image.Height);
+                Rectangle imageRect;
+
+                if (!_compact)
+                {
+                    imageRect = new(rect.X + rect.Width - Image.Width - 5 /*- (int)(alpha * 4f / 255f) DISABLED FOR BETTER PERFORMANCE*/
+                         , rect.Y + (rect.Height - Image.Height) / 2, Image.Width, Image.Height);
+                }
+                else
+                {
+                    imageRect = new(rect.X + (rect.Width - Image.Width) / 2 + 1, rect.Y + (rect.Height - Image.Height) / 2 + 1, Image.Width, Image.Height);
+                }
 
                 ////Disabled for better performance
                 //G.DrawGlow(rect_all, Color.FromArgb(alpha_hover, _color.CB(-0.1f)), shadowSize, 30, true);
@@ -325,7 +349,10 @@ namespace WinPaletter.UI.WP
                     G.SetClip(clipPath, CombineMode.Intersect);
 
                     using (LinearGradientBrush br0G = new(rect_margin, colors.Back_Checked_Hover, Color.Transparent, LinearGradientMode.ForwardDiagonal))
-                    using (LinearGradientBrush br1G = new(rect_margin, Color.Transparent, Color.FromArgb(alpha, Program.Style.DarkMode ? colors.Line_Checked.Dark() : colors.Line_Checked.Light()), LinearGradientMode.ForwardDiagonal))
+                    using (LinearGradientBrush br1G = new(rect_margin, 
+                        !_compact ? Color.Transparent : Color.FromArgb(Math.Min(alpha, 175), Program.Style.DarkMode ? colors.Line_Checked.Dark() : colors.Line_Checked.Light()),
+                                                        Color.FromArgb(alpha, Program.Style.DarkMode ? colors.Line_Checked_Hover.Dark() : colors.Line_Checked_Hover.Light()),
+                        LinearGradientMode.ForwardDiagonal))
                     {
                         G.FillRectangle(br0G, rect_margin);
 
@@ -421,44 +448,51 @@ namespace WinPaletter.UI.WP
                 Rectangle textRect = Rectangle.Empty;
                 Rectangle descriptionRect = Rectangle.Empty;
 
-                if (Tag != null && !string.IsNullOrWhiteSpace(Tag))
+                if (!_compact)
                 {
-                    descriptionSize = (Tag).Measure(Font, rect.Width) + new SizeF(0, 17);
+                    if (Tag != null && !string.IsNullOrWhiteSpace(Tag))
+                    {
+                        descriptionSize = (Tag).Measure(Font, rect.Width) + new SizeF(0, 17);
 
-                    int totalHeight = (int)(textSize.Height + descriptionSize.Height);
-                    int centerY = rect.Y + ((rect.Height - totalHeight) / 2);
+                        int totalHeight = (int)(textSize.Height + descriptionSize.Height);
+                        int centerY = rect.Y + ((rect.Height - totalHeight) / 2);
 
-                    textRect = new Rectangle(rect.X + 5, centerY, rect.Width - 10, (int)textSize.Height);
+                        textRect = new Rectangle(rect.X + 5, centerY, rect.Width - 10, (int)textSize.Height);
 
-                    // Center description below the title
-                    descriptionRect = new Rectangle(rect.X + 8, textRect.Bottom + 4, rect.Width - 12, (int)descriptionSize.Height);
+                        // Center description below the title
+                        descriptionRect = new Rectangle(rect.X + 8, textRect.Bottom + 4, rect.Width - 12, (int)descriptionSize.Height);
+                    }
+                    else
+                    {
+                        // Only the title is centered
+                        textRect = new Rectangle(rect.X + 5, rect.Y + (rect.Height - (int)textSize.Height) / 2, rect.Width - 10, (int)textSize.Height);
+                        descriptionRect = Rectangle.Empty;
+                    }
+
+                    if (descriptionSize != SizeF.Empty)
+                    {
+                        // Calculate the initial centerY
+                        int centerY = rect.Y + (rect.Height - (int)textSize.Height) / 2;
+
+                        // Calculate the center of the title and description combined
+                        int combinedCenterY = rect.Y + (rect.Height - (int)(textSize.Height + descriptionSize.Height)) / 2;
+
+                        // Interpolate between the two states based on the alpha_hover value
+                        int interpolatedY = Lerp(centerY, combinedCenterY, alpha / 255f);
+
+                        // Update the positions
+                        textRect.Y = interpolatedY;
+                        descriptionRect.Y = interpolatedY + textRect.Height + 5;
+                    }
                 }
                 else
                 {
-                    // Only the title is centered
-                    textRect = new Rectangle(rect.X + 5, rect.Y + (rect.Height - (int)textSize.Height) / 2, rect.Width - 10, (int)textSize.Height);
-                    descriptionRect = Rectangle.Empty;
+                    textRect = rect;
                 }
 
-                if (descriptionSize != SizeF.Empty)
-                {
-                    // Calculate the initial centerY
-                    int centerY = rect.Y + (rect.Height - (int)textSize.Height) / 2;
-
-                    // Calculate the center of the title and description combined
-                    int combinedCenterY = rect.Y + (rect.Height - (int)(textSize.Height + descriptionSize.Height)) / 2;
-
-                    // Interpolate between the two states based on the alpha_hover value
-                    int interpolatedY = Lerp(centerY, combinedCenterY, alpha / 255f);
-
-                    // Update the positions
-                    textRect.Y = interpolatedY;
-                    descriptionRect.Y = interpolatedY + textRect.Height + 5;
-                }
-
-                using (SolidBrush br0 = new(ForeColor))
+                using (SolidBrush br0 = new(Color.FromArgb(!_compact ? 255 : alpha, ForeColor)))
                 using (SolidBrush br1 = new(Color.FromArgb(alpha, ForeColor)))
-                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                using (StringFormat sf = (!_compact ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter).ToStringFormat())
                 {
                     G.SetClip(clipPath, CombineMode.Intersect);
 

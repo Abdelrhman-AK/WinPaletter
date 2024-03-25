@@ -98,6 +98,13 @@ namespace WinPaletter.Theme
                                     def.LogonUI81.Enabled = false;
                                     def.LogonUI7.Enabled = false;
                                     def.LogonUIXP.Enabled = true;
+                                    def.VisualStyles_12.Enabled = true;
+                                    def.VisualStyles_11.Enabled = true;
+                                    def.VisualStyles_10.Enabled = true;
+                                    def.VisualStyles_81.Enabled = true;
+                                    def.VisualStyles_7.Enabled = true;
+                                    def.VisualStyles_Vista.Enabled = true;
+                                    def.VisualStyles_XP.Enabled = true;
                                     if (OS.WXP) Theme.Structures.Cursors.ResetCursorsToNone_XP(); else Theme.Structures.Cursors.ResetCursorsToAero();
                                     def.CommandPrompt.Enabled = true;
                                     def.PowerShellx86.Enabled = true;
@@ -126,6 +133,13 @@ namespace WinPaletter.Theme
                         Windows7.SaveToggleState(tv);
                         WindowsVista.SaveToggleState(tv);
                         WindowsXP.SaveToggleState(tv);
+                        VisualStyles_12.SaveToggleState("12", tv);
+                        VisualStyles_11.SaveToggleState("11", tv);
+                        VisualStyles_10.SaveToggleState("10", tv);
+                        VisualStyles_81.SaveToggleState("8.1", tv);
+                        VisualStyles_7.SaveToggleState("7", tv);
+                        VisualStyles_Vista.SaveToggleState("Vista", tv);
+                        VisualStyles_XP.SaveToggleState("XP", tv);
                         Win32.SaveToggleState(tv);
                         LogonUI10x.SaveToggleState(tv);
                         LogonUI81.SaveToggleState("8.1", tv);
@@ -186,6 +200,14 @@ namespace WinPaletter.Theme
                                 !Windows12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 Program.Lang.TM_Skip_WinColors);
 
+                            Execute(() => VisualStyles_12.Apply("12", tv), treeView,
+                                Program.Lang.TM_Applying_VS,
+                                Program.Lang.TM_VS_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !VisualStyles_12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
+                                Program.Lang.TM_Skip_VS);
+
                             Execute(() => LogonUI10x.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_LogonUI12,
                                 Program.Lang.TM_LogonUI12_Error,
@@ -204,6 +226,14 @@ namespace WinPaletter.Theme
                                 sw_all,
                                 !Windows11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 Program.Lang.TM_Skip_WinColors);
+
+                            Execute(() => VisualStyles_11.Apply("11", tv), treeView,
+                                Program.Lang.TM_Applying_VS,
+                                Program.Lang.TM_VS_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !VisualStyles_11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
+                                Program.Lang.TM_Skip_VS);
 
                             Execute(() => LogonUI10x.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_LogonUI11,
@@ -224,6 +254,14 @@ namespace WinPaletter.Theme
                                 !Windows10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 Program.Lang.TM_Skip_WinColors);
 
+                            Execute(() => VisualStyles_10.Apply("10", tv), treeView,
+                                Program.Lang.TM_Applying_VS,
+                                Program.Lang.TM_VS_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !VisualStyles_10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
+                                Program.Lang.TM_Skip_VS);
+
                             Execute(() => LogonUI10x.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_LogonUI10,
                                 Program.Lang.TM_LogonUI10_Error,
@@ -243,6 +281,14 @@ namespace WinPaletter.Theme
                                 !Windows81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 Program.Lang.TM_Skip_WinColors);
 
+                            Execute(() => VisualStyles_81.Apply("8.1", tv), treeView,
+                                Program.Lang.TM_Applying_VS,
+                                Program.Lang.TM_VS_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !VisualStyles_81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
+                                Program.Lang.TM_Skip_VS);
+
                             Execute(() => LogonUI81.Apply("8.1", false, treeView), treeView,
                                 Program.Lang.TM_Applying_LogonUI8,
                                 Program.Lang.TM_LogonUI8_Error,
@@ -261,6 +307,14 @@ namespace WinPaletter.Theme
                                 sw_all,
                                 !Windows7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 Program.Lang.TM_Skip_WinColors);
+
+                            Execute(() => VisualStyles_7.Apply("7", tv), treeView,
+                                Program.Lang.TM_Applying_VS,
+                                Program.Lang.TM_VS_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !VisualStyles_7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
+                                Program.Lang.TM_Skip_VS);
 
                             Execute(() => LogonUI7.Apply("7", false, treeView), treeView,
                                 Program.Lang.TM_Applying_LogonUI7,
@@ -284,6 +338,16 @@ namespace WinPaletter.Theme
                             sw_all,
                             !WindowsVista.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                             Program.Lang.TM_Skip_WinColors);
+
+
+                            Execute(() => VisualStyles_Vista.Apply("Vista", tv), treeView,
+                                Program.Lang.TM_Applying_VS,
+                                Program.Lang.TM_VS_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !VisualStyles_Vista.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
+                                Program.Lang.TM_Skip_VS);
+
                         }
 
                         if (OS.WXP)
@@ -295,6 +359,14 @@ namespace WinPaletter.Theme
                                 sw_all,
                                 !WindowsXP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 Program.Lang.TM_Skip_WinColors);
+
+                            Execute(() => VisualStyles_XP.Apply("XP", tv), treeView,
+                                Program.Lang.TM_Applying_VS,
+                                Program.Lang.TM_VS_Error,
+                                Program.Lang.TM_Time,
+                                sw_all,
+                                !VisualStyles_XP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
+                                Program.Lang.TM_Skip_VS);
 
                             Execute(() => LogonUIXP.Apply(tv), treeView,
                                 Program.Lang.TM_Applying_LogonUIXP,
@@ -692,7 +764,7 @@ namespace WinPaletter.Theme
             {
                 Type type = field.FieldType;
 
-                if (IsStructure(type))
+                if (type.IsStructure())
                 {
                     JSON_Overall.Add(field.Name, DeserializeProps(type, field.GetValue(this)));
                 }
@@ -2334,7 +2406,126 @@ namespace WinPaletter.Theme
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
                             if (System.IO.File.Exists(file))
-                                archive.CreateEntryFromFile(file, $"WXP_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
+                                archive.CreateEntryFromFile(file, $"WXP_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
+                        }
+                    }
+                }
+
+                if (TM.VisualStyles_12.Enabled)
+                {
+                    ref string targetProperty = ref TM.VisualStyles_12.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}W12_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                            targetProperty = ZipEntry;
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                                archive.CreateEntryFromFile(file, $"W12_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
+                        }
+                    }
+                }
+
+                if (TM.VisualStyles_11.Enabled)
+                {
+                    ref string targetProperty = ref TM.VisualStyles_11.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}W11_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                            targetProperty = ZipEntry;
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                                archive.CreateEntryFromFile(file, $"W11_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
+                        }
+                    }
+                }
+
+                if (TM.VisualStyles_10.Enabled)
+                {
+                    ref string targetProperty = ref TM.VisualStyles_10.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}W10_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                            targetProperty = ZipEntry;
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                                archive.CreateEntryFromFile(file, $"W10_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
+                        }
+                    }
+                }
+
+                if (TM.VisualStyles_81.Enabled)
+                {
+                    ref string targetProperty = ref TM.VisualStyles_81.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}W81_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                            targetProperty = ZipEntry;
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                                archive.CreateEntryFromFile(file, $"W81_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
+                        }
+                    }
+                }
+
+                if (TM.VisualStyles_7.Enabled)
+                {
+                    ref string targetProperty = ref TM.VisualStyles_7.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}W7_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                            targetProperty = ZipEntry;
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                                archive.CreateEntryFromFile(file, $"W7_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
+                        }
+                    }
+                }
+
+                if (TM.VisualStyles_Vista.Enabled)
+                {
+                    ref string targetProperty = ref TM.VisualStyles_Vista.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}WVista_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                            targetProperty = ZipEntry;
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                                archive.CreateEntryFromFile(file, $"WVista_VS{(file.Replace(DirName, string.Empty))}", CompressionLevel.Optimal);
+                        }
+                    }
+                }
+
+                if (TM.VisualStyles_XP.Enabled)
+                {
+                    ref string targetProperty = ref TM.VisualStyles_XP.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}WXP_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                            targetProperty = ZipEntry;
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                                archive.CreateEntryFromFile(file, $"WXP_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
                         }
                     }
                 }

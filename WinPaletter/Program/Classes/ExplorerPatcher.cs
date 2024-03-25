@@ -1,26 +1,62 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// ExplorerPatcher helper class
+    /// </summary>
     public class ExplorerPatcher
     {
+        /// <summary>
+        /// Is ExplorerPatcher installed
+        /// </summary>
         public static bool IsInstalled = false;
+
+        /// <summary>
+        /// Use Windows 10 Start Menu style
+        /// </summary>
         public bool UseStart10 = false;
+
+        /// <summary>
+        /// Use Windows 10 Taskbar style
+        /// </summary>
         public bool UseTaskbar10 = false;
+
+        /// <summary>
+        /// Use Windows 10 start button style
+        /// </summary>
         public bool TaskbarButton10 = false;
+
+        /// <summary>
+        /// Start menu style
+        /// </summary>
         public StartStyles StartStyle;
 
+        /// <summary>
+        /// Start menu styles enumeration
+        /// </summary>
         public enum StartStyles
         {
+            /// <summary>
+            /// No rounded corners (standard)
+            /// </summary>
             NotRounded,
+            /// <summary>
+            /// Rounded corners and floating menu
+            /// </summary>
             RoundedCornersFloatingMenu,
+
+            /// <summary>
+            /// Rounded corners and docked menu (not floating)
+            /// </summary>
             RoundedCornersDockedMenu
         }
 
+        /// <summary>
+        /// Create a new instance of ExplorerPatcher helper class
+        /// </summary>
         public ExplorerPatcher()
         {
-
             try
             {
                 IsInstalled = RegKeyExists("HKEY_CURRENT_USER\\Software\\ExplorerPatcher");
@@ -63,6 +99,10 @@ namespace WinPaletter
 
         }
 
+        /// <summary>
+        /// Allow or disallow the use of the ExplorerPatcher helper class
+        /// </summary>
+        /// <returns></returns>
         public static bool IsAllowed()
         {
             bool condition0 = (OS.W12 || OS.W11) && Program.Settings.ExplorerPatcher.Enabled && IsInstalled;

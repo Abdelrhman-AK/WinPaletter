@@ -7,6 +7,9 @@ namespace WinPaletter
 {
     internal partial class Forms
     {
+        private static Win12Colors _Win12Colors;
+        public static Win12Colors Win12Colors => (_Win12Colors == null || _Win12Colors.IsDisposed) ? (_Win12Colors = CreateInstance(_Win12Colors)) : _Win12Colors;
+
         private static Win11Colors _Win11Colors;
         public static Win11Colors Win11Colors => (_Win11Colors == null || _Win11Colors.IsDisposed) ? (_Win11Colors = CreateInstance(_Win11Colors)) : _Win11Colors;
 
@@ -24,6 +27,9 @@ namespace WinPaletter
 
         private static WinXPColors _WinXPColors;
         public static WinXPColors WinXPColors => (_WinXPColors == null || _WinXPColors.IsDisposed) ? (_WinXPColors = CreateInstance(_WinXPColors)) : _WinXPColors;
+
+        private static VisualStyles _VisualStyles;
+        public static VisualStyles VisualStyles => (_VisualStyles == null || _VisualStyles.IsDisposed) ? (_VisualStyles = CreateInstance(_VisualStyles)) : _VisualStyles;
 
         private static ColorPickerDlg _ColorPickerDlg;
         public static ColorPickerDlg ColorPickerDlg => (_ColorPickerDlg == null || _ColorPickerDlg.IsDisposed) ? (_ColorPickerDlg = CreateInstance(_ColorPickerDlg)) : _ColorPickerDlg;

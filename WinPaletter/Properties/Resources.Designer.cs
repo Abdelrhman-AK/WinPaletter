@@ -183,6 +183,16 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Compact {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Compact", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Glyph_Copy {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Copy", resourceCulture);
@@ -216,6 +226,16 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap Glyph_Edit {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Expand {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Expand", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -431,7 +451,7 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MIT License
+        ///   Looks up a localized string similar to MIT/LGPL Dual License
         ///
         ///Copyright (c) 2022-2024 Abdelrhman-AK
         ///
@@ -442,7 +462,7 @@ namespace WinPaletter.Properties {
         ///copies of the Software, and to permit persons to whom the Software is
         ///furnished to do so, subject to the following conditions:
         ///
-        ///The above copyr [rest of string was truncated]&quot;;.
+        ///The a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LICENSE {
             get {
@@ -496,6 +516,26 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap Noise_Opaque {
             get {
                 object obj = ResourceManager.GetObject("Noise_Opaque", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap off {
+            get {
+                object obj = ResourceManager.GetObject("off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap on {
+            get {
+                object obj = ResourceManager.GetObject("on", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

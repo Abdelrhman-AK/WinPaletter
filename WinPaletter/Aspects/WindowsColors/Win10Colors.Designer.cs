@@ -159,6 +159,8 @@
             this.theme_aero = new WinPaletter.UI.WP.RadioImage();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.theme_skip = new WinPaletter.UI.WP.RadioImage();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.GroupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).BeginInit();
@@ -2066,7 +2068,7 @@
             this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox1.Image = null;
-            this.alertBox1.Location = new System.Drawing.Point(564, 557);
+            this.alertBox1.Location = new System.Drawing.Point(564, 591);
             this.alertBox1.Name = "alertBox1";
             this.alertBox1.Size = new System.Drawing.Size(534, 48);
             this.alertBox1.TabIndex = 229;
@@ -2079,6 +2081,7 @@
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox4.Controls.Add(this.theme_skip);
             this.groupBox4.Controls.Add(this.theme_aerolite);
             this.groupBox4.Controls.Add(this.theme_aero);
             this.groupBox4.Controls.Add(this.pictureBox9);
@@ -2144,15 +2147,51 @@
             this.label20.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.label20.Location = new System.Drawing.Point(44, 30);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(285, 35);
+            this.label20.Size = new System.Drawing.Size(184, 35);
             this.label20.TabIndex = 0;
             this.label20.Text = "Theme";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // theme_skip
+            // 
+            this.theme_skip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.theme_skip.Checked = false;
+            this.theme_skip.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.theme_skip.ForeColor = System.Drawing.Color.White;
+            this.theme_skip.Image = ((System.Drawing.Image)(resources.GetObject("theme_skip.Image")));
+            this.theme_skip.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_skip.Location = new System.Drawing.Point(234, 3);
+            this.theme_skip.Name = "theme_skip";
+            this.theme_skip.Size = new System.Drawing.Size(95, 88);
+            this.theme_skip.TabIndex = 46;
+            this.theme_skip.Text = "Don\'t modify";
+            this.theme_skip.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.theme_skip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.theme_skip.CheckedChanged += new System.EventHandler(this.theme_skip_CheckedChanged);
+            // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(564, 557);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(534, 28);
+            this.alertBox2.TabIndex = 230;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "If Visual Styles aspect is enabled, theme (default\\aero lite) will be overriden";
+            this.alertBox2.Visible = false;
             // 
             // Win10Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.ClientSize = new System.Drawing.Size(1104, 756);
+            this.Controls.Add(this.alertBox2);
             this.Controls.Add(this.alertBox1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
@@ -2164,11 +2203,12 @@
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Win10Colors_HelpButtonClicked);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Win10Colors_FormClosed);
             this.Load += new System.EventHandler(this.Win10Colors_Load);
-            this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.groupBox4, 0);
             this.Controls.SetChildIndex(this.alertBox1, 0);
+            this.Controls.SetChildIndex(this.titlebarExtender1, 0);
+            this.Controls.SetChildIndex(this.alertBox2, 0);
             this.GroupBox13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).EndInit();
@@ -2346,5 +2386,7 @@
         internal UI.WP.RadioImage theme_aero;
         internal System.Windows.Forms.PictureBox pictureBox9;
         internal System.Windows.Forms.Label label20;
+        internal UI.WP.RadioImage theme_skip;
+        internal UI.WP.AlertBox alertBox2;
     }
 }

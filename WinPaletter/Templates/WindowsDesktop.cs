@@ -779,7 +779,7 @@ namespace WinPaletter.Templates
                 {
                     _color1 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
+                    if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
                         if (ExplorerPatcher.IsAllowed())
                         {
@@ -862,7 +862,7 @@ namespace WinPaletter.Templates
                 {
                     _color2 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
+                    if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
                         if (!DarkMode_Win)
                         {
@@ -909,7 +909,7 @@ namespace WinPaletter.Templates
                 {
                     _color3 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
+                    if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
                         if (ExplorerPatcher.IsAllowed())
                         {
@@ -952,7 +952,7 @@ namespace WinPaletter.Templates
                 {
                     _color4 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
+                    if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
                         if (ExplorerPatcher.IsAllowed())
                         {
@@ -1048,7 +1048,7 @@ namespace WinPaletter.Templates
                 {
                     _color5 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
+                    if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
                         if (!DarkMode_Win) taskbar.AppUnderline = value;
 
@@ -1126,7 +1126,7 @@ namespace WinPaletter.Templates
                 {
                     _color6 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
+                    if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
                         ActionCenter.ActionCenterButton_Pressed = value;
                     }
@@ -1150,15 +1150,15 @@ namespace WinPaletter.Templates
                 {
                     _color7 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
-                    {
+                    //if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
+                    //{
 
-                    }
+                    //}
 
-                    else if (WindowStyle == WindowStyle.W10)
-                    {
+                    //else if (WindowStyle == WindowStyle.W10)
+                    //{
 
-                    }
+                    //}
                 }
             }
         }
@@ -1174,7 +1174,7 @@ namespace WinPaletter.Templates
                 {
                     _color8 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
+                    if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
                         taskbar.AppBackground = value;
                     }
@@ -1202,15 +1202,15 @@ namespace WinPaletter.Templates
                 {
                     _color9 = value;
 
-                    if (WindowStyle == WindowStyle.W11)
-                    {
+                    //if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
+                    //{
 
-                    }
+                    //}
 
-                    else if (WindowStyle == WindowStyle.W10)
-                    {
+                    //else if (WindowStyle == WindowStyle.W10)
+                    //{
 
-                    }
+                    //}
                 }
             }
         }
@@ -1760,6 +1760,132 @@ namespace WinPaletter.Templates
         {
             switch (_windowStyle)
             {
+                case WindowStyle.W12:
+                    {
+                        Preview = Windows_10x_Theme == Themes.Aero ? Preview_Enum.W11 : Preview_Enum.W11Lite;
+
+                        if (OS.W12 || OS.W11) Program.EP = new();
+
+                        if (ExplorerPatcher.IsAllowed())
+                        {
+                            ref ExplorerPatcher EP = ref Program.EP;
+
+                            if ((bool)!EP?.UseTaskbar10)
+                            {
+                                taskbar.Height = 42;
+                                taskbar.NoisePower = 0.3f;
+                            }
+                            else
+                            {
+                                taskbar.Height = 35;
+                                taskbar.NoisePower = 0f;
+                                UseWin11ORB_WithWin10 = (bool)!EP?.TaskbarButton10;
+                            }
+
+                            if ((bool)!EP?.UseStart10)
+                            {
+                                start.BlurPower = 6;
+                                start.NoisePower = 0.3f;
+                                start.Size = new(135, 200);
+                                start.Location = new(10, taskbar.Bottom - taskbar.Height - start.Height - 10);
+                            }
+                            else
+                            {
+                                start.BlurPower = 7;
+                                start.NoisePower = 0.3f;
+
+                                switch (EP?.StartStyle)
+                                {
+                                    case ExplorerPatcher.StartStyles.NotRounded:
+                                        {
+                                            start.Size = new(182, 201);
+                                            start.Left = 0;
+                                            start.Top = taskbar.Bottom - taskbar.Height - start.Height;
+                                            UseWin11RoundedCorners_WithWin10_Level1 = false;
+                                            UseWin11RoundedCorners_WithWin10_Level2 = false;
+                                            break;
+                                        }
+
+                                    case ExplorerPatcher.StartStyles.RoundedCornersDockedMenu:
+                                        {
+                                            start.Size = new(182, 201);
+                                            start.Left = 0;
+                                            start.Top = taskbar.Bottom - taskbar.Height - start.Height;
+                                            UseWin11RoundedCorners_WithWin10_Level1 = true;
+                                            UseWin11RoundedCorners_WithWin10_Level2 = false;
+                                            break;
+                                        }
+
+                                    case ExplorerPatcher.StartStyles.RoundedCornersFloatingMenu:
+                                        {
+                                            start.Size = new(182, 201);
+                                            start.Location = new(10, taskbar.Bottom - taskbar.Height - start.Height - 10);
+                                            UseWin11RoundedCorners_WithWin10_Level1 = false;
+                                            UseWin11RoundedCorners_WithWin10_Level2 = true;
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            taskbar.BlurPower = 8;
+                            taskbar.Height = 42;
+                            taskbar.NoisePower = 0.3f;
+
+                            start.BlurPower = 6;
+                            start.NoisePower = 0.3f;
+                            start.Size = new(135, 200);
+                            start.Location = new(10, taskbar.Bottom - taskbar.Height - start.Height - 10);
+                        }
+
+                        ActionCenter.Dock = default;
+                        ActionCenter.BlurPower = 6;
+                        ActionCenter.NoisePower = 0.3f;
+                        ActionCenter.Size = new(120, 85);
+                        ActionCenter.Location = new(ActionCenter.Parent.Width - ActionCenter.Width - 10, taskbar.Top - ActionCenter.Height - 10);
+
+                        byte TB_Alpha = default, S_Alpha = default, AC_Alpha = default, TB_Blur = default(byte);
+
+                        if (DarkMode_Win)
+                        {
+                            AC_Alpha = 90;
+
+                            if (ExplorerPatcher.IsAllowed())
+                            {
+                                S_Alpha = (bool)Program.EP?.UseStart10 ? (byte)185 : (byte)90;
+                                (TB_Alpha, TB_Blur) = (bool)Program.EP?.UseTaskbar10 ? ((byte)185, (byte)8) : ((byte)105, (byte)8);
+                            }
+                            else
+                            {
+                                (TB_Alpha, TB_Blur, S_Alpha) = (105, 8, 90);
+                            }
+                        }
+                        else
+                        {
+
+                            AC_Alpha = 180;
+
+                            if (ExplorerPatcher.IsAllowed())
+                            {
+                                S_Alpha = (bool)Program.EP?.UseStart10 ? (byte)210 : (byte)180;
+                                (TB_Alpha, TB_Blur) = (bool)Program.EP?.UseTaskbar10 ? ((byte)210, (byte)8) : ((byte)180, (byte)8);
+                            }
+                            else
+                            {
+                                (TB_Alpha, TB_Blur, S_Alpha) = (180, 8, 180);
+                            }
+                        }
+
+                        ActionCenter.BackColorAlpha = AC_Alpha;
+                        start.BackColorAlpha = S_Alpha;
+                        taskbar.BackColorAlpha = TB_Alpha;
+                        taskbar.BlurPower = TB_Blur;
+
+                        break;
+                    }
+
                 case WindowStyle.W11:
                     {
                         Preview = Windows_10x_Theme == Themes.Aero ? Preview_Enum.W11 : Preview_Enum.W11Lite;
@@ -2247,7 +2373,29 @@ namespace WinPaletter.Templates
 
             _hookedTM = TM;
 
-            if (WindowStyle == WindowStyle.W11)
+            if (WindowStyle == WindowStyle.W12)
+            {
+                Transparency = HookedTM.Windows12.Transparency;
+                DarkMode_App = !HookedTM.Windows12.AppMode_Light;
+                DarkMode_Win = !HookedTM.Windows12.WinMode_Light;
+                TitlebarColor_Active = HookedTM.Windows12.Titlebar_Active;
+                TitlebarColor_Inactive = HookedTM.Windows12.Titlebar_Inactive;
+                TitlebarColor_Enabled = HookedTM.Windows12.ApplyAccentOnTitlebars;
+                AccentLevel = HookedTM.Windows12.ApplyAccentOnTaskbar;
+                TB_Blur = true;
+                Color1 = HookedTM.Windows12.Color_Index5;
+                Color2 = HookedTM.Windows12.Color_Index0;
+                Color3 = HookedTM.Windows12.Color_Index1;
+                Color4 = HookedTM.Windows12.Color_Index4;
+                Color5 = HookedTM.Windows12.Color_Index3;
+                Color6 = HookedTM.Windows12.Color_Index2;
+                Color7 = HookedTM.Windows12.StartMenu_Accent;
+                Color8 = HookedTM.Windows12.Color_Index6;
+                Color9 = HookedTM.Windows12.Color_Index7;
+                Windows_10x_Theme = HookedTM.Windows12.Theme;
+            }
+
+            else if (WindowStyle == WindowStyle.W11)
             {
                 Transparency = HookedTM.Windows11.Transparency;
                 DarkMode_App = !HookedTM.Windows11.AppMode_Light;

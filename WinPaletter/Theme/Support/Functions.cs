@@ -331,13 +331,5 @@ namespace WinPaletter.Theme
 
             return DecompressedData;
         }
-
-        /// <summary>
-        /// Checks if this type is a structure or not
-        /// </summary>
-        private bool IsStructure(Type type)
-        {
-            return type.IsValueType && !type.IsPrimitive && type.Namespace is not null && !type.Namespace.StartsWith("System.");
-        }
     }
 }

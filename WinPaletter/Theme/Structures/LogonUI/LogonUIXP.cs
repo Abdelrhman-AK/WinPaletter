@@ -17,10 +17,10 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Windows XP LogonUI mode</summary>
         public Modes Mode = Modes.Default;
 
-        /// <summary>Windows XP LogonUI background color if selected 'Mode' is 'Win2000'</summary>
+        /// <summary>Windows XP LogonUI background color if selected 'Source' is 'Win2000'</summary>
         public Color BackColor = Color.Black;
 
-        /// <summary>Controls if 'More options' button is visible if selected 'Mode' is 'Win2000'</summary>
+        /// <summary>Controls if 'More options' button is visible if selected 'Source' is 'Win2000'</summary>
         public bool ShowMoreOptions = false;
 
         /// <summary>
