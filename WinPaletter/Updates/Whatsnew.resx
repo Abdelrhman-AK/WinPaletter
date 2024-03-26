@@ -186,20 +186,46 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="label34.Text" xml:space="preserve">
+    <value>● A new option is made to skip setting theme from (default\aero lite) in Windows 10/11
+● Making WinPaletter can block aspect applying in its specific form if it was blocked in settings by 'Aspects control'
+● Toggle compact\expanded layout in the main form (for small resolutions)
+● Minor tweaks to make WinPaletter can handle Windows 12 (arbitary, exactly the same as Windows 11 until new developers work on it with Windows 12 release)
+
+● Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects &gt; Taskbar for all Windows editions.
+● Making Windows Effect's toggle enabled will display confirmation alert.
+● Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
+● Making close with tabs open dialog is shown first before saving theme dialog.
+● Making bug report shows error message instead of error type in bug report title.
+● UI improvements</value>
+  </data>
+  <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAyBJREFUSEvt
+        lM1PE1EUxSfxA000IpIAhZBKWIFBwRZYuEA0uDBIq+kOo6IrgwtXFHThH2AiMWEBgxo1IYSlJiZKpLTo
+        Bo1Q2mrQBQyFViWhX6iBUK7nDbe0dSgUcKe/5OQN5753Lu915kn/iVH+5ofO6Ag1Gu2hdoMj1IOxF+ow
+        2MNN1baAnqdtH6MjeMroCNsQHoUohZbFnKrBwMnKocDRUg/t5uWbo/gFZSBsPiF4EZqAHNhtP3bnxPMS
+        16jSHv5lsIci29qx+K8RPIBjbD4xFDzI9irHbIHMSkf4mmEw7EbToGhc5YiUcHl9LF7ae+EbFZ3zUtl5
+        H1WwvSE1NtqJRuOxnRrsgXIurY/5Kx0x+SgIkZBlq78FU9rnWX99g4/OoNECNAstsZ2EeZoOoTYihBPJ
+        YltDjjxZmydPRXRdymm2tJhm6DWCqGGGnGY/OdlOot5PpWKOkHhmWwOa2SCCXrGVjMlPeoQsiyA0u8S2
+        hnQb6rq9zdwwmi9PF7AdBw0vc9CC5TvtY1tDug0Lur1ZaLagNu1WLrIdBwH3OOgdWyr1PsqGdzwm7N7C
+        88RJiOfVmpjLy1TyZGVENNTJU3fZioMFT0QIdvqMLRV4w6qfnoZ5mYpO9j7nY33MVhxMfsqLXrKlIkLY
+        T0ebahg70s9sqZgmKFNcBjHxp6M2EM+JNcscHeBlKnmy90PqI014ac4qpLnCYqT70mQ/mN2PRovqDtd6
+        afCDFyJE/Swa/HSdbQ1pNex8vwvNrvBxRnWdvkKuJGP20YAIEiNbGtJpiGZjuV1TY9xw7Q9fgJA6KII7
+        tZYtDXy1vRVKdbWpu5KVOYzzOfJ0Ndtrs90Lu/j+lwzemVAgt0tJ+Tsn0/axQrK6iTUuWfp2cGVDdJ2T
+        FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
+        YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
+        i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="label39.Text" xml:space="preserve">
-    <value>● Fix Terminal two exception errors in a list on loading a WinPaletter theme file due to the inability to deserialize the current JSON array into type 'WinPaletter.WinTerminal+Types+Profiles' because the type requires a JSON object to deserialize.
-● Fix merging user preference mask (UPM) to default account even if this is disabled in settings.
-● Fix issues related to toggles, where Windows Switcher (Alt+Tab) and LogonUI (Windows 10/11) are not saveable.
-● Fix the problem where pressing "apply" in Windows color doesn't load edited preferences in the current theme; apply should apply edited preferences and load them into the current open theme.
-● Fix the absence of "Classic Colors" in the WinPaletter Store aspects check dialog.
-● Fix in metrics and fonts: caption font not synced with menu and misc previews.
-● Fix in metrics and fonts: icons font not synced with icons previews.
-● Fix Windows XP metrics loading padded border width with 4 as a default value to fix the wrong classic theme preview.
-● Fix cursor render (help) when font "Segoe UI Black" doesn't exist.
-● Fix miscellaneous section preview in metrics and fonts with classic mode is on due to wrong WindowText colors.
-● Fix window caption buttons preview with classic mode is on and maladjusted close content 'x' and other control box buttons using the 'Marlett' font.
-● Fix the issue of System.OutOfMemoryException: 'Out of memory.' occurring when a new theme is applied, followed by opening a new tab or form with a combo box in it.
-● Fix the app crash that occurs when starting with the classic theme enabled.</value>
+    <value>● Fix the issue where a system user account (NT SERVICE) appears among normal users.
+
+● Fix the issue where using the command line option "--apply" with a non-existing theme file still opens WinPaletter instead of exiting.
+
+● Fix the issue where using the command line option "--apply" with Windows 11 applied with a custom visual style brings back aero.msstyles, while the GUI doesn't.
+
+● Fix the UI issue of a black area in tabs when the title bar is not.</value>
   </data>
   <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -239,6 +265,35 @@
         82gFpVdhCTV4oiT4uDIsjipH2cvqA995Dw3nJHlKkOQRgSQHBSJHRDLeJcaTu9e86PXAS/IQFj5iy8bS
         efvz1qGn6cfUPThn242jLVqIHYrm4eCND9ByS4+x7cbRdr2g/Cw8cFP/89+PVzYK/znroPB/X4vDl7Sm
         1n69mUrnbHsDhs/3A0yv0sTFrzXoAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>● This new feature will allow you to modify desktop icons, certain explorer icons, control panel icons on the main page, and shell32.dll.
+
+● It won't patch system files; this process involves modifying the registry exclusively.</value>
+  </data>
+  <data name="banner14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAABGZJREFUSEvt
+        lGtMm2UYhqvO3yabJtJh6MZppZxGQTlTGGwQ5aDbIonZD51zbnFmJhvRzDiTISJHwVHGxklBToGxDLap
+        YwIZyyYyy1CgjEAGFOj5BAXb0t2+79ePAFshBPmnd3Kl/dq+z5X76ddy/rsp362KIuRc8lXWFfMVlYVu
+        08cytsu2sW9vXqpf0zjXhKg7akM0+DFYgx+C1CjzV6LYS44Ctyl9Dk/2IfvRf5/aIM0r9WFaWWOUDpdF
+        etDHujAtIyVNcd5zGjm8SeTyJs+yR5hUA0GZKpxiL9efmhBNZ5NIh5Y4A67tM+JqrIGR0qZkvRCTlnk7
+        p6j0cTZvQkTPtANbKm3oO/3QZvnqEZyYQetJZZAykrZpjtHjeoIRbUmzjPRytB61oRpUBKhQLFAg35UR
+        ImfHZBs9V2HDiYoF4KN+Kz4dXbjLDFtPKoXKjNpQLbPK1r0G3CBS2rSJNCTNGeGyhshxmbRe+m1+R6kV
+        hjIrcLTPjPckZnw+vpDEjlw7pf6qKnLDoCGcSEkr2pSut55cV72qRqkf+Q53ye0ywjcujyCesjaXmIGL
+        BCo71P03jvWZdRzgGXbs6rnorSimLaiUNqXrpaukMvr9XSDrLHC33zTZPBnSD4ygaA6Pi+YBMeHQ7/NI
+        vTuHtwknH1ry2bGrp9Bj6kiJtwJlZHilUIXvA9WoECpxwW8cYsEUCj3sMkqG6why++atBbNAoQn4jpB6
+        z4T9XbN4i0CeL6RJTVx2tOPkOU9sJUP1Yr4cRV4ylAi6ccv/FHo9I9Dtsx/V/HJ87TKCLN440s9MINcI
+        5M0A+SwH7swiqXMGiR123pXMdbOjV08278+PW3zScd9rLyRcL0icdq3gwc5AdArfR2Frty1DZUGWHsg2
+        ADlEntxpRPwtwxK/GvDBgCmFHb0ywwkJLw0FRrf2uQaYn5Q4ZLsX7kS+gfLzVUhXLSBTByS0G7DnFz1B
+        xxDzsw4pt42Ob6BBUYpIGvG6atA/aqTPdbfVocQBXe5CnJ224JwaiG3TIfKG1s51LSJYUntMYlazFCoc
+        ik4GQ1SSTRocNzTgGy7vdX56rcvpchPijMyCLxRA5E9ahLSoGYKXQaS2d+7NObMqe1YIl0FaT/QLQsYc
+        yShUmDZmwWfTQOg1DQKvqBiEizQrEUCI79T/warsWU1I+cs7dNiRjEKFn4xacFpG/r2vquDXpIAvpXEJ
+        H0JQi9qS2G58kdVtXHibCE8MW3ByDPAnTbwa5ODXU6YZAq6ozPEdhjxRO7awKns2LHQV4uiQBcdHAQGR
+        uddMwY3g06SYj2nTZz4lWsxGhT3OgpnDA9b2I8OAe900BI1yU/hN3TlOA55jRzvORoUSLp/5nR0eRmLY
+        TX2WsAfPsyPXzkjswRekouRsaXSyab3CXif+7H0uP40dsbH07zu4dSgm5Usi0q8q5PK1Eq7HcfbI5mRw
+        z5vbWLFhUdjL9dRtuujJSOOSuA+8Q76VvMzPAofzLPvy/1kjHM4/tiQ6KgDPMMwAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="label5.Text" xml:space="preserve">
@@ -534,66 +589,40 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="label34.Text" xml:space="preserve">
-    <value>● Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects &gt; Taskbar for all Windows editions.
+  <data name="label6.Text" xml:space="preserve">
+    <value>● In this release, WinPaletter introduces a new feature that allows you to change Windows Visual Styles.
 
-● Making Windows Effect's toggle enabled will display confirmation alert.
-
-● Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
-
-● Making close with tabs open dialog is shown first before saving theme dialog.
-
-● Making bug report shows error message instead of error type in bug report title.
-
-● UI improvements</value>
+● This feature requires patching UxTheme.dll. There will be a guide available within its form to patch it, either by using SecureUxTheme from its official releases in its repository (recommended) or by utilizing the SecureUxTheme setup wrapper provided by WinPaletter.</value>
   </data>
-  <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="banner15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAyBJREFUSEvt
-        lM1PE1EUxSfxA000IpIAhZBKWIFBwRZYuEA0uDBIq+kOo6IrgwtXFHThH2AiMWEBgxo1IYSlJiZKpLTo
-        Bo1Q2mrQBQyFViWhX6iBUK7nDbe0dSgUcKe/5OQN5753Lu915kn/iVH+5ofO6Ag1Gu2hdoMj1IOxF+ow
-        2MNN1baAnqdtH6MjeMroCNsQHoUohZbFnKrBwMnKocDRUg/t5uWbo/gFZSBsPiF4EZqAHNhtP3bnxPMS
-        16jSHv5lsIci29qx+K8RPIBjbD4xFDzI9irHbIHMSkf4mmEw7EbToGhc5YiUcHl9LF7ae+EbFZ3zUtl5
-        H1WwvSE1NtqJRuOxnRrsgXIurY/5Kx0x+SgIkZBlq78FU9rnWX99g4/OoNECNAstsZ2EeZoOoTYihBPJ
-        YltDjjxZmydPRXRdymm2tJhm6DWCqGGGnGY/OdlOot5PpWKOkHhmWwOa2SCCXrGVjMlPeoQsiyA0u8S2
-        hnQb6rq9zdwwmi9PF7AdBw0vc9CC5TvtY1tDug0Lur1ZaLagNu1WLrIdBwH3OOgdWyr1PsqGdzwm7N7C
-        88RJiOfVmpjLy1TyZGVENNTJU3fZioMFT0QIdvqMLRV4w6qfnoZ5mYpO9j7nY33MVhxMfsqLXrKlIkLY
-        T0ebahg70s9sqZgmKFNcBjHxp6M2EM+JNcscHeBlKnmy90PqI014ac4qpLnCYqT70mQ/mN2PRovqDtd6
-        afCDFyJE/Swa/HSdbQ1pNex8vwvNrvBxRnWdvkKuJGP20YAIEiNbGtJpiGZjuV1TY9xw7Q9fgJA6KII7
-        tZYtDXy1vRVKdbWpu5KVOYzzOfJ0Ndtrs90Lu/j+lwzemVAgt0tJ+Tsn0/axQrK6iTUuWfp2cGVDdJ2T
-        FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
-        YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
-        i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>● This new feature will allow you to modify desktop icons, certain explorer icons, control panel icons on the main page, and shell32.dll.
-
-● It won't patch system files; this process involves modifying the registry exclusively.</value>
-  </data>
-  <data name="banner14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAARmSURBVEhL7ZRrTJtlGIarzt8mmybSYejGaaWcRkE5UxhsEOWg2yKJ2Q+dc25xZiYb0cw4kyEi
-        R8FRxsZJQU6BsQy2qWMCGcsmMstQoIxABhTo+QQF29Ldvu/XjwBbIQT5p3dypf3avs+V++nXcv67Kd+t
-        iiLkXPJV1hXzFZWFbtPHMrbLtrFvb16qX9M414SoO2pDNPgxWIMfgtQo81ei2EuOArcpfQ5P9iH70X+f
-        2iDNK/VhWlljlA6XRXrQx7owLSMlTXHecxo5vEnk8ibPskeYVANBmSqcYi/Xn5oQTWeTSIeWOAOu7TPi
-        aqyBkdKmZL0Qk5Z5O6eo9HE2b0JEz7QDWypt6Dv90Gb56hGcmEHrSWWQMpK2aY7R43qCEW1Js4z0crQe
-        taEaVASoUCxQIN+VESJnx2QbPVdhw4mKBeCjfis+HV24ywxbTyqFyozaUC2zyta9BtwgUtq0iTQkzRnh
-        sobIcZm0XvptfkepFYYyK3C0z4z3JGZ8Pr6QxI5cO6X+qipyw6AhnEhJK9qUrreeXFe9qkapH/kOd8nt
-        MsI3Lo8gnrI2l5iBiwQqO9T9N471mXUc4Bl27Oq56K0opi2olDal66WrpDL6/V0g6yxwt9802TwZ0g+M
-        oGgOj4vmATHh0O/zSL07h7cJJx9a8tmxq6fQY+pIibcCZWR4pVCF7wPVqBAqccFvHGLBFAo97DJKhusI
-        cvvmrQWzQKEJ+I6Qes+E/V2zeItAni+kSU1cdrTj5DlPbCVD9WK+HEVeMpQIunHL/xR6PSPQ7bMf1fxy
-        fO0ygizeONLPTCDXCOTNAPksB+7MIqlzBokddt6VzHWzo1dPNu/Pj1t80nHfay8kXC9InHat4MHOQHQK
-        30dha7ctQ2VBlh7INgA5RJ7caUT8LcMSvxrwwYAphR29MsMJCS8NBUa39rkGmJ+UOGS7F+5EvoHy81VI
-        Vy0gUwcktBuw5xc9QccQ87MOKbeNjm+gQVGKSBrxumrQP2qkz3W31aHEAV3uQpydtuCcGoht0yHyhtbO
-        dS0iWFJ7TGJWsxQqHIpOBkNUkk0aHDc04Bsu73V+eq3L6XIT4ozMgi8UQORPWoS0qBmCl0GktnfuzTmz
-        KntWCJdBWk/0C0LGHMkoVJg2ZsFn00DoNQ0Cr6gYhIs0KxFAiO/U/8Gq7FlNSPnLO3TYkYxChZ+MWnBa
-        Rv69r6rg16SAL6VxCR9CUIvakthufJHVbVx4mwhPDFtwcgzwJ028GuTg11OmGQKuqMzxHYY8UTu2sCp7
-        Nix0FeLokAXHRwEBkbnXTMGN4NOkmI9p02c+JVrMRoU9zoKZwwPW9iPDgHvdNASNclP4Td05TgOeY0c7
-        zkaFEi6f+Z0dHkZi2E19lrAHz7Mj185I7MEXpKLkbGl0smm9wl4n/ux9Lj+NHbGx9O87uHUoJuVLItKv
-        KuTytRKux3H2yOZkcM+b21ixYVHYy/XUbbroyUjjkrgPvEO+lbzMzwKH8yz78v9ZIxzOP7YkOioAzzDM
-        AAAAAElFTkSuQmCC
+        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
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -398,6 +398,7 @@ namespace WinPaletter
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Get dictionary of SID, USERNAME\DOMAIN of all users
         /// </summary>
@@ -420,12 +421,12 @@ namespace WinPaletter
                 }
                 catch
                 {
-                    foreach (string SID in Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList").GetSubKeyNames()) { FoundSIDs.Add(SID); }
+                    foreach (string SID in GetSubKeys("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList")) { FoundSIDs.Add(SID); }
                 }
             }
             else
             {
-                foreach (string SID in Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList").GetSubKeyNames()) { FoundSIDs.Add(SID); }
+                foreach (string SID in GetSubKeys("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList")) { FoundSIDs.Add(SID); }
             }
 
             foreach (string sid in FoundSIDs)
@@ -433,7 +434,7 @@ namespace WinPaletter
                 try
                 {
                     string username = new SecurityIdentifier(sid).Translate(typeof(NTAccount)).ToString();
-                    bool condition_base = includeSystemProfiles | !username.ToUpper().StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase);
+                    bool condition_base = includeSystemProfiles | !(username.ToUpper().StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase) || username.ToUpper().StartsWith("NT SERVICE", StringComparison.OrdinalIgnoreCase));
                     bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid));
                     bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
 
@@ -448,7 +449,7 @@ namespace WinPaletter
                     }
 
                 }
-                catch { } // Don't list a user that couldn't be got from SID using the registry in Windows XP
+                catch { } // Don't list a user that couldn't be got from SID
             }
 
             return result;
@@ -471,7 +472,6 @@ namespace WinPaletter
             // If one user if found, there is no need to login, use current windows identity
             else { User.SID = WindowsIdentity.GetCurrent().User.Value; }
         }
-
 
         private static string GetActiveSessionSID()
         {
@@ -591,14 +591,7 @@ namespace WinPaletter
 
                 if (User is null)
                 {
-                    if (SID.ToUpper() == "S-1-5-18" || SID.ToUpper() == "S-1-5-19" || SID.ToUpper() == "S-1-5-20")
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return SID.ToUpper() == "S-1-5-18" || SID.ToUpper() == "S-1-5-19" || SID.ToUpper() == "S-1-5-20";
                 }
 
                 bool IsAdmin = (from Group in User.GetGroups() where Group.Sid == AdminGroupSID select Group).Any();
@@ -611,6 +604,7 @@ namespace WinPaletter
             }
             catch { return false; } // Couldn't get user groups, return false and we will assume that the user is not administrator
         }
+
         #endregion
 
         #region Exceptions
