@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using WinPaletter.NativeMethods;
-using WinPaletter.Theme;
 
 namespace WinPaletter.Tabs
 {

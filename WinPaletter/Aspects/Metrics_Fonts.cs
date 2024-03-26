@@ -269,7 +269,7 @@ namespace WinPaletter
             windowMetrics1.BackgroundImage = Program.Wallpaper;
             Desktop_icons.BackgroundImage = Program.Wallpaper;
 
-            alertBox1.Visible = OS.W11 || OS.W12;
+            alertBox1.Visible = Program.WindowStyle == PreviewHelpers.WindowStyle.W11 || Program.WindowStyle == PreviewHelpers.WindowStyle.W12;
 
             comboBox1.Items.Clear();
             comboBox1.Items.AddRange(Theme.Schemes.Metrics.Split('\n').Select(f => f.Split('|')[0]).ToArray());

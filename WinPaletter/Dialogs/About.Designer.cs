@@ -82,6 +82,8 @@ namespace WinPaletter
             this.LinkLabel11 = new WinPaletter.UI.WP.LinkLabel();
             this.LinkLabel9 = new WinPaletter.UI.WP.LinkLabel();
             this.LinkLabel13 = new WinPaletter.UI.WP.LinkLabel();
+            this.pictureBox19 = new System.Windows.Forms.PictureBox();
+            this.linkLabel18 = new WinPaletter.UI.WP.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
@@ -103,13 +105,14 @@ namespace WinPaletter
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.bottom_buttons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             this.SuspendLayout();
             // 
             // PictureBox2
             // 
             this.PictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox2.Image")));
-            this.PictureBox2.Location = new System.Drawing.Point(12, 453);
+            this.PictureBox2.Location = new System.Drawing.Point(12, 483);
             this.PictureBox2.Name = "PictureBox2";
             this.PictureBox2.Size = new System.Drawing.Size(24, 24);
             this.PictureBox2.TabIndex = 5;
@@ -119,7 +122,7 @@ namespace WinPaletter
             // 
             this.PictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox3.Image")));
-            this.PictureBox3.Location = new System.Drawing.Point(12, 183);
+            this.PictureBox3.Location = new System.Drawing.Point(12, 213);
             this.PictureBox3.Name = "PictureBox3";
             this.PictureBox3.Size = new System.Drawing.Size(24, 24);
             this.PictureBox3.TabIndex = 7;
@@ -129,7 +132,7 @@ namespace WinPaletter
             // 
             this.PictureBox4.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(12, 213);
+            this.PictureBox4.Location = new System.Drawing.Point(12, 243);
             this.PictureBox4.Name = "PictureBox4";
             this.PictureBox4.Size = new System.Drawing.Size(24, 24);
             this.PictureBox4.TabIndex = 9;
@@ -139,7 +142,7 @@ namespace WinPaletter
             // 
             this.PictureBox5.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox5.Image")));
-            this.PictureBox5.Location = new System.Drawing.Point(12, 513);
+            this.PictureBox5.Location = new System.Drawing.Point(12, 543);
             this.PictureBox5.Name = "PictureBox5";
             this.PictureBox5.Size = new System.Drawing.Size(24, 24);
             this.PictureBox5.TabIndex = 19;
@@ -173,7 +176,7 @@ namespace WinPaletter
             // 
             this.PictureBox7.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox7.Image")));
-            this.PictureBox7.Location = new System.Drawing.Point(12, 603);
+            this.PictureBox7.Location = new System.Drawing.Point(12, 633);
             this.PictureBox7.Name = "PictureBox7";
             this.PictureBox7.Size = new System.Drawing.Size(24, 24);
             this.PictureBox7.TabIndex = 24;
@@ -183,7 +186,7 @@ namespace WinPaletter
             // 
             this.PictureBox8.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox8.Image")));
-            this.PictureBox8.Location = new System.Drawing.Point(12, 483);
+            this.PictureBox8.Location = new System.Drawing.Point(12, 513);
             this.PictureBox8.Name = "PictureBox8";
             this.PictureBox8.Size = new System.Drawing.Size(24, 24);
             this.PictureBox8.TabIndex = 26;
@@ -193,7 +196,7 @@ namespace WinPaletter
             // 
             this.PictureBox9.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox9.Image")));
-            this.PictureBox9.Location = new System.Drawing.Point(12, 573);
+            this.PictureBox9.Location = new System.Drawing.Point(12, 603);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
             this.PictureBox9.TabIndex = 28;
@@ -203,7 +206,7 @@ namespace WinPaletter
             // 
             this.PictureBox11.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox11.Image")));
-            this.PictureBox11.Location = new System.Drawing.Point(12, 393);
+            this.PictureBox11.Location = new System.Drawing.Point(12, 423);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
             this.PictureBox11.TabIndex = 32;
@@ -213,7 +216,7 @@ namespace WinPaletter
             // 
             this.pictureBox16.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox16.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox16.Image")));
-            this.pictureBox16.Location = new System.Drawing.Point(12, 333);
+            this.pictureBox16.Location = new System.Drawing.Point(12, 363);
             this.pictureBox16.Name = "pictureBox16";
             this.pictureBox16.Size = new System.Drawing.Size(24, 24);
             this.pictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -224,7 +227,7 @@ namespace WinPaletter
             // 
             this.PictureBox15.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox15.Image")));
-            this.PictureBox15.Location = new System.Drawing.Point(12, 363);
+            this.PictureBox15.Location = new System.Drawing.Point(12, 393);
             this.PictureBox15.Name = "PictureBox15";
             this.PictureBox15.Size = new System.Drawing.Size(24, 24);
             this.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -235,7 +238,7 @@ namespace WinPaletter
             // 
             this.PictureBox13.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox13.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox13.Image")));
-            this.PictureBox13.Location = new System.Drawing.Point(12, 303);
+            this.PictureBox13.Location = new System.Drawing.Point(12, 333);
             this.PictureBox13.Name = "PictureBox13";
             this.PictureBox13.Size = new System.Drawing.Size(24, 24);
             this.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -246,7 +249,7 @@ namespace WinPaletter
             // 
             this.PictureBox10.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox10.Image")));
-            this.PictureBox10.Location = new System.Drawing.Point(12, 543);
+            this.PictureBox10.Location = new System.Drawing.Point(12, 573);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
             this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -257,7 +260,7 @@ namespace WinPaletter
             // 
             this.PictureBox14.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
-            this.PictureBox14.Location = new System.Drawing.Point(12, 243);
+            this.PictureBox14.Location = new System.Drawing.Point(12, 273);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);
             this.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -268,7 +271,7 @@ namespace WinPaletter
             // 
             this.PictureBox12.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
-            this.PictureBox12.Location = new System.Drawing.Point(12, 273);
+            this.PictureBox12.Location = new System.Drawing.Point(12, 303);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
             this.PictureBox12.TabIndex = 42;
@@ -278,7 +281,7 @@ namespace WinPaletter
             // 
             this.pictureBox17.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox17.Image")));
-            this.pictureBox17.Location = new System.Drawing.Point(12, 153);
+            this.pictureBox17.Location = new System.Drawing.Point(12, 183);
             this.pictureBox17.Name = "pictureBox17";
             this.pictureBox17.Padding = new System.Windows.Forms.Padding(2);
             this.pictureBox17.Size = new System.Drawing.Size(24, 24);
@@ -290,7 +293,7 @@ namespace WinPaletter
             // 
             this.pictureBox18.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox18.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox18.Image")));
-            this.pictureBox18.Location = new System.Drawing.Point(12, 423);
+            this.pictureBox18.Location = new System.Drawing.Point(12, 453);
             this.pictureBox18.Name = "pictureBox18";
             this.pictureBox18.Size = new System.Drawing.Size(24, 24);
             this.pictureBox18.TabIndex = 123;
@@ -304,7 +307,7 @@ namespace WinPaletter
             this.linkLabel17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel17.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.linkLabel17.LinkColor = System.Drawing.Color.White;
-            this.linkLabel17.Location = new System.Drawing.Point(42, 423);
+            this.linkLabel17.Location = new System.Drawing.Point(42, 453);
             this.linkLabel17.Name = "linkLabel17";
             this.linkLabel17.Size = new System.Drawing.Size(610, 24);
             this.linkLabel17.TabIndex = 124;
@@ -321,7 +324,7 @@ namespace WinPaletter
             this.linkLabel16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel16.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.linkLabel16.LinkColor = System.Drawing.Color.White;
-            this.linkLabel16.Location = new System.Drawing.Point(42, 153);
+            this.linkLabel16.Location = new System.Drawing.Point(42, 183);
             this.linkLabel16.Name = "linkLabel16";
             this.linkLabel16.Size = new System.Drawing.Size(610, 24);
             this.linkLabel16.TabIndex = 122;
@@ -339,7 +342,7 @@ namespace WinPaletter
             this.LinkLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel6.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel6.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel6.Location = new System.Drawing.Point(42, 603);
+            this.LinkLabel6.Location = new System.Drawing.Point(42, 633);
             this.LinkLabel6.Name = "LinkLabel6";
             this.LinkLabel6.Size = new System.Drawing.Size(616, 24);
             this.LinkLabel6.TabIndex = 25;
@@ -357,7 +360,7 @@ namespace WinPaletter
             this.LinkLabel8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel8.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel8.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel8.Location = new System.Drawing.Point(42, 573);
+            this.LinkLabel8.Location = new System.Drawing.Point(42, 603);
             this.LinkLabel8.Name = "LinkLabel8";
             this.LinkLabel8.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel8.TabIndex = 29;
@@ -374,7 +377,7 @@ namespace WinPaletter
             this.LinkLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel1.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel1.Location = new System.Drawing.Point(42, 453);
+            this.LinkLabel1.Location = new System.Drawing.Point(42, 483);
             this.LinkLabel1.Name = "LinkLabel1";
             this.LinkLabel1.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel1.TabIndex = 11;
@@ -391,7 +394,7 @@ namespace WinPaletter
             this.LinkLabel2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel2.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel2.Location = new System.Drawing.Point(42, 183);
+            this.LinkLabel2.Location = new System.Drawing.Point(42, 213);
             this.LinkLabel2.Name = "LinkLabel2";
             this.LinkLabel2.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel2.TabIndex = 12;
@@ -408,7 +411,7 @@ namespace WinPaletter
             this.LinkLabel7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel7.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel7.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel7.Location = new System.Drawing.Point(42, 483);
+            this.LinkLabel7.Location = new System.Drawing.Point(42, 513);
             this.LinkLabel7.Name = "LinkLabel7";
             this.LinkLabel7.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel7.TabIndex = 27;
@@ -426,7 +429,7 @@ namespace WinPaletter
             this.linkLabel15.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel15.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.linkLabel15.LinkColor = System.Drawing.Color.White;
-            this.linkLabel15.Location = new System.Drawing.Point(42, 333);
+            this.linkLabel15.Location = new System.Drawing.Point(42, 363);
             this.linkLabel15.Name = "linkLabel15";
             this.linkLabel15.Size = new System.Drawing.Size(610, 24);
             this.linkLabel15.TabIndex = 47;
@@ -444,7 +447,7 @@ namespace WinPaletter
             this.LinkLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel4.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel4.Location = new System.Drawing.Point(42, 513);
+            this.LinkLabel4.Location = new System.Drawing.Point(42, 543);
             this.LinkLabel4.Name = "LinkLabel4";
             this.LinkLabel4.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel4.TabIndex = 20;
@@ -479,7 +482,7 @@ namespace WinPaletter
             this.LinkLabel10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel10.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel10.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel10.Location = new System.Drawing.Point(42, 543);
+            this.LinkLabel10.Location = new System.Drawing.Point(42, 573);
             this.LinkLabel10.Name = "LinkLabel10";
             this.LinkLabel10.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel10.TabIndex = 35;
@@ -524,8 +527,8 @@ namespace WinPaletter
             this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pin_button.ForeColor = System.Drawing.Color.White;
             this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
-            this.pin_button.ImageGlyphEnabled = false;
             this.pin_button.ImageGlyph = null;
+            this.pin_button.ImageGlyphEnabled = false;
             this.pin_button.Location = new System.Drawing.Point(12, 11);
             this.pin_button.Name = "pin_button";
             this.pin_button.Size = new System.Drawing.Size(34, 34);
@@ -593,7 +596,7 @@ namespace WinPaletter
             this.LinkLabel3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel3.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel3.Location = new System.Drawing.Point(42, 213);
+            this.LinkLabel3.Location = new System.Drawing.Point(42, 243);
             this.LinkLabel3.Name = "LinkLabel3";
             this.LinkLabel3.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel3.TabIndex = 13;
@@ -610,7 +613,7 @@ namespace WinPaletter
             this.LinkLabel14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel14.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel14.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel14.Location = new System.Drawing.Point(42, 363);
+            this.LinkLabel14.Location = new System.Drawing.Point(42, 393);
             this.LinkLabel14.Name = "LinkLabel14";
             this.LinkLabel14.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel14.TabIndex = 45;
@@ -627,7 +630,7 @@ namespace WinPaletter
             this.LinkLabel12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel12.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel12.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel12.Location = new System.Drawing.Point(42, 243);
+            this.LinkLabel12.Location = new System.Drawing.Point(42, 273);
             this.LinkLabel12.Name = "LinkLabel12";
             this.LinkLabel12.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel12.TabIndex = 41;
@@ -643,7 +646,7 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Controls.Add(this.Label3);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 653);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 668);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(664, 48);
             this.bottom_buttons.TabIndex = 119;
@@ -656,8 +659,8 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.ImageGlyphEnabled = false;
             this.Button3.ImageGlyph = null;
+            this.Button3.ImageGlyphEnabled = false;
             this.Button3.Location = new System.Drawing.Point(533, 7);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(125, 34);
@@ -675,8 +678,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(402, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(125, 34);
@@ -708,7 +711,7 @@ namespace WinPaletter
             this.LinkLabel11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel11.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel11.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel11.Location = new System.Drawing.Point(42, 303);
+            this.LinkLabel11.Location = new System.Drawing.Point(42, 333);
             this.LinkLabel11.Name = "LinkLabel11";
             this.LinkLabel11.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel11.TabIndex = 39;
@@ -726,7 +729,7 @@ namespace WinPaletter
             this.LinkLabel9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel9.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel9.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel9.Location = new System.Drawing.Point(42, 393);
+            this.LinkLabel9.Location = new System.Drawing.Point(42, 423);
             this.LinkLabel9.Name = "LinkLabel9";
             this.LinkLabel9.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel9.TabIndex = 33;
@@ -743,7 +746,7 @@ namespace WinPaletter
             this.LinkLabel13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel13.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel13.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel13.Location = new System.Drawing.Point(42, 273);
+            this.LinkLabel13.Location = new System.Drawing.Point(42, 303);
             this.LinkLabel13.Name = "LinkLabel13";
             this.LinkLabel13.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel13.TabIndex = 43;
@@ -752,12 +755,44 @@ namespace WinPaletter
             this.LinkLabel13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LinkLabel13.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel13_LinkClicked);
             // 
+            // pictureBox19
+            // 
+            this.pictureBox19.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox19.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox19.Image")));
+            this.pictureBox19.Location = new System.Drawing.Point(12, 153);
+            this.pictureBox19.Name = "pictureBox19";
+            this.pictureBox19.Padding = new System.Windows.Forms.Padding(2);
+            this.pictureBox19.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox19.TabIndex = 125;
+            this.pictureBox19.TabStop = false;
+            // 
+            // linkLabel18
+            // 
+            this.linkLabel18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel18.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel18.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkLabel18.LinkColor = System.Drawing.Color.White;
+            this.linkLabel18.Location = new System.Drawing.Point(42, 153);
+            this.linkLabel18.Name = "linkLabel18";
+            this.linkLabel18.Size = new System.Drawing.Size(610, 24);
+            this.linkLabel18.TabIndex = 126;
+            this.linkLabel18.TabStop = true;
+            this.linkLabel18.Text = "Patching UxTheme.dll to apply unsigned Visual Styles by SecureUxTheme, developed " +
+    "by namazso";
+            this.linkLabel18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel18.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel18_LinkClicked);
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(664, 701);
+            this.ClientSize = new System.Drawing.Size(664, 716);
+            this.Controls.Add(this.pictureBox19);
+            this.Controls.Add(this.linkLabel18);
             this.Controls.Add(this.pictureBox18);
             this.Controls.Add(this.linkLabel17);
             this.Controls.Add(this.pictureBox17);
@@ -831,6 +866,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.bottom_buttons.ResumeLayout(false);
             this.bottom_buttons.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -881,5 +917,7 @@ namespace WinPaletter
         internal UI.WP.LinkLabel linkLabel16;
         internal PictureBox pictureBox18;
         internal UI.WP.LinkLabel linkLabel17;
+        internal PictureBox pictureBox19;
+        internal UI.WP.LinkLabel linkLabel18;
     }
 }

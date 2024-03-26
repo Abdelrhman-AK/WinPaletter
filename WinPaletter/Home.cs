@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -318,7 +317,7 @@ namespace WinPaletter
 
             if (Program.WindowStyle == WindowStyle.W12)
             {
-                form = Forms.Win11Colors;
+                form = Forms.Win12Colors;
             }
             else if (Program.WindowStyle == WindowStyle.W11)
             {

@@ -45,6 +45,7 @@ namespace WinPaletter
             this.radioImage3 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage1 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage2 = new WinPaletter.UI.WP.RadioImage();
+            this.radioImage7 = new WinPaletter.UI.WP.RadioImage();
             this.SuspendLayout();
             // 
             // radioImage6
@@ -81,13 +82,14 @@ namespace WinPaletter
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(18)))), ((int)(((byte)(31)))));
+            this.button7.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button7.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = null;
+            this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
             this.button7.ImageGlyphEnabled = true;
-            this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageVector")));
-            this.button7.Location = new System.Drawing.Point(360, 10);
+            this.button7.Location = new System.Drawing.Point(423, 10);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(20, 20);
             this.button7.TabIndex = 103;
@@ -155,15 +157,31 @@ namespace WinPaletter
             this.radioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // radioImage7
+            // 
+            this.radioImage7.Checked = false;
+            this.radioImage7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage7.ForeColor = System.Drawing.Color.White;
+            this.radioImage7.Image = ((System.Drawing.Image)(resources.GetObject("radioImage7.Image")));
+            this.radioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage7.Location = new System.Drawing.Point(386, 39);
+            this.radioImage7.Name = "radioImage7";
+            this.radioImage7.Size = new System.Drawing.Size(57, 68);
+            this.radioImage7.TabIndex = 110;
+            this.radioImage7.Text = "12*";
+            this.radioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // OS_Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.CancelButton = this.button7;
-            this.ClientSize = new System.Drawing.Size(388, 115);
+            this.ClientSize = new System.Drawing.Size(451, 115);
             this.CloseOnLostFocus = false;
             this.ControlBox = false;
+            this.Controls.Add(this.radioImage7);
             this.Controls.Add(this.radioImage6);
             this.Controls.Add(this.radioImage5);
             this.Controls.Add(this.button7);
@@ -189,5 +207,6 @@ namespace WinPaletter
         private UI.WP.RadioImage radioImage3;
         private UI.WP.RadioImage radioImage2;
         private UI.WP.RadioImage radioImage1;
+        private UI.WP.RadioImage radioImage7;
     }
 }

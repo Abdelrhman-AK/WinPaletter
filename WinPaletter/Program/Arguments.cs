@@ -128,6 +128,7 @@ namespace WinPaletter
                         using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply, false, o.SilentApply))
                         {
                             Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
+                            Program.TM = TMx.Clone() as Theme.Manager;
                             TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
                             if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
 

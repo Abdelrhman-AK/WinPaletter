@@ -1,13 +1,29 @@
-﻿using System;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
-using System.IO.Compression;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
+using System.IO.Compression;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using WinPaletter;
 
 namespace SecureUxTheme
 {
+    //  SecureUxTheme - A secure boot compatible in-memory UxTheme patcher
+    //  Copyright (C) 2022  namazso <admin@namazso.eu>
+    //  
+    //  This library is free software; you can redistribute it and/or
+    //  modify it under the terms of the GNU Lesser General Public
+    //  License as published by the Free Software Foundation; either
+    //  version 2.1 of the License, or (at your option) any later version.
+    //  
+    //  This library is distributed in the hope that it will be useful,
+    //  but WITHOUT ANY WARRANTY; without even the implied warranty of
+    //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    //  Lesser General Public License for more details.
+    //  
+    //  You should have received a copy of the GNU Lesser General Public
+    //  License along with this library; if not, write to the Free Software
+    //  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
     static class Wrapper
     {
         private class Core
@@ -20,21 +36,21 @@ namespace SecureUxTheme
             static void MoveKey(RegistryKey sourceKey, string destinationKeyName)
             {
                 // Create the destination key
-                using (var destinationKey = Registry.LocalMachine.CreateSubKey(destinationKeyName))
+                using (RegistryKey destinationKey = Registry.LocalMachine.CreateSubKey(destinationKeyName))
                 {
                     // Copy all values from source to destination
-                    foreach (var valueName in sourceKey.GetValueNames())
+                    foreach (string valueName in sourceKey.GetValueNames())
                     {
-                        var value = sourceKey.GetValue(valueName);
+                        object value = sourceKey.GetValue(valueName);
                         destinationKey.SetValue(valueName, value);
                     }
 
                     // Copy all subkeys recursively
-                    foreach (var subKeyName in sourceKey.GetSubKeyNames())
+                    foreach (string subKeyName in sourceKey.GetSubKeyNames())
                     {
-                        using (var subKey = sourceKey.OpenSubKey(subKeyName))
+                        using (RegistryKey subKey = sourceKey.OpenSubKey(subKeyName))
                         {
-                            MoveKey(subKey, destinationKeyName + "\\" + subKeyName);
+                            MoveKey(subKey, $"{destinationKeyName}\\{subKeyName}");
                         }
                     }
                 }
@@ -52,7 +68,7 @@ namespace SecureUxTheme
 
             public static void RenameDefaultColors()
             {
-                using (var key = Registry.LocalMachine.OpenSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName, true))
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName, true))
                 {
                     if (key != null)
                     {
@@ -68,13 +84,13 @@ namespace SecureUxTheme
                 }
 
                 // Create keys
-                using (var key = Registry.LocalMachine.CreateSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName))
+                using (Registry.LocalMachine.CreateSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName))
                 {
                 }
-                using (var key = Registry.LocalMachine.CreateSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName + "\\HighContrast"))
+                using (Registry.LocalMachine.CreateSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName + "\\HighContrast"))
                 {
                 }
-                using (var key = Registry.LocalMachine.CreateSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName + "\\Standard"))
+                using (Registry.LocalMachine.CreateSubKey(kCurrentColorsPath + "\\" + kCurrentColorsName + "\\Standard"))
                 {
                 }
             }
@@ -94,7 +110,7 @@ namespace SecureUxTheme
 
             static bool IsValidDefaultColors(string keyName)
             {
-                using (var key = Registry.LocalMachine.OpenSubKey(kCurrentColorsPath + "\\" + keyName))
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey($"{kCurrentColorsPath}\\{keyName}"))
                 {
                     return key != null;
                 }
@@ -161,7 +177,7 @@ namespace SecureUxTheme
                         WinPaletter.NativeMethods.Kernel32.CloseHandle(h);
                         result = true;
                     }
-   
+
                     wic.Undo();
 
                     return result;
@@ -170,13 +186,13 @@ namespace SecureUxTheme
 
             public static bool IsInstalledForExecutable(string executable, string dllName = "SecureUxTheme.dll")
             {
-                string subkey = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\" + executable;
+                string subkey = $@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\{executable}";
                 using (RegistryKey key = Registry.LocalMachine.OpenSubKey(subkey))
                 {
                     if (key != null)
                     {
                         int GlobalFlag = (int)key.GetValue("GlobalFlag", 0);
-                        string VerifierDlls = key.GetValue("VerifierDlls", "").ToString();
+                        string VerifierDlls = key.GetValue("VerifierDlls", string.Empty).ToString();
                         return (GlobalFlag & FLG_APPLICATION_VERIFIER) != 0 && string.Equals(VerifierDlls, dllName, StringComparison.OrdinalIgnoreCase);
                     }
                     else
@@ -194,7 +210,7 @@ namespace SecureUxTheme
         /// <param name="hookSystemSettings">Hook <c>SystemSettings.exe</c> so that users can can use "Themes" in settings to set a patched theme</param>
         /// <param name="hookLogonUI">Hook <c>LogonUI.exe</c> to prevent LogonUI from resetting colors  </param>
         /// <param name="renameDefaultColors">Rename the default colors registry key to prevent Windows from resetting colors</param>
-        public static void Install(bool hookExplorer = false,  bool hookSystemSettings = false, bool hookLogonUI = false, bool renameDefaultColors = true)
+        public static void Install(bool hookExplorer = false, bool hookSystemSettings = false, bool hookLogonUI = false, bool renameDefaultColors = true)
         {
             Core.CopyToSystem32();
             Core.InstallForExecutable("winlogon.exe");

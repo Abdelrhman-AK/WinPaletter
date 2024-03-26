@@ -1,7 +1,7 @@
 ﻿using Devcorp.Controls.VisualStyles;
-using libmsstyle;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -127,7 +127,7 @@ namespace WinPaletter.Theme.Structures
                             string fileName = System.IO.Path.GetFileName(result);
 
                             System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(themeFile));
-                            var matchingStyles = System.IO.Directory.GetFiles(di.FullName, "*.msstyles", System.IO.SearchOption.AllDirectories)
+                            List<string> matchingStyles = System.IO.Directory.GetFiles(di.FullName, "*.msstyles", System.IO.SearchOption.AllDirectories)
                                 .Where(f => System.IO.Path.GetFileName(f).Equals(fileName, StringComparison.OrdinalIgnoreCase))
                                 .ToList();
 

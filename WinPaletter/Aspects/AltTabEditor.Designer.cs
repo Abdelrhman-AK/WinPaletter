@@ -99,9 +99,9 @@ namespace WinPaletter
             this.AlertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox2.Image = null;
-            this.AlertBox2.Location = new System.Drawing.Point(9, 279);
+            this.AlertBox2.Location = new System.Drawing.Point(9, 283);
             this.AlertBox2.Name = "AlertBox2";
-            this.AlertBox2.Size = new System.Drawing.Size(328, 24);
+            this.AlertBox2.Size = new System.Drawing.Size(328, 28);
             this.AlertBox2.TabIndex = 216;
             this.AlertBox2.TabStop = false;
             this.AlertBox2.Text = "Sometimes, you should logoff and logon to apply effects";
@@ -116,9 +116,9 @@ namespace WinPaletter
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(9, 309);
+            this.AlertBox1.Location = new System.Drawing.Point(9, 317);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(328, 24);
+            this.AlertBox1.Size = new System.Drawing.Size(328, 28);
             this.AlertBox1.TabIndex = 215;
             this.AlertBox1.TabStop = false;
             this.AlertBox1.Text = "Applying in Windows 7 may require a device restart";
@@ -135,7 +135,7 @@ namespace WinPaletter
             this.GroupBox4.Location = new System.Drawing.Point(9, 174);
             this.GroupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox4.Name = "GroupBox4";
-            this.GroupBox4.Size = new System.Drawing.Size(328, 99);
+            this.GroupBox4.Size = new System.Drawing.Size(328, 103);
             this.GroupBox4.TabIndex = 213;
             // 
             // Trackbar1
@@ -159,7 +159,7 @@ namespace WinPaletter
             // EP_Alert
             // 
             this.EP_Alert.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.EP_Alert.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.EP_Alert.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EP_Alert.BackColor = System.Drawing.Color.Transparent;
             this.EP_Alert.CenterText = false;
@@ -168,7 +168,7 @@ namespace WinPaletter
             this.EP_Alert.Image = null;
             this.EP_Alert.Location = new System.Drawing.Point(4, 70);
             this.EP_Alert.Name = "EP_Alert";
-            this.EP_Alert.Size = new System.Drawing.Size(320, 24);
+            this.EP_Alert.Size = new System.Drawing.Size(320, 28);
             this.EP_Alert.TabIndex = 214;
             this.EP_Alert.TabStop = false;
             this.EP_Alert.Text = "Opacity control can also be enabled in Windows 11 by using ExplorerPatcher.";
@@ -503,7 +503,6 @@ namespace WinPaletter
             this.Controls.Add(this.GroupBox3);
             this.Controls.Add(this.previewContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;

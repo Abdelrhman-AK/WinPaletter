@@ -105,7 +105,7 @@ namespace WinPaletter.Theme
         public Structures.Win32UI Win32 = new();
 
         /// <summary>
-        /// Structure instance that contains data about Windows 10/11 LogonUI appearance, and it can be customized.
+        /// Structure instance that contains data about Windows 10/11/12 LogonUI appearance, and it can be customized.
         /// </summary>
         public LogonUI10x LogonUI10x = new();
 
@@ -227,7 +227,7 @@ namespace WinPaletter.Theme
         /// Structure instance that contains data about PowerShell x64, and it can be customized.
         /// </summary>
         public Structures.Console PowerShellx64 = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
-      
+
         /// <summary>
         /// class that contains data about Windows Terminal Stable, and it can be customized.
         /// </summary>

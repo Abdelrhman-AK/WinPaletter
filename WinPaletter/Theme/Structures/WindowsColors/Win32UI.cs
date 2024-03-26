@@ -355,29 +355,36 @@ namespace WinPaletter.Theme.Structures
                 #region Colors override by msstyles
 
                 VisualStyles _vs = new();
-                switch (Program.WindowStyle)
+
+                if (Program.TM is not null)
                 {
-                    case WindowStyle.W12:
-                        _vs = Program.TM.VisualStyles_12;
-                        break;
-                    case WindowStyle.W11:
-                        _vs = Program.TM.VisualStyles_11;
-                        break;
-                    case WindowStyle.W10:
-                        _vs = Program.TM.VisualStyles_10;
-                        break;
-                    case WindowStyle.W81:
-                        _vs = Program.TM.VisualStyles_81;
-                        break;
-                    case WindowStyle.W7:
-                        _vs = Program.TM.VisualStyles_7;
-                        break;
-                    case WindowStyle.WVista:
-                        _vs = Program.TM.VisualStyles_Vista;
-                        break;
-                    case WindowStyle.WXP:
-                        _vs = Program.TM.VisualStyles_XP;
-                        break;
+                    switch (Program.WindowStyle)
+                    {
+                        case WindowStyle.W12:
+                            _vs = Program.TM.VisualStyles_12;
+                            break;
+                        case WindowStyle.W11:
+                            _vs = Program.TM.VisualStyles_11;
+                            break;
+                        case WindowStyle.W10:
+                            _vs = Program.TM.VisualStyles_10;
+                            break;
+                        case WindowStyle.W81:
+                            _vs = Program.TM.VisualStyles_81;
+                            break;
+                        case WindowStyle.W7:
+                            _vs = Program.TM.VisualStyles_7;
+                            break;
+                        case WindowStyle.WVista:
+                            _vs = Program.TM.VisualStyles_Vista;
+                            break;
+                        case WindowStyle.WXP:
+                            _vs = Program.TM.VisualStyles_XP;
+                            break;
+                        default:
+                            _vs = Program.TM.VisualStyles_12;
+                            break;
+                    }
                 }
 
                 if (_vs.Enabled && _vs.OverrideColors)

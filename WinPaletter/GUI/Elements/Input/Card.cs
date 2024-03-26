@@ -349,7 +349,7 @@ namespace WinPaletter.UI.WP
                     G.SetClip(clipPath, CombineMode.Intersect);
 
                     using (LinearGradientBrush br0G = new(rect_margin, colors.Back_Checked_Hover, Color.Transparent, LinearGradientMode.ForwardDiagonal))
-                    using (LinearGradientBrush br1G = new(rect_margin, 
+                    using (LinearGradientBrush br1G = new(rect_margin,
                         !_compact ? Color.Transparent : Color.FromArgb(Math.Min(alpha, 175), Program.Style.DarkMode ? colors.Line_Checked.Dark() : colors.Line_Checked.Light()),
                                                         Color.FromArgb(alpha, Program.Style.DarkMode ? colors.Line_Checked_Hover.Dark() : colors.Line_Checked_Hover.Light()),
                         LinearGradientMode.ForwardDiagonal))

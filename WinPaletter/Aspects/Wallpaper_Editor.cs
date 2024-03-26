@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
-using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;

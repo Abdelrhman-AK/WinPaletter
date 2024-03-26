@@ -4,16 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Management.Instrumentation;
-using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using System.Windows.Interop;
 using WinPaletter.NativeMethods;
-using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
-using static WinPaletter.WinTerminal.Types;
 
 namespace WinPaletter
 {

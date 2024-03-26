@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {

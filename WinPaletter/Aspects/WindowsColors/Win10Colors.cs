@@ -197,7 +197,7 @@ namespace WinPaletter
             if (theme_skip.Checked) TM.Windows10.Theme = Theme.Structures.Windows10x.Themes.Skip;
             else if (theme_aero.Checked) TM.Windows10.Theme = Theme.Structures.Windows10x.Themes.Aero;
             else if (theme_aerolite.Checked) TM.Windows10.Theme = Theme.Structures.Windows10x.Themes.AeroLite;
-            
+
             TM.Windows10.WinMode_Light = !WinMode_Toggle.Checked;
             TM.Windows10.AppMode_Light = !AppMode_Toggle.Checked;
             TM.Windows10.Transparency = Transparency_Toggle.Checked;

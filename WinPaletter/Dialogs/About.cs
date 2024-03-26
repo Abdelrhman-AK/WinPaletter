@@ -141,5 +141,10 @@ namespace WinPaletter
         {
             Process.Start("https://github.com/commandlineparser/commandline");
         }
+
+        private void linkLabel18_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(Links.SecureUxThemeRepository);
+        }
     }
 }
