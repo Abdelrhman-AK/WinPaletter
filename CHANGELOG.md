@@ -2,6 +2,51 @@
 
 ---
 
+### 1.0.8.9
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Beta`   | 27 Mar 2024  |
+
+## 🛑 Announcement: Project Development Discontinuation:
+### While there's an extremely weak possibility that I may find time in the distant future (maybe years) to resume maintenance of WinPaletter, as of now, Version `1.0.9.0` is likely to be the final release within the next few days or weeks (or subsequent `1.0.9.x` versions). Comprehensive details will be provided in the `readme.md`, and I'll proceed to archive this repository accordingly. Thank you sincerely for your support and for choosing WinPaletter.
+
+⚠️ **Warning**
+If you are using command lines, type `WinPaletter -?` in any terminal to know new commands formats
+
+# The same as 1.0.8.5, 1.0.8.6, 1.0.8.7, and 1.0.8.8 except for a new feature, some application improvements and bugs fixes:
+
+### New feature: Windows Visual Styles
+- In this release, WinPaletter introduces a new feature that allows you to change Windows Visual Styles (part of #225).
+- This feature requires patching UxTheme.dll. There will be a guide available within its form to patch it, either by using SecureUxTheme from its [official releases in its repository (recommended)](https://github.com/namazso/SecureUxTheme/releases) or by utilizing the SecureUxTheme setup wrapper provided by WinPaletter.
+
+### Application improvements
+- A new option is made to skip setting theme from (default\aero lite) in Windows 10/11
+- Making WinPaletter can block aspect applying in its specific form if it was blocked in settings by 'Aspects control'
+- Toggle compact\expanded layout in the main form (for small resolutions)
+
+- Minor tweaks to make WinPaletter can handle Windows 12 (arbitary, exactly the same as Windows 11 until new developers work on it with Windows 12 release)
+
+### Bug fixes
+- Fix the issue where a system user account (NT SERVICE) appears among normal users (part of #225).
+- Fix the issue where using the command line option "--apply" with a non-existing theme file still opens WinPaletter instead of exiting.
+- Fix the issue where using the command line option "--apply" with Windows 11 applied with a custom visual style brings back aero.msstyles, while the GUI doesn't (part of #225).
+- Fix the UI issue of a black area in tabs when the title bar is not.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.4`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.4...v1.0.8.9) |
+| Previous Beta   | `1.0.8.8`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.8...v1.0.8.9) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.8.9) |
+
+---
+
 ### 1.0.8.8
 
 > **Info:**
