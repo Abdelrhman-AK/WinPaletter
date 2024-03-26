@@ -79,6 +79,8 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit: [Link 1](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent), [Link 2](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well)
 
+- [Patching UxTheme.dll to apply unsigned Visual Styles by SecureUxTheme, developed by namazso](https://github.com/namazso/SecureUxTheme)
+
 - [3D and flat degrees modification in 3D objects (Classic Colors) is inspired by Desktop Architect](https://en.wikipedia.org/wiki/Desktop_Architect)
 
 - [Colors picking controls by Cyotek](https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker)
