@@ -11,7 +11,14 @@
 | `Stable` | 01 Apr 2024  |
 
 ## 🛑 Announcement: Project Development Discontinuation:
-### While there's an extremely weak possibility that I may find time in the distant future (maybe years) to resume maintenance of WinPaletter, as of now, Version `1.0.9.0` is likely to be the final release within the next few days or weeks (or subsequent `1.0.9.x` versions). Comprehensive details will be provided in the `readme.md`, and I'll proceed to archive this repository accordingly. Thank you sincerely for your support and for choosing WinPaletter.
+
+Dear WinPaletter Users,
+
+It is with a heavy heart that I announce the discontinuation of further development on the WinPaletter project. While there's an extremely slim possibility that I may find time in the distant future, perhaps years from now, to resume maintenance, I must inform you that version `1.0.9.0` marks the end of active development. Subsequent versions (`1.0.9.x`) has extremely weak possibility to be developed.
+
+In the coming days or weeks, I will proceed to archive this repository. However, please note that the existing version will remain accessible for continued use, albeit without updates or maintenance.
+
+I want to express my deepest gratitude for your support and for choosing WinPaletter. Your enthusiasm and feedback have been invaluable throughout this journey. It has been an immense honor for me to contribute to a project that aimed to enhance your user experience. If WinPaletter has caused any inconvenience or disruption to your Windows setup, I sincerely apologize.
 
 ---
 
