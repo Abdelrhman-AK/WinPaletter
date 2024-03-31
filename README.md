@@ -2,7 +2,7 @@
 
 Dear WinPaletter Users,
 
-It is with a heavy heart that I announce the discontinuation of further development on the WinPaletter project. While there's an extremely slim possibility that I may find time in the distant future, perhaps years from now, to resume maintenance, I must inform you that version 1.0.9.0 marks the end of active development. Subsequent versions (1.0.9.x) has extremely weak possibility to be developed.
+It is with a heavy heart that I announce the discontinuation of further development on the WinPaletter project. While there's an extremely slim possibility that I may find time in the distant future, perhaps years from now, to resume maintenance, I must inform you that version `1.0.9.0` marks the end of active development. Subsequent versions (`1.0.9.x`) has extremely weak possibility to be developed.
 
 In the coming days or weeks, I will proceed to archive this repository. However, please note that the existing version will remain accessible for continued use, albeit without updates or maintenance.
 
