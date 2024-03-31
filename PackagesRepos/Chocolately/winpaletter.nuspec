@@ -3,11 +3,11 @@
   <metadata>
     <id>winpaletter</id>
     <title>WinPaletter</title>
-    <version>1.0.8.9</version>
+    <version>1.0.9.0</version>
     <authors>Abdelrhman-AK</authors>
     <owners>Abdelrhman-AK</owners>
     <iconUrl>https://raw.githubusercontent.com/Abdelrhman-AK/WinPaletter/master/icon.png</iconUrl>
-    <tags>winpaletter mods windows customize cursors logonui colors classic cmd console terminal metrics fonts wallpaper sounds screensavers</tags>
+    <tags>winpaletter mods windows customize cursors logonui colors classic cmd console terminal metrics fonts wallpaper sounds screensavers visualstyles icons</tags>
     <description>WinPaletter is a portable application that helps you customize Windows aspects in an advanced way</description>
     <summary>Customize your Windows aspects</summary>
     <projectUrl>https://github.com/Abdelrhman-AK/WinPaletter</projectUrl>
