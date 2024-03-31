@@ -81,10 +81,6 @@ I want to express my deepest gratitude for your support and for choosing WinPale
 
 [Click here to read instructions](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Antiviruses-or-browsers-download-issue).
 
-## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Contributing.png?raw=true) Contributing
-
-Contributions to make WinPaletter even better are welcomed! If you have ideas, improvements, or bug fixes, please open an issue or submit a pull request. Check out our [contribution guidelines](CONTRIBUTING.md) for more details.
-
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Credits.png?raw=true) Credits
 
 WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Abdelrhman-AK) and the incredible open-source community:
