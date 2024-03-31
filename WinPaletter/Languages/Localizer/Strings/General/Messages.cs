@@ -44,7 +44,7 @@
         public string SecureUxThemeNotInstalled0 { get; set; } = "SecureUxTheme is not installed. Please use the official tool from its GitHub repository instead.";
         public string SecureUxThemeNotInstalled1 { get; set; } = "If it still doesn't work, please visit SecureUxTheme's GitHub repository and follow the instructions provided there. Alternatively, you can report any issues directly in the SecureUxTheme repository, rather than the WinPaletter repository.";
         public string Win12_Preview_Msg0 { get; set; } = "Windows 12 is not fully supported yet. WinPaletter will treat it as Windows 11 until Windows 12 is officially released.";
-        public string Win12_Preview_Msg1 { get; set; } = "The main reason is that WinPaletter may not be maintained once Windows 12 is released.";
+        public string Win12_Preview_Msg1 { get; set; } = "The main reason is that WinPaletter may not be maintained when Windows 12 is released.";
 
     }
 }

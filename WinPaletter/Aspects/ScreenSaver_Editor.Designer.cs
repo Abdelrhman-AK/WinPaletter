@@ -93,8 +93,8 @@ namespace WinPaletter
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
-            this.button2.ImageGlyphEnabled = true;
             this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Menu;
+            this.button2.ImageGlyphEnabled = true;
             this.button2.Location = new System.Drawing.Point(360, 30);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(34, 24);
@@ -150,8 +150,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
-            this.Button1.ImageGlyphEnabled = true;
             this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.Button1.ImageGlyphEnabled = true;
             this.Button1.Location = new System.Drawing.Point(401, 30);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
@@ -253,8 +253,8 @@ namespace WinPaletter
             this.Button14.ForeColor = System.Drawing.Color.White;
             this.Button14.Image = null;
             this.Button14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button14.ImageGlyphEnabled = true;
             this.Button14.ImageGlyph = null;
+            this.Button14.ImageGlyphEnabled = true;
             this.Button14.Location = new System.Drawing.Point(213, 308);
             this.Button14.Name = "Button14";
             this.Button14.Size = new System.Drawing.Size(150, 24);
@@ -280,8 +280,8 @@ namespace WinPaletter
             this.Button13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button13.ForeColor = System.Drawing.Color.White;
             this.Button13.Image = null;
+            this.Button13.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button13.ImageGlyph")));
             this.Button13.ImageGlyphEnabled = true;
-            this.Button13.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button13.ImageVector")));
             this.Button13.Location = new System.Drawing.Point(439, 308);
             this.Button13.Name = "Button13";
             this.Button13.Size = new System.Drawing.Size(90, 24);
@@ -299,8 +299,8 @@ namespace WinPaletter
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
+            this.Button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button6.ImageGlyph")));
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button6.ImageVector")));
             this.Button6.Location = new System.Drawing.Point(369, 308);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(29, 24);
@@ -316,8 +316,8 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
+            this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageGlyph")));
             this.Button5.ImageGlyphEnabled = true;
-            this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageVector")));
             this.Button5.Location = new System.Drawing.Point(404, 308);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(29, 24);
@@ -334,7 +334,6 @@ namespace WinPaletter
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.previewContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;

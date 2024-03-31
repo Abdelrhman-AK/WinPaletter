@@ -17,7 +17,7 @@ namespace WinPaletter.Theme.Structures
         public bool Enabled = true;
 
         /// <summary>Theme used for Windows 10/11</summary>
-        public Themes Theme = Windows10x.Themes.Aero;
+        public Themes Theme = Windows10x.Themes.Skip;
 
         /// <summary>Color index 0 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
         public Color Color_Index0 = Color.FromArgb(153, 235, 255);

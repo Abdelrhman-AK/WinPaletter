@@ -8,7 +8,7 @@ namespace WinPaletter.Theme
         /// Get default Windows theme, based on your selection
         /// </summary>
         /// <param name="PreviewStyle">Windows edition</param>
-        /// <returns><code>WinPaletter.Theme.Manager</code></returns>
+        /// <returns><see cref="WinPaletter.Theme.Manager"/></returns>
         public static Manager Get(WindowStyle PreviewStyle)
         {
             return PreviewStyle switch
@@ -27,7 +27,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Get default Windows theme, based on current Windows edition
         /// </summary>
-        /// <returns><code>WinPaletter.Theme.Manager</code></returns>
+        /// <returns><see cref="WinPaletter.Theme.Manager"/></returns>
         public static Manager Get()
         {
             if (OS.W12)

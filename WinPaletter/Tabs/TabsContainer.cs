@@ -978,7 +978,7 @@ namespace WinPaletter.Tabs
             SizeF betaSize = Program.Lang.Beta.ToUpper().Measure(Font) + new SizeF(2, 3);
             Rectangle betaRect = new(0 + Width - (int)betaSize.Width - 5 - 1, 0 + (int)((Height - 1 - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
 
-            helpButton.Left = betaRect.Left - helpButton.Width - 5;
+            helpButton.Left = Program.IsBeta ? betaRect.Left - helpButton.Width - 5 : betaRect.Right - helpButton.Width;
             helpButton.Top = (Height - helpButton.Height) / 2;
 
             if (TabDataList != null && TabDataList.Count > 0)

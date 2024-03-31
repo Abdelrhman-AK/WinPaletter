@@ -124,7 +124,7 @@
   <data name="card14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAG4AAABuCAYAAADGWyb7AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAHZ9JREFUeF7t3Qd0FNe9x3H7JXHsuGC/2AE7fnHBdoqJKZJQR71SBAIhmkQRICRE
+        vAAADrwBlbxySQAAHZ9JREFUeF7t3Qd0FNe9x3H7JXHsuGC/2AE7fnHBdoqJKZJQR71SBAIhmkQRICRE
         76FjukCi2KaZYsASvah3ob7SqiEEEqqAQ2zznhOKsXGRf+9/Z3Z2Z2ZnmyDEnLP3nO8RRchkP/rfuTOb
         c3jMuqzLuqzLuqzLuqzLuqzLuqzLuqzLuqzLuqzLuqzLuqzLuqzLuh7Z5ebm9ksvLy87Hx8fX2v/uTw9
         PfuEhIT8QsNifA0aNOhZb2/vZOoL6n+tWRZ9wz/IPqd2Ozg4PKXhMbzoE2fRX+B7CtaMR6/Vw4jh+Wt4
@@ -1339,7 +1339,7 @@
   <data name="button1.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAAANlJREFUSEvtlDEKwkAURJO7eCxFQSw8gZ1oIdprJXgZOxvRQs+iQrLO/J2gYZvA
+        vQAADr0BR/uQrQAAANlJREFUSEvtlDEKwkAURJO7eCxFQSw8gZ1oIdprJXgZOxvRQs+iQrLO/J2gYZvA
         T7o8eBoZ9lkENuvplBDCGA4gn3M45W/NfhAr4FLxPSQTzX4UXMFNfAxHmGv2E5vhrG+LQ60tYNkI/2Qh
         W30HH/hPCUeam4NDdzte56bZj4IJmv2ol6DZj3oJmv2ol6DZD1rPmKzx0NwcHBrClx3/8dbsBzFeXFu4
         gxdoaPbDllwzDK780OyHLVjFT9CeNftBi/c7OUBeXLyKS81+EOM7mCte/Z5p7umCLPsCbj+PQrftOEUA
