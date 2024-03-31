@@ -2,6 +2,233 @@
 
 ---
 
+### 1.0.9.0
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 01 Apr 2024  |
+
+## 🛑 Announcement: Project Development Discontinuation:
+### While there's an extremely weak possibility that I may find time in the distant future (maybe years) to resume maintenance of WinPaletter, as of now, Version `1.0.9.0` is likely to be the final release within the next few days or weeks (or subsequent `1.0.9.x` versions). Comprehensive details will be provided in the `readme.md`, and I'll proceed to archive this repository accordingly. Thank you sincerely for your support and for choosing WinPaletter.
+
+---
+
+## ⚠️ **Warning**
+### If you are using command lines, type `WinPaletter -?` in any terminal to know new commands formats
+
+## ℹ️ **Info**
+### This stable release is identical to the last 5 beta updates. If you have read them before, don't read this long changelog to save your time. If not, then you can read this changelog.
+
+---
+
+# New features:
+
+### 1. WinPaletter new look
+
+- In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.
+
+### 2. Windows Visual Styles
+- In this release, WinPaletter introduces a new feature that allows you to change Windows Visual Styles (part of #225).
+- This feature requires patching UxTheme.dll. There will be a guide available within its form to patch it, either by using SecureUxTheme from its [official releases in its repository (recommended)](https://github.com/namazso/SecureUxTheme/releases) or by utilizing the SecureUxTheme setup wrapper provided by WinPaletter.
+
+### 3. Windows Icons
+
+- This new feature will allow you to modify desktop icons, certain explorer icons, control panel icons on the main page, and shell32.dll.
+- It won't patch system files; this process involves modifying the registry exclusively.
+
+### 4. Changes in all Windows aspects
+
+- Some aspects (Windows Colors, Classic Colors, Cursors, Metrics, Fonts, and Wallpaper) will have two modes: Advanced Mode and Simple Mode. This change aims to make modifying Windows easier for users who found WinPaletter complex to use #190.
+
+- All aspects will feature a toggle controller (including aspects that didn't have it before, such as Windows Colors and Classic Colors), allowing users to control all Windows aspects and disable aspects they do not wish to modify.
+
+- All aspects will now include a toolbar featuring a simplified button layout (instead of the old and condensed buttons). Additionally, a split button is introduced to provide more functions, such as importing schemes from Windows defaults or current preferences.
+
+### 5. Changes in Windows aspect; Windows Colors
+
+- Fixes in previewer and performance improvements.
+
+- Per-element modifier; click on an elements on the preview to change its color.
+
+- Windows 11/10 Accent Colors Generator: Modify the titlebar color, then click 'Generate Accent Colors from Active Titlebar Color' to make WinPaletter generate nine accent colors based on this selected color.
+
+- Palette Generator: Improved performance and bug fixes, featuring a trials panel that records previous attempts to generate a palette, making it easier for users to revisit and select a preferred trial.
+
+### 6. Changes in Windows aspect; Classic Colors
+
+- Per-element modifier; right click on an elements on the preview to change its color.
+
+- 3D and flat degrees modification in 3D objects improved.
+
+- Magnifier: Use it to view small details in the preview, such as shadow borders and dark shadow lines. This feature makes it easier to utilize the per-element modifier.
+
+- Schemes Gallery: Preview all Classic Colors schemes in a single form, aiding users in visualizing and selecting their preferred scheme.
+
+- Fullscreen Preview: Expand the preview to fullscreen for a better examination.
+
+- Resolved exception error when importing from visual styles designed for Windows versions newer than XP.
+
+### 7. Changes in Windows aspect; Metrics and Fonts
+
+- Per-element modifier: Click on an element in the preview to alter its font and drag-and-drop to adjust its sizes.
+
+- Resolved a visual bug related to applying fonts with high DPI settings, preventing issues such as small or large fonts and irregular icon sizes not aligned with the selected DPI (scaling) value #205.
+
+### 8. Changes in Windows aspect; Cursors Studio
+
+- Enhanced rendering of classic styles, introducing pixelation for a more accurate and similar appearance to classic Windows cursors.
+
+- Fixed: the center point animation of the hourglass in classic style.
+
+- ⚠️ Known issue: Higher DPI scaling will render classic cursors wrongly.
+
+### 9. Changes in Windows aspect; Windows Terminals and Consoles
+
+- The JSON read/write mechanism for the terminal has been upgraded to improve code readability for developers and enhance the structure of theme files to match terminal JSON precisely. 
+
+- Fixed a bug in creating a new external terminal (incorrect registry key path).
+
+- Resolved issue where opening PowerShell for testing launches 'takeown' PowerShell executable instead of the intended PowerShell.
+
+### 10. Changes in Windows aspect; Others
+
+- LogonUI now supports preview for Windows 10 and 11.
+
+- Screen Saver: Lists installed screensavers on the system to assist users in selecting one.
+
+- Sounds: Added a 'Restore Defaults' button to facilitate the restoration of a sound entry.
+
+- Sounds: WinPaletter will no longer install System Events Sounds by default at application startup. Users can manually install it in the Sounds form or Settings. However, if already installed, it will be updated automatically with a newer service version if available #206.
+
+- Increased speed of Wallpaer Tone previewer.
+
+- WinPaletter Application Themer: Introducing new colors for errors (secondary color) and tips (tertiary color), along with an option for animations.
+
+### 11. Themes backup and restore
+
+- WinPaletter now introduces a new feature that allows you to automatically backup your themes.
+
+- Backing up before applying themes is enabled by default in WinPaletter.
+
+- You can also back up upon application startup or when opening a theme file (these options are not enabled by default).
+
+- You can open theme backups from the toolbar on the home page (main form).
+
+- You can control the backup folder location and other settings in Settings > Themes Backup.
+
+### 12. Aspects control
+
+- WinPaletter now introduces a new feature that allows you to increase your control over Windows aspects. This will be helpful for users who don't want to change a Windows aspect they like (acts like a secure lock).
+
+- For example, a user edited Windows Colors to an accent they like and doesn't want it to change again with any theme. This user can enable this feature and uncheck Windows Colors to disable editing it in the future.
+
+- Another example is a user who likes their own Metrics and Fonts; using WinPaletter's store may override their preferences. This user can enable this feature and uncheck Metrics and Fonts to disable editing them in the future.
+
+- You can find this feature in Settings > Aspects control.
+
+---
+
+# Application improvements:
+
+- Update assembly `System.Resources.Extensions` to `9.0.0-preview.2.24128.5`
+- Making WinPaletter can block aspect applying in its specific form if it was blocked in settings by 'Aspects control'
+- Toggle compact\expanded layout in the main form (for small resolutions)
+- Minor tweaks to make WinPaletter can handle Windows 12 (arbitary, exactly the same as Windows 11 until new developers work on it with Windows 12 release)
+- Welcome dialog: it will give you quick tips about editing aspects, themes backup and finally an alert (#212) about using third-party tools.
+- New automatic backup timing: after pressing 'Apply' in a single Windows aspect form.
+- Parital support for Rectify11 (by fixing an issue in the last release of reapplying aero.msstyles instead of the previous msstyles) #210.
+- Metrics and Fonts: Now, you can import preferences from a classic .theme file.
+- Metrics and Fonts: Presets (like Classic Colors) from different Windows editions are introduced.
+- Ability to generate .theme files including classic colors, metrics and fonts.
+- Minor changes in Windows Effects layout: new section: Taskbar including show seconds, enable Windows 7 volume mixer in taskbar for Windows 10. and Windows 11 spinning dots boot screen is moved to Miscellaneous.
+- Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects > Taskbar for all Windows editions.
+- Making Windows Effect's toggle enabled will display confirmation alert.
+- Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
+- Store item redesign, and new patterns are introduced in theme edit form.
+- Making close with tabs open dialog is shown first before saving theme dialog.
+- Making bug report shows error message instead of error type in bug report title. (indirect issue in #224)
+- Double-click on a tab to detach it, middle click to close it.
+- Aero Lite theme for Windows 10/11 #38, with an option to skip setting it.
+- New 4 Classic Colors schemes: Windows 11 Contrast themes: Aquatic, Desert, Dusk, and Night Sky.
+- New sounds (Wi-Fi connection\disconnection\connection failure) in Devices section as requested in #218.
+- Help button for the current active tab (won't be visible if a tab doesn't provide a help link).
+- Changed message box of Windows Effects alert to another dialog with important tips, with a choice for not showing this dialog again #219.
+- Command argument: Silent apply (For example: `WinPaletter -a Theme.wpth -s` or `WinPaletter --apply Theme.wpth --silent`).
+- Modification of Windows Effects is controlled by a message. If you press 'Yes,' the application of these changes will continue, but please note that this may conflict with ExplorerPatcher settings. #217
+- Starting now, the inclusion of User Preference Mask (UPM) modification for all users from current theme will be disabled by default. Look at Settings > Theme applying behavior. #217
+### 13. WinPaletter Store for themes: Faster opening of the WinPaletter Store, Memory cleanup for store items upon closing the Store has been fixed.
+- Command lines changes; type 'WinPaletter.exe -?' in any terminal for help.
+- Replaced 'Save theme file and apply theme on exit' dialog with a straightforward Windows dialog.
+- Resolved an exception error that occurred when applying a theme in a separate thread, ensuring the program does not exit before the thread completes its task.
+- The mechanism for downloading data from the web has been improved, transitioning from WebClient to HTTPClient.
+- Addressed increased memory usage during cursor rendering and after closing Wallpaper and LogonUI forms.
+- Remove all registry residuals during uninstallation #196 #191.
+- Enable the 'Colors history' feature within the 'Custom colors' section if the Windows Classic Colors picker is enabled in settings.
+- Making Metrics and Fonts applies values to open windows in a separate thread as a trial to reduce hanging #209.
+- UI improvements
+
+---
+
+# Bugs fixes
+
+- Fix the issue where a system user account (NT SERVICE) appears among normal users (part of #225).
+- Fix the issue where using the command line option "--apply" with a non-existing theme file still opens WinPaletter instead of exiting.
+- Fix the issue where using the command line option "--apply" with Windows 11 applied with a custom visual style brings back aero.msstyles, while the GUI doesn't (part of #225).
+- Fix the UI issue of a black area in tabs when the title bar is not.
+- Fix Terminal two exception errors in a list on loading a WinPaletter theme file due to the inability to deserialize the current JSON array into type 'WinPaletter.WinTerminal+Types+Profiles' because the type requires a JSON object to deserialize.
+- Fix merging user preference mask (UPM) to default account even if this is disabled in settings.
+- Fix issues related to toggles, where Windows Switcher (Alt+Tab) and LogonUI (Windows 10/11) are not saveable #212.
+- Fix the problem where pressing "apply" in Windows color doesn't load edited preferences in the current theme; apply should apply edited preferences and load them into the current open theme.
+- Fix the absence of "Classic Colors" in the WinPaletter Store aspects check dialog.
+- Fix in metrics and fonts: caption font not synced with menu and misc previews.
+- Fix in metrics and fonts: icons font not synced with icons previews.
+- Fix Windows XP metrics loading padded border width with 4 as a default value to fix the wrong classic theme preview.
+- Fix cursor render (help) when font "Segoe UI Black" doesn't exist #224.
+- Fix misc. section preview in metrics and fonts with classic mode is on due to wrong WindowText colors.
+- Fix window caption buttons preview with classic mode is on and maladjusted close content 'x' and other control box buttons using the 'Marlett' font.
+- Fix the issue of System.OutOfMemoryException: 'Out of memory.' occurring when a new theme is applied, followed by opening a new tab or form with a combo box in it.
+- Fix the app crash that occurs when starting with the classic theme enabled.
+- Fix bug of Windows 11/10 colors are not applicable (part of issue #212)
+- Refix bug #214 when WinPaletter store is opened and closed, the bug reoccurs (home form is closed while the app is not closed, leaving a white rectangle).
+- Fix bug #220: Windows Terminal exception error (ex error on returning null to be set as a color for background and unfocusedBackground in tabSettings in themes).
+- Fix sounds not included in themes resources pack (Charger connected, Charger disconnected, Windows lock).
+- Fix Classic Colors Gallery scheme picker not showing the background color in thumbnails.
+- Fix per element modifier: clicking on the menu with flat menu enabled modified button face instead.
+- Fix ex error on starting WinPaletter with a desktop with slideshow and directory of images doesn't exist.
+- Metrics: Fix visual styles import if using a msstyles newer than Windows XP.
+- Fix ex error on importing a visual styles (*.msstyles) if a .theme file is selected from the open file dialog.
+- Fix press edit button in the store doesn't fully apply WinPaletter theme in open forms.
+- Fix dragging area below store tab moves the form with glitches.
+- Fix exception error when adding a form into tabs (inaccessible form icon) #218.
+- Fix browse for wav wrong titles in sounds.
+- Fix Windows Terminal exception error (incorrect character error in JSON file when using ColorSchemePair as a type for colorScheme or numeric font weight instead of a value from an enum). #215
+- Fix the bug where the application continues running in tabs when the home or main form is closed. #214
+- Fix exception error when opening the Windows XP Colors editor and Metrics and Fonts editor with Windows XP selected.
+- Windows XP preview design fixes (increased titlebar height).
+- Fix inability to select the menu font in the metrics editor.
+- Fix preview: status font is not selected at the first Metrics and Fonts load.
+- Fix incorrect label colors and menu bar color in Windows Vista Metrics and Fonts preview.
+- Fix bug in WinPaletter application themes: selecting the GitHub scheme making the accent color the same as Reddit's scheme.
+- Resolved exception error with ITaskbar3 on Windows XP and Vista.
+- Fixed exception errors occurring when applying cursors.
+- Fixed error when applying Windows 8.1 lock screen background and Windows 7 LogonUI background.
+- Fixed bug applying dark mode after opening WinPaletter Application Themer with light mode.
+- Fixed sync issue between WinPaletter and Wallpaper change preview and automatic dark/light mode.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.8.4`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.4...v1.0.9.0) |
+| Previous Beta   | `1.0.8.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.9...v1.0.9.0) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.9.0) |
+
+---
+
 ### 1.0.8.9
 
 > **Info:**
