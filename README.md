@@ -1,4 +1,4 @@
-# 🛑 Announcement: Project Development Discontinuation:
+#@ 🛑 Announcement: Project Development Discontinuation:
 
 Dear WinPaletter Users,
 
