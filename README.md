@@ -6,6 +6,8 @@ It is with a heavy heart that I announce the discontinuation of further developm
 
 In the coming days or weeks, I will proceed to archive this repository. However, please note that the existing version will remain accessible for continued use, albeit without updates or maintenance.
 
+You can certainly contribute to the WinPaletter Store for themes; this repository won't be archived. [Open the Wiki](https://github.com/Abdelrhman-AK/WinPaletter/wiki) and navigate to the WinPaletter Store section in the side panel.
+
 I want to express my deepest gratitude for your support and for choosing WinPaletter. Your enthusiasm and feedback have been invaluable throughout this journey. It has been an immense honor for me to contribute to a project that aimed to enhance your user experience. If WinPaletter has caused any inconvenience or disruption to your Windows setup, I sincerely apologize.
 
 ---
