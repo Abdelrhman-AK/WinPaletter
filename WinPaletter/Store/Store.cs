@@ -178,6 +178,14 @@ namespace WinPaletter
             CursorTM_to_Cursor(Person, TM.Cursors.Cursor_Person);
             CursorTM_to_Cursor(IBeam, TM.Cursors.Cursor_IBeam);
             CursorTM_to_Cursor(Cross, TM.Cursors.Cursor_Cross);
+
+            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
+            {
+                i.Prop_Scale = TM.Cursors.Size / 32f;
+                i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
+                i.Height = i.Width;
+                i.Refresh();
+            }
         }
 
         public void CursorTM_to_Cursor(UI.Controllers.CursorControl CursorControl, Theme.Structures.Cursor Cursor)
@@ -1216,20 +1224,6 @@ namespace WinPaletter
         #endregion
 
         #region Others
-        private void CursorsSize_Bar_Scroll(object sender)
-        {
-            if (!_Shown) return;
-
-            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
-            {
-                i.Prop_Scale = (float)((UI.WP.TrackBar)sender).Value / 100f;
-                i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
-                i.Height = i.Width;
-                i.Refresh();
-            }
-
-            Label17.Text = $"{Program.Lang.Scaling} ({(float)((UI.WP.TrackBar)sender).Value / 100f}x)";
-        }
 
         private void Search_box_KeyPress(object sender, KeyPressEventArgs e)
         {

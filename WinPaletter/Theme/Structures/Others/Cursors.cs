@@ -34,6 +34,11 @@ namespace WinPaletter.Theme.Structures
         public int Trails = 0;
 
         /// <summary>
+        /// Size of cursors
+        /// </summary>
+        public int Size = 32;
+
+        /// <summary>
         /// Structure instance that has data can be modified to customize 'Arrow' cursor.
         /// </summary>
         public Cursor Cursor_Arrow = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_arrow.cur" };
@@ -140,6 +145,8 @@ namespace WinPaletter.Theme.Structures
             if (!SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref Sonar, SPIF.SPIF_NONE))
                 Sonar = @default.Sonar;
 
+            Size = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", @default.Size));
+
             Cursor_Arrow.Load("Arrow");
             Cursor_Help.Load("Help");
             Cursor_AppLoading.Load("AppLoading");
@@ -200,6 +207,7 @@ namespace WinPaletter.Theme.Structures
                 SystemParametersInfo(tv, SPI.SPI_SETCURSORSHADOW, 0, Shadow, SPIF.SPIF_UPDATEINIFILE);
                 SystemParametersInfo(tv, SPI.SPI_SETMOUSESONAR, 0, Sonar, SPIF.SPIF_UPDATEINIFILE);
                 SystemParametersInfo(tv, SPI.SPI_SETMOUSETRAILS, Trails, 0, SPIF.SPIF_UPDATEINIFILE);
+                EditReg(tv, @"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", Size);
 
                 if (!Cursor_Arrow.UseFromFile || (Cursor_Arrow.UseFromFile && !File.Exists(Cursor_Arrow.File))) RenderCursor(Paths.CursorType.Arrow, this, tv);
                 if (!Cursor_AppLoading.UseFromFile || (Cursor_AppLoading.UseFromFile && !File.Exists(Cursor_AppLoading.File))) RenderCursor(Paths.CursorType.AppLoading, this, tv);
@@ -290,7 +298,7 @@ namespace WinPaletter.Theme.Structures
 
             if (!Directory.Exists(SysPaths.CursorsWP)) Directory.CreateDirectory(SysPaths.CursorsWP);
 
-            if (!(Type == Paths.CursorType.Busy) & !(Type == Paths.CursorType.AppLoading))
+            if (Type != Paths.CursorType.Busy & Type != Paths.CursorType.AppLoading)
             {
                 string Path = $"{SysPaths.CursorsWP}\\{CurName}.cur";
 
@@ -298,9 +306,13 @@ namespace WinPaletter.Theme.Structures
                 {
                     EOIcoCurWriter EO = new(FS, 7, EOIcoCurWriter.IcoCurType.Cursor);
 
-                    for (float i = 1f; i <= 4f; i += 0.5f)
+                    int[] scales = [24, 32, 48, 64, 96];
+                    if (!scales.Contains(Size)) scales = scales.ToList().Append(Size).ToArray();
+
+                    foreach (int scale in scales)
                     {
-                        Bitmap bmp = new((int)Math.Round(32f * i), (int)Math.Round(32f * i), System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                        float i = scale / 32f;
+                        Bitmap bmp = new(scale, scale, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
                         Point HotPoint = new(1, 1);
 
                         switch (Type)
@@ -445,20 +457,20 @@ namespace WinPaletter.Theme.Structures
                 int steps = 360 / increment + 2; // +1 for first angle, +1 for last  angle
                 int loopIndex = 0;
                 int[] angles = new int[steps];
-                int[] scales = new int[] { 32, 64, 128 };
+                int[] scales = [32, 64, 128];
 
                 //Create array of angles
                 for (int ang = 180; ang <= 360; ang += +increment) { angles[loopIndex] = ang; loopIndex++; }
                 for (int ang = 0; ang <= 180; ang += +increment) { angles[loopIndex] = ang; loopIndex++; }
 
-                string[] ProcessedFiles = new string[] { string.Empty };
+                string[] ProcessedFiles = [string.Empty];
 
                 //Loop to create different cursors sizes(scales)
                 foreach (int scale in scales)
                 {
-                    List<Bitmap> BMPList = new();
+                    List<Bitmap> BMPList = [];
                     BMPList.Clear();
-                    float factor = (float)scale / 32;
+                    float factor = scale / 32f;
 
                     foreach (int angle in angles)
                     {
@@ -500,7 +512,7 @@ namespace WinPaletter.Theme.Structures
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { AN.WriteFrame(BMPList[(int)i1]); }
 
-                        ProcessedFiles = ProcessedFiles.ToList().Append($@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani").ToArray();
+                        ProcessedFiles = ProcessedFiles.ToList().Append($"{SysPaths.CursorsWP}\\{CurName}{curFileNameModifier}.ani").ToArray();
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { BMPList[(int)i1].Dispose(); }
                         BMPList.Clear();
@@ -526,7 +538,18 @@ namespace WinPaletter.Theme.Structures
             double DPI = Program.GetWindowsScreenScalingFactor();
             string DPI_Fixer = string.Empty;
 
-            if (DPI >= 150 && DPI < 175) { DPI_Fixer = "_l"; } else if (DPI >= 175) { DPI_Fixer = "_xl"; }
+            if (Size <= 32)
+            {
+                if (DPI >= 150 && DPI < 175) { DPI_Fixer = "_l"; } else if (DPI >= 175) { DPI_Fixer = "_xl"; }
+            }
+            else if (Size > 32 && Size <= 48)
+            {
+                DPI_Fixer = "_l";
+            }
+            else if (Size > 48)
+            {
+                DPI_Fixer = "_xl";
+            }
 
             string RegValue;
             RegValue = $@"{Path}\{"Arrow.cur"}";
@@ -549,7 +572,6 @@ namespace WinPaletter.Theme.Structures
 
             EditReg($@"{scopeReg}\Control Panel\Cursors\Schemes", "WinPaletter", RegValue, RegistryValueKind.String);
             EditReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "WinPaletter", RegistryValueKind.String);
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
             EditReg($@"{scopeReg}\Control Panel\Cursors", "Scheme Source", 1, RegistryValueKind.DWord);
 
             string x = System.IO.Path.Combine(Path, "Arrow.cur");
@@ -655,6 +677,8 @@ namespace WinPaletter.Theme.Structures
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
 
             SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
+
+            SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, Size, SPIF.SPIF_WRITEANDNOTIFY);
         }
 
         /// <summary>
@@ -788,6 +812,8 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
+
+                SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
             }
 
             catch (Exception ex)
@@ -860,6 +886,8 @@ namespace WinPaletter.Theme.Structures
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
+
+                SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
             }
 
             catch (Exception ex)

@@ -20,7 +20,6 @@
         public string LogoffAlert2 { get; set; } = "Logoff equals 'Sign out' in Windows 8.1, 10 & 11.";
         public string LogoffNotFound { get; set; } = "Couldn't find the logoff.exe in '{0}' directory. You should log off your Windows profile manually.";
         public string ShutdownNotFound { get; set; } = "Couldn't find shutdown.exe in '{0}' directory. You should restart or shut down your Windows manually.";
-        public string ScalingTip { get; set; } = "The scaling option is only a preview; the cursor will be saved with different sizes, and the suitable size will be loaded according to your DPI settings.";
         public string RemoveExtMsg { get; set; } = "Are you sure you want to remove file associations (*.wpth, *.wptp, *.wpsf) from the registry?";
         public string RemoveExtMsgNote { get; set; } = "Note: You can reassociate them by activating the checkbox and restarting WinPaletter.";
         public string EmptyName { get; set; } = "You can't leave the theme name empty. Please type a name for it.";

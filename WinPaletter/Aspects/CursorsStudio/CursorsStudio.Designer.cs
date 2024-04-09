@@ -131,8 +131,9 @@ namespace WinPaletter
             this.CheckBox9 = new WinPaletter.UI.WP.CheckBox();
             this.Label11 = new System.Windows.Forms.Label();
             this.GroupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
+            this.trackBarX10 = new WinPaletter.UI.Controllers.TrackBarX();
             this.Button5 = new WinPaletter.UI.WP.Button();
-            this.Button10 = new WinPaletter.UI.WP.Button();
             this.Label1 = new System.Windows.Forms.Label();
             this.cursorsConatiner = new System.Windows.Forms.FlowLayoutPanel();
             this.Arrow = new WinPaletter.UI.Controllers.CursorControl();
@@ -154,7 +155,6 @@ namespace WinPaletter
             this.Cross = new WinPaletter.UI.Controllers.CursorControl();
             this.PictureBox12 = new System.Windows.Forms.PictureBox();
             this.Label5 = new System.Windows.Forms.Label();
-            this.Trackbar1 = new WinPaletter.UI.WP.TrackBar();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
@@ -257,7 +257,7 @@ namespace WinPaletter
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(610, 505);
+            this.tabControl1.Size = new System.Drawing.Size(610, 522);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 138;
             this.tabControl1.Visible = false;
@@ -281,7 +281,7 @@ namespace WinPaletter
             this.tabPage1.Location = new System.Drawing.Point(154, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(452, 497);
+            this.tabPage1.Size = new System.Drawing.Size(452, 514);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Configuration";
             // 
@@ -502,7 +502,7 @@ namespace WinPaletter
             this.tabPage2.Location = new System.Drawing.Point(154, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(452, 497);
+            this.tabPage2.Size = new System.Drawing.Size(452, 514);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Cursor colors";
             // 
@@ -1060,7 +1060,7 @@ namespace WinPaletter
             this.tabPage3.Location = new System.Drawing.Point(154, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(452, 497);
+            this.tabPage3.Size = new System.Drawing.Size(452, 514);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Custom shadow";
             // 
@@ -1178,7 +1178,7 @@ namespace WinPaletter
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(6, 414);
+            this.AlertBox1.Location = new System.Drawing.Point(6, 431);
             this.AlertBox1.Name = "AlertBox1";
             this.AlertBox1.Size = new System.Drawing.Size(440, 77);
             this.AlertBox1.TabIndex = 137;
@@ -1322,7 +1322,7 @@ namespace WinPaletter
             this.tabPage5.Location = new System.Drawing.Point(154, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(452, 497);
+            this.tabPage5.Size = new System.Drawing.Size(452, 514);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Cursor from file";
             // 
@@ -1334,8 +1334,8 @@ namespace WinPaletter
             this.button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button20.ForeColor = System.Drawing.Color.White;
             this.button20.Image = null;
-            this.button20.ImageGlyphEnabled = true;
             this.button20.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.button20.ImageGlyphEnabled = true;
             this.button20.Location = new System.Drawing.Point(412, 42);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(34, 24);
@@ -1422,7 +1422,7 @@ namespace WinPaletter
             this.tabPage4.Location = new System.Drawing.Point(154, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(452, 497);
+            this.tabPage4.Size = new System.Drawing.Size(452, 514);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Miscellaneous";
             // 
@@ -1533,21 +1533,57 @@ namespace WinPaletter
             this.GroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.GroupBox1.Controls.Add(this.alertBox2);
+            this.GroupBox1.Controls.Add(this.trackBarX10);
             this.GroupBox1.Controls.Add(this.Button5);
-            this.GroupBox1.Controls.Add(this.Button10);
             this.GroupBox1.Controls.Add(this.Label1);
             this.GroupBox1.Controls.Add(this.cursorsConatiner);
             this.GroupBox1.Controls.Add(this.PictureBox12);
             this.GroupBox1.Controls.Add(this.Label5);
-            this.GroupBox1.Controls.Add(this.Trackbar1);
             this.GroupBox1.Controls.Add(this.Button6);
             this.GroupBox1.Controls.Add(this.Button2);
             this.GroupBox1.Controls.Add(this.Button1);
             this.GroupBox1.Location = new System.Drawing.Point(630, 62);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.GroupBox1.Size = new System.Drawing.Size(310, 525);
+            this.GroupBox1.Size = new System.Drawing.Size(310, 540);
             this.GroupBox1.TabIndex = 7;
+            // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(8, 433);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(296, 66);
+            this.alertBox2.TabIndex = 69;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "The cursor size can be changed in Windows 10 and later versions, but not in earli" +
+    "er ones.\r\nIf cursors are blurry, use sizes 32, 48, 64, or 96.";
+            // 
+            // trackBarX10
+            // 
+            this.trackBarX10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX10.AnimateChanges = true;
+            this.trackBarX10.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarX10.DefaultValue = 32;
+            this.trackBarX10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackBarX10.Location = new System.Drawing.Point(133, 403);
+            this.trackBarX10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trackBarX10.Maximum = 255;
+            this.trackBarX10.Minimum = 16;
+            this.trackBarX10.Name = "trackBarX10";
+            this.trackBarX10.Size = new System.Drawing.Size(170, 24);
+            this.trackBarX10.TabIndex = 68;
+            this.trackBarX10.Value = 32;
+            this.trackBarX10.ValueChanged += new System.EventHandler(this.trackBarX10_ValueChanged);
             // 
             // Button5
             // 
@@ -1557,9 +1593,9 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.ImageGlyphEnabled = false;
             this.Button5.ImageGlyph = null;
-            this.Button5.Location = new System.Drawing.Point(150, 491);
+            this.Button5.ImageGlyphEnabled = false;
+            this.Button5.Location = new System.Drawing.Point(150, 505);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(152, 28);
             this.Button5.TabIndex = 66;
@@ -1567,23 +1603,6 @@ namespace WinPaletter
             this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
-            // 
-            // Button10
-            // 
-            this.Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button10.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
-            this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
-            this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button10.ForeColor = System.Drawing.Color.White;
-            this.Button10.Image = null;
-            this.Button10.ImageGlyphEnabled = true;
-            this.Button10.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
-            this.Button10.Location = new System.Drawing.Point(281, 463);
-            this.Button10.Name = "Button10";
-            this.Button10.Size = new System.Drawing.Size(20, 21);
-            this.Button10.TabIndex = 58;
-            this.Button10.UseVisualStyleBackColor = false;
-            this.Button10.Click += new System.EventHandler(this.Button10_Click);
             // 
             // Label1
             // 
@@ -1622,7 +1641,7 @@ namespace WinPaletter
             this.cursorsConatiner.Location = new System.Drawing.Point(3, 41);
             this.cursorsConatiner.Name = "cursorsConatiner";
             this.cursorsConatiner.Padding = new System.Windows.Forms.Padding(4, 4, 0, 4);
-            this.cursorsConatiner.Size = new System.Drawing.Size(301, 415);
+            this.cursorsConatiner.Size = new System.Drawing.Size(301, 356);
             this.cursorsConatiner.TabIndex = 6;
             // 
             // Arrow
@@ -2361,7 +2380,7 @@ namespace WinPaletter
             this.PictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.PictureBox12.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
-            this.PictureBox12.Location = new System.Drawing.Point(8, 461);
+            this.PictureBox12.Location = new System.Drawing.Point(10, 403);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
             this.PictureBox12.TabIndex = 57;
@@ -2372,27 +2391,12 @@ namespace WinPaletter
             this.Label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Label5.BackColor = System.Drawing.Color.Transparent;
             this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label5.Location = new System.Drawing.Point(38, 461);
+            this.Label5.Location = new System.Drawing.Point(40, 403);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(100, 24);
+            this.Label5.Size = new System.Drawing.Size(86, 24);
             this.Label5.TabIndex = 56;
-            this.Label5.Text = "Scaling (1x)";
+            this.Label5.Text = "Cursor size";
             this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Trackbar1
-            // 
-            this.Trackbar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar1.LargeChange = 50;
-            this.Trackbar1.Location = new System.Drawing.Point(144, 464);
-            this.Trackbar1.Maximum = 320;
-            this.Trackbar1.Minimum = 100;
-            this.Trackbar1.Name = "Trackbar1";
-            this.Trackbar1.Size = new System.Drawing.Size(131, 19);
-            this.Trackbar1.SmallChange = 20;
-            this.Trackbar1.TabIndex = 9;
-            this.Trackbar1.Value = 100;
-            this.Trackbar1.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.Trackbar1_Scroll);
             // 
             // Button6
             // 
@@ -2403,9 +2407,9 @@ namespace WinPaletter
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
-            this.Button6.ImageGlyphEnabled = false;
             this.Button6.ImageGlyph = null;
-            this.Button6.Location = new System.Drawing.Point(74, 491);
+            this.Button6.ImageGlyphEnabled = false;
+            this.Button6.Location = new System.Drawing.Point(74, 505);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(70, 28);
             this.Button6.TabIndex = 67;
@@ -2423,9 +2427,9 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = ((System.Drawing.Image)(resources.GetObject("Button2.Image")));
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
-            this.Button2.Location = new System.Drawing.Point(41, 491);
+            this.Button2.ImageGlyphEnabled = false;
+            this.Button2.Location = new System.Drawing.Point(41, 505);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(27, 28);
             this.Button2.TabIndex = 11;
@@ -2441,9 +2445,9 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
-            this.Button1.Location = new System.Drawing.Point(8, 491);
+            this.Button1.ImageGlyphEnabled = false;
+            this.Button1.Location = new System.Drawing.Point(8, 505);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(27, 28);
             this.Button1.TabIndex = 10;
@@ -2460,7 +2464,7 @@ namespace WinPaletter
             this.tablessControl1.Location = new System.Drawing.Point(9, 62);
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(618, 533);
+            this.tablessControl1.Size = new System.Drawing.Size(618, 550);
             this.tablessControl1.TabIndex = 139;
             // 
             // tabPage6
@@ -2470,7 +2474,7 @@ namespace WinPaletter
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(610, 505);
+            this.tabPage6.Size = new System.Drawing.Size(610, 522);
             this.tabPage6.TabIndex = 0;
             this.tabPage6.Text = "0";
             // 
@@ -2482,7 +2486,7 @@ namespace WinPaletter
             this.tabPage7.Controls.Add(this.groupBox6);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(610, 505);
+            this.tabPage7.Size = new System.Drawing.Size(610, 522);
             this.tabPage7.TabIndex = 1;
             this.tabPage7.Text = "1";
             // 
@@ -2981,11 +2985,10 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(952, 644);
+            this.ClientSize = new System.Drawing.Size(952, 661);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.GroupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
@@ -3092,13 +3095,11 @@ namespace WinPaletter
         internal UI.Controllers.ColorItem CircleColor1;
         internal UI.WP.Button Button1;
         internal UI.WP.Button Button2;
-        internal UI.WP.TrackBar Trackbar1;
         internal PictureBox PictureBox12;
         internal Label Label5;
         internal UI.WP.Button Button5;
         internal Timer Timer1;
         internal UI.WP.Button Button6;
-        internal UI.WP.Button Button10;
         internal PictureBox PictureBox9;
         internal UI.WP.CheckBox CheckBox9;
         internal Label Label11;
@@ -3191,5 +3192,7 @@ namespace WinPaletter
         internal Label label27;
         internal PictureBox pictureBox27;
         internal PictureBox pictureBox29;
+        private UI.Controllers.TrackBarX trackBarX10;
+        private UI.WP.AlertBox alertBox2;
     }
 }

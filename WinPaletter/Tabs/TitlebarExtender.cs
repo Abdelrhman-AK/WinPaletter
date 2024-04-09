@@ -183,10 +183,9 @@ namespace WinPaletter.Tabs
                 {
                     Form form = FindForm();
 
-                    if (form is not null) Forms.MainForm.Text = form.Text;
+                    if (form is not null && Forms.MainForm is not null) Forms.MainForm.Text = form.Text;
 
                     if (form is not null && form.Parent is not null) form = form.Parent.FindForm();
-
 
                     if (DWMAPI.IsCompositionEnabled())
                     {

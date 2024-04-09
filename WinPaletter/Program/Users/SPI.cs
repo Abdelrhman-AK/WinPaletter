@@ -589,6 +589,15 @@ namespace WinPaletter.NativeMethods
             SPI_SETCURSORS = 0x0057,
 
             /// <summary>
+            /// <b>Set system cursors size.</b>
+            /// <br></br>
+            /// <br></br> • Set the <b><c>uiParam</c></b> parameter to <c>zero</c> and the <b><c>pvParam</c></b> parameter to the desired size.
+            /// <br></br>
+            /// <br></br> • <i> (!) Undocumented entry from Microsoft</i>
+            /// </summary>
+            SPI_SETCURSORSSIZE = 0x2029,
+
+            /// <summary>
             /// <b>Reloads the system icons.</b>
             /// <br></br>
             /// <br></br> • Set the <b><c>uiParam</c></b> parameter to <c>zero</c> and the <b><c>pvParam</c></b> parameter to null.

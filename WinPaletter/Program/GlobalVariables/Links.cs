@@ -155,7 +155,7 @@ namespace WinPaletter.GlobalVariables
             /// <summary>
             /// Link to WinPaletter cursors wiki.
             /// </summary>
-            public readonly static string Cursors = $"{WikiURL}/Edit-WinPaletter-cursors";
+            public readonly static string Cursors = $"{WikiURL}/Edit-Windows-cursors";
 
             /// <summary>
             /// Link to WinPaletter theme info edit wiki.

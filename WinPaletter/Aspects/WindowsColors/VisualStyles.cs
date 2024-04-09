@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -465,6 +466,37 @@ namespace WinPaletter
         private void button28_Click(object sender, EventArgs e)
         {
             Forms.SecureUxTheme_Setup.ShowDialog();
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Default.Get())
+            {
+                switch (Program.WindowStyle)
+                {
+                    case WindowStyle.W12:
+                        VS_textbox.Text = TMx.VisualStyles_12.ThemeFile;
+                        break;
+                    case WindowStyle.W11:
+                        VS_textbox.Text = TMx.VisualStyles_11.ThemeFile;
+                        break;
+                    case WindowStyle.W10:
+                        VS_textbox.Text = TMx.VisualStyles_10.ThemeFile;
+                        break;
+                    case WindowStyle.W81:
+                        VS_textbox.Text = TMx.VisualStyles_81.ThemeFile;
+                        break;
+                    case WindowStyle.W7:
+                        VS_textbox.Text = TMx.VisualStyles_7.ThemeFile;
+                        break;
+                    case WindowStyle.WVista:
+                        VS_textbox.Text = TMx.VisualStyles_Vista.ThemeFile;
+                        break;
+                    case WindowStyle.WXP:
+                        VS_textbox.Text = TMx.VisualStyles_XP.ThemeFile;
+                        break;
+                }
+            }
         }
     }
 }

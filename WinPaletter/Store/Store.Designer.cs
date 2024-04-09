@@ -91,9 +91,6 @@ namespace WinPaletter
             this.Person = new WinPaletter.UI.Controllers.CursorControl();
             this.IBeam = new WinPaletter.UI.Controllers.CursorControl();
             this.Cross = new WinPaletter.UI.Controllers.CursorControl();
-            this.PictureBox12 = new System.Windows.Forms.PictureBox();
-            this.CursorsSize_Bar = new WinPaletter.UI.WP.TrackBar();
-            this.Label17 = new System.Windows.Forms.Label();
             this.cur_anim_btn = new WinPaletter.UI.WP.Button();
             this.TabPage5 = new System.Windows.Forms.TabPage();
             this.search_results = new System.Windows.Forms.FlowLayoutPanel();
@@ -118,7 +115,6 @@ namespace WinPaletter
             this.FlowLayoutPanel1.SuspendLayout();
             this.Panel1.SuspendLayout();
             this.Cursors_Container.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).BeginInit();
             this.TabPage5.SuspendLayout();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -794,9 +790,6 @@ namespace WinPaletter
             // 
             this.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Panel1.Controls.Add(this.Cursors_Container);
-            this.Panel1.Controls.Add(this.PictureBox12);
-            this.Panel1.Controls.Add(this.CursorsSize_Bar);
-            this.Panel1.Controls.Add(this.Label17);
             this.Panel1.Controls.Add(this.cur_anim_btn);
             this.Panel1.Location = new System.Drawing.Point(2677, 3);
             this.Panel1.Name = "Panel1";
@@ -1562,39 +1555,6 @@ namespace WinPaletter
             this.Cross.Size = new System.Drawing.Size(64, 64);
             this.Cross.TabIndex = 20;
             // 
-            // PictureBox12
-            // 
-            this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
-            this.PictureBox12.Location = new System.Drawing.Point(6, 265);
-            this.PictureBox12.Name = "PictureBox12";
-            this.PictureBox12.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox12.TabIndex = 70;
-            this.PictureBox12.TabStop = false;
-            // 
-            // CursorsSize_Bar
-            // 
-            this.CursorsSize_Bar.BackColor = System.Drawing.Color.Transparent;
-            this.CursorsSize_Bar.LargeChange = 50;
-            this.CursorsSize_Bar.Location = new System.Drawing.Point(141, 268);
-            this.CursorsSize_Bar.Maximum = 320;
-            this.CursorsSize_Bar.Minimum = 100;
-            this.CursorsSize_Bar.Name = "CursorsSize_Bar";
-            this.CursorsSize_Bar.Size = new System.Drawing.Size(213, 19);
-            this.CursorsSize_Bar.SmallChange = 20;
-            this.CursorsSize_Bar.TabIndex = 68;
-            this.CursorsSize_Bar.Value = 100;
-            this.CursorsSize_Bar.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.CursorsSize_Bar_Scroll);
-            // 
-            // Label17
-            // 
-            this.Label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label17.Location = new System.Drawing.Point(36, 265);
-            this.Label17.Name = "Label17";
-            this.Label17.Size = new System.Drawing.Size(99, 24);
-            this.Label17.TabIndex = 69;
-            this.Label17.Text = "Scaling (1x)";
-            this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // cur_anim_btn
             // 
             this.cur_anim_btn.CustomColor = System.Drawing.Color.Empty;
@@ -1810,7 +1770,6 @@ namespace WinPaletter
             this.FlowLayoutPanel1.ResumeLayout(false);
             this.Panel1.ResumeLayout(false);
             this.Cursors_Container.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).EndInit();
             this.TabPage5.ResumeLayout(false);
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
@@ -1863,9 +1822,6 @@ namespace WinPaletter
         internal UI.Controllers.CursorControl Person;
         internal UI.Controllers.CursorControl IBeam;
         internal UI.Controllers.CursorControl Cross;
-        internal PictureBox PictureBox12;
-        internal Label Label17;
-        internal UI.WP.TrackBar CursorsSize_Bar;
         internal Timer Cursor_Timer;
         internal Panel search_panel;
         internal UI.WP.ProgressBar ProgressBar1;

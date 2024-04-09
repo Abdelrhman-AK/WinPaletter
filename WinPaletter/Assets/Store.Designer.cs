@@ -83,6 +83,16 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DesignedFor12 {
+            get {
+                object obj = ResourceManager.GetObject("DesignedFor12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DesignedFor7 {
             get {
                 object obj = ResourceManager.GetObject("DesignedFor7", resourceCulture);

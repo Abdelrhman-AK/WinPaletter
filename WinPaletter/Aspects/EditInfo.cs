@@ -159,6 +159,7 @@ namespace WinPaletter
             color2.BackColor = TM.Info.Color2;
             trackBarX1.Value = TM.Info.Pattern;
 
+            checkBox8.Checked = TM.Info.DesignedFor_Win12;
             CheckBox1.Checked = TM.Info.DesignedFor_Win11;
             CheckBox2.Checked = TM.Info.DesignedFor_Win10;
             CheckBox3.Checked = TM.Info.DesignedFor_Win81;
@@ -181,6 +182,7 @@ namespace WinPaletter
             TM.Info.Color2 = color2.BackColor;
             TM.Info.Pattern = trackBarX1.Value;
 
+            TM.Info.DesignedFor_Win12 = checkBox8.Checked;
             TM.Info.DesignedFor_Win11 = CheckBox1.Checked;
             TM.Info.DesignedFor_Win10 = CheckBox2.Checked;
             TM.Info.DesignedFor_Win81 = CheckBox3.Checked;
@@ -245,6 +247,15 @@ namespace WinPaletter
             CList.Clear();
         }
 
+        private void checkBox8_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!CheckAllOS())
+                ((UI.WP.CheckBox)sender).Checked = true;
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_Win12 = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
+        }
+
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (!CheckAllOS())
@@ -301,7 +312,7 @@ namespace WinPaletter
 
         public bool CheckAllOS()
         {
-            return CheckBox1.Checked | CheckBox2.Checked | CheckBox3.Checked | CheckBox4.Checked | CheckBox5.Checked | CheckBox6.Checked;
+            return checkBox8.Checked | CheckBox1.Checked | CheckBox2.Checked | CheckBox3.Checked | CheckBox4.Checked | CheckBox5.Checked | CheckBox6.Checked;
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
@@ -345,5 +356,6 @@ namespace WinPaletter
         {
             StoreItem1.UpdatePattern(trackBarX1.Value);
         }
+
     }
 }

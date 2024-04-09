@@ -57,6 +57,7 @@ namespace WinPaletter
             this.separatorH2 = new WinPaletter.UI.WP.SeparatorH();
             this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.separatorH3 = new WinPaletter.UI.WP.SeparatorH();
+            this.button21 = new WinPaletter.UI.WP.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -161,7 +162,7 @@ namespace WinPaletter
             this.VS_textbox.SelectedText = "";
             this.VS_textbox.SelectionLength = 0;
             this.VS_textbox.SelectionStart = 0;
-            this.VS_textbox.Size = new System.Drawing.Size(657, 24);
+            this.VS_textbox.Size = new System.Drawing.Size(617, 24);
             this.VS_textbox.TabIndex = 124;
             this.VS_textbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.VS_textbox.UseSystemPasswordChar = false;
@@ -378,12 +379,30 @@ namespace WinPaletter
             this.separatorH3.TabStop = false;
             this.separatorH3.Text = "separatorH3";
             // 
+            // button21
+            // 
+            this.button21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button21.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button21.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button21.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button21.ForeColor = System.Drawing.Color.White;
+            this.button21.Image = null;
+            this.button21.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button21.ImageGlyph")));
+            this.button21.ImageGlyphEnabled = true;
+            this.button21.Location = new System.Drawing.Point(805, 63);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(34, 24);
+            this.button21.TabIndex = 232;
+            this.button21.UseVisualStyleBackColor = false;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
+            // 
             // VisualStyles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(893, 542);
+            this.Controls.Add(this.button21);
             this.Controls.Add(this.separatorH3);
             this.Controls.Add(this.alertBox1);
             this.Controls.Add(this.separatorH2);
@@ -433,6 +452,7 @@ namespace WinPaletter
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.alertBox1, 0);
             this.Controls.SetChildIndex(this.separatorH3, 0);
+            this.Controls.SetChildIndex(this.button21, 0);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -462,5 +482,6 @@ namespace WinPaletter
         private UI.WP.SeparatorH separatorH2;
         private UI.WP.AlertBox alertBox1;
         private UI.WP.SeparatorH separatorH3;
+        internal UI.WP.Button button21;
     }
 }

@@ -203,12 +203,26 @@ namespace WinPaletter
             return Cursor;
         }
 
+        void setCursorsSizes()
+        {
+            foreach (CursorControl i in cursorsConatiner.Controls)
+            {
+                i.Prop_Scale = trackBarX10.Value / 32f;
+                i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
+                i.Height = i.Width;
+                i.Refresh();
+            }
+        }
+
         public void LoadFromTM(Theme.Manager TM)
         {
             AspectEnabled = TM.Cursors.Enabled;
             CheckBox9.Checked = TM.Cursors.Shadow;
             trackBarX9.Value = TM.Cursors.Trails;
             CheckBox10.Checked = TM.Cursors.Sonar;
+            trackBarX10.Value = TM.Cursors.Size;
+            setCursorsSizes();
+
             CursorTM_to_Cursor(Arrow, TM.Cursors.Cursor_Arrow);
             CursorTM_to_Cursor(Help, TM.Cursors.Cursor_Help);
             CursorTM_to_Cursor(AppLoading, TM.Cursors.Cursor_AppLoading);
@@ -239,6 +253,7 @@ namespace WinPaletter
             TM.Cursors.Shadow = CheckBox9.Checked;
             TM.Cursors.Trails = trackBarX9.Value;
             TM.Cursors.Sonar = CheckBox10.Checked;
+            TM.Cursors.Size = trackBarX10.Value;
             TM.Cursors.Cursor_Arrow = Cursor_to_CursorTM(Arrow);
             TM.Cursors.Cursor_Help = Cursor_to_CursorTM(Help);
             TM.Cursors.Cursor_AppLoading = Cursor_to_CursorTM(AppLoading);
@@ -256,7 +271,6 @@ namespace WinPaletter
             TM.Cursors.Cursor_Person = Cursor_to_CursorTM(Person);
             TM.Cursors.Cursor_IBeam = Cursor_to_CursorTM(IBeam);
             TM.Cursors.Cursor_Cross = Cursor_to_CursorTM(Cross);
-
         }
 
         private void CursorsStudio_FormClosed(object sender, FormClosedEventArgs e)
@@ -684,17 +698,7 @@ namespace WinPaletter
 
         private void Trackbar1_Scroll(object sender)
         {
-            if (!IsShown) return;
 
-            foreach (CursorControl i in cursorsConatiner.Controls)
-            {
-                i.Prop_Scale = ((float)((UI.WP.TrackBar)sender).Value) / 100;
-                i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
-                i.Height = i.Width;
-                i.Refresh();
-            }
-
-            Label5.Text = $"{Program.Lang.Scaling} ({((float)((UI.WP.TrackBar)sender).Value) / 100}x)";
         }
 
         private float Angle = 180f;
@@ -960,13 +964,7 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            Program.ToolTip.ToolTipText = Program.Lang.ScalingTip;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
-            Program.ToolTip.Image = Assets.Notifications.Info;
 
-            Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
-
-            Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 7000);
         }
 
         private void ComboBox5_SelectedIndexChanged(object sender, EventArgs e)
@@ -1528,6 +1526,11 @@ namespace WinPaletter
             }
 
             CList.Clear();
+        }
+
+        private void trackBarX10_ValueChanged(object sender, EventArgs e)
+        {
+            setCursorsSizes();
         }
     }
 }

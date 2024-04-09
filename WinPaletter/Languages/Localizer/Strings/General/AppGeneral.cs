@@ -41,7 +41,6 @@
         public string AppPreview { get; set; } = "App preview";
         public string InactiveApp { get; set; } = "Inactive app";
         public string Disabled { get; set; } = "Disabled";
-        public string Scaling { get; set; } = "Scaling";
         public string Default { get; set; } = "Default";
         public string Defaults { get; set; } = "Defaults";
         public string Untitled { get; set; } = "Untitled";
