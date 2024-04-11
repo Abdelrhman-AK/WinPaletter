@@ -2,6 +2,41 @@
 
 ---
 
+### 1.0.9.1
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 11 Apr 2024  |
+
+# Critical update
+This update is pushed to fix an exception error occured on substituting font Segoe UI and opening back WinPaletter.
+
+---
+
+# Application improvements:
+
+- Change cursors sizes as you like in Windows 10 and higher.
+
+---
+
+# Bugs fixes
+
+- Wrong wiki (help) URL for cursors is fixed.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.9.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.9.0...v1.0.9.1) |
+| Previous Beta   | `1.0.8.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.9...v1.0.9.1) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.9.1) |
+
+---
+
 ### 1.0.9.0
 
 > **Info:**
