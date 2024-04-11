@@ -2099,7 +2099,6 @@
             this.alertBox2.TabIndex = 228;
             this.alertBox2.TabStop = false;
             this.alertBox2.Text = "If Visual Styles aspect is enabled, theme (default\\aero lite) will be overriden";
-            this.alertBox2.Visible = false;
             // 
             // Win12Colors
             // 

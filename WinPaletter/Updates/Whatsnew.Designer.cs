@@ -43,6 +43,9 @@ namespace WinPaletter
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.banner1 = new WinPaletter.UI.WP.Banner();
+            this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.banner15 = new WinPaletter.UI.WP.Banner();
             this.tabPage14 = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
             this.banner14 = new WinPaletter.UI.WP.Banner();
@@ -87,13 +90,11 @@ namespace WinPaletter
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
-            this.tabPage15 = new System.Windows.Forms.TabPage();
-            this.label6 = new System.Windows.Forms.Label();
-            this.banner15 = new WinPaletter.UI.WP.Banner();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.TabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage15.SuspendLayout();
             this.tabPage14.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -108,7 +109,6 @@ namespace WinPaletter
             this.tabPage10.SuspendLayout();
             this.tabPage11.SuspendLayout();
             this.bottom_buttons.SuspendLayout();
-            this.tabPage15.SuspendLayout();
             this.SuspendLayout();
             // 
             // AnimatedBox1
@@ -215,6 +215,45 @@ namespace WinPaletter
             this.banner1.TabIndex = 0;
             this.banner1.TabStop = false;
             this.banner1.Text = "Updated the overall look and feel of the application";
+            // 
+            // tabPage15
+            // 
+            this.tabPage15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage15.Controls.Add(this.label6);
+            this.tabPage15.Controls.Add(this.banner15);
+            this.tabPage15.Location = new System.Drawing.Point(4, 24);
+            this.tabPage15.Name = "tabPage15";
+            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage15.Size = new System.Drawing.Size(817, 422);
+            this.tabPage15.TabIndex = 14;
+            this.tabPage15.Text = "001";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(8, 69);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(801, 323);
+            this.label6.TabIndex = 29;
+            this.label6.Text = resources.GetString("label6.Text");
+            // 
+            // banner15
+            // 
+            this.banner15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.banner15.BackColor = System.Drawing.Color.Transparent;
+            this.banner15.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner15.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner15.Image")));
+            this.banner15.Location = new System.Drawing.Point(8, 6);
+            this.banner15.Name = "banner15";
+            this.banner15.Size = new System.Drawing.Size(801, 48);
+            this.banner15.TabIndex = 28;
+            this.banner15.TabStop = false;
+            this.banner15.Text = "Windows Visual Styles";
             // 
             // tabPage14
             // 
@@ -809,45 +848,6 @@ namespace WinPaletter
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
-            // tabPage15
-            // 
-            this.tabPage15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage15.Controls.Add(this.label6);
-            this.tabPage15.Controls.Add(this.banner15);
-            this.tabPage15.Location = new System.Drawing.Point(4, 24);
-            this.tabPage15.Name = "tabPage15";
-            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage15.Size = new System.Drawing.Size(817, 422);
-            this.tabPage15.TabIndex = 14;
-            this.tabPage15.Text = "001";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(8, 69);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(801, 323);
-            this.label6.TabIndex = 29;
-            this.label6.Text = resources.GetString("label6.Text");
-            // 
-            // banner15
-            // 
-            this.banner15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.banner15.BackColor = System.Drawing.Color.Transparent;
-            this.banner15.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner15.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner15.Image")));
-            this.banner15.Location = new System.Drawing.Point(8, 6);
-            this.banner15.Name = "banner15";
-            this.banner15.Size = new System.Drawing.Size(801, 48);
-            this.banner15.TabIndex = 28;
-            this.banner15.TabStop = false;
-            this.banner15.Text = "Windows Visual Styles";
-            // 
             // Whatsnew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -872,6 +872,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.TabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage15.ResumeLayout(false);
             this.tabPage14.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -886,7 +887,6 @@ namespace WinPaletter
             this.tabPage10.ResumeLayout(false);
             this.tabPage11.ResumeLayout(false);
             this.bottom_buttons.ResumeLayout(false);
-            this.tabPage15.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

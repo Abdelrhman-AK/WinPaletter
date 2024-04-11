@@ -19,7 +19,7 @@ namespace WinPaletter
             switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
-                    radioImage6.Checked = true;
+                    radioImage7.Checked = true;
                     break;
 
                 case WindowStyle.W11:

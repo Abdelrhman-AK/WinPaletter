@@ -307,7 +307,7 @@ namespace WinPaletter.Theme.Structures
                     EOIcoCurWriter EO = new(FS, 7, EOIcoCurWriter.IcoCurType.Cursor);
 
                     int[] scales = [24, 32, 48, 64, 96];
-                    if (!scales.Contains(Size)) scales = scales.ToList().Append(Size).ToArray();
+                    if (!scales.Contains(Size)) scales = scales.ToList().Append(Size).OrderBy(x => x).ToArray();
 
                     foreach (int scale in scales)
                     {
@@ -465,7 +465,7 @@ namespace WinPaletter.Theme.Structures
 
                 string[] ProcessedFiles = [string.Empty];
 
-                //Loop to create different cursors sizes(scales)
+                //Loop to create different cursors sizes (scales)
                 foreach (int scale in scales)
                 {
                     List<Bitmap> BMPList = [];

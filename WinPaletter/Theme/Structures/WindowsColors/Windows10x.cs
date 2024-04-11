@@ -135,9 +135,6 @@ namespace WinPaletter.Theme.Structures
                     Theme = stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" || !System.IO.File.Exists(stringThemeName) ? Themes.AeroLite : Themes.Aero;
                 }
 
-                List<Color> Colors = new();
-                Colors.Clear();
-
                 byte[] x;
                 object y;
 
@@ -154,22 +151,15 @@ namespace WinPaletter.Theme.Structures
                     };
 
                 x = (byte[])GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);
-                Colors.Add(Color.FromArgb(255, x[0], x[1], x[2]));
-                Colors.Add(Color.FromArgb(255, x[4], x[5], x[6]));
-                Colors.Add(Color.FromArgb(255, x[8], x[9], x[10]));
-                Colors.Add(Color.FromArgb(255, x[12], x[13], x[14]));
-                Colors.Add(Color.FromArgb(255, x[16], x[17], x[18]));
-                Colors.Add(Color.FromArgb(255, x[20], x[21], x[22]));
-                Colors.Add(Color.FromArgb(255, x[24], x[25], x[26]));
-                Colors.Add(Color.FromArgb(255, x[28], x[29], x[30]));
-                Color_Index0 = Colors[0];
-                Color_Index1 = Colors[1];
-                Color_Index2 = Colors[2];
-                Color_Index3 = Colors[3];
-                Color_Index4 = Colors[4];
-                Color_Index5 = Colors[5];
-                Color_Index6 = Colors[6];
-                Color_Index7 = Colors[7];
+
+                Color_Index0 = Color.FromArgb(x[3], x[0], x[1], x[2]);
+                Color_Index1 = Color.FromArgb(x[7], x[4], x[5], x[6]);
+                Color_Index2 = Color.FromArgb(x[11], x[8], x[9], x[10]);
+                Color_Index3 = Color.FromArgb(x[15], x[12], x[13], x[14]);
+                Color_Index4 = Color.FromArgb(x[19], x[16], x[17], x[18]);
+                Color_Index5 = Color.FromArgb(x[23], x[20], x[21], x[22]);
+                Color_Index6 = Color.FromArgb(x[27], x[24], x[25], x[26]);
+                Color_Index7 = Color.FromArgb(x[31], x[28], x[29], x[30]);
 
                 y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse().ToArgb());
                 StartMenu_Accent = Color.FromArgb(Convert.ToInt32(y)).Reverse();

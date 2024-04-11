@@ -56,6 +56,7 @@
             this.Label63 = new System.Windows.Forms.Label();
             this.WXP_Luna_Silver = new WinPaletter.UI.WP.RadioImage();
             this.WXP_Luna_OliveGreen = new WinPaletter.UI.WP.RadioImage();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox2.SuspendLayout();
             this.groupBox51.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox36)).BeginInit();
@@ -530,10 +531,27 @@
             this.WXP_Luna_OliveGreen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.WXP_Luna_OliveGreen.CheckedChanged += new System.EventHandler(this.WXP_Luna_OliveGreen_CheckedChanged);
             // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(544, 401);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(534, 28);
+            this.alertBox2.TabIndex = 229;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "If Visual Styles aspect is enabled, theme (default\\aero lite) will be overriden";
+            // 
             // WinXPColors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.ClientSize = new System.Drawing.Size(1084, 561);
+            this.Controls.Add(this.alertBox2);
             this.Controls.Add(this.groupBox51);
             this.Controls.Add(this.GroupBox48);
             this.Controls.Add(this.GroupBox47);
@@ -550,6 +568,7 @@
             this.Controls.SetChildIndex(this.GroupBox47, 0);
             this.Controls.SetChildIndex(this.GroupBox48, 0);
             this.Controls.SetChildIndex(this.groupBox51, 0);
+            this.Controls.SetChildIndex(this.alertBox2, 0);
             this.groupBox2.ResumeLayout(false);
             this.groupBox51.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox36)).EndInit();
@@ -591,5 +610,6 @@
         internal System.Windows.Forms.Label Label63;
         internal UI.WP.RadioImage WXP_Luna_Silver;
         internal UI.WP.RadioImage WXP_Luna_OliveGreen;
+        internal UI.WP.AlertBox alertBox2;
     }
 }

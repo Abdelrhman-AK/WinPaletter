@@ -186,40 +186,12 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="label34.Text" xml:space="preserve">
-    <value>● A new option is made to skip setting theme from (default\aero lite) in Windows 10/11
-● Making WinPaletter can block aspect applying in its specific form if it was blocked in settings by 'Aspects control'
-● Toggle compact\expanded layout in the main form (for small resolutions)
-● Minor tweaks to make WinPaletter can handle Windows 12 (arbitary, exactly the same as Windows 11 until new developers work on it with Windows 12 release)
-
-● Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects &gt; Taskbar for all Windows editions.
-● Making Windows Effect's toggle enabled will display confirmation alert.
-● Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
-● Making close with tabs open dialog is shown first before saving theme dialog.
-● Making bug report shows error message instead of error type in bug report title.
-● UI improvements</value>
-  </data>
-  <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAyBJREFUSEvt
-        lM1PE1EUxSfxA000IpIAhZBKWIFBwRZYuEA0uDBIq+kOo6IrgwtXFHThH2AiMWEBgxo1IYSlJiZKpLTo
-        Bo1Q2mrQBQyFViWhX6iBUK7nDbe0dSgUcKe/5OQN5753Lu915kn/iVH+5ofO6Ag1Gu2hdoMj1IOxF+ow
-        2MNN1baAnqdtH6MjeMroCNsQHoUohZbFnKrBwMnKocDRUg/t5uWbo/gFZSBsPiF4EZqAHNhtP3bnxPMS
-        16jSHv5lsIci29qx+K8RPIBjbD4xFDzI9irHbIHMSkf4mmEw7EbToGhc5YiUcHl9LF7ae+EbFZ3zUtl5
-        H1WwvSE1NtqJRuOxnRrsgXIurY/5Kx0x+SgIkZBlq78FU9rnWX99g4/OoNECNAstsZ2EeZoOoTYihBPJ
-        YltDjjxZmydPRXRdymm2tJhm6DWCqGGGnGY/OdlOot5PpWKOkHhmWwOa2SCCXrGVjMlPeoQsiyA0u8S2
-        hnQb6rq9zdwwmi9PF7AdBw0vc9CC5TvtY1tDug0Lur1ZaLagNu1WLrIdBwH3OOgdWyr1PsqGdzwm7N7C
-        88RJiOfVmpjLy1TyZGVENNTJU3fZioMFT0QIdvqMLRV4w6qfnoZ5mYpO9j7nY33MVhxMfsqLXrKlIkLY
-        T0ebahg70s9sqZgmKFNcBjHxp6M2EM+JNcscHeBlKnmy90PqI014ac4qpLnCYqT70mQ/mN2PRovqDtd6
-        afCDFyJE/Swa/HSdbQ1pNex8vwvNrvBxRnWdvkKuJGP20YAIEiNbGtJpiGZjuV1TY9xw7Q9fgJA6KII7
-        tZYtDXy1vRVKdbWpu5KVOYzzOfJ0Ndtrs90Lu/j+lwzemVAgt0tJ+Tsn0/axQrK6iTUuWfp2cGVDdJ2T
-        FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
-        YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
-        i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="label39.Text" xml:space="preserve">
-    <value>● Fix the issue where a system user account (NT SERVICE) appears among normal users.
+    <value>● Wrong wiki (help) URL for cursors is fixed.
+
+● Fixed an exception error occured on substituting font Segoe UI and opening back WinPaletter
+
+● Fix the issue where a system user account (NT SERVICE) appears among normal users.
 
 ● Fix the issue where using the command line option "--apply" with a non-existing theme file still opens WinPaletter instead of exiting.
 
@@ -265,6 +237,42 @@
         82gFpVdhCTV4oiT4uDIsjipH2cvqA995Dw3nJHlKkOQRgSQHBSJHRDLeJcaTu9e86PXAS/IQFj5iy8bS
         efvz1qGn6cfUPThn242jLVqIHYrm4eCND9ByS4+x7cbRdr2g/Cw8cFP/89+PVzYK/znroPB/X4vDl7Sm
         1n69mUrnbHsDhs/3A0yv0sTFrzXoAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>● In this release, WinPaletter introduces a new feature that allows you to change Windows Visual Styles.
+
+● This feature requires patching UxTheme.dll. There will be a guide available within its form to patch it, either by using SecureUxTheme from its official releases in its repository (recommended) or by utilizing the SecureUxTheme setup wrapper provided by WinPaletter.</value>
+  </data>
+  <data name="banner15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
 </value>
   </data>
   <data name="label4.Text" xml:space="preserve">
@@ -422,7 +430,9 @@
 </value>
   </data>
   <data name="label19.Text" xml:space="preserve">
-    <value>● Enhanced rendering of classic styles, introducing pixelation for a more accurate and similar appearance to classic Windows cursors.
+    <value>● Change cursors sizes as you like in Windows 10 and higher.
+
+● Enhanced rendering of classic styles, introducing pixelation for a more accurate and similar appearance to classic Windows cursors.
 
 ● Fixed: the center point animation of the hourglass in classic style.
 
@@ -589,40 +599,36 @@
         AABJRU5ErkJggg==
 </value>
   </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>● In this release, WinPaletter introduces a new feature that allows you to change Windows Visual Styles.
+  <data name="label34.Text" xml:space="preserve">
+    <value>● A new option is made to skip setting theme from (default\aero lite) in Windows 10/11
+● Making WinPaletter can block aspect applying in its specific form if it was blocked in settings by 'Aspects control'
+● Toggle compact\expanded layout in the main form (for small resolutions)
+● Minor tweaks to make WinPaletter can handle Windows 12 (arbitary, exactly the same as Windows 11 until new developers work on it with Windows 12 release)
 
-● This feature requires patching UxTheme.dll. There will be a guide available within its form to patch it, either by using SecureUxTheme from its official releases in its repository (recommended) or by utilizing the SecureUxTheme setup wrapper provided by WinPaletter.</value>
+● Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects &gt; Taskbar for all Windows editions.
+● Making Windows Effect's toggle enabled will display confirmation alert.
+● Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
+● Making close with tabs open dialog is shown first before saving theme dialog.
+● Making bug report shows error message instead of error type in bug report title.
+● UI improvements</value>
   </data>
-  <data name="banner15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="banner10.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        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
+        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
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
