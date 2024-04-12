@@ -755,7 +755,7 @@ namespace WinPaletter.UI.Controllers
 
                 int frames = GetTotalFramesFromANI(CurOptions.File);
 
-                Size size = new((int)(CurOptions.Scale * 32), (int)(CurOptions.Scale * 32));
+                Size size = new((int)(CurOptions.Scale * 32f), (int)(CurOptions.Scale * 32f));
                 Point location = new((Width - size.Width) / 2 - 1, (Height - size.Height) / 2 - 1);
 
                 int AngleToFrame = (int)(_Angle / 360 * frames);

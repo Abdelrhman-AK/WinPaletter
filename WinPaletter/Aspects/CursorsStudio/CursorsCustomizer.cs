@@ -1498,14 +1498,14 @@ namespace WinPaletter
 
                             for (uint i = 0; i <= cur.CountImages() - 1; i++)
                             {
-                                if (cur.GetImage(i).Size.Width <= b.Size.Width)
+                                if (cur.GetImage(i).Size.Width <= Math.Max(b.Size.Width, 32))
                                 {
                                     ExtractedBMP = cur.GetImage(i);
                                     break;
                                 }
                             }
 
-                            G.DrawImage(ExtractedBMP, 0, 0);
+                            if (ExtractedBMP is not null) G.DrawImage(ExtractedBMP, 0, 0);
                         }
                     }
                 }
@@ -1515,33 +1515,34 @@ namespace WinPaletter
             G.Save();
 
             Bitmap B_Final = new(b.Width, b.Height);
-            Graphics G_Final = Graphics.FromImage(B_Final);
-
-            if (CursorOptions.Shadow_Enabled)
+            using (Graphics G_Final = Graphics.FromImage(B_Final))
             {
-                Bitmap shadowedBMP = new(b);
-
-                for (int x = 0, loopTo = b.Width - 1; x <= loopTo; x++)
+                if (CursorOptions.Shadow_Enabled)
                 {
-                    for (int y = 0, loopTo1 = b.Height - 1; y <= loopTo1; y++)
-                        shadowedBMP.SetPixel(x, y, Color.FromArgb(b.GetPixel(x, y).A, CursorOptions.Shadow_Color));
+                    Bitmap shadowedBMP = new(b);
+
+                    for (int x = 0, loopTo = b.Width - 1; x <= loopTo; x++)
+                    {
+                        for (int y = 0, loopTo1 = b.Height - 1; y <= loopTo1; y++)
+                            shadowedBMP.SetPixel(x, y, Color.FromArgb(b.GetPixel(x, y).A, CursorOptions.Shadow_Color));
+                    }
+
+                    using (ImageProcessor.ImageFactory ImgF = new())
+                    {
+                        ImgF.Load(shadowedBMP);
+                        ImgF.GaussianBlur(CursorOptions.Shadow_Blur);
+                        ImgF.Alpha((int)(CursorOptions.Shadow_Opacity * 100f));
+                        G_Final.DrawImage(ImgF.Image, new Rectangle(0 + CursorOptions.Shadow_OffsetX, 0 + CursorOptions.Shadow_OffsetY, b.Width, b.Height));
+                    }
                 }
 
-                using (ImageProcessor.ImageFactory ImgF = new())
-                {
-                    ImgF.Load(shadowedBMP);
-                    ImgF.GaussianBlur(CursorOptions.Shadow_Blur);
-                    ImgF.Alpha((int)(CursorOptions.Shadow_Opacity * 100f));
-                    G_Final.DrawImage(ImgF.Image, new Rectangle(0 + CursorOptions.Shadow_OffsetX, 0 + CursorOptions.Shadow_OffsetY, b.Width, b.Height));
-                }
+                G_Final.DrawImage(b, new Rectangle(0, 0, b.Width, b.Height));
             }
-
-            G_Final.DrawImage(b, new Rectangle(0, 0, b.Width, b.Height));
 
             b.Dispose();
             G.Dispose();
 
-            return new Bitmap(B_Final);
+            return B_Final;
         }
 
         public enum ArrowStyle

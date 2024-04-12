@@ -187,7 +187,9 @@
 </value>
   </data>
   <data name="label39.Text" xml:space="preserve">
-    <value>● Wrong wiki (help) URL for cursors is fixed.
+    <value>● Fix an exception error that occurs when changing the cursor size, when the source is a file and not rendered by WinPaletter.
+
+● Wrong wiki (help) URL for cursors is fixed.
 
 ● Fixed an exception error occured on substituting font Segoe UI and opening back WinPaletter
 
@@ -247,7 +249,7 @@
   <data name="banner15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAABehJREFUSEvtlWtMU2cYx9HNfXEm2wzLEr+Y6JzLnHKpQLEUegXlIiDlfilXaZE7
+        wAAADsABataJCQAABehJREFUSEvtlWtMU2cYx9HNfXEm2wzLEr+Y6JzLnHKpQLEUegXlIiDlfilXaZE7
         ioCxOEQQpiK6RWxrdOgiKhd1FGhVRJQeSumF4tBNnc5u+8Cc8ZqZOf97zylasmFmou7TnuSXnp48eX7n
         /T9tjsv/9cpLIpG8IRAIFvB4PO7rhM/nz2GEYrH4vVVRee1pWWr7v5LpIDVDbZfSpKvtKTRpansSIZEm
         VW1PkKrt8TQpKnscTZLKLhSH7qEP5xIUFOQal1BFFZdbMSVlVhStt6Kw1IqCUgvy1xHWWpBHyC2xYE2R

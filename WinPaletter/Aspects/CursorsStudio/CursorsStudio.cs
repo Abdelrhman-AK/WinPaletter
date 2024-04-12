@@ -696,11 +696,6 @@ namespace WinPaletter
 
         }
 
-        private void Trackbar1_Scroll(object sender)
-        {
-
-        }
-
         private float Angle = 180f;
         private readonly float Increment = 5f;
         private int Cycles = 0;
@@ -960,11 +955,6 @@ namespace WinPaletter
                     i.Invalidate();
                 }
             }
-        }
-
-        private void Button10_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void ComboBox5_SelectedIndexChanged(object sender, EventArgs e)
