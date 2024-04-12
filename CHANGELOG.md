@@ -2,6 +2,29 @@
 
 ---
 
+### 1.0.9.2
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 12 Apr 2024  |
+
+# Critical update
+This update is pushed to fix an exception error that occurs when changing the cursor size, when the source is a file and not rendered by WinPaletter.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.9.1`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.9.1...v1.0.9.2) |
+| Previous Beta   | `1.0.8.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.9...v1.0.9.2) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.9.2) |
+
+---
+
 ### 1.0.9.1
 
 > **Info:**
