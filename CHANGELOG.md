@@ -11,7 +11,7 @@
 | `Stable` | 12 Apr 2024  |
 
 # Critical update
-This update is pushed to fix an exception error that occurs when changing the cursor size, when the source is a file and not rendered by WinPaletter.
+This update is pushed to fix an exception error that occurs when changing the cursor size, when the source is a file and not rendered by WinPaletter #230.
 
 ---
 
