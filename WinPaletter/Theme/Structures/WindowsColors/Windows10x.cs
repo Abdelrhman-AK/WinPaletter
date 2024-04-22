@@ -102,6 +102,7 @@ namespace WinPaletter.Theme.Structures
         /// <code>
         /// Aero
         /// AeroLite
+        /// Skip
         /// </code>
         /// </summary>
         public enum Themes

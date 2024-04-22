@@ -484,6 +484,8 @@ namespace WinPaletter
 
             using (Manager TMx = Default.Get(Program.WindowStyle))
             {
+                TMx.MetricsFonts.Enabled = AspectEnabled;
+
                 if (!string.IsNullOrWhiteSpace(metrics) && metrics.Contains("="))
                 {
                     List<byte> bytes = new();

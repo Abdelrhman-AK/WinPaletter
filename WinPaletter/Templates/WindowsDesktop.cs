@@ -1762,7 +1762,7 @@ namespace WinPaletter.Templates
             {
                 case WindowStyle.W12:
                     {
-                        Preview = Windows_10x_Theme == Themes.Aero ? Preview_Enum.W11 : Preview_Enum.W11Lite;
+                        Preview = Windows_10x_Theme == Themes.Aero || Windows_10x_Theme == Themes.Skip ? Preview_Enum.W11 : Preview_Enum.W11Lite;
 
                         if (OS.W12 || OS.W11) Program.EP = new();
 
@@ -1888,7 +1888,7 @@ namespace WinPaletter.Templates
 
                 case WindowStyle.W11:
                     {
-                        Preview = Windows_10x_Theme == Themes.Aero ? Preview_Enum.W11 : Preview_Enum.W11Lite;
+                        Preview = Windows_10x_Theme == Themes.Aero || Windows_10x_Theme == Themes.Skip ? Preview_Enum.W11 : Preview_Enum.W11Lite;
 
                         if (OS.W12 || OS.W11) Program.EP = new();
 
@@ -2014,7 +2014,7 @@ namespace WinPaletter.Templates
 
                 case WindowStyle.W10:
                     {
-                        Preview = Windows_10x_Theme == Themes.Aero ? Preview_Enum.W10 : Preview_Enum.W10Lite;
+                        Preview = Windows_10x_Theme == Themes.Aero || Windows_10x_Theme == Themes.Skip ? Preview_Enum.W10 : Preview_Enum.W10Lite;
 
                         ActionCenter.Dock = DockStyle.Right;
                         ActionCenter.BlurPower = 7;
@@ -2346,6 +2346,12 @@ namespace WinPaletter.Templates
                             break;
                         }
 
+                    case Theme.Structures.Windows10x.Themes.Skip:
+                        {
+                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10 : Preview_Enum.W11;
+                            break;
+                        }
+
                     case Theme.Structures.Windows10x.Themes.AeroLite:
                         {
                             Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10Lite : Preview_Enum.W11Lite;
@@ -2359,7 +2365,6 @@ namespace WinPaletter.Templates
                         }
                 }
             }
-
         }
 
         #endregion
