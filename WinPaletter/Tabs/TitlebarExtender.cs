@@ -192,6 +192,7 @@ namespace WinPaletter.Tabs
                         if (OS.WVista || OS.W7 || OS.W8x)
                         {
                             BackColor = Color.Black;
+                            if (form is not null) form?.DropEffect(p, true, DWM.FormStyle.Aero);
                         }
                         else
                         {

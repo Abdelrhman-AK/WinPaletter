@@ -28,6 +28,9 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Enable titlebar gradience</summary>
         public bool EnableGradient = true;
 
+        /// <summary>Enable high contrast colors</summary>
+        public bool HighContrast = false;
+
         /// <summary>Color of active window border</summary>
         public Color ActiveBorder = Color.FromArgb(180, 180, 180);
 
@@ -162,6 +165,10 @@ namespace WinPaletter.Theme.Structures
 
                         SystemParametersInfo(SPI.SPI_GETFLATMENU, 0, ref EnableTheming, SPIF.SPIF_NONE);
                         SystemParametersInfo(SPI.SPI_GETGRADIENTCAPTIONS, 0, ref EnableGradient, SPIF.SPIF_NONE);
+
+                        HIGHCONTRAST highContrastStr = new() { cbSize = Marshal.SizeOf(typeof(User32.HIGHCONTRAST)) };
+                        SystemParametersInfo(SPI.SPI_GETHIGHCONTRAST, 0, ref highContrastStr, SPIF.SPIF_NONE);
+                        HighContrast = highContrastStr.dwFlags == 1u;
 
                         using (Theme.Manager @default = Default.Get())
                         {
@@ -425,9 +432,38 @@ namespace WinPaletter.Theme.Structures
 
                 #endregion
 
+                #region High contrast
+
+                if (!OS.WXP && !OS.WVista && !OS.W7)
+                {
+                    EditReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "ColorSetFromTheme", 0);
+
+                    HIGHCONTRAST highContrast = new()
+                    {
+                        cbSize = Marshal.SizeOf(typeof(User32.HIGHCONTRAST)),
+                        dwFlags = HighContrast ? 0x1u : 0x0u,
+                        lpszDefaultScheme = IntPtr.Zero,
+                    };
+
+                    User32.SystemParametersInfo(User32.SPI.SPI_SETHIGHCONTRAST, highContrast.cbSize, ref highContrast, User32.SPIF.SPIF_WRITEANDNOTIFY);
+
+                    if (HighContrast)
+                    {
+                        DelKey(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast\Pre-High Contrast Scheme");
+                        EditReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
+                        EditReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
+                        EditReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "ColorSetFromTheme", 0);
+
+                        // Broadcast the system message to notify about the setting change
+                        User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE | User32.WindowsMessages.WM_THEMECHANGED | User32.WindowsMessages.WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
+                    }
+                }
+
+                #endregion
+
                 bool isClassic = string.IsNullOrEmpty(NativeMethods.UxTheme.GetCurrentVS().Item1);
 
-                List<Form> fl = new();
+                List<Form> fl = [];
                 fl.Clear();
 
                 // Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode

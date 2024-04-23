@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -12,22 +13,6 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public partial class User32
     {
-        /// <summary>
-        /// Enable or disable the high contrast mode.
-        /// </summary>
-        /// <param name="enable"></param>
-        /// <returns></returns>
-        public static bool SetHighContrast(bool enable)
-        {
-            HIGHCONTRAST highContrast = new()
-            {
-                cbSize = Marshal.SizeOf(typeof(User32.HIGHCONTRAST)),
-                dwFlags = enable ? 0x1u : 0x0u // Set to HCF_HIGHCONTRASTON to enable, 0 to disable
-            };
-
-            return User32.SystemParametersInfo(User32.SPI.SPI_SETHIGHCONTRAST, highContrast.cbSize, ref highContrast, User32.SPIF.SPIF_WRITEANDNOTIFY);
-        }
-
         /// <summary>
         /// Loads the specified cursor resource from the executable (.EXE) file associated with an application instance.
         /// </summary>
@@ -343,13 +328,21 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32")]
         public static extern bool GetIconInfo(IntPtr hIcon, out ICONINFO pIconInfo);
 
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct HIGHCONTRAST
         {
+            /// <summary>
+            /// Size of the structure
+            /// </summary>
             public int cbSize;
-            [MarshalAs(UnmanagedType.U4)]
+            /// <summary>
+            /// Flags indicating high contrast settings
+            /// </summary>
             public uint dwFlags;
-            public string lpszDefaultScheme;
+            /// <summary>
+            /// Pointer to a null-terminated string
+            /// </summary>
+            public IntPtr lpszDefaultScheme;
         }
 
         /// <summary>

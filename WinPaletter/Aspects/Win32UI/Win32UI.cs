@@ -255,6 +255,7 @@ namespace WinPaletter
             AspectEnabled = win32ui.Enabled;
             Toggle1.Checked = win32ui.EnableTheming;
             Toggle2.Checked = win32ui.EnableGradient;
+            highContrastToggle.Checked = win32ui.HighContrast;
             ActiveBorder_pick.BackColor = win32ui.ActiveBorder;
             activetitle_pick.BackColor = win32ui.ActiveTitle;
             AppWorkspace_pick.BackColor = win32ui.AppWorkspace;
@@ -361,39 +362,39 @@ namespace WinPaletter
 
         public void LoadColors(VisualStyleMetrics vs)
         {
-            Forms.Win32UI.Toggle1.Checked = vs.FlatMenus;
-            //Forms.Win32UI.ActiveBorder_pick.BackColor = vs.Palette.ActiveBorder;
-            Forms.Win32UI.activetitle_pick.BackColor = vs.Colors.ActiveCaption;
-            Forms.Win32UI.AppWorkspace_pick.BackColor = vs.Colors.AppWorkspace;
-            Forms.Win32UI.background_pick.BackColor = vs.Colors.Background;
-            //Forms.Win32UI.btnaltface_pick.BackColor = vs.Palette.ButtonAlternativeFace;
-            Forms.Win32UI.btndkshadow_pick.BackColor = vs.Colors.DkShadow3d;
-            Forms.Win32UI.btnface_pick.BackColor = vs.Colors.Btnface;
-            Forms.Win32UI.btnhilight_pick.BackColor = vs.Colors.BtnHighlight;
-            Forms.Win32UI.btnlight_pick.BackColor = vs.Colors.Light3d;
-            Forms.Win32UI.btnshadow_pick.BackColor = vs.Colors.BtnShadow;
-            Forms.Win32UI.btntext_pick.BackColor = vs.Colors.WindowText;
-            Forms.Win32UI.GActivetitle_pick.BackColor = vs.Colors.GradientActiveCaption;
-            Forms.Win32UI.GInactivetitle_pick.BackColor = vs.Colors.GradientInactiveCaption;
-            Forms.Win32UI.GrayText_pick.BackColor = vs.Colors.GrayText;
-            Forms.Win32UI.hilighttext_pick.BackColor = vs.Colors.HighlightText;
-            Forms.Win32UI.hottracking_pick.BackColor = vs.Colors.HotTracking;
-            //Forms.Win32UI.InactiveBorder_pick.BackColor = vs.Palette.InactiveBorder;
-            Forms.Win32UI.InactiveTitle_pick.BackColor = vs.Colors.InactiveCaption;
-            Forms.Win32UI.InactivetitleText_pick.BackColor = vs.Colors.InactiveCaptionText;
-            //Forms.Win32UI.InfoText_pick.BackColor = vs.Palette.InfoText;
-            //Forms.Win32UI.InfoWindow_pick.BackColor = vs.Palette.InfoBk;
-            Forms.Win32UI.menu_pick.BackColor = vs.Colors.Menu;
-            Forms.Win32UI.menubar_pick.BackColor = vs.Colors.MenuBar;
-            Forms.Win32UI.menutext_pick.BackColor = vs.Colors.MenuText;
-            //Forms.Win32UI.Scrollbar_pick.BackColor = vs.Palette.ScrollBar;
-            Forms.Win32UI.TitleText_pick.BackColor = vs.Colors.CaptionText;
-            Forms.Win32UI.Window_pick.BackColor = vs.Colors.Window;
-            //Forms.Win32UI.Frame_pick.BackColor = vs.Palette.WindowFrame;
-            Forms.Win32UI.WindowText_pick.BackColor = vs.Colors.WindowText;
-            Forms.Win32UI.hilight_pick.BackColor = vs.Colors.Highlight;
-            Forms.Win32UI.menuhilight_pick.BackColor = vs.Colors.MenuHilight;
-            Forms.Win32UI.desktop_pick.BackColor = vs.Colors.Background;
+            Toggle1.Checked = vs.FlatMenus;
+            //ActiveBorder_pick.BackColor = vs.Palette.ActiveBorder;
+            activetitle_pick.BackColor = vs.Colors.ActiveCaption;
+            AppWorkspace_pick.BackColor = vs.Colors.AppWorkspace;
+            background_pick.BackColor = vs.Colors.Background;
+            //btnaltface_pick.BackColor = vs.Palette.ButtonAlternativeFace;
+            btndkshadow_pick.BackColor = vs.Colors.DkShadow3d;
+            btnface_pick.BackColor = vs.Colors.Btnface;
+            btnhilight_pick.BackColor = vs.Colors.BtnHighlight;
+            btnlight_pick.BackColor = vs.Colors.Light3d;
+            btnshadow_pick.BackColor = vs.Colors.BtnShadow;
+            btntext_pick.BackColor = vs.Colors.WindowText;
+            GActivetitle_pick.BackColor = vs.Colors.GradientActiveCaption;
+            GInactivetitle_pick.BackColor = vs.Colors.GradientInactiveCaption;
+            GrayText_pick.BackColor = vs.Colors.GrayText;
+            hilighttext_pick.BackColor = vs.Colors.HighlightText;
+            hottracking_pick.BackColor = vs.Colors.HotTracking;
+            //InactiveBorder_pick.BackColor = vs.Palette.InactiveBorder;
+            InactiveTitle_pick.BackColor = vs.Colors.InactiveCaption;
+            InactivetitleText_pick.BackColor = vs.Colors.InactiveCaptionText;
+            //InfoText_pick.BackColor = vs.Palette.InfoText;
+            //InfoWindow_pick.BackColor = vs.Palette.InfoBk;
+            menu_pick.BackColor = vs.Colors.Menu;
+            menubar_pick.BackColor = vs.Colors.MenuBar;
+            menutext_pick.BackColor = vs.Colors.MenuText;
+            //Scrollbar_pick.BackColor = vs.Palette.ScrollBar;
+            TitleText_pick.BackColor = vs.Colors.CaptionText;
+            Window_pick.BackColor = vs.Colors.Window;
+            //Frame_pick.BackColor = vs.Palette.WindowFrame;
+            WindowText_pick.BackColor = vs.Colors.WindowText;
+            hilight_pick.BackColor = vs.Colors.Highlight;
+            menuhilight_pick.BackColor = vs.Colors.MenuHilight;
+            desktop_pick.BackColor = vs.Colors.Background;
         }
 
         public void ApplyDefaultTMValues()
@@ -445,6 +446,7 @@ namespace WinPaletter
             Win32.Enabled = AspectEnabled;
             Win32.EnableTheming = Toggle1.Checked;
             Win32.EnableGradient = Toggle2.Checked;
+            Win32.HighContrast = highContrastToggle.Checked;
             Win32.ActiveBorder = ActiveBorder_pick.BackColor;
             Win32.ActiveTitle = activetitle_pick.BackColor;
             Win32.AppWorkspace = AppWorkspace_pick.BackColor;

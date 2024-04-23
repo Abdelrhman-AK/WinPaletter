@@ -174,6 +174,12 @@ namespace WinPaletter
             this.Scrollbar_pick = new WinPaletter.UI.Controllers.ColorItem();
             this.Label17 = new System.Windows.Forms.Label();
             this.desktop_pick = new WinPaletter.UI.Controllers.ColorItem();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.groupBox6 = new WinPaletter.UI.WP.GroupBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.highContrastToggle = new WinPaletter.UI.WP.Toggle();
+            this.pictureBox35 = new System.Windows.Forms.PictureBox();
             this.preview = new WinPaletter.UI.WP.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.retroDesktopColors1 = new WinPaletter.Templates.RetroDesktopColors();
@@ -244,6 +250,9 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).BeginInit();
             this.preview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -270,7 +279,8 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(1, "Titlebar");
             this.ImageList1.Images.SetKeyName(2, "Selection");
             this.ImageList1.Images.SetKeyName(3, "Window");
-            this.ImageList1.Images.SetKeyName(4, "icons8_exclamation_mark_16px.png");
+            this.ImageList1.Images.SetKeyName(4, "Obsolete");
+            this.ImageList1.Images.SetKeyName(5, "HighContrast");
             // 
             // PictureBox16
             // 
@@ -369,6 +379,7 @@ namespace WinPaletter
             this.TabControl1.Controls.Add(this.TabPage3);
             this.TabControl1.Controls.Add(this.TabPage4);
             this.TabControl1.Controls.Add(this.TabPage5);
+            this.TabControl1.Controls.Add(this.tabPage6);
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ImageList = this.ImageList1;
@@ -1981,6 +1992,81 @@ namespace WinPaletter
             this.desktop_pick.Size = new System.Drawing.Size(89, 22);
             this.desktop_pick.TabIndex = 2;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage6.Controls.Add(this.alertBox1);
+            this.tabPage6.Controls.Add(this.groupBox6);
+            this.tabPage6.Location = new System.Drawing.Point(164, 4);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(357, 454);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "High contrast";
+            // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox1.CenterText = false;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = null;
+            this.alertBox1.Location = new System.Drawing.Point(3, 45);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(351, 235);
+            this.alertBox1.TabIndex = 227;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = resources.GetString("alertBox1.Text");
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox6.Controls.Add(this.label34);
+            this.groupBox6.Controls.Add(this.highContrastToggle);
+            this.groupBox6.Controls.Add(this.pictureBox35);
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(351, 36);
+            this.groupBox6.TabIndex = 86;
+            // 
+            // label34
+            // 
+            this.label34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label34.BackColor = System.Drawing.Color.Transparent;
+            this.label34.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(37, 4);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(264, 28);
+            this.label34.TabIndex = 83;
+            this.label34.Text = "Enabled";
+            this.label34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // highContrastToggle
+            // 
+            this.highContrastToggle.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.highContrastToggle.Checked = false;
+            this.highContrastToggle.DarkLight_Toggler = false;
+            this.highContrastToggle.Location = new System.Drawing.Point(307, 8);
+            this.highContrastToggle.Name = "highContrastToggle";
+            this.highContrastToggle.Size = new System.Drawing.Size(40, 20);
+            this.highContrastToggle.TabIndex = 80;
+            // 
+            // pictureBox35
+            // 
+            this.pictureBox35.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox35.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox35.Image")));
+            this.pictureBox35.Location = new System.Drawing.Point(5, 6);
+            this.pictureBox35.Name = "pictureBox35";
+            this.pictureBox35.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox35.TabIndex = 84;
+            this.pictureBox35.TabStop = false;
+            // 
             // preview
             // 
             this.preview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2198,8 +2284,8 @@ namespace WinPaletter
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
-            this.button1.ImageGlyphEnabled = false;
             this.button1.ImageGlyph = null;
+            this.button1.ImageGlyphEnabled = false;
             this.button1.Location = new System.Drawing.Point(753, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 30);
@@ -2245,7 +2331,6 @@ namespace WinPaletter
             this.Controls.Add(this.preview);
             this.Controls.Add(this.TabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
@@ -2314,6 +2399,9 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).EndInit();
             this.preview.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -2483,5 +2571,11 @@ namespace WinPaletter
         internal Label label35;
         internal PictureBox pictureBox33;
         internal UI.WP.AlertBox tips_box;
+        private TabPage tabPage6;
+        internal UI.WP.GroupBox groupBox6;
+        internal Label label34;
+        internal UI.WP.Toggle highContrastToggle;
+        internal PictureBox pictureBox35;
+        internal UI.WP.AlertBox alertBox1;
     }
 }
