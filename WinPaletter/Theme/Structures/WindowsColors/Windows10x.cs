@@ -153,14 +153,14 @@ namespace WinPaletter.Theme.Structures
 
                 x = (byte[])GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);
 
-                Color_Index0 = Color.FromArgb(x[3], x[0], x[1], x[2]);
-                Color_Index1 = Color.FromArgb(x[7], x[4], x[5], x[6]);
-                Color_Index2 = Color.FromArgb(x[11], x[8], x[9], x[10]);
-                Color_Index3 = Color.FromArgb(x[15], x[12], x[13], x[14]);
-                Color_Index4 = Color.FromArgb(x[19], x[16], x[17], x[18]);
-                Color_Index5 = Color.FromArgb(x[23], x[20], x[21], x[22]);
-                Color_Index6 = Color.FromArgb(x[27], x[24], x[25], x[26]);
-                Color_Index7 = Color.FromArgb(x[31], x[28], x[29], x[30]);
+                Color_Index0 = Color.FromArgb(/*x[3]*/ 255, x[0], x[1], x[2]);
+                Color_Index1 = Color.FromArgb(/*x[7]*/ 255, x[4], x[5], x[6]);
+                Color_Index2 = Color.FromArgb(/*x[11]*/ 255, x[8], x[9], x[10]);
+                Color_Index3 = Color.FromArgb(/*x[15]*/ 255, x[12], x[13], x[14]);
+                Color_Index4 = Color.FromArgb(/*x[19]*/ 255, x[16], x[17], x[18]);
+                Color_Index5 = Color.FromArgb(/*x[23]*/ 255, x[20], x[21], x[22]);
+                Color_Index6 = Color.FromArgb(/*x[27]*/ 255, x[24], x[25], x[26]);
+                Color_Index7 = Color.FromArgb(/*x[31]*/ 255, x[28], x[29], x[30]);
 
                 y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse().ToArgb());
                 StartMenu_Accent = Color.FromArgb(Convert.ToInt32(y)).Reverse();
@@ -233,6 +233,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves Windows10x data into registry
         /// </summary>
+        /// <param name="edition">String edition mark</param>
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(string edition, TreeView treeView = null)
         {
@@ -247,7 +248,6 @@ namespace WinPaletter.Theme.Structures
                             EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", false);
 
                             UxTheme.EnableTheming(1);
-                            //User32.SetHighContrast(false);
 
                             if (System.IO.Path.GetFileNameWithoutExtension(Program.FirstVisualStyles).ToLower() != "aerolite")
                             {
@@ -269,10 +269,8 @@ namespace WinPaletter.Theme.Structures
                             UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
 
                             DelKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
-
                             EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
                             EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
-                            //User32.SetHighContrast(true);
 
                             break;
                         }
@@ -286,14 +284,17 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 
-                byte[] Colors = new[] { Color_Index0.R, Color_Index0.G, Color_Index0.B, Color_Index0.A,
-                Color_Index1.R, Color_Index1.G, Color_Index1.B, Color_Index1.A,
-                Color_Index2.R, Color_Index2.G, Color_Index2.B, Color_Index2.A,
-                Color_Index3.R, Color_Index3.G, Color_Index3.B, Color_Index3.A,
-                Color_Index4.R, Color_Index4.G, Color_Index4.B, Color_Index4.A,
-                Color_Index5.R, Color_Index5.G, Color_Index5.B, Color_Index5.A,
-                Color_Index6.R, Color_Index6.G, Color_Index6.B, Color_Index6.A,
-                Color_Index7.R, Color_Index7.G, Color_Index7.B, Color_Index7.A };
+                byte[] Colors = 
+                [
+                    Color_Index0.R , Color_Index0.G, Color_Index0.B, /*Color_Index0.A*/ 255,
+                    Color_Index1.R , Color_Index1.G, Color_Index1.B, /*Color_Index1.A*/ 255,
+                    Color_Index2.R , Color_Index2.G, Color_Index2.B, /*Color_Index2.A*/ 255,
+                    Color_Index3.R , Color_Index3.G, Color_Index3.B, /*Color_Index3.A*/ 255,
+                    Color_Index4.R , Color_Index4.G, Color_Index4.B, /*Color_Index4.A*/ 255,
+                    Color_Index5.R , Color_Index5.G, Color_Index5.B, /*Color_Index5.A*/ 255,
+                    Color_Index6.R , Color_Index6.G, Color_Index6.B, /*Color_Index6.A*/ 255,
+                    Color_Index7.R , Color_Index7.G, Color_Index7.B, /*Color_Index7.A*/ 255
+                ];
 
                 switch (ApplyAccentOnTaskbar)
                 {

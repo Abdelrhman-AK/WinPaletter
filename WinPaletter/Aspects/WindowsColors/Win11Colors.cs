@@ -683,7 +683,11 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                windowsDesktop1.Color9 = ((UI.Controllers.ColorItem)sender).BackColor;
+                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
+                {
+                    windowsDesktop1.Color9 = ((UI.Controllers.ColorItem)sender).BackColor;
+                }
                 return;
             }
 

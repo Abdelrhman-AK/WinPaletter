@@ -393,7 +393,7 @@ namespace WinPaletter
             this.label11.ForeColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(8, 69);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(801, 320);
+            this.label11.Size = new System.Drawing.Size(801, 350);
             this.label11.TabIndex = 44;
             this.label11.Text = resources.GetString("label11.Text");
             // 
@@ -744,7 +744,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label39.BackColor = System.Drawing.Color.Transparent;
-            this.label39.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label39.ForeColor = System.Drawing.Color.White;
             this.label39.Location = new System.Drawing.Point(8, 69);
             this.label39.Name = "label39";

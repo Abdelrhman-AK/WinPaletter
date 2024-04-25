@@ -186,41 +186,6 @@
         /fOXi8v/AEDU8y+GxVx6AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="label39.Text" xml:space="preserve">
-    <value>● Fix an exception error that occurs when changing the cursor size, when the source is a file and not rendered by WinPaletter.
-
-● Wrong wiki (help) URL for cursors is fixed.
-
-● Fixed an exception error occured on substituting font Segoe UI and opening back WinPaletter
-
-● Fix the issue where a system user account (NT SERVICE) appears among normal users.
-
-● Fix the issue where using the command line option "--apply" with a non-existing theme file still opens WinPaletter instead of exiting.
-
-● Fix the issue where using the command line option "--apply" with Windows 11 applied with a custom visual style brings back aero.msstyles, while the GUI doesn't.
-
-● Fix the UI issue of a black area in tabs when the title bar is not.</value>
-  </data>
-  <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA1ZJREFUSEvt
-        lV9IU1Ecx8/FFMOiP28JaqkP2UuJRUwiNKcznc79cdp0m25uzm3+yaXTrFh/iFCpUHtQqehFH1IDpUiL
-        BLEnywzNMtRE11DSVaKmRZ3O2T2jpfc6td7qCx92z/2e3+fA7v6Afzv6gqIKtcEQQJZuk6HT7dYXmivI
-        cv2Rq7PrJKny0TiRyHFocXHxVmNRiTj3VInZgalUpNdbtuAuLk4UIJYp3sm1ObV4vdFQUbH8mqORXKtC
-        o7ueZcifQcBlTCuzsq8diYiyRscnVuMZenSDSVEqg6TpGfa0TA1cDWm60i6WqQLJ2MaSlJSxXZgiGxNK
-        ZXAtiKSy0eTk5G1kfP3RqKL7YhOEcD1o1VF9ZNx99CdLgtGL4xks9XgIHtb5QrU8HEZweWsiC+1tr/eF
-        i889ErADhSLOldFqtZ5Z+jxr8glFXyQvTva1G3R9ewogZqjJB9686A9LdSFQKQ2FAv4hB/ga37t1yQ8O
-        Nfs49mLQbGdUzPE07FLr8yYsFssmcszvQe+/F18oUUiSOCNLT9BgJzO2NhqmDrOIZsWC8GHswk6iZ8/s
-        Aw/NYjsaZMHaQsPUOUEOFdG5z0IruPGlFUA2xhtpmDonyFFFdO4zfxe0zDcByMbYHRqmzoUmonOfuQbw
-        CAHZGK2nYepc6CC6lck3m/1VObn9Epl8hBvLH+k4v2Nu9jZ6DiwM19AwdU7akQO7sBO79YVlfuQ4ANDH
-        1itTZzyGfny5XF48d7Dc+/7nWgDZeHuVhqlzMlC+uQ27sBO78deOHLcy9mqg+1hNQTbeXKFh6px8qgIa
-        onOfmUqwz15JQTZeX6Bh6pxMV4K9ROc+YWFhnoNnvd9PX0aDDAyU0TB1mFdnvK3YQXSrJ1GcGor+2wbO
-        SfZMfrBQkIn+YhqmDlMmCZzEDuwiWubo8k28VIVqgRef2MDjcHZOlVJdCLicl/k0TB3iMQfNxsQLGpFr
-        HjuJfmUKik4fyMw2CMgS2ApAyJSJsk+aKOjKCx3N8vuIGZvp17PDrtxC836yXFsmDeCwzYhERgo66VXR
-        uN5DTNuM4CAZ+7OMq4DvhJa6Z9VSPxCwJ50GXyO+I5rHtGAX2f73MqEGwRMZoKQ3lep+lkJ1o2vzuBIE
-        kfp/UAD4CRp4YiYir2WiAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>● In this release, WinPaletter boasts a revamped appearance with a massive UI refresh, including the introduction of a new tabbed navigation system for an organized and intuitive user experience. The addition of tabs enhances visual appeal and facilitates seamless task-switching. Embrace the improved visuals and navigation as I strive for a more user-friendly interface in every aspect of the application.
 
@@ -249,7 +214,7 @@
   <data name="banner15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAABehJREFUSEvtlWtMU2cYx9HNfXEm2wzLEr+Y6JzLnHKpQLEUegXlIiDlfilXaZE7
+        vQAADr0BR/uQrQAABehJREFUSEvtlWtMU2cYx9HNfXEm2wzLEr+Y6JzLnHKpQLEUegXlIiDlfilXaZE7
         ioCxOEQQpiK6RWxrdOgiKhd1FGhVRJQeSumF4tBNnc5u+8Cc8ZqZOf97zylasmFmou7TnuSXnp48eX7n
         /T9tjsv/9cpLIpG8IRAIFvB4PO7rhM/nz2GEYrH4vVVRee1pWWr7v5LpIDVDbZfSpKvtKTRpansSIZEm
         VW1PkKrt8TQpKnscTZLKLhSH7qEP5xIUFOQal1BFFZdbMSVlVhStt6Kw1IqCUgvy1xHWWpBHyC2xYE2R
@@ -357,7 +322,9 @@
 </value>
   </data>
   <data name="label11.Text" xml:space="preserve">
-    <value>● Per-element modifier; right click on an elements on the preview to change its color.
+    <value>● High contrast mode is introduced in a new tab
+
+● Per-element modifier; right click on an elements on the preview to change its color.
 
 ● 3D and flat degrees modification in 3D objects improved.
 
@@ -602,11 +569,12 @@
 </value>
   </data>
   <data name="label34.Text" xml:space="preserve">
-    <value>● A new option is made to skip setting theme from (default\aero lite) in Windows 10/11
+    <value>● Applying Windows 10 and 11 colors won't require a system logoff and logon, colors and preferences will be applied instantely, and fully applied after an explorer restart.
+
+● A new option is made to skip setting theme from (default\aero lite) in Windows 10/11
 ● Making WinPaletter can block aspect applying in its specific form if it was blocked in settings by 'Aspects control'
 ● Toggle compact\expanded layout in the main form (for small resolutions)
 ● Minor tweaks to make WinPaletter can handle Windows 12 (arbitary, exactly the same as Windows 11 until new developers work on it with Windows 12 release)
-
 ● Aero peek and hibernate thumbnails are moved from Windows 7/8.1 colors, to be available in Windows Effects &gt; Taskbar for all Windows editions.
 ● Making Windows Effect's toggle enabled will display confirmation alert.
 ● Explorer ribbon and bar are applicable now without depending on ExplorerPatcher and StartAllBack.
@@ -631,6 +599,42 @@
         FQWytyznoVKkfzSxh+0NaPWUcDO/1OpyQlelOyOZXI1z05MlWT3NUot7QLK6atjdAtZPegTNQj/jO/Us
         YRxFcP+KPGP4ezFed89LN75kcMImEQvbXGUIrYUGEbacEPynoitzXHW8+i9w23kYgU0I70B4L8YejO1S
         i6tRujWaz7P+eSTpNy8C03wfAtQEAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="label39.Text" xml:space="preserve">
+    <value>● Fix WinPaletter Store showing areo lite scheme on preview when the theme is not using aero lite in Windows 11 and 10.
+● Fixed black rectangle that is shown instead of aero glass effect in tabs in Windows Vista and 7.
+● Icons and Visual Styles were not included in store items check, now they are fixed.
+● Changing metrics and fonts scheme from the schemes list disabled the aspect, now it is fixed.
+● Fix issue of loading Windows 11/10 colors with alpha channels equal 0 (completely transparent) while they should be opaque (255).
+● Fix exception error that might occur on opening WinPaletter (control or object is in use elsewhere). If it happens again, you can safely ignore this error.
+
+● Fix an exception error that occurs when changing the cursor size, when the source is a file and not rendered by WinPaletter.
+● Wrong wiki (help) URL for cursors is fixed.
+● Fixed an exception error occured on substituting font Segoe UI and opening back WinPaletter
+● Fix the issue where a system user account (NT SERVICE) appears among normal users.
+● Fix the issue where using the command line option "--apply" with a non-existing theme file still opens WinPaletter instead of exiting.
+● Fix the issue where using the command line option "--apply" with Windows 11 applied with a custom visual style brings back aero.msstyles, while the GUI doesn't.
+● Fix the UI issue of a black area in tabs when the title bar is not.</value>
+  </data>
+  <data name="banner11.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAA1ZJREFUSEvt
+        lV9IU1Ecx8/FFMOiP28JaqkP2UuJRUwiNKcznc79cdp0m25uzm3+yaXTrFh/iFCpUHtQqehFH1IDpUiL
+        BLEnywzNMtRE11DSVaKmRZ3O2T2jpfc6td7qCx92z/2e3+fA7v6Afzv6gqIKtcEQQJZuk6HT7dYXmivI
+        cv2Rq7PrJKny0TiRyHFocXHxVmNRiTj3VInZgalUpNdbtuAuLk4UIJYp3sm1ObV4vdFQUbH8mqORXKtC
+        o7ueZcifQcBlTCuzsq8diYiyRscnVuMZenSDSVEqg6TpGfa0TA1cDWm60i6WqQLJ2MaSlJSxXZgiGxNK
+        ZXAtiKSy0eTk5G1kfP3RqKL7YhOEcD1o1VF9ZNx99CdLgtGL4xks9XgIHtb5QrU8HEZweWsiC+1tr/eF
+        i889ErADhSLOldFqtZ5Z+jxr8glFXyQvTva1G3R9ewogZqjJB9686A9LdSFQKQ2FAv4hB/ga37t1yQ8O
+        Nfs49mLQbGdUzPE07FLr8yYsFssmcszvQe+/F18oUUiSOCNLT9BgJzO2NhqmDrOIZsWC8GHswk6iZ8/s
+        Aw/NYjsaZMHaQsPUOUEOFdG5z0IruPGlFUA2xhtpmDonyFFFdO4zfxe0zDcByMbYHRqmzoUmonOfuQbw
+        CAHZGK2nYepc6CC6lck3m/1VObn9Epl8hBvLH+k4v2Nu9jZ6DiwM19AwdU7akQO7sBO79YVlfuQ4ANDH
+        1itTZzyGfny5XF48d7Dc+/7nWgDZeHuVhqlzMlC+uQ27sBO78deOHLcy9mqg+1hNQTbeXKFh6px8qgIa
+        onOfmUqwz15JQTZeX6Bh6pxMV4K9ROc+YWFhnoNnvd9PX0aDDAyU0TB1mFdnvK3YQXSrJ1GcGor+2wbO
+        SfZMfrBQkIn+YhqmDlMmCZzEDuwiWubo8k28VIVqgRef2MDjcHZOlVJdCLicl/k0TB3iMQfNxsQLGpFr
+        HjuJfmUKik4fyMw2CMgS2ApAyJSJsk+aKOjKCx3N8vuIGZvp17PDrtxC836yXFsmDeCwzYhERgo66VXR
+        uN5DTNuM4CAZ+7OMq4DvhJa6Z9VSPxCwJ50GXyO+I5rHtGAX2f73MqEGwRMZoKQ3lep+lkJ1o2vzuBIE
+        kfp/UAD4CRp4YiYir2WiAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

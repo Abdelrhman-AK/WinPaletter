@@ -2016,7 +2016,7 @@ namespace WinPaletter
             this.alertBox1.Image = null;
             this.alertBox1.Location = new System.Drawing.Point(3, 45);
             this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(351, 280);
+            this.alertBox1.Size = new System.Drawing.Size(351, 300);
             this.alertBox1.TabIndex = 227;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = resources.GetString("alertBox1.Text");

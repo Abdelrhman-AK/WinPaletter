@@ -146,7 +146,12 @@ namespace WinPaletter.Tabs
             // If there is a bug, make TP.Controls.Add(form); here, not after adding and selecting tab page
             TP.Controls.Add(form);
 
-            if (!DesignMode) Program.Animator.HideSync(TabControl);
+            // try is made to bypass ex error of that object is in use elsewhere
+            try
+            {
+                if (!DesignMode) Program.Animator.HideSync(TabControl);
+            }
+            catch { }
 
             // If there is a bug, make form.Show(); here, not after adding and selecting tab page
             form.Show();
@@ -166,7 +171,12 @@ namespace WinPaletter.Tabs
                 form.Controls.OfType<Tabs.TitlebarExtender>().FirstOrDefault().DropDWMEffect = false;
             }
 
-            if (!DesignMode) Program.Animator.ShowSync(TabControl);
+            // try is made to bypass ex error of that object is in use elsewhere
+            try
+            {
+                if (!DesignMode) Program.Animator.ShowSync(TabControl);
+            }
+            catch { }
 
             Cursor = Cursors.Default;
         }
@@ -275,7 +285,12 @@ namespace WinPaletter.Tabs
 
             Refresh();
 
-            if (!DesignMode && animate) Program.Animator.ShowSync(TabControl);
+            // try is made to bypass ex error of that object is in use elsewhere
+            try
+            {
+                if (!DesignMode && animate) Program.Animator.ShowSync(TabControl);
+            }
+            catch { }
         }
 
         private void SwapTabs(int from, int to)
