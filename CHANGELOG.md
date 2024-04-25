@@ -2,6 +2,48 @@
 
 ---
 
+### 1.0.9.3
+
+> **Info:**
+
+| Channel  | Release Date |
+|:--------:|:------------:|
+| `Stable` | 25 Apr 2024  |
+
+# A new update is pushed, as I am trying to finalize WinPaletter and fix issues as much as I can.
+
+# New feature: High contrast mode (a part of Classic Colors aspect) #40 
+It is introduced in a new tab in classic colors tabs. It is supported in Windows 8 and higher not lower. More instructions are written in their part in the application.
+
+---
+
+# Application improvement:
+Applying Windows 10 and 11 colors won't require a system logoff and logon, colors and preferences will be applied instantely, and fully applied after an explorer restart.
+
+---
+
+# Bugs fixes:
+
+- Fix WinPaletter Store showing areo lite scheme on preview when the theme is not using aero lite in Windows 11 and 10.
+- Fixed black rectangle that is shown instead of aero glass effect in tabs in Windows Vista and 7.
+- Icons and Visual Styles were not included in store items check, now they are fixed.
+- Changing metrics and fonts scheme from the schemes list disabled the aspect, now it is fixed.
+- Fix issue of loading Windows 11/10 colors with alpha channels equal 0 (completely transparent) while they should be opaque (255).
+- Fix exception error that might occur on opening WinPaletter (control or object is in use elsewhere). If it happens again, you can safely ignore this error.
+- Fix context menu of 9th color item in Windows 11/10 colors not opening.
+
+---
+
+> **Compare source code with:**
+
+| Version Type    | Version Code | Link                                                                                |
+|:---------------:|:------------:|:-----------------------------------------------------------------------------------:|
+| Previous Stable | `1.0.9.2`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.9.2...v1.0.9.3) |
+| Previous Beta   | `1.0.8.9`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.8.9...v1.0.9.3) |
+| Initial Release | `1.0.0.0`    | [Compare](https://github.com/Abdelrhman-AK/WinPaletter/compare/v1.0.0.0...v1.0.9.3) |
+
+---
+
 ### 1.0.9.2
 
 > **Info:**
