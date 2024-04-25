@@ -2,7 +2,7 @@
 
 Dear WinPaletter Users,
 
-It is with a heavy heart that I announce the discontinuation of further development on the WinPaletter project. While there's an extremely slim possibility that I may find time in the distant future, perhaps years from now, to resume maintenance, I must inform you that version `1.0.9.2` marks the end of active development. Subsequent versions (`1.0.9.x`) has extremely weak possibility to be developed.
+It is with a heavy heart that I announce the discontinuation of further development on the WinPaletter project. While there's an extremely slim possibility that I may find time in the distant future, perhaps years from now, to resume maintenance, I must inform you that version `1.0.9.3` marks the end of active development. Subsequent versions (`1.0.9.x`) has extremely weak possibility to be developed.
 
 In the coming days or weeks, I will proceed to archive this repository. However, please note that the existing version will remain accessible for continued use, albeit without updates or maintenance.
 
@@ -20,7 +20,7 @@ I want to express my deepest gratitude for your support and for choosing WinPale
 
 #### WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
 
-#### With WinPaletter, you can customize a wide range of Windows aspects, including Windows Colors, Classic Colors, Lock screen (LogonUI), Cursors, Metrics and Fonts, Terminals and Consoles, wallpaper, sounds, screen savers, Windows effects (tweaks), and Windows icons according to your preferences.
+#### With WinPaletter, you can customize a wide range of Windows aspects, including Windows Colors, Visual Styles, Classic Colors, Lock screen (LogonUI), Cursors, Metrics and Fonts, Terminals and Consoles, wallpaper, sounds, screen savers, Windows effects (tweaks), and Windows icons according to your preferences.
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Features.png?raw=true) Key Features
 
