@@ -214,7 +214,7 @@
   <data name="banner15.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAABehJREFUSEvtlWtMU2cYx9HNfXEm2wzLEr+Y6JzLnHKpQLEUegXlIiDlfilXaZE7
+        vAAADrwBlbxySQAABehJREFUSEvtlWtMU2cYx9HNfXEm2wzLEr+Y6JzLnHKpQLEUegXlIiDlfilXaZE7
         ioCxOEQQpiK6RWxrdOgiKhd1FGhVRJQeSumF4tBNnc5u+8Cc8ZqZOf97zylasmFmou7TnuSXnp48eX7n
         /T9tjsv/9cpLIpG8IRAIFvB4PO7rhM/nz2GEYrH4vVVRee1pWWr7v5LpIDVDbZfSpKvtKTRpansSIZEm
         VW1PkKrt8TQpKnscTZLKLhSH7qEP5xIUFOQal1BFFZdbMSVlVhStt6Kw1IqCUgvy1xHWWpBHyC2xYE2R
@@ -608,6 +608,7 @@
 ● Changing metrics and fonts scheme from the schemes list disabled the aspect, now it is fixed.
 ● Fix issue of loading Windows 11/10 colors with alpha channels equal 0 (completely transparent) while they should be opaque (255).
 ● Fix exception error that might occur on opening WinPaletter (control or object is in use elsewhere). If it happens again, you can safely ignore this error.
+● Fix context menu of 9th color item in Windows 11/10 colors not opening.
 
 ● Fix an exception error that occurs when changing the cursor size, when the source is a file and not rendered by WinPaletter.
 ● Wrong wiki (help) URL for cursors is fixed.
