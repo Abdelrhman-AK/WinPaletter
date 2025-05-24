@@ -37,7 +37,7 @@ namespace WinPaletter.UI.Controllers
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         public bool ColorPickerOpened = false;
-        public List<Color> ColorsHistory = new();
+        public List<Color> ColorsHistory = [];
         private Color LineColor;
         public bool PauseColorsHistory = false;
 
@@ -442,7 +442,7 @@ namespace WinPaletter.UI.Controllers
             set { _alpha = value; Invalidate(); }
         }
 
-        private Timer Timer2;
+        private readonly Timer Timer2;
         private int Timer2_factor = 0;
 
         private async void Timer2_Tick(object sender, EventArgs e)
@@ -543,7 +543,7 @@ namespace WinPaletter.UI.Controllers
                                 {
                                     CenterPoint = px,
                                     CenterColor = BackColor,
-                                    SurroundColors = new Color[] { Color.Transparent }
+                                    SurroundColors = [Color.Transparent]
                                 })
                                 { G.FillEllipse(pgb, MouseCircle); }
                                 G.ResetClip();
@@ -582,7 +582,7 @@ namespace WinPaletter.UI.Controllers
                         {
                             CenterPoint = px,
                             CenterColor = DraggedColor,
-                            SurroundColors = new Color[] { Color.Transparent }
+                            SurroundColors = [Color.Transparent]
                         })
                         {
                             G.FillEllipse(pgb, MouseCircle);
@@ -655,7 +655,7 @@ namespace WinPaletter.UI.Controllers
                     if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.Dec)
                         CF = ColorsExtensions.ColorFormat.Dec;
 
-                    string S = Enabled ? TargetColor.ReturnFormat(CF, Program.Settings.NerdStats.ShowHexHash, !(TargetColor.A == 255)) : Program.Lang.Disabled;
+                    string S = Enabled ? TargetColor.ReturnFormat(CF, Program.Settings.NerdStats.ShowHexHash, !(TargetColor.A == 255)) : Program.Lang.Strings.General.Disabled;
 
                     Font F = Program.Settings.NerdStats.UseWindowsMonospacedFont ? new Font(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular) : Fonts.Console;
 
@@ -674,6 +674,8 @@ namespace WinPaletter.UI.Controllers
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

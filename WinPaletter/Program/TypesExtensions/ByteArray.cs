@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -65,7 +64,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Compares two byte arrays for equality.
+        /// Compares two byte arrays for equality. This method differs from the Array.Equals(Array1, Array2) method, which performs a reference equality check.
         /// </summary>
         /// <param name="array1">The first byte array to compare.</param>
         /// <param name="array2">The second byte array to compare.</param>
@@ -101,12 +100,12 @@ namespace WinPaletter.TypesExtensions
             {
                 int pendingLength = Marshal.SizeOf(typeof(T)) - data.Length;
 
-                List<byte> bytes = data.ToList();
+                List<byte> bytes = [.. data];
                 for (int i = 0; i < pendingLength; i++)
                 {
                     bytes.Add(0);
                 }
-                data = bytes.ToArray();
+                data = [.. bytes];
             }
 
             // Pin the managed memory while, copy out the data, then unpin it

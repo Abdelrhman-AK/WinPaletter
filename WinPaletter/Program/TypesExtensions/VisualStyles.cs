@@ -207,6 +207,11 @@ namespace WinPaletter.TypesExtensions
             return metricsFonts;
         }
 
+        /// <summary>
+        /// Parse a font string from a string embedded in a Windows Visual Styles to a <see cref="Font"/> object.
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns></returns>
         private static Font ParseFontFromString(string inputString)
         {
             Font defaultFont = new("Segoe UI", 9f, FontStyle.Regular);

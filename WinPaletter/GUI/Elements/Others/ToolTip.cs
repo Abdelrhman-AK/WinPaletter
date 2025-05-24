@@ -9,16 +9,16 @@ namespace WinPaletter.UI.WP
     {
         public ToolTip()
         {
-            this.OwnerDraw = true;
-            this.Draw += Tooltip_Draw;
-            this.Popup += Tooltip_Popup;
+            OwnerDraw = true;
+            Draw += Tooltip_Draw;
+            Popup += Tooltip_Popup;
 
             Font = !Fonts.Exists("Segoe UI") ? new Font("Tahoma", _font.Size == 9f ? 8.25f : _font.Size, _font.Style) : _font;
         }
 
         #region Variables
 
-        int padding_inner = 2;
+        readonly int padding_inner = 2;
         Color imageColor;
 
         Rectangle rectImageSide = Rectangle.Empty;
@@ -100,7 +100,7 @@ namespace WinPaletter.UI.WP
                 {
                     _image = value;
                     if (value != null) imageColor = value.AverageColor();
-                    this.ToolTipIcon = ToolTipIcon.Info;
+                    ToolTipIcon = ToolTipIcon.Info;
                 }
             }
         }

@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,17 +20,49 @@ namespace WinPaletter
 {
     internal partial class Program
     {
+        /// <summary>
+        /// Calculate the MD5 hash of a file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string CalculateMD5(string path)
+        {
+            string MD5_str;
+
+            if (System.IO.File.Exists(path))
+            {
+                using (MD5 md5 = MD5.Create())
+                {
+                    byte[] hash = md5.ComputeHash(System.IO.File.ReadAllBytes(path));
+                    string result = BitConverter.ToString(hash).Replace("-", string.Empty);
+                    MD5_str = result.ToUpper();
+                }
+            }
+            else
+            {
+                MD5_str = "0";
+            }
+
+            return MD5_str;
+        }
+
+        /// <summary>
+        /// Get a unique unused File name in the given directory
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        /// <param name="baseFileName"></param>
+        /// <returns></returns>
         public static string GetUniqueFileName(string directoryPath, string baseFileName)
         {
             string fullFilePath = System.IO.Path.Combine(directoryPath, baseFileName);
 
             if (!System.IO.File.Exists(fullFilePath))
             {
-                // The file with the given name does not exist, so it is already unique
+                // The File with the given name does not exist, so it is already unique
                 return fullFilePath;
             }
 
-            // If the file exists, generate a unique file name
+            // If the File exists, generate a unique File name
             int counter = 1;
             string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(baseFileName);
             string fileExtension = System.IO.Path.GetExtension(baseFileName);
@@ -43,6 +78,11 @@ namespace WinPaletter
             return fullFilePath;
         }
 
+        /// <summary>
+        /// Send a command to Command Prompt as Administrator impersonating the selected user
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="Wait"></param>
         public static void SendCommand(string command, bool Wait = true)
         {
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
@@ -68,9 +108,14 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// List all running processes with the given FullPath
+        /// </summary>
+        /// <param name="FullPath"></param>
+        /// <returns></returns>
         public static List<Process> ProgramsRunning(string FullPath)
         {
-            List<Process> processes = new();
+            List<Process> processes = [];
             string FileName = System.IO.Path.GetFileNameWithoutExtension(FullPath).ToLower();
 
             foreach (Process p in Process.GetProcessesByName(FileName))
@@ -82,6 +127,9 @@ namespace WinPaletter
             return processes;
         }
 
+        /// <summary>
+        /// Load the Theme Manager and set the Window Style for the preview depending on the OS version
+        /// </summary>
         private static void LoadThemeManager()
         {
             if (OS.W12)
@@ -114,13 +162,17 @@ namespace WinPaletter
             // Load Manager
             if (!ExternalLink)
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Theme Manager from selected user preferences and registry.");
+
                 if (TM is null) TM = new(Theme.Manager.Source.Registry);
                 Forms.Home.Text = Application.ProductName;
             }
             else
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Theme Manager from File: {ExternalLink_File}");
+
                 TM = new(Theme.Manager.Source.File, ExternalLink_File);
-                Forms.Home.file = ExternalLink_File;
+                Forms.Home.File = ExternalLink_File;
                 Forms.Home.Text = System.IO.Path.GetFileName(ExternalLink_File);
                 ExternalLink = false;
                 ExternalLink_File = string.Empty;
@@ -131,25 +183,44 @@ namespace WinPaletter
 
             if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnAppOpen)
             {
+                Log?.Write(Serilog.Events.LogEventLevel.Information, $"Creating a backup of the current theme on application open.");
+
                 string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", $"{TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                 TM.Save(Source.File, filename);
             }
         }
 
+        /// <summary>
+        /// Delete the old Winpaletter executable files
+        /// </summary>
         private static void DeleteUpdateResiduals()
         {
             try
             {
-                if (System.IO.File.Exists("oldWinpaletter.trash")) System.IO.File.Delete("oldWinpaletter.trash");
-                if (System.IO.File.Exists("oldWinpaletter_2.trash")) System.IO.File.Delete("oldWinpaletter_2.trash");
+                if (System.IO.File.Exists("oldWinpaletter.trash"))
+                {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter.trash");
+                    System.IO.File.Delete("oldWinpaletter.trash");
+                }
+                if (System.IO.File.Exists("oldWinpaletter_2.trash"))
+                {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter_2.trash");
+                    System.IO.File.Delete("oldWinpaletter_2.trash");
+                }
+
             }
             catch { } // Ignore deleting old executable files if they are in use
         }
 
+        /// <summary>
+        /// Get Jetbrains Mono font from memory
+        /// </summary>
         private static void GetMemoryFonts()
         {
             try
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
+
                 MemoryFonts.AddMemoryFont(Properties.Resources.JetBrainsMono_Medium);
                 Fonts.Console = MemoryFonts.GetFont(0, 7.75f);
                 Fonts.ConsoleMedium = MemoryFonts.GetFont(0, 9f);
@@ -163,6 +234,9 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Load the language file
+        /// </summary>
         public static void LoadLanguage()
         {
             if (Settings.Language.Enabled)
@@ -178,14 +252,26 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Check if the license is accepted. If not, show the license form and exit if the user does not accept it
+        /// </summary>
         public static void CheckIfLicenseIsAccepted()
         {
             if (!Settings.General.LicenseAccepted)
             {
-                if (Forms.LicenseForm.ShowDialog() != DialogResult.OK) Program.ForceExit();
+                if (Forms.LicenseForm.ShowDialog() != DialogResult.OK)
+                {
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"The license is not accepted, WinPaletter will exit.");
+                    Program.ForceExit();
+                }
             }
+
+            Log?.Write(Serilog.Events.LogEventLevel.Information, $"License is accepted, continuing...");
         }
 
+        /// <summary>
+        /// Start monitoiring Windows Wallpaper and Theme changes to adjust the preview accordingly
+        /// </summary>
         private static void StartMonitors()
         {
             FirstVisualStyles = UxTheme.GetCurrentVS().Item1 ?? SysPaths.Windows + "\\Resources\\Themes\\aero\\aero.msstyles";
@@ -195,7 +281,7 @@ namespace WinPaletter
                 try { Monitor(); }
                 catch (Exception ex)
                 {
-                    if (MsgBox(Lang.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, $"{Lang.MonitorIssue2}\r\n{Lang.TM_RestoreCursorsErrorPressOK}") == DialogResult.OK)
+                    if (MsgBox(Lang.Strings.Messages.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, $"{Lang.Strings.Messages.MonitorIssue2}\r\n{Lang.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK}") == DialogResult.OK)
                     {
                         Forms.BugReport.ThrowError(ex);
                     }
@@ -207,8 +293,13 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Initialize the Image Lists for the Theme Log and the Language TreeView
+        /// </summary>
         private static void InitializeImageLists()
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Initializing Image Lists for Theme Log and Language TreeView.");
+
             ImageLists.ThemeLog.Images.Add("info", Assets.Notifications.Info);
             ImageLists.ThemeLog.Images.Add("apply", Assets.Notifications.Applying);
             ImageLists.ThemeLog.Images.Add("error", Assets.Notifications.Error);
@@ -235,40 +326,58 @@ namespace WinPaletter
             Exceptions.ThemeLoad.Clear();
         }
 
+        /// <summary>
+        /// Associate the WinPaletter file types with the application
+        /// </summary>
         private static void AssociateFiles()
         {
             if (Settings.FileTypeManagement.AutoAddExt)
             {
-                if (!System.IO.Directory.Exists(SysPaths.appData)) System.IO.Directory.CreateDirectory(SysPaths.appData);
+                if (!System.IO.Directory.Exists(SysPaths.appData))
+                {
+                    System.IO.Directory.CreateDirectory(SysPaths.appData);
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.appData}");
+                }
 
-                WriteIfChangedOrNotExists($@"{SysPaths.appData}\fileextension.ico", Properties.Resources.fileextension.ToBytes());
-                WriteIfChangedOrNotExists($@"{SysPaths.appData}\settingsfile.ico", Properties.Resources.settingsfile.ToBytes());
-                WriteIfChangedOrNotExists($@"{SysPaths.appData}\themerespack.ico", Properties.Resources.ThemesResIcon.ToBytes());
+                WriteIfChangedOrNotExists($"{SysPaths.appData}\\fileextension.ico", Properties.Resources.fileextension.ToBytes());
+                WriteIfChangedOrNotExists($"{SysPaths.appData}\\settingsfile.ico", Properties.Resources.settingsfile.ToBytes());
+                WriteIfChangedOrNotExists($"{SysPaths.appData}\\themerespack.ico", Properties.Resources.ThemesResIcon.ToBytes());
 
-                bool assoc0 = CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.WP_Theme_FileType, $@"{SysPaths.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
-                bool assoc1 = CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.WP_Settings_FileType, $@"{SysPaths.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
-                bool assoc2 = CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.WP_ResourcesPack_FileType, $@"{SysPaths.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc0 = CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.Strings.Extensions.WinPaletterTheme, $@"{SysPaths.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc1 = CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.Strings.Extensions.WinPaletterSettings, $@"{SysPaths.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
+                bool assoc2 = CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.Strings.Extensions.WinPaletterResourcesPack, $@"{SysPaths.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
 
                 if (!assoc0 || !assoc1 || !assoc2)
                 {
-                    // Notify Windows that file associations have changed
+                    // Notify Windows that File associations have changed
                     Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"File associations have been updated.");
                 }
             }
         }
 
+        /// <summary>
+        /// Write the given data to the file if the file does not exist or the data is different (To avoid unnecessary writes, disk usage, and SSD wear)
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="data"></param>
         private static void WriteIfChangedOrNotExists(string file, byte[] data)
         {
             if (!System.IO.File.Exists(file))
             {
+                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new file has been created: {file}");
                 System.IO.File.WriteAllBytes(file, data);
             }
             else if (!System.IO.File.ReadAllBytes(file).Equals_Method2(data))
             {
+                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A file has been updated: {file}");
                 System.IO.File.WriteAllBytes(file, data);
             }
         }
 
+        /// <summary>
+        /// Extract the Luna theme from the resources to the Themes directory to be used for Windows XP preview
+        /// </summary>
         private static void ExtractLuna()
         {
             try
@@ -276,31 +385,55 @@ namespace WinPaletter
                 if (!System.IO.Directory.Exists(SysPaths.MSTheme_Dir))
                 {
                     System.IO.Directory.CreateDirectory(SysPaths.MSTheme_Dir);
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.MSTheme_Dir}");
                 }
 
                 WriteIfChangedOrNotExists(SysPaths.MSTheme_ZIP, Properties.Resources.luna);
 
-                using (System.IO.FileStream s = new(SysPaths.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                using (System.IO.FileStream archiveStream = new(SysPaths.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                using (ZipArchive zip = new(archiveStream, System.IO.Compression.ZipArchiveMode.Read))
                 {
-                    using (System.IO.Compression.ZipArchive z = new(s, System.IO.Compression.ZipArchiveMode.Read))
+                    foreach (ZipArchiveEntry entry in zip.Entries)
                     {
-                        foreach (System.IO.Compression.ZipArchiveEntry entry in z.Entries)
-                        {
-                            if (entry.FullName.Contains(@"\"))
-                            {
-                                string dest = System.IO.Path.Combine(SysPaths.MSTheme_Dir, entry.FullName);
-                                string dest_dir = dest.Replace($@"\{dest.Split('\\').Last()}", string.Empty);
+                        string destinationPath = System.IO.Path.Combine(SysPaths.MSTheme_Dir, entry.FullName);
 
-                                if (!System.IO.Directory.Exists(dest_dir))
+                        if (entry.FullName.Contains("\\"))
+                        {
+                            string destDir = destinationPath.Replace($"\\{destinationPath.Split('\\').Last()}", string.Empty);
+                            if (!System.IO.Directory.Exists(destDir))
+                            {
+                                System.IO.Directory.CreateDirectory(destDir);
+                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {destDir}");
+                            }
+                        }
+
+                        using (Stream entryStream = entry.Open())
+                        using (MemoryStream ms = new())
+                        {
+                            entryStream.CopyTo(ms, 4096 * 32);
+                            byte[] entryBytes = ms.ToArray();
+
+                            if (System.IO.File.Exists(destinationPath))
+                            {
+                                byte[] existingBytes = System.IO.File.ReadAllBytes(destinationPath);
+
+                                if (!existingBytes.Equals_Method2(entryBytes))
                                 {
-                                    System.IO.Directory.CreateDirectory(dest_dir);
+                                    System.IO.File.WriteAllBytes(destinationPath, entryBytes);
+                                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A file has been updated: {destinationPath}");
                                 }
                             }
-                            entry.ExtractToFile(System.IO.Path.Combine(SysPaths.MSTheme_Dir, entry.FullName), true);
+                            else
+                            {
+                                System.IO.File.WriteAllBytes(destinationPath, entryBytes);
+                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A file has been extracted: {destinationPath}");
+                            }
                         }
                     }
-                    s.Close();
+
+                    archiveStream.Close();
                 }
+
                 System.IO.File.WriteAllText(SysPaths.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
             }
             catch (Exception ex)
@@ -309,6 +442,9 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Backup the Windows Startup Sound from imageres.dll to the AppData directory
+        /// </summary>
         private static void BackupWindowsStartupSound()
         {
             try
@@ -317,6 +453,7 @@ namespace WinPaletter
                 {
                     byte[] SoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
                     System.IO.File.WriteAllBytes($@"{SysPaths.appData}\WindowsStartup_Backup.wav", SoundBytes);
+                    Program.Log.Information($"Windows startup sound has been backed-up: {SysPaths.appData}\\WindowsStartup_Backup.wav");
                 }
             }
             catch (Exception ex)
@@ -325,6 +462,9 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Update SysEventsSounds service
+        /// </summary>
         public static void UpdateSysEventsSounds()
         {
             if (!Program.UninstallDone)
@@ -334,6 +474,7 @@ namespace WinPaletter
                     //Update
                     if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
                     {
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, $"SysEventsSounds service is not up to date, updating it.");
                         Forms.SysEventsSndsInstaller.Install(false);
                         return;
                     }
@@ -341,18 +482,22 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Check if the new version of application is running for the first time, and show the What'archiveStream New pop-up if it is
+        /// </summary>
         public static void CheckWhatsNew()
         {
             if (!Settings.General.WhatsNewRecord.Contains(Version))
             {
-                // Display the What's New pop-up
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"This application version is running for the first time: {Version}");
+
+                // Display the What'archiveStream New pop-up
                 ShowWhatsNew = true;
 
                 // Update version information
-                List<string> versionHistory = new() { Version };
-                versionHistory.AddRange(Settings.General.WhatsNewRecord);
+                List<string> versionHistory = [Version, .. Settings.General.WhatsNewRecord];
                 versionHistory = versionHistory.Distinct().ToList();
-                Settings.General.WhatsNewRecord = versionHistory.ToArray();
+                Settings.General.WhatsNewRecord = [.. versionHistory];
 
                 // Save updated settings
                 Settings.General.Save();
@@ -363,6 +508,10 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Refresh DWM colorization parameters from the given <see cref="Theme.Manager"/> impersonating the selected user
+        /// </summary>
+        /// <param name="TM"></param>
         public static void RefreshDWM(Theme.Manager TM)
         {
             Task.Run(() =>
@@ -403,13 +552,17 @@ namespace WinPaletter
             });
         }
 
+        /// <summary>
+        /// Restart the Windows Explorer process
+        /// </summary>
+        /// <param name="treeView"></param>
         public static void RestartExplorer(TreeView treeView = null)
         {
             try
             {
                 if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                 {
-                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.KillingExplorer}", "info"); }
+                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.KillingExplorer}", "info"); }
 
                     Stopwatch sw = new();
                     sw.Reset();
@@ -421,7 +574,7 @@ namespace WinPaletter
 
                     sw.Stop();
 
-                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {(string.Format(Program.Lang.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d))}", "time"); }
+                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d)}", "time"); }
 
                     sw.Reset();
                 }
@@ -429,11 +582,11 @@ namespace WinPaletter
                 {
                     if (treeView is not null)
                     {
-                        ThemeLog.AddNode(treeView, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
+                        ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.Messages.RestartExplorerIssue0}. {Program.Lang.Strings.Messages.RestartExplorerIssue1}", "warning");
                     }
                     else
                     {
-                        MsgBox(Program.Lang.RestartExplorerIssue0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.RestartExplorerIssue1);
+                        MsgBox(Program.Lang.Strings.Messages.RestartExplorerIssue0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Messages.RestartExplorerIssue1);
                     }
                 }
             }
@@ -441,8 +594,8 @@ namespace WinPaletter
             {
                 if (treeView is not null)
                 {
-                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.ErrorExplorerRestart}", "error");
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.ErrorExplorerRestart, ex));
+                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Errors.ExplorerRestart}", "error");
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.Strings.ThemeManager.Errors.ExplorerRestart, ex));
                 }
                 else
                 {
@@ -459,9 +612,57 @@ namespace WinPaletter
         /// </returns>
         public static bool IsNetworkAvailable
         {
-            get => Wininet.CheckNet();
+            get
+            {
+                return IsNetworkOperational && HasNetworkInterfaces && Wininet.CheckNet();
+            }
         }
 
+        private static bool HasNetworkInterfaces
+        {
+            get
+            {
+                try
+                {
+                    var interfaces = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
+                    return interfaces.Any(nic => nic.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Interface check failed: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if network stack is available (to avoid dead network socket exception, especially in safe mode without networking).
+        /// </summary>
+        public static bool IsNetworkOperational
+        {
+            get
+            {
+                try
+                {
+                    var interfaces = NetworkInterface.GetAllNetworkInterfaces();
+                    return interfaces.Any(nic =>
+                        nic.OperationalStatus == OperationalStatus.Up &&
+                        nic.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
+                        nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Ping the given URL to check if it is reachable
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static bool Ping(string url)
         {
             try
@@ -482,6 +683,11 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Get the Windows Screen Scaling Factor
+        /// </summary>
+        /// <param name="percentage"></param>
+        /// <returns></returns>
         public static double GetWindowsScreenScalingFactor(bool percentage = true)
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())

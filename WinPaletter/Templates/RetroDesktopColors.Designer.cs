@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.toolTipR1 = new WinPaletter.UI.Retro.ToolTipR();
             this.ContextMenu = new WinPaletter.UI.Retro.ContextMenuR();
             this.RetroShadow1 = new WinPaletter.UI.WP.TransparentPictureBox();
             this.WindowR3 = new WinPaletter.UI.Retro.WindowR();
@@ -40,13 +41,23 @@
             this.WindowR4 = new WinPaletter.UI.Retro.WindowR();
             this.appWorkspaceR1 = new WinPaletter.UI.Retro.AppWorkspaceR();
             this.PanelR2 = new WinPaletter.UI.Retro.ScrollBarR();
-            this.toolTipR1 = new WinPaletter.UI.Retro.ToolTipR();
             ((System.ComponentModel.ISupportInitialize)(this.RetroShadow1)).BeginInit();
             this.WindowR3.SuspendLayout();
             this.WindowR2.SuspendLayout();
             this.WindowR4.SuspendLayout();
             this.appWorkspaceR1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // toolTipR1
+            // 
+            this.toolTipR1.BackColor = System.Drawing.Color.White;
+            this.toolTipR1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolTipR1.Location = new System.Drawing.Point(287, 141);
+            this.toolTipR1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.toolTipR1.Name = "toolTipR1";
+            this.toolTipR1.Size = new System.Drawing.Size(90, 15);
+            this.toolTipR1.TabIndex = 7;
+            this.toolTipR1.Text = "This is a tooltip";
             // 
             // ContextMenu
             // 
@@ -63,11 +74,12 @@
             this.ContextMenu.GrayText = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ContextMenu.Hilight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ContextMenu.HilightText = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.ContextMenu.Location = new System.Drawing.Point(221, 211);
+            this.ContextMenu.Location = new System.Drawing.Point(216, 204);
+            this.ContextMenu.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ContextMenu.MenuHilight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ContextMenu.Name = "ContextMenu";
-            this.ContextMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.ContextMenu.Size = new System.Drawing.Size(115, 66);
+            this.ContextMenu.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ContextMenu.Size = new System.Drawing.Size(134, 76);
             this.ContextMenu.TabIndex = 4;
             this.ContextMenu.Text = "New window";
             this.ContextMenu.LocationChanged += new System.EventHandler(this.ContextMenu_LocationChanged);
@@ -76,9 +88,10 @@
             // RetroShadow1
             // 
             this.RetroShadow1.BackColor = System.Drawing.Color.Transparent;
-            this.RetroShadow1.Location = new System.Drawing.Point(258, 221);
+            this.RetroShadow1.Location = new System.Drawing.Point(222, 211);
+            this.RetroShadow1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.RetroShadow1.Name = "RetroShadow1";
-            this.RetroShadow1.Size = new System.Drawing.Size(115, 80);
+            this.RetroShadow1.Size = new System.Drawing.Size(134, 73);
             this.RetroShadow1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RetroShadow1.TabIndex = 6;
             this.RetroShadow1.TabStop = false;
@@ -103,7 +116,8 @@
             this.WindowR3.Flat = false;
             this.WindowR3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.WindowR3.ForeColor = System.Drawing.Color.White;
-            this.WindowR3.Location = new System.Drawing.Point(149, 245);
+            this.WindowR3.Location = new System.Drawing.Point(132, 244);
+            this.WindowR3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WindowR3.MaximizeBox = true;
             this.WindowR3.Metrics_BorderWidth = 0;
             this.WindowR3.Metrics_CaptionHeight = 18;
@@ -112,7 +126,7 @@
             this.WindowR3.MinimizeBox = true;
             this.WindowR3.Name = "WindowR3";
             this.WindowR3.Padding = new System.Windows.Forms.Padding(3, 22, 3, 3);
-            this.WindowR3.Size = new System.Drawing.Size(147, 80);
+            this.WindowR3.Size = new System.Drawing.Size(172, 92);
             this.WindowR3.TabIndex = 2;
             this.WindowR3.Text = "Message box";
             // 
@@ -121,9 +135,10 @@
             this.labelR1.BackColor = System.Drawing.Color.Transparent;
             this.labelR1.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelR1.Location = new System.Drawing.Point(3, 22);
+            this.labelR1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelR1.Name = "labelR1";
-            this.labelR1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.labelR1.Size = new System.Drawing.Size(141, 20);
+            this.labelR1.Padding = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.labelR1.Size = new System.Drawing.Size(166, 23);
             this.labelR1.TabIndex = 7;
             this.labelR1.Text = "Message text";
             this.labelR1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -143,9 +158,10 @@
             this.ButtonR1.ForeColor = System.Drawing.Color.Black;
             this.ButtonR1.HatchBrush = false;
             this.ButtonR1.Image = null;
-            this.ButtonR1.Location = new System.Drawing.Point(37, 51);
+            this.ButtonR1.Location = new System.Drawing.Point(43, 59);
+            this.ButtonR1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ButtonR1.Name = "ButtonR1";
-            this.ButtonR1.Size = new System.Drawing.Size(75, 23);
+            this.ButtonR1.Size = new System.Drawing.Size(88, 27);
             this.ButtonR1.TabIndex = 2;
             this.ButtonR1.Text = "OK";
             this.ButtonR1.UseItAsScrollbar = false;
@@ -172,7 +188,8 @@
             this.WindowR2.Flat = false;
             this.WindowR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.WindowR2.ForeColor = System.Drawing.Color.White;
-            this.WindowR2.Location = new System.Drawing.Point(129, 170);
+            this.WindowR2.Location = new System.Drawing.Point(108, 157);
+            this.WindowR2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WindowR2.MaximizeBox = true;
             this.WindowR2.Metrics_BorderWidth = 0;
             this.WindowR2.Metrics_CaptionHeight = 18;
@@ -181,7 +198,7 @@
             this.WindowR2.MinimizeBox = true;
             this.WindowR2.Name = "WindowR2";
             this.WindowR2.Padding = new System.Windows.Forms.Padding(3, 22, 3, 3);
-            this.WindowR2.Size = new System.Drawing.Size(196, 120);
+            this.WindowR2.Size = new System.Drawing.Size(229, 138);
             this.WindowR2.TabIndex = 1;
             this.WindowR2.Text = "Active window";
             this.WindowR2.LocationChanged += new System.EventHandler(this.WindowR2_LocationChanged);
@@ -197,8 +214,9 @@
             this.windowControlR1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.windowControlR1.ForeColor = System.Drawing.SystemColors.WindowText;
             this.windowControlR1.Location = new System.Drawing.Point(3, 42);
+            this.windowControlR1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.windowControlR1.Name = "windowControlR1";
-            this.windowControlR1.Size = new System.Drawing.Size(190, 75);
+            this.windowControlR1.Size = new System.Drawing.Size(223, 93);
             this.windowControlR1.TabIndex = 7;
             this.windowControlR1.Text = "Window Text";
             // 
@@ -215,12 +233,13 @@
             this.menuBarR1.Hilight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.menuBarR1.HilightText = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.menuBarR1.Location = new System.Drawing.Point(3, 22);
+            this.menuBarR1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.menuBarR1.MenuBar = System.Drawing.SystemColors.MenuBar;
             this.menuBarR1.MenuHeight = 20;
             this.menuBarR1.MenuHilight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.menuBarR1.Name = "menuBarR1";
             this.menuBarR1.PreviewSelectionItem = true;
-            this.menuBarR1.Size = new System.Drawing.Size(190, 20);
+            this.menuBarR1.Size = new System.Drawing.Size(223, 20);
             this.menuBarR1.TabIndex = 7;
             // 
             // WindowR1
@@ -241,7 +260,8 @@
             this.WindowR1.Flat = false;
             this.WindowR1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.WindowR1.ForeColor = System.Drawing.Color.White;
-            this.WindowR1.Location = new System.Drawing.Point(113, 137);
+            this.WindowR1.Location = new System.Drawing.Point(90, 119);
+            this.WindowR1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WindowR1.MaximizeBox = true;
             this.WindowR1.Metrics_BorderWidth = 0;
             this.WindowR1.Metrics_CaptionHeight = 18;
@@ -250,7 +270,7 @@
             this.WindowR1.MinimizeBox = true;
             this.WindowR1.Name = "WindowR1";
             this.WindowR1.Padding = new System.Windows.Forms.Padding(3, 22, 3, 3);
-            this.WindowR1.Size = new System.Drawing.Size(180, 112);
+            this.WindowR1.Size = new System.Drawing.Size(210, 129);
             this.WindowR1.TabIndex = 0;
             this.WindowR1.Tag = "0";
             this.WindowR1.Text = "Inactive window";
@@ -274,7 +294,8 @@
             this.WindowR4.Flat = false;
             this.WindowR4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.WindowR4.ForeColor = System.Drawing.Color.White;
-            this.WindowR4.Location = new System.Drawing.Point(73, 90);
+            this.WindowR4.Location = new System.Drawing.Point(43, 65);
+            this.WindowR4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.WindowR4.MaximizeBox = false;
             this.WindowR4.Metrics_BorderWidth = 0;
             this.WindowR4.Metrics_CaptionHeight = 18;
@@ -283,7 +304,7 @@
             this.WindowR4.MinimizeBox = false;
             this.WindowR4.Name = "WindowR4";
             this.WindowR4.Padding = new System.Windows.Forms.Padding(3, 22, 3, 3);
-            this.WindowR4.Size = new System.Drawing.Size(156, 132);
+            this.WindowR4.Size = new System.Drawing.Size(182, 152);
             this.WindowR4.TabIndex = 3;
             this.WindowR4.Text = "Program container";
             this.WindowR4.LocationChanged += new System.EventHandler(this.WindowR4_LocationChanged);
@@ -295,8 +316,9 @@
             this.appWorkspaceR1.Controls.Add(this.PanelR2);
             this.appWorkspaceR1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.appWorkspaceR1.Location = new System.Drawing.Point(3, 22);
+            this.appWorkspaceR1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.appWorkspaceR1.Name = "appWorkspaceR1";
-            this.appWorkspaceR1.Size = new System.Drawing.Size(150, 107);
+            this.appWorkspaceR1.Size = new System.Drawing.Size(176, 127);
             this.appWorkspaceR1.TabIndex = 7;
             // 
             // PanelR2
@@ -307,27 +329,18 @@
             this.PanelR2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.PanelR2.ForeColor = System.Drawing.Color.Black;
             this.PanelR2.Location = new System.Drawing.Point(0, 0);
+            this.PanelR2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PanelR2.Maximum = 100;
             this.PanelR2.Minimum = 0;
             this.PanelR2.Name = "PanelR2";
             this.PanelR2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.PanelR2.Size = new System.Drawing.Size(16, 107);
+            this.PanelR2.Size = new System.Drawing.Size(19, 127);
             this.PanelR2.TabIndex = 0;
             this.PanelR2.Value = 50;
             // 
-            // toolTipR1
-            // 
-            this.toolTipR1.BackColor = System.Drawing.Color.White;
-            this.toolTipR1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.toolTipR1.Location = new System.Drawing.Point(216, 107);
-            this.toolTipR1.Name = "toolTipR1";
-            this.toolTipR1.Size = new System.Drawing.Size(86, 15);
-            this.toolTipR1.TabIndex = 7;
-            this.toolTipR1.Text = "This is a tooltip";
-            // 
             // RetroDesktopColors
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
             this.Controls.Add(this.toolTipR1);
@@ -337,6 +350,8 @@
             this.Controls.Add(this.WindowR2);
             this.Controls.Add(this.WindowR1);
             this.Controls.Add(this.WindowR4);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "RetroDesktopColors";
             this.Size = new System.Drawing.Size(400, 400);
             this.Load += new System.EventHandler(this.RetroDesktop_Load);

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.card1 = new WinPaletter.UI.WP.Card();
             this.card14 = new WinPaletter.UI.WP.Card();
             this.card2 = new WinPaletter.UI.WP.Card();
@@ -45,21 +46,18 @@
             this.card11 = new WinPaletter.UI.WP.Card();
             this.card12 = new WinPaletter.UI.WP.Card();
             this.card13 = new WinPaletter.UI.WP.Card();
+            this.card15 = new WinPaletter.UI.WP.Card();
             this.card10 = new WinPaletter.UI.WP.Card();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
             this.labelAlt3 = new WinPaletter.UI.WP.LabelAlt();
             this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
-            this.winEdition = new WinPaletter.UI.WP.Button();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.apply_btn = new WinPaletter.UI.WP.Button();
-            this.button41 = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.restartExplorer_btn = new WinPaletter.UI.WP.Button();
             this.Button28 = new WinPaletter.UI.WP.Button();
-            this.button1 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender2 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
@@ -75,12 +73,14 @@
             this.Button5 = new WinPaletter.UI.WP.Button();
             this.Button31 = new WinPaletter.UI.WP.Button();
             this.button8 = new WinPaletter.UI.WP.Button();
+            this.button1 = new WinPaletter.UI.WP.Button();
             this.Button39 = new WinPaletter.UI.WP.Button();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
             this.tip_label = new System.Windows.Forms.Label();
             this.userButton = new WinPaletter.UI.WP.Button();
+            this.winEdition = new WinPaletter.UI.WP.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -113,13 +113,24 @@
             this.flowLayoutPanel1.Controls.Add(this.card11);
             this.flowLayoutPanel1.Controls.Add(this.card12);
             this.flowLayoutPanel1.Controls.Add(this.card13);
+            this.flowLayoutPanel1.Controls.Add(this.card15);
             this.flowLayoutPanel1.Controls.Add(this.card10);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 122);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 121);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1176, 555);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1176, 556);
             this.flowLayoutPanel1.TabIndex = 153;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 51);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1176, 70);
+            this.panel1.TabIndex = 162;
+            this.panel1.BackColorChanged += new System.EventHandler(this.panel1_BackColorChanged);
             // 
             // card1
             // 
@@ -298,28 +309,32 @@
             this.card13.Text = "Windows Icons";
             this.card13.Click += new System.EventHandler(this.card13_Click);
             // 
+            // card15
+            // 
+            this.card15.Color = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(155)))), ((int)(((byte)(226)))));
+            this.card15.Compact = false;
+            this.card15.Image = ((System.Drawing.Image)(resources.GetObject("card15.Image")));
+            this.card15.Location = new System.Drawing.Point(289, 416);
+            this.card15.Name = "card15";
+            this.card15.Size = new System.Drawing.Size(277, 130);
+            this.card15.TabIndex = 134;
+            this.card15.Tag = "Enable High Contrast Mode and edit color filters to improve visibility and suppor" +
+    "t users with varying visual needs";
+            this.card15.Text = "Accessibility";
+            this.card15.Click += new System.EventHandler(this.card15_Click);
+            // 
             // card10
             // 
             this.card10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
             this.card10.Compact = false;
             this.card10.Image = ((System.Drawing.Image)(resources.GetObject("card10.Image")));
-            this.card10.Location = new System.Drawing.Point(289, 416);
+            this.card10.Location = new System.Drawing.Point(572, 416);
             this.card10.Name = "card10";
             this.card10.Size = new System.Drawing.Size(277, 130);
             this.card10.TabIndex = 131;
             this.card10.Tag = "Modify the look of WinPaletter to make it suits your theme";
             this.card10.Text = "WinPaletter Themes";
             this.card10.Click += new System.EventHandler(this.card10_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 52);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1176, 70);
-            this.panel1.TabIndex = 162;
-            this.panel1.BackColorChanged += new System.EventHandler(this.panel1_BackColorChanged);
             // 
             // groupBox1
             // 
@@ -388,30 +403,10 @@
             this.labelAlt2.TabIndex = 157;
             this.labelAlt2.Text = "0";
             // 
-            // winEdition
-            // 
-            this.winEdition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.winEdition.CustomColor = System.Drawing.Color.Empty;
-            this.winEdition.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.winEdition.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.winEdition.ForeColor = System.Drawing.Color.White;
-            this.winEdition.Image = null;
-            this.winEdition.ImageGlyph = null;
-            this.winEdition.ImageGlyphEnabled = false;
-            this.winEdition.Location = new System.Drawing.Point(1076, 1);
-            this.winEdition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.winEdition.Name = "winEdition";
-            this.winEdition.Size = new System.Drawing.Size(50, 50);
-            this.winEdition.TabIndex = 155;
-            this.winEdition.Tag = "";
-            this.winEdition.UseVisualStyleBackColor = false;
-            this.winEdition.Click += new System.EventHandler(this.winEdition_Click);
-            // 
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
             this.bottom_buttons.Controls.Add(this.apply_btn);
-            this.bottom_buttons.Controls.Add(this.button41);
             this.bottom_buttons.Controls.Add(this.Button13);
             this.bottom_buttons.Controls.Add(this.restartExplorer_btn);
             this.bottom_buttons.Controls.Add(this.Button28);
@@ -439,25 +434,6 @@
             this.apply_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.apply_btn.UseVisualStyleBackColor = false;
             this.apply_btn.Click += new System.EventHandler(this.apply_btn_Click);
-            // 
-            // button41
-            // 
-            this.button41.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button41.CustomColor = System.Drawing.Color.Empty;
-            this.button41.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button41.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button41.ForeColor = System.Drawing.Color.White;
-            this.button41.Image = ((System.Drawing.Image)(resources.GetObject("button41.Image")));
-            this.button41.ImageGlyph = null;
-            this.button41.ImageGlyphEnabled = false;
-            this.button41.Location = new System.Drawing.Point(346, 6);
-            this.button41.Name = "button41";
-            this.button41.Size = new System.Drawing.Size(180, 37);
-            this.button41.TabIndex = 35;
-            this.button41.Text = "Support via PayPal";
-            this.button41.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button41.UseVisualStyleBackColor = false;
-            this.button41.Click += new System.EventHandler(this.button41_Click);
             // 
             // Button13
             // 
@@ -516,25 +492,6 @@
             this.Button28.UseVisualStyleBackColor = false;
             this.Button28.Click += new System.EventHandler(this.Button28_Click);
             // 
-            // button1
-            // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(84)))), ((int)(((byte)(204)))));
-            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = null;
-            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageGlyph")));
-            this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(489, 3);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(32, 35);
-            this.button1.TabIndex = 36;
-            this.button1.Tag = "Compact\\Expand layout";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // titlebarExtender2
             // 
             this.titlebarExtender2.BackColor = System.Drawing.Color.Black;
@@ -542,13 +499,12 @@
             this.titlebarExtender2.Controls.Add(this.userButton);
             this.titlebarExtender2.Controls.Add(this.winEdition);
             this.titlebarExtender2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.titlebarExtender2.DropDWMEffect = false;
+            this.titlebarExtender2.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
             this.titlebarExtender2.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender2.Name = "titlebarExtender2";
-            this.titlebarExtender2.Size = new System.Drawing.Size(1176, 52);
+            this.titlebarExtender2.Size = new System.Drawing.Size(1176, 51);
             this.titlebarExtender2.TabIndex = 154;
             this.titlebarExtender2.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-            this.titlebarExtender2.Text = "titlebarExtender2";
             // 
             // flowLayoutPanel2
             // 
@@ -574,7 +530,7 @@
             this.flowLayoutPanel2.Controls.Add(this.Button12);
             this.flowLayoutPanel2.Controls.Add(this.separatorV2);
             this.flowLayoutPanel2.Controls.Add(this.tip_label);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(4, 6);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(4, 5);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(1065, 40);
             this.flowLayoutPanel2.TabIndex = 154;
@@ -803,7 +759,7 @@
             // button8
             // 
             this.button8.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button8.CustomColor = System.Drawing.Color.DarkGreen;
+            this.button8.CustomColor = System.Drawing.Color.Purple;
             this.button8.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.ForeColor = System.Drawing.Color.White;
@@ -814,9 +770,28 @@
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(32, 35);
             this.button8.TabIndex = 36;
-            this.button8.Tag = "Rescue tools";
+            this.button8.Tag = "SOS";
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(84)))), ((int)(((byte)(204)))));
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Image = null;
+            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageGlyph")));
+            this.button1.ImageGlyphEnabled = true;
+            this.button1.Location = new System.Drawing.Point(489, 3);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(32, 35);
+            this.button1.TabIndex = 36;
+            this.button1.Tag = "Compact\\Expand layout";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Button39
             // 
@@ -852,7 +827,7 @@
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(32, 35);
             this.Button6.TabIndex = 11;
-            this.Button6.Tag = "What\'s new";
+            this.Button6.Tag = "Releases (To see changelog)";
             this.Button6.UseVisualStyleBackColor = false;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
             // 
@@ -909,7 +884,7 @@
             this.userButton.Image = null;
             this.userButton.ImageGlyph = null;
             this.userButton.ImageGlyphEnabled = false;
-            this.userButton.Location = new System.Drawing.Point(1126, 1);
+            this.userButton.Location = new System.Drawing.Point(1126, 0);
             this.userButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.userButton.Name = "userButton";
             this.userButton.Size = new System.Drawing.Size(50, 50);
@@ -917,6 +892,25 @@
             this.userButton.Tag = "";
             this.userButton.UseVisualStyleBackColor = false;
             this.userButton.Click += new System.EventHandler(this.userButton_Click);
+            // 
+            // winEdition
+            // 
+            this.winEdition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.winEdition.CustomColor = System.Drawing.Color.Empty;
+            this.winEdition.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.winEdition.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.winEdition.ForeColor = System.Drawing.Color.White;
+            this.winEdition.Image = null;
+            this.winEdition.ImageGlyph = null;
+            this.winEdition.ImageGlyphEnabled = false;
+            this.winEdition.Location = new System.Drawing.Point(1076, 0);
+            this.winEdition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.winEdition.Name = "winEdition";
+            this.winEdition.Size = new System.Drawing.Size(50, 50);
+            this.winEdition.TabIndex = 155;
+            this.winEdition.Tag = "";
+            this.winEdition.UseVisualStyleBackColor = false;
+            this.winEdition.Click += new System.EventHandler(this.winEdition_Click);
             // 
             // Home
             // 
@@ -980,7 +974,6 @@
         private UI.WP.Card card10;
         private UI.WP.GroupBox bottom_buttons;
         internal UI.WP.Button apply_btn;
-        internal UI.WP.Button button41;
         internal UI.WP.Button Button13;
         internal UI.WP.Button restartExplorer_btn;
         internal UI.WP.Button Button28;
@@ -998,7 +991,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private UI.WP.SeparatorV separatorV2;
         internal UI.WP.Button winEdition;
-        private System.Windows.Forms.Panel panel1;
         private UI.WP.LabelAlt labelAlt1;
         private UI.WP.LabelAlt labelAlt2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
@@ -1007,5 +999,7 @@
         private UI.WP.Card card13;
         private UI.WP.Card card14;
         internal UI.WP.Button button1;
+        private UI.WP.Card card15;
+        public System.Windows.Forms.Panel panel1;
     }
 }

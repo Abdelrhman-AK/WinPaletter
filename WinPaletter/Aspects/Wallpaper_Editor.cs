@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -24,8 +23,8 @@ namespace WinPaletter
         private Bitmap img_untouched_forTint, img_tinted, img_tinted_filled, img_tinted_tile;
 
         private int index = 0;
-        private List<string> ImgLs1 = new();
-        private List<string> ImgLs2 = new();
+        private readonly List<string> ImgLs1 = [];
+        private readonly List<string> ImgLs2 = [];
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
@@ -52,7 +51,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -90,7 +89,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Wallpaper)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -134,7 +133,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Store_Toggle_Wallpaper,
+                AspectName = Program.Lang.Strings.Aspects.Wallpaper,
                 Enabled = Program.TM.Wallpaper.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -164,44 +163,44 @@ namespace WinPaletter
             {
                 case WindowStyle.W12:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win12);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W12);
                         break;
                     }
 
                 case WindowStyle.W11:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win11);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W11);
                         break;
                     }
                 case WindowStyle.W10:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win10);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W10);
                         break;
                     }
                 case WindowStyle.W81:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win81);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W81);
                         break;
                     }
                 case WindowStyle.W7:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_Win7);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W7);
                         break;
                     }
                 case WindowStyle.WVista:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_WinVista);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.WVista);
                         break;
                     }
                 case WindowStyle.WXP:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_WinXP);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.WXP);
                         break;
                     }
 
                 default:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.WallpaperTone_Notice, Program.Lang.OS_WinUndefined);
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.Undefined);
                         break;
                     }
             }
@@ -209,7 +208,7 @@ namespace WinPaletter
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 Focus();
                 BringToFront();
@@ -373,7 +372,7 @@ namespace WinPaletter
             }
 
             TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = TextBox2.Text;
-            TM.Wallpaper.Wallpaper_Slideshow_Images = new string[] { };
+            TM.Wallpaper.Wallpaper_Slideshow_Images = [];
             TM.Wallpaper.Wallpaper_Slideshow_Images = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
 
             TM.Wallpaper.Wallpaper_Slideshow_Interval = trackBarX1.Value;
@@ -444,7 +443,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -481,7 +480,7 @@ namespace WinPaletter
             }
             else
             {
-                using (System.Windows.Forms.FolderBrowserDialog dlg = new())
+                using (FolderBrowserDialog dlg = new())
                 {
                     if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
                 }
@@ -490,7 +489,7 @@ namespace WinPaletter
 
         private void Button18_Click(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Multiselect = true, Title = Program.Lang.Filter_OpenImagesFiles })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Multiselect = true, Title = Program.Lang.Strings.Extensions.OpenImagesFiles })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -762,7 +761,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Color clr = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Color clr = Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     pnl_preview.BackColor = clr;
@@ -778,7 +777,7 @@ namespace WinPaletter
             };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
-            ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
+            ((ColorItem)sender).BackColor = Color.FromArgb(255, C);
 
             CList.Clear();
         }
@@ -867,14 +866,14 @@ namespace WinPaletter
                         img_tinted_tile = img_tinted.Tile(pnl_preview.Size);
                     }
 
-                    this.Invoke(ApplyPreviewStyle);
+                    Invoke(ApplyPreviewStyle);
                 }
             });
         }
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_SavePNG })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.SavePNG })
             {
                 if (File.Exists(TextBox3.Text) && dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -897,7 +896,7 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -975,7 +974,7 @@ namespace WinPaletter
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

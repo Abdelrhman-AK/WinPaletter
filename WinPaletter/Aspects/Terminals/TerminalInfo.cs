@@ -19,7 +19,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (WindowsTerminal formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<WindowsTerminal>();
         }
 
         public DialogResult OpenDialog(bool IsDefault = false)
@@ -54,7 +54,7 @@ namespace WinPaletter
 
             if (Forms.WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) & !((Forms.WindowsTerminal.TerProfiles.SelectedItem.ToString().ToLower() ?? string.Empty) == (TerName.Text.ToLower() ?? string.Empty)))
             {
-                MsgBox(Program.Lang.Terminal_alreadyset, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Terminals.Name_AlreadySet, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -93,7 +93,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Color cx = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender, true);
+                Color cx = Forms.SubMenu.ShowMenu((ColorItem)sender, true);
 
                 WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
                     Forms.WindowsTerminal._Terminal.Profiles.Defaults :
@@ -125,7 +125,7 @@ namespace WinPaletter
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_OpenPNG })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.OpenPNG })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

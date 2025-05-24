@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Serilog.4.3.0-dev-02358\build\Serilog.props" Condition="Exists('..\packages\Serilog.4.3.0-dev-02358\build\Serilog.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,7 +12,7 @@
     <AssemblyName>WinPaletter</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -99,7 +100,6 @@
       <HintPath>..\packages\CommandLineParser.2.9.1\lib\net461\CommandLine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CustomMarshalers" />
     <Reference Include="Cyotek.Windows.Forms.ColorPicker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=58daa28b0b2de221, processorArchitecture=MSIL">
       <HintPath>..\packages\Cyotek.Windows.Forms.ColorPicker.2.0.0-beta.7\lib\net472\Cyotek.Windows.Forms.ColorPicker.dll</HintPath>
       <Private>False</Private>
@@ -108,8 +108,8 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FluentTransitions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentTransitions.2.0.1\lib\net45\FluentTransitions.dll</HintPath>
+    <Reference Include="FluentTransitions, Version=2.0.2.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentTransitions.2.0.2\lib\net48\FluentTransitions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
@@ -128,32 +128,34 @@
       <HintPath>packages\Ookii.Dialogs.WinForms.4.0.0\lib\net462\Ookii.Dialogs.WinForms.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="PresentationCore">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PresentationFramework" />
     <Reference Include="Ressy, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Ressy.1.0.3\lib\net461\Ressy.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Serilog, Version=4.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.4.3.0-dev-02358\lib\net471\Serilog.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Serilog.Formatting.Compact, Version=3.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.3.0.0\lib\net471\Serilog.Formatting.Compact.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.7.0.0\lib\net471\Serilog.Sinks.File.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Deployment">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Design">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Desktop\New folder\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing">
       <Private>False</Private>
@@ -165,61 +167,16 @@
     <Reference Include="System.Management">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Numerics">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Resources.Extensions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Resources.Extensions.9.0.0-preview.2.24128.5\lib\net462\System.Resources.Extensions.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Security">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceProcess">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Windows.Forms.DataVisualization" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Core">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Net.Http">
       <Private>False</Private>
     </Reference>
-    <Reference Include="WindowsBase">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -259,6 +216,12 @@
     <None Include="Resources\luna.zip" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aspects\AccessibilityEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Aspects\AccessibilityEditor.Designer.cs">
+      <DependentUpon>AccessibilityEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Aspects\WindowsColors\VisualStyles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -380,12 +343,6 @@
     <Compile Include="Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\UserPassword.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\UserPassword.Designer.cs">
-      <DependentUpon>UserPassword.cs</DependentUpon>
-    </Compile>
     <Compile Include="Aspects\ScreenSavers_List.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -395,8 +352,12 @@
     <Compile Include="GUI\Elements\AdvancedControls\Magnifier.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Languages\Localizer\Strings\General\Filters.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Extensions.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
+    <Compile Include="Languages\Localizer\Strings.cs" />
+    <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
+    <Compile Include="Program\NativeMethods\Credui.cs" />
+    <Compile Include="Program\NativeMethods\SrClient.cs" />
     <Compile Include="Program\TypesExtensions\Types.cs" />
     <Compile Include="SecureUxTheme\SecureUxTheme.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
@@ -408,6 +369,12 @@
     </Compile>
     <Compile Include="SecureUxTheme\SecureUxTheme_Setup.Designer.cs">
       <DependentUpon>SecureUxTheme_Setup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\Setup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\Setup.Designer.cs">
+      <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
     <Compile Include="Tabs\TabData.cs" />
     <Compile Include="Tabs\TabsContainer.cs">
@@ -458,7 +425,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Backup.cs" />
-    <Compile Include="Languages\Localizer\Strings\General\PaletteGenerator.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\Animation.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\CubicBezierTimingFunction.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\Margins.cs" />
@@ -511,15 +477,15 @@
       <DependentUpon>TestControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Languages\Localizer\Strings\Features\Features.cs" />
-    <Compile Include="Languages\Localizer\Strings\General\Designers.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Previewer.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Languages.cs" />
-    <Compile Include="Languages\Localizer\Strings\Features\Consoles.cs" />
+    <Compile Include="Languages\Localizer\Strings\Features\Consoles_Cls.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tips.cs" />
-    <Compile Include="Languages\Localizer\Strings\LanguageInfo.cs" />
+    <Compile Include="Languages\Localizer\LanguageInfo.cs" />
     <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Tips.cs" />
     <Compile Include="Languages\Localizer\Strings\Features\WinTerminals.cs" />
     <Compile Include="Languages\Localizer\Strings\Features\W10xLegends.cs" />
-    <Compile Include="Languages\Localizer\Strings\Features\Store.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\Store.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Converter.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Users.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Services.cs" />
@@ -532,7 +498,7 @@
     <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Errors.cs" />
     <Compile Include="Languages\Localizer\Strings\Verbose\Verbose_Applying.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Messages.cs" />
-    <Compile Include="Languages\Localizer\Strings\General\WindowsEditions.cs" />
+    <Compile Include="Languages\Localizer\Strings\General\WindowsEditions_Cls.cs" />
     <Compile Include="Languages\Localizer\Strings\General\AppGeneral.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\BitmapOps.cs" />
     <Compile Include="Program\Assemblies\AnimatedCursors\BooleanBitArray.cs" />
@@ -574,11 +540,11 @@
     <Compile Include="Dialogs\SysEventsSndsInstaller.Designer.cs">
       <DependentUpon>SysEventsSndsInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\RescueTools.cs">
+    <Compile Include="Dialogs\SOS.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\RescueTools.Designer.cs">
-      <DependentUpon>RescueTools.cs</DependentUpon>
+    <Compile Include="Dialogs\SOS.Designer.cs">
+      <DependentUpon>SOS.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ThemeLog.cs">
       <SubType>Form</SubType>
@@ -684,6 +650,7 @@
     <Compile Include="Theme\Save.cs" />
     <Compile Include="Theme\Structures\Others\Cursors.cs" />
     <Compile Include="Theme\Structures\Others\Icons.cs" />
+    <Compile Include="Theme\Structures\Others\Accessibility.cs" />
     <Compile Include="Theme\Structures\WindowsColors\VisualStyles.cs" />
     <Compile Include="Theme\Support\CloneSupport.cs" />
     <Compile Include="Theme\Support\DisposeSupport.cs" />
@@ -882,10 +849,10 @@
     <Compile Include="GUI\Elements\Trackbars\ColorBar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Languages\Lang_JSON_GUI.Designer.cs">
-      <DependentUpon>Lang_JSON_GUI.cs</DependentUpon>
+    <Compile Include="Languages\Lang_Editor.Designer.cs">
+      <DependentUpon>Lang_Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Languages\Lang_JSON_GUI.cs">
+    <Compile Include="Languages\Lang_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Languages\Lang_ReplaceText.Designer.cs">
@@ -947,24 +914,6 @@
       <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
     </Compile>
     <Compile Include="Languages\Lang_Add_Snippet.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Languages\Lang_Dashboard.Designer.cs">
-      <DependentUpon>Lang_Dashboard.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Languages\Lang_Dashboard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Languages\Lang_JSON_Manage.Designer.cs">
-      <DependentUpon>Lang_JSON_Manage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Languages\Lang_JSON_Manage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Languages\Lang_JSON_Update.Designer.cs">
-      <DependentUpon>Lang_JSON_Update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Languages\Lang_JSON_Update.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Languages\Localizer\Localizer.cs" />
@@ -1133,12 +1082,6 @@
     <Compile Include="Updates\Updates.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Updates\Whatsnew.Designer.cs">
-      <DependentUpon>Whatsnew.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Updates\Whatsnew.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Aspects\Wallpaper_Editor.Designer.cs">
       <DependentUpon>Wallpaper_Editor.cs</DependentUpon>
     </Compile>
@@ -1221,11 +1164,15 @@
   <ItemGroup>
     <Content Include="Icon.ico" />
     <Content Include="Resources\LICENSE.txt" />
+    <None Include="Resources\Restorepoint.png" />
     <None Include="Resources\MetricsFontsDB" />
     <None Include="Resources\SecureUxTheme.zip" />
     <None Include="Resources\WinPaletter.SysEventsSounds.exe" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Aspects\AccessibilityEditor.resx">
+      <DependentUpon>AccessibilityEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WindowsColors\VisualStyles.resx">
       <DependentUpon>VisualStyles.cs</DependentUpon>
     </EmbeddedResource>
@@ -1304,6 +1251,9 @@
     <EmbeddedResource Include="Dialogs\WinEffectsAlert.resx">
       <DependentUpon>WinEffectsAlert.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\GlassWindow.resx">
+      <DependentUpon>GlassWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
@@ -1316,14 +1266,11 @@
     <EmbeddedResource Include="Dialogs\PE_Warning.resx">
       <DependentUpon>PE_Warning.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\RescueTools.resx">
-      <DependentUpon>RescueTools.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\SOS.resx">
+      <DependentUpon>SOS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ThemeLog.resx">
       <DependentUpon>ThemeLog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\UserPassword.resx">
-      <DependentUpon>UserPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\UserSwitch.resx">
       <DependentUpon>UserSwitch.cs</DependentUpon>
@@ -1371,20 +1318,11 @@
     <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
       <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Languages\Lang_Dashboard.resx">
-      <DependentUpon>Lang_Dashboard.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Languages\Lang_JSON_Manage.resx">
-      <DependentUpon>Lang_JSON_Manage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Languages\Lang_JSON_Update.resx">
-      <DependentUpon>Lang_JSON_Update.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Languages\Lang_JSON_GUI.resx">
-      <DependentUpon>Lang_JSON_GUI.cs</DependentUpon>
+    <EmbeddedResource Include="Languages\Lang_Editor.resx">
+      <DependentUpon>Lang_Editor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_ReplaceText.resx">
@@ -1434,6 +1372,9 @@
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\Setup.resx">
+      <DependentUpon>Setup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\Uninstall.resx">
       <DependentUpon>Uninstall.cs</DependentUpon>
@@ -1507,9 +1448,6 @@
     <EmbeddedResource Include="Updates\Updates.resx">
       <DependentUpon>Updates.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Updates\Whatsnew.resx">
-      <DependentUpon>Whatsnew.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Aspects\Wallpaper_Editor.resx">
       <DependentUpon>Wallpaper_Editor.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1556,4 +1494,12 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets'))" />
+    <Error Condition="!Exists('..\packages\Serilog.4.3.0-dev-02358\build\Serilog.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Serilog.4.3.0-dev-02358\build\Serilog.props'))" />
+  </Target>
 </Project>

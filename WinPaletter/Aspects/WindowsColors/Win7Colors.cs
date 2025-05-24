@@ -24,11 +24,11 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -56,13 +56,13 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -98,7 +98,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = string.Format(Program.Lang.WindowsColors, OS.Name),
+                AspectName = string.Format(Program.Lang.Strings.Aspects.WinTheme, OS.Name),
                 Enabled = Program.TM.Windows7.Enabled,
                 GeneratePalette = true,
                 GenerateMSTheme = false,
@@ -126,7 +126,7 @@ namespace WinPaletter
             ApplyDefaultTMValues();
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Windows7.Enabled;
             ColorizationColor_pick.BackColor = TM.Windows7.ColorizationColor;
@@ -171,7 +171,7 @@ namespace WinPaletter
             RefreshDWM();
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.Windows7.Enabled = AspectEnabled;
             TM.Windows7.ColorizationColor = ColorizationColor_pick.BackColor;
@@ -202,7 +202,7 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            using (Theme.Manager DefTM = Theme.Default.Get(WindowStyle.W7))
+            using (Manager DefTM = Theme.Default.Get(WindowStyle.W7))
             {
                 ColorizationColor_pick.DefaultBackColor = DefTM.Windows7.ColorizationColor;
                 ColorizationAfterglow_pick.DefaultBackColor = DefTM.Windows7.ColorizationAfterglow;
@@ -215,7 +215,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_SavePNG })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.SavePNG })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -633,11 +633,11 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.TitlebarColor_Active = ((UI.Controllers.ColorItem)sender).BackColor;
-                    windowsDesktop1.TitlebarColor_Inactive = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.TitlebarColor_Active = ((ColorItem)sender).BackColor;
+                    windowsDesktop1.TitlebarColor_Inactive = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -661,11 +661,11 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.AfterGlowColor_Active = ((UI.Controllers.ColorItem)sender).BackColor;
-                    windowsDesktop1.AfterGlowColor_Inactive = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.AfterGlowColor_Active = ((ColorItem)sender).BackColor;
+                    windowsDesktop1.AfterGlowColor_Inactive = ((ColorItem)sender).BackColor;
                 }
                 return;
             }

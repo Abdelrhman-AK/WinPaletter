@@ -10,15 +10,17 @@ using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
+    /// <summary>
+    /// String Extensions Class
+    /// </summary>
     public static class StringExtensions
     {
 
         /// <summary>
         /// Return Color From HEX String
         /// </summary>
-        public static Color FromHEXToColor(this string String, bool Alpha = false)
+        public static Color ToColorFromHex(this string String, bool Alpha = false)
         {
-
             try
             {
                 if (!Alpha)
@@ -34,13 +36,12 @@ namespace WinPaletter.TypesExtensions
             {
                 return Color.Empty;
             }
-
         }
 
         /// <summary>
         /// Return Color From Reg String String
         /// </summary>
-        public static Color FromWin32RegToColor(this string String)
+        public static Color ToColorFromWin32(this string String)
         {
             try
             {
@@ -89,13 +90,21 @@ namespace WinPaletter.TypesExtensions
             return System.Windows.Forms.TextRenderer.MeasureText(text, font, new Size(maxWidth, int.MaxValue), TextFormatFlags.WordBreak);
         }
 
-
-        public static string PhrasePath(this string path)
+        /// <summary>
+        /// Convert environment variables to their values
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string ExpandEnvironmentVariables(this string path)
         {
             return Environment.ExpandEnvironmentVariables(path.Replace("%WinDir%", @"%windir%\").Replace("%ThemeDir%", @"%ThemeDir%\").Replace(@"\\", @"\").Replace("%ThemeDir%", $@"{SysPaths.ProgramFiles}\Plus!\Themes"));
         }
 
-
+        /// <summary>
+        /// Convert string to byte array
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static byte[] ToBytes(this string str)
         {
             string[] numChars = str.Split(' ');
@@ -112,7 +121,11 @@ namespace WinPaletter.TypesExtensions
             return result;
         }
 
-
+        /// <summary>
+        /// Compress a string using DeflateStream
+        /// </summary>
+        /// <param name="uncompressedString"></param>
+        /// <returns></returns>
         public static string Compress(this string uncompressedString)
         {
             byte[] compressedBytes;
@@ -132,7 +145,11 @@ namespace WinPaletter.TypesExtensions
             return Convert.ToBase64String(compressedBytes);
         }
 
-
+        /// <summary>
+        /// Decompress a string using DeflateStream
+        /// </summary>
+        /// <param name="compressedString"></param>
+        /// <returns></returns>
         public static string Decompress(this string compressedString)
         {
             byte[] decompressedBytes;
@@ -150,7 +167,15 @@ namespace WinPaletter.TypesExtensions
             return Encoding.UTF8.GetString(decompressedBytes);
         }
 
-
+        /// <summary>
+        /// Replace a word in a string with another word with the option to ignore case and whole word
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="word"></param>
+        /// <param name="by"></param>
+        /// <param name="stringComparison"></param>
+        /// <param name="WholeWord"></param>
+        /// <returns></returns>
         public static string Replace(this string s, string word, string by, StringComparison stringComparison, bool WholeWord)
         {
             s += " ";
@@ -161,7 +186,7 @@ namespace WinPaletter.TypesExtensions
                 wordSt = s.IndexOf(word, stringComparison);
                 if (!WholeWord || (wordSt == 0 || !char.IsLetterOrDigit(char.Parse(s.Substring(wordSt - 1, 1)))) && !char.IsLetterOrDigit(char.Parse(s.Substring(wordSt + word.Length, 1))))
                 {
-                    sb.Append($"{(s.Substring(0, wordSt))}{by}");
+                    sb.Append($"{s.Substring(0, wordSt)}{by}");
                 }
                 else
                 {
@@ -173,7 +198,15 @@ namespace WinPaletter.TypesExtensions
             return sb.ToString().Substring(0, sb.Length - 1);
         }
 
-
+        /// <summary>
+        /// Replace a word in a string with another word with the option to ignore case and whole word
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="word"></param>
+        /// <param name="by"></param>
+        /// <param name="IgnoreCase"></param>
+        /// <param name="WholeWord"></param>
+        /// <returns></returns>
         public static string Replace(this string s, string word, string by, bool IgnoreCase, bool WholeWord)
         {
             StringComparison stringComparison = StringComparison.Ordinal;

@@ -2,13 +2,18 @@
 {
     public partial class Localizer
     {
-        public string Tab_Context_CloseAll { get; set; } = "Close all";
-        public string Tab_Context_CloseOthers { get; set; } = "Close all but this";
-        public string Tab_Context_CloseToTheRight { get; set; } = "Close all to the right";
-        public string Tab_Context_CloseToTheLeft { get; set; } = "Close all to the left";
-        public string Tab_Context_Detach { get; set; } = "Detach";
-        public string Tab_Context_DetachAll { get; set; } = "Detach all";
-        public string Tab_Context_DetachOthers { get; set; } = "Detach all but this";
-        public string OpenTabs_Close { get; set; } = "There are open forms in tabs. Do you want to exit WinPaletter anyway?";
+        public partial class Strings_Cls
+        {
+            public partial class Tabs_Cls
+            {
+                public string Context_CloseAll { get; set; } = "Close all";
+                public string Context_CloseOthers { get; set; } = "Close all but this";
+                public string Context_CloseToTheRight { get; set; } = "Close all to the right";
+                public string Context_CloseToTheLeft { get; set; } = "Close all to the left";
+                public string Context_Detach { get; set; } = "Detach";
+                public string Context_DetachAll { get; set; } = "Detach all";
+                public string Context_DetachOthers { get; set; } = "Detach all but this";
+            }
+        }
     }
 }

@@ -20,11 +20,11 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -52,13 +52,13 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -100,7 +100,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = string.Format(Program.Lang.WindowsColors, OS.Name),
+                AspectName = string.Format(Program.Lang.Strings.Aspects.WinTheme, OS.Name),
                 Enabled = Program.TM.Windows11.Enabled,
                 GeneratePalette = true,
                 GenerateMSTheme = false,
@@ -127,7 +127,7 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
 
-            ToolStripMenuItem item = new(string.Format(Program.Lang.CopycatFrom, Program.Lang.OS_Win10));
+            ToolStripMenuItem item = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W10));
             item.Click += Item_Click;
             easy_generator.Menu.Items.Add(item);
         }
@@ -135,16 +135,16 @@ namespace WinPaletter
         private void Item_Click(object sender, EventArgs e)
         {
             // Copycat from Windows 10 colors
-            using (Theme.Manager TMx = new(Manager.Source.Empty))
+            using (Manager TMx = new(Manager.Source.Empty))
             {
                 TMx.Windows11 = (Theme.Structures.Windows10x)Program.TM.Windows10.Clone();
-                LoadFromTM((Theme.Manager)TMx.Clone());
+                LoadFromTM((Manager)TMx.Clone());
 
-                Program.ToolTip.Show(easy_generator, Program.Lang.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+                Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
             }
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Windows11.Enabled;
             theme_aero.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.Aero;
@@ -188,7 +188,7 @@ namespace WinPaletter
             UpdateLegends();
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.Windows11.Enabled = AspectEnabled;
 
@@ -220,7 +220,7 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            using (Theme.Manager DefTM = Theme.Default.Get(WindowStyle.W11))
+            using (Manager DefTM = Theme.Default.Get(WindowStyle.W11))
             {
                 TActive.DefaultBackColor = DefTM.Windows11.Titlebar_Active;
                 TInactive.DefaultBackColor = DefTM.Windows11.Titlebar_Inactive;
@@ -250,7 +250,7 @@ namespace WinPaletter
 
         private void UpdateLegends()
         {
-            using (Theme.Manager TMx = new(Manager.Source.Empty))
+            using (Manager TMx = new(Manager.Source.Empty))
             {
                 ApplyToTM(TMx);
                 ApplyWin10xLegends(TMx, WindowStyle.W11, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8, lbl9, pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9);
@@ -262,10 +262,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.TitlebarColor_Active = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.TitlebarColor_Active = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -289,10 +289,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.TitlebarColor_Inactive = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.TitlebarColor_Inactive = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -467,10 +467,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color1 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color1 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -494,10 +494,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color2 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color2 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -521,10 +521,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color3 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color3 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -548,10 +548,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color4 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color4 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -575,10 +575,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color5 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color5 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -602,10 +602,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color6 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color6 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -629,10 +629,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color7 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color7 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -656,10 +656,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color8 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color8 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -683,10 +683,10 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
-                    windowsDesktop1.Color9 = ((UI.Controllers.ColorItem)sender).BackColor;
+                    windowsDesktop1.Color9 = ((ColorItem)sender).BackColor;
                 }
                 return;
             }
@@ -810,8 +810,8 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            Program.ToolTip.ToolTipText = Program.Lang.TitlebarColorNotice;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
+            Program.ToolTip.ToolTipText = Program.Lang.Strings.Tips.TitlebarColorNotice;
+            Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
             Program.ToolTip.Image = Assets.Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -854,26 +854,26 @@ namespace WinPaletter
                 {
                     if (AdvancedMode)
                     {
-                        CList.Add(TActive, new string[] { nameof(TActive.BackColor) });
-                        CList.Add(easy_activetitle, new string[] { nameof(easy_activetitle.BackColor) });
+                        CList.Add(TActive, [nameof(TActive.BackColor)]);
+                        CList.Add(easy_activetitle, [nameof(easy_activetitle.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(easy_activetitle, new string[] { nameof(easy_activetitle.BackColor) });
-                        CList.Add(TActive, new string[] { nameof(TActive.BackColor) });
+                        CList.Add(easy_activetitle, [nameof(easy_activetitle.BackColor)]);
+                        CList.Add(TActive, [nameof(TActive.BackColor)]);
                     }
                 }
                 else if (e.PropertyName.ToLower() == nameof(windowsDesktop1.TitlebarColor_Inactive).ToLower())
                 {
                     if (AdvancedMode)
                     {
-                        CList.Add(TInactive, new string[] { nameof(TInactive.BackColor) });
-                        CList.Add(easy_inactivetitle, new string[] { nameof(easy_inactivetitle.BackColor) });
+                        CList.Add(TInactive, [nameof(TInactive.BackColor)]);
+                        CList.Add(easy_inactivetitle, [nameof(easy_inactivetitle.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(easy_inactivetitle, new string[] { nameof(easy_inactivetitle.BackColor) });
-                        CList.Add(TInactive, new string[] { nameof(TInactive.BackColor) });
+                        CList.Add(easy_inactivetitle, [nameof(easy_inactivetitle.BackColor)]);
+                        CList.Add(TInactive, [nameof(TInactive.BackColor)]);
                     }
                 }
 
@@ -889,36 +889,36 @@ namespace WinPaletter
 
             else if (e.PropertyName.ToLower() == "Windows10x_StartColor".ToLower() || e.PropertyName.ToLower() == "Windows10x_ActionCenterColor".ToLower())
             {
-                Dictionary<Control, string[]> CList = new();
+                Dictionary<Control, string[]> CList = [];
 
                 if (WinMode_Toggle.Checked)
                 {
-                    CList.Add(windowsDesktop1, new string[] { nameof(windowsDesktop1.Color1) });
+                    CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color1)]);
 
                     if (AdvancedMode)
                     {
-                        CList.Add(C1, new string[] { nameof(C1.BackColor) });
-                        CList.Add(e1, new string[] { nameof(e1.BackColor) });
+                        CList.Add(C1, [nameof(C1.BackColor)]);
+                        CList.Add(e1, [nameof(e1.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e1, new string[] { nameof(e1.BackColor) });
-                        CList.Add(C1, new string[] { nameof(C1.BackColor) });
+                        CList.Add(e1, [nameof(e1.BackColor)]);
+                        CList.Add(C1, [nameof(C1.BackColor)]);
                     }
                 }
                 else
                 {
-                    CList.Add(windowsDesktop1, new string[] { nameof(windowsDesktop1.Color2) });
+                    CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color2)]);
 
                     if (AdvancedMode)
                     {
-                        CList.Add(C2, new string[] { nameof(C2.BackColor) });
-                        CList.Add(e2, new string[] { nameof(e2.BackColor) });
+                        CList.Add(C2, [nameof(C2.BackColor)]);
+                        CList.Add(e2, [nameof(e2.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e2, new string[] { nameof(e2.BackColor) });
-                        CList.Add(C2, new string[] { nameof(C2.BackColor) });
+                        CList.Add(e2, [nameof(e2.BackColor)]);
+                        CList.Add(C2, [nameof(C2.BackColor)]);
                     }
                 }
 
@@ -938,13 +938,13 @@ namespace WinPaletter
 
                 if (AdvancedMode)
                 {
-                    CList.Add(C1, new string[] { nameof(C1.BackColor) });
-                    CList.Add(e1, new string[] { nameof(e1.BackColor) });
+                    CList.Add(C1, [nameof(C1.BackColor)]);
+                    CList.Add(e1, [nameof(e1.BackColor)]);
                 }
                 else
                 {
-                    CList.Add(e1, new string[] { nameof(e1.BackColor) });
-                    CList.Add(C1, new string[] { nameof(C1.BackColor) });
+                    CList.Add(e1, [nameof(e1.BackColor)]);
+                    CList.Add(C1, [nameof(C1.BackColor)]);
                 }
 
                 Color C = Forms.ColorPickerDlg.Pick(CList);
@@ -959,36 +959,36 @@ namespace WinPaletter
 
             else if (e.PropertyName.ToLower() == "Windows10x_TaskbarAppUnderlineColor".ToLower())
             {
-                Dictionary<Control, string[]> CList = new();
+                Dictionary<Control, string[]> CList = [];
 
                 if (WinMode_Toggle.Checked)
                 {
-                    CList.Add(windowsDesktop1, new string[] { nameof(windowsDesktop1.Color3) });
+                    CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color3)]);
 
                     if (AdvancedMode)
                     {
-                        CList.Add(C3, new string[] { nameof(C3.BackColor) });
-                        CList.Add(e3, new string[] { nameof(e3.BackColor) });
+                        CList.Add(C3, [nameof(C3.BackColor)]);
+                        CList.Add(e3, [nameof(e3.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e3, new string[] { nameof(e3.BackColor) });
-                        CList.Add(C3, new string[] { nameof(C3.BackColor) });
+                        CList.Add(e3, [nameof(e3.BackColor)]);
+                        CList.Add(C3, [nameof(C3.BackColor)]);
                     }
                 }
                 else
                 {
-                    CList.Add(windowsDesktop1, new string[] { nameof(windowsDesktop1.Color4) });
+                    CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color4)]);
 
                     if (AdvancedMode)
                     {
-                        CList.Add(C4, new string[] { nameof(C4.BackColor) });
-                        CList.Add(e4, new string[] { nameof(e4.BackColor) });
+                        CList.Add(C4, [nameof(C4.BackColor)]);
+                        CList.Add(e4, [nameof(e4.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e4, new string[] { nameof(e4.BackColor) });
-                        CList.Add(C4, new string[] { nameof(C4.BackColor) });
+                        CList.Add(e4, [nameof(e4.BackColor)]);
+                        CList.Add(C4, [nameof(C4.BackColor)]);
                     }
                 }
 
@@ -1008,13 +1008,13 @@ namespace WinPaletter
 
                 if (AdvancedMode)
                 {
-                    CList.Add(C5, new string[] { nameof(C5.BackColor) });
-                    CList.Add(e5, new string[] { nameof(e5.BackColor) });
+                    CList.Add(C5, [nameof(C5.BackColor)]);
+                    CList.Add(e5, [nameof(e5.BackColor)]);
                 }
                 else
                 {
-                    CList.Add(e5, new string[] { nameof(e5.BackColor) });
-                    CList.Add(C5, new string[] { nameof(C5.BackColor) });
+                    CList.Add(e5, [nameof(e5.BackColor)]);
+                    CList.Add(C5, [nameof(C5.BackColor)]);
                 }
 
                 Color C = Forms.ColorPickerDlg.Pick(CList);
@@ -1029,36 +1029,36 @@ namespace WinPaletter
 
             else if (e.PropertyName.ToLower() == WindowsDesktop.prop_linksColor.ToLower())
             {
-                Dictionary<Control, string[]> CList = new();
+                Dictionary<Control, string[]> CList = [];
 
                 if (WinMode_Toggle.Checked)
                 {
-                    CList.Add(windowsDesktop1, new string[] { nameof(windowsDesktop1.Color2) });
+                    CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color2)]);
 
                     if (AdvancedMode)
                     {
-                        CList.Add(C2, new string[] { nameof(C2.BackColor) });
-                        CList.Add(e2, new string[] { nameof(e2.BackColor) });
+                        CList.Add(C2, [nameof(C2.BackColor)]);
+                        CList.Add(e2, [nameof(e2.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e2, new string[] { nameof(e2.BackColor) });
-                        CList.Add(C2, new string[] { nameof(C2.BackColor) });
+                        CList.Add(e2, [nameof(e2.BackColor)]);
+                        CList.Add(C2, [nameof(C2.BackColor)]);
                     }
                 }
                 else
                 {
-                    CList.Add(windowsDesktop1, new string[] { nameof(windowsDesktop1.Color1) });
+                    CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color1)]);
 
                     if (AdvancedMode)
                     {
-                        CList.Add(C1, new string[] { nameof(C1.BackColor) });
-                        CList.Add(e1, new string[] { nameof(e1.BackColor) });
+                        CList.Add(C1, [nameof(C1.BackColor)]);
+                        CList.Add(e1, [nameof(e1.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e1, new string[] { nameof(e1.BackColor) });
-                        CList.Add(C1, new string[] { nameof(C1.BackColor) });
+                        CList.Add(e1, [nameof(e1.BackColor)]);
+                        CList.Add(C1, [nameof(C1.BackColor)]);
                     }
                 }
 
@@ -1107,12 +1107,12 @@ namespace WinPaletter
             windowsDesktop1.Color8 = C8.BackColor;
             windowsDesktop1.Color9 = C9.BackColor;
 
-            Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Done, Program.Lang.ReadjustColor, null, new Point(2, ((UI.WP.Button)sender).Height + 2));
+            Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Strings.General.Done, Program.Lang.Strings.Messages.ReadjustColor, null, new Point(2, ((UI.WP.Button)sender).Height + 2));
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_SavePNG })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.SavePNG })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

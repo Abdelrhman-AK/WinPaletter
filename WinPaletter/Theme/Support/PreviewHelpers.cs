@@ -27,12 +27,12 @@ namespace WinPaletter
             W7,
             /// <summary>Windows Vista</summary>
             WVista,
-            /// <summary>Windows XP</summary>
+            /// <summary>Windows WXP</summary>
             WXP
         }
 
         /// <summary>
-        /// Change labels of Windows 11/10 in WinPaletter main form according to preview
+        /// Change labels of Windows 11/10 in their forms according to preview.
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="Style">Selected Windows edition</param>
@@ -56,16 +56,17 @@ namespace WinPaletter
         /// <param name="pic9"></param>
         public static void ApplyWin10xLegends(Theme.Manager TM, WindowStyle Style, Label lbl1, Label lbl2, Label lbl3, Label lbl4, Label lbl5, Label lbl6, Label lbl7, Label lbl8, Label lbl9, PictureBox pic1, PictureBox pic2, PictureBox pic3, PictureBox pic4, PictureBox pic5, PictureBox pic6, PictureBox pic7, PictureBox pic8, PictureBox pic9)
         {
-            if (ExplorerPatcher.IsAllowed()) Program.EP = new();
+            // Create new helper for Windows 11 Explorer patcher
+            if (ExplorerPatcher.CanBeUsed) Program.EP = new();
 
             switch (Style)
             {
                 case WindowStyle.W11:
                     {
-                        lbl6.Text = Program.Lang.TM_11_SomePressedButtons;
-                        lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win11);
-                        lbl8.Text = Program.Lang.TM_Undefined;
-                        lbl9.Text = Program.Lang.TM_Undefined;
+                        lbl6.Text = Program.Lang.Strings.Legends.TM_11_SomePressedButtons;
+                        lbl7.Text = string.Format(Program.Lang.Strings.Legends.TM_UWPBackground, Program.Lang.Strings.Windows.W11);
+                        lbl8.Text = Program.Lang.Strings.Legends.TM_Undefined;
+                        lbl9.Text = Program.Lang.Strings.Legends.TM_Undefined;
                         pic5.Image = Assets.Win10xLegends.Settings_Icons;
                         pic6.Image = Assets.Win10xLegends.PressedButton;
                         pic7.Image = Assets.Win10xLegends.UWPDlg;
@@ -76,11 +77,11 @@ namespace WinPaletter
                         {
                             case true:   // '''''''''DarkMode_App
                                 {
-                                    lbl1.Text = Program.Lang.TM_11_StartMenu_Taskbar_AC;
-                                    lbl2.Text = Program.Lang.TM_11_ACHover_Links;
-                                    lbl3.Text = Program.Lang.TM_11_Lines_Toggles_Buttons;
-                                    lbl4.Text = Program.Lang.TM_11_OverflowTray;
-                                    lbl5.Text = Program.Lang.TM_11_Settings;
+                                    lbl1.Text = Program.Lang.Strings.Legends.TM_11_StartMenu_Taskbar_AC;
+                                    lbl2.Text = Program.Lang.Strings.Legends.TM_11_ACHover_Links;
+                                    lbl3.Text = Program.Lang.Strings.Legends.TM_11_Lines_Toggles_Buttons;
+                                    lbl4.Text = Program.Lang.Strings.Legends.TM_11_OverflowTray;
+                                    lbl5.Text = Program.Lang.Strings.Legends.TM_11_Settings;
 
                                     pic1.Image = Assets.Win10xLegends.StartMenu_Taskbar_AC;
                                     pic2.Image = Assets.Win10xLegends.ACHover_Links;
@@ -90,11 +91,11 @@ namespace WinPaletter
                                 }
                             case false:   // '''''''''Light
                                 {
-                                    lbl1.Text = Program.Lang.TM_11_Taskbar_ACHover_Links;
-                                    lbl2.Text = Program.Lang.TM_11_StartMenu_AC;
-                                    lbl3.Text = Program.Lang.TM_11_UnreadBadge;
-                                    lbl4.Text = Program.Lang.TM_11_Lines_Toggles_Buttons_Overflow;
-                                    lbl5.Text = Program.Lang.TM_11_SettingsAndTaskbarAppUnderline;
+                                    lbl1.Text = Program.Lang.Strings.Legends.TM_11_Taskbar_ACHover_Links;
+                                    lbl2.Text = Program.Lang.Strings.Legends.TM_11_StartMenu_AC;
+                                    lbl3.Text = Program.Lang.Strings.Legends.TM_11_UnreadBadge;
+                                    lbl4.Text = Program.Lang.Strings.Legends.TM_11_Lines_Toggles_Buttons_Overflow;
+                                    lbl5.Text = Program.Lang.Strings.Legends.TM_11_SettingsAndTaskbarAppUnderline;
 
                                     pic1.Image = Assets.Win10xLegends.Taskbar;
                                     pic2.Image = Assets.Win10xLegends.StartMenu_Taskbar_AC;
@@ -104,7 +105,7 @@ namespace WinPaletter
                                 }
                         }
 
-                        if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.CanBeUsed)
                         {
                             switch (!TM.Windows11.WinMode_Light)
                             {
@@ -113,21 +114,21 @@ namespace WinPaletter
 
                                         if (Program.EP.UseTaskbar10)
                                         {
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_SomeBtns;
 
                                             if (Program.EP.UseStart10)
                                             {
-                                                lbl1.Text = Program.Lang.TM_10_Taskbar;
+                                                lbl1.Text = Program.Lang.Strings.Legends.TM_10_Taskbar;
                                                 pic1.Image = Assets.Win10xLegends.Taskbar;
                                             }
                                             else
                                             {
-                                                lbl1.Text = Program.Lang.TM_11_StartMenu_Taskbar_AC;
+                                                lbl1.Text = Program.Lang.Strings.Legends.TM_11_StartMenu_Taskbar_AC;
                                                 pic1.Image = Assets.Win10xLegends.StartMenu_Taskbar_AC;
                                             }
 
-                                            lbl3.Text = Program.Lang.TM_EP_ACButton_TaskbarAppLine;
-                                            lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_EP_ACButton_TaskbarAppLine;
+                                            lbl6.Text = Program.Lang.Strings.Legends.TM_10_StartMenuIconHover;
 
                                             pic3.Image = Assets.Win10xLegends.AC;
                                             pic5.Image = Assets.Win10xLegends.Settings_Icons;
@@ -136,7 +137,7 @@ namespace WinPaletter
 
                                         if (Program.EP.UseStart10)
                                         {
-                                            lbl4.Text = Program.Lang.TM_EP_StartMenu_OverflowMenus;
+                                            lbl4.Text = Program.Lang.Strings.Legends.TM_EP_StartMenu_OverflowMenus;
                                             pic4.Image = Assets.Win10xLegends.StartMenu;
                                         }
 
@@ -148,9 +149,9 @@ namespace WinPaletter
 
                                         if (Program.EP.UseTaskbar10)
                                         {
-                                            lbl3.Text = Program.Lang.TM_EP_Taskbar_AppUnderline;
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_EP_Taskbar_AppUnderline;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_SomeBtns;
+                                            lbl6.Text = Program.Lang.Strings.Legends.TM_10_StartMenuIconHover;
 
                                             pic3.Image = Assets.Win10xLegends.TaskbarApp;
                                             pic5.Image = Assets.Win10xLegends.Settings_Icons;
@@ -159,8 +160,8 @@ namespace WinPaletter
 
                                         if (Program.EP.UseStart10)
                                         {
-                                            lbl2.Text = Program.Lang.TM_EP_ActionCenterBackground;
-                                            lbl4.Text = Program.Lang.TM_EP_StartMenu_ActionCenterButtons;
+                                            lbl2.Text = Program.Lang.Strings.Legends.TM_EP_ActionCenterBackground;
+                                            lbl4.Text = Program.Lang.Strings.Legends.TM_EP_StartMenu_ActionCenterButtons;
                                             pic2.Image = Assets.Win10xLegends.AC;
                                             pic4.Image = Assets.Win10xLegends.StartMenu_Taskbar_AC;
                                         }
@@ -176,17 +177,17 @@ namespace WinPaletter
 
                 case WindowStyle.W10:
                     {
-                        lbl9.Text = Program.Lang.TM_Undefined;
+                        lbl9.Text = Program.Lang.Strings.Legends.TM_Undefined;
 
                         switch (!TM.Windows10.WinMode_Light)
                         {
                             case true: // '''''''''DarkMode_App
                                 {
-                                    lbl2.Text = Program.Lang.TM_10_ACLinks;
-                                    lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
-                                    lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
-                                    lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
-                                    lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win10);
+                                    lbl2.Text = Program.Lang.Strings.Legends.TM_10_ACLinks;
+                                    lbl3.Text = Program.Lang.Strings.Legends.TM_10_TaskbarAppUnderline;
+                                    lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_SomeBtns;
+                                    lbl6.Text = Program.Lang.Strings.Legends.TM_10_StartMenuIconHover;
+                                    lbl7.Text = string.Format(Program.Lang.Strings.Legends.TM_UWPBackground, Program.Lang.Strings.Windows.W10);
 
                                     pic2.Image = Assets.Win10xLegends.ACHover_Links;
                                     pic3.Image = Assets.Win10xLegends.TaskbarApp;
@@ -196,9 +197,9 @@ namespace WinPaletter
 
                                     if (TM.Windows10.Transparency)
                                     {
-                                        lbl1.Text = Program.Lang.TM_10_Hamburger;
-                                        lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
-                                        lbl8.Text = Program.Lang.TM_10_Taskbar_StartContextMenu;
+                                        lbl1.Text = Program.Lang.Strings.Legends.TM_10_Hamburger;
+                                        lbl4.Text = Program.Lang.Strings.Legends.TM_10_StartMenu_AC;
+                                        lbl8.Text = Program.Lang.Strings.Legends.TM_10_Taskbar_StartContextMenu;
 
                                         pic1.Image = Assets.Win10xLegends.Hamburger;
                                         pic4.Image = Assets.Win10xLegends.StartMenu_Taskbar_AC;
@@ -206,26 +207,26 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_Taskbar_SomeBtns;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_Taskbar_SomeBtns;
                                         }
                                     }
 
                                     else
                                     {
-                                        lbl1.Text = Program.Lang.TM_10_Taskbar;
+                                        lbl1.Text = Program.Lang.Strings.Legends.TM_10_Taskbar;
                                         pic1.Image = Assets.Win10xLegends.Taskbar;
                                         pic4.Image = Assets.Win10xLegends.StartMenu_Taskbar_AC;
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar != Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
+                                            lbl4.Text = Program.Lang.Strings.Legends.TM_10_StartMenu_AC_TaskbarActiveApp;
                                         }
                                         else
                                         {
-                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
+                                            lbl4.Text = Program.Lang.Strings.Legends.TM_10_StartMenu_AC;
                                         }
 
-                                        lbl8.Text = Program.Lang.TM_10_StartContextMenu;
+                                        lbl8.Text = Program.Lang.Strings.Legends.TM_10_StartContextMenu;
                                         pic8.Image = Assets.Win10xLegends.StartContextMenu;
 
                                     }
@@ -237,10 +238,10 @@ namespace WinPaletter
                                 {
                                     if (TM.Windows10.Transparency)
                                     {
-                                        lbl1.Text = Program.Lang.TM_10_Hamburger;
-                                        lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
-                                        lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
-                                        lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win10);
+                                        lbl1.Text = Program.Lang.Strings.Legends.TM_10_Hamburger;
+                                        lbl4.Text = Program.Lang.Strings.Legends.TM_10_StartMenu_AC;
+                                        lbl6.Text = Program.Lang.Strings.Legends.TM_10_StartMenuIconHover;
+                                        lbl7.Text = string.Format(Program.Lang.Strings.Legends.TM_UWPBackground, Program.Lang.Strings.Windows.W10);
 
                                         pic1.Image = Assets.Win10xLegends.Hamburger;
                                         pic4.Image = Assets.Win10xLegends.StartMenu_Taskbar_AC;
@@ -251,10 +252,10 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl2.Text = Program.Lang.TM_Undefined;
-                                            lbl3.Text = Program.Lang.TM_Undefined;
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
-                                            lbl8.Text = Program.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.Strings.Legends.TM_Undefined;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_Undefined;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
+                                            lbl8.Text = Program.Lang.Strings.Legends.TM_10_Taskbar_ACLinks_StartContextMenu;
 
                                             pic2.Image = Assets.Win10xLegends.Undefined;
                                             pic3.Image = Assets.Win10xLegends.Undefined;
@@ -262,10 +263,10 @@ namespace WinPaletter
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
-                                            lbl2.Text = Program.Lang.TM_Undefined;
-                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = Program.Lang.TM_10_Taskbar_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.Strings.Legends.TM_Undefined;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_10_TaskbarAppUnderline;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.Strings.Legends.TM_10_Taskbar_ACLinks_StartContextMenu;
 
                                             pic2.Image = Assets.Win10xLegends.Undefined;
                                             pic3.Image = Assets.Win10xLegends.TaskbarApp;
@@ -273,10 +274,10 @@ namespace WinPaletter
 
                                         else
                                         {
-                                            lbl2.Text = Program.Lang.TM_10_ACLinks;
-                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = Program.Lang.TM_10_Taskbar_StartContextMenu;
+                                            lbl2.Text = Program.Lang.Strings.Legends.TM_10_ACLinks;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_10_TaskbarAppUnderline;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.Strings.Legends.TM_10_Taskbar_StartContextMenu;
 
                                             pic2.Image = Assets.Win10xLegends.ACHover_Links;
                                             pic3.Image = Assets.Win10xLegends.TaskbarApp;
@@ -285,9 +286,9 @@ namespace WinPaletter
                                     }
                                     else
                                     {
-                                        lbl1.Text = Program.Lang.TM_10_Taskbar;
-                                        lbl6.Text = Program.Lang.TM_10_StartMenuIconHover;
-                                        lbl7.Text = string.Format(Program.Lang.TM_UWPBackground, Program.Lang.OS_Win10);
+                                        lbl1.Text = Program.Lang.Strings.Legends.TM_10_Taskbar;
+                                        lbl6.Text = Program.Lang.Strings.Legends.TM_10_StartMenuIconHover;
+                                        lbl7.Text = string.Format(Program.Lang.Strings.Legends.TM_UWPBackground, Program.Lang.Strings.Windows.W10);
 
                                         pic1.Image = Assets.Win10xLegends.Taskbar;
                                         pic6.Image = Assets.WinLogos.Win10;
@@ -295,11 +296,11 @@ namespace WinPaletter
 
                                         if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None)
                                         {
-                                            lbl2.Text = Program.Lang.TM_Undefined;
-                                            lbl3.Text = Program.Lang.TM_Undefined;
-                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC;
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
-                                            lbl8.Text = Program.Lang.TM_10_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.Strings.Legends.TM_Undefined;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_Undefined;
+                                            lbl4.Text = Program.Lang.Strings.Legends.TM_10_StartMenu_AC;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_TaskbarUndeline_SomeBtns;
+                                            lbl8.Text = Program.Lang.Strings.Legends.TM_10_ACLinks_StartContextMenu;
 
                                             pic2.Image = Assets.Win10xLegends.Undefined;
                                             pic3.Image = Assets.Win10xLegends.Undefined;
@@ -310,11 +311,11 @@ namespace WinPaletter
 
                                         else if (TM.Windows10.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar)
                                         {
-                                            lbl2.Text = Program.Lang.TM_Undefined;
-                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl4.Text = Program.Lang.TM_10_TaskbarFocusedApp_StartButtonHover;
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = Program.Lang.TM_10_ACLinks_StartContextMenu;
+                                            lbl2.Text = Program.Lang.Strings.Legends.TM_Undefined;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_10_TaskbarAppUnderline;
+                                            lbl4.Text = Program.Lang.Strings.Legends.TM_10_TaskbarFocusedApp_StartButtonHover;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.Strings.Legends.TM_10_ACLinks_StartContextMenu;
 
                                             pic2.Image = Assets.Win10xLegends.Undefined;
                                             pic3.Image = Assets.Win10xLegends.TaskbarApp;
@@ -325,11 +326,11 @@ namespace WinPaletter
 
                                         else
                                         {
-                                            lbl2.Text = Program.Lang.TM_10_ACLinks;
-                                            lbl3.Text = Program.Lang.TM_10_TaskbarAppUnderline;
-                                            lbl4.Text = Program.Lang.TM_10_StartMenu_AC_TaskbarActiveApp;
-                                            lbl5.Text = Program.Lang.TM_10_Settings_Links_SomeBtns;
-                                            lbl8.Text = Program.Lang.TM_10_StartContextMenu;
+                                            lbl2.Text = Program.Lang.Strings.Legends.TM_10_ACLinks;
+                                            lbl3.Text = Program.Lang.Strings.Legends.TM_10_TaskbarAppUnderline;
+                                            lbl4.Text = Program.Lang.Strings.Legends.TM_10_StartMenu_AC_TaskbarActiveApp;
+                                            lbl5.Text = Program.Lang.Strings.Legends.TM_10_Settings_Links_SomeBtns;
+                                            lbl8.Text = Program.Lang.Strings.Legends.TM_10_StartContextMenu;
 
                                             pic2.Image = Assets.Win10xLegends.ACHover_Links;
                                             pic3.Image = Assets.Win10xLegends.TaskbarApp;
@@ -349,7 +350,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Sets metrics for classic window in preview
+        /// Sets metrics for a classic window in preview
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="Window">Classic window simulation control</param>
@@ -367,11 +368,11 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Sets metrics for window in preview
+        /// Sets metrics for a window in preview
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="Window">Window simulation control</param>
-        public static void SetModernWindowMetrics(Theme.Manager TM, UI.Simulation.Window Window)
+        public static void SetModernWindowMetrics(Theme.Manager TM, Window Window)
         {
             if (TM is not null)
             {
@@ -384,7 +385,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Sets colors for classic window in preview
+        /// Sets colors for a classic window in preview
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="Window">Classic window simulation control</param>
@@ -420,7 +421,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Sets colors for classic raised panel in preview
+        /// Sets colors for a classic raised panel in preview
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="Panel">PanelRaisedR classic control</param>
@@ -435,7 +436,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Sets colors for classic raised panel in preview
+        /// Sets colors for a classic raised panel in preview
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="Panel">PanelR classic control</param>
@@ -450,7 +451,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Sets colors for classic buttons in preview
+        /// Sets colors for a classic button in preview
         /// </summary>
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="Button">ButtonR classic control</param>
@@ -474,23 +475,16 @@ namespace WinPaletter
         public static void ReValidateLivePreview(Control Parent)
         {
             Parent.Refresh();
-
-            foreach (Control ctrl in Parent.Controls)
-            {
-                ctrl.Refresh();
-                if (ctrl.HasChildren)
-                {
-                    foreach (Control c in ctrl.Controls)
-                        ReValidateLivePreview(c);
-                }
-            }
+            foreach (Control ctrl in Parent.GetAllControls())
+            { ctrl.Refresh(); }
         }
 
         /// <summary>
-        /// Apply selected Windows 8.1 start background to main form W81_start button
+        /// Apply selected Windows 8.1 start background in W81_start button in Windows 8.1 editing form
         /// </summary>
-        /// <param name="TM">WinPaletter theme manager</param>
-        /// <param name="W81_start">Main form Windows 8.1 start button</param>
+        /// <param name="ID">Selected Windows 8.1 start background ID</param>
+        /// <param name="W81_start">Windows 8.1 start button in Windows 8.1 editing form</param>
+        /// <param name="PersonalColorsBackground">Personal color for background</param>
         public static void ApplyMetroStartToButton(int ID, Color PersonalColorsBackground, UI.WP.Button W81_start)
         {
             switch (ID)
@@ -632,17 +626,19 @@ namespace WinPaletter
 
                 return (Bitmap)ImgF.Image.Clone();
             }
-
         }
 
         /// <summary>
-        /// Return height of a titlebar provided by a font
+        /// Return correct height of a titlebar provided by a font
         /// </summary>
         public static int GetTitlebarTextHeight(Font font)
         {
+            // Title scheme for measuring
             string TitleScheme = "ABCabc0123xYz.#";
             int Title_x_Height = (int)Math.Round(TitleScheme.Measure(font).Height);
             int Title_9_Height = (int)Math.Round(TitleScheme.Measure(new Font(font.Name, 9f, font.Style)).Height);
+
+            // Return correct height of a titlebar
             return Math.Max(0, Title_x_Height - Title_9_Height - 5);
         }
     }

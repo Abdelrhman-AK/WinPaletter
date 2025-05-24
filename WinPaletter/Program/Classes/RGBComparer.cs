@@ -3,8 +3,17 @@ using System.Drawing;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// Compares two colors based on their RGB values. Useful for palette generation.
+    /// </summary>
     public class RGBColorComparer : IComparer<Color>
     {
+        /// <summary>
+        /// Compares two colors based on their RGB values. Useful for palette generation.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public int Compare(Color a, Color b)
         {
             // Compare hue values

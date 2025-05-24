@@ -8,8 +8,8 @@ namespace EOFC
 {
     public class BooleanBitArray
     {
-        private int m_bitSize;  // Size of array (in # of bits)
-        private byte[] m_data;  // Allocated bit array
+        private readonly int m_bitSize;  // Size of array (in # of bits)
+        private readonly byte[] m_data;  // Allocated bit array
 
         /// <summary>
         /// Allocates the boolean bit array with the specified size, in bits (not bytes). All bits are 
@@ -40,7 +40,7 @@ namespace EOFC
         public bool Get(int bitIndex)
         {
             byte BitCheck = (byte)(1 << (bitIndex % 8));
-            return ((m_data[bitIndex / 8] & BitCheck) != 0);
+            return (m_data[bitIndex / 8] & BitCheck) != 0;
         }
 
         public static unsafe bool Get(byte* data, int BitIndex)
@@ -56,7 +56,7 @@ namespace EOFC
         public static bool Get(byte[] data, int bitIndex)
         {
             byte bitCheck = (byte)(1 << (bitIndex % 8));
-            return ((data[bitIndex / 8] & bitCheck) != 0);
+            return (data[bitIndex / 8] & bitCheck) != 0;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace EOFC
             }
             else
             {
-                BitSet = (byte)(~(1 << (BitIndex % 8)));
+                BitSet = (byte)~(1 << (BitIndex % 8));
                 data[BitIndex / 8] &= BitSet;
             }
         }
@@ -98,7 +98,7 @@ namespace EOFC
             }
             else
             {
-                BitSet = (byte)(~(1 << (BitIndex % 8)));
+                BitSet = (byte)~(1 << (BitIndex % 8));
                 data[BitIndex / 8] &= BitSet;
             }
         }
@@ -114,7 +114,7 @@ namespace EOFC
             }
             else
             {
-                BitSet = (byte)(~(1 << (7 - (BitIndex % 8))));
+                BitSet = (byte)~(1 << (7 - (BitIndex % 8)));
                 data[BitIndex / 8] &= BitSet;
             }
         }

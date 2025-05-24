@@ -6,14 +6,14 @@ using System.Windows.Forms;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// Structure responsible for WinPaletter themed cursors
+    /// Structure responsible for a single WinPaletter themed cursor inside <see cref="Cursors"/> structure instance.
     /// </summary>
     public struct Cursor : ICloneable
     {
-        /// <summary>Use a cursor file instead of rendering</summary>
+        /// <summary>Use a cursor file instead of rendering a new style using WinPaletter</summary>
         public bool UseFromFile = false;
 
-        /// <summary>Used cursor file</summary>
+        /// <summary>Used cursor File</summary>
         public string File = string.Empty;
 
         /// <summary>Style of main arrow</summary>

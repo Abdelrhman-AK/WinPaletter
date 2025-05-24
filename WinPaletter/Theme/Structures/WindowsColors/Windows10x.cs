@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,7 +15,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary> Controls if Windows 10x colors editing is enabled or not </summary> 
         public bool Enabled = true;
 
-        /// <summary>Theme used for Windows 10/11</summary>
+        /// <summary>WinTheme used for Windows 10/11</summary>
         public Themes Theme = Windows10x.Themes.Skip;
 
         /// <summary>Color index 0 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
@@ -98,7 +97,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Theme used for Windows 10/11
+        /// WinTheme used for Windows 10/11
         /// <code>
         /// Aero
         /// AeroLite
@@ -139,20 +138,21 @@ namespace WinPaletter.Theme.Structures
                 byte[] x;
                 object y;
 
-                byte[] DefColorsBytes = new[]
-                    {
-                        @default.Color_Index0.R, @default.Color_Index0.G, @default.Color_Index0.B, (byte)255,
-                        @default.Color_Index1.R, @default.Color_Index1.G, @default.Color_Index1.B, (byte)255,
-                        @default.Color_Index2.R, @default.Color_Index2.G, @default.Color_Index2.B, (byte)255,
-                        @default.Color_Index3.R, @default.Color_Index3.G, @default.Color_Index3.B, (byte)255,
-                        @default.Color_Index4.R, @default.Color_Index4.G, @default.Color_Index4.B, (byte)255,
-                        @default.Color_Index5.R, @default.Color_Index5.G, @default.Color_Index5.B, (byte)255,
-                        @default.Color_Index6.R, @default.Color_Index6.G, @default.Color_Index6.B, (byte)255,
-                        @default.Color_Index7.R, @default.Color_Index7.G, @default.Color_Index7.B, (byte)255
-                    };
+                byte[] DefColorsBytes =
+                    [
+                        @default.Color_Index0.R, @default.Color_Index0.G, @default.Color_Index0.B, 255,
+                        @default.Color_Index1.R, @default.Color_Index1.G, @default.Color_Index1.B, 255,
+                        @default.Color_Index2.R, @default.Color_Index2.G, @default.Color_Index2.B, 255,
+                        @default.Color_Index3.R, @default.Color_Index3.G, @default.Color_Index3.B, 255,
+                        @default.Color_Index4.R, @default.Color_Index4.G, @default.Color_Index4.B, 255,
+                        @default.Color_Index5.R, @default.Color_Index5.G, @default.Color_Index5.B, 255,
+                        @default.Color_Index6.R, @default.Color_Index6.G, @default.Color_Index6.B, 255,
+                        @default.Color_Index7.R, @default.Color_Index7.G, @default.Color_Index7.B, 255
+                    ];
 
                 x = (byte[])GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);
 
+                // Use 255 as alpha value for all colors as it is not used in Windows 10/11
                 Color_Index0 = Color.FromArgb(/*x[3]*/ 255, x[0], x[1], x[2]);
                 Color_Index1 = Color.FromArgb(/*x[7]*/ 255, x[4], x[5], x[6]);
                 Color_Index2 = Color.FromArgb(/*x[11]*/ 255, x[8], x[9], x[10]);
@@ -162,6 +162,7 @@ namespace WinPaletter.Theme.Structures
                 Color_Index6 = Color.FromArgb(/*x[27]*/ 255, x[24], x[25], x[26]);
                 Color_Index7 = Color.FromArgb(/*x[31]*/ 255, x[28], x[29], x[30]);
 
+                // Some colors are saved reversed in registry
                 y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse().ToArgb());
                 StartMenu_Accent = Color.FromArgb(Convert.ToInt32(y)).Reverse();
 
@@ -284,7 +285,8 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 
-                byte[] Colors = 
+                // 255 is used as alpha value for all colors as it is not used in Windows 10/11
+                byte[] Colors =
                 [
                     Color_Index0.R , Color_Index0.G, Color_Index0.B, /*Color_Index0.A*/ 255,
                     Color_Index1.R , Color_Index1.G, Color_Index1.B, /*Color_Index1.A*/ 255,
@@ -325,6 +327,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentOnTitlebars ? 1 : 0);
 
+                // Some colors are saved reversed in registry
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", Colors, RegistryValueKind.Binary);
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse().ToArgb());
 

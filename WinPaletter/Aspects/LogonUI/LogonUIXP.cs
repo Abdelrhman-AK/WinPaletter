@@ -27,7 +27,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -65,7 +65,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.LogonUIScreen,
+                AspectName = Program.Lang.Strings.Aspects.LogonUI,
                 Enabled = Program.TM.LogonUIXP.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -115,13 +115,13 @@ namespace WinPaletter
 
             LoadData(data);
 
-            using (LogonUI formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<LogonUI>();
             LoadFromTM(Program.TM);
         }
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 Focus();
                 BringToFront();
@@ -196,7 +196,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                UpdateWin2000Preview(Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender));
+                UpdateWin2000Preview(Forms.SubMenu.ShowMenu((ColorItem)sender));
                 return;
             }
 
@@ -207,7 +207,7 @@ namespace WinPaletter
             };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
-            ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
+            ((ColorItem)sender).BackColor = Color.FromArgb(255, C);
             UpdateWin2000Preview(C);
             CList.Clear();
         }

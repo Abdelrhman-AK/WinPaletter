@@ -89,7 +89,7 @@ namespace WinPaletter.UI.Controllers
         private void value_btn_Click(object sender, EventArgs e)
         {
             //UI.WP.Button button = sender as UI.WP.Button;
-            //string response = InputBox(Program.Lang.InputValue, button.Text, Program.Lang.ItMustBeNumerical);
+            //string response = InputBox(Program.modifiedLang.InputValue, button.Text, Program.modifiedLang.ItMustBeNumerical);
             //object value = Math.Max(Math.Min(Conversion.Val(response), Maximum), Minimum);
             //button.Text = value.ToString();
 
@@ -146,7 +146,7 @@ namespace WinPaletter.UI.Controllers
         private void value_btn_TextChanged(object sender, EventArgs e)
         {
             int innerPadding = trackBar1.Left;
-            int width = TextRenderer.MeasureText((value_btn.Text ?? "0"), value_btn.Font).Width + 10;
+            int width = TextRenderer.MeasureText(value_btn.Text ?? "0", value_btn.Font).Width + 10;
             value_btn.Width = width;
             value_btn.Left = Width - width;
             reset.Left = value_btn.Left - reset.Width - innerPadding;
@@ -161,32 +161,32 @@ namespace WinPaletter.UI.Controllers
 
         private void reset_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as UI.WP.Button, string.Empty, Program.Lang.ClickToReset, null, new Point(0, (sender as UI.WP.Button).Height + 2));
+            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Lang.Strings.Tips.ClickToReset, null, new Point(0, (sender as WP.Button).Height + 2));
         }
 
         private void reset_MouseLeave(object sender, EventArgs e)
         {
-            Program.ToolTip.Hide(sender as UI.WP.Button);
+            Program.ToolTip.Hide(sender as WP.Button);
         }
 
         private void value_btn_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as UI.WP.Button, string.Empty, Program.Lang.ClickToEdit, null, new Point(0, (sender as UI.WP.Button).Height + 2));
+            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Lang.Strings.Tips.ClickToEdit, null, new Point(0, (sender as WP.Button).Height + 2));
         }
 
         private void value_btn_MouseLeave(object sender, EventArgs e)
         {
-            Program.ToolTip.Hide(sender as UI.WP.Button);
+            Program.ToolTip.Hide(sender as WP.Button);
         }
 
         private void textBox1_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as UI.WP.TextBox, string.Empty, $"• {Program.Lang.PressEnterToUseValue}\r\n• {Program.Lang.PressEscToDismissEditing}", null, new Point(0, (sender as UI.WP.TextBox).Height + 2));
+            Program.ToolTip.Show(sender as WP.TextBox, string.Empty, $"• {Program.Lang.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Lang.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as WP.TextBox).Height + 2));
         }
 
         private void textBox1_MouseLeave(object sender, EventArgs e)
         {
-            Program.ToolTip.Hide(sender as UI.WP.TextBox);
+            Program.ToolTip.Hide(sender as WP.TextBox);
         }
     }
 }

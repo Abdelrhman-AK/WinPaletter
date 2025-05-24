@@ -82,7 +82,7 @@ namespace WinPaletter
             this.GroupBox1.Controls.Add(this.Label4);
             this.GroupBox1.Location = new System.Drawing.Point(9, 58);
             this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(439, 152);
+            this.GroupBox1.Size = new System.Drawing.Size(439, 150);
             this.GroupBox1.TabIndex = 226;
             // 
             // button2
@@ -95,10 +95,12 @@ namespace WinPaletter
             this.button2.Image = null;
             this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Menu;
             this.button2.ImageGlyphEnabled = true;
-            this.button2.Location = new System.Drawing.Point(360, 30);
+            this.button2.Location = new System.Drawing.Point(219, 30);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(34, 24);
+            this.button2.Size = new System.Drawing.Size(175, 24);
             this.button2.TabIndex = 227;
+            this.button2.Text = "Installed screen savers list";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -110,7 +112,7 @@ namespace WinPaletter
             this.trackbarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackbarX1.DefaultValue = 60;
             this.trackbarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackbarX1.Location = new System.Drawing.Point(36, 88);
+            this.trackbarX1.Location = new System.Drawing.Point(36, 85);
             this.trackbarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackbarX1.Maximum = 3600;
             this.trackbarX1.Minimum = 60;
@@ -136,7 +138,7 @@ namespace WinPaletter
             this.CheckBox1.Checked = false;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(36, 122);
+            this.CheckBox1.Location = new System.Drawing.Point(36, 119);
             this.CheckBox1.Name = "CheckBox1";
             this.CheckBox1.Size = new System.Drawing.Size(399, 24);
             this.CheckBox1.TabIndex = 223;
@@ -176,7 +178,7 @@ namespace WinPaletter
             // 
             this.PictureBox17.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox17.Image")));
-            this.PictureBox17.Location = new System.Drawing.Point(3, 61);
+            this.PictureBox17.Location = new System.Drawing.Point(3, 58);
             this.PictureBox17.Name = "PictureBox17";
             this.PictureBox17.Size = new System.Drawing.Size(24, 24);
             this.PictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -187,7 +189,7 @@ namespace WinPaletter
             // 
             this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(6, 122);
+            this.PictureBox1.Location = new System.Drawing.Point(6, 119);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(24, 24);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -208,7 +210,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(318, 24);
+            this.TextBox1.Size = new System.Drawing.Size(177, 24);
             this.TextBox1.TabIndex = 218;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -221,7 +223,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label4.BackColor = System.Drawing.Color.Transparent;
             this.Label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(33, 61);
+            this.Label4.Location = new System.Drawing.Point(33, 58);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(402, 24);
             this.Label4.TabIndex = 213;

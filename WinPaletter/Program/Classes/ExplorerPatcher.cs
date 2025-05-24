@@ -100,15 +100,18 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Allow or disallow the use of the ExplorerPatcher helper class
+        /// Gets if ExplorerPatcher can be used or not depending on the OS version, installation and settings
         /// </summary>
         /// <returns></returns>
-        public static bool IsAllowed()
+        public static bool CanBeUsed
         {
-            bool condition0 = (OS.W12 || OS.W11) && Program.Settings.ExplorerPatcher.Enabled && IsInstalled;
-            bool condition1 = Program.Settings.ExplorerPatcher.Enabled_Force;
+            get
+            {
+                bool condition0 = (OS.W12 || OS.W11) && Program.Settings.ExplorerPatcher.Enabled && IsInstalled;
+                bool condition1 = Program.Settings.ExplorerPatcher.Enabled_Force;
 
-            return condition0 || condition1;
+                return condition0 || condition1;
+            }
         }
     }
 }

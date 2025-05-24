@@ -2,62 +2,47 @@
 {
     public partial class Localizer
     {
-        public string TM_ApplyingTheme { get; set; } = "Applying theme: {0}";
-        public string TM_CloseOnApplying0 { get; set; } = "WinPaletter is still applying the theme. Do you want to close it anyway?";
-        public string TM_CloseOnApplying1 { get; set; } = "If you close it, the theme won't be completely applied and it might be broken.";
-        public string TM_ApplyFrom { get; set; } = "WinPaletter will apply theme from {0}'s section";
-        public string TM_Admin_Msg0 { get; set; } = "Writing to registry without administrator rights by deflection";
-        public string TM_Admin_Msg1 { get; set; } = "This deflection will take time more than if started as administrator";
-        public string TM_Applying_Started { get; set; } = "Applying started";
-        public string TM_SavingToggles { get; set; } = "Saving aspects toggles states into registry";
-        public string TM_Time { get; set; } = "It took {0} seconds";
-        public string TM_Time_They { get; set; } = "They took {0} seconds";
-        public string TM_SavingInfo { get; set; } = "Saving theme info into registry";
-        public string TM_ThemeReset { get; set; } = "Resetting theme to default Windows to apply new theme correctly";
-        public string TM_Applying_VS { get; set; } = "Applying Windows visual styles";
-        public string TM_Applying_Win12 { get; set; } = "Applying Windows 12 scheme";
-        public string TM_Applying_Win11 { get; set; } = "Applying Windows 11 scheme";
-        public string TM_Applying_Win10 { get; set; } = "Applying Windows 10 scheme";
-        public string TM_Applying_Win81 { get; set; } = "Applying Windows 8.1 scheme";
-        public string TM_Applying_Win7 { get; set; } = "Applying Windows 7 theme";
-        public string TM_Applying_WinVista { get; set; } = "Applying Windows Vista theme";
-        public string TM_Applying_WinXP { get; set; } = "Applying Windows XP theme";
-        public string TM_Applying_LogonUI12 { get; set; } = "Applying Windows 11 LogonUI";
-        public string TM_Applying_LogonUI11 { get; set; } = "Applying Windows 11 LogonUI";
-        public string TM_Applying_LogonUI10 { get; set; } = "Applying Windows 10 LogonUI";
-        public string TM_Applying_LogonUI8 { get; set; } = "Applying Windows 8.1 Lock Screen";
-        public string TM_Applying_LogonUI7 { get; set; } = "Applying Windows 7 LogonUI";
-        public string TM_Applying_LogonUIXP { get; set; } = "Applying Windows XP LogonUI";
-        public string TM_Applying_Win32UI { get; set; } = "Applying Classic Colors";
-        public string TM_Applying_WinEffects { get; set; } = "Applying Windows Effects";
-        public string TM_Applying_WallpaperTone { get; set; } = "Applying Wallpaper Tone";
-        public string TM_Applying_DesktopAllUsers { get; set; } = "Applying Wallpaper for all users";
-        public string TM_Applying_CMD { get; set; } = "Applying Command Prompt";
-        public string TM_Applying_PS32 { get; set; } = "Applying PowerShell x86";
-        public string TM_Applying_PS64 { get; set; } = "Applying PowerShell x64";
-        public string TM_Applying_TerminalStable { get; set; } = "Applying Windows Terminal Stable";
-        public string TM_Applying_Metrics { get; set; } = "Applying Windows Metrics and Fonts";
-        public string TM_Applying_AltTab { get; set; } = "Applying Windows Switcher (Alt+Tab) appearance";
-        public string TM_Applying_Wallpaper { get; set; } = "Applying Wallpaper";
-        public string TM_Applying_AppTheme { get; set; } = "Applying WinPaletter application theme";
-        public string TM_Applying_TerminalPreview { get; set; } = "Applying Windows Terminal Preview";
-        public string TM_Applying_ScreenSaver { get; set; } = "Applying Screen Saver";
-        public string TM_ApplyingCursors { get; set; } = "Applying Windows Cursors";
-        public string TM_Applying_Sounds { get; set; } = "Applying Sounds";
-        public string TM_Applying_Icons { get; set; } = "Applying Windows Icons";
-        public string TM_RenderingCustomLogonUI_MayNotRespond { get; set; } = "WinPaletter may not respond while rendering custom LogonUI";
-        public string TM_RenderingCustomLogonUI_Progress { get; set; } = "Rendering custom LogonUI:";
-        public string TM_RenderingCustomLogonUI { get; set; } = "Rendering custom LogonUI";
-        public string TM_RenderingCursors { get; set; } = "Rendering Windows Cursors";
-        public string TM_Time_Cursors { get; set; } = "Total applying Windows cursors took {0} seconds";
-        public string TM_SavingCursorsColors { get; set; } = "Saving Windows Cursors Colors to registry";
-        public string KillingExplorer { get; set; } = "Killing Explorer (To be restarted)";
-        public string ExplorerRestarted { get; set; } = "Explorer Restarted. It took about {0} seconds to kill Explorer";
-        public string TM_AppliedWithErrors { get; set; } = "Applying theme done but with error/s. It took {0} seconds";
-        public string TM_Applied { get; set; } = "Applying theme done. It took {0} seconds";
-        public string TM_AllDone { get; set; } = "All operations are done";
-        public string TM_ErrorHappened { get; set; } = @"Error\s happened. Press on 'Show Errors' for details.";
-        public string TM_LogWillClose { get; set; } = @"This log will close after {0} second\s";
-        public string TM_LogTimerFinished { get; set; } = @"The theme has been applied. You can close the log.";
+        public partial class Strings_Cls
+        {
+            public partial class ThemeManager_Cls
+            {
+                public partial class Actions_Cls
+                {
+                    public string RestorePoint0 { get; set; } = "WinPaletter is creating a system restore point before making changes to system preferences";
+                    public string RestorePoint1 { get; set; } = "Each restore point uses 100–300 MB. Delete old ones if you apply many themes to save disk space.";
+                    public string RestorePoint2 { get; set; } = "This process takes about a minute or less, depending on your device's performance";
+                    public string RestorePoint3 { get; set; } = "A system restore point has been created. It took {0} seconds.";
+                    public string ApplyingTheme { get; set; } = "Applying theme: {0}";
+                    public string CloseOnApplying0 { get; set; } = "WinPaletter is still applying the theme. Do you want to close it anyway?";
+                    public string CloseOnApplying1 { get; set; } = "If you close it, the theme won't be completely applied and it might be broken.";
+                    public string ApplyOS { get; set; } = "WinPaletter will apply the theme as if you are using {0}";
+                    public string Admin_Msg0 { get; set; } = "Writing to the registry without administrator rights through deflection";
+                    public string Admin_Msg1 { get; set; } = "This deflection will take more time than if it were started as an administrator";
+                    public string Applying_Started { get; set; } = "The applying process has just started";
+                    public string SavingToggles { get; set; } = "Saving the states of theme aspects toggles into the registry";
+                    public string Time { get; set; } = "It took {0} seconds";
+                    public string Time_MultipleAspects { get; set; } = "They took {0} seconds";
+                    public string Time_Cursors { get; set; } = "Applying the Windows cursors took a total of {0} seconds";
+                    public string SavingInfo { get; set; } = "Saving theme information into the registry";
+                    public string ThemeReset { get; set; } = "Resetting the theme to the default Windows theme to apply the new theme correctly";
+                    public string Theme { get; set; } = "Applying {0} theme";
+                    public string Applying_Feature_ForOS { get; set; } = "Applying {0}'s {1} preferences";
+                    public string Applying_Feature { get; set; } = "Applying {0} preferences";
+                    public string Applying_Feature_AllUsers { get; set; } = "Applying {0} preferences for all users";
+                    public string AppliedWithErrors { get; set; } = "Theme application completed with error(s). It took {0} seconds.";
+                    public string Applied { get; set; } = "The theme has just been applied. It took {0} seconds.";
+                    public string RenderingImage_MayNotRespond { get; set; } = "WinPaletter may not respond while rendering images to be used as the {0}";
+                    public string RenderingImages { get; set; } = "Rendering images for {0}:";
+                    public string RenderingImage { get; set; } = "Rendering an image for {0}";
+                    public string RenderingCursors { get; set; } = "Rendering Windows Cursors";
+                    public string SavingCursorsColors { get; set; } = "Saving the Windows cursor colors to the registry";
+                    public string KillingExplorer { get; set; } = "Killing Explorer (It will be restarted)";
+                    public string ExplorerRestarted { get; set; } = "Explorer has been restarted. It took about {0} seconds to kill Explorer";
+                    public string Complete { get; set; } = "All operations are complete";
+                    public string LogClosure { get; set; } = "This log will close after {0} second(s)";
+                    public string LogTimerFinished { get; set; } = "The theme has just been applied. You may close the log.";
+                }
+            }
+        }
     }
 }

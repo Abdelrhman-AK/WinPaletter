@@ -1,6 +1,6 @@
 namespace WinPaletter.Dialogs
 {
-    partial class RescueTools
+    partial class SOS
     {
         /// <summary>
         /// Required designer variable.
@@ -28,8 +28,9 @@ namespace WinPaletter.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RescueTools));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SOS));
             this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
+            this.button17 = new WinPaletter.UI.WP.Button();
             this.banner5 = new WinPaletter.UI.WP.Banner();
             this.button13 = new WinPaletter.UI.WP.Button();
             this.button14 = new WinPaletter.UI.WP.Button();
@@ -40,6 +41,7 @@ namespace WinPaletter.Dialogs
             this.button9 = new WinPaletter.UI.WP.Button();
             this.button7 = new WinPaletter.UI.WP.Button();
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
+            this.button16 = new WinPaletter.UI.WP.Button();
             this.banner3 = new WinPaletter.UI.WP.Banner();
             this.button6 = new WinPaletter.UI.WP.Button();
             this.button5 = new WinPaletter.UI.WP.Button();
@@ -54,26 +56,51 @@ namespace WinPaletter.Dialogs
             this.button1 = new WinPaletter.UI.WP.Button();
             this.button2 = new WinPaletter.UI.WP.Button();
             this.button3 = new WinPaletter.UI.WP.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox5
             // 
-            this.groupBox5.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox5.Controls.Add(this.button17);
             this.groupBox5.Controls.Add(this.banner5);
             this.groupBox5.Controls.Add(this.button13);
             this.groupBox5.Controls.Add(this.button14);
             this.groupBox5.Controls.Add(this.button15);
-            this.groupBox5.Location = new System.Drawing.Point(12, 316);
+            this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(676, 146);
+            this.groupBox5.Size = new System.Drawing.Size(428, 182);
             this.groupBox5.TabIndex = 35;
             this.groupBox5.Text = "groupBox5";
+            // 
+            // button17
+            // 
+            this.button17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button17.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.button17.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button17.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button17.ForeColor = System.Drawing.Color.White;
+            this.button17.Image = null;
+            this.button17.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button17.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button17.ImageGlyph")));
+            this.button17.ImageGlyphEnabled = true;
+            this.button17.Location = new System.Drawing.Point(3, 147);
+            this.button17.Name = "button17";
+            this.button17.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button17.Size = new System.Drawing.Size(422, 32);
+            this.button17.TabIndex = 29;
+            this.button17.Text = "Open Windows troubleshoots";
+            this.button17.UseVisualStyleBackColor = false;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // banner5
             // 
@@ -83,7 +110,7 @@ namespace WinPaletter.Dialogs
             this.banner5.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner5.Image")));
             this.banner5.Location = new System.Drawing.Point(0, 0);
             this.banner5.Name = "banner5";
-            this.banner5.Size = new System.Drawing.Size(676, 35);
+            this.banner5.Size = new System.Drawing.Size(428, 35);
             this.banner5.TabIndex = 28;
             this.banner5.TabStop = false;
             this.banner5.Text = "Windows control";
@@ -97,11 +124,13 @@ namespace WinPaletter.Dialogs
             this.button13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button13.ForeColor = System.Drawing.Color.White;
             this.button13.Image = null;
+            this.button13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button13.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button13.ImageGlyph")));
             this.button13.ImageGlyphEnabled = true;
-            this.button13.ImageGlyph = null;
             this.button13.Location = new System.Drawing.Point(3, 39);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(670, 32);
+            this.button13.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button13.Size = new System.Drawing.Size(422, 32);
             this.button13.TabIndex = 0;
             this.button13.Text = "Open Control Panel";
             this.button13.UseVisualStyleBackColor = false;
@@ -116,11 +145,13 @@ namespace WinPaletter.Dialogs
             this.button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button14.ForeColor = System.Drawing.Color.White;
             this.button14.Image = null;
+            this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button14.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button14.ImageGlyph")));
             this.button14.ImageGlyphEnabled = true;
-            this.button14.ImageGlyph = null;
             this.button14.Location = new System.Drawing.Point(3, 75);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(670, 32);
+            this.button14.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button14.Size = new System.Drawing.Size(422, 32);
             this.button14.TabIndex = 1;
             this.button14.Text = "Open Windows updates";
             this.button14.UseVisualStyleBackColor = false;
@@ -135,11 +166,13 @@ namespace WinPaletter.Dialogs
             this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button15.ForeColor = System.Drawing.Color.White;
             this.button15.Image = null;
+            this.button15.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button15.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button15.ImageGlyph")));
             this.button15.ImageGlyphEnabled = true;
-            this.button15.ImageGlyph = null;
             this.button15.Location = new System.Drawing.Point(3, 111);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(670, 32);
+            this.button15.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button15.Size = new System.Drawing.Size(422, 32);
             this.button15.TabIndex = 2;
             this.button15.Text = "Open system restore";
             this.button15.UseVisualStyleBackColor = false;
@@ -147,15 +180,16 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
             this.groupBox4.Controls.Add(this.banner4);
             this.groupBox4.Controls.Add(this.button8);
             this.groupBox4.Controls.Add(this.button9);
             this.groupBox4.Controls.Add(this.button7);
-            this.groupBox4.Location = new System.Drawing.Point(353, 164);
+            this.groupBox4.Location = new System.Drawing.Point(3, 685);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(335, 146);
+            this.groupBox4.Size = new System.Drawing.Size(428, 146);
             this.groupBox4.TabIndex = 34;
             this.groupBox4.Text = "groupBox4";
             // 
@@ -167,7 +201,7 @@ namespace WinPaletter.Dialogs
             this.banner4.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner4.Image")));
             this.banner4.Location = new System.Drawing.Point(0, 0);
             this.banner4.Name = "banner4";
-            this.banner4.Size = new System.Drawing.Size(335, 35);
+            this.banner4.Size = new System.Drawing.Size(428, 35);
             this.banner4.TabIndex = 30;
             this.banner4.TabStop = false;
             this.banner4.Text = "WinPaletter tasks";
@@ -181,11 +215,13 @@ namespace WinPaletter.Dialogs
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = null;
+            this.button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageGlyph")));
             this.button8.ImageGlyphEnabled = true;
-            this.button8.ImageGlyph = null;
             this.button8.Location = new System.Drawing.Point(3, 39);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(329, 32);
+            this.button8.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button8.Size = new System.Drawing.Size(422, 32);
             this.button8.TabIndex = 1;
             this.button8.Text = "Apply first theme (launched in current session)";
             this.button8.UseVisualStyleBackColor = false;
@@ -200,11 +236,13 @@ namespace WinPaletter.Dialogs
             this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Image = null;
+            this.button9.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button9.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button9.ImageGlyph")));
             this.button9.ImageGlyphEnabled = true;
-            this.button9.ImageGlyph = null;
             this.button9.Location = new System.Drawing.Point(3, 75);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(329, 32);
+            this.button9.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button9.Size = new System.Drawing.Size(422, 32);
             this.button9.TabIndex = 0;
             this.button9.Text = "Apply native Windows theme";
             this.button9.UseVisualStyleBackColor = false;
@@ -219,11 +257,13 @@ namespace WinPaletter.Dialogs
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = null;
+            this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
             this.button7.ImageGlyphEnabled = true;
-            this.button7.ImageGlyph = null;
             this.button7.Location = new System.Drawing.Point(3, 111);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(329, 32);
+            this.button7.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button7.Size = new System.Drawing.Size(422, 32);
             this.button7.TabIndex = 2;
             this.button7.Text = "Fix WinPaletter issues with uninstaller wizard";
             this.button7.UseVisualStyleBackColor = false;
@@ -231,17 +271,40 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox3
             // 
-            this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox3.Controls.Add(this.button16);
             this.groupBox3.Controls.Add(this.banner3);
             this.groupBox3.Controls.Add(this.button6);
             this.groupBox3.Controls.Add(this.button5);
             this.groupBox3.Controls.Add(this.button4);
-            this.groupBox3.Location = new System.Drawing.Point(353, 12);
+            this.groupBox3.Location = new System.Drawing.Point(3, 191);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(335, 146);
+            this.groupBox3.Size = new System.Drawing.Size(428, 184);
             this.groupBox3.TabIndex = 33;
             this.groupBox3.Text = "groupBox3";
+            // 
+            // button16
+            // 
+            this.button16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button16.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.button16.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button16.ForeColor = System.Drawing.Color.White;
+            this.button16.Image = null;
+            this.button16.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button16.ImageGlyph")));
+            this.button16.ImageGlyphEnabled = true;
+            this.button16.Location = new System.Drawing.Point(3, 75);
+            this.button16.Name = "button16";
+            this.button16.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button16.Size = new System.Drawing.Size(422, 32);
+            this.button16.TabIndex = 30;
+            this.button16.Text = "Restart your Windows into recovery mode";
+            this.button16.UseVisualStyleBackColor = false;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // banner3
             // 
@@ -251,7 +314,7 @@ namespace WinPaletter.Dialogs
             this.banner3.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner3.Image")));
             this.banner3.Location = new System.Drawing.Point(0, 0);
             this.banner3.Name = "banner3";
-            this.banner3.Size = new System.Drawing.Size(335, 35);
+            this.banner3.Size = new System.Drawing.Size(428, 35);
             this.banner3.TabIndex = 29;
             this.banner3.TabStop = false;
             this.banner3.Text = "Windows session";
@@ -265,11 +328,13 @@ namespace WinPaletter.Dialogs
             this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Image = null;
+            this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button6.ImageGlyph")));
             this.button6.ImageGlyphEnabled = true;
-            this.button6.ImageGlyph = null;
             this.button6.Location = new System.Drawing.Point(3, 39);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(329, 32);
+            this.button6.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button6.Size = new System.Drawing.Size(422, 32);
             this.button6.TabIndex = 0;
             this.button6.Text = "Logoff your Windows profile";
             this.button6.UseVisualStyleBackColor = false;
@@ -284,11 +349,13 @@ namespace WinPaletter.Dialogs
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.Image = null;
+            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button5.ImageGlyph")));
             this.button5.ImageGlyphEnabled = true;
-            this.button5.ImageGlyph = null;
-            this.button5.Location = new System.Drawing.Point(3, 75);
+            this.button5.Location = new System.Drawing.Point(3, 111);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(329, 32);
+            this.button5.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button5.Size = new System.Drawing.Size(422, 32);
             this.button5.TabIndex = 1;
             this.button5.Text = "Restart Windows";
             this.button5.UseVisualStyleBackColor = false;
@@ -303,11 +370,13 @@ namespace WinPaletter.Dialogs
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
+            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button4.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button4.ImageGlyph")));
             this.button4.ImageGlyphEnabled = true;
-            this.button4.ImageGlyph = null;
-            this.button4.Location = new System.Drawing.Point(3, 111);
+            this.button4.Location = new System.Drawing.Point(3, 147);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(329, 32);
+            this.button4.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button4.Size = new System.Drawing.Size(422, 32);
             this.button4.TabIndex = 2;
             this.button4.Text = "Shut down Windows";
             this.button4.UseVisualStyleBackColor = false;
@@ -315,15 +384,16 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.banner2);
             this.groupBox2.Controls.Add(this.button12);
             this.groupBox2.Controls.Add(this.button11);
             this.groupBox2.Controls.Add(this.button10);
-            this.groupBox2.Location = new System.Drawing.Point(12, 164);
+            this.groupBox2.Location = new System.Drawing.Point(3, 381);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(335, 146);
+            this.groupBox2.Size = new System.Drawing.Size(428, 146);
             this.groupBox2.TabIndex = 32;
             this.groupBox2.Text = "groupBox2";
             // 
@@ -335,7 +405,7 @@ namespace WinPaletter.Dialogs
             this.banner2.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner2.Image")));
             this.banner2.Location = new System.Drawing.Point(0, 0);
             this.banner2.Name = "banner2";
-            this.banner2.Size = new System.Drawing.Size(335, 35);
+            this.banner2.Size = new System.Drawing.Size(428, 35);
             this.banner2.TabIndex = 28;
             this.banner2.TabStop = false;
             this.banner2.Text = "System repair";
@@ -349,11 +419,13 @@ namespace WinPaletter.Dialogs
             this.button12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button12.ForeColor = System.Drawing.Color.White;
             this.button12.Image = null;
+            this.button12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button12.ImageGlyph")));
             this.button12.ImageGlyphEnabled = true;
-            this.button12.ImageGlyph = null;
             this.button12.Location = new System.Drawing.Point(3, 39);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(329, 32);
+            this.button12.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button12.Size = new System.Drawing.Size(422, 32);
             this.button12.TabIndex = 0;
             this.button12.Text = "Scan system file (sfc) on imageres.dll";
             this.button12.UseVisualStyleBackColor = false;
@@ -368,11 +440,13 @@ namespace WinPaletter.Dialogs
             this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button11.ForeColor = System.Drawing.Color.White;
             this.button11.Image = null;
+            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button11.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button11.ImageGlyph")));
             this.button11.ImageGlyphEnabled = true;
-            this.button11.ImageGlyph = null;
             this.button11.Location = new System.Drawing.Point(3, 75);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(329, 32);
+            this.button11.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button11.Size = new System.Drawing.Size(422, 32);
             this.button11.TabIndex = 1;
             this.button11.Text = "Scan all system files (sfc)";
             this.button11.UseVisualStyleBackColor = false;
@@ -387,11 +461,13 @@ namespace WinPaletter.Dialogs
             this.button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button10.ForeColor = System.Drawing.Color.White;
             this.button10.Image = null;
+            this.button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button10.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button10.ImageGlyph")));
             this.button10.ImageGlyphEnabled = true;
-            this.button10.ImageGlyph = null;
             this.button10.Location = new System.Drawing.Point(3, 111);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(329, 32);
+            this.button10.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button10.Size = new System.Drawing.Size(422, 32);
             this.button10.TabIndex = 2;
             this.button10.Text = "DISM repair Windows";
             this.button10.UseVisualStyleBackColor = false;
@@ -399,15 +475,16 @@ namespace WinPaletter.Dialogs
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.banner1);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(3, 533);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(335, 146);
+            this.groupBox1.Size = new System.Drawing.Size(428, 146);
             this.groupBox1.TabIndex = 31;
             this.groupBox1.Text = "groupBox1";
             // 
@@ -419,7 +496,7 @@ namespace WinPaletter.Dialogs
             this.banner1.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner1.Image")));
             this.banner1.Location = new System.Drawing.Point(0, 0);
             this.banner1.Name = "banner1";
-            this.banner1.Size = new System.Drawing.Size(335, 35);
+            this.banner1.Size = new System.Drawing.Size(428, 35);
             this.banner1.TabIndex = 27;
             this.banner1.TabStop = false;
             this.banner1.Text = "Windows Explorer";
@@ -433,11 +510,13 @@ namespace WinPaletter.Dialogs
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageGlyph")));
             this.button1.ImageGlyphEnabled = true;
-            this.button1.ImageGlyph = null;
             this.button1.Location = new System.Drawing.Point(3, 39);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(329, 32);
+            this.button1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button1.Size = new System.Drawing.Size(422, 32);
             this.button1.TabIndex = 0;
             this.button1.Text = "Launch Explorer";
             this.button1.UseVisualStyleBackColor = false;
@@ -452,11 +531,13 @@ namespace WinPaletter.Dialogs
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button2.ImageGlyph")));
             this.button2.ImageGlyphEnabled = true;
-            this.button2.ImageGlyph = null;
             this.button2.Location = new System.Drawing.Point(3, 75);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(329, 32);
+            this.button2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button2.Size = new System.Drawing.Size(422, 32);
             this.button2.TabIndex = 1;
             this.button2.Text = "Force stop (kill) Explorer";
             this.button2.UseVisualStyleBackColor = false;
@@ -471,38 +552,49 @@ namespace WinPaletter.Dialogs
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = null;
+            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button3.ImageGlyph")));
             this.button3.ImageGlyphEnabled = true;
-            this.button3.ImageGlyph = null;
             this.button3.Location = new System.Drawing.Point(3, 111);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(329, 32);
+            this.button3.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.button3.Size = new System.Drawing.Size(422, 32);
             this.button3.TabIndex = 2;
             this.button3.Text = "Restart Explorer";
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // RescueTools
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.groupBox5);
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.groupBox2);
+            this.panel1.Controls.Add(this.groupBox4);
+            this.panel1.Controls.Add(this.groupBox3);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(431, 531);
+            this.panel1.TabIndex = 117;
+            // 
+            // SOS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(700, 476);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(431, 531);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "RescueTools";
-            this.ShowIcon = false;
+            this.Name = "SOS";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Rescue tools for critical Windows issues";
+            this.Text = "SOS: Helps you fix critical issues";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.RescueTools_Load);
             this.groupBox5.ResumeLayout(false);
@@ -510,6 +602,7 @@ namespace WinPaletter.Dialogs
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -541,5 +634,8 @@ namespace WinPaletter.Dialogs
         private UI.WP.Button button13;
         private UI.WP.Button button14;
         private UI.WP.Button button15;
+        private System.Windows.Forms.Panel panel1;
+        private UI.WP.Button button16;
+        private UI.WP.Button button17;
     }
 }

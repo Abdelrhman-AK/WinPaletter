@@ -19,8 +19,8 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Create new instance of WinPaletter theme
         /// </summary>
-        /// <param name="Source">Source from which WinPaletter will get theme data. It can be from registry, file or empty.</param>
-        /// <param name="File">If selected source is file, this will specify WinPaletter theme file</param>
+        /// <param name="Source">Source from which WinPaletter will get theme data. It can be from registry, File or empty.</param>
+        /// <param name="File">If selected source is File, this will specify WinPaletter theme File</param>
         /// <param name="ignoreExtractionThemePack">This will ignore theme resources pack extraction, useful for previewing or getting theme data quickly without data extraction.</param>
         /// <param name="ignoreErrors">This will ignore any errors that may occur during theme loading.</param>
         public Manager(Source Source, string File = "", bool ignoreExtractionThemePack = false, bool ignoreErrors = false)
@@ -29,11 +29,16 @@ namespace WinPaletter.Theme
             {
                 case Source.Registry:
                     {
+                        // Imperonate the current user to get the theme data from the registry
                         using (User.Identity.Impersonate())
                         {
+                            // Get the theme data from the registry and use @default to help WinPaletter know the default values
                             using (Manager @default = Theme.Default.Get(Program.WindowStyle))
                             {
+                                // Clear the exception list that has theme load exceptions
                                 Exceptions.ThemeLoad.Clear();
+
+                                // Start loading the theme data from the registry
                                 Info.Load();
                                 Windows12.Load("12", @default.Windows12);
                                 Windows11.Load("11", @default.Windows11);
@@ -54,6 +59,7 @@ namespace WinPaletter.Theme
                                 LogonUI7.Load("7", @default.LogonUI7);
                                 LogonUIXP.Load(@default.LogonUIXP);
                                 Win32.Load();
+                                Accessibility.Load(@default.Accessibility);
                                 Cursors.Load(@default.Cursors);
                                 MetricsFonts.Load(@default.MetricsFonts);
                                 WindowsEffects.Load(@default.WindowsEffects);
@@ -90,11 +96,13 @@ namespace WinPaletter.Theme
                                 Terminal.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)) == 1;
                                 TerminalPreview.Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)) == 1;
 
+                                // Only load Terminal and TerminalPreview if the OS is Windows 10 or higher
                                 if (OS.W12 || OS.W11 || OS.W10)
                                 {
                                     string TerDir;
                                     string TerPreDir;
 
+                                    // Check if the user has enabled the path redirection feature or not
                                     if (!Program.Settings.WindowsTerminals.Path_Deflection)
                                     {
                                         TerDir = SysPaths.TerminalJSON;
@@ -117,13 +125,14 @@ namespace WinPaletter.Theme
                                     if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
                                     else { TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
                                 }
-                                else
+                                else // If the OS is not Windows 10 or higher, then set Terminal and TerminalPreview to empty (Default values)
                                 {
                                     Terminal = new(string.Empty, WinTerminal.Mode.Empty);
                                     TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
                                 }
                                 #endregion
 
+                                // After loading all the theme data, check if the theme loading process has any exceptions (errors) and display them
                                 if (!ignoreErrors && Exceptions.ThemeLoad.Count > 0)
                                 {
                                     Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
@@ -138,17 +147,19 @@ namespace WinPaletter.Theme
 
                 case Source.File:
                     {
+                        // Clear the exception list that has theme load exceptions
                         Exceptions.ThemeLoad.Clear();
 
-                        // Check if the theme file exists
+                        // Check if the theme File exists
                         if (!System.IO.File.Exists(File)) return;
 
-                        // Decompress the theme file content_list
+                        // Decompress the theme File content_list
                         List<string> content_list = Decompress(File) as List<string>;
 
-                        // Check if the theme file content_list is null or empty
+                        // Check if the theme File content_list is null or empty
                         if (content_list is null || content_list.Count == 0) return;
 
+                        // Use @default to help WinPaletter know the default values
                         using (Manager @default = Default.Get())
                         {
                             try
@@ -156,13 +167,13 @@ namespace WinPaletter.Theme
                                 // Copy values from default theme instance to current instance's fields, to avoid empty values after upgrading/downgrading WinPaletter
                                 SetDefaultValues(@default);
 
-                                // Extract theme name from the theme file quickly, to be used in creating theme pack resources cache
+                                // Extract theme name from the theme File quickly, to be used in creating theme pack resources cache
                                 SetThemeName(content_list);
 
-                                // Extract theme resources pack from the theme file
-                                if (!ignoreExtractionThemePack) ExtractThemeResourcesPack(File);
-
                                 string content = string.Join("\r\n", content_list);
+
+                                // Extract theme resources pack from the theme File
+                                if (!ignoreExtractionThemePack) ExtractThemeResourcesPack(File);
 
                                 if (IsValidJson(content))
                                 {
@@ -180,19 +191,19 @@ namespace WinPaletter.Theme
                                     ExtendCursorsComptability(ref json);
                                     ExtendTerminalComptability(ref json);
 
-                                    // Set the value of the current instance's field from theme file JSON data
+                                    // Set the value of the current instance's field from theme File JSON data
                                     SetThemeValues(json);
                                 }
                                 else if (GetEdition(File) == Editions.OldFormat)
                                 {
                                     // Display a message box for old format themes
-                                    MsgBox(Program.Lang.Convert_Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Convert_Detect_Old_OnLoadingTip);
+                                    MsgBox(Program.Lang.Strings.Converter.Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.Converter.Detect_Old_OnLoadingTip);
                                     return;
                                 }
                                 else
                                 {
                                     // Display a message box for invalid JSON
-                                    MsgBox(Program.Lang.Convert_Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MsgBox(Program.Lang.Strings.Converter.Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
 
                                 // Display exception information if any
@@ -219,7 +230,7 @@ namespace WinPaletter.Theme
         /// Set the value of the current instance's field from default theme instance
         /// </summary>
         /// <param name="default"></param>
-        private void SetDefaultValues(Theme.Manager @default)
+        private void SetDefaultValues(Manager @default)
         {
             // Copy values from default theme instance to current instance's fields, to avoid empty values after upgrading/downgrading WinPaletter
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
@@ -256,7 +267,7 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Extract theme resources pack from the theme file
+        /// Extract theme resources pack from the theme File
         /// </summary>
         /// <param name="ThemeFile"></param>
         private void ExtractThemeResourcesPack(string ThemeFile)
@@ -264,7 +275,7 @@ namespace WinPaletter.Theme
             // Prepare variables for theme resources pack extraction
             string packPath = $"{new FileInfo(ThemeFile).DirectoryName}\\{Path.GetFileNameWithoutExtension(ThemeFile)}.wptp";
             bool packIsValid = System.IO.File.Exists(packPath) && new FileInfo(packPath).Length > 0L && GetEdition(ThemeFile) == Editions.JSON;
-            string cache = $"{SysPaths.ThemeResPackCache}\\{(string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars())))}";
+            string cache = $"{SysPaths.ThemeResPackCache}\\{string.Concat(Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()))}";
 
             // Extract theme resources pack
             try
@@ -300,7 +311,7 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Replace %WinPaletterAppData% variable with a valid AppData folder path
+        /// Replace %WinPaletterAppData% variable with a valid AppData folder path inside theme data
         /// </summary>
         /// <param name="list"></param>
         private void ReplaceWPAppData(ref List<string> list)
@@ -511,7 +522,7 @@ namespace WinPaletter.Theme
         /// <param name="json"></param>
         private void ExtendTerminalComptability(ref JObject json)
         {
-            string[] editons = new string[] { "Terminal", "TerminalPreview" };
+            string[] editons = ["Terminal", "TerminalPreview"];
 
             foreach (string edition in editons)
             {
@@ -536,7 +547,7 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Set the value of the current instance's field from theme file JSON data
+        /// Set the value of the current instance's field from theme File JSON data
         /// </summary>
         /// <param name="json"></param>
         private void SetThemeValues(JObject json)

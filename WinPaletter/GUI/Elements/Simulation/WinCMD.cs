@@ -462,11 +462,11 @@ namespace WinPaletter.UI.Simulation
                     string sx = System.Runtime.InteropServices.RuntimeInformation.OSDescription.Replace("Microsoft Windows ", string.Empty);
                     sx = sx.Replace("S", string.Empty).Trim();
 
-                    string sy = $".{(Microsoft.Win32.Registry.GetValue(CV, "UBR", 0))}";
+                    string sy = $".{Microsoft.Win32.Registry.GetValue(CV, "UBR", 0)}";
                     if (sy == ".0")
                         sy = string.Empty;
 
-                    S = $"{($"Microsoft Windows [Version {sx}{sy}]")}\r\n{S1}\r\n\r\n{S2}";
+                    S = $"{$"Microsoft Windows [Version {sx}{sy}]"}\r\n{S1}\r\n\r\n{S2}";
                 }
 
                 else
@@ -476,13 +476,13 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                S = $"{Program.Lang.CMDSimulator_Alert0}\r\n\r\n{S2}";
+                S = $"{Program.Lang.Strings.Aspects.Consoles.CMDSimulator_Alert0}\r\n\r\n{S2}";
             }
 
 
             if (Raster)
             {
-                S += $"\r\n\r\n{Program.Lang.CMDSimulator_Alert1}";
+                S += $"\r\n\r\n{Program.Lang.Strings.Aspects.Consoles.CMDSimulator_Alert1}";
             }
 
             if (!Raster)
@@ -505,7 +505,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     using (SolidBrush br = new(PCF))
                     {
-                        G.DrawString(Program.Lang.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, sf);
+                        G.DrawString(Program.Lang.Strings.Aspects.Consoles.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, sf);
                     }
                 }
             }
@@ -694,6 +694,8 @@ namespace WinPaletter.UI.Simulation
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

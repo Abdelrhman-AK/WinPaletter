@@ -7,16 +7,15 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Dialogs
 {
-    public partial class RescueTools : Form
+    public partial class SOS : Form
     {
-        public RescueTools()
+        public SOS()
         {
             InitializeComponent();
         }
 
         private void RescueTools_Load(object sender, EventArgs e)
         {
-            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
             this.LoadLanguage();
             ApplyStyle(this);
         }
@@ -39,7 +38,7 @@ namespace WinPaletter.Dialogs
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Messages.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.Messages.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
@@ -52,14 +51,14 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.RestartQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Messages.RestartQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
@@ -72,14 +71,14 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.ShutdownQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Messages.ShutdownQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
@@ -92,7 +91,7 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -137,7 +136,7 @@ namespace WinPaletter.Dialogs
                         process.Start();
                         process.WaitForExit();
 
-                        switch (MsgBox(Program.Lang.RT_UseWinUpdate, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, Program.Lang.RT_UseInstallWIM))
+                        switch (MsgBox(Program.Lang.Strings.Messages.RescueTools_UseWinUpdate, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, Program.Lang.Strings.Messages.RescueTools_UseInstallWIM))
                         {
                             case DialogResult.Yes:
                                 {
@@ -155,7 +154,7 @@ namespace WinPaletter.Dialogs
                                     //Cross thread issue
                                     Invoke(() =>
                                     {
-                                        using (OpenFileDialog o = new() { Filter = Program.Filters.WinImages, Title = Program.Lang.Filter_OpenWinImage })
+                                        using (OpenFileDialog o = new() { Filter = Program.Filters.WinImages, Title = Program.Lang.Strings.Extensions.OpenWinImage })
                                         {
                                             result = o.ShowDialog();
                                             file = o.FileName;
@@ -198,7 +197,7 @@ namespace WinPaletter.Dialogs
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Forms.Uninstall.Show();
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Uninstall);
         }
 
         private void button13_Click(object sender, EventArgs e)
@@ -244,6 +243,76 @@ namespace WinPaletter.Dialogs
             else
             {
                 Process.Start("control", "sysdm.cpl,,4");
+            }
+        }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if (MsgBox(Program.Lang.Strings.Messages.RestartRecoveryQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
+            {
+                Forms.MainForm.LoggingOff = false;
+
+                IntPtr intPtr = IntPtr.Zero;
+                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+
+                if (OS.W8x || OS.W10 || OS.W11 || OS.W12)
+                {
+                    if (System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                    {
+                        Forms.MainForm.LoggingOff = true;
+                        Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /o /f /t 0", AppWinStyle.Hide);
+                    }
+                    else
+                    {
+                        MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+                else if (OS.W7)
+                {
+                    if (System.IO.File.Exists($@"{SysPaths.System32}\bcdedit.exe") && System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                    {
+                        Forms.MainForm.LoggingOff = true;
+                        Interaction.Shell($@"{SysPaths.System32}\bcdedit.exe /set " + "{current} recoverysequence {default}", AppWinStyle.Hide);
+                        Interaction.Shell($@"{SysPaths.System32}\bcdedit.exe /set " + "{current} recoveryenabled Yes", AppWinStyle.Hide);
+                        Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /t 0", AppWinStyle.Hide);
+                    }
+                    else
+                    {
+                        if (!System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                        {
+                            MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                        else
+                        {
+                            MsgBox(string.Format(Program.Lang.Strings.Messages.BcdeditNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        }
+                    }
+                }
+                else if (OS.WVista || OS.WXP)
+                {
+                    MsgBox(string.Format(Program.Lang.Strings.Messages.RecoveryNotAvailable, OS.WVista ? Program.Lang.Strings.Windows.WVista : Program.Lang.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            if ((OS.W7 || OS.W8x) && System.IO.File.Exists($"{SysPaths.System32}\\control.exe"))
+            {
+                Process.Start($"{SysPaths.System32}\\control.exe", "panel.dll, /name Microsoft.Troubleshooting");
+            }
+            else if (OS.W10 || OS.W11 || OS.W12)
+            {
+                Process.Start($"{SysPaths.Explorer}", "ms-settings:troubleshoot");
+            }
+            else if (OS.WVista || OS.WXP)
+            {
+                Process.Start("hh.exe", $"ms-its:{SysPaths.Windows}\\Help\\WindowsHelp.chm::/windows/troubleshoot.htm");
             }
         }
     }

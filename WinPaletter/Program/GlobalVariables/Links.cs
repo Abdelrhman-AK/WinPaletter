@@ -26,7 +26,7 @@ namespace WinPaletter.GlobalVariables
         public readonly static string RepositoryURL = $"{GitHub}/{Repository}";
 
         /// <summary>
-        /// Link to the license file in WinPaletter's GitHub repository.
+        /// Link to the license File in WinPaletter's GitHub repository.
         /// </summary>
         public readonly static string License = $"{RepositoryURL}/{branch}/License.md{getRaw}";
 
@@ -46,7 +46,7 @@ namespace WinPaletter.GlobalVariables
         public readonly static string Changelog = $"{RepositoryURL}/{branch}/CHANGELOG.md";
 
         /// <summary>
-        /// Link to the updates configuration file in WinPaletter's GitHub repository.
+        /// Link to the updates configuration File in WinPaletter's GitHub repository.
         /// </summary>
         public readonly static string Updates = $"{RepositoryURL}/{branch}/UpdatesConfig/Updates{getRaw}";
 
@@ -54,11 +54,6 @@ namespace WinPaletter.GlobalVariables
         /// Link to the languages directory in WinPaletter's GitHub repository.
         /// </summary>
         public readonly static string Languages = $"{RepositoryURL}/{tree}/Languages";
-
-        /// <summary>
-        /// Link to PayPal to donate to the developer.
-        /// </summary>
-        public readonly static string PayPal = "https://paypal.me/AbdelrhmanAK";
 
         /// <summary>
         /// Link to the WinPaletter Store repository.
@@ -113,7 +108,7 @@ namespace WinPaletter.GlobalVariables
             public readonly static string WinVistaColors = $"{WikiURL}/Edit-Windows-colors-and-theme#windows-vista";
 
             /// <summary>
-            /// Link to the WinPaletter Windows XP themes editing wiki.
+            /// Link to the WinPaletter Windows WXP themes editing wiki.
             /// </summary>
             public readonly static string WinXPThemes = $"{WikiURL}/Edit-Windows-colors-and-theme#windows-xp";
 
@@ -173,7 +168,7 @@ namespace WinPaletter.GlobalVariables
             public readonly static string LogonUI_8x = $"{WikiURL}/Edit-LogonUI-screen#windows-81-and-windows-7";
 
             /// <summary>
-            /// Link to WinPaletter LognoUI modification for Windows XP wiki.
+            /// Link to WinPaletter LognoUI modification for Windows WXP wiki.
             /// </summary>
             public readonly static string LogonUI_XP = $"{WikiURL}/Edit-LogonUI-screen#windows-xp";
 
@@ -213,6 +208,11 @@ namespace WinPaletter.GlobalVariables
             public readonly static string ClassicColors = $"{WikiURL}/Edit-Windows-classic-colors";
 
             /// <summary>
+            /// Link to WinPaletter high contrast wiki.
+            /// </summary>
+            public readonly static string HighContrast = $"{WikiURL}/Edit-High-Contrast";
+
+            /// <summary>
             /// Link to WinPaletter Windows Effects wiki.
             /// </summary>
             public readonly static string WindowsEffects = $"{WikiURL}/Edit-Windows-Effects";
@@ -228,17 +228,17 @@ namespace WinPaletter.GlobalVariables
             public readonly static string AntivirusIssue = $"{WikiURL}/Antiviruses-or-browsers-download-issue";
 
             /// <summary>
-            /// Link to WinPaletter language JSON file creation wiki.
+            /// Link to WinPaletter language JSON File creation wiki.
             /// </summary>
             public readonly static string LanguageCreation = $"{WikiURL}/Language-creation";
 
             /// <summary>
-            /// Link to WinPaletter language JSON file creation wiki (old methods).
+            /// Link to WinPaletter language JSON File creation wiki (old methods).
             /// </summary>
             public readonly static string LanguageCreation_OldMethods = $"{WikiURL}/Language-creation-(old-methods)";
 
             /// <summary>
-            /// Link to WinPaletter language JSON file creation wiki (old methods) - 3. Update your language file.
+            /// Link to WinPaletter language JSON File creation wiki (old methods) - 3. Update your language File.
             /// </summary>
             public readonly static string LanguageCreation_OldMethods_UpdateLanguageFile = $"{LanguageCreation_OldMethods}#3-update-your-language-file-when-a-new-winpaletter-is-released";
         }

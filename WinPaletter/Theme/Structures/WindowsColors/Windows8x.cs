@@ -31,7 +31,7 @@ namespace WinPaletter.Theme.Structures
         public Color AccentColor = Color.FromArgb(72, 29, 178);
 
         /// <summary>
-        /// Theme used for Windows 8.1
+        /// WinTheme used for Windows 8.1
         /// <code>
         /// Aero
         /// AeroLite
@@ -55,6 +55,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Loads Windows8x data from registry
         /// </summary>
+        /// <param name="Edition">Windows edition</param>
         /// <param name="default">Default Windows8x data structure</param>
         public void Load(string Edition, Windows8x @default)
         {
@@ -89,11 +90,11 @@ namespace WinPaletter.Theme.Structures
 
                 string S;
 
-                S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.HEX(false, true)).ToString();
-                PersonalColors_Background = S.FromHEXToColor();
+                S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.ToStringHex(false, true)).ToString();
+                PersonalColors_Background = S.ToColorFromHex();
 
-                S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.HEX(false, true)).ToString();
-                PersonalColors_Accent = S.FromHEXToColor();
+                S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.ToStringHex(false, true)).ToString();
+                PersonalColors_Accent = S.ToColorFromHex();
 
                 Start = Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0));
             }
@@ -111,8 +112,10 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves Windows8x data into registry
         /// </summary>
+        /// <param name="edition">Windows edition</param>
+        /// <param name="TM">Theme manager used for refreshing DWM colors</param>
         /// <param name="treeView">treeView used as theme log</param>
-        public void Apply(Theme.Manager TM, string edition, TreeView treeView = null)
+        public void Apply(Manager TM, string edition, TreeView treeView = null)
         {
             SaveToggleState(edition, treeView);
 
@@ -150,8 +153,8 @@ namespace WinPaletter.Theme.Structures
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse().ToArgb());
 
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", $"#{PersonalColors_Background.HEX(false)}", RegistryValueKind.String);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.HEX(false)}", RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", $"#{PersonalColors_Background.ToStringHex(false)}", RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.ToStringHex(false)}", RegistryValueKind.String);
 
                 Program.RefreshDWM(TM);
             }

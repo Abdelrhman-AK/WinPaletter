@@ -6,15 +6,15 @@ using WinPaletter.NativeMethods;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// Structure responsible for managing Windows XP appearance
+    /// Structure responsible for managing Windows WXP appearance
     /// </summary>
     public struct WindowsXP : ICloneable
     {
-        /// <summary> Controls if Windows XP themes editing is enabled or not </summary> 
+        /// <summary> Controls if Windows WXP themes editing is enabled or not </summary> 
         public bool Enabled = true;
 
         /// <summary>
-        /// Theme used for Windows XP
+        /// WinTheme used for Windows WXP
         /// <code>
         /// LunaBlue
         /// LunaOliveGreen
@@ -25,10 +25,10 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public Themes Theme = Themes.LunaBlue;
 
-        /// <summary>Visual styles file used when 'Theme' selected as 'Custom'</summary>
+        /// <summary>Visual styles File used when <see cref="Theme"/> selected as <see cref="Themes.Custom"/></summary>
         public string ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles";
 
-        /// <summary>Color scheme of visual styles file 'WindowsXPThemePath' when 'Theme' selected as 'Custom'</summary>
+        /// <summary>Color scheme of visual styles File 'WindowsXPThemePath' when 'WinTheme' selected as 'Custom'</summary>
         public string ColorScheme = "NormalColor";
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public WindowsXP() { }
 
-        /// <summary>Enumeration of Windows XP stock themes.</summary>
+        /// <summary>Enumeration of Windows WXP stock themes.</summary>
         public enum Themes
         {
             /// <summary>Blue default color scheme of Luna</summary>
@@ -49,7 +49,7 @@ namespace WinPaletter.Theme.Structures
             Classic,
             /// <summary>
             /// Use 'WindowsXPThemePath' to be the current visual styles.
-            /// <br><b>- Requires UxTheme patched Windows XP</b></br>
+            /// <br><b>- Requires UxTheme patched Windows WXP</b></br>
             /// </summary>
             Custom
         }
@@ -67,7 +67,6 @@ namespace WinPaletter.Theme.Structures
                 Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
                 string vsFile = ThemeTuple.Item1;
                 string colorName = ThemeTuple.Item2;
-                string sizeName = ThemeTuple.Item3;
 
                 if ((vsFile.ToString().ToLower() ?? string.Empty) == (SysPaths.Windows.ToLower() + @"\resources\Themes\Luna\Luna.msstyles".ToLower() ?? string.Empty))
                 {
@@ -111,7 +110,6 @@ namespace WinPaletter.Theme.Structures
                     Theme = Themes.Custom;
                     ThemeFile = string.Empty;
                     ColorScheme = string.Empty;
-
                 }
             }
 

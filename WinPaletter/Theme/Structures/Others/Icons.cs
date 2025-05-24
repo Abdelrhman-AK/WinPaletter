@@ -14,8 +14,8 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// List of Control Panel CLSIDs and their icons (used as helpers)
         /// </summary>
-        public static readonly List<Tuple<string, string, string>> ControlPanelCLSIDs = new()
-        {
+        public static readonly List<Tuple<string, string, string>> ControlPanelCLSIDs =
+        [
             Tuple.Create("{D20EA4E1-3957-11d2-A40B-0C5020524153}", "Administrative Tools", $"{SysPaths.imageres},-114"),
             Tuple.Create("{9C60DE1E-E5FC-40f4-A487-460851A8D915}", "AutoPlay", $"{SysPaths.System32}\\autoplay.dll,-1"),
             Tuple.Create("{B98A2BEA-7D42-4558-8BD1-832F41BAC6FD}", "Backup and Restore (Windows 7)", $"{SysPaths.System32}\\sdcpl.dll,-1"),
@@ -57,25 +57,25 @@ namespace WinPaletter.Theme.Structures
             Tuple.Create("{5ea4f148-308c-46d7-98a9-49041b1dd468}", "Windows Mobility Center", $"{SysPaths.System32}\\mblctr.exe,0"),
             Tuple.Create("{8E0C279D-0BD1-43C3-9EBD-31C3DC5B8A77}", "Windows To Go", $"{SysPaths.System32}\\pwcreator.exe,-2001"),
             Tuple.Create("{ECDB0924-4208-451E-8EE0-373C0956DE16}", "Work Folders", $"{SysPaths.System32}\\WorkfoldersControl.dll,1"),
-        };
+        ];
 
         /// <summary>
         /// List of Desktop CLSIDs and their icons (used as helpers)
         /// </summary>
-        public static readonly List<Tuple<string, string, string>> DesktopCLSIDs = new()
-        {
+        public static readonly List<Tuple<string, string, string>> DesktopCLSIDs =
+        [
             Tuple.Create("{20D04FE0-3AEA-1069-A2D8-08002B30309D}", "Computer", $"{SysPaths.imageres},-109"),
             Tuple.Create("{5399E694-6CE5-4D6C-8FCE-1D8870FDCBA0}", "Control Panel", $"{SysPaths.imageres},-27"),
             Tuple.Create("{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}", "Network", $"{SysPaths.imageres},-25"),
             Tuple.Create("{59031a47-3f72-44a7-89c5-5595fe6b30ee}", "User", $"{SysPaths.imageres},-123"),
             Tuple.Create("{645FF040-5081-101B-9F08-00AA002F954E}", "Recycle Bin", $"{SysPaths.imageres},-55|{SysPaths.imageres},-54"/*empty_full*/),
-        };
+        ];
 
         /// <summary>
         /// List of Explorer CLSIDs and their icons (used as helpers)
         /// </summary>
-        public static readonly List<Tuple<string, string, string>> ExplorerCLSIDs = new()
-        {
+        public static readonly List<Tuple<string, string, string>> ExplorerCLSIDs =
+        [
             Tuple.Create("{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}", "Desktop", $"{SysPaths.imageres},-183"),
             Tuple.Create("{D3162B92-9365-467A-956B-92703ACA08AF}", "Documents", $"{SysPaths.imageres},-112"),
             Tuple.Create("{088e3905-0323-4b02-9826-5d99428e115f}", "Downloads", $"{SysPaths.imageres},-184"),
@@ -84,7 +84,7 @@ namespace WinPaletter.Theme.Structures
             Tuple.Create("{F86FA3AB-70D2-4FC7-9C99-FCBF05467F3A}", "Videos", $"{SysPaths.imageres},-189"),
             Tuple.Create("{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}", "3D Objects", $"{SysPaths.imageres},-198"),
             Tuple.Create("{679f85cb-0220-4080-b29b-5540cc05aab6}", "Quick Access", $"{SysPaths.System32}\\shell32.dll,-51380"),
-        };
+        ];
 
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -92,23 +92,23 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// List of Shell32 wrapper data: (value, data)
         /// <br><c>value</c> is the index of icon in real <c>shell32.dll</c> in your system</br>
-        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
+        /// <br><c>data</c> is the deflected icon path. If File is a PE File <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>File.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE File.</br>
         /// </summary>
-        public Dictionary<string, string> Shell32Wrapper = new();
+        public Dictionary<string, string> Shell32Wrapper = [];
 
         /// <summary>
         /// List of Control Panel wrapper data: (value, data)
         /// <br><c>value</c> is the CLSID of Control Panel item</br>
-        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
+        /// <br><c>data</c> is the deflected icon path. If File is a PE File <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>File.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE File.</br>
         /// </summary>
-        public Dictionary<string, string> ControlPanelWrapper = new();
+        public Dictionary<string, string> ControlPanelWrapper = [];
 
         /// <summary>
         /// List of Explorer icons wrapper data: (value, data)
         /// <br><c>value</c> is the CLSID of Explorer item</br>
-        /// <br><c>data</c> is the deflected icon path. If file is a PE file <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>file.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE file.</br>
+        /// <br><c>data</c> is the deflected icon path. If File is a PE File <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>File.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE File.</br>
         /// </summary>
-        public Dictionary<string, string> ExplorerWrapper = new();
+        public Dictionary<string, string> ExplorerWrapper = [];
 
         /// <summary>
         /// Path to Computer icon
@@ -183,7 +183,7 @@ namespace WinPaletter.Theme.Structures
         {
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled));
 
-            Shell32Wrapper = new();
+            Shell32Wrapper = [];
             Shell32Wrapper.Clear();
 
             foreach (string value in GetValueNames("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons"))
@@ -195,7 +195,7 @@ namespace WinPaletter.Theme.Structures
                 }
             }
 
-            ControlPanelWrapper = new();
+            ControlPanelWrapper = [];
             ControlPanelWrapper.Clear();
 
             foreach (Tuple<string, string, string> item in ControlPanelCLSIDs)
@@ -206,7 +206,7 @@ namespace WinPaletter.Theme.Structures
                 }
             }
 
-            ExplorerWrapper = new();
+            ExplorerWrapper = [];
             ExplorerWrapper.Clear();
 
             foreach (Tuple<string, string, string> item in ExplorerCLSIDs)

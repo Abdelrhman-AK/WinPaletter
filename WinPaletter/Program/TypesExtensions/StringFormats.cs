@@ -87,11 +87,10 @@ namespace WinPaletter.TypesExtensions
 
             // Set character spacing (kerning) to remove increased spaces inbetween words
             // Adjust this value as needed
-            SF.SetMeasurableCharacterRanges(new CharacterRange[] { new CharacterRange(0, 1) });
+            SF.SetMeasurableCharacterRanges([new(0, 1)]);
             SF.FormatFlags = StringFormatFlags.MeasureTrailingSpaces;
 
             return SF;
         }
     }
-
 }

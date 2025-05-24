@@ -8,7 +8,7 @@ namespace WinPaletter.Theme.Structures
 {
     /// <summary>
     /// Structure responsible for managing Wallpaper Tone
-    /// <br>Wallpaper Tone is a feature by WinPaletter. It modifies images HSL filter to alter wallpaper colors.</br>
+    /// <br>Wallpaper Tone is a feature by WinPaletter (not a feature in Windows). It modifies images HSL filter to alter wallpaper colors.</br>
     /// </summary>
     public struct WallpaperTone : ICloneable
     {
@@ -16,7 +16,7 @@ namespace WinPaletter.Theme.Structures
         public bool Enabled = false;
 
         /// <summary>
-        /// Image file used
+        /// Image File used
         /// <br><b>- It is better to use a stock Windows wallpaper in '%windir%\Web\Wallpaper', but sure you can use other images.</b></br>
         /// </summary>
         public string Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
@@ -36,7 +36,7 @@ namespace WinPaletter.Theme.Structures
         public WallpaperTone() { }
 
         /// <summary>
-        /// Loads Wallpaper data from registry
+        /// Loads WallpaperTone data from registry
         /// </summary>
         /// <param name="SubKey">
         /// Registry subkey in 'HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone' from which data will be got.
@@ -56,7 +56,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// ApplyToTM the data only to registry without processing and applying target image
+        /// Save data only to registry without processing and applying target image
         /// </summary>
         /// <param name="WT">WallpaperTone structure</param>
         /// <param name="SubKey">
@@ -92,8 +92,7 @@ namespace WinPaletter.Theme.Structures
         /// <exception cref="IOException"></exception>
         public void Apply(TreeView treeView = null)
         {
-            if (!File.Exists(Image))
-                throw new IOException("Couldn't Find image");
+            if (!File.Exists(Image)) throw new IOException("Couldn't Find image");
 
             string path;
             if (!OS.WXP & !OS.WVista)
@@ -106,8 +105,9 @@ namespace WinPaletter.Theme.Structures
             }
 
             if (treeView is not null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_SettingHSLImage, path), "pe_patch");
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.SettingHSLImage, path), "pe_patch");
 
+            // Process the image
             using (ImageProcessor.ImageFactory ImgF = new())
             {
                 ImgF.Load(Image);
@@ -117,6 +117,7 @@ namespace WinPaletter.Theme.Structures
                 ImgF.Image.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
             }
 
+            // Apply the processed image
             SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
             EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);

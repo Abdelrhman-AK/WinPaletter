@@ -38,14 +38,13 @@
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
             this.titlebarExtender1.Controls.Add(this.tabsContainer1);
             this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.titlebarExtender1.DropDWMEffect = true;
+            this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.System;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender1.Name = "titlebarExtender1";
             this.titlebarExtender1.Size = new System.Drawing.Size(933, 34);
             this.titlebarExtender1.TabIndex = 58;
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-            this.titlebarExtender1.Text = "titlebarExtender1";
-            this.titlebarExtender1.DoubleClick += new System.EventHandler(this.tabsContainer1_DoubleClick);
+            this.titlebarExtender1.DoubleClick += new System.EventHandler(this.titlebarExtender1_DoubleClick);
             // 
             // tabsContainer1
             // 

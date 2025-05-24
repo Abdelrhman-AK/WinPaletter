@@ -23,7 +23,7 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
-        int GripSize = 10;
+        readonly int GripSize = 10;
         Rectangle rect;
         Rectangle editorRect;
         Rectangle sizingRect;
@@ -165,15 +165,15 @@ namespace WinPaletter.UI.Simulation
 
                 if (sizingRect.Contains(e.Location))
                 {
-                    Cursor = Cursors.SizeNWSE;
+                    Cursor = System.Windows.Forms.Cursors.SizeNWSE;
                 }
                 else if (spacingRect.Contains(e.Location) && (EnableEditingSpacingV || EnableEditingSpacingH))
                 {
-                    Cursor = Cursors.SizeAll;
+                    Cursor = System.Windows.Forms.Cursors.SizeAll;
                 }
                 else
                 {
-                    Cursor = Cursors.Default;
+                    Cursor = System.Windows.Forms.Cursors.Default;
                 }
 
                 CursorOnLabel = LabelRect.Contains(e.Location);
@@ -217,7 +217,7 @@ namespace WinPaletter.UI.Simulation
                 _sizing = false;
                 _moving = false;
                 CursorOnLabel = false;
-                Cursor = Cursors.Default;
+                Cursor = System.Windows.Forms.Cursors.Default;
 
                 await Task.Delay(10);
                 Invalidate();
@@ -293,7 +293,9 @@ namespace WinPaletter.UI.Simulation
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
+            G.InterpolationMode = InterpolationMode.HighQualityBicubic;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
+            G.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             Rectangle IconRect = new(0, 0, Width - 1, Height - 30);
 
@@ -328,11 +330,22 @@ namespace WinPaletter.UI.Simulation
             }
 
             using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+            using (SolidBrush br = new(ColorText))
+            using (SolidBrush brShadow = new(ColorGlow))
             {
                 if (ColorGlow.A > 0)
-                    G.DrawString(Text, Font, Brushes.Black, LabelRectShadow, sf);
+                {
+                    //Draw a separate bitmap that has string in glow color and blurred
 
-                G.DrawGlowString(1, Text, Font, ColorText, ColorGlow, rect, LabelRectX, sf);
+                    using (Bitmap bmpShadow = new(LabelRectX.Width, LabelRectX.Height))
+                    using (Graphics gShadow = Graphics.FromImage(bmpShadow))
+                    {
+                        gShadow.DrawString(Text, Font, brShadow, new Rectangle(0, 1, LabelRectX.Width, LabelRectX.Height), sf);
+                        G.DrawImage(bmpShadow.Blur(1.1f).Fade(0.6f), LabelRectX);
+                    }
+                }
+
+                G.DrawString(Text, Font, br, LabelRectX, sf);
             }
 
             if (EnableEditingMetrics && _hovering)
@@ -353,6 +366,8 @@ namespace WinPaletter.UI.Simulation
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

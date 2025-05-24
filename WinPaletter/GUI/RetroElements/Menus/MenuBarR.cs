@@ -7,8 +7,14 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
 {
-    public class MenuBarR : System.Windows.Forms.Panel
+    /// <summary>
+    /// A retro menu bar with 3 items: Normal, Disabled, Selected.
+    /// </summary>
+    public class MenuBarR : Panel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MenuBarR"/> class.
+        /// </summary>
         public MenuBarR()
         {
             Font = new("Microsoft Sans Serif", 8f);
@@ -28,16 +34,16 @@ namespace WinPaletter.UI.Retro
         Rectangle item1Text;
         Rectangle item2Text;
 
-        string str0 = "Normal";
-        string str1 = "Disabled";
-        string str2 = "Selected";
+        string NormalStr => Program.Lang.Strings.Previewer.Normal;
+        string DisabledStr => Program.Lang.Strings.Previewer.Disabled;
+        string SelectedStr => Program.Lang.Strings.Previewer.Selected;
 
         private PointF[] btnShadowPoints0;
         private PointF[] btnShadowPoints1;
         private PointF[] btnHilightPoints0;
         private PointF[] btnHilightPoints1;
 
-        int GripSize = 6;
+        readonly int GripSize = 6;
         Rectangle Grip;
         bool isMoving_Grip = false;
 
@@ -45,6 +51,9 @@ namespace WinPaletter.UI.Retro
 
         #region Properties
 
+        /// <summary>
+        /// BackColor property of the control.
+        /// </summary>
         public override Color BackColor
         {
             get => base.BackColor;
@@ -58,6 +67,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// ForeColor property of the control.
+        /// </summary>
         public override Color ForeColor
         {
             get => base.ForeColor;
@@ -72,10 +84,14 @@ namespace WinPaletter.UI.Retro
         }
 
 
+        /// <summary>
+        /// The location of the selected item on the control.
+        /// </summary>
         public Point SelectedItemLocation => PreviewSelectionItem ? new(item2.Left, item2.Top) : Point.Empty;
 
-
-        private bool _flat = false;
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is flat design or not.
+        /// </summary>
         public bool Flat
         {
             get { return _flat; }
@@ -88,9 +104,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _flat = false;
 
-
-        private Color _menuBar = SystemColors.MenuBar;
+        /// <summary>
+        /// Menu bar color.
+        /// </summary>
         public Color MenuBar
         {
             get { return _menuBar; }
@@ -103,9 +121,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _menuBar = SystemColors.MenuBar;
 
-
-        private Color buttonHilight = SystemColors.ButtonHighlight;
+        /// <summary>
+        /// Button hilight color.
+        /// </summary>
         public Color ButtonHilight
         {
             get { return buttonHilight; }
@@ -118,9 +138,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color buttonHilight = SystemColors.ButtonHighlight;
 
-
-        private Color buttonShadow = SystemColors.ButtonShadow;
+        /// <summary>
+        /// Button shadow color.
+        /// </summary>
         public Color ButtonShadow
         {
             get { return buttonShadow; }
@@ -133,9 +155,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color buttonShadow = SystemColors.ButtonShadow;
 
-
-        private Color _hilight = SystemColors.Highlight;
+        /// <summary>
+        /// Hilight color.
+        /// </summary>
         public Color Hilight
         {
             get { return _hilight; }
@@ -148,9 +172,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _hilight = SystemColors.Highlight;
 
-
-        private Color _hilightText = SystemColors.HighlightText;
+        /// <summary>
+        /// Hilight text color.
+        /// </summary>
         public Color HilightText
         {
             get { return _hilightText; }
@@ -163,9 +189,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _hilightText = SystemColors.HighlightText;
 
-
-        private Color _menuHilight = SystemColors.MenuHighlight;
+        /// <summary>
+        /// Menu hilight color.
+        /// </summary>
         public Color MenuHilight
         {
             get { return _menuHilight; }
@@ -178,9 +206,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _menuHilight = SystemColors.MenuHighlight;
 
-
-        private Color _grayText = SystemColors.GrayText;
+        /// <summary>
+        /// Gray (disabled) text color.
+        /// </summary>
         public Color GrayText
         {
             get { return _grayText; }
@@ -193,9 +223,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _grayText = SystemColors.GrayText;
 
-
-        private int _MenuHeight = SystemInformation.MenuHeight;
+        /// <summary>
+        /// Height of the menu bar in pixels.
+        /// </summary>
         public int MenuHeight
         {
             get { return _MenuHeight; }
@@ -214,9 +246,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private int _MenuHeight = SystemInformation.MenuHeight;
 
-
-        private bool _previewSelectionItem = true;
+        /// <summary>
+        /// Determines whether the selected item is previewed or not.
+        /// </summary>
         public bool PreviewSelectionItem
         {
             get { return _previewSelectionItem; }
@@ -229,12 +263,18 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _previewSelectionItem = true;
 
-
+        /// <summary>
+        /// A value indicating whether the control colors can be edited by the user.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingColors { get; set; } = false;
 
+        /// <summary>
+        /// A value indicating whether the control metrics can be edited by the user.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingMetrics { get; set; } = false;
@@ -242,36 +282,69 @@ namespace WinPaletter.UI.Retro
 
         #region Events/Overrides
 
+        /// <summary>
+        /// Event handler for the editor when the user clicks on the control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
+
+        /// <summary>
+        /// Event raised when the user clicks on the control.
+        /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        /// <summary>
+        /// Raises the <see cref="Control.Click"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClick(EventArgs e)
         {
             if (!DesignMode)
             {
+                // If this flag is enabled, the user can edit the colors after clicking on the control.
                 if (EnableEditingColors)
                 {
+                    // Edit shadow color when the cursor is on the shadow area.
                     if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonShadow)));
+
+                    // Edit hilight color when the cursor is on the hilight area.
                     else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonHilight)));
+
+                    // Edit face color when the cursor is on the face area.
                     else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(Flat ? nameof(Templates.RetroDesktopColors.MenuBar) : nameof(Templates.RetroDesktopColors.ButtonFace)));
+
+                    // Edit text color when the cursor is on the text area.
                     else if (CursorOnText0 | CursorOnText1) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonText)));
+
+                    // Edit gray text color when the cursor is on the gray text area.
                     else if (CursorOnGrayText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.GrayText)));
+
+                    // Edit menu hilight color when the cursor is on the menu hilight area.
                     else if (CursorOnSelectionText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.HilightText)));
+
+                    // Edit menu hilight color when the cursor is on the menu hilight area.
                     else if (CursorOnMenuHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.MenuHilight)));
+
+                    // Edit selection hilight color when the cursor is on the selection hilight area.
                     else if (CursorOnSelectionHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.Hilight)));
                 }
 
+                // If this flag is enabled, the user can edit the metrics after clicking on the control.
                 else if (EnableEditingMetrics)
                 {
+                    // Edit the menu font when the cursor is on any text area.
                     if (CursorOnText0 || CursorOnGrayText)
                     {
-                        using (FontDialog fd = new() { Font = this.Font })
+                        using (FontDialog fd = new() { Font = Font })
                         {
                             if (fd.ShowDialog() == DialogResult.OK)
                             {
-                                this.Font = fd.Font;
+                                Font = fd.Font;
                                 SetStyle();
                                 Refresh();
+
+                                // Raise the event to notify the editor that the font has been changed.
                                 EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Font)));
                             }
                         }
@@ -282,28 +355,42 @@ namespace WinPaletter.UI.Retro
             base.OnClick(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.FontChanged"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnFontChanged(EventArgs e)
         {
             SetStyle();
             base.OnFontChanged(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.Resize"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnResize(EventArgs e)
         {
             SetStyle();
             base.OnResize(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.MouseMove"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (!DesignMode)
             {
+                // If the user is editing the metrics, the cursor changes to a grip cursor when the cursor is on the grip area.
                 if (isMoving_Grip)
                 {
                     MenuHeight = e.Location.Y;
                     Cursor = Cursors.SizeNS;
                 }
 
+                // Get flags that indicate the cursor is on a specific area of the control (for colors editing).
                 if (EnableEditingColors)
                 {
                     CursorOnText0 = item0Text.Contains(e.Location);
@@ -314,14 +401,15 @@ namespace WinPaletter.UI.Retro
                     CursorOnMenuHilight = PreviewSelectionItem && Flat && item2.BordersContains(e.Location);
                     CursorOnSelectionHilight = PreviewSelectionItem && Flat && item2.Contains(e.Location) && !item2.BordersContains(e.Location) && !CursorOnSelectionText;
 
-                    CursorOnShadow = (PreviewSelectionItem && !Flat) && (btnShadowPoints0.Contains(e.Location) || btnShadowPoints1.Contains(e.Location));
-                    CursorOnHilight = (PreviewSelectionItem && !Flat) && (btnHilightPoints0.Contains(e.Location) || btnHilightPoints1.Contains(e.Location));
+                    CursorOnShadow = PreviewSelectionItem && !Flat && (btnShadowPoints0.Contains(e.Location) || btnShadowPoints1.Contains(e.Location));
+                    CursorOnHilight = PreviewSelectionItem && !Flat && (btnHilightPoints0.Contains(e.Location) || btnHilightPoints1.Contains(e.Location));
 
                     CursorOnFace = rect.Contains(e.Location) && !CursorOnText0 && !CursorOnText1 && !CursorOnSelectionText && !CursorOnGrayText && !CursorOnMenuHilight && !CursorOnSelectionHilight && !CursorOnShadow && !CursorOnHilight;
 
                     Refresh();
                 }
 
+                // Get flags that indicate the cursor is on a specific area of the control (for metrics editing).
                 else if (EnableEditingMetrics)
                 {
                     CursorOnMe = rect.Contains(e.Location);
@@ -337,30 +425,46 @@ namespace WinPaletter.UI.Retro
             base.OnMouseMove(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.MouseDown"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (!DesignMode && EnableEditingMetrics)
             {
+                // If the user is editing the metrics, the grip area can be moved.
                 isMoving_Grip = CursorOnGrip;
             }
 
             base.OnMouseDown(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.MouseUp"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (!DesignMode && EnableEditingMetrics)
             {
+                // Release the grip area.
                 isMoving_Grip = false;
             }
 
             base.OnMouseUp(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.MouseLeave"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
             if (!DesignMode)
             {
+                // Reset area flags when the cursor leaves the control.
+
                 if (EnableEditingColors)
                 {
                     CursorOnText0 = false;
@@ -391,29 +495,37 @@ namespace WinPaletter.UI.Retro
 
         #region Methods
 
+        /// <summary>
+        /// Sets the style of the control based on the metrics and fonts.
+        /// </summary>
         private void SetStyle()
         {
             rect = new Rectangle(0, 0, Width - 1, Height - 1);
 
             Height = Math.Max(MenuHeight, Font.Height);
 
-            item0 = new Rectangle(0, 0, (int)str0.Measure(Font).Width, Height);
-            item1 = new Rectangle(item0.Right, 0, (int)str1.Measure(Font).Width, Height);
-            item2 = new Rectangle(item1.Right, 0, (int)str2.Measure(Font).Width, Height);
+            // Calculate the rectangles of the items.
+            item0 = new Rectangle(0, 0, (int)NormalStr.Measure(Font).Width, Height);
+            item1 = new Rectangle(item0.Right, 0, (int)DisabledStr.Measure(Font).Width, Height);
+            item2 = new Rectangle(item1.Right, 0, (int)SelectedStr.Measure(Font).Width, Height);
 
-            SizeF item0Size = str0.Measure(Font) - new Size(6, 6);
-            SizeF item1Size = str1.Measure(Font) - new Size(6, 6);
-            SizeF item2Size = str2.Measure(Font) - new Size(6, 6);
+            // Calculate the rectangles of the text of the items.
+            SizeF item0Size = NormalStr.Measure(Font) - new Size(6, 6);
+            SizeF item1Size = DisabledStr.Measure(Font) - new Size(6, 6);
+            SizeF item2Size = SelectedStr.Measure(Font) - new Size(6, 6);
 
+            // Proper alignment of the text in the rectangles.
             item0Text = new Rectangle(item0.X + (item0.Width - (int)item0Size.Width) / 2, item0.Y + (item0.Height - (int)item0Size.Height) / 2, (int)item0Size.Width, (int)item0Size.Height);
             item1Text = new Rectangle(item1.X + (item1.Width - (int)item1Size.Width) / 2, item1.Y + (item1.Height - (int)item1Size.Height) / 2, (int)item1Size.Width, (int)item1Size.Height);
             item2Text = new Rectangle(item2.X + (item2.Width - (int)item2Size.Width) / 2, item2.Y + (item2.Height - (int)item2Size.Height) / 2, (int)item2Size.Width, (int)item2Size.Height);
 
-            btnShadowPoints0 = new PointF[] { new PointF(item2.Left, item2.Top), new PointF(item2.Right - 1, item2.Top) };
-            btnShadowPoints1 = new PointF[] { new PointF(item2.Left, item2.Top), new PointF(item2.Left, item2.Bottom - 1) };
-            btnHilightPoints0 = new PointF[] { new PointF(item2.Right - 1, item2.Top), new PointF(item2.Right - 1, item2.Bottom - 1) };
-            btnHilightPoints1 = new PointF[] { new PointF(item2.Left, item2.Bottom - 1), new PointF(item2.Right - 1, item2.Bottom - 1) };
+            // Get points where the shadow and hilight lines are drawn.
+            btnShadowPoints0 = [new(item2.Left, item2.Top), new(item2.Right - 1, item2.Top)];
+            btnShadowPoints1 = [new(item2.Left, item2.Top), new(item2.Left, item2.Bottom - 1)];
+            btnHilightPoints0 = [new(item2.Right - 1, item2.Top), new(item2.Right - 1, item2.Bottom - 1)];
+            btnHilightPoints1 = [new(item2.Left, item2.Bottom - 1), new(item2.Right - 1, item2.Bottom - 1)];
 
+            // Resizing grip area.
             Grip = new(rect.X + rect.Width / 2 - (int)(0.5 * GripSize), rect.Y + rect.Height - GripSize, GripSize, GripSize);
         }
 
@@ -421,6 +533,9 @@ namespace WinPaletter.UI.Retro
 
         #region Colors editor
 
+        /// <summary>
+        /// Flags that indicate the cursor is on a specific area of the control.
+        /// </summary>
         private bool CursorOnShadow, CursorOnHilight, CursorOnFace, CursorOnText0, CursorOnText1, CursorOnGrayText, CursorOnMenuHilight, CursorOnSelectionHilight, CursorOnSelectionText;
 
         private bool CursorOnMe, CursorOnGrip;
@@ -439,16 +554,22 @@ namespace WinPaletter.UI.Retro
 
         #endregion
 
+        /// <summary>
+        /// Paints the control.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighQuality;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
+            // Draw the control background. If the control is flat, the background is the same as the menu bar color.
             G.Clear(!Flat ? BackColor : MenuBar);
 
             #region Editor
 
+            // Draw hatch brush on the face area when the user is editing the face color.
             if (_ColorEdit_Face)
             {
                 Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
@@ -457,8 +578,10 @@ namespace WinPaletter.UI.Retro
 
             #endregion
 
+            // Draw the items if the flag is enabled.
             if (PreviewSelectionItem)
             {
+                // Draw menu bar as flat design.
                 if (Flat)
                 {
                     using (Pen P = new(MenuHilight))
@@ -470,12 +593,14 @@ namespace WinPaletter.UI.Retro
 
                     #region Editor
 
+                    // Draw hatch brush on the selection hilight area when the user is editing the selection hilight color.
                     if (_ColorEdit_SelectionHilight)
                     {
                         Color color = Color.FromArgb(100, Hilight.IsDark() ? Color.White : Color.Black);
                         using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent)) { G.FillRectangle(hb, item2); }
                     }
 
+                    // Draw the menu hilight area with a different color when the user is editing the menu hilight color.
                     if (_ColorEdit_MenuHilight)
                     {
                         Color color = Color.FromArgb(200, 128, 0, 0);
@@ -486,6 +611,8 @@ namespace WinPaletter.UI.Retro
                 }
                 else
                 {
+                    // Draw menu bar as non-flat design.
+
                     using (Pen pShadow = new(ButtonShadow))
                     using (Pen pHilight = new(ButtonHilight))
                     {
@@ -497,6 +624,7 @@ namespace WinPaletter.UI.Retro
 
                     #region Editor
 
+                    // Draw shadow lines with a different color when the user is editing the shadow color.
                     if (_ColorEdit_Shadow)
                     {
                         Color color = Color.FromArgb(200, 128, 0, 0);
@@ -507,6 +635,7 @@ namespace WinPaletter.UI.Retro
                         }
                     }
 
+                    // Draw hilight lines with a different color when the user is editing the hilight color.
                     if (_ColorEdit_Hilight)
                     {
                         Color color = Color.FromArgb(200, 128, 0, 0);
@@ -523,6 +652,7 @@ namespace WinPaletter.UI.Retro
 
             #region Editor
 
+            // Draw hatch brush on the text area when the user is editing the text color.
             if (_ColorEdit_Text || _MetricsEdit_Text)
             {
                 Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
@@ -534,6 +664,7 @@ namespace WinPaletter.UI.Retro
                 }
             }
 
+            // Draw hatch brush on the gray text area when the user is editing the gray text color.
             if (_ColorEdit_GrayText || _MetricsEdit_GrayText)
             {
                 Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
@@ -545,6 +676,7 @@ namespace WinPaletter.UI.Retro
                 }
             }
 
+            // Draw hatch brush on the selection text area when the user is editing the selection text color.
             if (_ColorEdit_TextSelectionItem_NonFlat || _ColorEdit_SelectionText)
             {
                 Color color;
@@ -562,17 +694,19 @@ namespace WinPaletter.UI.Retro
 
             #endregion
 
+            // Draw the text of the items.
             using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
             using (SolidBrush ForeColorBrush = new(ForeColor))
             using (SolidBrush DisabledBrush = new(GrayText))
             using (SolidBrush SelectedBrush = new(Flat ? HilightText : ForeColor))
             {
-                G.DrawString(str0, Font, ForeColorBrush, item0, sf);
-                G.DrawString(str1, Font, DisabledBrush, item1, sf);
+                G.DrawString(NormalStr, Font, ForeColorBrush, item0, sf);
+                G.DrawString(DisabledStr, Font, DisabledBrush, item1, sf);
 
-                if (PreviewSelectionItem) G.DrawString(str2, Font, SelectedBrush, item2, sf);
+                if (PreviewSelectionItem) G.DrawString(SelectedStr, Font, SelectedBrush, item2, sf);
             }
 
+            // Draw the grip area when the user is editing the menu height.
             if (_MetricsEdit_MenuHeight)
             {
                 using (Pen P = new(BackColor.Invert()) { DashStyle = DashStyle.Dot })
@@ -583,12 +717,13 @@ namespace WinPaletter.UI.Retro
                 using (Pen P = new(BackColor.Invert()) { DashStyle = DashStyle.Solid })
                 {
                     G.FillRoundedRect(Brushes.White, Grip, 1, true);
-
                     G.DrawRoundedRect(P, Grip, 1, true);
                 }
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

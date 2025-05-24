@@ -17,7 +17,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -53,7 +53,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Icons)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.WindowsIcons,
+                AspectName = Program.Lang.Strings.Aspects.Icons,
                 Enabled = Program.TM.Icons.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -152,17 +152,17 @@ namespace WinPaletter
 
             string shell32 = $"{SysPaths.System32}\\shell32.dll";
 
-            List<DataGridViewRow> rowsToAdd = new();
+            List<DataGridViewRow> rowsToAdd = [];
             rowsToAdd.Clear();
 
             for (int i = 0, count = PE.GetIconGroupCount(shell32); i < count; i++)
             {
                 DataGridViewRow row = new();
-                row.CreateCells(shell32Data, i, PE.GetIcon(shell32, i), null, string.Empty, Program.Lang.Browse);
+                row.CreateCells(shell32Data, i, PE.GetIcon(shell32, i), null, string.Empty, Program.Lang.Strings.General.Browse);
                 rowsToAdd.Add(row);
             }
 
-            shell32Data.Rows.AddRange(rowsToAdd.ToArray());
+            shell32Data.Rows.AddRange([.. rowsToAdd]);
 
             // remove default [x] image for data DataGridViewImageColumn columns
             foreach (DataGridViewColumn column in shell32Data.Columns)
@@ -182,7 +182,7 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            List<DataGridViewRow> rowsToAdd = new();
+            List<DataGridViewRow> rowsToAdd = [];
             rowsToAdd.Clear();
 
             for (int i = 0, count = Theme.Structures.Icons.ControlPanelCLSIDs.Count; i < count; i++)
@@ -208,12 +208,12 @@ namespace WinPaletter
                     icon = null;
                 }
 
-                row.CreateCells(cpData, name, CLSID, icon, null, string.Empty, Program.Lang.Browse);
+                row.CreateCells(cpData, name, CLSID, icon, null, string.Empty, Program.Lang.Strings.General.Browse);
 
                 rowsToAdd.Add(row);
             }
 
-            cpData.Rows.AddRange(rowsToAdd.ToArray());
+            cpData.Rows.AddRange([.. rowsToAdd]);
 
             // remove default [x] image for data DataGridViewImageColumn columns
             foreach (DataGridViewColumn column in cpData.Columns)
@@ -233,7 +233,7 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            List<DataGridViewRow> rowsToAdd = new();
+            List<DataGridViewRow> rowsToAdd = [];
             rowsToAdd.Clear();
 
             for (int i = 0, count = Theme.Structures.Icons.ExplorerCLSIDs.Count; i < count; i++)
@@ -259,12 +259,12 @@ namespace WinPaletter
                     icon = null;
                 }
 
-                row.CreateCells(explorerData, name, CLSID, icon, null, string.Empty, Program.Lang.Browse);
+                row.CreateCells(explorerData, name, CLSID, icon, null, string.Empty, Program.Lang.Strings.General.Browse);
 
                 rowsToAdd.Add(row);
             }
 
-            explorerData.Rows.AddRange(rowsToAdd.ToArray());
+            explorerData.Rows.AddRange([.. rowsToAdd]);
 
             // remove default [x] image for data DataGridViewImageColumn columns
             foreach (DataGridViewColumn column in explorerData.Columns)
@@ -677,9 +677,9 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.IconsImport_Shell32_1, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.IconsImport_Shell32_2) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Messages.IconsImport_Shell32_1, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.Strings.Messages.IconsImport_Shell32_2) == DialogResult.Yes)
             {
-                using (OpenFileDialog dlg = new() { Filter = Program.Filters.DLL, Title = Program.Lang.Filter_OpenDLL })
+                using (OpenFileDialog dlg = new() { Filter = Program.Filters.DLL, Title = Program.Lang.Strings.Extensions.OpenDLL })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {

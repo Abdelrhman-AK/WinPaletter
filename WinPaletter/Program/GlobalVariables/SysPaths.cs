@@ -4,8 +4,8 @@ using Application = System.Windows.Forms.Application;
 namespace WinPaletter.GlobalVariables
 {
     /// <summary>
-    /// Extended paths
-    /// <br></br><b>Class contains strings have paths to system and application important directories and files</b>
+    /// System paths
+    /// <br></br><b>Class contains strings have paths to system and application-related directories and files</b>
     /// </summary>
     public static class SysPaths
     {
@@ -73,12 +73,12 @@ namespace WinPaletter.GlobalVariables
         public static string SysEventsSounds => $"{SysEventsSoundsDir}\\WinPaletter.SysEventsSounds.exe";
 
         /// <summary>
-        /// WinPaletter system events sounds INI file
+        /// WinPaletter system events sounds INI File
         /// </summary>
         public static string SysEventsSounds_Local_INI => $"{appData}\\sounds.ini";
 
         /// <summary>
-        /// WinPaletter system events sounds INI file
+        /// WinPaletter system events sounds INI File
         /// </summary>
         public static string SysEventsSounds_Global_INI => $"{SysEventsSoundsDir}\\sounds.ini";
 
@@ -100,24 +100,24 @@ namespace WinPaletter.GlobalVariables
 
         #region System processes
         /// <summary>
-        /// Explorer process file path
+        /// Explorer process File path
         /// </summary>
         public readonly static string Explorer = $"{Windows}\\explorer.exe";
 
         /// <summary>
-        /// Task Scheduler command process file path
+        /// Task Scheduler command process File path
         /// </summary>
         public readonly static string SchTasks = $"{System32}\\schtasks.exe";
 
         /// <summary>
-        /// Take ownership command process file path
+        /// Take ownership command process File path
         /// </summary>
         public readonly static string TakeOwn = $"{System32}\\takeown.exe";
         #endregion
 
         #region System PE files
         /// <summary>
-        /// Imageres.dll PE file
+        /// Imageres.dll PE File
         /// </summary>
         public readonly static string imageres = $"{System32}\\imageres.dll";
         #endregion
@@ -146,27 +146,27 @@ namespace WinPaletter.GlobalVariables
 
         #region Consoles\Terminals
         /// <summary>
-        /// Command Prompt process file path
+        /// Command Prompt process File path
         /// </summary>
         public readonly static string CMD = $"{System32}\\cmd.exe";
 
         /// <summary>
-        /// PowerShell x86 process file directory
+        /// PowerShell x86 process File directory
         /// </summary>
         public readonly static string PS86_dir = $"{System32}\\WindowsPowerShell\\v1.0";
 
         /// <summary>
-        /// PowerShell x86 process file path
+        /// PowerShell x86 process File path
         /// </summary>
         public readonly static string PS86_app = $"{PS86_dir}\\powershell.exe";
 
         /// <summary>
-        /// PowerShell x64 process file directory
+        /// PowerShell x64 process File directory
         /// </summary>
         public readonly static string PS64_dir = $"{SysWOW64}\\WindowsPowerShell\\v1.0";
 
         /// <summary>
-        /// PowerShell x64 process file path
+        /// PowerShell x64 process File path
         /// </summary>
         public readonly static string PS64_app = $"{PS64_dir}\\powershell.exe";
 
@@ -181,12 +181,12 @@ namespace WinPaletter.GlobalVariables
         public readonly static string PS64_reg = $"{PS64_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
 
         /// <summary>
-        /// Microsoft Terminal JSON settings file
+        /// Microsoft Terminal JSON settings File
         /// </summary>
         public static string TerminalJSON => $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json";
 
         /// <summary>
-        /// Microsoft Terminal Preview JSON settings file
+        /// Microsoft Terminal Preview JSON settings File
         /// </summary>
         public static string TerminalPreviewJSON => $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\\LocalState\\settings.json";
         #endregion

@@ -15,7 +15,7 @@ namespace WinPaletter.Dialogs
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<MainForm>();
 
             TextBox1.Font = Fonts.ConsoleMedium;
             SystemSounds.Exclamation.Play();
@@ -23,7 +23,7 @@ namespace WinPaletter.Dialogs
 
         private void button2_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Filter_SaveText })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Strings.Extensions.SaveText })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

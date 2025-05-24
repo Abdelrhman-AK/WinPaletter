@@ -11,7 +11,7 @@ namespace WinPaletter.NativeMethods
     public class Kernel32
     {
         /// <summary>
-        /// Disables file system redirection for the calling thread.
+        /// Disables File system redirection for the calling thread.
         /// </summary>
         /// <param name="ptr">A pointer to a value that receives the address of the Wow64 redirection information.</param>
         /// <returns>Returns true if the function succeeds; otherwise, false.</returns>
@@ -19,7 +19,7 @@ namespace WinPaletter.NativeMethods
         public static extern bool Wow64DisableWow64FsRedirection(ref IntPtr ptr);
 
         /// <summary>
-        /// Reverts the file system redirection previously disabled for the calling thread.
+        /// Reverts the File system redirection previously disabled for the calling thread.
         /// </summary>
         /// <param name="ptr">A pointer to the Wow64 redirection information obtained from a previous call to <see cref="Wow64DisableWow64FsRedirection"/>.</param>
         /// <returns>Returns true if the function succeeds; otherwise, false.</returns>
@@ -27,25 +27,25 @@ namespace WinPaletter.NativeMethods
         public static extern bool Wow64RevertWow64FsRedirection(IntPtr ptr);
 
         /// <summary>
-        /// Writes data to the specified section of an initialization file.
+        /// Writes data to the specified section of an initialization File.
         /// </summary>
         /// <param name="section">The name of the section to which the data is to be copied.</param>
         /// <param name="key">The name of the key whose associated value is to be set.</param>
         /// <param name="val">The string to be written.</param>
-        /// <param name="filePath">The name of the initialization file.</param>
+        /// <param name="filePath">The name of the initialization File.</param>
         /// <returns>Returns nonzero if the function succeeds; otherwise, zero.</returns>
         [DllImport("kernel32")]
         public static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
 
         /// <summary>
-        /// Retrieves a string from the specified section in an initialization file.
+        /// Retrieves a string from the specified section in an initialization File.
         /// </summary>
         /// <param name="section">The name of the section containing the key name.</param>
         /// <param name="key">The name of the key whose associated value is to be retrieved.</param>
         /// <param name="def">A default value.</param>
         /// <param name="retVal">A StringBuilder that receives the retrieved string.</param>
         /// <param name="size">The size of the Buffer pointed to by the retVal parameter, in characters.</param>
-        /// <param name="filePath">The name of the initialization file.</param>
+        /// <param name="filePath">The name of the initialization File.</param>
         /// <returns>Returns the number of characters copied to the Buffer, excluding the null-terminating character.</returns>
         [DllImport("kernel32.dll")]
         public static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
@@ -71,11 +71,11 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
-        /// Retrieves the full path and file name of the executable file for a specified process.
+        /// Retrieves the full path and File name of the executable File for a specified process.
         /// </summary>
         /// <param name="hProcess">A handle to the process.</param>
         /// <param name="dwFlags">This parameter is reserved for future use. It must be zero.</param>
-        /// <param name="lpExeName">A pointer to a Buffer that receives the null-terminated string specifying the executable file for the process.</param>
+        /// <param name="lpExeName">A pointer to a Buffer that receives the null-terminated string specifying the executable File for the process.</param>
         /// <param name="lpdwSize">On input, specifies the size of the lpExeName Buffer, in characters. On success, receives the number of characters written to the Buffer, excluding the null-terminating character.</param>
         /// <returns>Returns true if the function succeeds; otherwise, false.</returns>
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -96,14 +96,14 @@ namespace WinPaletter.NativeMethods
         private static extern IntPtr OpenProcess(ProcessAccessFlags processAccess, bool bInheritHandle, int processId);
 
         /// <summary>
-        /// Retrieves the full path and file name of the executable file for a specified process.
+        /// Retrieves the full path and File name of the executable File for a specified process.
         /// </summary>
         /// <param name="p">The process for which to retrieve the filename.</param>
-        /// <returns>The full path and filename of the executable file for the specified process.</returns>
+        /// <returns>The full path and filename of the executable File for the specified process.</returns>
         public static string GetProcessFilename(Process p)
         {
             int capacity = 2000;
-            StringBuilder builder = new StringBuilder(capacity);
+            StringBuilder builder = new(capacity);
             IntPtr ptr = OpenProcess(ProcessAccessFlags.QueryLimitedInformation, false, p.Id);
             if (!QueryFullProcessImageName(ptr, 0, builder, ref capacity))
             {

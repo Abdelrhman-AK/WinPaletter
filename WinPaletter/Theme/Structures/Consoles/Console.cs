@@ -83,7 +83,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Use raster (pixelated/retro) font</summary>
         public bool FontRaster = false;
 
-        /// <summary>Console font size or raster console screen size</summary>
+        /// <summary>Console font size or raster console screen size if <see cref="FontRaster"/> is true </summary>
         public int FontSize = 18 * 65536;
 
         /// <summary>Console font weight</summary>
@@ -120,9 +120,12 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Console structure that has default data</param>
         public void Load(string RegKey, string Signature_Of_Enable, Console @default)
         {
-            object temp;
-            string RegAddress = $@"HKEY_CURRENT_USER\Console{((string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}"))}";
+            Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)) == 1;
 
+            object temp;
+            string RegAddress = $@"HKEY_CURRENT_USER\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
+
+            // Windows stores color values in reverse order, so we need to reverse them
             temp = GetReg(RegAddress, "ColorTable00", @default.ColorTable00.Reverse().ToArgb());
             ColorTable00 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
@@ -171,6 +174,7 @@ namespace WinPaletter.Theme.Structures
             temp = GetReg(RegAddress, "ColorTable15", @default.ColorTable15.Reverse().ToArgb());
             ColorTable15 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
 
+            // Windows stores popup forecolor and backcolor in the same value, so we need to split them
             temp = GetReg(RegAddress, "PopupColors", Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16));
             string d = ((int)temp).ToString("X");
             if (d.Count() == 1)
@@ -178,6 +182,7 @@ namespace WinPaletter.Theme.Structures
             PopupBackground = Convert.ToInt32(d[0].ToString(), 16);
             PopupForeground = Convert.ToInt32(d[1].ToString(), 16);
 
+            // Windows stores screen forecolor and backcolor in the same value, so we need to split them
             temp = GetReg(RegAddress, "ScreenColors", Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16));
             d = ((int)temp).ToString("X");
             if (d.Count() == 1)
@@ -198,7 +203,7 @@ namespace WinPaletter.Theme.Structures
             }
 
             temp = GetReg(RegAddress, "FontFamily", !@default.FontRaster ? 54 : 1);
-            FontRaster = ((int)temp == 1 | (int)temp == 0) | (int)temp == 48;
+            FontRaster = (int)temp == 1 | (int)temp == 0 | (int)temp == 48;
             if (FaceName.ToLower() == "terminal")
                 FontRaster = true;
 
@@ -210,7 +215,6 @@ namespace WinPaletter.Theme.Structures
 
             FontWeight = Convert.ToInt32(GetReg(RegAddress, "FontWeight", 400));
 
-
             if (OS.W10_1909)
             {
                 temp = GetReg(RegAddress, "CursorColor", Color.White.Reverse().ToArgb());
@@ -221,9 +225,6 @@ namespace WinPaletter.Theme.Structures
                 W10_1909_TerminalScrolling = Convert.ToBoolean(GetReg(RegAddress, "TerminalScrolling", false));
                 W10_1909_WindowAlpha = Convert.ToInt32(GetReg(RegAddress, "WindowAlpha", 255));
             }
-
-            Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)) == 1;
-
         }
 
         /// <summary>
@@ -235,7 +236,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used as a theme log</param>
         public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView treeView = null)
         {
-            string RegAddress = $@"{scopeReg}\Console{((string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}"))}";
+            string RegAddress = $@"{scopeReg}\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
 
             try
             {
@@ -247,6 +248,8 @@ namespace WinPaletter.Theme.Structures
             catch { } // Ignore creating a registry key
 
             EditReg(treeView, RegAddress, "EnableColorSelection", 1);
+
+            // Windows stores color values in reverse order, so we need to reverse them
             EditReg(treeView, RegAddress, "ColorTable00", Color.FromArgb(0, Console.ColorTable00.Reverse()).ToArgb());
             EditReg(treeView, RegAddress, "ColorTable01", Color.FromArgb(0, Console.ColorTable01.Reverse()).ToArgb());
             EditReg(treeView, RegAddress, "ColorTable02", Color.FromArgb(0, Console.ColorTable02.Reverse()).ToArgb());

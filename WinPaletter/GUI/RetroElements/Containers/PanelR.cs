@@ -6,11 +6,16 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
 {
-
+    /// <summary>
+    /// A retro panel with Windows 9x style
+    /// </summary>
     [Description("Retro panel with Windows 9x style")]
     public class PanelR : Panel
     {
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PanelR"/> class.
+        /// </summary>
         public PanelR()
         {
             DoubleBuffered = true;
@@ -29,6 +34,9 @@ namespace WinPaletter.UI.Retro
         private Color buttonLight = SystemColors.ControlLight;
         private bool style2 = false;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the panel is flat or not.
+        /// </summary>
         public bool Flat
         {
             get { return flat; }
@@ -42,6 +50,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the button hilight color.
+        /// </summary>
         public Color ButtonHilight
         {
             get { return buttonHilight; }
@@ -55,6 +66,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the button shadow color.
+        /// </summary>
         public Color ButtonShadow
         {
             get { return buttonShadow; }
@@ -68,6 +82,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the button dark shadow color.
+        /// </summary>
         public Color ButtonDkShadow
         {
             get { return buttonDkShadow; }
@@ -81,6 +98,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the button light color.
+        /// </summary>
         public Color ButtonLight
         {
             get { return buttonLight; }
@@ -94,6 +114,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the panel is styled as the second style.
+        /// </summary>
         public bool Style2
         {
             get { return style2; }
@@ -109,6 +132,10 @@ namespace WinPaletter.UI.Retro
 
         #endregion
 
+        /// <summary>
+        /// Paints the panel.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
@@ -116,12 +143,16 @@ namespace WinPaletter.UI.Retro
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
 
+            // Draw background
             G.Clear(BackColor);
 
+            // Draw border
             if (!Flat)
             {
                 if (!Style2)
                 {
+                    // Draw 3D borders with style 1
+
                     using (Pen P0 = new(ButtonShadow))
                     using (Pen P1 = new(ButtonHilight))
                     {
@@ -133,6 +164,8 @@ namespace WinPaletter.UI.Retro
                 }
                 else
                 {
+                    // Draw 3D borders with style 2
+
                     using (Pen P0 = new(ButtonShadow))
                     using (Pen P1 = new(ButtonDkShadow))
                     using (Pen P2 = new(ButtonHilight))
@@ -151,10 +184,12 @@ namespace WinPaletter.UI.Retro
             }
             else
             {
+                // Draw a flat border
+
                 using (Pen P = new(ButtonShadow)) G.DrawRectangle(P, Rect);
             }
+
+
         }
-
     }
-
 }

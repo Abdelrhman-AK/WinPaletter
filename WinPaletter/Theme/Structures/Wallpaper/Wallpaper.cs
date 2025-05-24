@@ -22,7 +22,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public bool SlideShow_Folder_or_ImagesList = true;
 
-        /// <summary>Wallpaper file path</summary>
+        /// <summary>Wallpaper File path</summary>
         public string ImageFile = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace WinPaletter.Theme.Structures
         public WallpaperStyles WallpaperStyle = WallpaperStyles.Fill;
 
         /// <summary>
-        /// ButtonOverlay of wallpaper
+        /// Different types of wallpaper to be set
         /// <code>
         /// Picture
         /// SolidColor
@@ -47,14 +47,14 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public WallpaperTypes WallpaperType = WallpaperTypes.Picture;
 
-        /// <summary>Folder that has images for wallpaper slide show, (if SlideShow_Folder_or_ImagesList = true;)</summary>
+        /// <summary>Folder that has images for wallpaper slide show, (if <c>SlideShow_Folder_or_ImagesList == true</c>)</summary>
         public string Wallpaper_Slideshow_ImagesRootPath = string.Empty;
 
         /// <summary>
         /// String array that has pathes of images files, (if SlideShow_Folder_or_ImagesList = false;)
-        /// <br><b><i>(!) Important note: array items (files) must be from the same folder, or slideshow won't load them.</i></b></br>
+        /// <br><b><i>(!) Important note: array items (files) must be located in the same folder, or slideshow won't load them.</i></b></br>
         /// </summary>
-        public string[] Wallpaper_Slideshow_Images = new string[] { };
+        public string[] Wallpaper_Slideshow_Images = [];
 
         /// <summary>Interval of wallpaper changing in slideshow</summary>
         public int Wallpaper_Slideshow_Interval = 60000;
@@ -153,6 +153,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
+                // Slideshow.ini file path
                 string slideshow_ini = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\slideshow.ini";
                 string slideshow_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper";
 
@@ -174,9 +175,11 @@ namespace WinPaletter.Theme.Structures
                     EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", (int)WallpaperStyle, RegistryValueKind.String);
                 }
 
+                // Wallpaper application is not skipped, process it
+                // This is necessary to apply wallpaper changes in real time
+                // Skipping is necessary if WallpaperTone is used
                 if (!SkipSettingWallpaper)
                 {
-
                     if (WallpaperType == WallpaperTypes.SolidColor)
                     {
                         SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, string.Empty, SPIF.SPIF_UPDATEINIFILE);
@@ -191,7 +194,7 @@ namespace WinPaletter.Theme.Structures
                             {
                                 if (bmp.RawFormat != System.Drawing.Imaging.ImageFormat.Bmp)
                                 {
-                                    if (MsgBox(Program.Lang.TM_Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.TM_Wallpaper_NonBMP1) == DialogResult.Yes)
+                                    if (MsgBox(Program.Lang.Strings.ThemeManager.Tips.Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.ThemeManager.Tips.Wallpaper_NonBMP1) == DialogResult.Yes)
                                     {
                                         bmp.Save(ImageFile, System.Drawing.Imaging.ImageFormat.Bmp);
                                     }
@@ -215,16 +218,15 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType);
 
+                // Windows WXP and Vista don't support slideshow
                 if (!OS.WXP && !OS.WVista)
                 {
-
                     if (!SkipSettingWallpaper)
                     {
                         using (INI _ini = new(slideshow_ini))
                         {
-
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_SettingSlideshow, slideshow_ini), "dll");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.SettingSlideshow, slideshow_ini), "dll");
 
                             if (WallpaperType == WallpaperTypes.SlideShow && SlideShow_Folder_or_ImagesList && Directory.Exists(Wallpaper_Slideshow_ImagesRootPath))
                             {
@@ -244,7 +246,6 @@ namespace WinPaletter.Theme.Structures
                                 for (int i = 0, loopTo = Wallpaper_Slideshow_Images.Count() - 1; i <= loopTo; i++)
                                     _ini.Write("Slideshow", $"Item{i}Path", Wallpaper_Slideshow_Images[i]);
                             }
-
                         }
                     }
 

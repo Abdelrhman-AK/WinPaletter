@@ -13,7 +13,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (WindowsTerminal formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<WindowsTerminal>();
 
             if (ComboBox1.Items.Count > 0) { ComboBox1.SelectedIndex = 0; }
         }

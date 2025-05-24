@@ -15,7 +15,7 @@ namespace WinPaletter
     {
         private CursorControl _SelectedControl;
         private CursorControl _CopiedControl;
-        private readonly List<CursorControl> AnimateList = new();
+        private readonly List<CursorControl> AnimateList = [];
 
         private void CursorsStudio_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -30,7 +30,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -96,7 +96,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Cursors)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -283,7 +283,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Store_Toggle_Cursors,
+                AspectName = Program.Lang.Strings.Aspects.Cursors,
                 Enabled = Program.TM.Cursors.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -336,7 +336,7 @@ namespace WinPaletter
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 Focus();
                 BringToFront();
@@ -458,7 +458,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_PrimaryColor1 = ((ColorItem)sender).BackColor;
@@ -497,7 +497,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_PrimaryColor2 = ((ColorItem)sender).BackColor;
@@ -536,7 +536,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_SecondaryColor1 = ((ColorItem)sender).BackColor;
@@ -575,7 +575,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_SecondaryColor2 = ((ColorItem)sender).BackColor;
@@ -614,7 +614,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
@@ -769,7 +769,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
@@ -808,7 +808,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleHot1 = ((ColorItem)sender).BackColor;
@@ -847,7 +847,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_LoadingCircleHot2 = ((ColorItem)sender).BackColor;
@@ -981,7 +981,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_Shadow_Color = ((ColorItem)sender).BackColor;
@@ -1018,7 +1018,7 @@ namespace WinPaletter
 
         private void button20_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Cursors, Title = Program.Lang.Filter_OpenCursor })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Cursors, Title = Program.Lang.Strings.Extensions.OpenCursor })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1065,7 +1065,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 100f)
             {
                 valX = 100f;
@@ -1083,7 +1083,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 100f)
             {
                 valX = 100f;
@@ -1101,7 +1101,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 100f)
             {
                 valX = 100f;
@@ -1119,7 +1119,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 100f)
             {
                 valX = 100f;
@@ -1137,7 +1137,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 10f)
             {
                 valX = 10f;
@@ -1155,7 +1155,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 100f)
             {
                 valX = 100f;
@@ -1173,7 +1173,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 5f)
             {
                 valX = 5f;
@@ -1191,7 +1191,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((UI.Controllers.TrackBarX)sender).Value);
+            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
             if (valX > 5f)
             {
                 valX = 5f;
@@ -1313,7 +1313,7 @@ namespace WinPaletter
             {
                 foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
                 {
-                    Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                    Color back = ((ColorItem)sender).BackColor;
                     Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                     cursorControl.Prop_PrimaryColor1 = back;
@@ -1324,7 +1324,7 @@ namespace WinPaletter
 
                 foreach (CursorControl cursorControl in panel1.Controls.OfType<CursorControl>())
                 {
-                    Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                    Color back = ((ColorItem)sender).BackColor;
                     Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                     cursorControl.Prop_PrimaryColor1 = back;
@@ -1338,12 +1338,12 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
                     {
-                        Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                        Color back = ((ColorItem)sender).BackColor;
                         Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                         cursorControl.Prop_PrimaryColor1 = back;
@@ -1354,7 +1354,7 @@ namespace WinPaletter
 
                     foreach (CursorControl cursorControl in panel1.Controls.OfType<CursorControl>())
                     {
-                        Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                        Color back = ((ColorItem)sender).BackColor;
                         Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                         cursorControl.Prop_PrimaryColor1 = back;
@@ -1375,12 +1375,12 @@ namespace WinPaletter
 
             foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
             {
-                CList.Add(cursorControl, new string[] { nameof(cursorControl.Prop_PrimaryColor1), nameof(cursorControl.Prop_PrimaryColor2) });
+                CList.Add(cursorControl, [nameof(cursorControl.Prop_PrimaryColor1), nameof(cursorControl.Prop_PrimaryColor2)]);
             }
 
             foreach (CursorControl cursorControl in panel1.Controls.OfType<CursorControl>())
             {
-                CList.Add(cursorControl, new string[] { nameof(cursorControl.Prop_PrimaryColor1), nameof(cursorControl.Prop_PrimaryColor2) });
+                CList.Add(cursorControl, [nameof(cursorControl.Prop_PrimaryColor1), nameof(cursorControl.Prop_PrimaryColor2)]);
             }
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
@@ -1421,7 +1421,7 @@ namespace WinPaletter
             {
                 foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
                 {
-                    Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                    Color back = ((ColorItem)sender).BackColor;
                     Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                     cursorControl.Prop_LoadingCircleBack1 = back;
@@ -1432,7 +1432,7 @@ namespace WinPaletter
 
                 foreach (CursorControl cursorControl in panel2.Controls.OfType<CursorControl>())
                 {
-                    Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                    Color back = ((ColorItem)sender).BackColor;
                     Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                     cursorControl.Prop_LoadingCircleBack1 = back;
@@ -1446,12 +1446,12 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
                     {
-                        Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                        Color back = ((ColorItem)sender).BackColor;
                         Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                         cursorControl.Prop_LoadingCircleBack1 = back;
@@ -1462,7 +1462,7 @@ namespace WinPaletter
 
                     foreach (CursorControl cursorControl in panel2.Controls.OfType<CursorControl>())
                     {
-                        Color back = ((UI.Controllers.ColorItem)sender).BackColor;
+                        Color back = ((ColorItem)sender).BackColor;
                         Color border = back.IsDark() ? back.LightLight() : back.Dark();
 
                         cursorControl.Prop_LoadingCircleBack1 = back;
@@ -1482,12 +1482,12 @@ namespace WinPaletter
 
             foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
             {
-                CList.Add(cursorControl, new string[] { nameof(cursorControl.Prop_LoadingCircleBack1), nameof(cursorControl.Prop_LoadingCircleBack2) });
+                CList.Add(cursorControl, [nameof(cursorControl.Prop_LoadingCircleBack1), nameof(cursorControl.Prop_LoadingCircleBack2)]);
             }
 
             foreach (CursorControl cursorControl in panel2.Controls.OfType<CursorControl>())
             {
-                CList.Add(cursorControl, new string[] { nameof(cursorControl.Prop_LoadingCircleBack1), nameof(cursorControl.Prop_LoadingCircleBack2) });
+                CList.Add(cursorControl, [nameof(cursorControl.Prop_LoadingCircleBack1), nameof(cursorControl.Prop_LoadingCircleBack2)]);
             }
 
             Color C = Forms.ColorPickerDlg.Pick(CList);

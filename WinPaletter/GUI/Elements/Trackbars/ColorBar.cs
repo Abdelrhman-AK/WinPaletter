@@ -15,10 +15,10 @@ namespace WinPaletter.UI.WP
         {
             cb_H = new()
             {
-                Positions = new[] { 0f, 1f / 6.0f, 2f / 6.0f, 3f / 6.0f, 4f / 6.0f, 5f / 6.0f, 1f },
-                Colors = new[] { Color1, Color2, Color3, Color4, Color5, Color6, Color7 }
+                Positions = [0f, 1f / 6.0f, 2f / 6.0f, 3f / 6.0f, 4f / 6.0f, 5f / 6.0f, 1f],
+                Colors = [Color1, Color2, Color3, Color4, Color5, Color6, Color7]
             };
-            cb_L = new() { Positions = new[] { 0f, 1f / 2.0f, 1f }, Colors = new[] { Color.Black, _AccentColor, Color.White } };
+            cb_L = new() { Positions = [0f, 1f / 2.0f, 1f], Colors = [Color.Black, _AccentColor, Color.White] };
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | (ControlStyles)139286, true);
             SetStyle(ControlStyles.Selectable, false);
@@ -280,9 +280,9 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), Circle.Contains(this.PointToClient(MousePosition)) ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(alpha), Circle.Contains(PointToClient(MousePosition)) ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
-            else { alpha = Circle.Contains(this.PointToClient(MousePosition)) ? 255 : 0; }
+            else { alpha = Circle.Contains(PointToClient(MousePosition)) ? 255 : 0; }
 
             base.OnMouseMove(e);
         }
@@ -392,8 +392,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -434,7 +432,7 @@ namespace WinPaletter.UI.WP
 
                 case ModesList.Light:
                     {
-                        cb_L = new() { Positions = new[] { 0f, 1f / 2.0f, 1f }, Colors = new[] { Color.Black, _AccentColor, Color.White } };
+                        cb_L = new() { Positions = [0f, 1f / 2.0f, 1f], Colors = [Color.Black, _AccentColor, Color.White] };
                         back = new(middleRect, Color.Black, Color.Black, 0f, false) { InterpolationColors = cb_L };
                         ColorsExtensions.HSL HSL_ = _AccentColor.ToHSL();
                         HSL_.L = (float)(Value / (double)Maximum);
@@ -474,6 +472,8 @@ namespace WinPaletter.UI.WP
             using (SolidBrush br = new(Color.FromArgb(alpha, color))) { G.FillEllipse(br, smallC2); }
 
             base.OnPaint(e);
+
+
         }
     }
 }

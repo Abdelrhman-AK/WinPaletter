@@ -7,7 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Documents;
+using System.Text.RegularExpressions;
 using static WinPaletter.WinTerminal.Types;
 
 namespace WinPaletter
@@ -24,11 +24,11 @@ namespace WinPaletter
         {
             /// <summary>Default Windows Terminal settings</summary>
             Default,
-            /// <summary>Windows Terminal JSON settings file</summary>
+            /// <summary>Windows Terminal JSON settings File</summary>
             JSONFile,
-            /// <summary>WinPaletter theme  file</summary>
+            /// <summary>WinPaletter theme  File</summary>
             WinPaletterFile,
-            /// <summary>Empty data that has nothing; no profiles, no themes, ...</summary>
+            /// <summary>EmptyError data that has nothing; no profiles, no themes, ...</summary>
             Empty
         }
 
@@ -60,13 +60,13 @@ namespace WinPaletter
         /// Gets or sets the profiles for the terminal.
         /// </summary>
         [JsonProperty("profiles")]
-        public Types.Profiles Profiles { get; set; } = new();
+        public Profiles Profiles { get; set; } = new();
 
         /// <summary>
         /// Gets or sets the color schemes for the terminal.
         /// </summary>
         [JsonProperty("schemes")]
-        public List<Types.Scheme> Schemes { get; set; } = new();
+        public List<Scheme> Schemes { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the default theme for the terminal.
@@ -78,7 +78,7 @@ namespace WinPaletter
         /// Gets or sets the list of available themes for the terminal.
         /// </summary>
         [JsonProperty("themes")]
-        public List<Types.Theme> Themes { get; set; } = new();
+        public List<Types.Theme> Themes { get; set; } = [];
 
         /// <summary>
         /// Gets or sets whether to use acrylic in the tab row.
@@ -109,7 +109,7 @@ namespace WinPaletter
                 /// Gets or sets the list of profiles.
                 /// </summary>
                 [JsonProperty("list")]
-                public List<Profile> List { get; set; } = new();
+                public List<Profile> List { get; set; } = [];
 
                 /// <summary>
                 /// Clone current Windows Terminal profiles
@@ -120,7 +120,7 @@ namespace WinPaletter
                     return new Profiles
                     {
                         Defaults = Defaults.Clone() as Profile,
-                        List = new List<Profile>(List.Select(p => p.Clone() as Profile))
+                        List = [.. List.Select(p => p.Clone() as Profile)]
                     };
                 }
             }
@@ -569,14 +569,32 @@ namespace WinPaletter
 
             #region Converters
 
-            public class ColorSchemeConverter : JsonConverter<ColorScheme>
+            /// <summary>
+            /// JSON converter for serializing and deserializing <see cref="ColorScheme"/> objects.
+            /// </summary>
+            private class ColorSchemeConverter : JsonConverter<ColorScheme>
             {
+                /// <summary>
+                /// Write values in JSON format
+                /// </summary>
+                /// <param name="writer"></param>
+                /// <param name="value"></param>
+                /// <param name="serializer"></param>
                 public override void WriteJson(JsonWriter writer, ColorScheme value, JsonSerializer serializer)
                 {
                     // Use the custom ToString method for serialization
                     writer.WriteValue(value.ToString());
                 }
 
+                /// <summary>
+                /// Read values in JSON format and convert them to <see cref="ColorScheme"/> objects
+                /// </summary>
+                /// <param name="reader"></param>
+                /// <param name="objectType"></param>
+                /// <param name="existingValue"></param>
+                /// <param name="hasExistingValue"></param>
+                /// <param name="serializer"></param>
+                /// <returns></returns>
                 public override ColorScheme ReadJson(JsonReader reader, Type objectType, ColorScheme existingValue, bool hasExistingValue, JsonSerializer serializer)
                 {
                     if (reader.TokenType == JsonToken.String)
@@ -602,6 +620,12 @@ namespace WinPaletter
             /// </summary>
             private class ColorConverter : JsonConverter
             {
+                /// <summary>
+                /// Write values in JSON format
+                /// </summary>
+                /// <param name="writer"></param>
+                /// <param name="value"></param>
+                /// <param name="serializer"></param>
                 public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
                 {
                     if (value == null)
@@ -615,25 +639,62 @@ namespace WinPaletter
                     serializer.Serialize(writer, hexColor);
                 }
 
+                /// <summary>
+                /// Read values in JSON format and convert them to .NET color format
+                /// </summary>
+                /// <param name="reader"></param>
+                /// <param name="objectType"></param>
+                /// <param name="existingValue"></param>
+                /// <param name="serializer"></param>
+                /// <returns></returns>
                 public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
                 {
-                    if (reader.TokenType == JsonToken.Null)
-                    {
-                        return Color.Empty;
-                    }
+                    if (reader.TokenType == JsonToken.Null) return Color.Empty;
 
-                    string hexColor = (string)reader.Value;
+                    string hexColor = reader.Value as string;
 
                     // Handle empty string
-                    if (string.IsNullOrEmpty(hexColor))
-                    {
-                        // Return a default color.
-                        return Color.Empty;
-                    }
+                    if (string.IsNullOrEmpty(hexColor)) return Color.Empty; // Return a default color.
 
-                    return ColorTranslator.FromHtml(hexColor);
+                    // Remove unsupported characters
+                    hexColor = Regex.Replace(hexColor, "[，、]", ",");
+
+                    // Replace spaces with commas if exist as ColorTranslator.FromHtml doesn't support spaces
+                    if (hexColor.Contains(" ") && !hexColor.Contains(",")) hexColor = hexColor.Replace(" ", ", ");
+
+                    // Check if the color is HEX or RGB/ARGB format
+                    if (!hexColor.Contains(","))
+                    {
+                        return ColorTranslator.FromHtml(hexColor);
+                    }
+                    else
+                    {
+                        string[] colors = hexColor.Split([','], StringSplitOptions.RemoveEmptyEntries);
+                        if (colors.Length == 3)
+                        {
+                            return Color.FromArgb(Math.Min(255, Math.Max(0, int.Parse(colors[0].Trim()))),
+                                                  Math.Min(255, Math.Max(0, int.Parse(colors[1].Trim()))),
+                                                  Math.Min(255, Math.Max(0, int.Parse(colors[2].Trim()))));
+                        }
+                        else if (colors.Length == 4)
+                        {
+                            return Color.FromArgb(Math.Min(255, Math.Max(0, int.Parse(colors[0].Trim()))),
+                                                  Math.Min(255, Math.Max(0, int.Parse(colors[1].Trim()))),
+                                                  Math.Min(255, Math.Max(0, int.Parse(colors[2].Trim()))),
+                                                  Math.Min(255, Math.Max(0, int.Parse(colors[3].Trim()))));
+                        }
+                        else
+                        {
+                            return Color.Empty;
+                        }
+                    }
                 }
 
+                /// <summary>
+                /// Check if the object type is <see cref="Color"/> for conversion.
+                /// </summary>
+                /// <param name="objectType"></param>
+                /// <returns></returns>
                 public override bool CanConvert(Type objectType)
                 {
                     return objectType == typeof(Color);
@@ -647,8 +708,17 @@ namespace WinPaletter
             /// This converter is used to handle the conversion between JSON representations and the <see cref="FontWeight"/> enumeration.
             /// It ensures correct deserialization of font weights and provides a default value (Normal) if parsing fails.
             /// </remarks>
-            public class FontWeightConverter : JsonConverter<FontWeight>
+            private class FontWeightConverter : JsonConverter<FontWeight>
             {
+                /// <summary>
+                /// Read values in JSON format and convert them to <see cref="FontWeight"/> enumeration values.
+                /// </summary>
+                /// <param name="reader"></param>
+                /// <param name="objectType"></param>
+                /// <param name="existingValue"></param>
+                /// <param name="hasExistingValue"></param>
+                /// <param name="serializer"></param>
+                /// <returns></returns>
                 public override FontWeight ReadJson(JsonReader reader, Type objectType, FontWeight existingValue, bool hasExistingValue, JsonSerializer serializer)
                 {
                     if (reader.TokenType == JsonToken.Integer)
@@ -716,8 +786,12 @@ namespace WinPaletter
                     return FontWeight.Normal; // Default value if parsing fails
                 }
 
-
-                /// <inheritdoc/>
+                /// <summary>
+                /// Write values in JSON format
+                /// </summary>
+                /// <param name="writer"></param>
+                /// <param name="value"></param>
+                /// <param name="serializer"></param>
                 public override void WriteJson(JsonWriter writer, FontWeight value, JsonSerializer serializer)
                 {
                     // Use reflection to get the JsonProperty attribute value
@@ -736,9 +810,17 @@ namespace WinPaletter
             /// This converter is used to handle the conversion between JSON representations and the <see cref="CursorShape"/> enumeration.
             /// It ensures correct deserialization of cursor shapes and provides a default value (Bar) if parsing fails.
             /// </remarks>
-            public class CursorShapeConverter : JsonConverter<CursorShape>
+            private class CursorShapeConverter : JsonConverter<CursorShape>
             {
-                /// <inheritdoc/>
+                /// <summary>
+                /// Read values in JSON format and convert them to <see cref="CursorShape"/> enumeration values.
+                /// </summary>
+                /// <param name="reader"></param>
+                /// <param name="objectType"></param>
+                /// <param name="existingValue"></param>
+                /// <param name="hasExistingValue"></param>
+                /// <param name="serializer"></param>
+                /// <returns></returns>
                 public override CursorShape ReadJson(JsonReader reader, Type objectType, CursorShape existingValue, bool hasExistingValue, JsonSerializer serializer)
                 {
                     if (Enum.TryParse(reader.Value?.ToString(), true, out CursorShape result))
@@ -749,7 +831,12 @@ namespace WinPaletter
                     return CursorShape.Bar; // Default value if parsing fails
                 }
 
-                /// <inheritdoc/>
+                /// <summary>
+                /// Write values in JSON format
+                /// </summary>
+                /// <param name="writer"></param>
+                /// <param name="value"></param>
+                /// <param name="serializer"></param>
                 public override void WriteJson(JsonWriter writer, CursorShape value, JsonSerializer serializer)
                 {
                     // Use reflection to get the JsonProperty attribute value
@@ -768,9 +855,17 @@ namespace WinPaletter
             /// This converter is used to handle the conversion between JSON representations and the <see cref="double"/> type for background image opacity.
             /// It ensures correct deserialization of opacity values and clamps them between 0 and 1. The default value is 1 if parsing fails.
             /// </remarks>
-            public class BackgroundImageOpacityConverter : JsonConverter<double>
+            private class BackgroundImageOpacityConverter : JsonConverter<double>
             {
-                /// <inheritdoc/>
+                /// <summary>
+                /// Read values in JSON format and convert them to <see cref="double"/> values representing background image opacity.
+                /// </summary>
+                /// <param name="reader"></param>
+                /// <param name="objectType"></param>
+                /// <param name="existingValue"></param>
+                /// <param name="hasExistingValue"></param>
+                /// <param name="serializer"></param>
+                /// <returns></returns>
                 public override double ReadJson(JsonReader reader, Type objectType, double existingValue, bool hasExistingValue, JsonSerializer serializer)
                 {
                     if (double.TryParse(reader.Value?.ToString(), out double result))
@@ -781,7 +876,12 @@ namespace WinPaletter
                     return 1; // Default value if parsing fails
                 }
 
-                /// <inheritdoc/>
+                /// <summary>
+                /// Write values in JSON format
+                /// </summary>
+                /// <param name="writer"></param>
+                /// <param name="value"></param>
+                /// <param name="serializer"></param>
                 public override void WriteJson(JsonWriter writer, double value, JsonSerializer serializer)
                 {
                     double clampedValue = Math.Max(0, Math.Min(value / 100, 1));
@@ -815,7 +915,7 @@ namespace WinPaletter
                 DoubleUnderscore,
 
                 /// <summary>
-                /// Empty box cursor shape.
+                /// EmptyError box cursor shape.
                 /// </summary>
                 [JsonProperty("emptyBox")]
                 EmptyBox,
@@ -920,8 +1020,8 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Merging two JObjects with desired behavior
-        /// <br>Desired behavior is to merge two JSONs without including null values</br>
+        /// Merging two JObjects with desired behavior.
+        /// <br>The desired behavior is to merge two JSONs without including null values.</br>
         /// </summary>
         /// <param name="original"></param>
         /// <param name="newJson"></param>
@@ -987,9 +1087,9 @@ namespace WinPaletter
         /// </summary>
         /// <param name="originalArray"></param>
         /// <param name="newArray"></param>
-        void MergeArrays(JArray originalArray, JArray newArray)
+        private void MergeArrays(JArray originalArray, JArray newArray)
         {
-            List<JObject> originalItems = originalArray.Children<JObject>().ToList();
+            List<JObject> originalItems = [.. originalArray.Children<JObject>()];
 
             foreach (JObject newItem in newArray.Children<JObject>())
             {
@@ -1023,7 +1123,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Take ownership of a file for the current Windows user
+        /// Take ownership of a File for the current Windows user
         /// </summary>
         /// <param name="filepath"></param>
         private void TakeOwnership(string filepath)
@@ -1041,7 +1141,8 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Remove default properties from a JObject
+        /// Remove default properties from a <see cref="JObject"></see> based on a default scheme.
+        /// <br>Useful for making schemes that has values exist in default scheme being got from default scheme not from scheme itself (Same Windows Terminal behaviour).</br>
         /// </summary>
         /// <param name="value"></param>
         /// <param name="defaults"></param>
@@ -1049,7 +1150,7 @@ namespace WinPaletter
         public static JObject RemoveDefaultProperties(JObject value, JObject defaults)
         {
             // Create a list to store properties to remove
-            List<string> propertiesToRemove = new List<string>();
+            List<string> propertiesToRemove = [];
 
             foreach (JProperty property in value.Properties())
             {
@@ -1074,7 +1175,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Check if two JToken values are equal
+        /// Check if two <see cref="JToken"/> values are equal
         /// </summary>
         /// <param name="value1"></param>
         /// <param name="value2"></param>
@@ -1100,15 +1201,16 @@ namespace WinPaletter
         #endregion
 
         /// <summary>
-        /// Create an instance of class has all data of Windows Terminal settings
+        /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
         /// </summary>
-        /// <param name="File">File to be opened, either JSON or WinPaletter theme file</param>
-        /// <param name="Mode">Either Windows Terminal JSON settings file or WinPaletter theme file</param>
+        /// <param name="File">File to be opened, either JSON or WinPaletter theme File</param>
+        /// <param name="Mode">Either Windows Terminal JSON settings File or WinPaletter theme File</param>
         /// <param name="Version">Either Stable or Preview</param>
         public WinTerminal(string File, Mode Mode, Version Version = Version.Stable)
         {
             switch (Mode)
             {
+                // Load Windows Terminal settings from JSON File
                 case Mode.JSONFile:
                     {
                         WinTerminal result = new(string.Empty, Mode.Empty, Version);
@@ -1136,6 +1238,7 @@ namespace WinPaletter
                         break;
                     }
 
+                // Load Windows Terminal settings from WinPaletter theme File
                 case Mode.WinPaletterFile:
                     {
                         using (Theme.Manager TMx = new(WinPaletter.Theme.Manager.Source.File, File))
@@ -1165,20 +1268,22 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// ApplyToTM Windows Terminal settings data
+        /// Save Windows Terminal settings data
         /// </summary>
-        /// <param name="File">File into which data will be saved, either JSON or WinPaletter theme file</param>
-        /// <param name="Mode">Either Windows Terminal JSON settings file or WinPaletter theme file</param>
+        /// <param name="File">File into which data will be saved, either JSON or WinPaletter theme File</param>
+        /// <param name="Mode">Either Windows Terminal JSON settings File or WinPaletter theme File</param>
         /// <param name="Version">Either Stable or Preview</param>
         /// <returns></returns>
         public string Save(string File, Mode Mode, Version Version = Version.Stable)
         {
             switch (Mode)
             {
+                // Save Windows Terminal settings to JSON File
                 case Mode.JSONFile:
                     {
                         string SettingsFile = string.Empty;
 
+                        // Determine the path of the Windows Terminal settings JSON File based on the Version
                         switch (Version)
                         {
                             case Version.Stable:
@@ -1218,7 +1323,7 @@ namespace WinPaletter
                                 }
                         }
 
-                        // Load the original JSON from the file
+                        // Load the original JSON from the File
                         JObject existingJson;
 
                         if (System.IO.File.Exists(SettingsFile))
@@ -1232,7 +1337,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            existingJson = new JObject();
+                            existingJson = [];
                         }
 
                         // Create a new JObject from the current instance
@@ -1244,7 +1349,7 @@ namespace WinPaletter
                         // Get schemes from new JSON unmodified (solve the problem of schemes not being merged correctly)
                         existingJson["schemes"] = newJson["schemes"];
 
-                        // Remove default properties from the profiles, so Windows Terminal will handle this and apply default values automatically
+                        // Remove default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does)
                         {
                             // Retrieve the list of profiles and the defaults JObject
                             JArray profilesList = (JArray)existingJson["profiles"]["list"];
@@ -1278,10 +1383,10 @@ namespace WinPaletter
                         // Serialize the merged JObject to a JSON string
                         string result = existingJson.ToString(Formatting.Indented);
 
-                        // Take ownership of Windows Terminal settings JSON file
+                        // Take ownership of Windows Terminal settings JSON File
                         TakeOwnership(SettingsFile);
 
-                        // Write the updated JSON to the file
+                        // Write the updated JSON to the File
                         using (FileStream fileStream = new(SettingsFile, FileMode.Create, FileAccess.Write))
                         using (StreamWriter streamWriter = new(fileStream))
                         {
@@ -1310,9 +1415,9 @@ namespace WinPaletter
                 Enabled = Enabled,
                 DefaultProfile = DefaultProfile,
                 Profiles = Profiles.Clone() as Profiles,
-                Schemes = new List<Types.Scheme>(Schemes),
+                Schemes = [.. Schemes],
                 Theme = Theme,
-                Themes = new List<Types.Theme>(Themes),
+                Themes = [.. Themes],
                 UseAcrylicInTabRow = UseAcrylicInTabRow
             };
         }
@@ -1337,8 +1442,8 @@ namespace WinPaletter
             return other != null &&
                    Enabled == other.Enabled &&
                    DefaultProfile == other.DefaultProfile &&
-                   EqualityComparer<Types.Profiles>.Default.Equals(Profiles, other.Profiles) &&
-                   EqualityComparer<List<Types.Scheme>>.Default.Equals(Schemes, other.Schemes) &&
+                   EqualityComparer<Profiles>.Default.Equals(Profiles, other.Profiles) &&
+                   EqualityComparer<List<Scheme>>.Default.Equals(Schemes, other.Schemes) &&
                    Theme == other.Theme &&
                    EqualityComparer<List<Types.Theme>>.Default.Equals(Themes, other.Themes) &&
                    UseAcrylicInTabRow == other.UseAcrylicInTabRow;

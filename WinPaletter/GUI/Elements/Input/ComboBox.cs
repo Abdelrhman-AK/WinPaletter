@@ -45,7 +45,7 @@ namespace WinPaletter.UI.WP
         #region Methods
         protected void DrawTriangle(Color Clr, Point FirstPoint, Point SecondPoint, Point ThirdPoint, Graphics G)
         {
-            List<Point> points = new() { FirstPoint, SecondPoint, ThirdPoint };
+            List<Point> points = [FirstPoint, SecondPoint, ThirdPoint];
             using (SolidBrush br = new(Clr))
             {
                 G.FillPolygon(br, points.ToArray());
@@ -57,7 +57,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space) { this.DroppedDown = !this.DroppedDown; }
+            if (e.KeyCode == Keys.Space) { DroppedDown = !DroppedDown; }
 
             base.OnKeyDown(e);
         }
@@ -210,6 +210,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnDrawItem(e);
+
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -279,6 +281,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

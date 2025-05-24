@@ -9,70 +9,115 @@ namespace WinPaletter
 {
     internal partial class Program
     {
+        /// <summary>
+        /// Command line arguments options.
+        /// </summary>
         public class Options
         {
+            /// <summary>
+            /// Export a JSON English language file.
+            /// </summary>
             [Option('l', "exportlanguage", Required = false, HelpText = "Export a JSON English language file.")]
             public bool ExportLang { get; set; }
 
+            /// <summary>
+            /// Uninstall WinPaletter.
+            /// </summary>
             [Option('u', "uninstall", Required = false, HelpText = "Uninstall WinPaletter.")]
             public bool Uninstall { get; set; }
 
+            /// <summary>
+            /// Uninstall WinPaletter without asking for confirmation.
+            /// </summary>
             [Option('q', "uninstall-quiet", Required = false, HelpText = "Uninstall WinPaletter without asking for confirmation.")]
             public bool Uninstall_Quiet { get; set; }
 
+            /// <summary>
+            /// Apply a WinPaletter theme file.
+            /// </summary>
             [Option('a', "apply", Required = false, HelpText = "Apply a WinPaletter theme file.")]
             public string Apply { get; set; }
 
+            /// <summary>
+            /// A switch to apply theme file silently. Requires -a "file" or --apply "file" before -s or --silent.
+            /// </summary>
             [Option('s', "silent", Required = false, HelpText = "A switch to apply theme file silently. Requires -a \"file\" or --apply \"file\" before -s or --silent.")]
             public bool SilentApply { get; set; }
 
+            /// <summary>
+            /// Edit a WinPaletter theme file.
+            /// </summary>
             [Option('e', "edit", Required = false, HelpText = "Edit a WinPaletter theme file.")]
             public string Edit { get; set; }
 
+            /// <summary>
+            /// Arguments help.
+            /// </summary>
             [Option('?', "help", Required = false, HelpText = "Commands lines help.")]
             public bool Help { get; set; }
 
+            /// <summary>
+            /// Start SOS form to fix issues.
+            /// </summary>
+            [Option('f', "SOS", Required = false, HelpText = "Start SOS form to fix issues.")]
+            public bool SOS { get; set; }
+
+            /// <summary>
+            /// Hide version.
+            /// </summary>
             [Option('v', "version", Required = false, HelpText = "Show version.")]
             public bool Version { get; set; }
 
+            /// <summary>
+            /// Input file paths to be processed.
+            /// </summary>
             [Value(0, MetaName = "inputFiles", HelpText = "Input file paths.", Default = new string[] { }, Hidden = true)]
             public IEnumerable<string> InputFiles { get; set; }
 
+            /// <summary>
+            /// Examples of how to use the command line arguments.
+            /// </summary>
             [Usage(ApplicationAlias = "WinPaletter")]
             public static IEnumerable<Example> Examples
             {
                 get
                 {
-                    return new List<Example>()
-                    {
+                    return
+                    [
                         new Example("Apply a theme from command line", new Options { Apply = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\My Theme.wpth" }),
                         new Example("Edit a theme from command line", new Options { Edit = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\My Theme.wpth" }),
-                    };
+                    ];
                 }
             }
         }
 
+        /// <summary>
+        /// Check if the command line arguments can skip the user login.
+        /// </summary>
         public static bool ArgsCanSkipUserLogin
         {
             get
             {
-                IEnumerable<string> args = Environment.GetCommandLineArgs().Skip(1).ToArray();
+                IEnumerable<string> args = [.. Environment.GetCommandLineArgs().Skip(1)];
 
                 bool value = false;
 
                 Parser.Default.ParseArguments<Options>(args)
-                  .WithParsed<Options>(o =>
+                  .WithParsed(o =>
                   {
-                      if (o.Help || o.Version || o.Uninstall || o.Uninstall_Quiet)
+                      if (o.Help || o.Version || o.Uninstall || o.Uninstall_Quiet || o.SOS)
                       {
+                          // Skip user login when help, version, uninstall, uninstall-quiet or SOS is requested. User login is then not needed.
                           value = true;
                       }
                       else if (o.Apply != null && System.IO.File.Exists(o.Apply))
                       {
+                          // Skip user login when applying a theme file. User login is then not needed and the theme will be applied to the current user.
                           value = true;
                       }
                       else if (o.Apply == null && o.Edit == null && o.InputFiles.Where(s => System.IO.File.Exists(s) && System.IO.Path.GetExtension(s).ToLower() == ".wpth").Count() > 0)
                       {
+                          // Skip user login when opening a theme file. User login is then not needed and the theme will be opened for the current user.
                           value = true;
                       }
                   });
@@ -81,139 +126,183 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Execute the command line arguments.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="canExit"></param>
         private static void ExecuteArgs(string[] args = null, bool canExit = true)
         {
+            // Check if the command line arguments are null or empty to avoid unnecessary processing.
+            // Count 1 is for the executable name.
+            if (Environment.GetCommandLineArgs().Count() <= 1) return;
+
+            // Check if the command line arguments can skip the user login.
             bool shouldExit = false;
             bool displayHelp = false;
 
-            Parser parser = new(config => config.HelpWriter = null);
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments: {string.Join(" ", args ?? Environment.GetCommandLineArgs().Skip(1))}");
 
-            ParserResult<Options> result = parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()).WithParsed<Options>(o =>
+            using (Parser parser = new(config => config.HelpWriter = null))
             {
-                if (o.Help)
+                ParserResult<Options> result = parser.ParseArguments<Options>(args ?? [.. Environment.GetCommandLineArgs().Skip(1)]).WithParsed(o =>
                 {
-                    displayHelp = true;
-                    shouldExit = true;
-                }
-
-                if (o.Version)
-                {
-                    MsgBox($"WinPaletter version: {Program.Version}");
-                    shouldExit = true;
-                }
-
-                if (o.ExportLang)
-                {
-                    Lang.ExportJSON($"language-en {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.json");
-                    MsgBox(Lang.LngExported, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    shouldExit = true;
-                }
-
-                if (o.Uninstall)
-                {
-                    Forms.Uninstall.ShowDialog();
-                    shouldExit = true;
-                }
-
-                if (o.Uninstall_Quiet)
-                {
-                    Uninstall_Quiet();
-                    shouldExit = true;
-                }
-
-                if (o.Apply != null)
-                {
-                    if (System.IO.File.Exists(o.Apply))
+                    if (o.Help)
                     {
-                        using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply, false, o.SilentApply))
-                        {
-                            Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
-                            Program.TM = TMx.Clone() as Theme.Manager;
-                            TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
-                            if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
-
-                            ExternalLink = true;
-                            ExternalLink_File = o.Apply;
-                        }
+                        displayHelp = true;
+                        shouldExit = true;
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments help requested.");
                     }
 
-                    shouldExit = true;
-                }
-
-                if (o.Edit != null && System.IO.File.Exists(o.Edit))
-                {
-                    TM = new(Theme.Manager.Source.File, o.Edit);
-                    TM_Original = (Theme.Manager)TM.Clone();
-                    Forms.Home.file = o.Edit;
-                    Forms.Home.LoadFromTM(TM);
-                    Forms.Home.Text = System.IO.Path.GetFileName(o.Edit);
-
-                    ExternalLink = true;
-                    ExternalLink_File = o.Edit;
-                    shouldExit = false;
-                }
-
-                IEnumerable<string> files = o.InputFiles.Where(s => System.IO.File.Exists(s));
-
-                if (files.Count() > 0)
-                {
-                    foreach (string file in files)
+                    if (o.Version)
                     {
-                        if (System.IO.Path.GetExtension(file).ToLower() == ".wpth")
+                        MsgBox($"WinPaletter version: {Program.Version}");
+                        shouldExit = true;
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments version requested.");
+                    }
+
+                    if (o.ExportLang)
+                    {
+                        Lang.Save($"language-en {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.json");
+                        MsgBox(Lang.Strings.Languages.Exported, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        shouldExit = true;
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments export language requested.");
+                    }
+
+                    if (o.Uninstall)
+                    {
+                        Forms.Uninstall.ShowDialog();
+                        shouldExit = true;
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments uninstall requested.");
+                    }
+
+                    if (o.Uninstall_Quiet)
+                    {
+                        Uninstall_Quiet();
+                        shouldExit = true;
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments uninstall quiet requested.");
+                    }
+
+                    if (o.SOS)
+                    {
+                        Forms.SOS.ShowDialog();
+                        shouldExit = true;
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments SOS requested.");
+                    }
+
+                    if (o.Apply != null)
+                    {
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments apply requested: {o.Apply}");
+                        if (o.SilentApply) Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments apply requested silently: {o.Apply}.");
+
+                        if (System.IO.File.Exists(o.Apply))
                         {
-                            if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
+                            using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply, false, o.SilentApply))
                             {
-                                Forms.Home.Text = System.IO.Path.GetFileName(file);
-                                TM = new(Theme.Manager.Source.File, file, false);
-                                TM_Original = (Theme.Manager)TM.Clone();
-                                Forms.Home.file = file;
-                                Forms.Home.LoadFromTM(TM);
+                                Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
+                                Program.TM = TMx.Clone() as Theme.Manager;
+                                TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
+                                if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
 
                                 ExternalLink = true;
-                                ExternalLink_File = file;
-
-                                shouldExit = false;
+                                ExternalLink_File = o.Apply;
                             }
-                            else
+                        }
+
+                        shouldExit = true;
+                    }
+
+                    if (o.Edit != null && System.IO.File.Exists(o.Edit))
+                    {
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments edit requested: {o.Edit}");
+
+                        TM = new(Theme.Manager.Source.File, o.Edit);
+                        TM_Original = (Theme.Manager)TM.Clone();
+                        Forms.Home.File = o.Edit;
+                        Forms.Home.LoadFromTM(TM);
+                        Forms.Home.Text = System.IO.Path.GetFileName(o.Edit);
+
+                        ExternalLink = true;
+                        ExternalLink_File = o.Edit;
+                        shouldExit = false;
+                    }
+
+                    IEnumerable<string> files = o.InputFiles.Where(s => System.IO.File.Exists(s));
+
+                    if (files.Count() > 0)
+                    {
+                        foreach (string file in files)
+                        {
+                            if (System.IO.Path.GetExtension(file).ToLower() == ".wpth")
                             {
-                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, o.SilentApply))
+                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments open requested: {file}");
+
+                                if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
                                 {
-                                    TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
-                                    if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
                                     Forms.Home.Text = System.IO.Path.GetFileName(file);
-                                    shouldExit = true;
+                                    TM = new(Theme.Manager.Source.File, file, false);
+                                    TM_Original = (Theme.Manager)TM.Clone();
+                                    Forms.Home.File = file;
+                                    Forms.Home.LoadFromTM(TM);
+
+                                    ExternalLink = true;
+                                    ExternalLink_File = file;
+
+                                    shouldExit = false;
+                                }
+                                else
+                                {
+                                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments apply requested: {file}");
+
+                                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, o.SilentApply))
+                                    {
+                                        TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
+                                        if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
+                                        Forms.Home.Text = System.IO.Path.GetFileName(file);
+                                        shouldExit = true;
+                                    }
                                 }
                             }
-                        }
 
-                        else if (System.IO.Path.GetExtension(file).ToLower() == ".wpsf")
-                        {
-                            Forms.SettingsX._External = true;
-                            Forms.SettingsX._File = file;
-                            Forms.SettingsX.ShowDialog();
-                            shouldExit = true;
+                            else if (System.IO.Path.GetExtension(file).ToLower() == ".wpsf")
+                            {
+                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments settings requested: {file}");
+
+                                Forms.SettingsX._External = true;
+                                Forms.SettingsX._File = file;
+                                Forms.SettingsX.ShowDialog();
+                                shouldExit = true;
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            if (displayHelp)
-            {
-                HelpText helpText = HelpText.AutoBuild(result, h =>
+                if (displayHelp)
                 {
-                    h.AdditionalNewLineAfterOption = false;
-                    h.AddDashesToOption = true;
-                    h.MaximumDisplayWidth = 1000;
-                    h.Heading = $"{Application.ProductName} {Program.Version}";
-                    h.AddPreOptionsLine(" ");
-                    return HelpText.DefaultParsingErrorsHandler(parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()), h);
-                }, e => e);
+                    HelpText helpText = HelpText.AutoBuild(result, h =>
+                    {
+                        h.AdditionalNewLineAfterOption = false;
+                        h.AddDashesToOption = true;
+                        h.MaximumDisplayWidth = 1000;
+                        h.Heading = $"{Application.ProductName} {Program.Version}";
+                        h.AddPreOptionsLine(" ");
+                        return HelpText.DefaultParsingErrorsHandler(parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()), h);
+                    }, e => e);
 
-                Forms.ArgsHelp.TextBox1.Text = helpText;
-                Forms.ArgsHelp.ShowDialog();
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments help requested: {helpText}", helpText);
+
+                    Forms.ArgsHelp.TextBox1.Text = helpText;
+                    Forms.ArgsHelp.ShowDialog();
+                }
             }
 
-            if (canExit && shouldExit) Program.ForceExit();
+            // Exit the program if an argument requires it.
+
+            if (canExit && shouldExit)
+            {
+                Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments exit requested (No GUI interaction is required for arguments).");
+                Program.ForceExit();
+            }
         }
     }
 }

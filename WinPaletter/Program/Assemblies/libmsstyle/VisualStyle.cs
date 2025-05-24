@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace libmsstyle
 {
@@ -67,18 +63,6 @@ namespace libmsstyle
 
         private ushort m_resourceLanguage;
 
-        public VisualStyle()
-        {
-            m_stylePath = null;
-            m_classes = new Dictionary<int, StyleClass>();
-            m_stringTable = new Dictionary<int, string>();
-            m_resourceUpdates = new Dictionary<StyleResource, string>();
-            m_timingFunctions = new List<TimingFunction>();
-            m_animations = new List<Animation>();
-            m_numProps = 0;
-            m_resourceLanguage = 0;
-        }
-
         public VisualStyle(string msstyles)
         {
             if (System.IO.Path.GetExtension(msstyles).ToLower() == ".theme")
@@ -104,7 +88,7 @@ namespace libmsstyle
                             {
                                 string fileName = System.IO.Path.GetFileName(result);
 
-                                System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(msstyles));
+                                DirectoryInfo di = new(System.IO.Path.GetDirectoryName(msstyles));
                                 var matchingStyles = System.IO.Directory.GetFiles(di.FullName, "*.msstyles", System.IO.SearchOption.AllDirectories)
                                     .Where(f => System.IO.Path.GetFileName(f).Equals(fileName, StringComparison.OrdinalIgnoreCase))
                                     .ToList();
@@ -128,16 +112,17 @@ namespace libmsstyle
             }
 
             m_stylePath = msstyles;
-            m_classes = new Dictionary<int, StyleClass>();
-            m_stringTable = new Dictionary<int, string>();
-            m_resourceUpdates = new Dictionary<StyleResource, string>();
-            m_timingFunctions = new List<TimingFunction>();
-            m_animations = new List<Animation>();
+            m_classes = [];
+            m_stringTable = [];
+            m_resourceUpdates = [];
+            m_timingFunctions = [];
+            m_animations = [];
             m_numProps = 0;
             m_resourceLanguage = 0;
 
             Load(msstyles);
         }
+
 
         ~VisualStyle()
         {
@@ -442,20 +427,16 @@ namespace libmsstyle
             LoadProperties(pmap);
 
 
-            // Get an overview of language resources.
-            // Type: Version Info, Name: 1
-            var l1 = ResourceAccess.GetAllLanguageIds(m_moduleHandle, "#" + Win32Api.RT_VERSION, 1,
-                Win32Api.EnumResourceFlags.RESOURCE_ENUM_MUI |
-                Win32Api.EnumResourceFlags.RESOURCE_ENUM_LN);
+            // Try to get an overview of language resources.
             // Type: String Table, Name: 7 (typically style name & copyright)
-            var l2 = ResourceAccess.GetAllLanguageIds(m_moduleHandle, "#" + Win32Api.RT_STRING, 7,
+            var l1 = ResourceAccess.GetAllLanguageIds(m_moduleHandle, "#" + Win32Api.RT_STRING, 7,
                 Win32Api.EnumResourceFlags.RESOURCE_ENUM_MUI |
                 Win32Api.EnumResourceFlags.RESOURCE_ENUM_LN);
             // Type: String Table, Name: 32 (typically font definitions)
-            var l3 = ResourceAccess.GetAllLanguageIds(m_moduleHandle, "#" + Win32Api.RT_STRING, 32,
+            var l2 = ResourceAccess.GetAllLanguageIds(m_moduleHandle, "#" + Win32Api.RT_STRING, 32,
                 Win32Api.EnumResourceFlags.RESOURCE_ENUM_MUI |
                 Win32Api.EnumResourceFlags.RESOURCE_ENUM_LN);
-            var langs = l1.Union(l2).Union(l3);
+            var langs = l1.Union(l2);
 
             // Load all tables for internal purposes.
             foreach (var lang in langs)

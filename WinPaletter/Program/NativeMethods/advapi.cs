@@ -92,20 +92,58 @@ namespace WinPaletter.NativeMethods
         internal const int TOKEN_QUERY = 0x0008;  // Use hexadecimal notation for constants
         internal const int TOKEN_ADJUST_PRIVILEGES = 0x0020;
 
+        /// <summary>
+        /// Represents a locally unique identifier (LUID) structure.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct TokPriv1Luid
         {
+            /// <summary>
+            /// The number of privileges to adjust.
+            /// </summary>
             public int Count;
+
+            /// <summary>
+            /// The locally unique identifier (LUID) of the privilege.
+            /// </summary>
             public long Luid;
+
+            /// <summary>
+            /// The attributes of the privilege.
+            /// </summary>
             public int Attr;
         }
 
+        /// <summary>
+        /// Adjust the privileges of a token.
+        /// </summary>
+        /// <param name="htok"></param>
+        /// <param name="disall"></param>
+        /// <param name="newst"></param>
+        /// <param name="len"></param>
+        /// <param name="prev"></param>
+        /// <param name="relen"></param>
+        /// <returns></returns>
         [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall, ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);
 
+        /// <summary>
+        /// Open the access token associated with a process.
+        /// </summary>
+        /// <param name="h"></param>
+        /// <param name="acc"></param>
+        /// <param name="phtok"></param>
+        /// <returns></returns>
         [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);
 
+        /// <summary>
+        /// Look up the locally unique identifier (LUID) for a privilege.
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="name"></param>
+        /// <param name="pluid"></param>
+        /// <returns></returns>
         [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);
 
@@ -125,10 +163,12 @@ namespace WinPaletter.NativeMethods
                 if (!OpenProcessToken(hProcess, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref hToken))
                     return false;
 
-                TokPriv1Luid newst = new TokPriv1Luid();
-                newst.Count = 1;
-                newst.Luid = 0L;
-                newst.Attr = disable ? SE_PRIVILEGE_DISABLED : SE_PRIVILEGE_ENABLED;
+                TokPriv1Luid newst = new()
+                {
+                    Count = 1,
+                    Luid = 0L,
+                    Attr = disable ? SE_PRIVILEGE_DISABLED : SE_PRIVILEGE_ENABLED
+                };
 
                 if (!LookupPrivilegeValue(null, privilege, ref newst.Luid))
                     return false;

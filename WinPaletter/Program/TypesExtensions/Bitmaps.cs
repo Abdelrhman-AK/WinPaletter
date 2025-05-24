@@ -70,19 +70,22 @@ namespace WinPaletter.TypesExtensions
             {
                 G.SmoothingMode = SmoothingMode.AntiAlias;
 
+                // Create a color matrix for the blur effect
                 ColorMatrix m = new() { Matrix33 = 0.4f };
                 att.SetColorMatrix(m);
 
+                // Loop through the blur force and draw the image in x-coordinates with a slight offset
                 for (float x = -blurForce; x <= blurForce; x += 0.5f)
                 {
-                    PointF[] destPointsX = { new PointF(x, 0), new PointF(x + imgWidth, 0), new PointF(x, imgHeight) };
+                    PointF[] destPointsX = [new(x, 0), new(x + imgWidth, 0), new(x, imgHeight)];
                     RectangleF srcRectX = new(0, 0, imgWidth, imgHeight);
                     G.DrawImage(img, destPointsX, srcRectX, GraphicsUnit.Pixel, att);
                 }
 
+                // Loop through the blur force and draw the image in y-coordinates with a slight offset
                 for (float y = -blurForce; y <= blurForce; y += 0.5f)
                 {
-                    PointF[] destPointsY = { new PointF(0, y), new PointF(imgWidth, y), new PointF(0, y + imgHeight) };
+                    PointF[] destPointsY = [new(0, y), new(imgWidth, y), new(0, y + imgHeight)];
                     RectangleF srcRectY = new(0, 0, imgWidth, imgHeight);
                     G.DrawImage(img, destPointsY, srcRectY, GraphicsUnit.Pixel, att);
                 }
@@ -272,13 +275,13 @@ namespace WinPaletter.TypesExtensions
         public static Bitmap Tint(this Bitmap originalBitmap, Color tintColor)
         {
             // Create a color matrix for the tint effect
-            float[][] matrixElements = {
-            new float[] {tintColor.R / 255f, 0, 0, 0, 0},
-            new float[] {0, tintColor.G / 255f, 0, 0, 0},
-            new float[] {0, 0, tintColor.B / 255f, 0, 0},
-            new float[] {0, 0, 0, tintColor.A / 255f, 0},
-            new float[] {0, 0, 0, 0, 1}
-        };
+            float[][] matrixElements = [
+            [tintColor.R / 255f, 0, 0, 0, 0],
+            [0, tintColor.G / 255f, 0, 0, 0],
+            [0, 0, tintColor.B / 255f, 0, 0],
+            [0, 0, 0, tintColor.A / 255f, 0],
+            [0, 0, 0, 0, 1]
+        ];
 
             ColorMatrix colorMatrix = new(matrixElements);
 
@@ -345,12 +348,12 @@ namespace WinPaletter.TypesExtensions
 
             using (Graphics G = Graphics.FromImage(newBitmap))
             {
-                ColorMatrix colorMatrix = new(new float[][] { new float[] { 0.3f, 0.3f, 0.3f, 0f, 0f }, new float[] { 0.59f, 0.59f, 0.59f, 0f, 0f }, new float[] { 0.11f, 0.11f, 0.11f, 0f, 0f }, new float[] { 0f, 0f, 0f, 1f, 0f }, new float[] { 0f, 0f, 0f, 0f, 1f } });
+                ColorMatrix colorMatrix = new([[0.3f, 0.3f, 0.3f, 0f, 0f], [0.59f, 0.59f, 0.59f, 0f, 0f], [0.11f, 0.11f, 0.11f, 0f, 0f], [0f, 0f, 0f, 1f, 0f], [0f, 0f, 0f, 0f, 1f]]);
 
                 using (ImageAttributes attributes = new())
                 {
                     attributes.SetColorMatrix(colorMatrix);
-                    G.DrawImage(original, new Rectangle(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
+                    G.DrawImage(original, new(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
                 }
             }
 
@@ -448,7 +451,7 @@ namespace WinPaletter.TypesExtensions
             if (bitmap is null) return null;
             if (parts < 1) return null;
 
-            List<Bitmap> list = new();
+            List<Bitmap> list = [];
             int partHeight = bitmap.Height / parts;
 
             for (int i = 0; i < parts; i++)

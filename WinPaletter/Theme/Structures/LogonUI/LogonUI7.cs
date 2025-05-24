@@ -148,12 +148,18 @@ namespace WinPaletter.Theme.Structures
             EditReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", string.Empty, Enabled);
         }
 
+        /// <summary>
+        /// Save LogonUI and apply it as if current system is Windows 7
+        /// </summary>
+        /// <param name="treeView"></param>
         private void SaveAsWin7(TreeView treeView = null)
         {
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             IntPtr wow64Value = IntPtr.Zero;
+
+            // Disable WOW64 redirection to access system32 folder correctly
             Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
 
             string DirX = $@"{SysPaths.System32}\oobe\info\backgrounds";
@@ -163,18 +169,19 @@ namespace WinPaletter.Theme.Structures
             foreach (string fileX in System.IO.Directory.GetFiles(DirX))
             {
                 try { System.IO.File.Delete(fileX); }
-                catch { } // Couldn't delete a logonUI background file
+                catch { } // Couldn't delete a logonUI background File
             }
 
-            List<Bitmap> bmpList = new();
+            List<Bitmap> bmpList = [];
             bmpList.Clear();
 
-            if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, Program.Lang.Verbose_GetInstanceLogonUIImg, "info");
+            if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "info");
 
             switch (Mode)
             {
                 case Theme.Structures.LogonUI7.Sources.Default:
                     {
+                        // Windows 7 Default LogonUI Backgrounds are stored in imageres.dll from index 5031 to 5043
                         for (int i = 5031; i <= 5043; i += +1)
                             bmpList.Add(PE.GetPNG(SysPaths.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
                         break;
@@ -213,17 +220,17 @@ namespace WinPaletter.Theme.Structures
             }
 
             if (ReportProgress)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Lang.Strings.Aspects.LogonUI), "info");
 
             for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
             {
                 if (ReportProgress)
-                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_RenderingCustomLogonUI_Progress} {bmpList[x].Width}x{bmpList[x].Height} ({x + 1}/{bmpList.Count})", "info");
+                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImages, Program.Lang.Strings.Aspects.LogonUI)} {bmpList[x].Width}x{bmpList[x].Height} ({x + 1}/{bmpList.Count})", "info");
 
                 if (Grayscale)
                 {
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, Program.Lang.Verbose_GrayscaleLogonUIImg, "apply");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
                     bmpList[x] = bmpList[x].Grayscale();
                 }
@@ -231,7 +238,7 @@ namespace WinPaletter.Theme.Structures
                 if (Blur)
                 {
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, Program.Lang.Verbose_BlurringLogonUIImg, "apply");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
                     ImageProcessor.ImageFactory imgF = new();
 
@@ -246,7 +253,7 @@ namespace WinPaletter.Theme.Structures
                 if (Noise)
                 {
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, Program.Lang.Verbose_NoiseLogonUIImg, "apply");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
                     bmpList[x] = bmpList[x].Noise(Noise_Mode, (float)(Noise_Intensity / 100d));
                 }
@@ -265,7 +272,7 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_LogonUIImgSaved, $@"{DirX}\backgroundDefault.jpg"), "info");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LogonUI, $@"{DirX}\backgroundDefault.jpg"), "info");
             }
             else
             {
@@ -273,23 +280,28 @@ namespace WinPaletter.Theme.Structures
                 {
                     if (Program.Elevated)
                     {
-                        bmpList[x].Save($"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bmpList[x].Save($"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
                     }
                     else
                     {
-                        bmpList[x].Save($"{SysPaths.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", System.Drawing.Imaging.ImageFormat.Jpeg);
-                        Reg_IO.Move_File($"{SysPaths.appData}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", $"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}");
+                        bmpList[x].Save($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Reg_IO.Move_File($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}");
                     }
 
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_LogonUIImgNUMSaved, $"{DirX}{($@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg")}", x + 1), "info");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgNUMSaved, $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", x + 1), "info");
 
                 }
             }
 
+            // Restore WOW64 redirection
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Save LogonUI and apply it as if current system is Windows 8.1
+        /// </summary>
+        /// <param name="treeView"></param>
         private void SaveAsWin8(TreeView treeView = null)
         {
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
@@ -303,7 +315,7 @@ namespace WinPaletter.Theme.Structures
 
             Bitmap bmp;
 
-            if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, Program.Lang.Verbose_GetInstanceLockScreenImg, "info");
+            if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "info");
 
             switch (Mode)
             {
@@ -373,22 +385,22 @@ namespace WinPaletter.Theme.Structures
             }
 
             if (ReportProgress)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.TM_RenderingCustomLogonUI_MayNotRespond), "info");
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Lang.Strings.Aspects.LockScreen), "info");
 
             if (ReportProgress)
-                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_RenderingCustomLogonUI}", "info");
+                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage, Program.Lang.Strings.Aspects.LogonUI)}", "info");
 
             if (Grayscale)
             {
                 if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, Program.Lang.Verbose_GrayscaleLockScreenImg, "apply");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
                 bmp = bmp.Grayscale();
             }
 
             if (Blur)
             {
                 if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, Program.Lang.Verbose_BlurringLockScreenImg, "apply");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
                 ImageProcessor.ImageFactory ImgF = new();
                 using (Bitmap b = new(bmp))
                 {
@@ -402,7 +414,7 @@ namespace WinPaletter.Theme.Structures
             if (Noise)
             {
                 if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, Program.Lang.Verbose_NoiseLockScreenImg, "apply");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
                 bmp = bmp.Noise(Noise_Mode, Noise_Intensity / 100f);
             }
 
@@ -410,7 +422,7 @@ namespace WinPaletter.Theme.Structures
                 System.IO.File.Delete(lockimg);
 
             if (ReportProgress_Detailed)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_LockScreenImgSaved, lockimg), "info");
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LockScreen, lockimg), "info");
 
             bmp.Save(lockimg);
         }

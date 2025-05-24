@@ -11,7 +11,7 @@ namespace WinPaletter.TypesExtensions
     public static class TreeViewExtensions
     {
         /// <summary>
-        /// Serialize from a JSON file to TreeView Nodes
+        /// Serialize from a JSON File to TreeView Nodes
         /// </summary>
         public static void FromJSON(this TreeView treeView, string JSON_File, string rootName)
         {
@@ -25,12 +25,10 @@ namespace WinPaletter.TypesExtensions
             {
                 treeView.Nodes.Clear();
 
-                {
-                    TreeNode temp = treeView.Nodes.Add(rootName);
-                    temp.ImageKey = "json";
-                    temp.SelectedImageKey = "json";
-                    temp.Tag = root;
-                }
+                TreeNode temp = treeView.Nodes.Add(rootName);
+                temp.ImageKey = "json";
+                temp.SelectedImageKey = "json";
+                temp.Tag = root;
 
                 AddNode(root, treeView.Nodes[0]);
 
@@ -42,38 +40,38 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        /// <summary>
+        /// Add a node to the TreeView from a JToken
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="inTreeNode"></param>
         private static void AddNode(JToken token, TreeNode inTreeNode)
         {
-            if (token is null)
-                return;
+            if (token is null) return;
 
             if (token is JValue)
             {
-
-                {
-                    TreeNode temp = inTreeNode.Nodes.Add(token.ToString());
-                    temp.ImageKey = "value";
-                    temp.SelectedImageKey = "value";
-                    temp.Tag = token;
-                }
+                TreeNode temp = inTreeNode.Nodes.Add(token.ToString());
+                temp.ImageKey = "value";
+                temp.SelectedImageKey = "value";
+                temp.Tag = token;
             }
 
-            else if (token is JObject)
+            else if (token is JObject obj && obj is not null)
             {
-                JObject obj = (JObject)token;
-
                 foreach (JProperty property in obj.Properties())
                 {
-                    TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(property.Name)).ToString()];
-                    childNode.Tag = property;
-                    AddNode(property.Value, childNode);
+                    if (property is not null)
+                    {
+                        TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(property.Name)).ToString()];
+                        childNode.Tag = property;
+                        AddNode(property.Value, childNode);
+                    }
                 }
             }
 
-            else if (token is JArray)
+            else if (token is JArray array && array is not null)
             {
-                JArray array = (JArray)token;
-
                 for (int i = 0, loopTo = array.Count - 1; i <= loopTo; i++)
                 {
                     TreeNode childNode = inTreeNode.Nodes[inTreeNode.Nodes.Add(new TreeNode(i.ToString()))];
@@ -88,13 +86,13 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static string ToJSON(this TreeNode TreeNode)
         {
-            JObject J_All = new();
+            JObject J_All = [];
             J_All.RemoveAll();
 
             foreach (TreeNode N in TreeNode.Nodes)
             {
 
-                JObject J = new();
+                JObject J = [];
                 J.RemoveAll();
                 LoopThroughNodes(N, N, J);
 
@@ -104,6 +102,12 @@ namespace WinPaletter.TypesExtensions
             return J_All.ToString();
         }
 
+        /// <summary>
+        /// Loop through the nodes and add them to a JObject
+        /// </summary>
+        /// <param name="Node"></param>
+        /// <param name="MainNode"></param>
+        /// <param name="JSON"></param>
         private static void LoopThroughNodes(TreeNode Node, TreeNode MainNode, JObject JSON)
         {
             foreach (TreeNode N in Node.Nodes)

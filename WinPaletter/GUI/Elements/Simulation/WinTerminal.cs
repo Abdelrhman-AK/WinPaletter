@@ -21,7 +21,7 @@ namespace WinPaletter.UI.Simulation
         }
 
         #region Variables
-        Timer Timer = new() { Enabled = false, Interval = 500 };
+        readonly Timer Timer = new() { Enabled = false, Interval = 500 };
 
         private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
         private Bitmap adaptedBack;
@@ -615,8 +615,8 @@ namespace WinPaletter.UI.Simulation
             Rectangle Rect_Titlebar = new(0, 0, Width - 1, 32);
             Rectangle Rect_Console = new(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height);
 
-            string s1 = Program.Lang.Terminal_ConsoleSample;
-            string s2 = Program.Lang.Terminal_ThisIsASelection;
+            string s1 = Program.Lang.Strings.Aspects.Terminals.ConsoleSample;
+            string s2 = Program.Lang.Strings.Aspects.Terminals.ThisIsASelection;
             string s3 = $"{SysPaths.System32}>";
 
             SizeF s1X = s1.Measure(Font) + new SizeF(5f, 0f);
@@ -806,7 +806,7 @@ namespace WinPaletter.UI.Simulation
                 }
             }
             TextRenderer.DrawText(G, TabTitle, new Font("Segoe UI", 8f, FontStyle.Bold), RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis);
-            TextRenderer.DrawText(G, Program.Lang.Terminal_Another, new Font("Segoe UI", 8f, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
+            TextRenderer.DrawText(G, Program.Lang.Strings.Aspects.Terminals.Another, new Font("Segoe UI", 8f, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
 
             using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
             {
@@ -910,6 +910,8 @@ namespace WinPaletter.UI.Simulation
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

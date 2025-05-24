@@ -117,32 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button1.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADbSURBVDhPtZI7CsJAFEVTWii6ChEUXYmF7kQsFKy0srG09AdWgkvxsx0LjedOHklMYiKiBw4k
-        7zPJmxnvL/i+38EZ7s0pti39HopqeMQsHnjAqpW/QqKCVyzijGVriyC4c+nPWFlbAIEG3l0qzRZvwWOI
-        auvW7haYuHA2PexicpGxtbsF1kEsZIEjc4Al7GOcaAxeNkEsZIlzU8epDdafxFlbe+EI+nLhCHmbqPHy
-        N1EQ+P4YBUHNeXHpfE6YvkhCCdS569omUUzjZDfHoaiFQ9TpSD03Lf1LPO8JolRpwbsrYQ8AAAAASUVO
-        RK5CYII=
-</value>
-  </data>
-  <data name="button3.ImageVector" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAADoSURBVDhP3dHNioFhGMbxF9mIxRQ1ZTmWjKwcgXIYFnMaY2FjKUvFUbCfTImUcgAs0DSzEkqZ
-        lNf/8t7kYyFbV/3quT+eej+cJ4zruhk0MMbcjFBH2tZuwzBiSzN84h0vJo0iflBD2K55oRHDEBWErBdC
-        1pz3qhggqp6aAXyjdGgQzin8YYElfpG0seZlfMGv4gOdQ+ENfZjiPDtM4LMdP7ooqNDj5DRQOCewwnXU
-        e7M17eXR16GEgPVVx7HGddR7tTXt6dVPr30RBj1scYzObRvfD8v6Ky38Y4MmvK/+SLgUFCufM46zB2IH
-        U0xVoZFPAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="alertBox2.Text" xml:space="preserve">
-    <value>This function is designed to open a user profile in memory, make modifications, and apply a theme without the need to open WinPaletter in a separate profile.
-
-Continuing without entering a password allows WinPaletter to accurately read and write registry values for the specified user. However, it will be unable to manage other aspects unrelated to the registry, specifically those dependent on calling functions in system DLL files.
-
-For instance, WinPaletter utilizes the 'SystemParameterInfo' function within User32.dll to instantly apply Windows settings without relying on the registry or requiring an Explorer restart. If you proceed without a password, these functions will affect the user who initiated the WinPaletter executable but not the selected user within WinPaletter.</value>
-  </data>
 </root>

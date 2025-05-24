@@ -37,7 +37,7 @@ namespace EOFC
             uint RowSize = w * bpp / 8;
             if (PaddedTo32 && RowSize % 4 != 0)
             {
-                RowSize += (4 - (RowSize % 4));
+                RowSize += 4 - (RowSize % 4);
             }
             return h * RowSize;
         }
@@ -70,7 +70,7 @@ namespace EOFC
             }
             else if (PixelFormat.Format8bppIndexed == bm.PixelFormat)
             {
-                System.Drawing.Imaging.ColorPalette cp = bm.Palette;
+                ColorPalette cp = bm.Palette;
                 BitmapData bd = bm.LockBits(r, ImageLockMode.ReadOnly, bm.PixelFormat);
                 unsafe
                 {
@@ -79,7 +79,7 @@ namespace EOFC
                         for (int y = 0; y < r.Height; y++)
                         {
                             byte* src8 = (byte*)bd.Scan0.ToPointer();
-                            src8 += (bd.Stride * y);
+                            src8 += bd.Stride * y;
                             uint* dst = &pxls[y * r.Width];
 
                             for (int x = 0; x < r.Width; x++)
@@ -243,7 +243,7 @@ namespace EOFC
             Bitmap bm2 = new(w, h, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
-            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bm2);
+            Graphics g = System.Drawing.Graphics.FromImage(bm2);
             g.DrawImage(bm,
                 new Rectangle(0, 0, w, h), // dest rect
                 new Rectangle(x1, y1, w, h), // source rect
@@ -270,7 +270,7 @@ namespace EOFC
             Bitmap bm2 = new(w, bm.Height, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
-            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bm2);
+            Graphics g = System.Drawing.Graphics.FromImage(bm2);
             g.DrawImage(bm,
                 new Rectangle(0, 0, w, bm.Height), // dest rect
                 new Rectangle(x1, 0, w, bm.Height), // source rect
@@ -299,27 +299,17 @@ namespace EOFC
 
         public static PixelFormat FormatFrombpp(int bpp)
         {
-            switch (bpp)
+            return bpp switch
             {
-                case 32:
-                    return PixelFormat.Format32bppArgb;
+                32 => PixelFormat.Format32bppArgb,
+                24 => PixelFormat.Format24bppRgb,
+                16 => PixelFormat.Format16bppRgb565,
+                15 => PixelFormat.Format16bppRgb555,
+                8 => PixelFormat.Format8bppIndexed,
+                1 => PixelFormat.Format1bppIndexed,
+                _ => PixelFormat.Undefined,
+            };
 
-                case 24:
-                    return PixelFormat.Format24bppRgb;
-
-                case 16:
-                    return PixelFormat.Format16bppRgb565;
-
-                case 15:
-                    return PixelFormat.Format16bppRgb555;
-
-                case 8:
-                    return PixelFormat.Format8bppIndexed;
-
-                case 1:
-                    return PixelFormat.Format1bppIndexed;
-            }
-            return PixelFormat.Undefined;
         }
 
         // Untested:
@@ -355,7 +345,7 @@ namespace EOFC
             int SRowSize = w * 3;
             if (PaddedTo32Bit && SRowSize % 4 != 0)
             {
-                SRowSize += (4 - (SRowSize % 4));
+                SRowSize += 4 - (SRowSize % 4);
             }
 
             byte* bsrc = (byte*)bits;
@@ -373,7 +363,7 @@ namespace EOFC
                     // exceed the boundary of the image data by one byte.
                     for (int x = 0; x < w; x++)
                     {
-                        ushort firsttwo = *((ushort*)&srcrow[x * 3]);
+                        ushort firsttwo = *(ushort*)&srcrow[x * 3];
                         byte third = srcrow[x * 3 + 2];
                         destrow[x] = firsttwo | ((uint)third) << 16 | 0xFF000000;
                     }
@@ -383,7 +373,7 @@ namespace EOFC
                     // Loop through the pixels in this row
                     for (int x = 0; x < w; x++)
                     {
-                        destrow[x] = *((uint*)&srcrow[x * 3]) | 0xFF000000;
+                        destrow[x] = *(uint*)&srcrow[x * 3] | 0xFF000000;
                     }
                 }
             }
@@ -420,7 +410,7 @@ namespace EOFC
             int SRowSize = w / 2;
             if (PaddedTo32Bit && SRowSize % 4 != 0)
             {
-                SRowSize += (4 - (SRowSize % 4));
+                SRowSize += 4 - (SRowSize % 4);
             }
 
             byte* bsrc = (byte*)bits;
@@ -436,7 +426,7 @@ namespace EOFC
                 // Loop through the pixels in this row
                 for (int x = 0; x < w; x++)
                 {
-                    bool even = (x % 2 == 0);
+                    bool even = x % 2 == 0;
                     index = (uint)(srcrow[x / 2] & (even ? 0xF0 : 0x0F));
                     if (even)
                     {
@@ -461,7 +451,7 @@ namespace EOFC
             int SRowSize = w;
             if (PaddedTo32Bit && w % 4 != 0)
             {
-                SRowSize += (4 - (w % 4));
+                SRowSize += 4 - (w % 4);
             }
 
             byte* bsrc = (byte*)bits;
@@ -494,7 +484,7 @@ namespace EOFC
             int SRowSize = w / 8;
             if (PaddedTo32Bit && SRowSize % 4 != 0)
             {
-                SRowSize += (4 - (SRowSize % 4));
+                SRowSize += 4 - (SRowSize % 4);
             }
 
             byte* bsrc = (byte*)bits;
@@ -552,20 +542,14 @@ namespace EOFC
 
         public static int GetBitsPerPixel(Bitmap bm)
         {
-            switch (bm.PixelFormat)
+            return bm.PixelFormat switch
             {
-                case PixelFormat.Format32bppArgb:
-                case PixelFormat.Format32bppPArgb:
-                case PixelFormat.Format32bppRgb:
-                    return 32;
+                PixelFormat.Format32bppArgb or PixelFormat.Format32bppPArgb or PixelFormat.Format32bppRgb => 32,
+                PixelFormat.Format24bppRgb => 24,
+                PixelFormat.Format8bppIndexed => 8,
+                _ => 0,
+            };
 
-                case PixelFormat.Format24bppRgb:
-                    return 24;
-
-                case PixelFormat.Format8bppIndexed:
-                    return 8;
-            }
-            return 0;
         }
 
         public static void MakeOpaque(Bitmap bm)

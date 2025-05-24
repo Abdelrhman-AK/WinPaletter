@@ -17,11 +17,11 @@ namespace WinPaletter.Theme
             /// </summary>
             Registry,
             /// <summary>
-            /// WinPaletter theme file
+            /// WinPaletter theme File
             /// </summary>
             File,
             /// <summary>
-            /// Empty WinPaletter theme file
+            /// EmptyError WinPaletter theme File
             /// </summary>
             Empty
         }

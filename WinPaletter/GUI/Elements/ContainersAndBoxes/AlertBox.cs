@@ -62,7 +62,8 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        public Image Image { get; set; }
+        private Image _image;
+        public new Image Image { get => _image; set => _image = value; }
         public Color CustomColor { get; set; }
         public bool CenterText { get; set; } = false;
 
@@ -117,8 +118,8 @@ namespace WinPaletter.UI.WP
             {
                 case Style.Simple:
                     {
-                        borderColor = scheme1.Colors.Line_Hover(parentLevel);
-                        innerColor = scheme1.Colors.Back_Hover(parentLevel);
+                        borderColor = scheme1.Colors.Line_Hover(parentLevel + 4);
+                        innerColor = scheme1.Colors.Back(parentLevel);
                         textColor = scheme1.Colors.ForeColor;
 
                         break;
@@ -136,8 +137,8 @@ namespace WinPaletter.UI.WP
                     {
                         using (Config.Colors_Collection colors = new(Color.FromArgb(115, 113, 6), default, DarkMode))
                         {
-                            borderColor = colors.Line_Checked_Hover;
-                            innerColor = colors.Back_Checked_Hover;
+                            borderColor = colors.Line_Checked;
+                            innerColor = colors.Back_Checked;
                             textColor = colors.ForeColor_Accent;
                         }
 
@@ -191,8 +192,8 @@ namespace WinPaletter.UI.WP
                         {
                             using (Config.Colors_Collection colors = new(Image.AverageColor(), default, DarkMode))
                             {
-                                borderColor = colors.Line_Checked_Hover;
-                                innerColor = colors.Back_Checked_Hover;
+                                borderColor = colors.Line_Checked;
+                                innerColor = colors.Back_Checked;
                                 textColor = colors.ForeColor_Accent;
                             }
 
@@ -201,8 +202,8 @@ namespace WinPaletter.UI.WP
 
                         using (Config.Colors_Collection colors = new(CustomColor, default, DarkMode))
                         {
-                            borderColor = colors.Line_Checked_Hover;
-                            innerColor = colors.Back_Checked_Hover;
+                            borderColor = colors.Line_Checked;
+                            innerColor = colors.Back_Checked;
                             textColor = colors.ForeColor_Accent;
                         }
 
@@ -212,11 +213,11 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(innerColor)) { G.FillRoundedRect(br, new Rectangle(0, 0, Width - 1, Height - 1)); }
 
-            using (Pen P = new(borderColor)) { G.DrawRoundedRect_LikeW11(P, new Rectangle(0, 0, Width - 1, Height - 1)); }
+            using (Pen P = new(borderColor)) { G.DrawRoundedRect(P, new Rectangle(0, 0, Width - 1, Height - 1)); }
 
             int TextX = 5;
 
-            if (Image is not null) { G.DrawImage(Image, new Rectangle(!RTL ? 5 : Width - 5 - Image.Width, 5, Image.Width, Image.Height)); }
+            if (Image is not null) { G?.DrawImage(Image, new Rectangle(!RTL ? 5 : Width - 5 - Image.Width, 5, Image.Width, Image.Height)); }
 
             if (!CenterText)
             {
@@ -263,6 +264,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

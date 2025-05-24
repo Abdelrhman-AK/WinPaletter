@@ -3,6 +3,9 @@ using System.Drawing;
 
 namespace WinPaletter.GlobalVariables
 {
+    /// <summary>
+    /// Class that has monospaced font (Jetbrains Mono) and other fonts used in the application.
+    /// </summary>
     public static class Fonts
     {
         /// <summary>
@@ -26,7 +29,7 @@ namespace WinPaletter.GlobalVariables
         public static FontFamily Title = Exists("Segoe UI Variable Display") ? new("Segoe UI Variable Display") : Exists("Segoe UI") ? new("Segoe UI") : new("Trebuchet MS");
 
         /// <summary>
-        /// Checks if a font is installed or not (from its name)
+        /// Checks if a font is installed or not (by its name)
         /// </summary>
         public static bool Exists(string fontName)
         {
@@ -46,7 +49,7 @@ namespace WinPaletter.GlobalVariables
         }
 
         /// <summary>
-        /// Checks if a font is installed or not (from its name and style)
+        /// Checks if a font is installed or not (by its name and style)
         /// </summary>
         public static bool Exists(string fontName, FontStyle style)
         {

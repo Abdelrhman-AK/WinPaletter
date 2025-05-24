@@ -9,14 +9,22 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
 {
+    /// <summary>
+    /// A control that simulates a classic window with a title bar and caption box.
+    /// </summary>
     [Description("Retro window with Windows 9x style")]
     public class WindowR : Panel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowR"/> class.
+        /// </summary>
         public WindowR()
         {
+            // Default classic window font
             Font = new("Microsoft Sans Serif", 8f);
             titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
 
+            // Initialize control box buttons
             _CloseBtn = new() { Name = "CloseBtn", Text = "r", Font = new("Marlett", 7.8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
             _MinBtn = new() { Name = "MinBtn", Text = "1", Font = new("Marlett", 8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
             _MaxBtn = new() { Name = "MaxBtn", Text = "0", Font = new("Marlett", 8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
@@ -28,11 +36,13 @@ namespace WinPaletter.UI.Retro
             BorderStyle = BorderStyle.None;
             Text = "New window";
 
-            Controls.AddRange(new Control[] { _CloseBtn, _MaxBtn, _MinBtn });
+            // Add control box buttons to the control
+            Controls.AddRange([_CloseBtn, _MaxBtn, _MinBtn]);
             _CloseBtn.Visible = _ControlBox;
             _MinBtn.Visible = _ControlBox & _MinimizeBox;
             _MaxBtn.Visible = _ControlBox & _MaximizeBox;
 
+            // Adjust control box buttons sizes and locations
             AdjustControlBoxFontsSizes();
             AdjustButtonSizes();
             AdjustLocations();
@@ -62,7 +72,7 @@ namespace WinPaletter.UI.Retro
         private PointF[] btnLightPoints0;
         private PointF[] btnLightPoints1;
 
-        int GripSize = 6;
+        readonly int GripSize = 6;
         Rectangle editingRect;
         Rectangle Grip_topLeft;
         Rectangle Grip_topRight;
@@ -96,6 +106,9 @@ namespace WinPaletter.UI.Retro
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the text associated with this window (caption/title).
+        /// </summary>
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -103,6 +116,9 @@ namespace WinPaletter.UI.Retro
         [Bindable(true)]
         public override string Text { get; set; } = "New window";
 
+        /// <summary>
+        /// Gets or sets the background color of the window.
+        /// </summary>
         public override Color BackColor
         {
             get => base.BackColor;
@@ -119,8 +135,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
-
-        private bool _colorGradient = true;
+        /// <summary>
+        /// Enables or disables the color gradient effect on the title bar.
+        /// </summary>
         public bool ColorGradient
         {
             get => _colorGradient;
@@ -133,9 +150,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _colorGradient = true;
 
-
-        private bool _active = true;
+        /// <summary>
+        /// A flag that indicates whether the window is active or inactive.
+        /// </summary>
         public bool Active
         {
             get => _active;
@@ -148,9 +167,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _active = true;
 
-
-        private Color _colorBorder = SystemColors.ActiveBorder;
+        /// <summary>
+        /// Gets or sets border color of the window.
+        /// </summary>
         public Color ColorBorder
         {
             get { return _colorBorder; }
@@ -163,9 +184,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _colorBorder = SystemColors.ActiveBorder;
 
-
-        private bool _flat = false;
+        /// <summary>
+        /// Gets or sets if the window is flat or not.
+        /// </summary>
         public bool Flat
         {
             get { return _flat; }
@@ -178,9 +201,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _flat = false;
 
-
-        private Color _Color1 = SystemColors.ActiveCaption;
+        /// <summary>
+        /// Gets or sets the color of the title bar.
+        /// </summary>
         public Color Color1
         {
             get
@@ -196,9 +221,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _Color1 = SystemColors.ActiveCaption;
 
-
-        private Color _Color2 = SystemColors.GradientActiveCaption;
+        /// <summary>
+        /// Gets or sets the color of the title bar gradient.
+        /// </summary>
         public Color Color2
         {
             get
@@ -214,9 +241,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _Color2 = SystemColors.GradientActiveCaption;
 
-
-        private Color _ButtonShadow = SystemColors.ButtonShadow;
+        /// <summary>
+        /// Gets or sets the color of button shadow.
+        /// </summary>
         public Color ButtonShadow
         {
             get => _ButtonShadow;
@@ -232,9 +261,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _ButtonShadow = SystemColors.ButtonShadow;
 
-
-        private Color _ButtonDkShadow = SystemColors.ControlDark;
+        /// <summary>
+        /// Gets or sets the color of button dark shadow.
+        /// </summary>
         public Color ButtonDkShadow
         {
             get => _ButtonDkShadow;
@@ -250,9 +281,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _ButtonDkShadow = SystemColors.ControlDark;
 
-
-        private Color _ButtonHilight = SystemColors.ButtonHighlight;
+        /// <summary>
+        /// Gets or sets the color of button hilight.
+        /// </summary>
         public Color ButtonHilight
         {
             get => _ButtonHilight;
@@ -268,9 +301,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _ButtonHilight = SystemColors.ButtonHighlight;
 
-
-        private Color _ButtonLight = SystemColors.ControlLight;
+        /// <summary>
+        /// Gets or sets the color of button light.
+        /// </summary>
         public Color ButtonLight
         {
             get => _ButtonLight;
@@ -286,9 +321,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _ButtonLight = SystemColors.ControlLight;
 
-
-        private Color _ButtonText = SystemColors.ControlText;
+        /// <summary>
+        /// Gets or sets the color of the title bar text.
+        /// </summary>
         public Color ButtonText
         {
             get => _ButtonText;
@@ -304,12 +341,15 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private Color _ButtonText = SystemColors.ControlText;
 
 
-        private int min_Metrics_CaptionHeight = 16;
-        private int max_Metrics_CaptionHeight = 50;
+        private readonly int min_Metrics_CaptionHeight = 16;
+        private readonly int max_Metrics_CaptionHeight = 50;
 
-        private int _Metrics_CaptionHeight = SystemInformation.CaptionHeight;
+        /// <summary>
+        /// Gets or sets the height of the caption (title) bar.
+        /// </summary>
         public int Metrics_CaptionHeight
         {
             get => _Metrics_CaptionHeight;
@@ -332,12 +372,14 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private int _Metrics_CaptionHeight = SystemInformation.CaptionHeight;
 
+        private readonly int min_Metrics_CaptionWidth = 16;
+        private readonly int max_Metrics_CaptionWidth = 50;
 
-        private int min_Metrics_CaptionWidth = 16;
-        private int max_Metrics_CaptionWidth = 50;
-
-        private int _Metrics_CaptionWidth = 22;
+        /// <summary>
+        /// Gets or sets the width of the caption (title) bar buttons.
+        /// </summary>
         public int Metrics_CaptionWidth
         {
             get => _Metrics_CaptionWidth;
@@ -357,12 +399,14 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private int _Metrics_CaptionWidth = 22;
 
+        private readonly int min_Metrics_BorderWidth = 0;
+        private readonly int max_Metrics_BorderWidth = 50;
 
-        private int min_Metrics_BorderWidth = 0;
-        private int max_Metrics_BorderWidth = 50;
-
-        private int _Metrics_BorderWidth = 1;
+        /// <summary>
+        /// Gets or sets the width of the window border.
+        /// </summary>
         public int Metrics_BorderWidth
         {
             get => _Metrics_BorderWidth;
@@ -382,12 +426,15 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private int _Metrics_BorderWidth = 1;
 
 
-        private int min_Metrics_PaddedBorderWidth = 0;
-        private int max_Metrics_PaddedBorderWidth = 50;
+        private readonly int min_Metrics_PaddedBorderWidth = 0;
+        private readonly int max_Metrics_PaddedBorderWidth = 50;
 
-        private int _Metrics_PaddedBorderWidth = 4;
+        /// <summary>
+        /// Gets or sets the padded border width of the window border.
+        /// </summary>
         public int Metrics_PaddedBorderWidth
         {
             get => _Metrics_PaddedBorderWidth;
@@ -408,9 +455,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private int _Metrics_PaddedBorderWidth = 4;
 
-
-        private bool _ControlBox = true;
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has a control box.
+        /// </summary>
         public bool ControlBox
         {
             get => _ControlBox;
@@ -427,9 +476,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _ControlBox = true;
 
-
-        private bool _MinimizeBox = true;
+        /// <summary>
+        /// Shows or hides the minimize button in the control box.
+        /// </summary>
         public bool MinimizeBox
         {
             get => _MinimizeBox;
@@ -444,9 +495,11 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _MinimizeBox = true;
 
-
-        private bool _MaximizeBox = true;
+        /// <summary>
+        /// Shows or hides the maximize button in the control box.
+        /// </summary>
         public bool MaximizeBox
         {
             get => _MaximizeBox;
@@ -461,12 +514,18 @@ namespace WinPaletter.UI.Retro
                 }
             }
         }
+        private bool _MaximizeBox = true;
 
+        /// <summary>
+        /// A flag that indicates whether the window colors can be edited by clicking on areas of the window.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingColors { get; set; } = false;
 
-
+        /// <summary>
+        /// A flag that indicates whether the window metrics can be edited by clicking and dragging on areas of the window.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingMetrics { get; set; } = false;
@@ -475,11 +534,25 @@ namespace WinPaletter.UI.Retro
 
         #region Events/Overrides
 
+        /// <summary>
+        /// Occurs when the user clicks on a color area of the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
+
+        /// <summary>
+        /// Occurs when the user clicks on a color area of the window.
+        /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        /// <summary>
+        /// Raises the <see cref="Control.FontChanged"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnFontChanged(EventArgs e)
         {
+            // Get the proper titlebar text height based on the font, and adjust the control box buttons sizes and locations
             titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
             AdjustControlBoxFontsSizes();
             AdjustButtonSizes();
@@ -489,14 +562,23 @@ namespace WinPaletter.UI.Retro
             base.OnFontChanged(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.SizeChanged"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnSizeChanged(EventArgs e)
         {
+            // Adjust the control box buttons sizes and locations, and the window padding
             AdjustLocations();
             AdjustPadding();
 
             base.OnSizeChanged(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="Control.MouseDown"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (!DesignMode)
@@ -613,7 +695,7 @@ namespace WinPaletter.UI.Retro
                         CursorOnTitlebarColor2 = r1.Contains(e.Location);
 
                         CursorOnShadow = (!Flat && (btnShadowPoints0.Contains(e.Location) || btnShadowPoints1.Contains(e.Location)))
-                            || (Flat && (Rect.BordersContains(e.Location)));
+                            || (Flat && Rect.BordersContains(e.Location));
 
                         CursorOnDkShadow = btnDkShadowPoints0.Contains(e.Location) || btnDkShadowPoints1.Contains(e.Location);
                         CursorOnHilight = btnHilightPoints0.Contains(e.Location) || btnHilightPoints1.Contains(e.Location);
@@ -636,27 +718,27 @@ namespace WinPaletter.UI.Retro
 
                     if (isMoving_Grip_padding_left)
                     {
-                        Metrics_PaddedBorderWidth = (e.Location.X - (int)(GripSize * 0.5)) - _Metrics_BorderWidth;
+                        Metrics_PaddedBorderWidth = e.Location.X - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
                     }
                     else if (isMoving_Grip_borderWidth_left)
                     {
-                        Metrics_BorderWidth = (e.Location.X - (int)(GripSize * 0.5)) - _Metrics_PaddedBorderWidth;
+                        Metrics_BorderWidth = e.Location.X - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
                     }
                     else if (isMoving_Grip_padding_right)
                     {
-                        Metrics_PaddedBorderWidth = (Width - e.Location.X - (int)(GripSize * 0.5)) - _Metrics_BorderWidth;
+                        Metrics_PaddedBorderWidth = Width - e.Location.X - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
                     }
                     else if (isMoving_Grip_borderWidth_right)
                     {
-                        Metrics_BorderWidth = (Width - e.Location.X - (int)(GripSize * 0.5)) - _Metrics_PaddedBorderWidth;
+                        Metrics_BorderWidth = Width - e.Location.X - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
                     }
                     else if (isMoving_Grip_padding_bottom)
                     {
-                        Metrics_PaddedBorderWidth = (Height - e.Location.Y - (int)(GripSize * 0.5)) - _Metrics_BorderWidth;
+                        Metrics_PaddedBorderWidth = Height - e.Location.Y - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
                     }
                     else if (isMoving_Grip_borderWidth_bottom)
                     {
-                        Metrics_BorderWidth = (Height - e.Location.Y - (int)(GripSize * 0.5)) - _Metrics_PaddedBorderWidth;
+                        Metrics_BorderWidth = Height - e.Location.Y - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
                     }
 
                     else
@@ -750,7 +832,7 @@ namespace WinPaletter.UI.Retro
 
             else if (!DesignMode && _MetricsEdit_CaptionFont)
             {
-                using (FontDialog fd = new() { Font = this.Font })
+                using (FontDialog fd = new() { Font = Font })
                 {
                     if (fd.ShowDialog() == DialogResult.OK)
                     {
@@ -855,17 +937,17 @@ namespace WinPaletter.UI.Retro
             Rect = new(0, 0, Width - 1, Height - 1);
             Border = new(2, 2, Width - 5, Height - 5);
 
-            btnShadowPoints0 = new PointF[] { new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1) };
-            btnShadowPoints1 = new PointF[] { new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1) };
+            btnShadowPoints0 = [new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1)];
+            btnShadowPoints1 = [new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1)];
 
-            btnDkShadowPoints0 = new PointF[] { new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height) };
-            btnDkShadowPoints1 = new PointF[] { new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height) };
+            btnDkShadowPoints0 = [new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height)];
+            btnDkShadowPoints1 = [new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height)];
 
-            btnHilightPoints0 = new PointF[] { new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1) };
-            btnHilightPoints1 = new PointF[] { new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2) };
+            btnHilightPoints0 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1)];
+            btnHilightPoints1 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2)];
 
-            btnLightPoints0 = new PointF[] { new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y) };
-            btnLightPoints1 = new PointF[] { new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1) };
+            btnLightPoints0 = [new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y)];
+            btnLightPoints1 = [new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1)];
         }
 
         #endregion
@@ -1098,6 +1180,8 @@ namespace WinPaletter.UI.Retro
                     G.DrawRoundedRect(P, Grip_rightCenter, 1, true);
                 }
             }
+
+
         }
     }
 }

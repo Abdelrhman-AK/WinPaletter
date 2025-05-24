@@ -20,15 +20,16 @@ namespace WinPaletter.TypesExtensions
         {
             byte[] b = new byte[size];
 
-            for (int x = 0; x <= 3; x += +1)
-                b[x] = BitConverter.GetBytes(logFont.lfHeight)[x];
+            // Copy the values of the logFont object to the byte array.
+            for (int x = 0; x <= 3; x += +1) b[x] = BitConverter.GetBytes(logFont.lfHeight)[x];
 
-            for (int x = 4; x <= 15; x += +1)
-                b[x] = 0;
+            // Set the rest of the byte array to 0.
+            for (int x = 4; x <= 15; x += +1) b[x] = 0;
 
-            for (int x = 16; x <= 19; x += +1)
-                b[x] = BitConverter.GetBytes(logFont.lfWeight)[x - 16];
+            // Copy the values of the logFont object to the byte array.
+            for (int x = 16; x <= 19; x += +1) b[x] = BitConverter.GetBytes(logFont.lfWeight)[x - 16];
 
+            // Set other values of the byte array.
             b[20] = logFont.lfItalic;
             b[21] = logFont.lfUnderline;
             b[22] = logFont.lfStrikeOut;
@@ -65,7 +66,7 @@ namespace WinPaletter.TypesExtensions
                 int deviceDpi = GetSystemDpi();
                 float fontSize = Math.Max(-logFont.lfHeight * 72.0f / deviceDpi, 8f);
 
-                return new Font(logFont.lfFaceName, fontSize, ConvertLogFontStyle(logFont));
+                return new(logFont.lfFaceName, fontSize, ConvertLogFontStyle(logFont));
             }
         }
 

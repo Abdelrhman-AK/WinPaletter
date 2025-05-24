@@ -21,7 +21,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -57,7 +57,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.AltTab)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -84,7 +84,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Store_Toggle_AltTab,
+                AspectName = Program.Lang.Strings.Aspects.AltTab,
                 Enabled = Program.TM.AltTab.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -253,10 +253,10 @@ namespace WinPaletter
             Panel2.BackColor = PanelRRaised1.BackColor;
             LabelR1.Font = Program.TM.MetricsFonts.CaptionFont;
 
-            GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 || ExplorerPatcher.IsAllowed();
+            GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 || ExplorerPatcher.CanBeUsed;
             AlertBox1.Visible = Program.WindowStyle == WindowStyle.W7;
 
-            if (ExplorerPatcher.IsAllowed())
+            if (ExplorerPatcher.CanBeUsed)
             {
                 try
                 {
@@ -299,7 +299,7 @@ namespace WinPaletter
         {
             TM.AltTab.Enabled = AspectEnabled;
             TM.AltTab.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
-            if (ExplorerPatcher.IsAllowed() & WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
+            if (ExplorerPatcher.CanBeUsed & WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
                 TM.AltTab.Style = Theme.Structures.AltTab.Styles.EP_Win10;
             TM.AltTab.Win10Opacity = Trackbar1.Value;
         }

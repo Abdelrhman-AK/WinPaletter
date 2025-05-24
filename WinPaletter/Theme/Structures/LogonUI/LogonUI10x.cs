@@ -4,7 +4,7 @@ using System.Windows.Forms;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// LogonUI structure for Windows 10/11
+    /// Lock screen structure for Windows 10/11/12
     /// </summary>
     public struct LogonUI10x : ICloneable
     {

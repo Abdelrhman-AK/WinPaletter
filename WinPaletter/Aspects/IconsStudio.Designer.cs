@@ -1001,7 +1001,7 @@
             this.dataGridViewImageColumn4.HeaderText = "Target";
             this.dataGridViewImageColumn4.Name = "dataGridViewImageColumn4";
             this.dataGridViewImageColumn4.ReadOnly = true;
-            this.dataGridViewImageColumn4.Width = 44;
+            this.dataGridViewImageColumn4.Width = 45;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -1511,7 +1511,7 @@
             this.dataGridViewImageColumn2.HeaderText = "Target";
             this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
             this.dataGridViewImageColumn2.ReadOnly = true;
-            this.dataGridViewImageColumn2.Width = 44;
+            this.dataGridViewImageColumn2.Width = 45;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -1654,7 +1654,7 @@
             this.SelectedImage.HeaderText = "Target";
             this.SelectedImage.Name = "SelectedImage";
             this.SelectedImage.ReadOnly = true;
-            this.SelectedImage.Width = 44;
+            this.SelectedImage.Width = 45;
             // 
             // Path
             // 

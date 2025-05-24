@@ -21,17 +21,17 @@ namespace WinPaletter.Theme.Structures
         public bool Enabled = false;
 
         /// <summary>
-        /// Visual styles file used when 'Theme' selected as 'Custom'
+        /// Visual styles File used when 'WinTheme' selected as 'Custom'
         /// </summary>
         public string ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles";
 
         /// <summary>
-        /// Color scheme of visual styles file
+        /// Color scheme of visual styles File
         /// </summary>
         public string ColorScheme = "NormalColor";
 
         /// <summary>
-        /// Size scheme of visual styles file
+        /// Size scheme of visual styles File
         /// </summary>
         public string SizeScheme = "NormalSize";
 
@@ -91,7 +91,8 @@ namespace WinPaletter.Theme.Structures
                     UxTheme.EnableTheming(1);
                     UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, SizeScheme, 0, treeView);
 
-                    // Don't use ThemeFile as it may be a .theme file
+                    // Don't use ThemeFile as it may be a .theme File
+                    // Visual styles File is already set by UxTheme.SetSystemVisualStyle, get it again by using GetCurrentVS method to get correct msstyles File
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", UxTheme.GetCurrentVS().Item1, RegistryValueKind.String);
 
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ColorScheme, RegistryValueKind.String);
@@ -103,9 +104,14 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>
+        /// Get msstyles File from a .theme File
+        /// </summary>
+        /// <param name="themeFile"></param>
+        /// <returns></returns>
         private string getMsstylesFile(string themeFile)
         {
-            using (WinPaletter.INI ini = new(themeFile))
+            using (INI ini = new(themeFile))
             {
                 string result = ini.Read("VisualStyles", "Path");
 
@@ -126,7 +132,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             string fileName = System.IO.Path.GetFileName(result);
 
-                            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(themeFile));
+                            DirectoryInfo di = new(System.IO.Path.GetDirectoryName(themeFile));
                             List<string> matchingStyles = System.IO.Directory.GetFiles(di.FullName, "*.msstyles", System.IO.SearchOption.AllDirectories)
                                 .Where(f => System.IO.Path.GetFileName(f).Equals(fileName, StringComparison.OrdinalIgnoreCase))
                                 .ToList();
@@ -149,14 +155,19 @@ namespace WinPaletter.Theme.Structures
             }
         }
 
+        /// <summary>
+        /// Check if VisualStyles File is compatible with current Windows version
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns></returns>
         private bool isCorrectVSPlatform(string theme)
         {
             try
             {
                 using (libmsstyle.VisualStyle vs = new(theme))
                 {
-                    // Let's assume that Win12 is identical to Win11 until official release !
-                    if (vs.Platform == libmsstyle.Platform.Win11 && (Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12))
+                    // Let's assume that W12 is identical to Win11 until official release!
+                    if (vs.Platform == libmsstyle.Platform.Win11 && Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12)
                     {
                         return false;
                     }
@@ -182,7 +193,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
             }
-            catch // Couldn't load visual styles file by libmsstyles, so we will assume that it is a Windows XP theme
+            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows WXP theme
             {
                 try
                 {

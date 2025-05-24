@@ -12,11 +12,26 @@ using static WinPaletter.UI.Simulation.Window;
 
 namespace WinPaletter.Templates
 {
+    /// <summary>
+    /// Window metrics template
+    /// </summary>
     public partial class WindowMetrics : UserControl
     {
+        /// <summary>
+        /// Event handler for editing sizes (metrics) and fonts of window elements
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
+
+        /// <summary>
+        /// Event handler for editing sizes (metrics) and fonts of window elements
+        /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        /// <summary>
+        /// Create a new instance of the window metrics template
+        /// </summary>
         public WindowMetrics()
         {
             DoubleBuffered = true;
@@ -25,6 +40,7 @@ namespace WinPaletter.Templates
 
             InitializeComponent();
 
+            // Get correct information message icon to be shown as siumlation for a message box, according to current Windows edition.
             if (!DesignMode)
             {
                 if (OS.WXP)
@@ -53,9 +69,9 @@ namespace WinPaletter.Templates
         #region Variables
 
         bool ForceRefresh = false;
-        private bool WXP_VS_ReplaceColors = false;
-        private bool WXP_VS_ReplaceMetrics = false;
-        private bool WXP_VS_ReplaceFonts = false;
+        private readonly bool WXP_VS_ReplaceColors = false;
+        private readonly bool WXP_VS_ReplaceMetrics = false;
+        private readonly bool WXP_VS_ReplaceFonts = false;
         private string msstyles;
 
         bool Win7;
@@ -211,7 +227,7 @@ namespace WinPaletter.Templates
 
         /// <summary>
         /// Titlebar (caption) font of a tool box window
-        /// <summary>
+        /// </summary>
         public Font SmCaptionFont
         {
             get => _smCaptionFont;
@@ -323,6 +339,9 @@ namespace WinPaletter.Templates
 
         #region Important preview properties
 
+        /// <summary>
+        /// Hide the preview as a menu strip containing window
+        /// </summary>
         public bool ShowAsMenu
         {
             get => _showAsMenuOnly;
@@ -353,6 +372,9 @@ namespace WinPaletter.Templates
 
 
         private bool _classic = false;
+        /// <summary>
+        /// Hide the preview as a classic window
+        /// </summary>
         public bool Classic
         {
             get { return _classic; }
@@ -376,6 +398,9 @@ namespace WinPaletter.Templates
 
 
         private bool _showMenuSection = false;
+        /// <summary>
+        /// Hide the preview as a menu section
+        /// </summary>
         public bool ShowMenuSection
         {
             get => _showMenuSection;
@@ -412,7 +437,9 @@ namespace WinPaletter.Templates
             }
         }
 
-
+        /// <summary>
+        /// Theme manager to be used for the preview
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public Theme.Manager HookedTM
@@ -1491,6 +1518,10 @@ namespace WinPaletter.Templates
             }
         }
 
+        /// <summary>
+        /// Load all theme settings from a <see cref="Theme.Manager"/> 
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadFromTM(Theme.Manager TM)
         {
             ForceRefresh = true;
@@ -1548,13 +1579,13 @@ namespace WinPaletter.Templates
             {
                 TitlebarColor_Active = HookedTM.WindowsVista.ColorizationColor;
                 TitlebarColor_Inactive = HookedTM.WindowsVista.ColorizationColor;
-                Win7ColorBal = (HookedTM.WindowsVista.Alpha / 255) * 100;
+                Win7ColorBal = HookedTM.WindowsVista.Alpha / 255 * 100;
                 TitlebarColor_Enabled = true;
                 AfterGlowColor_Active = Color.Transparent;
                 AfterGlowColor_Inactive = Color.Transparent;
                 Win7GlowBal = 0;
                 Win7Noise = 100f;
-                Win7Alpha = 100 - (HookedTM.WindowsVista.Alpha / 255) * 100;
+                Win7Alpha = 100 - HookedTM.WindowsVista.Alpha / 255 * 100;
                 Windows_7_8_Theme = HookedTM.WindowsVista.Theme;
             }
 
@@ -1574,6 +1605,10 @@ namespace WinPaletter.Templates
             ForceRefresh = false;
         }
 
+        /// <summary>
+        /// Load all metrics settings from a <see cref="Theme.Manager"/>
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadMetrics(Theme.Manager TM)
         {
             CaptionFont = TM.MetricsFonts.CaptionFont;
@@ -1595,6 +1630,10 @@ namespace WinPaletter.Templates
             StatusFont = TM.MetricsFonts.StatusFont;
         }
 
+        /// <summary>
+        /// Load all color settings from a <see cref="Theme.Manager"/>
+        /// </summary>
+        /// <param name="TM"></param>
         private void LoadColors(Theme.Manager TM)
         {
             EnableTheming = TM.Win32.EnableTheming;
@@ -1658,7 +1697,7 @@ namespace WinPaletter.Templates
             tabs_preview.TabPages[3].BackgroundImage = BackgroundImage;
         }
 
-        private void windowR1_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        private void windowR1_EditorInvoker(object sender, EditorEventArgs e)
         {
             if (sender == Window1)
             {
@@ -1714,7 +1753,7 @@ namespace WinPaletter.Templates
             }
         }
 
-        private void windowR2_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        private void windowR2_EditorInvoker(object sender, EditorEventArgs e)
         {
             if (sender == Window2)
             {

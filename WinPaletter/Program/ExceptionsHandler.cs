@@ -7,6 +7,11 @@ namespace WinPaletter
 {
     internal partial class Program
     {
+        /// <summary>
+        /// Handles the exception thrown by the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)
         {
             if (!Debugger.IsAttached)
@@ -15,7 +20,12 @@ namespace WinPaletter
                 ExceptionDispatchInfo.Capture(e.Exception).Throw();
         }
 
-        private static void Domain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
+        /// <summary>
+        /// Handles the exception thrown by the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void Domain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
 #if DEBUG
             if (!Debugger.IsAttached)

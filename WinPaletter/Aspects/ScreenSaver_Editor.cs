@@ -25,11 +25,11 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -39,21 +39,21 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Theme.Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Theme.Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.OpenTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -73,45 +73,45 @@ namespace WinPaletter
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
         private void Apply(object sender, EventArgs e)
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.ScreenSaver)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -132,7 +132,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Store_Toggle_ScreenSaver,
+                AspectName = Program.Lang.Strings.Aspects.ScreenSaver,
                 Enabled = Program.TM.ScreenSaver.Enabled,
                 Import_theme = true,
                 Import_msstyles = false,
@@ -161,7 +161,7 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.ScreenSaver.Enabled;
             TextBox1.Text = TM.ScreenSaver.File;
@@ -169,7 +169,7 @@ namespace WinPaletter
             CheckBox1.Checked = TM.ScreenSaver.IsSecure;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.ScreenSaver.Enabled = AspectEnabled;
             TM.ScreenSaver.File = TextBox1.Text;
@@ -181,7 +181,7 @@ namespace WinPaletter
         {
             using (INI _ini = new(File))
             {
-                TextBox1.Text = _ini.Read("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).PhrasePath();
+                TextBox1.Text = _ini.Read("boot", "SCRNSAVE.EXE", _DefaultScrSvr.File).ExpandEnvironmentVariables();
             }
         }
 
@@ -192,7 +192,7 @@ namespace WinPaletter
                 string filename = string.Empty;
                 int previewHandle = 0;
 
-                this.Invoke(() =>
+                Invoke(() =>
                 {
                     filename = TextBox1.Text;
                     previewHandle = pnl_preview.Handle.ToInt32();
@@ -209,7 +209,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Screensavers, Title = Program.Lang.Filter_OpenScreensaver })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.ScreenSavers, Title = Program.Lang.Strings.Extensions.OpenScreenSaver })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -225,7 +225,7 @@ namespace WinPaletter
                 string filename = string.Empty;
                 int previewHandle = 0;
 
-                this.Invoke(() =>
+                Invoke(() =>
                 {
                     filename = TextBox1.Text;
                     previewHandle = pnl_preview.Handle.ToInt32();
@@ -251,7 +251,7 @@ namespace WinPaletter
             {
                 string filename = string.Empty;
 
-                this.Invoke(() => { filename = TextBox1.Text; });
+                Invoke(() => { filename = TextBox1.Text; });
 
                 if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
                 {
@@ -269,7 +269,7 @@ namespace WinPaletter
                 string filename = string.Empty;
                 int previewHandle = 0;
 
-                this.Invoke(() =>
+                Invoke(() =>
                 {
                     filename = TextBox1.Text;
                     previewHandle = pnl_preview.Handle.ToInt32();

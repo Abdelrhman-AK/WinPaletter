@@ -14,9 +14,9 @@ namespace WinPaletter.Theme.Structures
         public string AppVersion = Program.Version;
 
         /// <summary>Name of current WinPaletter theme</summary>
-        public string ThemeName = Program.Lang.MyTheme;
+        public string ThemeName = Program.Lang.Strings.General.MyTheme;
 
-        /// <summary>Description of current WinPaletter theme. It can include tags.</summary>
+        /// <summary>Description of current WinPaletter theme. It can include tags that are useful for search in WinPaletter Store.</summary>
         public string Description = string.Empty;
 
         /// <summary>Make saving this theme export theme resources pack that has sounds and images used in theme and are not located in system directories.</summary>
@@ -40,7 +40,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Descriptive color 2. It should give the user a figure about your theme.</summary>
         public Color Color2 = Color.FromArgb(122, 9, 9);
 
-        /// <summary>Decorative pattern for your theme displayed in WinPaletter Store. It can be any value from 0 to 10</summary>
+        /// <summary>Decorative pattern for your theme displayed in WinPaletter Store.</summary>
         public int Pattern = 1;
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace WinPaletter.Theme.Structures
         public bool DesignedFor_WinVista = true;
 
         /// <summary>
-        /// This theme is designed especially for Windows XP
+        /// This theme is designed especially for Windows WXP
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_WinXP = true;
@@ -95,7 +95,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public void Load()
         {
-            ThemeName = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Lang.MyTheme).ToString();
+            ThemeName = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Lang.Strings.General.MyTheme).ToString();
             ThemeVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0").ToString();
             Author = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", User.UserName).ToString();
             AuthorSocialMediaLink = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", string.Empty).ToString();

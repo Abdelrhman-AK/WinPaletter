@@ -5,7 +5,7 @@ namespace WinPaletter.Theme
     public partial class Manager
     {
         /// <summary>
-        /// Get edition of a WinPaletter theme file
+        /// Get edition of a WinPaletter theme File
         /// </summary>
         /// <param name="File"></param>
         /// <returns></returns>
@@ -52,7 +52,7 @@ namespace WinPaletter.Theme
             /// </summary>
             OldFormat,
             /// <summary>
-            /// Error, file not found or not a WinPaletter theme file
+            /// Error, File not found or not a WinPaletter theme File
             /// </summary>
             Error
         }

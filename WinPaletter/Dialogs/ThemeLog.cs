@@ -18,14 +18,14 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Add node to treeView (Theme log)
+        /// Add node to treeView (WinTheme log)
         /// </summary>
         /// <param name="treeView">treeView used as a theme log</param>
         /// <param name="Text">Log node text</param>
         /// <param name="ImageKey">ImageKey used for icon for log node</param>
         public static void AddNode(TreeView treeView, string Text, string ImageKey)
         {
-            if (treeView is not null)
+            if (treeView is not null && treeView.IsHandleCreated)
             {
                 treeView?.Invoke(() =>
                 {
@@ -51,31 +51,39 @@ namespace WinPaletter
                 {
                     try
                     {
-                        using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
+                        Icon = FormsExtensions.Icon<MainForm>();
                     }
                     catch { } // Ignore this exception when form or icon is disposed
                 });
             });
 
-            this.LoadLanguage();
-            ApplyStyle(this);
-            CheckForIllegalCrossThreadCalls = false;
-            TreeView1.ImageList = ImageLists.ThemeLog;
+            if (this is not null)
+            {
+                this.LoadLanguage();
+                ApplyStyle(this);
+                CheckForIllegalCrossThreadCalls = false;
+                if (TreeView1 is not null) TreeView1.ImageList = ImageLists.ThemeLog;
+            }
         }
 
         private void ThemeLog_Closing(object sender, FormClosingEventArgs e)
         {
             if (Apply_Thread.IsAlive)
             {
-                if (MsgBox(Program.Lang.TM_CloseOnApplying0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.TM_CloseOnApplying1) == DialogResult.No)
+                if (MsgBox(Program.Lang.Strings.ThemeManager.Actions.CloseOnApplying0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.Strings.ThemeManager.Actions.CloseOnApplying1) == DialogResult.No)
                 {
                     e.Cancel = true;
                     return;
                 }
                 else
                 {
-                    Apply_Thread.Abort();
+                    Apply_Thread?.Abort();
                 }
+            }
+
+            if (Program.ProgramsRunning(SysPaths.Explorer).Count == 0)
+            {
+                Task.Run(() => { Program.Explorer_exe?.Start(); });
             }
         }
 
@@ -91,8 +99,8 @@ namespace WinPaletter
 
             if (Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None)
             {
-                //Show();
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+                //Hide();
+                Forms.MainForm?.tabsContainer1?.AddFormIntoTab(this);
             }
 
             Apply_Thread = new(() =>
@@ -102,9 +110,9 @@ namespace WinPaletter
                 animatedBox1.Color1 = TM.Info.Color1;
                 animatedBox1.Color2 = TM.Info.Color2;
 
-                TreeView1.Nodes.Clear();
+                TreeView1?.Nodes?.Clear();
 
-                log_lbl.SetText(string.Format(Program.Lang.TM_ApplyingTheme, TM.Info.ThemeName));
+                log_lbl?.SetText(string.Format(Program.Lang.Strings.ThemeManager.Actions.ApplyingTheme, TM.Info.ThemeName));
 
                 Cursor = Cursors.WaitCursor;
 
@@ -133,24 +141,24 @@ namespace WinPaletter
                 {
                     if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                     {
-                        Program.ExplorerKiller.Start();
-                        Program.ExplorerKiller.WaitForExit();
+                        Program.ExplorerKiller?.Start();
+                        Program.ExplorerKiller?.WaitForExit();
                     }
                 }
 
                 try
                 {
-                    TM.Save(Theme.Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
+                    TM?.Save(Theme.Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
 
                     if (LogEnabled)
-                        AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_AllDone}", "info");
+                        AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.Complete}", "info");
 
                     if (AdditionalStoreTips)
-                        AddNode(TreeView1, Program.Lang.Store_LogoffRecommended, "info");
+                        AddNode(TreeView1, Program.Lang.Strings.Store.LogoffRecommended, "info");
                 }
                 catch (Exception ex)
                 {
-                    AddNode(TreeView1, Program.Lang.TM_FatalErrorHappened, "error");
+                    AddNode(TreeView1, Program.Lang.Strings.ThemeManager.Errors.FatalError, "error");
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
@@ -167,7 +175,7 @@ namespace WinPaletter
                         log_lbl.Visible = true;
                         Button8.Visible = true;
                         Button22.Visible = true;
-                        Button25.Visible = true;
+                        Button25.Visible = Exceptions.ThemeApply.Count == 0 && Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.Detailed;
                     });
                 }
                 else
@@ -175,12 +183,12 @@ namespace WinPaletter
                     log_lbl.Visible = true;
                     Button8.Visible = true;
                     Button22.Visible = true;
-                    Button25.Visible = true;
+                    Button25.Visible = Exceptions.ThemeApply.Count == 0 && Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.Detailed;
                 }
 
                 if (Exceptions.ThemeApply.Count != 0)
                 {
-                    log_lbl.SetText(Program.Lang.TM_ErrorHappened);
+                    log_lbl.SetText(Program.Lang.Strings.ThemeManager.Errors.ErrorHappened);
 
                     if (!dontInvoke)
                     {
@@ -197,7 +205,7 @@ namespace WinPaletter
                 }
                 else if (dontInvoke || (Program.Settings.ThemeLog.CountDown && Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.Detailed))
                 {
-                    log_lbl.SetText(string.Format(Program.Lang.TM_LogWillClose, Program.Settings.ThemeLog.CountDown_Seconds));
+                    log_lbl?.SetText(string.Format(Program.Lang.Strings.ThemeManager.Actions.LogClosure, Program.Settings.ThemeLog.CountDown_Seconds));
                     elapsedSecs = 1;
 
                     if (!dontInvoke)
@@ -206,18 +214,18 @@ namespace WinPaletter
                         BeginInvoke(() =>
                     {
                         timer1.Enabled = true;
-                        timer1.Start();
+                        timer1?.Start();
                     });
                     }
                     else
                     {
                         timer1.Enabled = true;
-                        timer1.Start();
+                        timer1?.Start();
                     }
                 }
                 else
                 {
-                    log_lbl.SetText(Program.Lang.TM_LogTimerFinished);
+                    log_lbl?.SetText(Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished);
                 }
 
                 //New method of restarting Explorer
@@ -225,23 +233,23 @@ namespace WinPaletter
                 {
                     if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                     {
-                        Program.Explorer_exe.Start();
+                        Program.Explorer_exe?.Start();
                     }
                     else
                     {
-                        AddNode(TreeView1, $"{Program.Lang.RestartExplorerIssue0}. {Program.Lang.RestartExplorerIssue1}", "warning");
+                        AddNode(TreeView1, $"{Program.Lang.Strings.Messages.RestartExplorerIssue0}. {Program.Lang.Strings.Messages.RestartExplorerIssue1}", "warning");
                     }
                 }
 
-                else if (LogEnabled) { AddNode(TreeView1, Program.Lang.NoDefResExplorer, "warning"); }
+                else if (LogEnabled) { AddNode(TreeView1, Program.Lang.Strings.ThemeManager.Tips.NoDefResExplorer, "warning"); }
             });
 
-            Apply_Thread.Start();
+            Apply_Thread?.Start();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            log_lbl.Text = string.Format(Program.Lang.TM_LogWillClose, Program.Settings.ThemeLog.CountDown_Seconds - elapsedSecs);
+            log_lbl.Text = string.Format(Program.Lang.Strings.ThemeManager.Actions.LogClosure, Program.Settings.ThemeLog.CountDown_Seconds - elapsedSecs);
 
             if (elapsedSecs + 1 <= Program.Settings.ThemeLog.CountDown_Seconds)
             {
@@ -251,17 +259,17 @@ namespace WinPaletter
             {
                 ((System.Windows.Forms.Timer)sender).Enabled = false;
                 ((System.Windows.Forms.Timer)sender).Stop();
-                this.Close();
+                this?.Close();
             }
         }
 
         private void Button22_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = Program.Lang.TM_LogTimerFinished;
+            log_lbl.Text = Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished;
             timer1.Enabled = false;
-            timer1.Stop();
+            timer1?.Stop();
 
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Filter_SaveText })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Strings.Extensions.SaveText })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -286,7 +294,7 @@ namespace WinPaletter
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = Program.Lang.TM_LogTimerFinished;
+            log_lbl.Text = Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished;
             timer1.Enabled = false;
             timer1.Stop();
             Forms.Saving_ex_list.ex_List = Exceptions.ThemeApply;
@@ -295,7 +303,7 @@ namespace WinPaletter
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = Program.Lang.TM_LogTimerFinished;
+            log_lbl.Text = Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished;
             timer1.Enabled = false;
             timer1.Stop();
             (sender as UI.WP.Button).Visible = false;
@@ -303,10 +311,9 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = Program.Lang.TM_LogTimerFinished;
             timer1.Enabled = false;
             timer1.Stop();
-            Forms.RescueTools.ShowDialog();
+            Forms.SOS.ShowDialog();
         }
     }
 }

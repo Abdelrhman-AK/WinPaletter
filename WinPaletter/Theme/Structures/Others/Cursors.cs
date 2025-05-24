@@ -11,7 +11,7 @@ using static WinPaletter.NativeMethods.User32;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// Structure responsible for managing Windows switcher (Alt+Tab) appearance
+    /// Structure responsible for managing Windows cursors, either rendered by WinPaletter or loaded from files.
     /// </summary>
     public struct Cursors : ICloneable
     {
@@ -24,7 +24,7 @@ namespace WinPaletter.Theme.Structures
         public bool Shadow = false;
 
         /// <summary>
-        /// Enable sonar (gray circle) surrounding cursor while pressing CTRL multiple times.
+        /// Enable sonar (gray circle) surrounding cursor while pressing <c>CTRL</c> key multiple times.
         /// </summary>
         public bool Sonar = false;
 
@@ -129,7 +129,7 @@ namespace WinPaletter.Theme.Structures
         public Cursors() { }
 
         /// <summary>
-        /// Loads Cursors data from registry
+        /// Loads cursors data from registry
         /// </summary>
         /// <param name="default">Default Cursors data structure</param>
         public void Load(Cursors @default)
@@ -174,12 +174,13 @@ namespace WinPaletter.Theme.Structures
         {
             SaveToggleState(treeView);
 
+            // Determine if we should report progress
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
             TreeView tv = ReportProgress_Detailed ? treeView : null;
 
             Stopwatch sw = new();
-            ThemeLog.AddNode(tv, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.TM_SavingCursorsColors}", "info");
+            ThemeLog.AddNode(tv, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.SavingCursorsColors}", "info");
             sw.Reset();
             sw.Start();
             Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow, tv);
@@ -199,7 +200,7 @@ namespace WinPaletter.Theme.Structures
             Cursor.Save_Cursors_To_Registry("Person", Cursor_Person, tv);
             Cursor.Save_Cursors_To_Registry("IBeam", Cursor_IBeam, tv);
             Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, tv);
-            ThemeLog.AddNode(tv, string.Format(Program.Lang.TM_Time, sw.ElapsedMilliseconds / 1000d), "time");
+            ThemeLog.AddNode(tv, string.Format(Program.Lang.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
             sw.Stop();
 
             if (Enabled)
@@ -227,6 +228,7 @@ namespace WinPaletter.Theme.Structures
                 if (!Cursor_IBeam.UseFromFile || (Cursor_IBeam.UseFromFile && !File.Exists(Cursor_IBeam.File))) RenderCursor(Paths.CursorType.IBeam, this, tv);
                 if (!Cursor_Cross.UseFromFile || (Cursor_Cross.UseFromFile && !File.Exists(Cursor_Cross.File))) RenderCursor(Paths.CursorType.Cross, this, tv);
 
+                // Apply cursors to system
                 SetCursorsToSystem(this, "HKEY_CURRENT_USER", ReportProgress_Detailed ? treeView : null);
 
                 if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -294,27 +296,33 @@ namespace WinPaletter.Theme.Structures
 
             string CurName = cursorTypeMap.TryGetValue(Type, out string name) ? name : string.Empty;
 
-            if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_RenderingCursor, CurName), "pe_patch");
+            if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.RenderingCursor, CurName), "pe_patch");
 
             if (!Directory.Exists(SysPaths.CursorsWP)) Directory.CreateDirectory(SysPaths.CursorsWP);
 
             if (Type != Paths.CursorType.Busy & Type != Paths.CursorType.AppLoading)
             {
+                // Save cursor to file path inside WinPaletter cursors folder
                 string Path = $"{SysPaths.CursorsWP}\\{CurName}.cur";
 
+                // Create cursor file stream
                 using (FileStream FS = new(Path, FileMode.Create))
                 {
+                    // Use EOIcoCurWriter to write cursor file
                     EOIcoCurWriter EO = new(FS, 7, EOIcoCurWriter.IcoCurType.Cursor);
 
+                    // Create scales array
                     int[] scales = [24, 32, 48, 64, 96];
-                    if (!scales.Contains(Size)) scales = scales.ToList().Append(Size).OrderBy(x => x).ToArray();
+                    if (!scales.Contains(Size)) scales = [.. scales.ToList().Append(Size).OrderBy(x => x)];
 
+                    // Loop to create different cursors sizes (scales)
                     foreach (int scale in scales)
                     {
                         float i = scale / 32f;
                         Bitmap bmp = new(scale, scale, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
                         Point HotPoint = new(1, 1);
 
+                        // Switch to create different cursors. Each case is a different cursor type and has its own rendering options.
                         switch (Type)
                         {
                             case Paths.CursorType.Arrow:
@@ -439,17 +447,20 @@ namespace WinPaletter.Theme.Structures
 
                         }
 
+                        // Write bitmap to cursor file stream
                         EO.WriteBitmap(bmp, null, HotPoint);
 
                         bmp.Dispose();
                     }
 
+                    // Close cursor file stream
                     FS.Close();
                 }
 
-                if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, Path), "info");
+                if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, Path), "info");
             }
 
+            // Render animated cursors
             else
             {
                 Point HotPoint = new(1, 1);
@@ -494,6 +505,8 @@ namespace WinPaletter.Theme.Structures
                     }
 
                     uint count = (uint)BMPList.Count;
+
+                    // Create frame rates and frame sequential numbers arrays
                     uint[] frameRates = new uint[count];
                     uint[] framesSequentialNumbers = new uint[count];
                     uint Speed = 2;
@@ -504,23 +517,27 @@ namespace WinPaletter.Theme.Structures
                     if (scale == 64) { curFileNameModifier = "_l"; }
                     if (scale == 128) { curFileNameModifier = "_xl"; }
 
+                    // Save cursor to file path inside WinPaletter cursors folder
                     string OutputFile = $@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani";
 
+                    // Create cursor file stream
                     using (FileStream fs = new(OutputFile, FileMode.Create))
                     {
+                        // Use EOIcoCurWriter to write cursor file
                         EOANIWriter AN = new(fs, count, Speed, frameRates, framesSequentialNumbers, null, null, HotPoint);
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { AN.WriteFrame(BMPList[(int)i1]); }
 
-                        ProcessedFiles = ProcessedFiles.ToList().Append($"{SysPaths.CursorsWP}\\{CurName}{curFileNameModifier}.ani").ToArray();
+                        ProcessedFiles = [.. ProcessedFiles, $"{SysPaths.CursorsWP}\\{CurName}{curFileNameModifier}.ani"];
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { BMPList[(int)i1].Dispose(); }
                         BMPList.Clear();
 
+                        // Close cursor file stream
                         fs.Close();
                     }
 
-                    if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_CursorRenderedInto, $@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani"), "info");
+                    if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, $@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani"), "info");
                 }
             }
         }
@@ -533,6 +550,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used to show applying log</param>
         public void SetCursorsToSystem(Cursors cursors, string scopeReg = "HKEY_CURRENT_USER", TreeView treeView = null)
         {
+            // WinPaletter saves rendered cursors to the following path
             string Path = SysPaths.CursorsWP;
 
             double DPI = Program.GetWindowsScreenScalingFactor();
@@ -676,8 +694,8 @@ namespace WinPaletter.Theme.Structures
             EditReg($@"{scopeReg}\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
 
+            // Broadcast registry change to system
             SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
-
             SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, Size, SPIF.SPIF_WRITEANDNOTIFY);
         }
 
@@ -811,21 +829,21 @@ namespace WinPaletter.Theme.Structures
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
                 }
 
+                // Broadcast registry change to system
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
-
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
             }
 
             catch (Exception ex)
             {
-                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(Program.Lang.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.ThemeManager.Tips.RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }
 
         }
 
         /// <summary>
-        /// Reset cursors to default Windows NT 5.1 (XP)
+        /// Reset cursors to default Windows NT 5.1 (WXP)
         /// </summary>
         /// <param name="scopeReg">It can be HKEY_CURRENT_USER or HKEY_USERS\...</param>
         /// <param name="treeView">TreeView used to show applying log</param>
@@ -885,14 +903,14 @@ namespace WinPaletter.Theme.Structures
                 EditReg($@"{scopeReg}\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
+                // Broadcast registry change to system
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
-
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
             }
 
             catch (Exception ex)
             {
-                if (MsgBox(Program.Lang.TM_RestoreCursorsError, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.TM_RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.TM_RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(Program.Lang.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.ThemeManager.Tips.RestoreCursorsTip, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }
         }

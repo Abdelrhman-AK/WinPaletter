@@ -16,7 +16,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (WindowsTerminal formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<WindowsTerminal>();
 
             Color c = PictureBox1.Image.AverageColor();
             Color c1 = c.CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));

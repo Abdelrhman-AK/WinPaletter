@@ -6,9 +6,15 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
+    /// <summary>
+    /// Custom control for testing purposes
+    /// </summary>
     //[ToolboxItem(false)]
     public class TestControl : Control
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TestControl"/> class.
+        /// </summary>
         public TestControl()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
@@ -18,18 +24,52 @@ namespace WinPaletter.UI.WP
             Text = string.Empty;
         }
 
+        /// <summary>
+        /// States of the control
+        /// </summary>
         public enum States
         {
+            /// <summary>
+            /// Default state
+            /// </summary>
             None,
+
+            /// <summary>
+            /// Hover state
+            /// </summary>
             Hover,
+
+            /// <summary>
+            /// Checked state with a cursor hover
+            /// </summary>
             CheckedHover,
+
+            /// <summary>
+            /// Checked state
+            /// </summary>
             Checked,
+
+            /// <summary>
+            /// Button normal state
+            /// </summary>
             ButtonNone,
+
+            /// <summary>
+            /// Button hover state
+            /// </summary>
             ButtonOver,
+
+            /// <summary>
+            /// Button down state
+            /// </summary>
             ButtonDown
         }
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the text associated with this control.
+        /// </summary>
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
@@ -37,7 +77,9 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
-        private Config.Scheme _scheme = Program.Style.Schemes.Main;
+        /// <summary>
+        /// Gets or sets the scheme of the control
+        /// </summary>
         public Config.Scheme Scheme
         {
             get => _scheme;
@@ -47,8 +89,11 @@ namespace WinPaletter.UI.WP
                 Invalidate();
             }
         }
+        private Config.Scheme _scheme = Program.Style.Schemes.Main;
 
-        private States _state = States.None;
+        /// <summary>
+        /// Gets or sets the state of the control
+        /// </summary>
         public States State
         {
             get => _state;
@@ -58,7 +103,11 @@ namespace WinPaletter.UI.WP
                 Invalidate();
             }
         }
+        private States _state = States.None;
 
+        /// <summary>
+        /// Creates and gets the parameters of the control
+        /// </summary>
         protected override CreateParams CreateParams
         {
             get
@@ -79,6 +128,11 @@ namespace WinPaletter.UI.WP
 
 
         int parentLevel = 0;
+
+        /// <summary>
+        /// Occurs when the parent of the control changes to update the parent level
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
@@ -86,11 +140,13 @@ namespace WinPaletter.UI.WP
             parentLevel = this.Level();
         }
 
-
+        /// <summary>
+        /// Paints the control
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
-            G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
             //Makes background drawn properly, and transparent
@@ -143,24 +199,24 @@ namespace WinPaletter.UI.WP
             using (Pen P = new(lC)) { G.DrawRoundedRect_LikeW11(P, MainRect); }
 
             using (SolidBrush br = new(bkC.IsDark() ? Color.White : Color.Black)) { G.DrawString(Text, Font, br, MainRect, ContentAlignment.MiddleCenter.ToStringFormat()); }
+
+
         }
 
+        /// <summary>
+        /// Gets the line color of the control
+        /// </summary>
+        /// <param name="baseColor"></param>
+        /// <returns></returns>
         private Color LineColor(Color baseColor = default)
         {
-            switch (State)
+            return State switch
             {
-                case States.ButtonNone:
-                    return baseColor.CB(baseColor.IsDark() ? 0.02f : -0.04f);
-
-                case States.ButtonOver:
-                    return baseColor.CB(baseColor.IsDark() ? 0.07f : -0.1f);
-
-                case States.ButtonDown:
-                    return baseColor.CB(baseColor.IsDark() ? 0.1f : -0.08f);
-
-                default:
-                    return baseColor.CB(baseColor.IsDark() ? 0.02f : -0.04f);
-            }
+                States.ButtonNone => baseColor.CB(baseColor.IsDark() ? 0.02f : -0.04f),
+                States.ButtonOver => baseColor.CB(baseColor.IsDark() ? 0.07f : -0.1f),
+                States.ButtonDown => baseColor.CB(baseColor.IsDark() ? 0.1f : -0.08f),
+                _ => baseColor.CB(baseColor.IsDark() ? 0.02f : -0.04f),
+            };
         }
     }
 }

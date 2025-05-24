@@ -2,20 +2,14 @@ using System.IO;
 
 namespace EOFC
 {
-    internal sealed class OffsetStream : Stream
+    internal sealed class OffsetStream(Stream underlyingStream) : Stream
     {
-        private Stream m_base;
+        private readonly Stream m_base = underlyingStream;
 
         /// <summary>
         /// Offset in bytes, counting from the beginning of the stream
         /// </summary>
-        private long m_pos;
-
-        public OffsetStream(Stream underlyingStream)
-        {
-            m_base = underlyingStream;
-            m_pos = underlyingStream.Position;
-        }
+        private readonly long m_pos = underlyingStream.Position;
 
         public override bool CanRead
         {

@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +20,19 @@ namespace WinPaletter
         public BugReport()
         {
             InitializeComponent();
+        }
+
+        bool collapsed = true;
+        int previousHeight = 540;
+
+        private int CollapsedHeight
+        {
+            get
+            {
+                int upperPaddingDifference = separatorH1.Bottom - AnimatedBox1.Bottom;
+
+                return separatorH1.Bottom + upperPaddingDifference + bottom_buttons.Height + 40;
+            }
         }
 
         private void Center()
@@ -48,10 +62,6 @@ namespace WinPaletter
             Color c = PictureBox1.Image.AverageColor().CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
             AnimatedBox1.BackColor = c;
 
-            Label2.Font = Fonts.ConsoleMedium;
-            Label3.Font = Fonts.ConsoleMedium;
-            label9.Font = Fonts.ConsoleMedium;
-
             TreeView1.Font = Fonts.ConsoleMedium;
 
             Forms.GlassWindow.Show();
@@ -60,6 +70,14 @@ namespace WinPaletter
                 lbl.ForeColor = Color.White;
 
             SystemSounds.Exclamation.Play();
+
+            Height = CollapsedHeight;
+
+            Rectangle area = Screen.FromControl(this).WorkingArea;
+            int targetX = (area.Width / 2) - (Width / 2);
+            int targetY = (area.Height / 2) - (Height / 2);
+
+            Location = new Point(targetX, targetY);
 
             BringToFront();
 
@@ -117,7 +135,7 @@ namespace WinPaletter
 
         public static IEnumerable<Exception> GetAllInnerExceptions(Exception exception)
         {
-            List<Exception> exceptions = new();
+            List<Exception> exceptions = [];
 
             while (exception != null)
             {
@@ -130,28 +148,57 @@ namespace WinPaletter
 
         public void ThrowError(Exception ex, bool noRecovery = false, int win32Error = -1)
         {
+            // Try is used to avoid loop in case of error in the backup function
+            try
+            {
+                // If theme backup option is enabled, backup it before throwing error
+                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnExError && Program.TM is not null)
+                {
+                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    Program.TM.Save(Theme.Manager.Source.File, filename);
+                }
+            }
+            catch { }
+
             if (win32Error == -1) { win32Error = Marshal.GetLastWin32Error(); }
 
-            Label7.Text = string.Format(Program.Lang.BugReport_Format, ex?.Message ?? ex.GetType().FullName);
-
-            Label2.Text = $"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}";
-
-            Label3.Text = $"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Beta}" : string.Empty)}";
-
-#if DEBUG
-            Label3.Text += ", Build: Debug";
-#else
-            Label3.Text += ", Build: Release";
-#endif
-
-            label9.Text = Debugger.IsAttached ? Program.Lang.Yes : Program.Lang.No;
+            Label7.Text = ex.GetType().FullName + (!string.IsNullOrWhiteSpace(ex?.Message) ? $": {ex?.Message}" : string.Empty);
 
             AlertBox1.Visible = noRecovery;
             TreeView1.Nodes?.Clear();
 
+            TreeNode n = TreeView1?.Nodes.Add("Information");
+            n?.Nodes.Add("OS").Nodes.Add($"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}");
+
+#if DEBUG
+            n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Debug");
+#else
+            n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Release");
+#endif
+
+            n?.Nodes.Add("WinPaletter language").Nodes.Add(Program.Lang.Information.Lang);
+            n?.Nodes.Add("Debugger is attached?").Nodes.Add(Debugger.IsAttached ? Program.Lang.Strings.General.Yes : Program.Lang.Strings.General.No);
+
             if (ex is not null)
             {
                 AddException("Exception", ex, TreeView1);
+
+                if (ex?.GetBaseException() is not null && ex?.GetBaseException() != ex)
+                {
+                    Exception baseEx = ex.GetBaseException();
+                    AddException("Base exception", baseEx, TreeView1, win32Error);
+
+                    IEnumerable<Exception> exceptions = GetAllInnerExceptions(baseEx);
+                    if (exceptions.Count() > 0)
+                    {
+                        int i = 0;
+                        foreach (Exception sub_ex in exceptions)
+                        {
+                            AddException($"Base exception: sub inner exception {i}", sub_ex.InnerException, TreeView1, win32Error);
+                            i++;
+                        }
+                    }
+                }
 
                 if (ex?.InnerException is not null)
                 {
@@ -178,11 +225,19 @@ namespace WinPaletter
 
             TreeView1.ExpandAll();
 
+            n?.Collapse();
+
             TreeView1.SelectedNode = TreeView1.Nodes[0];
 
             if (!System.IO.Directory.Exists($@"{SysPaths.appData}\Reports")) System.IO.Directory.CreateDirectory($@"{SysPaths.appData}\Reports");
 
-            System.IO.File.WriteAllText($@"{SysPaths.appData}\Reports\{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.txt", GetDetails());
+            string exLogPath = $@"{SysPaths.appData}\Reports\{DateTime.Now:HHmmss_ddMMyy}.txt";
+
+            System.IO.File.WriteAllText(exLogPath, GetDetails());
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"{ex}:\r\n{GetDetails().Trim()}");
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Exception error full details text file is saved as {exLogPath}");
 
             ShowDialog();
 
@@ -217,7 +272,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Filter_SaveText })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Strings.Extensions.SaveText })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -234,9 +289,16 @@ namespace WinPaletter
             SB.AppendLine("//General information");
             SB.AppendLine("//...........................................................");
             SB.AppendLine($"   Report.Date = \"{$"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}"}\";");
-            SB.AppendLine($"   OS = \"{Label2.Text}\";");
-            SB.AppendLine($"   WinPaletter.Version = \"{Label3.Text}\";");
-            SB.AppendLine($"   WinPaletter.Language = \"{Program.Lang.Lang}\";");
+            SB.AppendLine($"   OS = \"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}\";");
+
+#if DEBUG
+            SB.AppendLine($"   WinPaletter.Version = \"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Debug\";");
+#else
+            SB.AppendLine($"   WinPaletter.Version = \"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Release\";");
+#endif
+
+
+            SB.AppendLine($"   WinPaletter.Language = \"{Program.Lang.Information.Lang}\";");
             SB.AppendLine($"   WinPaletter.Debugging = {(Debugger.IsAttached ? "true" : "false")};");
             SB.AppendLine();
 
@@ -245,6 +307,8 @@ namespace WinPaletter
 
             foreach (TreeNode x in TreeView1.Nodes)
             {
+                if (x == TreeView1.Nodes[0]) continue;
+
                 string prop = x.Text.Replace(" ", ".").Replace("'s", string.Empty).Replace(@"\", "_");
 
                 if (x.Nodes?.Count == 1)
@@ -255,7 +319,7 @@ namespace WinPaletter
                     }
                     else
                     {
-                        SB.AppendLine($"   {prop} = \"{(x.Nodes[0].Text.Replace("\\", "\\\\"))}\";");
+                        SB.AppendLine($"   {prop} = \"{x.Nodes[0].Text.Replace("\\", "\\\\")}\";");
                     }
                 }
 
@@ -264,7 +328,7 @@ namespace WinPaletter
                     SB.AppendLine($"   {prop} =");
                     SB.AppendLine("   " + "{");
 
-                    foreach (TreeNode y in x.Nodes) { SB.AppendLine($"      {(y.Text.Replace("\\", "\\\\"))}"); }
+                    foreach (TreeNode y in x.Nodes) { SB.AppendLine($"      {y.Text.Replace("\\", "\\\\")}"); }
 
                     SB.AppendLine("   " + "};");
                 }
@@ -284,7 +348,7 @@ namespace WinPaletter
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Lang.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -295,7 +359,59 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Forms.RescueTools.ShowDialog();
+            Forms.SOS.ShowDialog();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (collapsed)
+            {
+                collapsed = false;
+                GroupBox3.Visible = false;
+                (sender as UI.WP.Button).ImageGlyph = Properties.Resources.Glyph_Up;
+
+                FluentTransitions.Transition
+                    .With(this, nameof(Height), previousHeight)
+                    .With(this, nameof(Top), Top - (previousHeight - Height) / 2)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                Program.Animator.HideSync(label2);
+
+                // Make async delay to make fading in groupbox is consistent with form animation
+                Task.Run(() =>
+                {
+                    System.Threading.Thread.Sleep(Program.AnimationDuration / 3);
+                    Invoke(() => Program.Animator.ShowSync(GroupBox3));
+                });
+            }
+            else
+            {
+                collapsed = true;
+                previousHeight = Height;
+                (sender as UI.WP.Button).ImageGlyph = Properties.Resources.Glyph_Down;
+
+                Program.Animator.Hide(GroupBox3);
+                Program.Animator.Show(label2);
+
+                FluentTransitions.Transition
+                    .With(this, nameof(Height), CollapsedHeight)
+                    .With(this, nameof(Top), Top + (Height - CollapsedHeight) / 2)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(Forms.Home.File) ? Program.TM.Info.ThemeName + ".wpth" : Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    Forms.Home.File = dlg.FileNames[0];
+                    Program.TM.Save(Theme.Manager.Source.File, Forms.Home.File);
+                    Forms.Home.Text = System.IO.Path.GetFileName(Forms.Home.File);
+                    Forms.Home.LoadFromTM(Program.TM);
+                }
+            }
         }
     }
 }

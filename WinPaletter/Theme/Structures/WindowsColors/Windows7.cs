@@ -32,7 +32,7 @@ namespace WinPaletter.Theme.Structures
         public int ColorizationGlassReflectionIntensity = 0;
 
         /// <summary>
-        /// Theme used for Windows 7
+        /// WinTheme used for Windows 7
         /// <code>
         /// Aero
         /// AeroOpaque
@@ -142,8 +142,9 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves Windows7 data into registry
         /// </summary>
+        /// <param name="TM">Theme manager used for refreshing DWM colors</param>
         /// <param name="treeView">treeView used as theme log</param>
-        public void Apply(Theme.Manager TM, TreeView treeView = null)
+        public void Apply(Manager TM, TreeView treeView = null)
         {
             SaveToggleState(treeView);
 

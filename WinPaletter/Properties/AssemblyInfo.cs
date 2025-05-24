@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Advanced Windows Appearance Editor")]
 [assembly: AssemblyCompany("Abdelrhman-AK")]
 [assembly: AssemblyProduct("WinPaletter")]
-[assembly: AssemblyCopyright("Copyright ©  2022-2024")]
+[assembly: AssemblyCopyright("Copyright ©  2022-2025")]
 [assembly: AssemblyTrademark("WinPaletter")]
 
 [assembly: ComVisible(false)]
@@ -32,6 +32,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // <Assembly: AssemblyVersion("1.0.*")>
 
-[assembly: AssemblyVersion("1.0.9.3")]
-[assembly: AssemblyFileVersion("1.0.9.3")]
+[assembly: AssemblyVersion("1.0.9.4")]
+[assembly: AssemblyFileVersion("1.0.9.4")]
 [assembly: NeutralResourcesLanguage("")]

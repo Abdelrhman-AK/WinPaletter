@@ -2,11 +2,16 @@
 {
     public partial class Localizer
     {
-        public string Checking { get; set; } = "Checking...";
-        public string DoAction_Update { get; set; } = "Do action";
-        public string NoUpdateAvailable { get; set; } = "No update is available";
-        public string CheckForUpdates { get; set; } = "Check for updates";
-        public string UpdatesOSNoTLS12 { get; set; } = "Updates won't work as TLS 1.2 protocol isn't enabled in {0}. Use GitHub instead.";
-        public string Msgbox_Downloaded { get; set; } = "Downloaded successfully";
+        public partial class Strings_Cls
+        {
+            public partial class Updates_Cls
+            {
+                public string NewUpdate { get; set; } = "A new update is available";
+                public string NoUpdateAvailable { get; set; } = "No update is available";
+                public string CheckForUpdates { get; set; } = "Check for updates";
+                public string NoTLS12 { get; set; } = "Updates won't work as TLS 1.2 protocol isn't enabled in {0}. Use GitHub instead.";
+                public string Downloaded { get; set; } = "The update is downloaded successfully";
+            }
+        }
     }
 }

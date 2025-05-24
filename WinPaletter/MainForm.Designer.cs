@@ -42,16 +42,15 @@ namespace WinPaletter
             // 
             // tabsContainer1
             // 
-            this.tabsContainer1.Size = new System.Drawing.Size(1156, 34);
             this.tabsContainer1.TabControl = this.tabControl1;
             // 
             // tabControl1
             // 
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 34);
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1156, 725);
+            this.tabControl1.Size = new System.Drawing.Size(1156, 787);
             this.tabControl1.TabIndex = 121;
             // 
             // MainForm
@@ -61,7 +60,7 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1156, 759);
+            this.ClientSize = new System.Drawing.Size(1156, 787);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.HelpButton = true;

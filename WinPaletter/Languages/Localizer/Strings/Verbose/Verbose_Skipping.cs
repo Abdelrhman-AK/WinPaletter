@@ -2,30 +2,21 @@
 {
     public partial class Localizer
     {
-        public string TM_Skip_VS { get; set; } = "Skipping applying Windows visual styles as it is disabled";
-        public string TM_Skip_WinColors { get; set; } = "Skipping applying Windows colors as it is disabled";
-        public string TM_Skip_ClassicColors { get; set; } = "Skipping applying Classic Colors as it is disabled";
-        public string TM_Skip_LogonUI { get; set; } = "Skipping applying LogonUI as it is disabled";
-        public string TM_Skip_TerminalPreview { get; set; } = "Skipping Windows Terminal Preview as it is disabled";
-        public string TM_Skip_TerminalStable { get; set; } = "Skipping Windows Terminal Stable as it is disabled";
-        public string TM_Skip_Terminals { get; set; } = "Skipping Windows Terminal Stable & Preview as they are disabled";
-        public string TM_Skip_Terminals_NotSupported { get; set; } = "Skipping Windows Terminal Stable, Preview. Not supported in this OS";
-        public string TM_Skip_TerminalPreview_NotInstalled { get; set; } = "Skipping Windows Terminal Preview as it isn't installed";
-        public string TM_Skip_TerminalPreview_DeflectionNotFound { get; set; } = "Skipping Windows Terminal Preview as deflected JSON doesn't exist";
-        public string TM_Skip_TerminalStable_NotInstalled { get; set; } = "Skipping Windows Terminal Stable as it isn't installed";
-        public string TM_Skip_TerminalStable_DeflectionNotFound { get; set; } = "Skipping Windows Stable Preview as deflected JSON doesn't exist";
-        public string TM_Skip_CMD { get; set; } = "Skipping Command Prompt as it is disabled";
-        public string TM_Skip_PS64 { get; set; } = "Skipping PowerShell x64 as it is disabled";
-        public string TM_Skip_PS32 { get; set; } = "Skipping PowerShell x86 as it is disabled";
-        public string TM_Skip_Metrics { get; set; } = "Skipping Windows Metrics and Fonts as they are disabled";
-        public string TM_Skip_AltTab { get; set; } = "Skipping Windows Switcher (Alt+Tab) Appearance as it is disabled";
-        public string TM_Skip_WinEffects { get; set; } = "Skipping Windows Effects as it is disabled";
-        public string TM_Skip_Wallpaper { get; set; } = "Skipping Wallpaper as it is disabled";
-        public string TM_Skip_WallpaperTone { get; set; } = "Skipping WinPaletter Wallpaper Tone as it is disabled";
-        public string TM_Skip_AppTheme { get; set; } = "Skipping WinPaletter application theme as it is disabled";
-        public string TM_Skip_Sounds { get; set; } = "Skipping Sounds as its toggle is disabled";
-        public string TM_Skip_Icons { get; set; } = "Skipping Icons as its toggle is disabled";
-        public string TM_Skip_ScreenSaver { get; set; } = "Skipping Screen Saver as its toggle is disabled";
-        public string TM_Skip_Cursors { get; set; } = "Skipping Windows Cursors as it is disabled";
+        public partial class Strings_Cls
+        {
+            public partial class ThemeManager_Cls
+            {
+                /// <summary>
+                /// A class that contains all the skip strings used in the ThemeManager.
+                /// </summary>
+                public partial class Skip_Cls
+                {
+                    public string Main { get; set; } = "Skipping the application of {0} as its toggle is disabled";
+                    public string Terminals { get; set; } = "Skipping the application of Windows Terminal Stable and Preview as their toggles are disabled";
+                    public string Terminals_NotSupported { get; set; } = "Skipping the application of both Windows Terminal Stable and Preview, as they are not supported on this OS";
+                    public string Terminal_JSONNotFound { get; set; } = "Skipping the application of {0} as the JSON settings file is missing (not installed or redirected to a non-existent path)";
+                }
+            }
+        }
     }
 }

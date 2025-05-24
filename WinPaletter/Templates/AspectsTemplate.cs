@@ -2,25 +2,47 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// A template form for managing WinPaletter aspects editor
+    /// </summary>
     public partial class AspectsTemplate : Form
     {
+        /// <summary>
+        /// Creates a new instance of AspectsTemplate
+        /// </summary>
         public AspectsTemplate()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Data for managing WinPaletter aspects editor
+        /// </summary>
         DesignerData _data;
 
+        /// <summary>
+        /// Event that is raised when 'AspectEnabled' property is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void AspectEnabledChangedEventHandler(object sender, EventArgs e);
+
+        /// <summary>
+        /// Event that is raised when 'AspectEnabled' property is changed
+        /// </summary>
         public event AspectEnabledChangedEventHandler AspectEnabledChanged;
 
         private bool _shown = false;
+        /// <summary>
+        /// Controls if form is shown
+        /// </summary>
         public bool IsShown
         {
             get => _shown;
@@ -42,6 +64,10 @@ namespace WinPaletter
             ApplyStyle(this);
         }
 
+        /// <summary>
+        /// Loads data into form
+        /// </summary>
+        /// <param name="data"></param>
         public void LoadData(DesignerData data)
         {
             _data = data;
@@ -82,19 +108,20 @@ namespace WinPaletter
             //titlebarExtender1.Height = !_data.ShowSchemesList ? schemes.Top + 3 : titlebarExtender1.Height;
 
             #region Text _data
-            button_import.Text = Program.Lang.Designer_import_wpth;
-            button_palette_generate.Text = Program.Lang.Designer_generatePalette_image;
-            button_saveas_MSTheme.Text = Program.Lang.Designer_saveas_MSTheme;
-            mode_advanced.Text = Program.Lang.Designer_mode_advanced;
-            mode_simple.Text = Program.Lang.Designer_mode_simple;
-            button_load.Text = Program.Lang.Designer_load_into_current_theme;
-            button_apply.Text = Program.Lang.Designer_apply;
-            button_cancel.Text = Program.Lang.Cancel;
+            button_import.Text = Program.Lang.Strings.Previewer.Import_wpth;
+            button_palette_generate.Text = Program.Lang.Strings.Previewer.GeneratePalette_image;
+            button_saveas_MSTheme.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme;
+            mode_advanced.Text = Program.Lang.Strings.Previewer.Mode_advanced;
+            mode_simple.Text = Program.Lang.Strings.Previewer.Mode_simple;
+            button_load.Text = Program.Lang.Strings.Previewer.Load_into_current_theme;
+            button_apply.Text = Program.Lang.Strings.Previewer.Apply;
+            button_cancel.Text = Program.Lang.Strings.General.Cancel;
             #endregion
 
             #region Menu _data
             button_import.Menu.Items.Clear();
             button_palette_generate.Menu.Items.Clear();
+            button_apply.Menu.Items.Clear();
 
             ToolStripMenuItem import_current = new();
             ToolStripMenuItem import_defaultWindows = new();
@@ -102,7 +129,7 @@ namespace WinPaletter
             ToolStripMenuItem import_msstyles = new();
             ToolStripMenuItem import_JSON = new();
             ToolStripMenuItem import_scheme = new();
-            //ToolStripMenuItem import_scheme_12 = new();
+            ToolStripMenuItem import_scheme_12 = new();
             ToolStripMenuItem import_scheme_11 = new();
             ToolStripMenuItem import_scheme_10 = new();
             ToolStripMenuItem import_scheme_81 = new();
@@ -111,23 +138,25 @@ namespace WinPaletter
             ToolStripMenuItem import_scheme_XP = new();
             ToolStripMenuItem create_palette_fromColor = new();
             ToolStripMenuItem saveTheme_oneAspect = new();
+            ToolStripMenuItem applyThemeWithRP = new();
 
-            import_current.Text = Program.Lang.Designer_import_current;
-            import_defaultWindows.Text = Program.Lang.Designer_import_defaultWindows;
-            import_theme.Text = Program.Lang.Designer_import_classictheme;
-            import_msstyles.Text = Program.Lang.Designer_import_msstyles;
-            import_scheme.Text = Program.Lang.Designer_import_preset;
-            import_scheme_11.Text = Program.Lang.OS_Win11;
-            import_scheme_10.Text = Program.Lang.OS_Win10;
-            import_scheme_81.Text = Program.Lang.OS_Win81;
-            import_scheme_7.Text = Program.Lang.OS_Win7;
-            import_scheme_Vista.Text = Program.Lang.OS_WinVista;
-            import_scheme_XP.Text = Program.Lang.OS_WinXP;
-            //import_scheme_12.Text = Program.Lang.OS_Win12;
+            import_current.Text = Program.Lang.Strings.Previewer.Import_current;
+            import_defaultWindows.Text = Program.Lang.Strings.Previewer.Import_defaultWindows;
+            import_theme.Text = Program.Lang.Strings.Previewer.Import_classictheme;
+            import_msstyles.Text = Program.Lang.Strings.Previewer.Import_msstyles;
+            import_scheme.Text = Program.Lang.Strings.Previewer.Import_preset;
+            import_scheme_11.Text = Program.Lang.Strings.Windows.W11;
+            import_scheme_10.Text = Program.Lang.Strings.Windows.W10;
+            import_scheme_81.Text = Program.Lang.Strings.Windows.W81;
+            import_scheme_7.Text = Program.Lang.Strings.Windows.W7;
+            import_scheme_Vista.Text = Program.Lang.Strings.Windows.WVista;
+            import_scheme_XP.Text = Program.Lang.Strings.Windows.WXP;
+            import_scheme_12.Text = Program.Lang.Strings.Windows.W12;
+            applyThemeWithRP.Text = Program.Lang.Strings.Previewer.Apply_RestorePoint;
 
-            import_JSON.Text = Program.Lang.Designer_import_JSON;
+            import_JSON.Text = Program.Lang.Strings.Previewer.Import_JSON;
 
-            create_palette_fromColor.Text = Program.Lang.Designer_generatePalette_color;
+            create_palette_fromColor.Text = Program.Lang.Strings.Previewer.GeneratePalette_color;
 
             import_current.Image = AspectsResources.CurrentApplied;
 
@@ -164,7 +193,7 @@ namespace WinPaletter
             import_msstyles.Image = AspectsResources.msstyles;
 
             import_scheme.Image = AspectsResources.Scheme;
-            //import_scheme_12.Image = WinLogos.add_win12_20px;
+            import_scheme_12.Image = WinLogos.Add_Win12_20px;
             import_scheme_11.Image = WinLogos.Add_Win11_20px;
             import_scheme_10.Image = WinLogos.Add_Win10_20px;
             import_scheme_81.Image = WinLogos.Add_Win81_20px;
@@ -173,10 +202,12 @@ namespace WinPaletter
             import_scheme_XP.Image = WinLogos.Add_WinXP_20px;
 
             import_JSON.Image = AspectsResources.JSON;
+            applyThemeWithRP.Image = AspectsResources.Restorepoint;
 
             create_palette_fromColor.Image = button_palette_generate.Image;
 
-            import_scheme.DropDown.Renderer = button_import.Menu.Renderer;
+            import_scheme.DropDown = new UI.WP.ContextMenuStrip();
+            import_scheme.DropDown.Items.Add(import_scheme_12);
             import_scheme.DropDown.Items.Add(import_scheme_11);
             import_scheme.DropDown.Items.Add(import_scheme_10);
             import_scheme.DropDown.Items.Add(import_scheme_81);
@@ -188,7 +219,9 @@ namespace WinPaletter
             button_import.Menu.Items.Add(import_defaultWindows);
             button_palette_generate.Menu.Items.Add(create_palette_fromColor);
 
-            saveTheme_oneAspect.Text = Program.Lang.Designer_saveas_MSTheme_OneAspect;
+            button_apply.Menu.Items.Add(applyThemeWithRP);
+
+            saveTheme_oneAspect.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme_OneAspect;
             saveTheme_oneAspect.Image = button_saveas_MSTheme.Image;
             button_saveas_MSTheme.Menu.Items.Add(saveTheme_oneAspect);
 
@@ -218,6 +251,9 @@ namespace WinPaletter
             if (button_apply != null)
                 button_apply.Click += _data.OnApply ?? null;
 
+            if (applyThemeWithRP != null)
+                applyThemeWithRP.Click += applyWithRP_Click;
+
             if (button_cancel != null)
                 button_cancel.Click += _data.OnCancel ?? null;
 
@@ -244,6 +280,9 @@ namespace WinPaletter
 
             if (import_defaultWindows != null)
                 import_defaultWindows.Click += _data.OnImportFromDefault ?? null;
+
+            if (import_scheme_12 != null)
+                import_scheme_12.Click += _data.OnImportFromScheme_12;
 
             if (import_scheme_11 != null)
                 import_scheme_11.Click += _data.OnImportFromScheme_11;
@@ -292,6 +331,9 @@ namespace WinPaletter
                 if (button_apply != null)
                     button_apply.Click -= _data.OnApply ?? null;
 
+                if (applyThemeWithRP != null)
+                    applyThemeWithRP.Click -= applyWithRP_Click;
+
                 if (button_cancel != null)
                     button_cancel.Click -= _data.OnCancel ?? null;
 
@@ -318,6 +360,9 @@ namespace WinPaletter
 
                 if (import_defaultWindows != null)
                     import_defaultWindows.Click -= _data.OnImportFromDefault ?? null;
+
+                if (import_scheme_12 != null)
+                    import_scheme_12.Click -= _data.OnImportFromScheme_12;
 
                 if (import_scheme_11 != null)
                     import_scheme_11.Click -= _data.OnImportFromScheme_11;
@@ -368,6 +413,9 @@ namespace WinPaletter
 
         #region Properties
 
+        /// <summary>
+        /// Controls if aspect is enabled or not
+        /// </summary>
         public bool AspectEnabled
         {
             get => !DesignMode && _data != null ? _data.Enabled : false;
@@ -385,6 +433,9 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Controls if form is in advanced mode or simple mode
+        /// </summary>
         public bool AdvancedMode
         {
             get => checker_mode_advanced.Checked;
@@ -395,10 +446,19 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Gets if form is in simple mode
+        /// </summary>
         public bool SimpleMode => checker_mode_simple.Checked;
 
+        /// <summary>
+        /// Name of aspect being modified by form
+        /// </summary>
         public string AspectName { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Flag that controls if form can be dragged over by a ColorItem
+        /// </summary>
         public bool CanDragOver = false;
 
         #endregion
@@ -415,8 +475,8 @@ namespace WinPaletter
 
             if (IsShown)
             {
-                Program.ToolTip.ToolTipText = ((UI.WP.Toggle)sender).Checked ? Program.Lang.AspectEnabledTip : Program.Lang.AspectDisabledTip;
-                Program.ToolTip.ToolTipTitle = ((UI.WP.Toggle)sender).Checked ? string.Format(Program.Lang.AspectEnabled, AspectName) : string.Format(Program.Lang.AspectDisabled, AspectName);
+                Program.ToolTip.ToolTipText = ((UI.WP.Toggle)sender).Checked ? Program.Lang.Strings.Aspects.EnabledTip : Program.Lang.Strings.Aspects.DisabledTip;
+                Program.ToolTip.ToolTipTitle = ((UI.WP.Toggle)sender).Checked ? string.Format(Program.Lang.Strings.Aspects.Enabled, AspectName) : string.Format(Program.Lang.Strings.Aspects.Disabled, AspectName);
                 Program.ToolTip.Image = checker_img.Image;
 
                 Point location = new(-Program.ToolTip.Size.Width + checker_img.Width, (checker_img.Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -425,6 +485,10 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Handles drag over event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnDragOver(DragEventArgs e)
         {
             if (CanDragOver)
@@ -443,7 +507,7 @@ namespace WinPaletter
 
         private void btn_cancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void AspectsTemplate_Shown(object sender, EventArgs e)
@@ -458,7 +522,7 @@ namespace WinPaletter
 
         private void AspectsTemplate_ParentChanged(object sender, EventArgs e)
         {
-            if (this.Parent != null && Parent is TabPage)
+            if (Parent != null && Parent is TabPage)
             {
                 pin_button.Visible = false;
             }
@@ -472,12 +536,40 @@ namespace WinPaletter
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
+
+        private void applyWithRP_Click(object sender, EventArgs e)
+        {
+            // Create a restore point in a separate thread to avoid UI freeze, followed by applying the aspect
+            Task.Run(() =>
+            {
+                Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.WaitCursor));
+
+                SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Lang.Strings.General.RestorePoint_Aspect, _data.AspectName));
+
+                Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.Default));
+
+                Invoke(() =>
+                {
+                    _data.OnApply?.Invoke((sender as ToolStripMenuItem).GetCurrentParent().Parent, e);
+                });
+            });
+
+        }
+
+        private void btn_apply_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     /// <summary>
     /// Class that has data for WinPaletter aspets editor form
     /// </summary>
-    public class DesignerData
+    /// <remarks>
+    /// Creates new data instance for managing WinPaletter aspects editor
+    /// </remarks>
+    /// <param name="Form"></param>
+    public class DesignerData(Form Form)
     {
         /// <summary>
         /// Name of Windows aspect being modified by specified form
@@ -492,127 +584,132 @@ namespace WinPaletter
         /// <summary>
         /// Parent form
         /// </summary>
-        public Form Form;
+        public Form Form = Form;
 
         /// <summary>
         /// EventHandler associated with clicking on 'Load into current theme' button
         /// </summary>
-        public System.EventHandler OnLoadIntoCurrentTheme { get; set; }
+        public EventHandler OnLoadIntoCurrentTheme { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Quick apply' button
         /// </summary>
-        public System.EventHandler OnApply { get; set; }
+        public EventHandler OnApply { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Cancel' button
         /// </summary>
-        public System.EventHandler OnCancel { get; set; }
+        public EventHandler OnCancel { get; set; }
 
         /// <summary>
         /// EventHandler associated with checked changed for 'Advanced mode' radio image
         /// </summary>
-        public System.EventHandler OnModeAdvanced { get; set; }
+        public EventHandler OnModeAdvanced { get; set; }
 
         /// <summary>
         /// EventHandler associated with checked changed for 'Simple mode' radio image
         /// </summary>
-        public System.EventHandler OnModeSimple { get; set; }
+        public EventHandler OnModeSimple { get; set; }
 
         /// <summary>
         /// EventHandler associated with checked changed for 'Toggle'
         /// </summary>
-        public System.EventHandler OnToggleCheckedChanged { get; set; }
+        public EventHandler OnToggleCheckedChanged { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from a WinPaletter theme' button
         /// </summary>
-        public System.EventHandler OnImportFromWPTH { get; set; }
+        public EventHandler OnImportFromWPTH { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from current applied theme' button
         /// </summary>
-        public System.EventHandler OnImportFromCurrentApplied { get; set; }
+        public EventHandler OnImportFromCurrentApplied { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from default Windows presets' button
         /// </summary>
-        public System.EventHandler OnImportFromDefault { get; set; }
+        public EventHandler OnImportFromDefault { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'Import from a classic Windows theme file' button
+        /// EventHandler associated with clicking on 'Import from a classic Windows theme File' button
         /// </summary>
-        public System.EventHandler OnImportFromTHEME { get; set; }
+        public EventHandler OnImportFromTHEME { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'Import from a Windows visual styles file' button
+        /// EventHandler associated with clicking on 'Import from a Windows visual styles File' button
         /// </summary>
-        public System.EventHandler OnImportFromMSSTYLES { get; set; }
+        public EventHandler OnImportFromMSSTYLES { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'Import from a classic Windows theme file' button
+        /// EventHandler associated with clicking on 'Import from a classic Windows theme File' button
         /// </summary>
-        public System.EventHandler OnImportFromJSON { get; set; }
+        public EventHandler OnImportFromJSON { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from a preset' button
         /// </summary>
-        public System.EventHandler OnImportFromScheme { get; set; }
+        public EventHandler OnImportFromScheme { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Generate a palette from an image' button
         /// </summary>
-        public System.EventHandler OnGeneratePaletteFromImage { get; set; }
+        public EventHandler OnGeneratePaletteFromImage { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Generate a palette from a color' button
         /// </summary>
-        public System.EventHandler OnGeneratePaletteFromColor { get; set; }
+        public EventHandler OnGeneratePaletteFromColor { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'Save as *.theme file' button
+        /// EventHandler associated with clicking on 'Save as *.theme File' button
         /// </summary>
-        public System.EventHandler OnSaveAsMSTheme { get; set; }
+        public EventHandler OnSaveAsMSTheme { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'Save this aspect only as *.theme file' button
+        /// EventHandler associated with clicking on 'Save this aspect only as *.theme File' button
         /// </summary>
-        public System.EventHandler OnSaveAsMSTheme_OneAspect { get; set; }
+        public EventHandler OnSaveAsMSTheme_OneAspect { get; set; }
 
         /// <summary>
         /// EventHandler associated with changing selected index of 'Schemes list' combobox
         /// </summary>
-        public System.EventHandler OnSchemeIndexChanged { get; set; }
+        public EventHandler OnSchemeIndexChanged { get; set; }
+
+        /// <summary>
+        /// EventHandler associated with clicking on 'Import from scheme > Windows 12' button
+        /// </summary>
+        public EventHandler OnImportFromScheme_12 { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from scheme > Windows 11' button
         /// </summary>
-        public System.EventHandler OnImportFromScheme_11 { get; set; }
+        public EventHandler OnImportFromScheme_11 { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from scheme > Windows 10' button
         /// </summary>
-        public System.EventHandler OnImportFromScheme_10 { get; set; }
+        public EventHandler OnImportFromScheme_10 { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from scheme > Windows 8.1' button
         /// </summary>
-        public System.EventHandler OnImportFromScheme_81 { get; set; }
+        public EventHandler OnImportFromScheme_81 { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from scheme > Windows 7' button
         /// </summary>
-        public System.EventHandler OnImportFromScheme_7 { get; set; }
+        public EventHandler OnImportFromScheme_7 { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from scheme > Windows Vista' button
         /// </summary>
-        public System.EventHandler OnImportFromScheme_Vista { get; set; }
+        public EventHandler OnImportFromScheme_Vista { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'Import from scheme > Windows XP' button
+        /// EventHandler associated with clicking on 'Import from scheme > Windows WXP' button
         /// </summary>
-        public System.EventHandler OnImportFromScheme_XP { get; set; }
+        public EventHandler OnImportFromScheme_XP { get; set; }
 
         /// <summary>
         /// Controls if user can switch between advanced and simple modes
@@ -620,12 +717,12 @@ namespace WinPaletter
         public bool CanSwitchMode { get; set; } = true;
 
         /// <summary>
-        /// Controls if 'Import from a classic Windows theme file' button is visible
+        /// Controls if 'Import from a classic Windows theme File' button is visible
         /// </summary>
         public bool Import_theme { get; set; } = false;
 
         /// <summary>
-        /// Controls if 'Import from a Windows visual styles file' button is visible
+        /// Controls if 'Import from a Windows visual styles File' button is visible
         /// </summary>
         public bool Import_msstyles { get; set; } = false;
 
@@ -635,7 +732,7 @@ namespace WinPaletter
         public bool Import_preset { get; set; } = true;
 
         /// <summary>
-        /// Controls if 'Import from a JSON file' button is visible
+        /// Controls if 'Import from a JSON File' button is visible
         /// </summary>
         public bool Import_JSON { get; set; } = false;
 
@@ -645,7 +742,7 @@ namespace WinPaletter
         public bool GeneratePalette { get; set; } = true;
 
         /// <summary>
-        /// Controls if 'ApplyToTM as *.theme file' button is visible
+        /// Controls if 'ApplyToTM as *.theme File' button is visible
         /// </summary>
         public bool GenerateMSTheme { get; set; } = false;
 
@@ -653,24 +750,5 @@ namespace WinPaletter
         /// Controls if a form can be dragged over by a ColorItem
         /// </summary>
         public bool CanDragOver { get; set; } = true;
-
-        ///// <summary>
-        ///// Shows or hides 'Schemes list' combobox
-        ///// </summary>
-        //public bool ShowSchemesList { get; set; } = false;
-
-        ///// <summary>
-        ///// Items for 'Schemes list' combobox
-        ///// </summary>
-        //public object[] SchemeItems { get; set; } = new object[] { };
-
-        /// <summary>
-        /// Creates new data instance for managing WinPaletter aspects editor
-        /// </summary>
-        /// <param name="Form"></param>
-        public DesignerData(Form Form)
-        {
-            this.Form = Form;
-        }
     }
 }

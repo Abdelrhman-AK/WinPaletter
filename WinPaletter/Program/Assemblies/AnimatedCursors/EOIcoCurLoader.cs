@@ -13,11 +13,11 @@ public class EOIcoCurLoader
     public unsafe delegate void* EOIcoCurAllocator(int size);
     public unsafe delegate void EOIcoCurFree(void* ptr);
 
-    private long m_initialStreamPos;
+    private readonly long m_initialStreamPos;
     public string ErrorMsg;
     private Point HotSpot;
 
-    private BinaryReader m_reader = null;
+    private readonly BinaryReader m_reader = null;
 
     public enum Type
     {
@@ -26,18 +26,12 @@ public class EOIcoCurLoader
     }
 
     #region Helpful structures
-    private struct IcoHeader
+    private struct IcoHeader(Type type)
     {
-        public ushort Reserved;
-        public ushort Type; // 1=icon, 2=cursor
-        public ushort Count;
+        public ushort Reserved = 0;
+        public ushort Type = (ushort)type; // 1=icon, 2=cursor
+        public ushort Count = 0;
 
-        public IcoHeader(Type type)
-        {
-            Reserved = 0;
-            Type = (ushort)type;
-            Count = 0;
-        }
         public bool IsValid()
         {
             // If the reserved value is non-zero and/or the type is not 1 or 2,
@@ -206,7 +200,7 @@ public class EOIcoCurLoader
         m_reader.BaseStream.Position = m_initialStreamPos;
 
         // Load the icon header
-        IcoHeader hdr = new IcoHeader();
+        IcoHeader hdr = new();
         hdr.ReadFromStream(m_reader);
 
         // Make sure that the "ImageIndex" parameter is ok
@@ -249,7 +243,7 @@ public class EOIcoCurLoader
             m_reader.BaseStream.Seek(-4, SeekOrigin.Current);
 
             // Create an offset stream so .NET can load
-            OffsetStream os = new EOFC.OffsetStream(m_reader.BaseStream);
+            OffsetStream os = new(m_reader.BaseStream);
 
             try
             {
@@ -269,14 +263,14 @@ public class EOIcoCurLoader
         GetImageDimensions(ImageIndex, ref w, ref h, ref bpp);
 
         // Load BITMAPINFOHEADER structure
-        BITMAPINFOHEADER BIH = new BITMAPINFOHEADER();
+        BITMAPINFOHEADER BIH = new();
         BIH.ReadFromStream(m_reader);
 
         // Read palette data, if it is present
         uint* Palette = stackalloc uint[256];
         if (bpp <= 8)
         {
-            int clrcount = (1 << (int)bpp);
+            int clrcount = 1 << (int)bpp;
             for (i = 0; i < clrcount; i++)
             {
                 Palette[i] = m_reader.ReadUInt32();
@@ -319,8 +313,8 @@ public class EOIcoCurLoader
         // Seek to the initial stream position
         m_reader.BaseStream.Position = m_initialStreamPos;
 
-        // Read in the file header
-        IcoHeader hdr = new IcoHeader();
+        // Read in the File header
+        IcoHeader hdr = new();
         hdr.ReadFromStream(m_reader);
 
         // Make sure that the "ImageIndex" parameter is ok
@@ -359,7 +353,7 @@ public class EOIcoCurLoader
             m_reader.BaseStream.Seek(-4, SeekOrigin.Current);
 
             // Create an offset stream so .NET can load
-            EOFC.OffsetStream os = new(m_reader.BaseStream);
+            OffsetStream os = new(m_reader.BaseStream);
 
             try
             {
@@ -427,24 +421,17 @@ public class EOIcoCurLoader
 
     private uint PixelFormatTobpp(PixelFormat pf)
     {
-        switch (pf)
+        return pf switch
         {
-            case PixelFormat.Format32bppArgb:
-                return 32;
-            case PixelFormat.Format24bppRgb:
-                return 24;
-            case PixelFormat.Format16bppRgb565:
-                return 16;
-            case PixelFormat.Format16bppRgb555:
-                return 15;
-            case PixelFormat.Format8bppIndexed:
-                return 8;
-            case PixelFormat.Format4bppIndexed:
-                return 4;
-            case PixelFormat.Format1bppIndexed:
-                return 1;
-        }
-        return 32;
+            PixelFormat.Format32bppArgb => 32,
+            PixelFormat.Format24bppRgb => 24,
+            PixelFormat.Format16bppRgb565 => 16,
+            PixelFormat.Format16bppRgb555 => 15,
+            PixelFormat.Format8bppIndexed => 8,
+            PixelFormat.Format4bppIndexed => 4,
+            PixelFormat.Format1bppIndexed => 1,
+            _ => 32,
+        };
     }
 
     private uint SizeComp(uint w, uint h, uint bpp)
@@ -453,7 +440,7 @@ public class EOIcoCurLoader
         uint RowSize = w * bpp / 8;
         if (RowSize % 4 != 0)
         {
-            RowSize += (4 - (RowSize % 4));
+            RowSize += 4 - (RowSize % 4);
         }
         return h * RowSize;
     }

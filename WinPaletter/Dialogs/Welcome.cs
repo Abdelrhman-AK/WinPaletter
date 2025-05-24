@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -13,8 +12,8 @@ namespace WinPaletter
 
         private void Welcome_Load(object sender, EventArgs e)
         {
-            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
-            Button1.Text = Program.Lang.Next;
+            Icon = FormsExtensions.Icon<MainForm>();
+            Button1.Text = Program.Lang.Strings.General.Next;
 
             this.LoadLanguage();
             ApplyStyle(this);
@@ -25,7 +24,7 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
             Button2.Enabled = true;
-            if (((UI.WP.Button)sender).Text == Program.Lang.OK)
+            if (((UI.WP.Button)sender).Text == Program.Lang.Strings.General.OK)
             {
                 Close();
             }
@@ -35,14 +34,14 @@ namespace WinPaletter
                     tabControl1.SelectedIndex += 1;
                 if (tabControl1.SelectedIndex == tabControl1.TabPages.Count - 1)
                 {
-                    Button1.Text = Program.Lang.OK;
+                    Button1.Text = Program.Lang.Strings.General.OK;
                 }
             }
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Button1.Text = Program.Lang.Next;
+            Button1.Text = Program.Lang.Strings.General.Next;
             if (tabControl1.SelectedIndex > 0)
                 tabControl1.SelectedIndex -= 1;
             if (tabControl1.SelectedIndex == 0)

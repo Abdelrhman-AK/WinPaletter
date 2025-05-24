@@ -5,16 +5,41 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// Download progress form for downloading themes from the store.
+    /// </summary>
     public partial class Store_DownloadProgress
     {
+        /// <summary>
+        /// URL of the theme to download.
+        /// </summary>
         public string URL;
+
+        /// <summary>
+        /// File to save the downloaded theme.
+        /// </summary>
         public string File;
+
+        /// <summary>
+        /// Name of the theme.
+        /// </summary>
         public string ThemeName;
+
+        /// <summary>
+        /// Version of the theme.
+        /// </summary>
         public string ThemeVersion;
 
-        private Stopwatch SW = new();
-        private DownloadManager _ThemeDownloader;
+        /// <summary>
+        /// Stopwatch to calculate the download speed.
+        /// </summary>
+        private readonly Stopwatch SW = new();
 
+
+        private DownloadManager _ThemeDownloader;
+        /// <summary>
+        /// Download manager for downloading the theme.
+        /// </summary>
         private DownloadManager ThemeDownloader
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -41,6 +66,9 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Store_DownloadProgress"/> class.
+        /// </summary>
         public Store_DownloadProgress()
         {
             ThemeDownloader = new();
@@ -51,9 +79,9 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (Store formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<Store>();
 
-            Label1.Text = string.Format(Program.Lang.Store_DownloadingPackForTheme, ThemeName, ThemeVersion);
+            Label1.Text = string.Format(Program.Lang.Strings.Store.DownloadingPackForTheme, ThemeName, ThemeVersion);
             Label2.Text = string.Empty;
             Label3.Text = string.Empty;
             Label4.Text = string.Empty;
@@ -68,22 +96,25 @@ namespace WinPaletter
 
         private void ThemeDownloader_DownloadProgressChanged(object sender, DownloadManager.DownloadProgressEventArgs e)
         {
+            // Calculate the download speed
             long Speed = (long)Math.Round(e.BytesReceived / SW.Elapsed.TotalSeconds, 2);
-            Label3.SetText(Speed.SizeString(true));
+            Label3.SetText(Speed.ToStringFileSize(true));
 
+            // Update the progress bar and labels
             if (e.TotalBytesToReceive > 0L)
             {
                 ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
                 ProgressBar1.Value = (int)e.ProgressPercentage;
-                Label2.SetText($"{e.BytesReceived.SizeString()}/{e.TotalBytesToReceive.SizeString()}");
+                Label2.SetText($"{e.BytesReceived.ToStringFileSize()}/{e.TotalBytesToReceive.ToStringFileSize()}");
                 TimeSpan time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / (double)Speed);
                 Label4.SetText(time.ToString(@"mm\:ss"));
             }
             else
             {
+                // Marquee style for indeterminate progress
                 ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
                 ProgressBar1.Value = 0;
-                Label2.SetText(e.BytesReceived.SizeString());
+                Label2.SetText(e.BytesReceived.ToStringFileSize());
                 Label4.SetText(string.Empty);
             }
         }

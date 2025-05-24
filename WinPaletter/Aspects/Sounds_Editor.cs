@@ -27,11 +27,11 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -41,21 +41,21 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Theme.Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Theme.Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.OpenTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -81,7 +81,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Sounds)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace WinPaletter
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             Program.Settings.Save(Settings.Source.Registry);
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -264,7 +264,7 @@ namespace WinPaletter
 
         public void BrowseForWAV(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WAV, Title = Program.Lang.Filter_OpenWAV })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WAV, Title = Program.Lang.Strings.Extensions.OpenWAV })
             {
                 UI.WP.TextBox temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
                 if (File.Exists(temp?.Text))
@@ -302,7 +302,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Store_Toggle_Sounds,
+                AspectName = Program.Lang.Strings.Aspects.Sounds,
                 Enabled = Program.TM.Sounds.Enabled,
                 Import_theme = true,
                 Import_msstyles = false,
@@ -374,7 +374,7 @@ namespace WinPaletter
             }
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             LoadFromTM(TM.Sounds);
         }
@@ -474,7 +474,7 @@ namespace WinPaletter
             textBox89.Text = Sounds.Snd_WiFiConnectionFailed;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
             Sounds.Enabled = AspectEnabled;
@@ -592,95 +592,95 @@ namespace WinPaletter
                 Theme.Structures.Sounds snd = new();
 
                 string Scope_Win = @"AppEvents\Schemes\Apps\.Default\{0}\.Current";
-                snd.Snd_Win_Default = _ini.Read(string.Format(Scope_Win, ".Default"), "DefaultValue", _DefaultSounds.Snd_Win_Default).PhrasePath();
-                snd.Snd_Win_AppGPFault = _ini.Read(string.Format(Scope_Win, "AppGPFault"), "DefaultValue", _DefaultSounds.Snd_Win_AppGPFault).PhrasePath();
-                snd.Snd_Win_CCSelect = _ini.Read(string.Format(Scope_Win, "CCSelect"), "DefaultValue", _DefaultSounds.Snd_Win_CCSelect).PhrasePath();
-                snd.Snd_Win_ChangeTheme = _ini.Read(string.Format(Scope_Win, "ChangeTheme"), "DefaultValue", _DefaultSounds.Snd_Win_ChangeTheme).PhrasePath();
-                snd.Snd_Win_Close = _ini.Read(string.Format(Scope_Win, "Close"), "DefaultValue", _DefaultSounds.Snd_Win_Close).PhrasePath();
-                snd.Snd_Win_CriticalBatteryAlarm = _ini.Read(string.Format(Scope_Win, "CriticalBatteryAlarm"), "DefaultValue", _DefaultSounds.Snd_Win_CriticalBatteryAlarm).PhrasePath();
-                snd.Snd_Win_DeviceConnect = _ini.Read(string.Format(Scope_Win, "DeviceConnect"), "DefaultValue", _DefaultSounds.Snd_Win_DeviceConnect).PhrasePath();
-                snd.Snd_Win_DeviceDisconnect = _ini.Read(string.Format(Scope_Win, "DeviceDisconnect"), "DefaultValue", _DefaultSounds.Snd_Win_DeviceDisconnect).PhrasePath();
-                snd.Snd_Win_DeviceFail = _ini.Read(string.Format(Scope_Win, "DeviceFail"), "DefaultValue", _DefaultSounds.Snd_Win_DeviceFail).PhrasePath();
-                snd.Snd_Win_FaxBeep = _ini.Read(string.Format(Scope_Win, "FaxBeep"), "DefaultValue", _DefaultSounds.Snd_Win_FaxBeep).PhrasePath();
-                snd.Snd_Win_LowBatteryAlarm = _ini.Read(string.Format(Scope_Win, "LowBatteryAlarm"), "DefaultValue", _DefaultSounds.Snd_Win_LowBatteryAlarm).PhrasePath();
-                snd.Snd_Win_MailBeep = _ini.Read(string.Format(Scope_Win, "MailBeep"), "DefaultValue", _DefaultSounds.Snd_Win_MailBeep).PhrasePath();
-                snd.Snd_Win_Maximize = _ini.Read(string.Format(Scope_Win, "Maximize"), "DefaultValue", _DefaultSounds.Snd_Win_Maximize).PhrasePath();
-                snd.Snd_Win_MenuCommand = _ini.Read(string.Format(Scope_Win, "MenuCommand"), "DefaultValue", _DefaultSounds.Snd_Win_MenuCommand).PhrasePath();
-                snd.Snd_Win_MenuPopup = _ini.Read(string.Format(Scope_Win, "MenuPopup"), "DefaultValue", _DefaultSounds.Snd_Win_MenuPopup).PhrasePath();
-                snd.Snd_Win_MessageNudge = _ini.Read(string.Format(Scope_Win, "MessageNudge"), "DefaultValue", _DefaultSounds.Snd_Win_MessageNudge).PhrasePath();
-                snd.Snd_Win_Minimize = _ini.Read(string.Format(Scope_Win, "Minimize"), "DefaultValue", _DefaultSounds.Snd_Win_Minimize).PhrasePath();
-                snd.Snd_Win_Notification_Default = _ini.Read(string.Format(Scope_Win, "Notification.Default"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Default).PhrasePath();
-                snd.Snd_Win_Notification_IM = _ini.Read(string.Format(Scope_Win, "Notification.IM"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_IM).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm2 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm2"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm2).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm3 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm3"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm3).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm4 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm4"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm4).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm5 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm5"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm5).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm6 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm6"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm6).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm7 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm7"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm7).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm8 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm8"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm8).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm9 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm9"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm9).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Alarm10 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm10"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm10).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call2 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call2"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call2).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call3 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call3"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call3).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call4 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call4"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call4).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call5 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call5"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call5).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call6 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call6"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call6).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call7 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call7"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call7).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call8 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call8"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call8).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call9 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call9"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call9).PhrasePath();
-                snd.Snd_Win_Notification_Looping_Call10 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call10"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call10).PhrasePath();
-                snd.Snd_Win_Notification_Mail = _ini.Read(string.Format(Scope_Win, "Notification.Mail"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Mail).PhrasePath();
-                snd.Snd_Win_Notification_Proximity = _ini.Read(string.Format(Scope_Win, "Notification.Proximity"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Proximity).PhrasePath();
-                snd.Snd_Win_Notification_Reminder = _ini.Read(string.Format(Scope_Win, "Notification.Reminder"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Reminder).PhrasePath();
-                snd.Snd_Win_Notification_SMS = _ini.Read(string.Format(Scope_Win, "Notification.SMS"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_SMS).PhrasePath();
-                snd.Snd_Win_Open = _ini.Read(string.Format(Scope_Win, "Open"), "DefaultValue", _DefaultSounds.Snd_Win_Open).PhrasePath();
-                snd.Snd_Win_PrintComplete = _ini.Read(string.Format(Scope_Win, "PrintComplete"), "DefaultValue", _DefaultSounds.Snd_Win_PrintComplete).PhrasePath();
-                snd.Snd_Win_ProximityConnection = _ini.Read(string.Format(Scope_Win, "ProximityConnection"), "DefaultValue", _DefaultSounds.Snd_Win_ProximityConnection).PhrasePath();
-                snd.Snd_Win_RestoreDown = _ini.Read(string.Format(Scope_Win, "RestoreDown"), "DefaultValue", _DefaultSounds.Snd_Win_RestoreDown).PhrasePath();
-                snd.Snd_Win_RestoreUp = _ini.Read(string.Format(Scope_Win, "RestoreUp"), "DefaultValue", _DefaultSounds.Snd_Win_RestoreUp).PhrasePath();
-                snd.Snd_Win_ShowBand = _ini.Read(string.Format(Scope_Win, "ShowBand"), "DefaultValue", _DefaultSounds.Snd_Win_ShowBand).PhrasePath();
-                snd.Snd_Win_SystemAsterisk = _ini.Read(string.Format(Scope_Win, "SystemAsterisk"), "DefaultValue", _DefaultSounds.Snd_Win_SystemAsterisk).PhrasePath();
-                snd.Snd_Win_SystemExclamation = _ini.Read(string.Format(Scope_Win, "SystemExclamation"), "DefaultValue", _DefaultSounds.Snd_Win_SystemExclamation).PhrasePath();
-                snd.Snd_Win_SystemExit = _ini.Read(string.Format(Scope_Win, "SystemExit"), "DefaultValue", _DefaultSounds.Snd_Win_SystemExit).PhrasePath();
-                snd.Snd_Win_SystemStart = _ini.Read(string.Format(Scope_Win, "SystemStart"), "DefaultValue", _DefaultSounds.Snd_Win_SystemStart).PhrasePath();
+                snd.Snd_Win_Default = _ini.Read(string.Format(Scope_Win, ".Default"), "DefaultValue", _DefaultSounds.Snd_Win_Default).ExpandEnvironmentVariables();
+                snd.Snd_Win_AppGPFault = _ini.Read(string.Format(Scope_Win, "AppGPFault"), "DefaultValue", _DefaultSounds.Snd_Win_AppGPFault).ExpandEnvironmentVariables();
+                snd.Snd_Win_CCSelect = _ini.Read(string.Format(Scope_Win, "CCSelect"), "DefaultValue", _DefaultSounds.Snd_Win_CCSelect).ExpandEnvironmentVariables();
+                snd.Snd_Win_ChangeTheme = _ini.Read(string.Format(Scope_Win, "ChangeTheme"), "DefaultValue", _DefaultSounds.Snd_Win_ChangeTheme).ExpandEnvironmentVariables();
+                snd.Snd_Win_Close = _ini.Read(string.Format(Scope_Win, "Close"), "DefaultValue", _DefaultSounds.Snd_Win_Close).ExpandEnvironmentVariables();
+                snd.Snd_Win_CriticalBatteryAlarm = _ini.Read(string.Format(Scope_Win, "CriticalBatteryAlarm"), "DefaultValue", _DefaultSounds.Snd_Win_CriticalBatteryAlarm).ExpandEnvironmentVariables();
+                snd.Snd_Win_DeviceConnect = _ini.Read(string.Format(Scope_Win, "DeviceConnect"), "DefaultValue", _DefaultSounds.Snd_Win_DeviceConnect).ExpandEnvironmentVariables();
+                snd.Snd_Win_DeviceDisconnect = _ini.Read(string.Format(Scope_Win, "DeviceDisconnect"), "DefaultValue", _DefaultSounds.Snd_Win_DeviceDisconnect).ExpandEnvironmentVariables();
+                snd.Snd_Win_DeviceFail = _ini.Read(string.Format(Scope_Win, "DeviceFail"), "DefaultValue", _DefaultSounds.Snd_Win_DeviceFail).ExpandEnvironmentVariables();
+                snd.Snd_Win_FaxBeep = _ini.Read(string.Format(Scope_Win, "FaxBeep"), "DefaultValue", _DefaultSounds.Snd_Win_FaxBeep).ExpandEnvironmentVariables();
+                snd.Snd_Win_LowBatteryAlarm = _ini.Read(string.Format(Scope_Win, "LowBatteryAlarm"), "DefaultValue", _DefaultSounds.Snd_Win_LowBatteryAlarm).ExpandEnvironmentVariables();
+                snd.Snd_Win_MailBeep = _ini.Read(string.Format(Scope_Win, "MailBeep"), "DefaultValue", _DefaultSounds.Snd_Win_MailBeep).ExpandEnvironmentVariables();
+                snd.Snd_Win_Maximize = _ini.Read(string.Format(Scope_Win, "Maximize"), "DefaultValue", _DefaultSounds.Snd_Win_Maximize).ExpandEnvironmentVariables();
+                snd.Snd_Win_MenuCommand = _ini.Read(string.Format(Scope_Win, "MenuCommand"), "DefaultValue", _DefaultSounds.Snd_Win_MenuCommand).ExpandEnvironmentVariables();
+                snd.Snd_Win_MenuPopup = _ini.Read(string.Format(Scope_Win, "MenuPopup"), "DefaultValue", _DefaultSounds.Snd_Win_MenuPopup).ExpandEnvironmentVariables();
+                snd.Snd_Win_MessageNudge = _ini.Read(string.Format(Scope_Win, "MessageNudge"), "DefaultValue", _DefaultSounds.Snd_Win_MessageNudge).ExpandEnvironmentVariables();
+                snd.Snd_Win_Minimize = _ini.Read(string.Format(Scope_Win, "Minimize"), "DefaultValue", _DefaultSounds.Snd_Win_Minimize).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Default = _ini.Read(string.Format(Scope_Win, "Notification.Default"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Default).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_IM = _ini.Read(string.Format(Scope_Win, "Notification.IM"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_IM).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm2 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm2"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm2).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm3 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm3"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm3).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm4 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm4"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm4).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm5 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm5"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm5).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm6 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm6"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm6).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm7 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm7"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm7).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm8 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm8"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm8).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm9 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm9"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm9).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Alarm10 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Alarm10"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Alarm10).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call2 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call2"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call2).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call3 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call3"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call3).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call4 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call4"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call4).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call5 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call5"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call5).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call6 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call6"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call6).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call7 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call7"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call7).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call8 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call8"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call8).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call9 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call9"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call9).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Looping_Call10 = _ini.Read(string.Format(Scope_Win, "Notification.Looping.Call10"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Looping_Call10).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Mail = _ini.Read(string.Format(Scope_Win, "Notification.Mail"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Mail).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Proximity = _ini.Read(string.Format(Scope_Win, "Notification.Proximity"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Proximity).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_Reminder = _ini.Read(string.Format(Scope_Win, "Notification.Reminder"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_Reminder).ExpandEnvironmentVariables();
+                snd.Snd_Win_Notification_SMS = _ini.Read(string.Format(Scope_Win, "Notification.SMS"), "DefaultValue", _DefaultSounds.Snd_Win_Notification_SMS).ExpandEnvironmentVariables();
+                snd.Snd_Win_Open = _ini.Read(string.Format(Scope_Win, "Open"), "DefaultValue", _DefaultSounds.Snd_Win_Open).ExpandEnvironmentVariables();
+                snd.Snd_Win_PrintComplete = _ini.Read(string.Format(Scope_Win, "PrintComplete"), "DefaultValue", _DefaultSounds.Snd_Win_PrintComplete).ExpandEnvironmentVariables();
+                snd.Snd_Win_ProximityConnection = _ini.Read(string.Format(Scope_Win, "ProximityConnection"), "DefaultValue", _DefaultSounds.Snd_Win_ProximityConnection).ExpandEnvironmentVariables();
+                snd.Snd_Win_RestoreDown = _ini.Read(string.Format(Scope_Win, "RestoreDown"), "DefaultValue", _DefaultSounds.Snd_Win_RestoreDown).ExpandEnvironmentVariables();
+                snd.Snd_Win_RestoreUp = _ini.Read(string.Format(Scope_Win, "RestoreUp"), "DefaultValue", _DefaultSounds.Snd_Win_RestoreUp).ExpandEnvironmentVariables();
+                snd.Snd_Win_ShowBand = _ini.Read(string.Format(Scope_Win, "ShowBand"), "DefaultValue", _DefaultSounds.Snd_Win_ShowBand).ExpandEnvironmentVariables();
+                snd.Snd_Win_SystemAsterisk = _ini.Read(string.Format(Scope_Win, "SystemAsterisk"), "DefaultValue", _DefaultSounds.Snd_Win_SystemAsterisk).ExpandEnvironmentVariables();
+                snd.Snd_Win_SystemExclamation = _ini.Read(string.Format(Scope_Win, "SystemExclamation"), "DefaultValue", _DefaultSounds.Snd_Win_SystemExclamation).ExpandEnvironmentVariables();
+                snd.Snd_Win_SystemExit = _ini.Read(string.Format(Scope_Win, "SystemExit"), "DefaultValue", _DefaultSounds.Snd_Win_SystemExit).ExpandEnvironmentVariables();
+                snd.Snd_Win_SystemStart = _ini.Read(string.Format(Scope_Win, "SystemStart"), "DefaultValue", _DefaultSounds.Snd_Win_SystemStart).ExpandEnvironmentVariables();
                 snd.Snd_Imageres_SystemStart = System.IO.File.Exists(snd.Snd_Win_SystemStart) ? snd.Snd_Win_SystemStart : "Current";
-                snd.Snd_Win_SystemHand = _ini.Read(string.Format(Scope_Win, "SystemHand"), "DefaultValue", _DefaultSounds.Snd_Win_SystemHand).PhrasePath();
-                snd.Snd_Win_SystemNotification = _ini.Read(string.Format(Scope_Win, "SystemNotification"), "DefaultValue", _DefaultSounds.Snd_Win_SystemNotification).PhrasePath();
-                snd.Snd_Win_SystemQuestion = _ini.Read(string.Format(Scope_Win, "SystemQuestion"), "DefaultValue", _DefaultSounds.Snd_Win_SystemQuestion).PhrasePath();
-                snd.Snd_Win_WindowsLogoff = _ini.Read(string.Format(Scope_Win, "WindowsLogoff"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsLogoff).PhrasePath();
-                snd.Snd_Win_WindowsLogon = _ini.Read(string.Format(Scope_Win, "WindowsLogon"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsLogon).PhrasePath();
-                snd.Snd_Win_WindowsUAC = _ini.Read(string.Format(Scope_Win, "WindowsUAC"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsUAC).PhrasePath();
-                snd.Snd_Win_WindowsUnlock = _ini.Read(string.Format(Scope_Win, "WindowsUnlock"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsUnlock).PhrasePath();
+                snd.Snd_Win_SystemHand = _ini.Read(string.Format(Scope_Win, "SystemHand"), "DefaultValue", _DefaultSounds.Snd_Win_SystemHand).ExpandEnvironmentVariables();
+                snd.Snd_Win_SystemNotification = _ini.Read(string.Format(Scope_Win, "SystemNotification"), "DefaultValue", _DefaultSounds.Snd_Win_SystemNotification).ExpandEnvironmentVariables();
+                snd.Snd_Win_SystemQuestion = _ini.Read(string.Format(Scope_Win, "SystemQuestion"), "DefaultValue", _DefaultSounds.Snd_Win_SystemQuestion).ExpandEnvironmentVariables();
+                snd.Snd_Win_WindowsLogoff = _ini.Read(string.Format(Scope_Win, "WindowsLogoff"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsLogoff).ExpandEnvironmentVariables();
+                snd.Snd_Win_WindowsLogon = _ini.Read(string.Format(Scope_Win, "WindowsLogon"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsLogon).ExpandEnvironmentVariables();
+                snd.Snd_Win_WindowsUAC = _ini.Read(string.Format(Scope_Win, "WindowsUAC"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsUAC).ExpandEnvironmentVariables();
+                snd.Snd_Win_WindowsUnlock = _ini.Read(string.Format(Scope_Win, "WindowsUnlock"), "DefaultValue", _DefaultSounds.Snd_Win_WindowsUnlock).ExpandEnvironmentVariables();
 
                 string Scope_Explorer = @"AppEvents\Schemes\Apps\Explorer\{0}\.Current";
-                snd.Snd_Explorer_ActivatingDocument = _ini.Read(string.Format(Scope_Explorer, "ActivatingDocument"), "DefaultValue", _DefaultSounds.Snd_Explorer_ActivatingDocument).PhrasePath();
-                snd.Snd_Explorer_BlockedPopup = _ini.Read(string.Format(Scope_Explorer, "BlockedPopup"), "DefaultValue", _DefaultSounds.Snd_Explorer_BlockedPopup).PhrasePath();
-                snd.Snd_Explorer_EmptyRecycleBin = _ini.Read(string.Format(Scope_Explorer, "EmptyRecycleBin"), "DefaultValue", _DefaultSounds.Snd_Explorer_EmptyRecycleBin).PhrasePath();
-                snd.Snd_Explorer_FeedDiscovered = _ini.Read(string.Format(Scope_Explorer, "FeedDiscovered"), "DefaultValue", _DefaultSounds.Snd_Explorer_FeedDiscovered).PhrasePath();
-                snd.Snd_Explorer_MoveMenuItem = _ini.Read(string.Format(Scope_Explorer, "MoveMenuItem"), "DefaultValue", _DefaultSounds.Snd_Explorer_MoveMenuItem).PhrasePath();
-                snd.Snd_Explorer_Navigating = _ini.Read(string.Format(Scope_Explorer, "Navigating"), "DefaultValue", _DefaultSounds.Snd_Explorer_Navigating).PhrasePath();
-                snd.Snd_Explorer_SecurityBand = _ini.Read(string.Format(Scope_Explorer, "SecurityBand"), "DefaultValue", _DefaultSounds.Snd_Explorer_SecurityBand).PhrasePath();
-                snd.Snd_Explorer_SearchProviderDiscovered = _ini.Read(string.Format(Scope_Explorer, "SearchProviderDiscovered"), "DefaultValue", _DefaultSounds.Snd_Explorer_SearchProviderDiscovered).PhrasePath();
-                snd.Snd_Explorer_FaxError = _ini.Read(string.Format(Scope_Explorer, "FaxError"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxError).PhrasePath();
-                snd.Snd_Explorer_FaxLineRings = _ini.Read(string.Format(Scope_Explorer, "FaxLineRings"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxLineRings).PhrasePath();
-                snd.Snd_Explorer_FaxNew = _ini.Read(string.Format(Scope_Explorer, "FaxNew"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxNew).PhrasePath();
-                snd.Snd_Explorer_FaxSent = _ini.Read(string.Format(Scope_Explorer, "FaxSent"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxSent).PhrasePath();
+                snd.Snd_Explorer_ActivatingDocument = _ini.Read(string.Format(Scope_Explorer, "ActivatingDocument"), "DefaultValue", _DefaultSounds.Snd_Explorer_ActivatingDocument).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_BlockedPopup = _ini.Read(string.Format(Scope_Explorer, "BlockedPopup"), "DefaultValue", _DefaultSounds.Snd_Explorer_BlockedPopup).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_EmptyRecycleBin = _ini.Read(string.Format(Scope_Explorer, "EmptyRecycleBin"), "DefaultValue", _DefaultSounds.Snd_Explorer_EmptyRecycleBin).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_FeedDiscovered = _ini.Read(string.Format(Scope_Explorer, "FeedDiscovered"), "DefaultValue", _DefaultSounds.Snd_Explorer_FeedDiscovered).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_MoveMenuItem = _ini.Read(string.Format(Scope_Explorer, "MoveMenuItem"), "DefaultValue", _DefaultSounds.Snd_Explorer_MoveMenuItem).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_Navigating = _ini.Read(string.Format(Scope_Explorer, "Navigating"), "DefaultValue", _DefaultSounds.Snd_Explorer_Navigating).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_SecurityBand = _ini.Read(string.Format(Scope_Explorer, "SecurityBand"), "DefaultValue", _DefaultSounds.Snd_Explorer_SecurityBand).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_SearchProviderDiscovered = _ini.Read(string.Format(Scope_Explorer, "SearchProviderDiscovered"), "DefaultValue", _DefaultSounds.Snd_Explorer_SearchProviderDiscovered).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_FaxError = _ini.Read(string.Format(Scope_Explorer, "FaxError"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxError).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_FaxLineRings = _ini.Read(string.Format(Scope_Explorer, "FaxLineRings"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxLineRings).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_FaxNew = _ini.Read(string.Format(Scope_Explorer, "FaxNew"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxNew).ExpandEnvironmentVariables();
+                snd.Snd_Explorer_FaxSent = _ini.Read(string.Format(Scope_Explorer, "FaxSent"), "DefaultValue", _DefaultSounds.Snd_Explorer_FaxSent).ExpandEnvironmentVariables();
 
                 string Scope_NetMeeting = @"AppEvents\Schemes\Apps\Conf\{0}\.Current";
-                snd.Snd_NetMeeting_PersonJoins = _ini.Read(string.Format(Scope_NetMeeting, "Person Joins"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_PersonJoins).PhrasePath();
-                snd.Snd_NetMeeting_PersonLeaves = _ini.Read(string.Format(Scope_NetMeeting, "Person Leaves"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_PersonLeaves).PhrasePath();
-                snd.Snd_NetMeeting_ReceiveCall = _ini.Read(string.Format(Scope_NetMeeting, "Receive Call"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_ReceiveCall).PhrasePath();
-                snd.Snd_NetMeeting_ReceiveRequestToJoin = _ini.Read(string.Format(Scope_NetMeeting, "Receive Request to Join"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_ReceiveRequestToJoin).PhrasePath();
+                snd.Snd_NetMeeting_PersonJoins = _ini.Read(string.Format(Scope_NetMeeting, "Person Joins"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_PersonJoins).ExpandEnvironmentVariables();
+                snd.Snd_NetMeeting_PersonLeaves = _ini.Read(string.Format(Scope_NetMeeting, "Person Leaves"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_PersonLeaves).ExpandEnvironmentVariables();
+                snd.Snd_NetMeeting_ReceiveCall = _ini.Read(string.Format(Scope_NetMeeting, "Receive Call"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_ReceiveCall).ExpandEnvironmentVariables();
+                snd.Snd_NetMeeting_ReceiveRequestToJoin = _ini.Read(string.Format(Scope_NetMeeting, "Receive Request to Join"), "DefaultValue", _DefaultSounds.Snd_NetMeeting_ReceiveRequestToJoin).ExpandEnvironmentVariables();
 
                 string Scope_SpeechRec = @"AppEvents\Schemes\Apps\sapisvr\{0}\.current";
-                snd.Snd_SpeechRec_DisNumbersSound = _ini.Read(string.Format(Scope_SpeechRec, "DisNumbersSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_DisNumbersSound).PhrasePath();
-                snd.Snd_SpeechRec_HubOffSound = _ini.Read(string.Format(Scope_SpeechRec, "HubOffSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_HubOffSound).PhrasePath();
-                snd.Snd_SpeechRec_HubOnSound = _ini.Read(string.Format(Scope_SpeechRec, "HubOnSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_HubOnSound).PhrasePath();
-                snd.Snd_SpeechRec_HubSleepSound = _ini.Read(string.Format(Scope_SpeechRec, "HubSleepSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_HubSleepSound).PhrasePath();
-                snd.Snd_SpeechRec_MisrecoSound = _ini.Read(string.Format(Scope_SpeechRec, "MisrecoSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_MisrecoSound).PhrasePath();
-                snd.Snd_SpeechRec_PanelSound = _ini.Read(string.Format(Scope_SpeechRec, "PanelSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_PanelSound).PhrasePath();
+                snd.Snd_SpeechRec_DisNumbersSound = _ini.Read(string.Format(Scope_SpeechRec, "DisNumbersSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_DisNumbersSound).ExpandEnvironmentVariables();
+                snd.Snd_SpeechRec_HubOffSound = _ini.Read(string.Format(Scope_SpeechRec, "HubOffSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_HubOffSound).ExpandEnvironmentVariables();
+                snd.Snd_SpeechRec_HubOnSound = _ini.Read(string.Format(Scope_SpeechRec, "HubOnSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_HubOnSound).ExpandEnvironmentVariables();
+                snd.Snd_SpeechRec_HubSleepSound = _ini.Read(string.Format(Scope_SpeechRec, "HubSleepSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_HubSleepSound).ExpandEnvironmentVariables();
+                snd.Snd_SpeechRec_MisrecoSound = _ini.Read(string.Format(Scope_SpeechRec, "MisrecoSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_MisrecoSound).ExpandEnvironmentVariables();
+                snd.Snd_SpeechRec_PanelSound = _ini.Read(string.Format(Scope_SpeechRec, "PanelSound"), "DefaultValue", _DefaultSounds.Snd_SpeechRec_PanelSound).ExpandEnvironmentVariables();
 
                 LoadFromTM(snd);
                 GC.Collect();
@@ -692,432 +692,432 @@ namespace WinPaletter
 
         private void button259_Click_1(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox1.Text = TMx.Sounds.Snd_Win_SystemStart; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox1.Text = TMx.Sounds.Snd_Win_SystemStart; }
         }
 
         private void button12_Click_1(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox3.Text = TMx.Sounds.Snd_Win_SystemExit; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox3.Text = TMx.Sounds.Snd_Win_SystemExit; }
         }
 
         private void button11_Click_1(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox4.Text = TMx.Sounds.Snd_Win_WindowsLogoff; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox4.Text = TMx.Sounds.Snd_Win_WindowsLogoff; }
         }
 
         private void button10_Click_1(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox5.Text = TMx.Sounds.Snd_Win_WindowsLogon; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox5.Text = TMx.Sounds.Snd_Win_WindowsLogon; }
         }
 
         private void button9_Click_1(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox6.Text = TMx.Sounds.Snd_Win_WindowsUnlock; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox6.Text = TMx.Sounds.Snd_Win_WindowsUnlock; }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox86.Text = TMx.Sounds.Snd_Win_WindowsLock; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox86.Text = TMx.Sounds.Snd_Win_WindowsLock; }
         }
 
         private void button7_Click_1(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox64.Text = TMx.Sounds.Snd_Win_ChangeTheme; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox64.Text = TMx.Sounds.Snd_Win_ChangeTheme; }
         }
 
         private void button275_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox10.Text = TMx.Sounds.Snd_Win_SystemNotification; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox10.Text = TMx.Sounds.Snd_Win_SystemNotification; }
         }
 
         private void button274_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox7.Text = TMx.Sounds.Snd_Win_SystemQuestion; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox7.Text = TMx.Sounds.Snd_Win_SystemQuestion; }
         }
 
         private void button273_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox8.Text = TMx.Sounds.Snd_Win_SystemExclamation; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox8.Text = TMx.Sounds.Snd_Win_SystemExclamation; }
         }
 
         private void button272_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox9.Text = TMx.Sounds.Snd_Win_SystemAsterisk; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox9.Text = TMx.Sounds.Snd_Win_SystemAsterisk; }
         }
 
         private void button271_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox66.Text = TMx.Sounds.Snd_Win_SystemHand; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox66.Text = TMx.Sounds.Snd_Win_SystemHand; }
         }
 
         private void button270_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox11.Text = TMx.Sounds.Snd_Win_WindowsUAC; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox11.Text = TMx.Sounds.Snd_Win_WindowsUAC; }
         }
 
         private void button269_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox68.Text = TMx.Sounds.Snd_Win_AppGPFault; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox68.Text = TMx.Sounds.Snd_Win_AppGPFault; }
         }
 
         private void button283_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox16.Text = TMx.Sounds.Snd_Win_Open; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox16.Text = TMx.Sounds.Snd_Win_Open; }
         }
 
         private void button282_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox15.Text = TMx.Sounds.Snd_Win_Close; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox15.Text = TMx.Sounds.Snd_Win_Close; }
         }
 
         private void button281_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox14.Text = TMx.Sounds.Snd_Win_Maximize; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox14.Text = TMx.Sounds.Snd_Win_Maximize; }
         }
 
         private void button280_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox13.Text = TMx.Sounds.Snd_Win_Minimize; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox13.Text = TMx.Sounds.Snd_Win_Minimize; }
         }
 
         private void button279_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox12.Text = TMx.Sounds.Snd_Win_RestoreDown; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox12.Text = TMx.Sounds.Snd_Win_RestoreDown; }
         }
 
         private void button278_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox17.Text = TMx.Sounds.Snd_Win_RestoreUp; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox17.Text = TMx.Sounds.Snd_Win_RestoreUp; }
         }
 
         private void button292_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox45.Text = TMx.Sounds.Snd_Win_DeviceConnect; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox45.Text = TMx.Sounds.Snd_Win_DeviceConnect; }
         }
 
         private void button291_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox46.Text = TMx.Sounds.Snd_Win_DeviceDisconnect; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox46.Text = TMx.Sounds.Snd_Win_DeviceDisconnect; }
         }
 
         private void button290_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox47.Text = TMx.Sounds.Snd_Win_DeviceFail; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox47.Text = TMx.Sounds.Snd_Win_DeviceFail; }
         }
 
         private void button289_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox84.Text = TMx.Sounds.Snd_ChargerConnected; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox84.Text = TMx.Sounds.Snd_ChargerConnected; }
         }
 
         private void button288_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox85.Text = TMx.Sounds.Snd_ChargerDisconnected; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox85.Text = TMx.Sounds.Snd_ChargerDisconnected; }
         }
 
         private void button287_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox48.Text = TMx.Sounds.Snd_Win_LowBatteryAlarm; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox48.Text = TMx.Sounds.Snd_Win_LowBatteryAlarm; }
         }
 
         private void button286_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox49.Text = TMx.Sounds.Snd_Win_CriticalBatteryAlarm; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox49.Text = TMx.Sounds.Snd_Win_CriticalBatteryAlarm; }
         }
 
         private void button285_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox50.Text = TMx.Sounds.Snd_Win_PrintComplete; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox50.Text = TMx.Sounds.Snd_Win_PrintComplete; }
         }
 
         private void button284_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox52.Text = TMx.Sounds.Snd_Win_ProximityConnection; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox52.Text = TMx.Sounds.Snd_Win_ProximityConnection; }
         }
 
         private void button297_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox79.Text = TMx.Sounds.Snd_Explorer_FaxLineRings; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox79.Text = TMx.Sounds.Snd_Explorer_FaxLineRings; }
         }
 
         private void button296_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox51.Text = TMx.Sounds.Snd_Win_FaxBeep; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox51.Text = TMx.Sounds.Snd_Win_FaxBeep; }
         }
 
         private void button295_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox76.Text = TMx.Sounds.Snd_Explorer_FaxNew; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox76.Text = TMx.Sounds.Snd_Explorer_FaxNew; }
         }
 
         private void button294_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox77.Text = TMx.Sounds.Snd_Explorer_FaxSent; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox77.Text = TMx.Sounds.Snd_Explorer_FaxSent; }
         }
 
         private void button293_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox78.Text = TMx.Sounds.Snd_Explorer_FaxError; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox78.Text = TMx.Sounds.Snd_Explorer_FaxError; }
         }
 
         private void button306_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox62.Text = TMx.Sounds.Snd_Explorer_Navigating; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox62.Text = TMx.Sounds.Snd_Explorer_Navigating; }
         }
 
         private void button305_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox61.Text = TMx.Sounds.Snd_Explorer_EmptyRecycleBin; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox61.Text = TMx.Sounds.Snd_Explorer_EmptyRecycleBin; }
         }
 
         private void button304_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox56.Text = TMx.Sounds.Snd_Explorer_MoveMenuItem; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox56.Text = TMx.Sounds.Snd_Explorer_MoveMenuItem; }
         }
 
         private void button303_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox60.Text = TMx.Sounds.Snd_Explorer_ActivatingDocument; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox60.Text = TMx.Sounds.Snd_Explorer_ActivatingDocument; }
         }
 
         private void button302_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox63.Text = TMx.Sounds.Snd_Win_ShowBand; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox63.Text = TMx.Sounds.Snd_Win_ShowBand; }
         }
 
         private void button301_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox59.Text = TMx.Sounds.Snd_Explorer_SecurityBand; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox59.Text = TMx.Sounds.Snd_Explorer_SecurityBand; }
         }
 
         private void button300_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox58.Text = TMx.Sounds.Snd_Explorer_BlockedPopup; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox58.Text = TMx.Sounds.Snd_Explorer_BlockedPopup; }
         }
 
         private void button299_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox57.Text = TMx.Sounds.Snd_Explorer_FeedDiscovered; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox57.Text = TMx.Sounds.Snd_Explorer_FeedDiscovered; }
         }
 
         private void button298_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox75.Text = TMx.Sounds.Snd_Explorer_SearchProviderDiscovered; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox75.Text = TMx.Sounds.Snd_Explorer_SearchProviderDiscovered; }
         }
 
         private void button315_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox55.Text = TMx.Sounds.Snd_Win_Default; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox55.Text = TMx.Sounds.Snd_Win_Default; }
         }
 
         private void button314_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox23.Text = TMx.Sounds.Snd_Win_Notification_Default; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox23.Text = TMx.Sounds.Snd_Win_Notification_Default; }
         }
 
         private void button313_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox22.Text = TMx.Sounds.Snd_Win_Notification_IM; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox22.Text = TMx.Sounds.Snd_Win_Notification_IM; }
         }
 
         private void button312_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox21.Text = TMx.Sounds.Snd_Win_MessageNudge; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox21.Text = TMx.Sounds.Snd_Win_MessageNudge; }
         }
 
         private void button311_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox20.Text = TMx.Sounds.Snd_Win_Notification_Mail; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox20.Text = TMx.Sounds.Snd_Win_Notification_Mail; }
         }
 
         private void button310_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox65.Text = TMx.Sounds.Snd_Win_MailBeep; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox65.Text = TMx.Sounds.Snd_Win_MailBeep; }
         }
 
         private void button309_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox19.Text = TMx.Sounds.Snd_Win_Notification_Proximity; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox19.Text = TMx.Sounds.Snd_Win_Notification_Proximity; }
         }
 
         private void button308_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox18.Text = TMx.Sounds.Snd_Win_Notification_Reminder; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox18.Text = TMx.Sounds.Snd_Win_Notification_Reminder; }
         }
 
         private void button307_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox24.Text = TMx.Sounds.Snd_Win_Notification_SMS; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox24.Text = TMx.Sounds.Snd_Win_Notification_SMS; }
         }
 
         private void button325_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox31.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox31.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm; }
         }
 
         private void button324_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox30.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm2; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox30.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm2; }
         }
 
         private void button323_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox29.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm3; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox29.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm3; }
         }
 
         private void button322_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox28.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm4; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox28.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm4; }
         }
 
         private void button321_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox27.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm5; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox27.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm5; }
         }
 
         private void button320_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox26.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm6; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox26.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm6; }
         }
 
         private void button319_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox25.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm7; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox25.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm7; }
         }
 
         private void button318_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox34.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm8; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox34.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm8; }
         }
 
         private void button317_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox33.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm9; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox33.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm9; }
         }
 
         private void button316_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox32.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm10; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox32.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm10; }
         }
 
         private void button335_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox44.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox44.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call; }
         }
 
         private void button334_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox43.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call2; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox43.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call2; }
         }
 
         private void button333_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox42.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call3; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox42.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call3; }
         }
 
         private void button332_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox41.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call4; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox41.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call4; }
         }
 
         private void button331_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox40.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call5; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox40.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call5; }
         }
 
         private void button330_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox39.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call6; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox39.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call6; }
         }
 
         private void button329_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox38.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call7; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox38.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call7; }
         }
 
         private void button328_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox37.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call8; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox37.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call8; }
         }
 
         private void button327_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox36.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call9; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox36.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call9; }
         }
 
         private void button326_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox35.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call10; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox35.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call10; }
         }
 
         private void button341_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox70.Text = TMx.Sounds.Snd_SpeechRec_DisNumbersSound; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox70.Text = TMx.Sounds.Snd_SpeechRec_DisNumbersSound; }
         }
 
         private void button340_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox74.Text = TMx.Sounds.Snd_SpeechRec_PanelSound; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox74.Text = TMx.Sounds.Snd_SpeechRec_PanelSound; }
         }
 
         private void button339_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox69.Text = TMx.Sounds.Snd_SpeechRec_MisrecoSound; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox69.Text = TMx.Sounds.Snd_SpeechRec_MisrecoSound; }
         }
 
         private void button338_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox73.Text = TMx.Sounds.Snd_SpeechRec_HubOffSound; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox73.Text = TMx.Sounds.Snd_SpeechRec_HubOffSound; }
         }
 
         private void button337_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox72.Text = TMx.Sounds.Snd_SpeechRec_HubOnSound; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox72.Text = TMx.Sounds.Snd_SpeechRec_HubOnSound; }
         }
 
         private void button336_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox71.Text = TMx.Sounds.Snd_SpeechRec_HubSleepSound; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox71.Text = TMx.Sounds.Snd_SpeechRec_HubSleepSound; }
         }
 
         private void button345_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox83.Text = TMx.Sounds.Snd_NetMeeting_PersonJoins; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox83.Text = TMx.Sounds.Snd_NetMeeting_PersonJoins; }
         }
 
         private void button344_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox82.Text = TMx.Sounds.Snd_NetMeeting_PersonLeaves; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox82.Text = TMx.Sounds.Snd_NetMeeting_PersonLeaves; }
         }
 
         private void button343_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox80.Text = TMx.Sounds.Snd_NetMeeting_ReceiveCall; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox80.Text = TMx.Sounds.Snd_NetMeeting_ReceiveCall; }
         }
 
         private void button342_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox81.Text = TMx.Sounds.Snd_NetMeeting_ReceiveRequestToJoin; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox81.Text = TMx.Sounds.Snd_NetMeeting_ReceiveRequestToJoin; }
         }
 
         private void button346_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { TextBox67.Text = TMx.Sounds.Snd_Win_CCSelect; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox67.Text = TMx.Sounds.Snd_Win_CCSelect; }
         }
 
         private void button348_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox87.Text = TMx.Sounds.Snd_WiFiConnected; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox87.Text = TMx.Sounds.Snd_WiFiConnected; }
         }
 
         private void button352_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox88.Text = TMx.Sounds.Snd_WiFiDisconnected; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox88.Text = TMx.Sounds.Snd_WiFiDisconnected; }
         }
 
         private void button356_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get(Program.WindowStyle)) { textBox89.Text = TMx.Sounds.Snd_WiFiConnectionFailed; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox89.Text = TMx.Sounds.Snd_WiFiConnectionFailed; }
         }
 
         #endregion

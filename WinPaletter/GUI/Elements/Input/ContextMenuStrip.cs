@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -10,25 +11,6 @@ namespace WinPaletter.UI.WP
     [ToolboxItem(false)]
     public class ContextMenuStripRenderer : ToolStripRenderer
     {
-        protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
-        {
-            Graphics G = e.Graphics;
-            G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = Program.Style.TextRenderingHint;
-
-            Config.Scheme scheme = e.ToolStrip.Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-            Rectangle rect = new(0, 0, e.AffectedBounds.Width - 1, e.AffectedBounds.Height - 1);
-
-            using (SolidBrush br = new(scheme.Colors.Back(e.ToolStrip.Level())))
-            using (Pen P = new(scheme.Colors.Line_Hover(e.ToolStrip.Level())))
-            {
-                G.FillRectangle(br, rect);
-                G.DrawRectangle(P, rect);
-            }
-
-            base.OnRenderToolStripBackground(e);
-        }
-
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             if (e.Item.Selected)
@@ -119,9 +101,9 @@ namespace WinPaletter.UI.WP
     {
         public ContextMenuStrip()
         {
-            this.AllowTransparency = true;
-            this.AutoClose = true;
-            this.DropShadowEnabled = false;
+            AllowTransparency = true;
+            AutoClose = true;
+            DropShadowEnabled = true;
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = true;
@@ -130,9 +112,11 @@ namespace WinPaletter.UI.WP
             Renderer = new ContextMenuStripRenderer();
         }
 
+        private static readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public int ItemHeight { get; set; } = 25;
+        public int ItemHeight { get; set; } = 24;
 
         int parentLevel = 0;
         protected override void OnParentChanged(EventArgs e)
@@ -142,21 +126,81 @@ namespace WinPaletter.UI.WP
             parentLevel = this.Level();
         }
 
+        private Bitmap BlurredBackground;
+        private Bitmap Background;
 
-        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        protected override void OnClosed(ToolStripDropDownClosedEventArgs e)
+        {
+            base.OnClosed(e);
+
+            Background?.Dispose();
+            Background = null;
+
+            BlurredBackground?.Dispose();
+            BlurredBackground = null;
+        }
+
+        private void CaptureBlurredBackground(Control control, Point screenLocation)
+        {
+            if (control is not null)
+            {
+                screenLocation = control.PointToScreen(screenLocation);
+            }
+            else if (screenLocation == Point.Empty)
+            {
+                screenLocation = RectangleToScreen(Bounds).Location;
+            }
+
+            // Use preferred size or a default estimate if still zero
+            Size size = this.GetPreferredSize(Size.Empty);
+            if (size.Width <= 0 || size.Height <= 0) return;
+
+            using (Bitmap bmp = new(size.Width, size.Height))
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                // Copy the screen at the location where the menu WILL appear
+                g.CopyFromScreen(screenLocation, Point.Empty, size);
+
+                Background?.Dispose();
+                BlurredBackground?.Dispose();
+
+                Background = (Bitmap)bmp.Clone();
+                BlurredBackground = Background.Blur(6);
+            }
+        }
+
+        protected override void OnOpening(CancelEventArgs e)
+        {
+            base.OnOpening(e);
+            CaptureBlurredBackground(null, Bounds.Location);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
+
+            Rectangle rect = new(0, 0, Width - 1, Height - 1);
+            Rectangle rect_fix = new(0, 0, Width, Height);
+
+            if (Background != null)
+            {
+                G.DrawImage(Background, rect_fix);
+            }
+
+            if (BlurredBackground != null)
+            {
+                G.DrawRoundImage(BlurredBackground, rect);
+                G.FillRectangle(Noise, rect);
+            }
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-            Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
-            using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
-            using (Pen P = new(scheme.Colors.Line_Hover(parentLevel + 1)))
+            using (SolidBrush br = new(Color.FromArgb(160, scheme.Colors.Back(parentLevel))))
+            using (Pen P = new(Color.FromArgb(128, 128, 128, 128)))
             {
-                G.FillRectangle(br, rect);
-                G.DrawRectangle(P, rect);
+                G.FillRoundedRect(br, rect);
+                G.DrawRoundedRect(P, rect);
             }
 
             base.OnPaint(e);

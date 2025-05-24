@@ -11,27 +11,27 @@ using System.Text;
 public class EOANIWriter
 {
     private uint FramesListDataSize;
-    private System.Drawing.Point HotSpot;
-    private long initialStreamPosition;
+    private Point HotSpot;
+    private readonly long initialStreamPosition;
 
     public BinaryWriter m_writer = null;
 
-    // Position in the file where the 4-byte size value for the frames list resides
-    private long FramesListSizePosition;
+    // Position in the File where the 4-byte size value for the frames list resides
+    private readonly long FramesListSizePosition;
 
-    private static readonly byte[] fourccACON = { (byte)'A', (byte)'C', (byte)'O', (byte)'N' };
-    private static readonly byte[] fourccfram = { (byte)'f', (byte)'r', (byte)'a', (byte)'m' };
-    private static readonly byte[] fourccIART = { (byte)'I', (byte)'A', (byte)'R', (byte)'T' };
-    private static readonly byte[] fourccicon = { (byte)'i', (byte)'c', (byte)'o', (byte)'n' };
-    private static readonly byte[] fourccINAM = { (byte)'I', (byte)'N', (byte)'A', (byte)'M' };
-    private static readonly byte[] fourccINFO = { (byte)'I', (byte)'N', (byte)'F', (byte)'O' };
-    private static readonly byte[] fourccLIST = { (byte)'L', (byte)'I', (byte)'S', (byte)'T' };
-    private static readonly byte[] fourccrate = { (byte)'r', (byte)'a', (byte)'t', (byte)'e' };
-    private static readonly byte[] fourccseq = { (byte)'s', (byte)'e', (byte)'q', (byte)' ' };
-    private static readonly byte[] fourccRIFF = { (byte)'R', (byte)'I', (byte)'F', (byte)'F' };
+    private static readonly byte[] fourccACON = [(byte)'A', (byte)'C', (byte)'O', (byte)'N'];
+    private static readonly byte[] fourccfram = [(byte)'f', (byte)'r', (byte)'a', (byte)'m'];
+    private static readonly byte[] fourccIART = [(byte)'I', (byte)'A', (byte)'R', (byte)'T'];
+    private static readonly byte[] fourccicon = [(byte)'i', (byte)'c', (byte)'o', (byte)'n'];
+    private static readonly byte[] fourccINAM = [(byte)'I', (byte)'N', (byte)'A', (byte)'M'];
+    private static readonly byte[] fourccINFO = [(byte)'I', (byte)'N', (byte)'F', (byte)'O'];
+    private static readonly byte[] fourccLIST = [(byte)'L', (byte)'I', (byte)'S', (byte)'T'];
+    private static readonly byte[] fourccrate = [(byte)'r', (byte)'a', (byte)'t', (byte)'e'];
+    private static readonly byte[] fourccseq = [(byte)'s', (byte)'e', (byte)'q', (byte)' '];
+    private static readonly byte[] fourccRIFF = [(byte)'R', (byte)'I', (byte)'F', (byte)'F'];
 
     public EOANIWriter(Stream outputStream, uint frameCount, uint avgFrameRate, uint[] frameRates,
-        uint[] frameNums, string NameInfo, string ArtistInfo, System.Drawing.Point CursorHotSpot)
+        uint[] frameNums, string NameInfo, string ArtistInfo, Point CursorHotSpot)
     {
         if (!outputStream.CanSeek)
         {
@@ -44,9 +44,9 @@ public class EOANIWriter
 
         FramesListDataSize = 4; // Starts with just "fram"
         initialStreamPosition = m_writer.BaseStream.Position;
-        HotSpot = new System.Drawing.Point(CursorHotSpot.X, CursorHotSpot.Y);
+        HotSpot = new Point(CursorHotSpot.X, CursorHotSpot.Y);
 
-        // Create the RIFF stuff for an animated cursor file
+        // Create the RIFF stuff for an animated cursor File
         m_writer.Write(fourccRIFF, 0, 4);
         m_writer.Write(0);  // Placeholder for RIFF chunk size
         m_writer.Write(fourccACON, 0, 4);
@@ -61,7 +61,7 @@ public class EOANIWriter
         // Write "rate" and "seq " chunks
         if (frameRates != null && frameNums != null)
         {
-            this.Writerateseq(frameRates, frameNums);
+            Writerateseq(frameRates, frameNums);
         }
 
         m_writer.Write(fourccLIST, 0, 4);
@@ -87,7 +87,7 @@ public class EOANIWriter
     private void Writeanih(uint NumFrames, uint FrameRate)
     {
         // Write the block's signature
-        byte[] anih4cc = { (byte)'a', (byte)'n', (byte)'i', (byte)'h' };
+        byte[] anih4cc = [(byte)'a', (byte)'n', (byte)'i', (byte)'h'];
         m_writer.Write(anih4cc, 0, 4);
 
         // Not sure why, but this 44 byte block seems to start
@@ -123,7 +123,7 @@ public class EOANIWriter
         uint h = (uint)frame.Height;
 
         FrameSize = w * h * 4 + (w * h / 8) +
-            6 +     // Size of icon file header
+            6 +     // Size of icon File header
             16 +    // Size of icon directory entry
             40;     // Size of bitmap info header
 
@@ -132,13 +132,13 @@ public class EOANIWriter
 
         // WORK ON THIS TO MAKE IT ACCEPT DIFFERENT BITMAP SIZES !!??
         {
-            EOIcoCurWriter writer = new EOIcoCurWriter(m_writer.BaseStream, 1, EOIcoCurWriter.IcoCurType.Cursor);
+            EOIcoCurWriter writer = new(m_writer.BaseStream, 1, EOIcoCurWriter.IcoCurType.Cursor);
             writer.WriteBitmap(frame, null, HotSpot);
 
             // Update the data size of the written frame data
-            FramesListDataSize += (FrameSize + 8);
+            FramesListDataSize += FrameSize + 8;
             long BackupPos = m_writer.BaseStream.Position;
-            m_writer.BaseStream.Position = this.FramesListSizePosition;
+            m_writer.BaseStream.Position = FramesListSizePosition;
             m_writer.Write(FramesListDataSize);
             m_writer.BaseStream.Position = BackupPos;
         }
@@ -160,18 +160,18 @@ public class EOANIWriter
         uint len1 = 0;
         uint len2 = 0;
 
-        // Strings must have a null terminating character written. If the length with
+        // Strings_Cls must have a null terminating character written. If the length with
         // the null-terminating character is odd, then an additional null-byte will
         // be appended for even-length padding.
         if (NameInfo != null)
         {
             len1 = (uint)NameInfo.Length + 1 + 8;
-            len1 += (len1 % 2);
+            len1 += len1 % 2;
         }
         if (ArtistInfo != null)
         {
             len2 = (uint)ArtistInfo.Length + 1 + 8;
-            len2 += (len2 % 2);
+            len2 += len2 % 2;
         }
 
         // Write the list four character code

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,6 +11,9 @@ namespace WinPaletter
     /// </summary>
     public class DownloadManager : IDisposable
     {
+        /// <summary>
+        /// Initialize a new instance of <see cref="DownloadManager"/>
+        /// </summary>
         public DownloadManager()
         {
             client = CreateHttpClient();
@@ -46,7 +49,7 @@ namespace WinPaletter
         #region Properties
 
         /// <summary>
-        /// Gets whether the download manager is busy downloading a file
+        /// Gets whether the download manager is busy downloading a File
         /// </summary>
         public bool IsBusy { get; private set; }
 
@@ -55,86 +58,239 @@ namespace WinPaletter
         #region Async
 
         /// <summary>
-        /// Read string from a URL asynchronously
+        /// Read string from a URL
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
         public async Task<string> ReadStringAsync(string url)
         {
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
 
-            return await response.Content.ReadAsStringAsync();
+            string result;
+
+            using (HttpResponseMessage response = client.GetAsync(url).Result)
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't read string from `{url}`");
+                    throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+                else
+                {
+                    result = await response.Content.ReadAsStringAsync();
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
-        /// Download a file from URL  asynchronously
+        /// Download a File from URL asynchronously
         /// </summary>
         /// <param name="url"></param>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
         public async Task DownloadFileAsync(string url, string destinationPath)
         {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
+
+            // Set the IsBusy flag to true
             IsBusy = true;
+
+            // Create a new CancellationTokenSource
+            cancellationTokenSource = new();
+
+            try
+            {
+                // Send a GET request to the URL and get the response
+                using (HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token))
+                {
+                    // Ensure the response is successful
+                    response.EnsureSuccessStatusCode();
+
+                    // Get the total file size from the Content-Length header
+                    long totalBytes = response.Content.Headers.ContentLength.GetValueOrDefault();
+
+                    // Open a stream to read the response content and create a file stream to write the downloaded data
+                    using (System.IO.Stream stream = await response.Content.ReadAsStreamAsync())
+                    using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
+                    {
+                        // Create a buffer to read the data
+                        byte[] buffer = new byte[8192];
+
+                        // Read the data and write it to the file stream
+                        int bytesRead;
+
+                        // Variable to keep track of the total bytes read
+                        long totalBytesRead = 0;
+
+                        // Read the data in chunks and write it to the file stream
+                        while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token)) > 0)
+                        {
+                            // Write the downloaded data
+                            fileStream.Write(buffer, 0, bytesRead);
+                            totalBytesRead += bytesRead;
+
+                            // Raise the DownloadProgressChanged event
+                            OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, totalBytes));
+
+                            // Check if the download is cancelled
+                            if (cancellationTokenSource.Token.IsCancellationRequested) break;
+                        }
+                    }
+                }
+
+                // Raise the DownloadCompleted event when the download is completed
+                OnDownloadCompleted(new(null, false, null));
+            }
+            catch (Exception ex)
+            {
+                // Raise the DownloadErrorOccurred event if an error occurs
+                IsBusy = false;
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
+                OnDownloadErrorOccurred($"Error downloading file: {ex.Message}", ex);
+            }
+            finally
+            {
+                // Set the IsBusy flag to false when the download is completed
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
+                IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Download a part of a file from URL asynchronously
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="destinationPath"></param>
+        /// <param name="startByte"></param>
+        /// <param name="endByte"></param>
+        /// <returns></returns>
+        public async Task DownloadFilePartAsync(string url, string destinationPath, long startByte, long endByte)
+        {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
+
+            // Set the IsBusy flag to true
+            IsBusy = true;
+
+            // Create a new CancellationTokenSource
             cancellationTokenSource = new CancellationTokenSource();
 
             try
             {
-                long totalBytes = await GetFileSizeFromUrlAsync(url);
+                // Send a GET request to the URL with the Range header to download a specific part of the file
+                HttpRequestMessage request = new(HttpMethod.Get, url)
+                {
+                    Headers =
+            {
+                Range = new System.Net.Http.Headers.RangeHeaderValue(startByte, endByte)
+            }
+                };
 
-                HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
+                HttpResponseMessage response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
+
+                // Ensure the response is successful
                 response.EnsureSuccessStatusCode();
 
-                using (Stream stream = await response.Content.ReadAsStreamAsync())
-                using (FileStream fileStream = System.IO.File.Create(destinationPath))
+                // Open a stream to read the response content and create a file stream to write the downloaded data
+                using (System.IO.Stream stream = await response.Content.ReadAsStreamAsync())
+                using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
                 {
+                    // Create a buffer to read the data
                     byte[] buffer = new byte[8192];
+
+                    // Read the data and write it to the file stream
                     int bytesRead;
                     long totalBytesRead = 0;
 
                     while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token)) > 0)
                     {
+                        // Write the downloaded data
                         fileStream.Write(buffer, 0, bytesRead);
                         totalBytesRead += bytesRead;
 
-                        OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, totalBytes));
+                        // Raise the DownloadProgressChanged event when the download progress changes
+                        OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, endByte - startByte + 1));
 
+                        // Check if the download is cancelled
                         if (cancellationTokenSource.Token.IsCancellationRequested)
                             break;
                     }
                 }
 
+                // Raise the DownloadCompleted event when the download is completed
                 OnDownloadCompleted(new(null, false, null));
             }
             catch (Exception ex)
             {
+                // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                OnDownloadErrorOccurred($"Error downloading file: {ex.Message}");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
+                OnDownloadErrorOccurred($"Error downloading file from byte {startByte} for length of {endByte} bytes: {ex.Message}", ex);
             }
             finally
             {
+                // Set the IsBusy flag to false when the download is completed
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
                 IsBusy = false;
             }
         }
 
         /// <summary>   
-        /// Get file size from URL asynchronously
+        /// Get File size from URL asynchronously
         /// </summary>
         public async Task<long> GetFileSizeFromUrlAsync(string url)
         {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
+
+            long result = 0;
+
             try
             {
                 using (HttpResponseMessage response = await client.SendAsync(new(HttpMethod.Head, url)))
                 {
                     response.EnsureSuccessStatusCode();
-                    return response.Content.Headers.ContentLength.GetValueOrDefault();
+
+                    result = response.Content.Headers.ContentLength.GetValueOrDefault();
                 }
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
             }
             catch (Exception ex)
             {
-                OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}");
-                return 0;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
+                OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}", ex);
+                result = 0;
             }
+
+            return result;
         }
 
         #endregion
@@ -151,6 +307,8 @@ namespace WinPaletter
 
             };
 
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Creating HttpClient with timeout of {Program.Timeout} ms and protocols {handler.SslProtocols}");
+
             return new HttpClient(handler)
             {
                 Timeout = TimeSpan.FromMilliseconds(Program.Timeout)
@@ -165,86 +323,231 @@ namespace WinPaletter
         /// <exception cref="HttpRequestException"></exception>
         public string ReadString(string url)
         {
-            HttpResponseMessage response = client.GetAsync(url).Result;
-
-            if (!response.IsSuccessStatusCode)
+            if (url.Contains("github.com"))
             {
-                throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
             }
 
-            return response.Content.ReadAsStringAsync().Result;
+            string result;
+
+            using (HttpResponseMessage response = client.GetAsync(url).Result)
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't read string from `{url}`");
+                    throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+                else
+                {
+                    result = response.Content.ReadAsStringAsync().Result;
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
-        /// Download a file from URL
+        /// Download a File from URL
         /// </summary>
         /// <param name="url"></param>
         /// <param name="destinationPath"></param>
         public void DownloadFile(string url, string destinationPath)
         {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
+
+            // Set the IsBusy flag to true
             IsBusy = true;
-            cancellationTokenSource = new CancellationTokenSource();
+
+            // Create a new CancellationTokenSource
+            cancellationTokenSource = new();
 
             try
             {
-                long totalBytes = GetFileSizeFromUrl(url);
-
-                HttpResponseMessage response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).Result;
-                response.EnsureSuccessStatusCode();
-
-                using (Stream stream = response.Content.ReadAsStreamAsync().Result)
-                using (FileStream fileStream = System.IO.File.Create(destinationPath))
+                // Send a GET request to the URL and get the response
+                using (HttpResponseMessage response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).Result)
                 {
-                    byte[] buffer = new byte[8192];
-                    int bytesRead;
-                    long totalBytesRead = 0;
+                    // Ensure the response is successful
+                    response.EnsureSuccessStatusCode();
 
-                    while ((bytesRead = stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).Result) > 0)
+                    // Get the total file size
+                    long totalBytes = response.Content.Headers.ContentLength.GetValueOrDefault();
+
+                    // Open a stream to read the response content and create a file stream to write the downloaded data
+                    using (System.IO.Stream stream = response.Content.ReadAsStreamAsync().Result)
+                    using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
                     {
-                        fileStream.Write(buffer, 0, bytesRead);
-                        totalBytesRead += bytesRead;
+                        // Create a buffer to read the data
+                        byte[] buffer = new byte[8192];
 
-                        OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, totalBytes));
+                        // Read the data and write it to the file stream
+                        int bytesRead;
+                        long totalBytesRead = 0;
 
-                        if (cancellationTokenSource.Token.IsCancellationRequested)
-                            break;
+                        while ((bytesRead = stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).Result) > 0)
+                        {
+                            // Write the downloaded data
+                            fileStream.Write(buffer, 0, bytesRead);
+                            totalBytesRead += bytesRead;
+
+                            // Raise the DownloadProgressChanged event when the download progress changes
+                            OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, totalBytes));
+
+                            // Check if the download is cancelled
+                            if (cancellationTokenSource.Token.IsCancellationRequested)
+                                break;
+                        }
                     }
                 }
-
+                // Raise the DownloadCompleted event when the download is completed
                 IsBusy = false;
                 OnDownloadCompleted(new(null, false, new object()));
             }
             catch (Exception ex)
             {
+                // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                OnDownloadErrorOccurred($"Error downloading file: {ex.Message}");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
+                OnDownloadErrorOccurred($"Error downloading file: {ex.Message}", ex);
             }
             finally
             {
+                // Set the IsBusy flag to false when the download is completed
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
                 IsBusy = false;
             }
         }
 
         /// <summary>
-        /// Get file size from URL
+        /// Download a part of a file from URL
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="destinationPath"></param>
+        /// <param name="startByte"></param>
+        /// <param name="endByte"></param>
+        public void DownloadFilePart(string url, string destinationPath, long startByte, long endByte)
+        {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
+
+            // Set the IsBusy flag to true
+            IsBusy = true;
+
+            // Create a new CancellationTokenSource
+            cancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                // Send a GET request to the URL with the Range header to download a specific part of the file
+                HttpRequestMessage request = new(HttpMethod.Get, url)
+                {
+                    Headers =
+            {
+                Range = new System.Net.Http.Headers.RangeHeaderValue(startByte, endByte)
+            }
+                };
+
+                HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).Result;
+
+                // Ensure the response is successful
+                response.EnsureSuccessStatusCode();
+
+                // Open a stream to read the response content and create a file stream to write the downloaded data
+                using (System.IO.Stream stream = response.Content.ReadAsStreamAsync().Result)
+                using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
+                {
+                    // Create a buffer to read the data
+                    byte[] buffer = new byte[8192];
+
+                    // Read the data and write it to the file stream
+                    int bytesRead;
+                    long totalBytesRead = 0;
+
+                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        // Write the downloaded data
+                        fileStream.Write(buffer, 0, bytesRead);
+                        totalBytesRead += bytesRead;
+
+                        // Raise the DownloadProgressChanged event when the download progress changes
+                        OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, endByte - startByte + 1));
+
+                        // Check if the download is cancelled
+                        if (cancellationTokenSource.Token.IsCancellationRequested)
+                            break;
+                    }
+                }
+
+                // Raise the DownloadCompleted event when the download is completed
+                IsBusy = false;
+                OnDownloadCompleted(new(null, false, new object()));
+            }
+            catch (Exception ex)
+            {
+                // Raise the DownloadErrorOccurred event if an error occurs
+                IsBusy = false;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
+                OnDownloadErrorOccurred($"Error downloading file: {ex.Message} from byte {startByte} for length of {endByte} bytes", ex);
+            }
+            finally
+            {
+                // Set the IsBusy flag to false when the download is completed
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
+                IsBusy = false;
+            }
+        }
+
+
+        /// <summary>
+        /// Get File size from URL
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
         public long GetFileSizeFromUrl(string url)
         {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
+
+            long result = 0;
+
             try
             {
                 using (HttpResponseMessage response = client.SendAsync(new(HttpMethod.Head, url)).Result)
                 {
                     response.EnsureSuccessStatusCode();
-                    return response.Content.Headers.ContentLength.GetValueOrDefault();
+
+                    result = response.Content.Headers.ContentLength.GetValueOrDefault();
                 }
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
             }
             catch (Exception ex)
             {
-                OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}");
-                return 0;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
+                OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}", ex);
+                result = 0;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -254,6 +557,7 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Download is paused.");
                 cancellationTokenSource?.Cancel();
             }
         }
@@ -265,6 +569,7 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Download is cancelled.");
                 cancellationTokenSource?.Cancel();
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
                 // Additional cleanup if needed
@@ -297,9 +602,10 @@ namespace WinPaletter
         /// Method to raise the DownloadErrorOccurred event
         /// </summary>
         /// <param name="errorMessage"></param>
-        protected virtual void OnDownloadErrorOccurred(string errorMessage)
+        protected virtual void OnDownloadErrorOccurred(string errorMessage, Exception ex)
         {
             DownloadErrorOccurred?.Invoke(this, errorMessage);
+            Forms.BugReport.ThrowError(ex);
         }
 
         #endregion
@@ -309,30 +615,27 @@ namespace WinPaletter
         /// <summary>
         /// Event arguments for the DownloadProgressChanged event
         /// </summary>
-        public class DownloadProgressEventArgs : EventArgs
+        /// <remarks>
+        /// Constructor for DownloadProgressEventArgs
+        /// </remarks>
+        /// <param name="bytesDownloaded"></param>
+        /// <param name="totalBytes"></param>
+        public class DownloadProgressEventArgs(long bytesDownloaded, long totalBytes) : EventArgs
         {
             /// <summary>
             /// Bytes received so far by download manager
             /// </summary>
-            public long BytesReceived { get; }
+            public long BytesReceived { get; } = bytesDownloaded;
 
             /// <summary>
             /// Total bytes to receive. It could be zero if the server doesn't return the content length.
             /// </summary>
-            public long TotalBytesToReceive { get; }
-
-            public long ProgressPercentage => TotalBytesToReceive > 0 ? BytesReceived * 100 / TotalBytesToReceive : 0;
+            public long TotalBytesToReceive { get; } = totalBytes;
 
             /// <summary>
-            /// Constructor for DownloadProgressEventArgs
+            /// Progress percentage of the download
             /// </summary>
-            /// <param name="bytesDownloaded"></param>
-            /// <param name="totalBytes"></param>
-            public DownloadProgressEventArgs(long bytesDownloaded, long totalBytes)
-            {
-                BytesReceived = bytesDownloaded;
-                TotalBytesToReceive = totalBytes;
-            }
+            public long ProgressPercentage => TotalBytesToReceive > 0 ? BytesReceived * 100 / TotalBytesToReceive : 0;
         }
 
         #endregion

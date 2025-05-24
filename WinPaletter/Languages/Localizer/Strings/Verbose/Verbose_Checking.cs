@@ -2,8 +2,16 @@
 {
     public partial class Localizer
     {
-        public string TM_Check_Terminals { get; set; } = "Checking if Windows Terminal (Stable & Preview) are installed";
-        public string TM_Check_TerminalStable { get; set; } = "Checking if Windows Terminal Stable is installed";
-        public string TM_Check_TerminalPreview { get; set; } = "Checking if Windows Terminal Preview is installed";
+        public partial class Strings_Cls
+        {
+            public partial class ThemeManager_Cls
+            {
+                public partial class Check_Cls
+                {
+                    public string Terminals { get; set; } = "Checking if both Windows Terminal Stable and Preview are installed";
+                    public string Terminal { get; set; } = "Checking if {0} is installed";
+                }
+            }
+        }
     }
 }

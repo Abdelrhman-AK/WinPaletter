@@ -9,7 +9,7 @@ namespace WinPaletter
 {
     public partial class WinXPColors : AspectsTemplate
     {
-        Theme.Manager backup_TM;
+        Manager backup_TM;
 
         public WinXPColors()
         {
@@ -18,11 +18,11 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -50,13 +50,13 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -100,7 +100,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = string.Format(Program.Lang.WindowsColors, OS.Name),
+                AspectName = string.Format(Program.Lang.Strings.Aspects.WinTheme, OS.Name),
                 Enabled = Program.TM.WindowsXP.Enabled,
                 GeneratePalette = false,
                 GenerateMSTheme = false,
@@ -127,7 +127,7 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             backup_TM = (Manager)TM.Clone();
 
@@ -173,7 +173,7 @@ namespace WinPaletter
             windowsDesktop1.LoadFromTM(TM);
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.WindowsXP.Enabled = AspectEnabled;
 
@@ -204,8 +204,8 @@ namespace WinPaletter
 
             if (WXP_Classic.Checked || (!WXP_VS_ReplaceColors.Checked && !WXP_VS_ReplaceMetrics.Checked))
             {
-                TM.Win32 = (Theme.Structures.Win32UI)(backup_TM.Win32.Clone());
-                TM.MetricsFonts = (Theme.Structures.MetricsFonts)(backup_TM.MetricsFonts.Clone());
+                TM.Win32 = (Theme.Structures.Win32UI)backup_TM.Win32.Clone();
+                TM.MetricsFonts = (Theme.Structures.MetricsFonts)backup_TM.MetricsFonts.Clone();
             }
             else if (WXP_VS_ReplaceMetrics.Checked || WXP_VS_ReplaceColors.Checked)
             {
@@ -272,7 +272,7 @@ namespace WinPaletter
                                 }
                                 else
                                 {
-                                    TM.Win32 = (Theme.Structures.Win32UI)(backup_TM.Win32.Clone());
+                                    TM.Win32 = (Theme.Structures.Win32UI)backup_TM.Win32.Clone();
                                 }
 
                                 if (WXP_VS_ReplaceMetrics.Checked)
@@ -282,7 +282,7 @@ namespace WinPaletter
                                 }
                                 else
                                 {
-                                    TM.MetricsFonts = (Theme.Structures.MetricsFonts)(backup_TM.MetricsFonts.Clone());
+                                    TM.MetricsFonts = (Theme.Structures.MetricsFonts)backup_TM.MetricsFonts.Clone();
                                 }
                             }
                         }
@@ -291,12 +291,12 @@ namespace WinPaletter
                     {
                         if (WXP_VS_ReplaceColors.Checked)
                         {
-                            TM.Win32 = (Theme.Structures.Win32UI)(backup_TM.Win32.Clone());
+                            TM.Win32 = (Theme.Structures.Win32UI)backup_TM.Win32.Clone();
                         }
 
                         if (WXP_VS_ReplaceMetrics.Checked)
                         {
-                            TM.MetricsFonts = (Theme.Structures.MetricsFonts)(backup_TM.MetricsFonts.Clone());
+                            TM.MetricsFonts = (Theme.Structures.MetricsFonts)backup_TM.MetricsFonts.Clone();
                         }
                     }
                 }
@@ -304,12 +304,12 @@ namespace WinPaletter
                 {
                     if (WXP_VS_ReplaceColors.Checked)
                     {
-                        TM.Win32 = (Theme.Structures.Win32UI)(backup_TM.Win32.Clone());
+                        TM.Win32 = (Theme.Structures.Win32UI)backup_TM.Win32.Clone();
                     }
 
                     if (WXP_VS_ReplaceMetrics.Checked)
                     {
-                        TM.MetricsFonts = (Theme.Structures.MetricsFonts)(backup_TM.MetricsFonts.Clone());
+                        TM.MetricsFonts = (Theme.Structures.MetricsFonts)backup_TM.MetricsFonts.Clone();
                     }
                 }
 
@@ -318,7 +318,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Filter_SavePNG })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.SavePNG })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -404,7 +404,7 @@ namespace WinPaletter
                         {
                             foreach (VisualStyleScheme x in vs.ColorSchemes) WXP_VS_ColorsList.Items.Add(x.Name);
                         }
-                        catch { } // Couldn't load visual styles file, so no scheme will be added
+                        catch { } // Couldn't load visual styles File, so no scheme will be added
 
                         if (WXP_VS_ColorsList.Items.Count > 0)
                             WXP_VS_ColorsList.SelectedIndex = 0;
@@ -418,7 +418,7 @@ namespace WinPaletter
 
         private void WXP_VS_Browse_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK) WXP_VS_textbox.Text = dlg.FileName;
             }

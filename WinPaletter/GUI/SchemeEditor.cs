@@ -9,37 +9,94 @@ using static WinPaletter.UI.Style.Config.Colors_Collection;
 
 namespace WinPaletter.UI.Style
 {
+    /// <summary>
+    /// A form for editing the color scheme of the application (Engineering mode)
+    /// </summary>
     public class SchemeEditor : Form
     {
-        private Colors_Collection colorCollection;
-        ColorDialog colorDialog = new();
+        /// <summary>
+        /// The collection of colors instance that is being edited
+        /// </summary>
+        private readonly Colors_Collection colorCollection;
 
+        /// <summary>
+        /// A ColorDialog instance for selecting colors
+        /// </summary>
+        readonly ColorDialog colorDialog = new();
+
+        /// <summary>
+        /// The panel for selecting the accent color
+        /// </summary>
         private Panel accentPanel;
+
+        /// <summary>
+        /// The panel for selecting the back color
+        /// </summary>
         private Panel backPanel;
 
+        /// <summary>
+        /// TestControl instances for button none state
+        /// </summary>
         private WP.TestControl buttonNoneControl;
+
+        /// <summary>
+        /// TestControl instances for button over state
+        /// </summary>
         private WP.TestControl buttonOverControl;
+
+        /// <summary>
+        /// TestControl instances for button down state
+        /// </summary>
         private WP.TestControl buttonDownControl;
+
+        /// <summary>
+        /// TestControl instances for non checked state
+        /// </summary>
         private WP.TestControl noneControl;
+
+        /// <summary>
+        /// TestControl instances for hover state
+        /// </summary>
         private WP.TestControl hoverControl;
+
+        /// <summary>
+        /// TestControl instances for checked hover state
+        /// </summary>
         private WP.TestControl checkedHoverControl;
+
+        /// <summary>
+        /// TestControl instances for checked state
+        /// </summary>
         private WP.TestControl checkedControl;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemeEditor"/> class.
+        /// </summary>
         public SchemeEditor()
         {
             // Initialize with default colors
             colorCollection = Program.Style.Schemes.Main.Colors.Clone() as Colors_Collection;
+
+            // Create controls for editing the color scheme
             CreateColorControls();
+
+            // Create TestControls for different states
             CreateTestControls();
+
+            // Update color panels based on the current Colors_Collection
             UpdateColorPanels();
+
+            // Initialize the programmatic output TextBox for setting colors different values
             InitializeProgrammaticOutputTextBox();
             WindowState = FormWindowState.Maximized;
 
-            this.Shown += (s, e) => UpdateColorPanels();
+            // Attach event handlers for updating the color panels when the form is shown
+            Shown += (s, e) => UpdateColorPanels();
         }
 
         private void InitializeProgrammaticOutputTextBox()
         {
+            // Create a TextBox for displaying the programmatic output
             TextBox programmaticOutputTextBox = new()
             {
                 // Set TextBox properties
@@ -61,11 +118,13 @@ namespace WinPaletter.UI.Style
                 comboBox.SelectedIndexChanged += (sender, e) => UpdateProgrammaticOutput(programmaticOutputTextBox);
             }
 
+            // Attach event handlers for control changes
             foreach (TrackBar trackBar in Controls.OfType<TrackBar>())
             {
                 trackBar.ValueChanged += (sender, e) => UpdateProgrammaticOutput(programmaticOutputTextBox);
             }
 
+            // Attach event handlers for control changes
             accentPanel.BackColorChanged += (sender, e) => UpdateProgrammaticOutput(programmaticOutputTextBox);
             backPanel.BackColorChanged += (sender, e) => UpdateProgrammaticOutput(programmaticOutputTextBox);
 
@@ -73,13 +132,15 @@ namespace WinPaletter.UI.Style
             UpdateProgrammaticOutput(programmaticOutputTextBox);
         }
 
+        /// <summary>
+        /// Creates controls instances for test with different states
+        /// </summary>
         private void CreateTestControls()
         {
             int offsetY = 200;
 
             // Create TestControl instances for different states
             noneControl = CreateTestControl(WP.TestControl.States.None, offsetY);
-
             hoverControl = CreateTestControl(WP.TestControl.States.Hover, offsetY + 100);
             checkedControl = CreateTestControl(WP.TestControl.States.Checked, offsetY + 200);
             checkedHoverControl = CreateTestControl(WP.TestControl.States.CheckedHover, offsetY + 250);
@@ -98,16 +159,22 @@ namespace WinPaletter.UI.Style
             Controls.Add(buttonDownControl);
         }
 
+        /// <summary>
+        /// Creates a control instance for test with the specified state
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="offsetY"></param>
+        /// <returns></returns>
         private WP.TestControl CreateTestControl(WP.TestControl.States state, int offsetY)
         {
-            Label label = new Label
+            Label label = new()
             {
                 Text = state.ToString(),
                 AutoSize = true,
                 Location = new Point(700, offsetY - 20)
             };
 
-            WP.TestControl testControl = new WP.TestControl
+            WP.TestControl testControl = new()
             {
                 Location = new Point(700, offsetY),
                 Size = new Size(150, 30),
@@ -121,6 +188,9 @@ namespace WinPaletter.UI.Style
             return testControl;
         }
 
+        /// <summary>
+        /// Creates controls for editing the color scheme
+        /// </summary>
         private void CreateColorControls()
         {
             // Create controls dynamically based on the properties of Colors_Collection
@@ -152,9 +222,17 @@ namespace WinPaletter.UI.Style
             Controls.Add(backPanel);
         }
 
+        /// <summary>
+        /// Creates a panel for selecting a color
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="color"></param>
+        /// <param name="location"></param>
+        /// <returns></returns>
         private Panel CreateColorPanel(string propertyName, Color color, Point location)
         {
-            Panel panel = new Panel
+            // Create a Panel for selecting a color
+            Panel panel = new()
             {
                 Name = $"panel_{propertyName.Replace(" ", string.Empty)}",
                 BackColor = color,
@@ -163,7 +241,8 @@ namespace WinPaletter.UI.Style
                 Margin = new Padding(5)
             };
 
-            Label label = new Label
+            // Create a Label for the color property
+            Label label = new()
             {
                 Text = propertyName,
                 AutoSize = true,
@@ -176,10 +255,15 @@ namespace WinPaletter.UI.Style
             return panel;
         }
 
+        /// <summary>
+        /// Creates a control for editing a color property
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="offsetY"></param>
         private void CreateColorControl(string propertyName, int offsetY)
         {
             // Create a Label for the color property
-            Label label = new Label
+            Label label = new()
             {
                 Name = $"label_{propertyName}",
                 Text = propertyName,
@@ -188,7 +272,7 @@ namespace WinPaletter.UI.Style
             };
 
             // Create a ComboBox for selecting the method
-            ComboBox methodComboBox = new ComboBox
+            ComboBox methodComboBox = new()
             {
                 Name = $"comboBox_{propertyName}_Method",
                 DropDownStyle = ComboBoxStyle.DropDownList,
@@ -201,7 +285,7 @@ namespace WinPaletter.UI.Style
             methodComboBox.SelectedIndex = (int)GetInitialMethodFromStyleSchemes(propertyName); // Set the default method
 
             // Create a TrackBar for adjusting the value
-            TrackBar trackBar = new TrackBar
+            TrackBar trackBar = new()
             {
                 Name = $"trackbar_{propertyName}",
                 Minimum = -200,
@@ -215,7 +299,7 @@ namespace WinPaletter.UI.Style
             };
 
             // Create a TextBox for displaying and inputting the value
-            TextBox textBox = new TextBox
+            TextBox textBox = new()
             {
                 Name = $"textBox_{propertyName}",
                 Text = ((int)(GetInitialValueFromStyleSchemes(propertyName) * 100)).ToString(),
@@ -225,7 +309,7 @@ namespace WinPaletter.UI.Style
             };
 
             // Create a Panel for displaying the color
-            Panel colorPanel = new Panel
+            Panel colorPanel = new()
             {
                 Name = $"panel_{propertyName}",
                 BackColor = colorCollection.Accent, // Initial color
@@ -250,7 +334,7 @@ namespace WinPaletter.UI.Style
         private void UpdateTextBoxValue(TrackBar trackBar, TextBox textBox)
         {
             // Update TextBox value based on TrackBar value
-            textBox.Text = ((float)(trackBar.Value)).ToString();
+            textBox.Text = ((float)trackBar.Value).ToString();
         }
 
         private void UpdateTrackBarValue(TextBox textBox, TrackBar trackBar)
@@ -315,12 +399,16 @@ namespace WinPaletter.UI.Style
             return output.ToString();
         }
 
+        /// <summary>
+        /// Updates the color panels based on the current Colors_Collection
+        /// </summary>
         private void UpdateColorPanels()
         {
             // Update color panels based on the current Colors_Collection
             Color accentColor = accentPanel.BackColor;
             Color backColor = backPanel.BackColor;
 
+            // Update color panels based on the current Colors_Collection
             foreach (TrackBar trackBar in Controls.OfType<TrackBar>())
             {
                 string propertyName = trackBar.Name.Replace("trackbar_", string.Empty);
@@ -333,25 +421,31 @@ namespace WinPaletter.UI.Style
                     bool isBackProperty = propertyName.ToLower().Contains("back") || propertyName.ToLower().Contains("line") || propertyName.ToLower().Contains("button");
                     bool isCheckProperty = propertyName.ToLower().Contains("check") || propertyName.ToLower().Contains("accent");
 
+                    // Determine the color based on the property name (normal control vs a check control)
                     Color color = isCheckProperty ? accentColor : backColor;
 
+                    // Get the method for manipulating colors from the ComboBox
                     Method selectedMethod = (Method)Enum.Parse(typeof(Method), methodComboBox.SelectedItem.ToString());
 
                     if (selectedMethod == Method.CB)
                     {
-                        color = color.CB((float)trackBar.Value / 100.0f);
+                        // Change color brightness based on the trackbar value
+                        color = color.CB(trackBar.Value / 100.0f);
                     }
                     else if (selectedMethod == Method.Light)
                     {
-                        color = color.Light((float)trackBar.Value / 100.0f);
+                        // Lighten the color based on the trackbar value
+                        color = color.Light(trackBar.Value / 100.0f);
                     }
                     else if (selectedMethod == Method.Dark)
                     {
-                        color = color.Dark((float)trackBar.Value / 100.0f);
+                        // Darken the color based on the trackbar value
+                        color = color.Dark(trackBar.Value / 100.0f);
                     }
                     else
                     {
-                        color = color.CB((float)trackBar.Value / 100.0f);
+                        // Default: Change color brightness based on the trackbar value
+                        color = color.CB(trackBar.Value / 100.0f);
                     }
 
                     // Update color panels
@@ -365,7 +459,7 @@ namespace WinPaletter.UI.Style
             }
 
             // Update TestControls based on the current Colors_Collection
-            Config.Scheme scheme = new()
+            Scheme scheme = new()
             {
                 Colors = colorCollection
             };
@@ -379,10 +473,15 @@ namespace WinPaletter.UI.Style
             buttonDownControl.Scheme = scheme;
 
             // Update form's back color
-            this.BackColor = backColor;
-            this.ForeColor = backColor.IsDark() ? Color.White : Color.Black;
+            BackColor = backColor;
+            ForeColor = backColor.IsDark() ? Color.White : Color.Black;
         }
 
+        /// <summary>
+        /// Get the initial value for a property from the Style.Schemes.Main instance
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         private float GetInitialValueFromStyleSchemes(string propertyName)
         {
             // Assume Program.Style.Schemes.Main is an instance of Colors_Collection or similar
@@ -404,6 +503,11 @@ namespace WinPaletter.UI.Style
             return 0.0f;
         }
 
+        /// <summary>
+        /// Get the initial method for a property from the Style.Schemes.Main instance
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         private Method GetInitialMethodFromStyleSchemes(string propertyName)
         {
             // Assume Program.Style.Schemes.Main is an instance of Colors_Collection or similar
@@ -425,6 +529,9 @@ namespace WinPaletter.UI.Style
             return 0.0f;
         }
 
+        /// <summary>
+        /// Updates the color scheme based on the current control values
+        /// </summary>
         private void UpdateColorScheme()
         {
             // Update Colors_Collection with the specified colors
@@ -433,29 +540,35 @@ namespace WinPaletter.UI.Style
 
             foreach (ComboBox methodComboBox in Controls.OfType<ComboBox>())
             {
-                TrackBar trackBar = Controls.OfType<TrackBar>().Where(t => t.Name == $"trackbar_{(methodComboBox.Name.Replace("comboBox_", string.Empty).Replace("_Method", string.Empty).Trim())}").FirstOrDefault();
+                TrackBar trackBar = Controls.OfType<TrackBar>().Where(t => t.Name == $"trackbar_{methodComboBox.Name.Replace("comboBox_", string.Empty).Replace("_Method", string.Empty).Trim()}").FirstOrDefault();
                 string propertyName = methodComboBox.Name.Replace("comboBox_", string.Empty).Replace("_Method", string.Empty).Trim();
                 PropertyInfo property = typeof(Colors_Collection).GetProperty(propertyName);
 
+                // Determine the color based on the property name (normal control vs a check control)
                 Color color = propertyName.ToLower().Contains("check") || propertyName.ToLower().Contains("accent") ? accentColor : backColor;
 
+                // Get the method for manipulating colors from the ComboBox
                 Method selectedMethod = (Method)Enum.Parse(typeof(Method), methodComboBox.SelectedItem.ToString());
 
                 if (selectedMethod == Method.CB)
                 {
-                    property.SetValue(colorCollection, color.CB((float)trackBar.Value / 100.0f), null);
+                    // Change color brightness based on the trackbar value
+                    property.SetValue(colorCollection, color.CB(trackBar.Value / 100.0f), null);
                 }
                 else if (selectedMethod == Method.Light)
                 {
-                    property.SetValue(colorCollection, color.Light((float)trackBar.Value / 100.0f), null);
+                    // Lighten the color based on the trackbar value
+                    property.SetValue(colorCollection, color.Light(trackBar.Value / 100.0f), null);
                 }
                 else if (selectedMethod == Method.Dark)
                 {
-                    property.SetValue(colorCollection, color.Dark((float)trackBar.Value / 100.0f), null);
+                    // Darken the color based on the trackbar value
+                    property.SetValue(colorCollection, color.Dark(trackBar.Value / 100.0f), null);
                 }
                 else
                 {
-                    property.SetValue(colorCollection, color.CB((float)trackBar.Value / 100.0f), null);
+                    // Default: Change color brightness based on the trackbar value
+                    property.SetValue(colorCollection, color.CB(trackBar.Value / 100.0f), null);
                 }
             }
 

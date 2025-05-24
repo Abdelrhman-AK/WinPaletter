@@ -16,14 +16,23 @@ namespace WinPaletter
     /// </summary>
     public static class PE
     {
+        /// <summary>
+        /// Class to handle icons in Portable Executable (PE) files.
+        /// </summary>
         private static class Icons
         {
+            /// <summary>
+            /// Convert an icon group in a Portable Executable (PE) File to an <see cref="Icon"/>.
+            /// </summary>
+            /// <param name="PE"></param>
+            /// <param name="iconGroupResourceIdentifier"></param>
+            /// <returns></returns>
             public static Icon PEIconGroup_ToIcon(PortableExecutable PE, ResourceIdentifier iconGroupResourceIdentifier)
             {
                 int structureSize = 14;
                 byte[] iconBytes = PE.GetResource(iconGroupResourceIdentifier).Data.Skip(6).ToArray();
 
-                List<IconInfo> icons = new();
+                List<IconInfo> icons = [];
                 icons.Clear();
 
                 for (int i = 0; i < iconBytes.Length; i += structureSize)
@@ -38,7 +47,7 @@ namespace WinPaletter
                     iconWidth = iconWidth == 0 ? 256 : iconWidth;
                     iconHeight = iconHeight == 0 ? 256 : iconHeight;
 
-                    Ressy.Resource resource = PE.TryGetResource(new Ressy.ResourceIdentifier(Ressy.ResourceType.Icon, Ressy.ResourceName.FromCode(iconIndex)));
+                    Resource resource = PE.TryGetResource(new ResourceIdentifier(Ressy.ResourceType.Icon, Ressy.ResourceName.FromCode(iconIndex)));
                     if (resource is not null) icons.Add(new() { Width = iconWidth, Height = iconHeight, ColorCount = iconColors, Buffer = resource.Data });
                 }
 
@@ -53,6 +62,9 @@ namespace WinPaletter
                 }
             }
 
+            /// <summary>
+            /// IconInfo class to store icon information.
+            /// </summary>
             public class IconInfo
             {
                 public int Width;
@@ -63,7 +75,14 @@ namespace WinPaletter
                 public IconInfo() { }
             }
 
+            /// <summary>
+            /// Maximum icon width.
+            /// </summary>
             public const int MaxIconWidth = 256;
+
+            /// <summary>
+            /// Maximum icon height.
+            /// </summary>
             public const int MaxIconHeight = 256;
 
             private const ushort HeaderReserved = 0;
@@ -76,25 +95,37 @@ namespace WinPaletter
             private const byte PngColorsInPalette = 0;
             private const ushort PngColorPlanes = 1;
 
+            /// <summary>
+            /// Convert a collection of icon buffers to an icon.
+            /// </summary>
+            /// <param name="imageBuffers"></param>
+            /// <param name="writer"></param>
+            /// <exception cref="ArgumentNullException"></exception>
             private static void BytesToIcon(IEnumerable<IconInfo> imageBuffers, System.IO.BinaryWriter writer)
             {
+                // Validate the input
                 if (imageBuffers == null)
                     throw new ArgumentNullException(nameof(imageBuffers));
                 if (writer == null)
                     throw new ArgumentNullException(nameof(writer));
 
+                // Throw an exception if any of the image buffers are invalid
                 ThrowForInvalidImages(imageBuffers);
 
-                IconInfo[] orderedBuffers = imageBuffers.OrderBy(b => b.Buffer.Length).ToArray();
+                // Order the buffers by size
+                IconInfo[] orderedBuffers = [.. imageBuffers.OrderBy(b => b.Buffer.Length)];
 
+                // Write the icon header
                 writer.Write(HeaderReserved);
                 writer.Write(HeaderIconType);
                 writer.Write((ushort)orderedBuffers.Length);
 
-                Dictionary<uint, byte[]> buffers = new();
+                // Write the icon entries
+                Dictionary<uint, byte[]> buffers = [];
                 uint lengthSum = 0;
                 uint baseOffset = (uint)(HeaderLength + EntryLength * orderedBuffers.Length);
 
+                // Write the icon entries
                 for (int i = 0; i < orderedBuffers.Length; i++)
                 {
                     byte[] buffer = orderedBuffers[i].Buffer;
@@ -102,7 +133,7 @@ namespace WinPaletter
                     byte height = (byte)orderedBuffers[i].Height;
                     byte colorCount = (byte)orderedBuffers[i].ColorCount;
 
-                    uint offset = (baseOffset + lengthSum);
+                    uint offset = baseOffset + lengthSum;
 
                     writer.Write(width);
                     writer.Write(height);
@@ -117,6 +148,7 @@ namespace WinPaletter
                     buffers.Add(offset, buffer);
                 }
 
+                // Write the icon data
                 foreach (KeyValuePair<uint, byte[]> kvp in buffers)
                 {
                     writer.BaseStream.Seek(kvp.Key, System.IO.SeekOrigin.Begin);
@@ -124,6 +156,11 @@ namespace WinPaletter
                 }
             }
 
+            /// <summary>
+            /// Throw an exception if any of the image buffers are invalid
+            /// </summary>
+            /// <param name="imageBuffers"></param>
+            /// <exception cref="InvalidOperationException"></exception>
             private static void ThrowForInvalidImages(IEnumerable<IconInfo> imageBuffers)
             {
                 foreach (IconInfo buffer in imageBuffers)
@@ -136,12 +173,23 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Security Identifier for the Builtin Administrators group.
+        /// </summary>
         private readonly static SecurityIdentifier identifier = new(WellKnownSidType.BuiltinAdministratorsSid, null);
+
+        /// <summary>
+        /// NT Account for the Builtin Administrators group.
+        /// </summary>
         private readonly static NTAccount AdminAccount = (NTAccount)identifier.Translate(typeof(NTAccount));
+
+        /// <summary>
+        /// Access rule for the Builtin Administrators group.
+        /// </summary>
         private readonly static FileSystemAccessRule AccessRule = new(AdminAccount, FileSystemRights.FullControl, AccessControlType.Allow);
 
         /// <summary>
-        /// Get a resource from a Portable Executable (PE) file as a byte array.
+        /// Get a resource from a Portable Executable (PE) File as a byte array.
         /// </summary>
         /// <param name="SourceFile"></param>
         /// <param name="ResourceType"></param>
@@ -155,7 +203,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Replace a resource in a Portable Executable (PE) file by a byte array.
+        /// Replace a resource in a Portable Executable (PE) File by a byte array.
         /// </summary>
         /// <param name="treeView"></param>
         /// <param name="SourceFile"></param>
@@ -169,7 +217,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Replace a resource in a Portable Executable (PE) file by a byte array.
+        /// Replace a resource in a Portable Executable (PE) File by a byte array.
         /// </summary>
         /// <param name="SourceFile"></param>
         /// <param name="ResourceType"></param>
@@ -182,7 +230,7 @@ namespace WinPaletter
 
             if (System.IO.Path.GetFullPath(SourceFile).ToLower().StartsWith(SysPaths.Windows, StringComparison.OrdinalIgnoreCase))
             {
-                // It is a system PE file that needs rights/permissions modification.
+                // It is a system PE File that needs rights/permissions modification.
 
                 if (Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Program.Settings.ThemeApplyingBehavior.PE_ModifyByDefault || !Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Forms.PE_Warning.NotifyAction(SourceFile, ResourceType, ID, LangID) == DialogResult.OK)
                 {
@@ -190,31 +238,31 @@ namespace WinPaletter
                     string TempFile = System.IO.Path.GetTempFileName();
 
                     if (treeView is not null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_PE_GettingAccess, System.IO.Path.GetFileName(SourceFile)), "admin");
-                    PreparePrivileges();                                     // To get authorized access to change PE file access/permissions
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GettingAccess, System.IO.Path.GetFileName(SourceFile)), "admin");
+                    PreparePrivileges();                                     // To get authorized access to change PE File access/permissions
 
                     if (treeView is not null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_PE_CreateBackup, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
-                    if (CreateBackup(SourceFile))                        // Makes a copy of EP file as a backup file
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_CreateBackup, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                    if (CreateBackup(SourceFile))                        // Makes a copy of EP File as a backup File
                     {
 
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_PE_GetBackupPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
-                        if (BackupPermissions(SourceFile, TempFile))     // Source file rights have been backed up successfully
+                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetBackupPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                        if (BackupPermissions(SourceFile, TempFile))     // Source File rights have been backed up successfully
                         {
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_PE_GetAccessToChangeResources, System.IO.Path.GetFileName(SourceFile)), "admin");
-                            PreparePrivileges();                             // To get authorized access to change resources for PE file
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetAccessToChangeResources, System.IO.Path.GetFileName(SourceFile)), "admin");
+                            PreparePrivileges();                             // To get authorized access to change resources for PE File
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
                             PortableExecutable PE_File = new(SourceFile);
                             PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
-                            RestorePermissions(SourceFile, TempFile);        // Restore source file rights
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
+                            RestorePermissions(SourceFile, TempFile);        // Restore source File rights
 
                         }
                     }
@@ -233,6 +281,11 @@ namespace WinPaletter
 
         }
 
+        /// <summary>
+        /// Create a backup of a Portable Executable (PE) File.
+        /// </summary>
+        /// <param name="SourceFile"></param>
+        /// <returns></returns>
         private static bool CreateBackup(string SourceFile)
         {
             foreach (string backupFile in System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(SourceFile), $"{System.IO.Path.GetFileNameWithoutExtension(SourceFile)}*.bak"))
@@ -241,7 +294,7 @@ namespace WinPaletter
                 {
                     System.IO.File.Delete(backupFile);
                 }
-                catch { } // Ignore deleting backup file if it fails
+                catch { } // Ignore deleting backup File if it fails
 
                 PreparePrivileges();
             }
@@ -261,6 +314,12 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Backup permissions of a Portable Executable (PE) File.
+        /// </summary>
+        /// <param name="SourceFile"></param>
+        /// <param name="BackupFile"></param>
+        /// <returns></returns>
         private static bool BackupPermissions(string SourceFile, string BackupFile)
         {
             FileSecurity accessControl = System.IO.File.GetAccessControl(SourceFile);
@@ -279,6 +338,12 @@ namespace WinPaletter
             return true;
         }
 
+        /// <summary>
+        /// Restore permissions of a Portable Executable (PE) File.
+        /// </summary>
+        /// <param name="SourceFile"></param>
+        /// <param name="BackupFile"></param>
+        /// <returns></returns>
         private static bool RestorePermissions(string SourceFile, string BackupFile)
         {
             FileSecurity BackupAccessControl = System.IO.File.GetAccessControl(SourceFile);
@@ -290,6 +355,10 @@ namespace WinPaletter
             return true;
         }
 
+        /// <summary>
+        /// Prepare privileges for a Portable Executable (PE) File.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         private static void PreparePrivileges()
         {
             if (!NativeMethods.advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
@@ -299,7 +368,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get a PNG image as <see cref="Bitmap"/> from a Portable Executable (PE) file.
+        /// Get a PNG image as <see cref="Bitmap"/> from a Portable Executable (PE) File.
         /// </summary>
         /// <param name="File"></param>
         /// <param name="ResourceID"></param>
@@ -341,7 +410,10 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get an <see cref="Icon"/> from a Portable Executable (PE) file, provided by its icon group index.
+        /// Get an <see cref="Icon"/> from a Portable Executable (PE) File, provided by its icon group index.
+        /// <br></br>
+        /// <br></br>- If the icon group index is positive, the icon group is extracted by index.
+        /// <br></br>- If the icon group index is negative, the icon group is extracted by resource name.
         /// </summary>
         /// <param name="dllPath"></param>
         /// <param name="iconIndex"></param>
@@ -382,7 +454,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get the number of icon groups in a Portable Executable (PE) file.
+        /// Get the number of icon groups in a Portable Executable (PE) File.
         /// </summary>
         /// <param name="dllPath"></param>
         /// <returns></returns>

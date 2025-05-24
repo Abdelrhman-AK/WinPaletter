@@ -24,27 +24,19 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private string GetOSName(PreviewHelpers.WindowStyle windowStyle)
+        private string GetOSName(WindowStyle windowStyle)
         {
-            switch (windowStyle)
+            return windowStyle switch
             {
-                case PreviewHelpers.WindowStyle.W12:
-                    return Program.Lang.OS_Win12;
-                case PreviewHelpers.WindowStyle.W11:
-                    return Program.Lang.OS_Win11;
-                case PreviewHelpers.WindowStyle.W10:
-                    return Program.Lang.OS_Win10;
-                case PreviewHelpers.WindowStyle.W81:
-                    return Program.Lang.OS_Win81;
-                case PreviewHelpers.WindowStyle.W7:
-                    return Program.Lang.OS_Win7;
-                case PreviewHelpers.WindowStyle.WVista:
-                    return Program.Lang.OS_WinVista;
-                case PreviewHelpers.WindowStyle.WXP:
-                    return Program.Lang.OS_WinXP;
-                default:
-                    return Program.Lang.OS_WinUndefined;
-            }
+                PreviewHelpers.WindowStyle.W12 => Program.Lang.Strings.Windows.W12,
+                PreviewHelpers.WindowStyle.W11 => Program.Lang.Strings.Windows.W11,
+                PreviewHelpers.WindowStyle.W10 => Program.Lang.Strings.Windows.W10,
+                PreviewHelpers.WindowStyle.W81 => Program.Lang.Strings.Windows.W81,
+                PreviewHelpers.WindowStyle.W7 => Program.Lang.Strings.Windows.W7,
+                PreviewHelpers.WindowStyle.WVista => Program.Lang.Strings.Windows.WVista,
+                PreviewHelpers.WindowStyle.WXP => Program.Lang.Strings.Windows.WXP,
+                _ => Program.Lang.Strings.Windows.Undefined,
+            };
         }
 
         /// <summary>
@@ -54,11 +46,11 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         switch (Program.WindowStyle)
                         {
@@ -84,7 +76,7 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 switch (Program.WindowStyle)
                 {
@@ -110,7 +102,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle))
+            using (Manager TMx = Theme.Default.Get(Program.WindowStyle))
             {
                 switch (Program.WindowStyle)
                 {
@@ -161,13 +153,13 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -231,7 +223,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.VisualStyles,
+                AspectName = Program.Lang.Strings.Aspects.VisualStyles,
                 Enabled = visualStyles.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -252,7 +244,7 @@ namespace WinPaletter
             button28.Visible = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8;
             button29.Visible = button28.Visible;
 
-            alertBox2.Text = string.Format(Program.Lang.WallpaperTone_Notice, GetOSName(Program.WindowStyle));
+            alertBox2.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, GetOSName(Program.WindowStyle));
 
             switch (Program.WindowStyle)
             {
@@ -302,7 +294,7 @@ namespace WinPaletter
 
         private void VS_Browse_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK) VS_textbox.Text = dlg.FileName;
             }
@@ -324,7 +316,7 @@ namespace WinPaletter
                     if (!string.IsNullOrWhiteSpace(result.Value))
                     {
                         alertBox1.Visible = true;
-                        alertBox1.Text = string.Format(Program.Lang.VisualStyles_WrongPlatform, result.Value, GetOSName(Program.WindowStyle));
+                        alertBox1.Text = string.Format(Program.Lang.Strings.Tips.VisualStyles_WrongPlatform, result.Value, GetOSName(Program.WindowStyle));
                     }
                 }
                 else
@@ -342,26 +334,26 @@ namespace WinPaletter
             {
                 using (libmsstyle.VisualStyle vs = new(theme))
                 {
-                    // Let's assume that Win12 is identical to Win11 until official release !
-                    if (vs.Platform == libmsstyle.Platform.Win11 && (Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12))
+                    // Let's assume that W12 is identical to Win11 until official release !
+                    if (vs.Platform == libmsstyle.Platform.Win11 && Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12)
                     {
-                        return new(false, Program.Lang.OS_Win11);
+                        return new(false, Program.Lang.Strings.Windows.W11);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Win10 && Program.WindowStyle != WindowStyle.W10)
                     {
-                        return new(false, Program.Lang.OS_Win10);
+                        return new(false, Program.Lang.Strings.Windows.W10);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Win81 && Program.WindowStyle != WindowStyle.W81)
                     {
-                        return new(false, Program.Lang.OS_Win81);
+                        return new(false, Program.Lang.Strings.Windows.W81);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Win7 && Program.WindowStyle != WindowStyle.W7)
                     {
-                        return new(false, Program.Lang.OS_Win7);
+                        return new(false, Program.Lang.Strings.Windows.W7);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Vista && Program.WindowStyle != WindowStyle.WVista)
                     {
-                        return new(false, Program.Lang.OS_WinVista);
+                        return new(false, Program.Lang.Strings.Windows.WVista);
                     }
                     else
                     {
@@ -369,7 +361,7 @@ namespace WinPaletter
                     }
                 }
             }
-            catch // Couldn't load visual styles file by libmsstyles, so we will assume that it is a Windows XP theme
+            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows WXP theme
             {
                 try
                 {
@@ -385,7 +377,7 @@ namespace WinPaletter
                         {
                             if (Program.WindowStyle != WindowStyle.WXP)
                             {
-                                return new(false, Program.Lang.OS_WinXP);
+                                return new(false, Program.Lang.Strings.Windows.WXP);
                             }
                             else
                             {
@@ -448,7 +440,7 @@ namespace WinPaletter
                                 foreach (VisualStyleScheme x in vs.ColorSchemes) VS_ColorsList.Items.Add(x.Name);
                                 foreach (VisualStyleSize x in vs.Sizes) VS_SizesList.Items.Add(x.DisplayName);
                             }
-                            catch { } // Couldn't load visual styles file, so no scheme will be added
+                            catch { } // Couldn't load visual styles File, so no scheme will be added
 
                             if (VS_ColorsList.Items.Count > 0) VS_ColorsList.SelectedIndex = 0; else VS_ColorsList.SelectedIndex = -1;
                             if (VS_SizesList.Items.Count > 0) VS_SizesList.SelectedIndex = 0; else VS_SizesList.SelectedIndex = -1;
@@ -470,7 +462,7 @@ namespace WinPaletter
 
         private void button21_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Default.Get())
+            using (Manager TMx = Default.Get())
             {
                 switch (Program.WindowStyle)
                 {

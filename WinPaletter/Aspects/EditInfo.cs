@@ -18,7 +18,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -50,25 +50,25 @@ namespace WinPaletter
                 ref Localizer lang = ref Program.Lang;
                 if (string.IsNullOrWhiteSpace(TextBox1.Text))
                 {
-                    MsgBox(lang.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.Strings.Messages.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox2.Text))
                 {
-                    MsgBox(lang.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.Strings.Messages.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (!TextBox2.Text.Replace(".", string.Empty).All(char.IsDigit))
                 {
-                    MsgBox(lang.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.Strings.Messages.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox4.Text))
                 {
-                    MsgBox(lang.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(lang.Strings.Messages.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -106,7 +106,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.ThemeInfo,
+                AspectName = Program.Lang.Strings.Aspects.Info,
                 Enabled = true,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -318,11 +318,13 @@ namespace WinPaletter
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
             StoreItem1.TM.Info.ThemeName = ((UI.WP.TextBox)sender).Text;
+            StoreItem1.Invalidate();
         }
 
         private void TextBox4_TextChanged(object sender, EventArgs e)
         {
             StoreItem1.TM.Info.Author = ((UI.WP.TextBox)sender).Text;
+            StoreItem1.Invalidate();
         }
 
         private void TextBox2_TextChanged(object sender, EventArgs e)
@@ -342,7 +344,7 @@ namespace WinPaletter
 
         private void EditInfo_ParentChanged(object sender, EventArgs e)
         {
-            if (this.Parent != null && Parent is TabPage)
+            if (Parent != null && Parent is TabPage)
             {
                 pin_button.Visible = false;
             }

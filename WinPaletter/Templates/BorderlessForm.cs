@@ -4,20 +4,40 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// A borderless form with custom styling and animations.
+    /// </summary>
     public partial class BorderlessForm : Form
     {
         const uint WM_NCACTIVATE = 0x86U;
         private bool _shown = false;
 
+        /// <summary>
+        /// Whether the form should close when it loses focus.
+        /// </summary>
         public bool CloseOnLostFocus { get; set; } = true;
+
+        /// <summary>
+        /// Whether the form should close when clicked.
+        /// </summary>
         public bool CloseOnClick { get; set; } = false;
+
+        /// <summary>
+        /// Whether the form should animate when shown or hidden.
+        /// </summary>
         public bool Animate { get; set; } = true;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BorderlessForm"/> class.
+        /// </summary>
         public BorderlessForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Gets the creation parameters for the form.
+        /// </summary>
         protected override CreateParams CreateParams
         {
             get
@@ -36,6 +56,10 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Processes Windows messages.
+        /// </summary>
+        /// <param name="m"></param>
         protected override void WndProc(ref Message m)
         {
             if (!DesignMode)
@@ -44,6 +68,7 @@ namespace WinPaletter
                 {
                     case DWMAPI.WM_NCPAINT:
                         {
+                            // Glass (Aero) effect borders and drop shadow
                             int val = 2;
                             if (DWMAPI.IsCompositionEnabled())
                             {
@@ -61,6 +86,7 @@ namespace WinPaletter
                         }
                 }
 
+                // Close the form when it loses focus
                 if (CloseOnLostFocus && m.Msg == WM_NCACTIVATE && m.WParam == IntPtr.Zero)
                 {
                     if (Visible && !RectangleToScreen(DisplayRectangle).Contains(Cursor.Position))
@@ -73,7 +99,11 @@ namespace WinPaletter
             base.WndProc(ref m);
         }
 
-        public void Deactivate(bool close = true)
+        /// <summary>
+        /// Deactivates the form using an animation.
+        /// </summary>
+        /// <param name="close"></param>
+        public new void Deactivate(bool close = true)
         {
             if (_shown)
             {
@@ -86,22 +116,23 @@ namespace WinPaletter
             }
         }
 
-        private void BorderlessForm_Load(object sender, System.EventArgs e)
+        private void BorderlessForm_Load(object sender, EventArgs e)
         {
             _shown = false;
             this.LoadLanguage();
             ApplyStyle(this);
 
+            // Animate the form when shown
             if (!DesignMode && Animate)
             {
-                Opacity = (double)0;
+                Opacity = 0;
                 FluentTransitions.Transition
                     .With(this, nameof(Opacity), (double)1)
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
         }
 
-        private void BorderlessForm_Shown(object sender, System.EventArgs e)
+        private void BorderlessForm_Shown(object sender, EventArgs e)
         {
             _shown = true;
             Invalidate();

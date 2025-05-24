@@ -20,7 +20,7 @@ namespace WinPaletter.Theme.Structures
         public byte Alpha;
 
         /// <summary>
-        /// Theme used for Windows Vista
+        /// Theme type used for Windows Vista
         /// <code>
         /// Aero
         /// AeroOpaque
@@ -53,7 +53,7 @@ namespace WinPaletter.Theme.Structures
 
                 bool Opaque = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false));
 
-                bool Classic = false;
+                bool Classic;
 
                 try
                 {

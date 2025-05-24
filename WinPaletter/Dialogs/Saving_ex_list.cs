@@ -18,7 +18,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (BugReport formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<BugReport>();
 
             TreeView1.ImageList = ImageLists.ThemeLog;
             TreeView1.Nodes.Clear();
@@ -30,7 +30,7 @@ namespace WinPaletter
                 temp.SelectedImageKey = "error";
             }
 
-            alertBox1.Text = ApplyMode ? Program.Lang.ApplyingMode_ErrorDialog : Program.Lang.LoadingMode_ErrorDialog;
+            alertBox1.Text = ApplyMode ? Program.Lang.Strings.Messages.ApplyingMode_ErrorDialog : Program.Lang.Strings.Messages.LoadingMode_ErrorDialog;
 
             ApplyMode = true;
         }

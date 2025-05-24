@@ -22,8 +22,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>Returns true if there is an active network connection; otherwise, false.</returns>
         public static bool CheckNet()
         {
-            int desc;
-            return Wininet.InternetGetConnectedState(out desc, 0);
+            return Wininet.InternetGetConnectedState(out _, 0);
         }
     }
 }

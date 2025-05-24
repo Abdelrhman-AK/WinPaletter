@@ -7,10 +7,15 @@ using WinPaletter.UI.Simulation;
 
 namespace WinPaletter.Templates
 {
+    /// <summary>
+    /// Desktop Icons template (Used to simulate the desktop icons preview)
+    /// </summary>
     public partial class DesktopIcons : UserControl
     {
-
-        public Font Font
+        /// <summary>
+        /// Desktop icons font
+        /// </summary>
+        public new Font Font
         {
             get => _font;
             set
@@ -26,6 +31,9 @@ namespace WinPaletter.Templates
         }
         private Font _font = new("Segoe UI", 9f);
 
+        /// <summary>
+        /// Desktop icons size
+        /// </summary>
         public int IconSize
         {
             get => _iconSize;
@@ -53,6 +61,9 @@ namespace WinPaletter.Templates
         }
         private int _iconSize = 32;
 
+        /// <summary>
+        /// Vertical spacing between icons
+        /// </summary>
         public int IconSpacing_Vertical
         {
             get => _iconSpacingV;
@@ -74,6 +85,9 @@ namespace WinPaletter.Templates
         }
         private int _iconSpacingV = 75;
 
+        /// <summary>
+        /// Horizontal spacing between icons
+        /// </summary>
         public int IconSpacing_Horizontal
         {
             get => _iconSpacingH;
@@ -112,6 +126,9 @@ namespace WinPaletter.Templates
         }
         private Font _iconFont = new("Segoe UI", 9f);
 
+        /// <summary>
+        /// Create a new instance of <see cref="DesktopIcons"/>
+        /// </summary>
         public DesktopIcons()
         {
             DoubleBuffered = true;
@@ -119,7 +136,16 @@ namespace WinPaletter.Templates
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Event handler for editing an item on the preview (<see cref="EditorInvoker"/>) event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
+
+        /// <summary>
+        /// Occurs when an item on the preview is being edited
+        /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
         private void DesktopIcons_Load(object sender, EventArgs e)
@@ -131,7 +157,7 @@ namespace WinPaletter.Templates
                 FakeIcon3.EnableEditingSpacingH = true;
                 FakeIcon2.EnableEditingSpacingV = true;
 
-                using (MainForm formIcon = new()) { FakeIcon1.Icon = formIcon.Icon; } // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+                FakeIcon1.Icon = FormsExtensions.Icon<MainForm>();                    // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
                 FakeIcon2.Icon = Properties.Resources.fileextension;                  // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
                 FakeIcon3.Icon = Properties.Resources.ThemesResIcon;                  // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
@@ -141,6 +167,10 @@ namespace WinPaletter.Templates
             }
         }
 
+        /// <summary>
+        /// Load metrics from the theme manager
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadMetrics(Theme.Manager TM)
         {
             Font = TM.MetricsFonts.IconFont;
@@ -157,7 +187,7 @@ namespace WinPaletter.Templates
             FakeIcon3.ColorGlow = FakeIcon1.ColorGlow;
         }
 
-        private void FakeIconX_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        private void FakeIconX_EditorInvoker(object sender, EditorEventArgs e)
         {
             if (e.PropertyName == nameof(IconSize))
             {

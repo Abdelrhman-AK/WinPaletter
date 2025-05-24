@@ -164,10 +164,10 @@
             this.titlebarExtender1.Controls.Add(this.checker_img);
             this.titlebarExtender1.Controls.Add(this.separatorV1);
             this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.titlebarExtender1.DropDWMEffect = false;
+            this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender1.Name = "titlebarExtender1";
-            this.titlebarExtender1.Size = new System.Drawing.Size(884, 52);
+            this.titlebarExtender1.Size = new System.Drawing.Size(884, 51);
             this.titlebarExtender1.TabIndex = 115;
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             // 
@@ -181,9 +181,9 @@
             this.flowLayoutPanel1.Controls.Add(this.btn_import);
             this.flowLayoutPanel1.Controls.Add(this.btn_palette_generate);
             this.flowLayoutPanel1.Controls.Add(this.btn_saveas_MSTheme);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(7, 7);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(7, 6);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(772, 40);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(772, 39);
             this.flowLayoutPanel1.TabIndex = 124;
             // 
             // pin_button
@@ -259,7 +259,7 @@
             this.checker.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.checker.Checked = false;
             this.checker.DarkLight_Toggler = false;
-            this.checker.Location = new System.Drawing.Point(836, 17);
+            this.checker.Location = new System.Drawing.Point(836, 15);
             this.checker.Name = "checker";
             this.checker.Size = new System.Drawing.Size(40, 20);
             this.checker.TabIndex = 121;
@@ -269,7 +269,7 @@
             // 
             this.checker_img.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.checker_img.Image = global::WinPaletter.Properties.Resources.checker_disabled;
-            this.checker_img.Location = new System.Drawing.Point(794, 12);
+            this.checker_img.Location = new System.Drawing.Point(794, 10);
             this.checker_img.Name = "checker_img";
             this.checker_img.Size = new System.Drawing.Size(35, 31);
             this.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -282,9 +282,9 @@
             this.separatorV1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorV1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV1.Location = new System.Drawing.Point(785, 8);
+            this.separatorV1.Location = new System.Drawing.Point(785, 7);
             this.separatorV1.Name = "separatorV1";
-            this.separatorV1.Size = new System.Drawing.Size(1, 38);
+            this.separatorV1.Size = new System.Drawing.Size(1, 37);
             this.separatorV1.TabIndex = 113;
             this.separatorV1.TabStop = false;
             this.separatorV1.Text = "separatorV1";

@@ -19,7 +19,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Inactivity (idle) time after which the screen saver will start</summary>
         public int TimeOut = 60;
 
-        /// <summary>Screen saver file</summary>
+        /// <summary>Screen saver File</summary>
         public string File = string.Empty;
 
         /// <summary>

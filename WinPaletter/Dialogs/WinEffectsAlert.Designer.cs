@@ -205,8 +205,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WinEffectsAlert";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Windows Effects alert";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinEffectsAlert_FormClosing);
             this.Load += new System.EventHandler(this.WinEffectsAlert_Load);
             this.bottom_buttons.ResumeLayout(false);

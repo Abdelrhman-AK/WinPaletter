@@ -6,13 +6,18 @@ namespace WinPaletter.Theme
 {
     public partial class Manager
     {
+        /// <summary>
+        /// Add exception to the list of exceptions
+        /// </summary>
+        /// <param name="Label"></param>
+        /// <param name="Exception"></param>
         private void AddException(string Label, Exception Exception)
         {
             Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Label, Exception));
         }
 
         /// <summary>
-        /// Helps in executing apply Methods for WinPaletter theme structures, and counts execution time
+        /// Helps in executing apply methods for WinPaletter theme structures, logs the progress in a treeView (if provided), measures the time taken to execute the apply method, and handles exceptions.
         /// </summary>
         /// <param name="method">method that executes apply for a WinPaletter theme structure (feature)</param>
         /// <param name="treeView">treeView used as a theme log</param>
@@ -20,7 +25,7 @@ namespace WinPaletter.Theme
         /// <param name="errorStr">String used to inform user that applying feature threw an error</param>
         /// <param name="TimeStr">String used to inform user about applying feature execution time</param>
         /// <param name="overallStopwatch">A stopwatch used to collect all milliseconds for other themes structures (To calculate whole theme applying duration)</param>
-        /// <param name="skip">skip execution</param>
+        /// <param name="skip">Skip execution</param>
         /// <param name="skipStr">String used to inform user that feature has been skipped</param>
         public void Execute(MethodInvoker method, TreeView treeView = null, string statingStr = "", string errorStr = "", string TimeStr = "", Stopwatch overallStopwatch = null, bool skip = false, string skipStr = "")
         {

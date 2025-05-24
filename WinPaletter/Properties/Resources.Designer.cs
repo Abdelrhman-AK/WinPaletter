@@ -453,7 +453,7 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MIT/LGPL Dual License
         ///
-        ///Copyright (c) 2022-2024 Abdelrhman-AK
+        ///Copyright (c) 2022-2025 Abdelrhman-AK
         ///
         ///Permission is hereby granted, free of charge, to any person obtaining a copy
         ///of this software and associated documentation files (the &quot;Software&quot;), to deal

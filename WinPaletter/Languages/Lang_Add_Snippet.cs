@@ -4,13 +4,29 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-
+    /// <summary>
+    /// A form that allows the user to select a language name as a snippet from a list of all available languages.
+    /// </summary>
     public partial class Lang_Add_Snippet
     {
+        /// <summary>
+        /// The cultures available on the system.
+        /// </summary>
+        readonly CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+
+        /// <summary>
+        /// The result of the form.
+        /// </summary>
+        public string result;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Lang_Add_Snippet"/> class.
+        /// </summary>
         public Lang_Add_Snippet()
         {
             InitializeComponent();
         }
+
         private void Lang_Add_Snippet_Load(object sender, EventArgs e)
         {
             this.LoadLanguage();
@@ -18,51 +34,19 @@ namespace WinPaletter
 
             DialogResult = DialogResult.None;
 
-            CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
             ComboBox1.Items.Clear();
-            ComboBox2.Items.Clear();
 
             foreach (CultureInfo culture in cultures)
             {
-                if (!ComboBox1.Items.Contains(culture.NativeName) & !string.IsNullOrWhiteSpace(culture.NativeName))
-                    ComboBox1.Items.Add(culture.NativeName);
-                if (!ComboBox2.Items.Contains(culture.Name) & !string.IsNullOrWhiteSpace(culture.Name))
-                    ComboBox2.Items.Add(culture.Name);
+                if (!ComboBox1.Items.Contains(culture.NativeName) & !string.IsNullOrWhiteSpace(culture.NativeName)) ComboBox1.Items.Add(culture.NativeName);
             }
 
             ComboBox1.SelectedItem = CultureInfo.CurrentCulture.NativeName;
-            ComboBox2.SelectedItem = CultureInfo.CurrentCulture.Name;
-
-        }
-
-        public string _Result;
-
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                CultureInfo ci = CultureInfo.GetCultureInfo(ComboBox2.SelectedItem.ToString());
-                _Result = ci.TextInfo.IsRightToLeft.ToString();
-            }
-            catch
-            {
-                _Result = "False";
-            }
-
-            DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            _Result = ComboBox1.SelectedItem.ToString();
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        private void Button2_Click(object sender, EventArgs e)
-        {
-            _Result = ComboBox2.SelectedItem.ToString();
+            result = ComboBox1.SelectedItem.ToString();
             DialogResult = DialogResult.OK;
             Close();
         }

@@ -1246,7 +1246,7 @@ namespace WinPaletter
             // 
             this.pictureBox92.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox92.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox92.Image")));
-            this.pictureBox92.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox92.Location = new System.Drawing.Point(150, 3);
             this.pictureBox92.Name = "pictureBox92";
             this.pictureBox92.Size = new System.Drawing.Size(24, 24);
             this.pictureBox92.TabIndex = 118;
@@ -1282,7 +1282,7 @@ namespace WinPaletter
             // 
             this.label87.BackColor = System.Drawing.Color.Transparent;
             this.label87.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label87.Location = new System.Drawing.Point(60, 4);
+            this.label87.Location = new System.Drawing.Point(33, 4);
             this.label87.Name = "label87";
             this.label87.Size = new System.Drawing.Size(109, 22);
             this.label87.TabIndex = 112;
@@ -1617,7 +1617,7 @@ namespace WinPaletter
             // 
             this.pictureBox91.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox91.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox91.Image")));
-            this.pictureBox91.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox91.Location = new System.Drawing.Point(150, 3);
             this.pictureBox91.Name = "pictureBox91";
             this.pictureBox91.Size = new System.Drawing.Size(24, 24);
             this.pictureBox91.TabIndex = 118;
@@ -1653,7 +1653,7 @@ namespace WinPaletter
             // 
             this.Label6.BackColor = System.Drawing.Color.Transparent;
             this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label6.Location = new System.Drawing.Point(60, 4);
+            this.Label6.Location = new System.Drawing.Point(33, 4);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(109, 22);
             this.Label6.TabIndex = 112;
@@ -1883,7 +1883,7 @@ namespace WinPaletter
             // 
             this.pictureBox88.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox88.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox88.Image")));
-            this.pictureBox88.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox88.Location = new System.Drawing.Point(150, 3);
             this.pictureBox88.Name = "pictureBox88";
             this.pictureBox88.Size = new System.Drawing.Size(24, 24);
             this.pictureBox88.TabIndex = 117;
@@ -1919,7 +1919,7 @@ namespace WinPaletter
             // 
             this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(60, 4);
+            this.Label2.Location = new System.Drawing.Point(33, 4);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(109, 22);
             this.Label2.TabIndex = 112;
@@ -2019,7 +2019,7 @@ namespace WinPaletter
             // 
             this.pictureBox90.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox90.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox90.Image")));
-            this.pictureBox90.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox90.Location = new System.Drawing.Point(150, 3);
             this.pictureBox90.Name = "pictureBox90";
             this.pictureBox90.Size = new System.Drawing.Size(24, 24);
             this.pictureBox90.TabIndex = 118;
@@ -2055,7 +2055,7 @@ namespace WinPaletter
             // 
             this.Label3.BackColor = System.Drawing.Color.Transparent;
             this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label3.Location = new System.Drawing.Point(60, 4);
+            this.Label3.Location = new System.Drawing.Point(33, 4);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(109, 22);
             this.Label3.TabIndex = 112;
@@ -2155,7 +2155,7 @@ namespace WinPaletter
             // 
             this.pictureBox89.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox89.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox89.Image")));
-            this.pictureBox89.Location = new System.Drawing.Point(30, 2);
+            this.pictureBox89.Location = new System.Drawing.Point(150, 2);
             this.pictureBox89.Name = "pictureBox89";
             this.pictureBox89.Size = new System.Drawing.Size(24, 24);
             this.pictureBox89.TabIndex = 118;
@@ -2191,7 +2191,7 @@ namespace WinPaletter
             // 
             this.Label4.BackColor = System.Drawing.Color.Transparent;
             this.Label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(60, 4);
+            this.Label4.Location = new System.Drawing.Point(33, 4);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(109, 22);
             this.Label4.TabIndex = 112;
@@ -4585,7 +4585,7 @@ namespace WinPaletter
             // 
             this.pictureBox99.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox99.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox99.Image")));
-            this.pictureBox99.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox99.Location = new System.Drawing.Point(192, 3);
             this.pictureBox99.Name = "pictureBox99";
             this.pictureBox99.Size = new System.Drawing.Size(24, 24);
             this.pictureBox99.TabIndex = 121;
@@ -4621,7 +4621,7 @@ namespace WinPaletter
             // 
             this.label90.BackColor = System.Drawing.Color.Transparent;
             this.label90.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label90.Location = new System.Drawing.Point(60, 4);
+            this.label90.Location = new System.Drawing.Point(33, 4);
             this.label90.Name = "label90";
             this.label90.Size = new System.Drawing.Size(151, 22);
             this.label90.TabIndex = 112;
@@ -4879,7 +4879,7 @@ namespace WinPaletter
             // 
             this.pictureBox96.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox96.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox96.Image")));
-            this.pictureBox96.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox96.Location = new System.Drawing.Point(192, 3);
             this.pictureBox96.Name = "pictureBox96";
             this.pictureBox96.Size = new System.Drawing.Size(24, 24);
             this.pictureBox96.TabIndex = 120;
@@ -4889,7 +4889,7 @@ namespace WinPaletter
             // 
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(60, 4);
+            this.label12.Location = new System.Drawing.Point(33, 4);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(151, 22);
             this.label12.TabIndex = 112;
@@ -5121,7 +5121,7 @@ namespace WinPaletter
             // 
             this.pictureBox97.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox97.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox97.Image")));
-            this.pictureBox97.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox97.Location = new System.Drawing.Point(192, 3);
             this.pictureBox97.Name = "pictureBox97";
             this.pictureBox97.Size = new System.Drawing.Size(24, 24);
             this.pictureBox97.TabIndex = 121;
@@ -5157,7 +5157,7 @@ namespace WinPaletter
             // 
             this.label88.BackColor = System.Drawing.Color.Transparent;
             this.label88.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label88.Location = new System.Drawing.Point(60, 4);
+            this.label88.Location = new System.Drawing.Point(33, 4);
             this.label88.Name = "label88";
             this.label88.Size = new System.Drawing.Size(151, 22);
             this.label88.TabIndex = 112;
@@ -5677,7 +5677,7 @@ namespace WinPaletter
             // 
             this.pictureBox93.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox93.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox93.Image")));
-            this.pictureBox93.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox93.Location = new System.Drawing.Point(192, 3);
             this.pictureBox93.Name = "pictureBox93";
             this.pictureBox93.Size = new System.Drawing.Size(24, 24);
             this.pictureBox93.TabIndex = 120;
@@ -5687,7 +5687,7 @@ namespace WinPaletter
             // 
             this.Label86.BackColor = System.Drawing.Color.Transparent;
             this.Label86.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label86.Location = new System.Drawing.Point(60, 4);
+            this.Label86.Location = new System.Drawing.Point(33, 4);
             this.Label86.Name = "Label86";
             this.Label86.Size = new System.Drawing.Size(151, 22);
             this.Label86.TabIndex = 112;
@@ -5788,7 +5788,7 @@ namespace WinPaletter
             // 
             this.pictureBox94.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox94.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox94.Image")));
-            this.pictureBox94.Location = new System.Drawing.Point(30, 3);
+            this.pictureBox94.Location = new System.Drawing.Point(192, 3);
             this.pictureBox94.Name = "pictureBox94";
             this.pictureBox94.Size = new System.Drawing.Size(24, 24);
             this.pictureBox94.TabIndex = 121;
@@ -5824,7 +5824,7 @@ namespace WinPaletter
             // 
             this.label89.BackColor = System.Drawing.Color.Transparent;
             this.label89.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label89.Location = new System.Drawing.Point(60, 4);
+            this.label89.Location = new System.Drawing.Point(33, 4);
             this.label89.Name = "label89";
             this.label89.Size = new System.Drawing.Size(151, 22);
             this.label89.TabIndex = 112;
@@ -13131,7 +13131,6 @@ namespace WinPaletter
             this.Controls.Add(this.alertBox1);
             this.Controls.Add(this.TabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;

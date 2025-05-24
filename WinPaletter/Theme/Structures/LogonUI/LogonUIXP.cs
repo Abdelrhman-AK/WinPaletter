@@ -7,24 +7,24 @@ using System.Windows.Forms;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// LogonUI structure for Windows 10/11
+    /// LogonUI structure for Windows WXP
     /// </summary>
     public struct LogonUIXP : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
 
-        /// <summary>Windows XP LogonUI mode</summary>
+        /// <summary>Windows WXP LogonUI mode</summary>
         public Modes Mode = Modes.Default;
 
-        /// <summary>Windows XP LogonUI background color if selected 'Source' is 'Win2000'</summary>
+        /// <summary>Windows WXP LogonUI background color if selected 'Source' is 'Win2000'</summary>
         public Color BackColor = Color.Black;
 
         /// <summary>Controls if 'More options' button is visible if selected 'Source' is 'Win2000'</summary>
         public bool ShowMoreOptions = false;
 
         /// <summary>
-        /// Enumeration for Windows XP LogonUI modes
+        /// Enumeration for Windows WXP LogonUI modes
         /// </summary>
         public enum Modes
         {
@@ -35,14 +35,14 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Creates a new Windows XP LogonUI structure with default values
+        /// Creates a new Windows WXP LogonUI structure with default values
         /// </summary>
         public LogonUIXP() { }
 
         /// <summary>
-        /// Loads Windows XP LogonUI data from registry
+        /// Loads Windows WXP LogonUI data from registry
         /// </summary>
-        /// <param name="default">Default Windows XP LogonUI data structure</param>
+        /// <param name="default">Default Windows WXP LogonUI data structure</param>
         public void Load(LogonUIXP @default)
         {
             if (OS.WXP)
@@ -88,7 +88,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Saves Windows XP LogonUI data into registry
+        /// Saves Windows WXP LogonUI data into registry
         /// </summary>
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
@@ -98,13 +98,13 @@ namespace WinPaletter.Theme.Structures
             if (Enabled & OS.WXP)
             {
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", Mode == Modes.Default ? 1 : 0, RegistryValueKind.DWord);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToWin32Reg(), RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToStringWin32(), RegistryValueKind.String);
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", ShowMoreOptions ? 1 : 0, RegistryValueKind.DWord);
             }
         }
 
         /// <summary>
-        /// Saves the toggle state of Windows XP LogonUI
+        /// Saves the toggle state of Windows WXP LogonUI
         /// </summary>
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)

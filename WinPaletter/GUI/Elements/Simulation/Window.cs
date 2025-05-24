@@ -47,7 +47,7 @@ namespace WinPaletter.UI.Simulation
             WXP
         }
 
-        int GripSize = 6;
+        readonly int GripSize = 6;
         Rectangle editingRect;
         Rectangle Grip_topLeft;
         Rectangle Grip_topRight;
@@ -316,8 +316,8 @@ namespace WinPaletter.UI.Simulation
         }
 
 
-        private int min_Metrics_CaptionHeight = 16;
-        private int max_Metrics_CaptionHeight = 50;
+        private readonly int min_Metrics_CaptionHeight = 16;
+        private readonly int max_Metrics_CaptionHeight = 50;
 
         private int _Metrics_CaptionHeight = 22;
         public int Metrics_CaptionHeight
@@ -341,8 +341,8 @@ namespace WinPaletter.UI.Simulation
         }
 
 
-        private int min_Metrics_BorderWidth = 0;
-        private int max_Metrics_BorderWidth = 50;
+        private readonly int min_Metrics_BorderWidth = 0;
+        private readonly int max_Metrics_BorderWidth = 50;
 
         private int _Metrics_BorderWidth = 1;
         public int Metrics_BorderWidth
@@ -367,8 +367,8 @@ namespace WinPaletter.UI.Simulation
         }
 
 
-        private int min_Metrics_PaddedBorderWidth = 0;
-        private int max_Metrics_PaddedBorderWidth = 50;
+        private readonly int min_Metrics_PaddedBorderWidth = 0;
+        private readonly int max_Metrics_PaddedBorderWidth = 50;
 
         private int _Metrics_PaddedBorderWidth = 4;
         public int Metrics_PaddedBorderWidth
@@ -783,27 +783,27 @@ namespace WinPaletter.UI.Simulation
                 }
                 if (isMoving_Grip_padding_left)
                 {
-                    Metrics_PaddedBorderWidth = (e.Location.X - (int)(GripSize * 0.5)) - _Metrics_BorderWidth;
+                    Metrics_PaddedBorderWidth = e.Location.X - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
                 }
                 else if (isMoving_Grip_borderWidth_left)
                 {
-                    Metrics_BorderWidth = (e.Location.X - (int)(GripSize * 0.5)) - _Metrics_PaddedBorderWidth;
+                    Metrics_BorderWidth = e.Location.X - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
                 }
                 else if (isMoving_Grip_padding_right)
                 {
-                    Metrics_PaddedBorderWidth = (Width - e.Location.X - (int)(GripSize * 0.5)) - _Metrics_BorderWidth;
+                    Metrics_PaddedBorderWidth = Width - e.Location.X - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
                 }
                 else if (isMoving_Grip_borderWidth_right)
                 {
-                    Metrics_BorderWidth = (Width - e.Location.X - (int)(GripSize * 0.5)) - _Metrics_PaddedBorderWidth;
+                    Metrics_BorderWidth = Width - e.Location.X - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
                 }
                 else if (isMoving_Grip_padding_bottom)
                 {
-                    Metrics_PaddedBorderWidth = (Height - e.Location.Y - (int)(GripSize * 0.5)) - _Metrics_BorderWidth;
+                    Metrics_PaddedBorderWidth = Height - e.Location.Y - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
                 }
                 else if (isMoving_Grip_borderWidth_bottom)
                 {
-                    Metrics_BorderWidth = (Height - e.Location.Y - (int)(GripSize * 0.5)) - _Metrics_PaddedBorderWidth;
+                    Metrics_BorderWidth = Height - e.Location.Y - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
                 }
 
                 else
@@ -891,7 +891,7 @@ namespace WinPaletter.UI.Simulation
 
             else if (!DesignMode && _MetricsEdit_CaptionFont)
             {
-                using (FontDialog fd = new() { Font = this.Font })
+                using (FontDialog fd = new() { Font = Font })
                 {
                     if (fd.ShowDialog() == DialogResult.OK)
                     {
@@ -1814,6 +1814,8 @@ namespace WinPaletter.UI.Simulation
             #endregion
 
             base.OnPaint(e);
+
+
         }
     }
 }

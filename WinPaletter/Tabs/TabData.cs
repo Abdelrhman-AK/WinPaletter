@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.Tabs
@@ -25,7 +26,7 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Reference to the associated form's title bar extender.
         /// </summary>
-        private TitlebarExtender TitlebarExtender => Form?.Controls?.OfType<TitlebarExtender>().FirstOrDefault();
+        private TitlebarExtender TitlebarExtender => Form?.Controls?.OfType<TitlebarExtender>()?.FirstOrDefault();
 
         /// <summary>
         /// Text property for the tab.
@@ -144,19 +145,47 @@ namespace WinPaletter.Tabs
         }
         private bool _isRemoving = false;
 
-        private int _hoverAlpha;
+        /// <summary>
+        /// Flag indicating whether the tab is hovered.
+        /// </summary>
+        public bool Hovered
+        {
+            get => _hovered;
+            set
+            {
+                if (_hovered != value)
+                {
+                    _hovered = value;
+
+                    if (Program.Style.Animations)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(HoverAlpha), value ? (int)255 : (int)0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    }
+                    else
+                    {
+                        HoverAlpha = value ? (int)255 : (int)0;
+                    }
+                }
+            }
+        }
+        private bool _hovered;
+
+        /// <summary>
+        /// Alpha of hover effect over a tab
+        /// </summary>
         public int HoverAlpha
         {
             get => _hoverAlpha;
             set
             {
-                if (value != _hoverAlpha)
+                if (_hoverAlpha != value)
                 {
                     _hoverAlpha = value;
-                    tabsContainer.Invalidate(Rectangle);
+                    tabsContainer.Invalidate();
                 }
             }
         }
+        private int _hoverAlpha = 0;
 
         #endregion
 
@@ -249,6 +278,59 @@ namespace WinPaletter.Tabs
 
         #endregion
 
+        #region Voids
+
+        /// <summary>
+        /// Hide the tab with animation
+        /// </summary>
+        /// <param name="animate"></param>
+        /// <param name="animationDuration"></param>
+        /// <param name="afterAnimationValue"></param>
+        /// <param name="HookOnCompletion"></param>
+        /// <returns></returns>
+        private async Task Animate(bool animate, int animationDuration, int afterAnimationValue, Action HookOnCompletion = null)
+        {
+            if (tabsContainer is not null && tabsContainer.IsHandleCreated)
+            {
+                await Task.Run(() =>
+                {
+                    if (tabsContainer.CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(TabTop), afterAnimationValue)
+                        .HookOnCompletion(() => { tabsContainer.Invoke(HookOnCompletion); })
+                        .CriticalDamp(TimeSpan.FromMilliseconds(animate ? animationDuration : 1));
+                    }
+                    else
+                    {
+                        TabTop = afterAnimationValue;
+                        tabsContainer.Invoke(HookOnCompletion);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// Hide the tab with animation
+        /// </summary>
+        /// <param name="animate"></param>
+        /// <param name="HookOnCompletion"></param>
+        /// <returns></returns>
+        public async Task Hide(bool animate, Action HookOnCompletion = null)
+        {
+            await Animate(animate, Program.AnimationDuration_Quick, tabsContainer.Height, HookOnCompletion);
+        }
+
+        /// <summary>
+        /// Show the tab with animation
+        /// </summary>
+        /// <returns></returns>
+        public async Task Show(Action HookOnCompletion = null)
+        {
+            await Animate(tabsContainer.CanAnimate_Global, Program.AnimationDuration, tabsContainer.upperTabPadding, HookOnCompletion);
+        }
+
+        #endregion
+
         #region Event Handlers
 
         /// <summary>
@@ -274,7 +356,7 @@ namespace WinPaletter.Tabs
             Text = _form.Text;
             if (TabPage is not null) TabPage.Text = _form.Text;
             tabsContainer?.OnFormTextChanged(_form, new(this));
-            tabsContainer?.Invalidate(this.Rectangle);
+            tabsContainer?.Invalidate(Rectangle);
         }
 
         /// <summary>
@@ -333,21 +415,16 @@ namespace WinPaletter.Tabs
     /// <summary>
     /// Event arguments for tab events.
     /// </summary>
-    public class TabDataEventArgs : EventArgs
+    /// <remarks>
+    /// Constructor.
+    /// </remarks>
+    /// <param name="tabData">TabData associated with the event.</param>
+    public class TabDataEventArgs(TabData tabData) : EventArgs
     {
         /// <summary>
         /// TabData associated with the event.
         /// </summary>
-        public TabData TabData { get; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="tabData">TabData associated with the event.</param>
-        public TabDataEventArgs(TabData tabData)
-        {
-            TabData = tabData;
-        }
+        public TabData TabData { get; } = tabData;
     }
 
     /// <summary>
@@ -369,7 +446,7 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Reference to the TabData.
         /// </summary>
-        private TabData TabData;
+        private readonly TabData TabData;
 
         /// <summary>
         /// Last known icon handle.
@@ -387,7 +464,7 @@ namespace WinPaletter.Tabs
         /// <param name="tabData">Reference to the associated TabData.</param>
         public IconChangeMessageHandler(IntPtr handle, TabData tabData)
         {
-            this.TabData = tabData;
+            TabData = tabData;
             AssignHandle(handle);
         }
 

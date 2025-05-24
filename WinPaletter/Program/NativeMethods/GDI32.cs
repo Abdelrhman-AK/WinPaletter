@@ -11,101 +11,83 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Represents a logical font used for text rendering.
         /// </summary>
+        /// <remarks>
+        /// Initializes a new instance of the <see cref="LogFont"/> class.
+        /// </remarks>
+        /// <param name="lfFaceName">The typeface name of the font.</param>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public class LogFont
+        public class LogFont(string lfFaceName = null)
         {
             /// <summary>
             /// Specifies the height, in logical units, of the font's character cell or character.
             /// </summary>
-            public int lfHeight;
+            public int lfHeight = 0;
 
             /// <summary>
             /// Specifies the average width, in logical units, of characters in the font.
             /// </summary>
-            public int lfWidth;
+            public int lfWidth = 0;
 
             /// <summary>
             /// Specifies the angle, in tenths of degrees, between the escapement vector and the x-axis of the device.
             /// </summary>
-            public int lfEscapement;
+            public int lfEscapement = 0;
 
             /// <summary>
             /// Specifies the angle, in tenths of degrees, between each character's base line and the x-axis of the device.
             /// </summary>
-            public int lfOrientation;
+            public int lfOrientation = 0;
 
             /// <summary>
             /// Specifies the weight of the font.
             /// </summary>
-            public int lfWeight;
+            public int lfWeight = 0;
 
             /// <summary>
             /// Specifies if the font is italicized (1 for true, 0 for false).
             /// </summary>
-            public byte lfItalic;
+            public byte lfItalic = 0;
 
             /// <summary>
             /// Specifies if the font is underlined (1 for true, 0 for false).
             /// </summary>
-            public byte lfUnderline;
+            public byte lfUnderline = 0;
 
             /// <summary>
             /// Specifies if the font has a line through it (1 for true, 0 for false).
             /// </summary>
-            public byte lfStrikeOut;
+            public byte lfStrikeOut = 0;
 
             /// <summary>
             /// Specifies the character set of the font.
             /// </summary>
-            public byte lfCharSet;
+            public byte lfCharSet = 0;
 
             /// <summary>
             /// Specifies the output precision.
             /// </summary>
-            public byte lfOutPrecision;
+            public byte lfOutPrecision = 0;
 
             /// <summary>
             /// Specifies the clipping precision.
             /// </summary>
-            public byte lfClipPrecision;
+            public byte lfClipPrecision = 0;
 
             /// <summary>
             /// Specifies the output quality.
             /// </summary>
-            public byte lfQuality;
+            public byte lfQuality = 0;
 
             /// <summary>
             /// Specifies the pitch and family of the font.
             /// </summary>
-            public byte lfPitchAndFamily;
+            public byte lfPitchAndFamily = 0;
 
             /// <summary>
             /// Specifies the typeface name of the font.
             /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            public string lfFaceName;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="LogFont"/> class.
-            /// </summary>
-            /// <param name="lfFaceName">The typeface name of the font.</param>
-            public LogFont(string lfFaceName = null)
-            {
-                this.lfFaceName = lfFaceName;
-                lfHeight = 0;
-                lfWidth = 0;
-                lfEscapement = 0;
-                lfOrientation = 0;
-                lfWeight = 0;
-                lfItalic = 0;
-                lfUnderline = 0;
-                lfStrikeOut = 0;
-                lfCharSet = 0;
-                lfOutPrecision = 0;
-                lfClipPrecision = 0;
-                lfQuality = 0;
-                lfPitchAndFamily = 0;
-            }
+            public string lfFaceName = lfFaceName;
         }
 
         /// <summary>
@@ -306,6 +288,57 @@ namespace WinPaletter.NativeMethods
             /// </summary>
             FF_DECORATIVE = 5 << 4
         }
+
+        /// <summary>
+        /// Create a compatible device context (DC) for the specified device context (DC).
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+
+        /// <summary>
+        /// Creates a bitmap compatible with the specified device context (DC).
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
+
+        /// <summary>
+        /// Selects an object into the specified device context (DC). The object can be a bitmap, pen, brush, font, region, or palette.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern bool SelectObject(IntPtr hdc, IntPtr obj);
+
+        /// <summary>
+        /// Releases the specified device context (DC) and any associated resources.
+        /// </summary>
+        /// <param name="hObject"></param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern bool DeleteObject(IntPtr hObject);
+
+        /// <summary>
+        /// Copies a bitmap from one device context (DC) to another.
+        /// </summary>
+        /// <param name="hdcDest"></param>
+        /// <param name="nXDest"></param>
+        /// <param name="nYDest"></param>
+        /// <param name="nWidth"></param>
+        /// <param name="nHeight"></param>
+        /// <param name="hdcSource"></param>
+        /// <param name="nXSrc"></param>
+        /// <param name="nYSrc"></param>
+        /// <param name="dwRop"></param>
+        /// <returns></returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSource, int nXSrc, int nYSrc, uint dwRop);
 
         /// <summary>
         /// Adds a font resource to the system. The font resource is specified by the contents of a block of data.

@@ -19,7 +19,7 @@ namespace WinPaletter.UI.WP
 
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            if (this.Enabled && this.Selected)
+            if (Enabled && Selected)
             {
                 G.FillRectangle(SystemBrushes.MenuHighlight, new Rectangle(1, 1, Width - 2, Height - 2));
             }
@@ -38,6 +38,8 @@ namespace WinPaletter.UI.WP
                     G.DrawString(Text, Font, br, new Rectangle(1, 1, Width - 2, Height - 2), sf);
                 }
             }
+
+
         }
     }
 }

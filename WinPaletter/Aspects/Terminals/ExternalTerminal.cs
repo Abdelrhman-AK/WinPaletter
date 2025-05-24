@@ -34,15 +34,15 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                         ApplyPreview();
@@ -55,11 +55,11 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Theme.Manager.Source.Registry);
             LoadFromTM(TMx);
             ApplyPreview();
             TMx.Dispose();
@@ -69,7 +69,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -84,66 +84,66 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+            using (Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
         private void ExternalTerminal_Load(object sender, EventArgs e)
@@ -164,7 +164,7 @@ namespace WinPaletter
 
             IEnumerable<UI.WP.Button> buttons = flowLayoutPanel1.Controls.OfType<UI.WP.Button>();
             UI.WP.Button button_import = buttons.Where(b => b.Name.StartsWith("btn_import")).FirstOrDefault() ?? null;
-            button_import.Text = Program.Lang.Designer_import_wpth;
+            button_import.Text = Program.Lang.Strings.Previewer.Import_wpth;
 
             #region Menu _data
             button_import.Menu.Items.Clear();
@@ -180,16 +180,16 @@ namespace WinPaletter
             ToolStripMenuItem import_scheme_Vista = new();
             ToolStripMenuItem import_scheme_XP = new();
 
-            import_current.Text = Program.Lang.Designer_import_current;
-            import_defaultWindows.Text = Program.Lang.Designer_import_defaultWindows;
-            import_scheme.Text = Program.Lang.Designer_import_preset;
-            import_scheme_11.Text = Program.Lang.OS_Win11;
-            import_scheme_10.Text = Program.Lang.OS_Win10;
-            import_scheme_81.Text = Program.Lang.OS_Win81;
-            import_scheme_7.Text = Program.Lang.OS_Win7;
-            import_scheme_Vista.Text = Program.Lang.OS_WinVista;
-            import_scheme_XP.Text = Program.Lang.OS_WinXP;
-            //import_scheme_12.Text = Program.Lang.OS_Win12;
+            import_current.Text = Program.Lang.Strings.Previewer.Import_current;
+            import_defaultWindows.Text = Program.Lang.Strings.Previewer.Import_defaultWindows;
+            import_scheme.Text = Program.Lang.Strings.Previewer.Import_preset;
+            import_scheme_11.Text = Program.Lang.Strings.Windows.W11;
+            import_scheme_10.Text = Program.Lang.Strings.Windows.W10;
+            import_scheme_81.Text = Program.Lang.Strings.Windows.W81;
+            import_scheme_7.Text = Program.Lang.Strings.Windows.W7;
+            import_scheme_Vista.Text = Program.Lang.Strings.Windows.WVista;
+            import_scheme_XP.Text = Program.Lang.Strings.Windows.WXP;
+            //import_scheme_12.Text = Program.modifiedLang.Strings.Windows.W12;
 
             import_current.Image = AspectsResources.CurrentApplied;
 
@@ -314,7 +314,7 @@ namespace WinPaletter
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 Focus();
                 BringToFront();
@@ -356,7 +356,7 @@ namespace WinPaletter
 
             if (!GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(RegKey))
             {
-                MsgBox(Program.Lang.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -675,7 +675,7 @@ namespace WinPaletter
 
                 EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", ExtTerminal_FontWeightBox.SelectedIndex * 100);
 
-                MsgBox(Program.Lang.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -824,7 +824,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 return;
             }
 
@@ -860,7 +860,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 ApplyPreview();
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -875,53 +875,53 @@ namespace WinPaletter
                 { colorItem, new string[] { nameof(colorItem.BackColor) } }
             };
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable00) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable00)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable01) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable01)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable02) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable02)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable03) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable03)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable04) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable04)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable05) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable05)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable06) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable06)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable07) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable07)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable08) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable08)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable09) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable09)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable10) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable10)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable11) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable11)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable12) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable12)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable13) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable13)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable14) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable14)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                CList.Add(CMD4, new string[] { nameof(CMD4.CMD_ColorTable15) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
+                CList.Add(CMD4, [nameof(CMD4.CMD_ColorTable15)]);
 
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
@@ -1554,7 +1554,7 @@ namespace WinPaletter
             }
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             ExtTerminal_ColorTable00.BackColor = TM.CommandPrompt.ColorTable00;
             ExtTerminal_ColorTable01.BackColor = TM.CommandPrompt.ColorTable01;
@@ -1756,8 +1756,8 @@ namespace WinPaletter
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            Program.ToolTip.ToolTipText = Program.Lang.CMD_NotAllWeights;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
+            Program.ToolTip.ToolTipText = Program.Lang.Strings.Aspects.Consoles.CMD_NotAllWeights;
+            Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
             Program.ToolTip.Image = Assets.Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -1772,7 +1772,7 @@ namespace WinPaletter
 
         private void pin_button_ParentChanged(object sender, EventArgs e)
         {
-            if (this.Parent != null && Parent is TabPage)
+            if (Parent != null && Parent is TabPage)
             {
                 pin_button.Visible = false;
             }

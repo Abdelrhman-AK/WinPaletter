@@ -616,8 +616,16 @@ namespace WinPaletter.UI.Simulation
         protected override void OnHandleCreated(EventArgs e)
         {
             if (!DesignMode) ProcessBack();
+            if (!DesignMode && Parent is not null) Parent.BackgroundImageChanged += (sender, e) => ProcessBack();
 
             base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            if (!DesignMode && Parent is not null) Parent.BackgroundImageChanged -= (sender, e) => ProcessBack();
+
+            base.OnHandleDestroyed(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -800,8 +808,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.ActionCenter11:
                     #region Action Center 11
                     {
-                        if (!DesignMode && Transparency && back_blurred is not null)
-                            G.DrawRoundImage(back_blurred, RRect, Radius, true);
+                        if (!DesignMode && Transparency && back_blurred is not null) G.DrawRoundImage(back_blurred, RRect, Radius, true);
 
                         if (DarkMode)
                         {
@@ -822,8 +829,9 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRoundedRect(br, RRect, Radius, true);
                         }
-                        if (Transparency && Noise != null)
-                            G.FillRoundedRect(Noise, RRect, Radius, true);
+
+                        if (Transparency && Noise != null) G.FillRoundedRect(Noise, RRect, Radius, true);
+
                         Button1 = new(8, 8, 49, 20);
                         Button2 = new(62, 8, 49, 20);
 
@@ -1087,7 +1095,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        List<Rectangle> Rects = new();
+                        List<Rectangle> Rects = [];
                         Rects.Clear();
 
                         for (int x = 0, loopTo = appsNumber - 1; x <= loopTo; x++)
@@ -1461,7 +1469,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        List<Rectangle> Rects = new();
+                        List<Rectangle> Rects = [];
                         Rects.Clear();
 
                         for (int x = 0, loopTo2 = appsNumber - 1; x <= loopTo2; x++)
@@ -1688,7 +1696,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        List<Rectangle> Rects = new();
+                        List<Rectangle> Rects = [];
                         Rects.Clear();
 
                         for (int x = 0, loopTo4 = appsNumber - 1; x <= loopTo4; x++)
@@ -1725,7 +1733,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, TextRect, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, TextRect, sf);
                         }
                         break;
                     }
@@ -1751,7 +1759,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        List<Rectangle> Rects = new();
+                        List<Rectangle> Rects = [];
                         Rects.Clear();
 
                         for (int x = 0, loopTo6 = appsNumber - 1; x <= loopTo6; x++)
@@ -1790,7 +1798,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             using (SolidBrush br = new(ForeColor))
                             {
-                                G.DrawString(Program.Lang.AppPreview, Font, br, TextRect, sf);
+                                G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, br, TextRect, sf);
                             }
                         }
                         break;
@@ -2113,7 +2121,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        List<Rectangle> Rects = new();
+                        List<Rectangle> Rects = [];
                         Rects.Clear();
 
                         for (int x = 0, loopTo8 = appsNumber - 1; x <= loopTo8; x++)
@@ -2171,7 +2179,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawGlowString(2, Program.Lang.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                            G.DrawGlowString(2, Program.Lang.Strings.Previewer.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
                         }
                         break;
                     }
@@ -2215,7 +2223,7 @@ namespace WinPaletter.UI.Simulation
                         int AllAppsWidthWithPadding = RRect.Width - 2 * _padding;
                         int AppWidth = (AllAppsWidthWithPadding - (appsNumber - 1) * _padding) / appsNumber;
 
-                        List<Rectangle> Rects = new();
+                        List<Rectangle> Rects = [];
                         Rects.Clear();
 
                         for (int x = 0, loopTo10 = appsNumber - 1; x <= loopTo10; x++)
@@ -2273,7 +2281,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawGlowString(2, Program.Lang.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                            G.DrawGlowString(2, Program.Lang.Strings.Previewer.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
                         }
                         break;
                     }
@@ -2342,7 +2350,7 @@ namespace WinPaletter.UI.Simulation
 
                         int _paddingOuter = (RRect.Width - AppWidth * appsNumber - _padding * (appsNumber - 1)) / 2;
 
-                        List<Rectangle> Rects = new();
+                        List<Rectangle> Rects = [];
                         Rects.Clear();
 
                         for (int x = 0, loopTo12 = appsNumber - 1; x <= loopTo12; x++)
@@ -2371,7 +2379,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.Black, TextRect, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.Black, TextRect, sf);
                         }
                         break;
                     }
@@ -2498,8 +2506,8 @@ namespace WinPaletter.UI.Simulation
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, sf);
-                            G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
                         }
                         break;
                     }
@@ -2549,8 +2557,8 @@ namespace WinPaletter.UI.Simulation
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, sf);
-                            G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
                         }
                         break;
                     }
@@ -2579,8 +2587,8 @@ namespace WinPaletter.UI.Simulation
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.AppPreview, Font, Brushes.White, appLabel1, sf);
-                            G.DrawString(Program.Lang.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Lang.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
                         }
                         break;
                     }
@@ -2598,7 +2606,10 @@ namespace WinPaletter.UI.Simulation
                     }
                     #endregion
             }
+
             base.OnPaint(e);
+
+
         }
     }
 }

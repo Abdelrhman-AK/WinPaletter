@@ -42,19 +42,19 @@ namespace WinPaletter
 
             PE_File = SourceFile;
 
-            TreeView1.Nodes.Add(Program.Lang.PE_Systemfile).Nodes.Add(System.IO.Path.GetFullPath(SourceFile));
+            TreeView1.Nodes.Add(Program.Lang.Strings.PE.FileTypeDescription).Nodes.Add(System.IO.Path.GetFullPath(SourceFile));
 
             {
-                TreeNode temp = TreeView1.Nodes.Add(Program.Lang.PE_ReplacedResourceProperties);
-                temp.Nodes.Add(Program.Lang.PE_ResourceType).Nodes.Add(ResourceType);
-                temp.Nodes.Add(Program.Lang.PE_ResourceID).Nodes.Add(ID.ToString());
-                temp.Nodes.Add(Program.Lang.PE_ResourceLanguageCode).Nodes.Add(LangID.ToString());
+                TreeNode temp = TreeView1.Nodes.Add(Program.Lang.Strings.PE.ReplacedResourceProperties);
+                temp.Nodes.Add(Program.Lang.Strings.PE.ResourceType).Nodes.Add(ResourceType);
+                temp.Nodes.Add(Program.Lang.Strings.PE.ResourceID).Nodes.Add(ID.ToString());
+                temp.Nodes.Add(Program.Lang.Strings.PE.ResourceLanguageCode).Nodes.Add(LangID.ToString());
             }
 
             {
-                TreeNode temp1 = TreeView1.Nodes.Add(Program.Lang.PE_RunSFCinCMD_Node);
+                TreeNode temp1 = TreeView1.Nodes.Add(Program.Lang.Strings.PE.RunSFCinCMD_Node);
                 temp1.Nodes.Add($"sfc /scanfile=\"{System.IO.Path.GetFullPath(SourceFile)}\"");
-                temp1.Nodes.Add(Program.Lang.PE_DontForgetToRestart);
+                temp1.Nodes.Add(Program.Lang.Strings.PE.DontForgetToRestart);
             }
 
             TreeView1.ExpandAll();
@@ -106,7 +106,7 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
             Reg_IO.SFC(PE_File);
-            MsgBox($"{Program.Lang.Done}. {Program.Lang.PE_DontForgetToRestart}.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox($"{Program.Lang.Strings.General.Done}. {Program.Lang.Strings.PE.DontForgetToRestart}.", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Cursor = Cursors.Default;
         }
     }

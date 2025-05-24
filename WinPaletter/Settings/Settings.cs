@@ -15,7 +15,7 @@ namespace WinPaletter
     /// </summary>
     public class Settings
     {
-        private BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+        private readonly BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
         /// <summary>
         /// Settings structures
@@ -80,7 +80,7 @@ namespace WinPaletter
                 /// <summary>
                 /// String array of opened WinPaletter versions
                 /// </summary>
-                public string[] WhatsNewRecord = new[] { string.Empty };
+                public string[] WhatsNewRecord = [string.Empty];
 
                 /// <summary>
                 /// Create new instance of General settings structure with default values
@@ -175,19 +175,19 @@ namespace WinPaletter
             public struct FileTypeMgr
             {
                 /// <summary>
-                /// Automatic add file extension to theme files, settings files, and theme resources pack files at WinPaletter startup
+                /// Automatic add File extension to theme files, settings files, and theme resources pack files at WinPaletter startup
                 /// </summary>
                 public bool AutoAddExt = true;
 
                 /// <summary>
-                /// If <c>true</c>, opening a theme preview file from Windows explorer will open it in WinPaletter.
+                /// If <c>true</c>, opening a theme preview File from Windows explorer will open it in WinPaletter.
                 /// <br></br>
-                /// If <c>false</c>, opening a theme preview file from Windows explorer will apply it without loading WinPaletter GUI.
+                /// If <c>false</c>, opening a theme preview File from Windows explorer will apply it without loading WinPaletter GUI.
                 /// </summary>
                 public bool OpeningPreviewInApp_or_AppliesIt = true;
 
                 /// <summary>
-                /// Compress theme file json content when saving it
+                /// Compress theme File json content when saving it
                 /// </summary>
                 public bool CompressThemeFile = true;
 
@@ -218,17 +218,22 @@ namespace WinPaletter
             }
 
             /// <summary>
-            /// Theme applying behavior settings structure
+            /// WinTheme applying behavior settings structure
             /// </summary>
             public struct ThemeApplyingBehavior
             {
+                /// <summary>
+                /// Automatically create a system restore point before applying theme
+                /// </summary>
+                public bool CreateSystemRestore = true;
+
                 /// <summary>
                 /// Automatically restart Windows Explorer after applying a theme
                 /// </summary>
                 public bool AutoRestartExplorer = true;
 
                 /// <summary>
-                /// Show save confirmation dialog after closing WinPaletter
+                /// Hide save confirmation dialog after closing WinPaletter
                 /// </summary>
                 public bool ShowSaveConfirmation = true;
 
@@ -293,7 +298,7 @@ namespace WinPaletter
                 public bool SFC_on_restoring_StartupSound = false;
 
                 /// <summary>
-                /// Ignore PE modification alert when applying a theme and the target PE file is a system file
+                /// Ignore PE modification alert when applying a theme and the target PE File is a system File
                 /// </summary>
                 public bool Ignore_PE_Modify_Alert = false;
 
@@ -305,7 +310,7 @@ namespace WinPaletter
                 public bool PE_ModifyByDefault = true;
 
                 /// <summary>
-                /// Show alert when applying Windows Effects and also on changing its toggle state
+                /// Hide alert when applying Windows Effects and also on changing its toggle state
                 /// </summary>
                 public bool Show_WinEffects_Alert = true;
 
@@ -342,6 +347,7 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
+                    CreateSystemRestore = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", true));
                     AutoRestartExplorer = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", true));
                     ShowSaveConfirmation = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", true));
                     ClassicColors_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite));
@@ -366,6 +372,7 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
+                    EditReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", CreateSystemRestore, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", ShowSaveConfirmation, RegistryValueKind.DWord);
                     EditReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", ClassicColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
@@ -452,7 +459,7 @@ namespace WinPaletter
                 public bool Animations = true;
 
                 /// <summary>
-                /// Make WinPaletter appearance managed by WinPaletter Application Theme aspect in main form
+                /// Make WinPaletter appearance managed by WinPaletter Application WinTheme aspect in main form
                 /// </summary>
                 public bool ManagedByTheme = true;
 
@@ -508,12 +515,12 @@ namespace WinPaletter
             public struct Language
             {
                 /// <summary>
-                /// Enable using language file from <c>File</c>
+                /// Enable using language File from <c>File</c>
                 /// </summary>
                 public bool Enabled = false;
 
                 /// <summary>
-                /// Language JSON file path
+                /// Language JSON File path
                 /// </summary>
                 public string File = string.Empty;
 
@@ -609,7 +616,7 @@ namespace WinPaletter
             }
 
             /// <summary>
-            /// Theme verbose log settings structure
+            /// WinTheme verbose log settings structure
             /// </summary>
             public struct ThemeLog
             {
@@ -619,7 +626,7 @@ namespace WinPaletter
                 public VerboseLevels VerboseLevel = Structures.ThemeLog.VerboseLevels.Basic;
 
                 /// <summary>
-                /// Show skipped items on detailed verbose log (<c>VerboseLevel == Structures.ThemeLog.VerboseLevels.Detailed</c>)
+                /// Hide skipped items on detailed verbose log (<c>VerboseLevel == Structures.ThemeLog.VerboseLevels.Detailed</c>)
                 /// </summary>
                 public bool ShowSkippedItemsOnDetailedVerbose = false;
 
@@ -652,13 +659,13 @@ namespace WinPaletter
                     /// </summary>
                     Basic,
                     /// <summary>
-                    /// Show more details (registry values added\deleted\removed\...)
+                    /// Hide more details (registry values added\deleted\removed\...)
                     /// </summary>
                     Detailed
                 }
 
                 /// <summary>
-                /// Theme verbose log is enabled or not 
+                /// WinTheme verbose log is enabled or not 
                 /// </summary>
                 /// <returns></returns>
                 public bool Enabled => VerboseLevel != VerboseLevels.None;
@@ -702,17 +709,17 @@ namespace WinPaletter
                 public bool ListAllFonts = false;
 
                 /// <summary>
-                /// Deflect Windows Terminal settings json file into another file (useful if Terminal is not installed or installed in a different path)
+                /// Deflect Windows Terminal settings json File into another File (useful if Terminal is not installed or installed in a different path)
                 /// </summary>
                 public bool Path_Deflection = false;
 
                 /// <summary>
-                /// Deflected Windows Terminal settings json file path
+                /// Deflected Windows Terminal settings json File path
                 /// </summary>
                 public string Terminal_Stable_Path = SysPaths.TerminalJSON;
 
                 /// <summary>
-                /// Deflected Windows Terminal Preview settings json file path
+                /// Deflected Windows Terminal Preview settings json File path
                 /// </summary>
                 public string Terminal_Preview_Path = SysPaths.TerminalPreviewJSON;
 
@@ -776,12 +783,12 @@ namespace WinPaletter
                 /// <summary>
                 /// String array contains links to WinPaletter themes sources
                 /// </summary>
-                public string[] Online_Repositories = { Links.Store_MainDB, Links.Store_2ndDB };
+                public string[] Online_Repositories = [Links.Store_MainDB, Links.Store_2ndDB];
 
                 /// <summary>
                 /// String array contains directories to WinPaletter themes sources
                 /// </summary>
-                public string[] Offline_Directories = { string.Empty };
+                public string[] Offline_Directories = [string.Empty];
 
                 /// <summary>
                 /// Get themes from subdirectories when <c>Online_or_Offline == false</c>
@@ -789,7 +796,7 @@ namespace WinPaletter
                 public bool Offline_SubFolders = true;
 
                 /// <summary>
-                /// Show WinPaletter Store tips
+                /// Hide WinPaletter Store tips
                 /// </summary>
                 public bool ShowTips = true;
 
@@ -869,7 +876,7 @@ namespace WinPaletter
                 public Formats Type = Structures.NerdStats.Formats.HEX;
 
                 /// <summary>
-                /// Show hash (#) before color hex code if <c>true</c> and <c>Type == Structures.NerdStats.Formats.HEX</c>
+                /// Hide hash (#) before color hex code if <c>true</c> and <c>Type == Structures.NerdStats.Formats.HEX</c>
                 /// </summary>
                 public bool ShowHexHash = true;
 
@@ -884,7 +891,7 @@ namespace WinPaletter
                 public bool UseWindowsMonospacedFont = false;
 
                 /// <summary>
-                /// Show a dot indicator (small circle) if the color is changed from default
+                /// Hide a dot indicator (small circle) if the color is changed from default
                 /// </summary>
                 public bool DotDefaultChangedIndicator = true;
 
@@ -964,7 +971,7 @@ namespace WinPaletter
             public struct UsersServices
             {
                 /// <summary>
-                /// Show WinPaletter System Events Sounds Installer dialog when installing or updating it
+                /// Hide WinPaletter System Events Sounds Installer dialog when installing or updating it
                 /// </summary>
                 public bool ShowSysEventsSoundsInstaller = true;
 
@@ -1001,7 +1008,7 @@ namespace WinPaletter
                 public bool Win7LivePreview = true;
 
                 /// <summary>
-                /// Show welcome dialog on WinPaletter startup
+                /// Hide welcome dialog on WinPaletter startup
                 /// </summary>
                 public bool ShowWelcomeDialog = true;
 
@@ -1055,9 +1062,14 @@ namespace WinPaletter
                 public bool AutoBackupOnApplySingleAspect = true;
 
                 /// <summary>
-                /// Automatically backup current theme before opening a new one from open file dialog
+                /// Automatically backup current theme before opening a new one from open File dialog
                 /// </summary>
                 public bool AutoBackupOnThemeLoad = false;
+
+                /// <summary>
+                /// Automatically backup current theme when an exception error occurs
+                /// </summary>
+                public bool AutoBackupOnExError = true;
 
                 /// <summary>
                 /// Directory containing WinPaletter themes backups
@@ -1079,6 +1091,7 @@ namespace WinPaletter
                     AutoBackupOnApply = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApply", true));
                     AutoBackupOnApplySingleAspect = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApplySingleAspect", true));
                     AutoBackupOnThemeLoad = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnThemeLoad", false));
+                    AutoBackupOnExError = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnExError", true));
                     BackupPath = GetReg(REG_Backup, "BackupPath", $"{SysPaths.appData}\\Backup\\Themes").ToString();
                 }
 
@@ -1092,6 +1105,7 @@ namespace WinPaletter
                     EditReg(REG_Backup, "AutoBackupOnApply", AutoBackupOnApply, RegistryValueKind.DWord);
                     EditReg(REG_Backup, "AutoBackupOnApplySingleAspect", AutoBackupOnApplySingleAspect, RegistryValueKind.DWord);
                     EditReg(REG_Backup, "AutoBackupOnThemeLoad", AutoBackupOnThemeLoad, RegistryValueKind.DWord);
+                    EditReg(REG_Backup, "AutoBackupOnExError", AutoBackupOnExError, RegistryValueKind.DWord);
                     EditReg(REG_Backup, "BackupPath", BackupPath, RegistryValueKind.String);
                 }
             }
@@ -1134,6 +1148,11 @@ namespace WinPaletter
                 public bool ClassicColors = true;
 
                 /// <summary>
+                /// If <c>false</c>, Accessibility won't be applied at all
+                /// </summary>
+                public bool Accessibility = true;
+
+                /// <summary>
                 /// If <c>true</c>, Classic Colors aspect form will be opened in advanced mode
                 /// <br></br>
                 /// If <c>false</c>, Classic Colors aspect form will be opened in simple mode
@@ -1165,7 +1184,7 @@ namespace WinPaletter
                 public bool Cursors_Advanced = true;
 
                 /// <summary>
-                /// If <c>false</c>, Consoles won't be applied at all
+                /// If <c>false</c>, Consoles_Cls won't be applied at all
                 /// </summary>
                 public bool Consoles = true;
 
@@ -1228,6 +1247,7 @@ namespace WinPaletter
                     LogonUI = Conversions.ToBoolean(GetReg(REG_AspectsControl, "LogonUI", true));
                     ClassicColors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors", true));
                     ClassicColors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors_Advanced", true));
+                    Accessibility = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Accessibility", true));
                     MetricsFonts = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts", true));
                     MetricsFonts_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts_Advanced", true));
                     Cursors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Cursors", true));
@@ -1255,6 +1275,7 @@ namespace WinPaletter
                     EditReg(REG_AspectsControl, "LogonUI", LogonUI, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "ClassicColors", ClassicColors, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "ClassicColors_Advanced", ClassicColors_Advanced, RegistryValueKind.DWord);
+                    EditReg(REG_AspectsControl, "Accessibility", Accessibility, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "MetricsFonts", MetricsFonts, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "MetricsFonts_Advanced", MetricsFonts_Advanced, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "Cursors", Cursors, RegistryValueKind.DWord);
@@ -1283,7 +1304,7 @@ namespace WinPaletter
         public Structures.Updates Updates = new();
 
         /// <summary>
-        /// Settings related to WinPaletter file types (*.WPTH, *.WPSF) management and registration
+        /// Settings related to WinPaletter File types (*.WPTH, *.WPSF) management and registration
         /// </summary>
         public Structures.FileTypeMgr FileTypeManagement = new();
 
@@ -1308,7 +1329,7 @@ namespace WinPaletter
         public Structures.EP ExplorerPatcher = new();
 
         /// <summary>
-        /// Theme verbose log settings
+        /// WinTheme verbose log settings
         /// </summary>
         public Structures.ThemeLog ThemeLog = new();
 
@@ -1357,11 +1378,11 @@ namespace WinPaletter
             /// </summary>
             Registry,
             /// <summary>
-            /// JSON file
+            /// JSON File
             /// </summary>
             File,
             /// <summary>
-            /// Empty settings
+            /// EmptyError settings
             /// </summary>
             Empty
         }
@@ -1415,12 +1436,14 @@ namespace WinPaletter
                                     }
                                 }
 
+                                // Add default online repositories if not exist
                                 if (!Store.Online_Repositories.Contains(Links.Store_MainDB))
                                 {
                                     Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
                                     Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Links.Store_MainDB;
                                 }
 
+                                // Add second default online repositories if not exist
                                 if (!Store.Online_Repositories.Contains(Links.Store_2ndDB))
                                 {
                                     Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
@@ -1434,12 +1457,12 @@ namespace WinPaletter
                         }
                         else
                         {
-                            Forms.BugReport.ThrowError(new Exception(Program.Lang.SettingsFileNotJSON));
+                            Forms.BugReport.ThrowError(new Exception(Program.Lang.Strings.Messages.SettingsFileNotJSON));
                         }
                     }
                     else
                     {
-                        Forms.BugReport.ThrowError(new Exception(Program.Lang.SettingsFileNotExist));
+                        Forms.BugReport.ThrowError(new Exception(Program.Lang.Strings.Messages.SettingsFileNotExist));
                     }
 
                     break;
@@ -1474,6 +1497,7 @@ namespace WinPaletter
                     break;
 
                 case Source.File:
+                    // Add default online repositories if not exist
                     if (!Store.Online_Repositories.Contains(Links.Store_MainDB))
                     {
                         Array.Resize(ref Store.Online_Repositories, Store.Online_Repositories.Length + 1);
@@ -1497,7 +1521,7 @@ namespace WinPaletter
         /// <returns></returns>
         public override string ToString()
         {
-            JObject JSON_Overall = new();
+            JObject JSON_Overall = [];
             JSON_Overall.RemoveAll();
 
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
@@ -1522,7 +1546,7 @@ namespace WinPaletter
 
         private JObject DeserializeProps(Type StructureType, object Structure)
         {
-            JObject j = new();
+            JObject j = [];
 
             j.RemoveAll();
 

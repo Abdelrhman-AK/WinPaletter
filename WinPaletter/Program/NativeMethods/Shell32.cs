@@ -11,7 +11,7 @@ namespace WinPaletter.NativeMethods
     public class Shell32
     {
         /// <summary>
-        /// Extracts the icon associated with a file.
+        /// Extracts the icon associated with a File.
         /// </summary>
         /// <param name="szFileName"></param>
         /// <param name="nIconIndex"></param>
@@ -23,12 +23,12 @@ namespace WinPaletter.NativeMethods
         public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIcons);
 
         /// <summary>
-        /// Retrieves information about icons or icon-sized images from a specified file.
+        /// Retrieves information about icons or icon-sized images from a specified File.
         /// </summary>
-        /// <param name="lpszFile">The name of the file that contains the icon or icon-sized image.</param>
+        /// <param name="lpszFile">The name of the File that contains the icon or icon-sized image.</param>
         /// <param name="nIconIndex">The zero-based index of the icon or image.</param>
-        /// <param name="cxIcon">The width of the icon or image in pixels. This value is ignored if the <paramref name="flags"/> parameter specifies <see cref="IEI.GIL_ASYNC"/>.</param>
-        /// <param name="cyIcon">The height of the icon or image in pixels. This value is ignored if the <paramref name="flags"/> parameter specifies <see cref="IEI.GIL_ASYNC"/>.</param>
+        /// <param name="cxIcon">The desired width of the icon in pixels. The function uses this value to create a monochrome icon of the desired width.</param>
+        /// <param name="cyIcon">The desired height of the icon in pixels. The function uses this value to create a monochrome icon of the desired height.</param>
         /// <param name="phicon">An array of icon or image handles to be filled by this function. The array should be pre-allocated to hold at least <paramref name="nIcons"/> elements.</param>
         /// <param name="piconid">An array of icon IDs. This parameter can be <see langword="null"/>.</param>
         /// <param name="nIcons">The number of icons to extract. This value is limited to the number of image bits in the icon resource.</param>
@@ -46,7 +46,7 @@ namespace WinPaletter.NativeMethods
         public static extern bool DestroyIcon(IntPtr handle);
 
         /// <summary>
-        /// Show default Windows icon picker dialog.
+        /// Hide default Windows icon picker dialog.
         /// </summary>
         /// <param name="hwndOwner"></param>
         /// <param name="lpstrFile"></param>
@@ -69,8 +69,8 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Retrieves the index and handles of stock icons.
         /// </summary>
-        /// <param name="pszIconFile">The path of the file that contains the icon.</param>
-        /// <param name="iIndex">The index of the icon in the file.</param>
+        /// <param name="pszIconFile">The path of the File that contains the icon.</param>
+        /// <param name="iIndex">The index of the icon in the File.</param>
         /// <param name="uFlags">A combination of flags that specify which information to retrieve.</param>
         /// <param name="phiconLarge">A pointer to the handle of the large icon.</param>
         /// <param name="phiconSmall">A pointer to the handle of the small icon.</param>
@@ -108,7 +108,7 @@ namespace WinPaletter.NativeMethods
         {
             if (!OS.WXP)
             {
-                StringBuilder sb = new StringBuilder(1000);
+                StringBuilder sb = new(1000);
                 GetUserTilePath(username, 0x80000000, sb, sb.Capacity);
                 return sb.ToString();
             }
@@ -166,7 +166,7 @@ namespace WinPaletter.NativeMethods
             public int iIcon;
 
             /// <summary>
-            /// The path to the icon file.
+            /// The path to the icon File.
             /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ShellConstants.MAX_PATH)]
             public string szPath;
@@ -333,7 +333,7 @@ namespace WinPaletter.NativeMethods
             PRINTERFAXNET = 53,
 
             /// <summary>
-            /// A file that receives the output Of a Print To file operation.
+            /// A File that receives the output Of a Print To File operation.
             /// </summary>
             PRINTERFILE = 54,
 
@@ -418,22 +418,22 @@ namespace WinPaletter.NativeMethods
             MEDIACDROM = 70,
 
             /// <summary>
-            /// An audio file.
+            /// An audio File.
             /// </summary>
             AUDIOFILES = 71,
 
             /// <summary>
-            /// An image file.
+            /// An image File.
             /// </summary>
             IMAGEFILES = 72,
 
             /// <summary>
-            /// A video file.
+            /// A video File.
             /// </summary>
             VIDEOFILES = 73,
 
             /// <summary>
-            /// A mixed file.
+            /// A mixed File.
             /// </summary>
             MIXEDFILES = 74,
 
@@ -625,7 +625,7 @@ namespace WinPaletter.NativeMethods
             public const int MAX_PATH = 260;
 
             /// <summary>
-            /// Shell change event associated with changes in file associations.
+            /// Shell change event associated with changes in File associations.
             /// </summary>
             public const int SHCNE_ASSOCCHANGED = 0x8000000;
 

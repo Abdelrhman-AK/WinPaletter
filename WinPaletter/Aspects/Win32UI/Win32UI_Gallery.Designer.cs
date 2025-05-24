@@ -68,7 +68,9 @@
             this.btn_cancel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_cancel.ForeColor = System.Drawing.Color.White;
             this.btn_cancel.Image = null;
-            this.btn_cancel.Location = new System.Drawing.Point(851, 6);
+            this.btn_cancel.ImageGlyph = null;
+            this.btn_cancel.ImageGlyphEnabled = false;
+            this.btn_cancel.Location = new System.Drawing.Point(858, 6);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(80, 36);
             this.btn_cancel.TabIndex = 212;
@@ -86,7 +88,9 @@
             this.btn_load_into_theme.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_load_into_theme.ForeColor = System.Drawing.Color.White;
             this.btn_load_into_theme.Image = ((System.Drawing.Image)(resources.GetObject("btn_load_into_theme.Image")));
-            this.btn_load_into_theme.Location = new System.Drawing.Point(937, 6);
+            this.btn_load_into_theme.ImageGlyph = null;
+            this.btn_load_into_theme.ImageGlyphEnabled = false;
+            this.btn_load_into_theme.Location = new System.Drawing.Point(944, 6);
             this.btn_load_into_theme.Name = "btn_load_into_theme";
             this.btn_load_into_theme.Size = new System.Drawing.Size(100, 36);
             this.btn_load_into_theme.TabIndex = 211;

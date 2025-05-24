@@ -10,7 +10,7 @@ namespace WinPaletter.TypesExtensions
     public static class ColorsExtensions
     {
         /// <summary>
-        /// Reverse Color From RGB To BGR
+        /// Reverse Color From RGB To BGR or RGBA To ABGR (As used in some Windows Registry values)
         /// </summary>
         public static Color Reverse(this Color Color, bool Alpha = false)
         {
@@ -18,32 +18,28 @@ namespace WinPaletter.TypesExtensions
             {
                 return Color.FromArgb(Color.B, Color.G, Color.R);
             }
-
             else
             {
                 return Color.FromArgb(Color.A, Color.B, Color.G, Color.R);
-
             }
-
         }
 
         /// <summary>
         /// Return HEX Color As String From RGB
         /// </summary>
-        public static string HEX(this Color Color, bool Alpha = true, bool Hash = false)
+        public static string ToStringHex(this Color Color, bool Alpha = true, bool Hash = false)
         {
             string S;
             if (Alpha)
             {
-                S = $"{(string.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B))}{(string.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B))}{(string.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B))}{(string.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B))}";
+                S = $"{string.Format("{0:X2}", Color.A, Color.R, Color.G, Color.B)}{string.Format("{1:X2}", Color.A, Color.R, Color.G, Color.B)}{string.Format("{2:X2}", Color.A, Color.R, Color.G, Color.B)}{string.Format("{3:X2}", Color.A, Color.R, Color.G, Color.B)}";
             }
             else
             {
                 S = $"{Color.R:X2}{Color.G:X2}{Color.B:X2}";
             }
-            if (Hash)
-                S = $"#{S}";
-            return S;
+
+            return !Hash ? S : $"#{S}";
         }
 
         /// <summary>
@@ -178,9 +174,9 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return HSL String in the format of H S% L% From RGB Color
+        /// Return HSL String in the format of H S% L% From a RGB Color
         /// </summary>
-        public static string HSL_Text(this Color Color)
+        public static string ToStringHSL(this Color Color)
         {
             return $"{Color.ToHSL().H} {Math.Round((double)(Color.ToHSL().S * 100f))}% {Math.Round((double)(Color.ToHSL().L * 100f))}%";
         }
@@ -188,16 +184,9 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Get String in the format of R G B from a Color(R,G,B) or A R G B from a Color(A,R,G,B)
         /// </summary>
-        public static string ToWin32Reg(this Color Color, bool Alpha = false)
+        public static string ToStringWin32(this Color Color, bool Alpha = false)
         {
-            if (!Alpha)
-            {
-                return $"{Color.R} {Color.G} {Color.B}";
-            }
-            else
-            {
-                return $"{Color.A} {Color.R} {Color.G} {Color.B}";
-            }
+            return (Alpha ? $"{Color.A} " : "") + $"{Color.R} {Color.G} {Color.B}";
         }
 
         /// <summary>
@@ -235,7 +224,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static string ReturnFormat(this Color Color, ColorFormat Format, bool HexHash = false, bool Alpha = false)
         {
-            string s = Program.Lang.Empty;
+            string s = Program.Lang.Strings.General.Empty;
 
             if (Format == ColorFormat.Default)
             {
@@ -252,19 +241,19 @@ namespace WinPaletter.TypesExtensions
                 {
                     case ColorFormat.HEX:
                         {
-                            s = Color.HEX(Alpha, HexHash);
+                            s = Color.ToStringHex(Alpha, HexHash);
                             break;
                         }
 
                     case ColorFormat.RGB:
                         {
-                            s = Color.ToWin32Reg(Alpha);
+                            s = Color.ToStringWin32(Alpha);
                             break;
                         }
 
                     case ColorFormat.HSL:
                         {
-                            s = Color.HSL_Text();
+                            s = Color.ToStringHSL();
                             break;
                         }
 
@@ -278,7 +267,7 @@ namespace WinPaletter.TypesExtensions
             }
             else
             {
-                s = Program.Lang.Empty;
+                s = Program.Lang.Strings.General.Empty;
             }
 
             return s;
@@ -316,13 +305,13 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Bitmap ToBitmap(this Color Color, Size Size)
         {
-            Bitmap b = new(Size.Width, Size.Height);
-            Graphics G = Graphics.FromImage(b);
-            G.Clear(Color);
-            G.Save();
-            return b;
-            G.Dispose();
-            b.Dispose();
+            using (Bitmap b = new(Size.Width, Size.Height))
+            using (Graphics G = Graphics.FromImage(b))
+            {
+                G.Clear(Color);
+                G.Save();
+                return new(b);
+            }
         }
 
         /// <summary>Blends the specified colors together.</summary>
@@ -407,42 +396,35 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// HSL color structure
         /// </summary>
-        public struct HSL
+        /// <remarks>
+        /// Generate a HSL structure
+        /// </remarks>
+        /// <param name="h"></param>
+        /// <param name="s"></param>
+        /// <param name="l"></param>
+        public struct HSL(int h, float s, float l)
         {
-            /// <summary>
-            /// Generate a HSL structure
-            /// </summary>
-            /// <param name="h"></param>
-            /// <param name="s"></param>
-            /// <param name="l"></param>
-            public HSL(int h, float s, float l)
-            {
-                H = h;
-                S = s;
-                L = l;
-            }
-
             /// <summary>
             /// Hue
             /// </summary>
-            public int H { get; set; }
+            public int H { get; set; } = h;
 
             /// <summary>
             /// Saturation
             /// </summary>
-            public float S { get; set; }
+            public float S { get; set; } = s;
 
             /// <summary>
             /// Lightness
             /// </summary>
-            public float L { get; set; }
+            public float L { get; set; } = l;
 
             /// <summary>
             /// Check if two HSL colors are equal
             /// </summary>
             /// <param name="hsl"></param>
             /// <returns></returns>
-            public bool Equals(HSL hsl)
+            public readonly bool Equals(HSL hsl)
             {
                 return H == hsl.H && S == hsl.S && L == hsl.L;
             }

@@ -21,11 +21,11 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
-        private Color LineColor = Color.FromArgb(120, 150, 150, 150);
+        private readonly Color LineColor = Color.FromArgb(120, 150, 150, 150);
         private Color C1, C2;
         private float _Angle = 0f;
         private bool _Focused = true;
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.9f));
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.9f));
         public enum Styles
         {
             SwapColors,
@@ -93,8 +93,8 @@ namespace WinPaletter.UI.WP
 
         private void SetColors()
         {
-            this.C1 = Program.Style.DarkMode ? Color1.Dark(0.15f) : Color1.Light(0.6f);
-            this.C2 = Program.Style.DarkMode ? Color2.Dark(0.15f) : Color2.Light(0.6f);
+            C1 = Program.Style.DarkMode ? Color1.Dark(0.15f) : Color1.Light(0.6f);
+            C2 = Program.Style.DarkMode ? Color2.Dark(0.15f) : Color2.Light(0.6f);
         }
 
         public Styles Style { get; set; } = Styles.SwapColors;
@@ -110,31 +110,38 @@ namespace WinPaletter.UI.WP
 
         #region Animator
 
-        private readonly Timer Timer = new() { Enabled = false, Interval = 25 };
+        private readonly Timer Timer = new() { Enabled = false, Interval = 40 };
         private async void Timer_Tick(object sender, EventArgs e)
         {
             if (!DesignMode)
             {
-                if (_Angle + 2f > 360f)
+                bool needInvalidate = false;
+
+                if (_Angle + 3f > 360f)
                 {
                     _Angle = 0f;
 
                     if (Style == Styles.SwapColors)
                     {
-                        if (Color == C1 | Color == Color1)
+                        if (Color == C1 || Color == Color1)
                         {
-                            await Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
+                            await Task.Run(() => FluentTransitions.Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                         }
                         else
                         {
-                            await Task.Run(() => { FluentTransitions.Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
+                            await Task.Run(() => FluentTransitions.Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                         }
+                        needInvalidate = true;
                     }
                 }
+                else
+                {
+                    _Angle += 3f;
+                    needInvalidate = true;
+                }
 
-                else { _Angle += 2f; }
-
-                Invalidate();
+                if (needInvalidate)
+                    Invalidate();
             }
             else
             {
@@ -223,7 +230,6 @@ namespace WinPaletter.UI.WP
             base.Dispose(disposing);
 
             Timer?.Dispose();
-            Noise?.Dispose();
         }
 
         protected override void OnEnabledChanged(EventArgs e)
@@ -254,8 +260,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             Rectangle Rect = new(0, 0, Width, Height);
@@ -279,12 +283,23 @@ namespace WinPaletter.UI.WP
                     else
                     {
                         G.FillRectangle(l, Rect);
-                        G.FillRectangle(Noise, Rect);
+
+                        // Sometimes, Noise is used anywhere else and will throw an error
+                        try
+                        {
+                            G.FillRectangle(Noise, Rect);
+                        }
+                        catch { }
+
+                        using (TextureBrush tb = new(Assets.Store.Pattern1))
+                        {
+                            G.FillRectangle(tb, Rect);
+                        }
                     }
                 }
             }
 
-            base.OnPaint(e);
+            //base.OnPaint(e);
         }
     }
 }

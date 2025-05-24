@@ -188,13 +188,57 @@ namespace WinPaletter.TypesExtensions
         public static void FillRoundedRect(this Graphics G, Brush brush, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false)
         {
             if (G is null) return;
+            if (rectangle.IsEmpty) return;
             if (rectangle.Width <= 0 || rectangle.Height <= 0) return;
             if (brush is null) return;
 
             if (radius == -1) radius = Program.Style.Radius;
 
-            if ((Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0) { using (GraphicsPath path = rectangle.Round(radius)) { G.FillPath(brush, path); } }
-            else { G.FillRectangle(brush, rectangle); }
+            if ((Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0)
+            {
+                using (GraphicsPath path = rectangle.Round(radius))
+                {
+                    /* A try is used as sometimes the returned path is null and when if statement is used to return if path is null doesn't work 
+                       and it doesn't detect if path is null or not due to odd reason !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+                    try { G?.FillPath(brush, path); } catch { }
+                }
+            }
+            else
+            {
+                G?.FillRectangle(brush, rectangle);
+            }
+        }
+
+        /// <summary>
+        /// Fill a rounded rectangle
+        /// </summary>
+        /// <param name="G"></param>
+        /// <param name="brush"></param>
+        /// <param name="rectangle"></param>
+        /// <param name="radius"></param>
+        /// <param name="forcedRoundCorner"></param>
+        public static void FillRoundedRect(this Graphics G, Brush brush, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false)
+        {
+            if (G is null) return;
+            if (rectangle.IsEmpty) return;
+            if (rectangle.Width <= 0 || rectangle.Height <= 0) return;
+            if (brush is null) return;
+
+            if (radius == -1) radius = Program.Style.Radius;
+
+            if ((Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0)
+            {
+                using (GraphicsPath path = rectangle.Round(radius))
+                {
+                    /* A try is used as sometimes the returned path is null and when if statement is used to return if path is null doesn't work 
+                       and it doesn't detect if path is null or not due to odd reason !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+                    try { G?.FillPath(brush, path); } catch { }
+                }
+            }
+            else
+            {
+                G?.FillRectangle(brush, rectangle);
+            }
         }
 
         /// <summary>
@@ -237,25 +281,55 @@ namespace WinPaletter.TypesExtensions
         /// <returns></returns>
         public static GraphicsPath Round(this Rectangle rectangle, int Radius = -1)
         {
-            if (rectangle.Width <= 0 || rectangle.Height <= 0) return null;
+            GraphicsPath path = new();
+
+            if (rectangle.Width <= 0 || rectangle.Height <= 0) return path;
 
             Radius = Radius == -1 ? Program.Style.Radius * 2 : Radius *= 2;
 
+            path?.AddLine(rectangle.Left + Radius, rectangle.Top, rectangle.Right - Radius, rectangle.Top);
+            path?.AddArc(Rectangle.FromLTRB(rectangle.Right - Radius, rectangle.Top, rectangle.Right, rectangle.Top + Radius), -90, 90f);
+
+            path?.AddLine(rectangle.Right, rectangle.Top + Radius, rectangle.Right, rectangle.Bottom - Radius);
+            path?.AddArc(Rectangle.FromLTRB(rectangle.Right - Radius, rectangle.Bottom - Radius, rectangle.Right, rectangle.Bottom), 0f, 90f);
+
+            path?.AddLine(rectangle.Right - Radius, rectangle.Bottom, rectangle.Left + Radius, rectangle.Bottom);
+            path?.AddArc(Rectangle.FromLTRB(rectangle.Left, rectangle.Bottom - Radius, rectangle.Left + Radius, rectangle.Bottom), 90f, 90f);
+
+            path?.AddLine(rectangle.Left, rectangle.Bottom - Radius, rectangle.Left, rectangle.Top + Radius);
+            path?.AddArc(Rectangle.FromLTRB(rectangle.Left, rectangle.Top, rectangle.Left + Radius, rectangle.Top + Radius), 180f, 90f);
+
+            path?.CloseFigure();
+            return path;
+        }
+
+        /// <summary>
+        /// Rounded <see cref="GraphicsPath"/>
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <param name="Radius"></param>
+        /// <returns></returns>
+        public static GraphicsPath Round(this RectangleF rectangle, int Radius = -1)
+        {
             GraphicsPath path = new();
 
-            path.AddLine(rectangle.Left + Radius, rectangle.Top, rectangle.Right - Radius, rectangle.Top);
-            path.AddArc(Rectangle.FromLTRB(rectangle.Right - Radius, rectangle.Top, rectangle.Right, rectangle.Top + Radius), -90, 90f);
+            if (rectangle.Width <= 0 || rectangle.Height <= 0) return path;
 
-            path.AddLine(rectangle.Right, rectangle.Top + Radius, rectangle.Right, rectangle.Bottom - Radius);
-            path.AddArc(Rectangle.FromLTRB(rectangle.Right - Radius, rectangle.Bottom - Radius, rectangle.Right, rectangle.Bottom), 0f, 90f);
+            Radius = Radius == -1 ? Program.Style.Radius * 2 : Radius *= 2;
 
-            path.AddLine(rectangle.Right - Radius, rectangle.Bottom, rectangle.Left + Radius, rectangle.Bottom);
-            path.AddArc(Rectangle.FromLTRB(rectangle.Left, rectangle.Bottom - Radius, rectangle.Left + Radius, rectangle.Bottom), 90f, 90f);
+            path?.AddLine(rectangle.Left + Radius, rectangle.Top, rectangle.Right - Radius, rectangle.Top);
+            path?.AddArc(RectangleF.FromLTRB(rectangle.Right - Radius, rectangle.Top, rectangle.Right, rectangle.Top + Radius), -90, 90f);
 
-            path.AddLine(rectangle.Left, rectangle.Bottom - Radius, rectangle.Left, rectangle.Top + Radius);
-            path.AddArc(Rectangle.FromLTRB(rectangle.Left, rectangle.Top, rectangle.Left + Radius, rectangle.Top + Radius), 180f, 90f);
+            path?.AddLine(rectangle.Right, rectangle.Top + Radius, rectangle.Right, rectangle.Bottom - Radius);
+            path?.AddArc(RectangleF.FromLTRB(rectangle.Right - Radius, rectangle.Bottom - Radius, rectangle.Right, rectangle.Bottom), 0f, 90f);
 
-            path.CloseFigure();
+            path?.AddLine(rectangle.Right - Radius, rectangle.Bottom, rectangle.Left + Radius, rectangle.Bottom);
+            path?.AddArc(RectangleF.FromLTRB(rectangle.Left, rectangle.Bottom - Radius, rectangle.Left + Radius, rectangle.Bottom), 90f, 90f);
+
+            path?.AddLine(rectangle.Left, rectangle.Bottom - Radius, rectangle.Left, rectangle.Top + Radius);
+            path?.AddArc(RectangleF.FromLTRB(rectangle.Left, rectangle.Top, rectangle.Left + Radius, rectangle.Top + Radius), 180f, 90f);
+
+            path?.CloseFigure();
             return path;
         }
 
@@ -281,16 +355,57 @@ namespace WinPaletter.TypesExtensions
             {
                 G.DrawArc(pen, rectangle.X, rectangle.Y, radius, radius, 180, 90);
                 G.DrawLine(pen, (int)Math.Round(rectangle.X + radius / 2d), rectangle.Y, (int)Math.Round(rectangle.X + rectangle.Width - radius / 2d), rectangle.Y);
+
                 G.DrawArc(pen, rectangle.X + rectangle.Width - radius, rectangle.Y, radius, radius, 270, 90);
                 G.DrawLine(pen, rectangle.X, (int)Math.Round(rectangle.Y + radius / 2d), rectangle.X, (int)Math.Round(rectangle.Y + rectangle.Height - radius / 2d));
+
                 G.DrawLine(pen, rectangle.X + rectangle.Width, (int)Math.Round(rectangle.Y + radius / 2d), rectangle.X + rectangle.Width, (int)Math.Round(rectangle.Y + rectangle.Height - radius / 2d));
                 G.DrawLine(pen, (int)Math.Round(rectangle.X + radius / 2d), rectangle.Y + rectangle.Height, (int)Math.Round(rectangle.X + rectangle.Width - radius / 2d), rectangle.Y + rectangle.Height);
+
                 G.DrawArc(pen, rectangle.X, rectangle.Y + rectangle.Height - radius, radius, radius, 90, 90);
                 G.DrawArc(pen, rectangle.X + rectangle.Width - radius, rectangle.Y + rectangle.Height - radius, radius, radius, 0, 90);
             }
             else
             {
                 G.DrawRectangle(pen, rectangle);
+            }
+        }
+
+        /// <summary>
+        /// Draw a rounded rectangle
+        /// </summary>
+        /// <param name="G"></param>
+        /// <param name="pen"></param>
+        /// <param name="rectangle"></param>
+        /// <param name="radius"></param>
+        /// <param name="forcedRoundCorner"></param>
+        public static void DrawRoundedRect(this Graphics G, Pen pen, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false)
+        {
+            if (G is null) return;
+            if (pen is null) return;
+            if (rectangle.Width <= 0 || rectangle.Height <= 0) return;
+
+            if (radius == -1) radius = Program.Style.Radius;
+
+            radius *= 2;
+
+            if ((Program.Style.RoundedCorners | forcedRoundCorner) & radius > 0)
+            {
+                G.DrawArc(pen, rectangle.X, rectangle.Y, radius, radius, 180, 90);
+                G.DrawLine(pen, rectangle.X + radius / 2f, rectangle.Y, rectangle.X + rectangle.Width - radius / 2f, rectangle.Y);
+
+                G.DrawArc(pen, rectangle.X + rectangle.Width - radius, rectangle.Y, radius, radius, 270, 90);
+                G.DrawLine(pen, rectangle.X, rectangle.Y + radius / 2f, rectangle.X, rectangle.Y + rectangle.Height - radius / 2f);
+
+                G.DrawLine(pen, rectangle.X + rectangle.Width, rectangle.Y + radius / 2f, rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height - radius / 2f);
+                G.DrawLine(pen, rectangle.X + radius / 2f, rectangle.Y + rectangle.Height, rectangle.X + rectangle.Width - radius / 2f, rectangle.Y + rectangle.Height);
+
+                G.DrawArc(pen, rectangle.X, rectangle.Y + rectangle.Height - radius, radius, radius, 90, 90);
+                G.DrawArc(pen, rectangle.X + rectangle.Width - radius, rectangle.Y + rectangle.Height - radius, radius, radius, 0, 90);
+            }
+            else
+            {
+                G.DrawRectangle(pen, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             }
         }
 
@@ -341,10 +456,10 @@ namespace WinPaletter.TypesExtensions
                     differentBorder = new(rectangle, CColor, Pen1.Color, 180f);
                     ColorBlend cblend = new(5)
                     {
-                        Colors = new Color[5] { CColor, Pen1.Color, Pen1.Color, Pen1.Color, CColor },
+                        Colors = [CColor, Pen1.Color, Pen1.Color, Pen1.Color, CColor],
                         Positions = Rounded ?
-                        new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f } :
-                        new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f }
+                        [0f, 0.1f, 0.5f, 0.9f, 1.0f] :
+                        [0f, 0.1f, 0.5f, 0.9f, 1.0f]
                     };
                     differentBorder.InterpolationColors = cblend;
                 }
@@ -353,8 +468,8 @@ namespace WinPaletter.TypesExtensions
                     differentBorder = new(rectangle, Pen1.Color, CColor, 180f);
                     ColorBlend cblend = new(5)
                     {
-                        Colors = new Color[5] { Pen1.Color, CColor, CColor, CColor, Pen1.Color },
-                        Positions = new float[5] { 0f, 0.1f, 0.5f, 0.9f, 1.0f }
+                        Colors = [Pen1.Color, CColor, CColor, CColor, Pen1.Color],
+                        Positions = [0f, 0.1f, 0.5f, 0.9f, 1.0f]
                     };
                     differentBorder.InterpolationColors = cblend;
                 }
@@ -469,7 +584,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Check if a point is inside a polygon (or sets of points)
+        /// Check if a point is inside a polygon (or sets of points) or not
         /// </summary>
         /// <param name="pointFs"></param>
         /// <param name="point"></param>
@@ -487,27 +602,25 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Check if a point is inside a polygon (or sets of points)
+        /// Check if a point is inside a polygon (or sets of points) or not
         /// </summary>
         /// <param name="points"></param>
         /// <param name="point"></param>
         /// <returns></returns>
         public static bool Contains(this Point[] points, PointF point)
         {
-            if (points.Length < 2)
-                return false;
+            if (points.Length < 2) return false;
 
             for (int i = 0; i < points.Length - 1; i++)
             {
-                if (points[i].X <= point.X && points[i + 1].X >= point.X)
-                    return true;
+                if (points[i].X <= point.X && points[i + 1].X >= point.X) return true;
             }
 
             return false;
         }
 
         /// <summary>
-        /// Check if a targetRect lies in a parent rectangle, not exceeding it. 
+        /// Check if a rectangle lies in a parent rectangle, not exceeding it. 
         /// </summary>
         /// <param name="parentRect"></param>
         /// <param name="targetRect"></param>
@@ -519,7 +632,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Check if a point is located in the border of a rectangle but not inside it (supposing that rectangle border size is 1 pixel)
+        /// Check if a point is located in the border of a rectangle and not inside it (supposing that rectangle border size is 1 pixel)
         /// </summary>
         /// <param name="rectangle"></param>
         /// <param name="pointToCheck"></param>

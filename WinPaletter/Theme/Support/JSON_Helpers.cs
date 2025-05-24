@@ -9,7 +9,7 @@ namespace WinPaletter.Theme
     {
         private JObject DeserializeProps(Type StructureType, object Structure)
         {
-            JObject j = new();
+            JObject j = [];
 
             j.RemoveAll();
 
@@ -23,13 +23,17 @@ namespace WinPaletter.Theme
             return j;
         }
 
+        /// <summary>
+        /// Check if a string is a valid JSON
+        /// </summary>
+        /// <param name="strInput"></param>
+        /// <returns><see cref="bool"/> </returns>
         private static bool IsValidJson(string strInput)
         {
-            if (string.IsNullOrWhiteSpace(strInput))
-            {
-                return false;
-            }
+            if (string.IsNullOrWhiteSpace(strInput)) return false;
+
             strInput = strInput.Trim();
+
             if (strInput.StartsWith("{") && strInput.EndsWith("}") || strInput.StartsWith("[") && strInput.EndsWith("]")) // For object
             {
                 try

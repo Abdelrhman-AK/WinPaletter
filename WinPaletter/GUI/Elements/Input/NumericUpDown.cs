@@ -213,8 +213,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
@@ -272,6 +270,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

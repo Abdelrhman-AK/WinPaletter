@@ -31,7 +31,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -69,7 +69,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -96,7 +96,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.LockScreen,
+                AspectName = Program.Lang.Strings.Aspects.LockScreen,
                 Enabled = Program.TM.LogonUI10x.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -183,7 +183,7 @@ namespace WinPaletter
 
                 if (files.Count() > 0)
                 {
-                    // Find the most recently accessed file (assuming it's the lock screen image)
+                    // Find the most recently accessed File (assuming it's the lock screen image)
                     mostRecentFile = files.OrderByDescending(System.IO.File.GetLastAccessTime).FirstOrDefault();
                 }
             }

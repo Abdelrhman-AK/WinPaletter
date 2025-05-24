@@ -27,11 +27,11 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -41,7 +41,7 @@ namespace WinPaletter
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_OpenTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.OpenTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -53,7 +53,7 @@ namespace WinPaletter
 
                         if (!string.IsNullOrWhiteSpace(metricsStr))
                         {
-                            List<byte> bytes = new();
+                            List<byte> bytes = [];
                             foreach (string s in metricsStr.Split(' '))
                             {
                                 if (byte.TryParse(s, out byte result))
@@ -62,7 +62,7 @@ namespace WinPaletter
                                 }
                             }
 
-                            User32.NONCLIENTMETRICS ncm = new(bytes.ToArray());
+                            User32.NONCLIENTMETRICS ncm = new([.. bytes]);
 
                             TMx.MetricsFonts.CaptionWidth = ncm.iCaptionWidth;
                             TMx.MetricsFonts.CaptionHeight = ncm.iCaptionHeight;
@@ -86,7 +86,7 @@ namespace WinPaletter
 
                         if (!string.IsNullOrWhiteSpace(iconsmetricsStr))
                         {
-                            List<byte> bytes = new();
+                            List<byte> bytes = [];
                             foreach (string s in iconsmetricsStr.Split(' '))
                             {
                                 if (byte.TryParse(s, out byte result))
@@ -95,7 +95,7 @@ namespace WinPaletter
                                 }
                             }
 
-                            User32.ICONMETRICS icm = new(bytes.ToArray());
+                            User32.ICONMETRICS icm = new([.. bytes]);
 
                             TMx.MetricsFonts.IconSpacing = icm.iHorzSpacing;
                             TMx.MetricsFonts.IconVerticalSpacing = icm.iVertSpacing;
@@ -110,21 +110,21 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Theme.Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Theme.Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromMSSTYLES(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -135,7 +135,7 @@ namespace WinPaletter
                         //Newer versions of msstyles
                         using (libmsstyle.VisualStyle visualStyle = new(theme))
                         {
-                            using (Theme.Manager TMx = new(Manager.Source.Empty) { MetricsFonts = visualStyle.MetricsFonts() })
+                            using (Manager TMx = new(Manager.Source.Empty) { MetricsFonts = visualStyle.MetricsFonts() })
                             {
                                 LoadFromTM(TMx);
                             }
@@ -143,7 +143,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        // Old msstyles (Windows XP)
+                        // Old msstyles (Windows WXP)
                         try
                         {
                             if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
@@ -162,7 +162,7 @@ namespace WinPaletter
                         }
                         catch
                         {
-                            MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -177,7 +177,7 @@ namespace WinPaletter
 
         private void SaveAsTHEME(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Filter_SaveTheme })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.SaveTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -201,13 +201,13 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.MetricsFonts)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Theme.Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -240,7 +240,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.MetricsFonts,
+                AspectName = Program.Lang.Strings.Aspects.MetricsFonts,
                 Enabled = Program.TM.MetricsFonts.Enabled,
                 Import_theme = true,
                 Import_msstyles = true,
@@ -314,7 +314,7 @@ namespace WinPaletter
             }
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.MetricsFonts.Enabled;
 
@@ -364,7 +364,7 @@ namespace WinPaletter
             Desktop_icons.LoadMetrics(TM);
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.MetricsFonts.Enabled = AspectEnabled;
 
@@ -430,7 +430,7 @@ namespace WinPaletter
             windowMetrics1.StatusFont = vs.Fonts.CaptionFont;
             Label6.Text = vs.Fonts.StatusFont.Name;
 
-            using (Theme.Manager TMx = new(Manager.Source.Empty))
+            using (Manager TMx = new(Manager.Source.Empty))
             {
                 ApplyToTM(TMx);
                 LoadFromTM(TMx);
@@ -439,7 +439,7 @@ namespace WinPaletter
 
         void LoadDefaultValues()
         {
-            using (Theme.Manager @default = Default.Get(Program.WindowStyle))
+            using (Manager @default = Default.Get(Program.WindowStyle))
             {
                 trackBarX1.DefaultValue = @default.MetricsFonts.CaptionHeight;
                 trackBarX2.DefaultValue = @default.MetricsFonts.CaptionWidth;
@@ -488,7 +488,7 @@ namespace WinPaletter
 
                 if (!string.IsNullOrWhiteSpace(metrics) && metrics.Contains("="))
                 {
-                    List<byte> bytes = new();
+                    List<byte> bytes = [];
                     foreach (string s in metrics.Split('=')[1].Split(' '))
                     {
                         if (byte.TryParse(s, out byte result))
@@ -497,7 +497,7 @@ namespace WinPaletter
                         }
                     }
 
-                    User32.NONCLIENTMETRICS ncm = new(bytes.ToArray());
+                    User32.NONCLIENTMETRICS ncm = new([.. bytes]);
 
                     TMx.MetricsFonts.CaptionWidth = ncm.iCaptionWidth;
                     TMx.MetricsFonts.CaptionHeight = ncm.iCaptionHeight;
@@ -521,7 +521,7 @@ namespace WinPaletter
 
                 if (!string.IsNullOrWhiteSpace(icon) && icon.Contains("="))
                 {
-                    List<byte> bytes = new();
+                    List<byte> bytes = [];
                     foreach (string s in icon.Split('=')[1].Split(' '))
                     {
                         if (byte.TryParse(s, out byte result))
@@ -530,7 +530,7 @@ namespace WinPaletter
                         }
                     }
 
-                    User32.ICONMETRICS icm = new(bytes.ToArray());
+                    User32.ICONMETRICS icm = new([.. bytes]);
 
                     TMx.MetricsFonts.IconSpacing = icm.iHorzSpacing;
                     TMx.MetricsFonts.IconVerticalSpacing = icm.iVertSpacing;
@@ -876,7 +876,7 @@ namespace WinPaletter
 
         private void undo_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.Get(Program.WindowStyle))
             {
                 Label1.Font = TM.MetricsFonts.CaptionFont;
                 Label1.Text = Label1.Font.Name;
@@ -886,7 +886,7 @@ namespace WinPaletter
 
         private void button21_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.Get(Program.WindowStyle))
             {
                 Label5.Font = TM.MetricsFonts.SmCaptionFont;
                 Label5.Text = Label5.Font.Name;
@@ -896,7 +896,7 @@ namespace WinPaletter
 
         private void button22_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.Get(Program.WindowStyle))
             {
                 Label2.Font = TM.MetricsFonts.IconFont;
                 Label2.Text = Label2.Font.Name;
@@ -906,7 +906,7 @@ namespace WinPaletter
 
         private void button23_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.Get(Program.WindowStyle))
             {
                 Label3.Font = TM.MetricsFonts.MenuFont;
                 Label3.Text = Label3.Font.Name;
@@ -916,7 +916,7 @@ namespace WinPaletter
 
         private void button24_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.Get(Program.WindowStyle))
             {
                 Label4.Font = TM.MetricsFonts.MessageFont;
                 Label4.Text = Label4.Font.Name;
@@ -926,7 +926,7 @@ namespace WinPaletter
 
         private void button25_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.Get(Program.WindowStyle))
             {
                 Label6.Font = TM.MetricsFonts.StatusFont;
                 Label6.Text = Label6.Font.Name;
@@ -936,7 +936,7 @@ namespace WinPaletter
 
         private void button26_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.Get(Program.WindowStyle))
             {
                 CheckBox1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
             }

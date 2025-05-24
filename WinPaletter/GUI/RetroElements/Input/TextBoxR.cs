@@ -8,10 +8,16 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
 {
+    /// <summary>
+    /// TextBox with Windows 9x style
+    /// </summary>
     [Description("Retro TextBox with Windows 9x style")]
     [DefaultEvent("TextChanged")]
     public class TextBoxR : Control
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxR"/> class.
+        /// </summary>
         public TextBoxR()
         {
             _BaseColor = BackColor;
@@ -22,6 +28,7 @@ namespace WinPaletter.UI.Retro
             BackColor = SystemColors.Control;
             Font = new("Microsoft Sans Serif", 8f);
 
+            // Initialize the masked TextBox
             TB = new()
             {
                 Visible = true,
@@ -34,11 +41,11 @@ namespace WinPaletter.UI.Retro
                 UseSystemPasswordChar = _UseSystemPasswordChar,
                 BorderStyle = BorderStyle.None,
                 Location = new(1, 0),
-                Width = Width - 1
+                Width = Width - 1,
+                Cursor = Cursors.IBeam
             };
 
-            TB.Cursor = Cursors.IBeam;
-
+            // Set size of the masked TextBox based on the Multiline property correctly
             if (_Multiline)
             {
                 TB.Height = Height - 8;
@@ -48,6 +55,7 @@ namespace WinPaletter.UI.Retro
                 Height = TB.Height + 8;
             }
 
+            // Assign the events to the masked TextBox
             TB.TextChanged += OnBaseTextChanged;
             TB.KeyDown += OnBaseKeyDown;
         }
@@ -59,16 +67,31 @@ namespace WinPaletter.UI.Retro
 
         private MouseState State = MouseState.None;
 
+        /// <summary>
+        /// Mouse states for the control
+        /// </summary>
         public enum MouseState : byte
         {
+            /// <summary>
+            /// Mouse is not over the control
+            /// </summary>
             None = 0,
+
+            /// <summary>
+            /// Mouse is over the control
+            /// </summary>
             Over = 1,
+
+            /// <summary>
+            /// Mouse is pressing the control
+            /// </summary>
             Down = 2,
-            Block = 3
         }
 
         private TextBox _TB;
-
+        /// <summary>
+        /// A masked <see cref="TextBox"/> used to input text
+        /// </summary>
         private TextBox TB
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -80,6 +103,7 @@ namespace WinPaletter.UI.Retro
             [MethodImpl(MethodImplOptions.Synchronized)]
             set
             {
+                // Unsubscribe from the old TextBox events
                 if (_TB != null)
                 {
                     _TB.MouseDown -= TB_MouseDown;
@@ -89,6 +113,8 @@ namespace WinPaletter.UI.Retro
                 }
 
                 _TB = value;
+
+                // Subscribe to the new TextBox events
                 if (_TB != null)
                 {
                     _TB.MouseDown += TB_MouseDown;
@@ -103,6 +129,10 @@ namespace WinPaletter.UI.Retro
 
         #region Properties
         private HorizontalAlignment _TextAlign = HorizontalAlignment.Left;
+
+        /// <summary>
+        /// Gets or sets the text alignment of the text in the control
+        /// </summary>
         [Category("Options")]
         public HorizontalAlignment TextAlign
         {
@@ -121,6 +151,10 @@ namespace WinPaletter.UI.Retro
         }
 
         private int _MaxLength = 32767;
+
+        /// <summary>
+        /// Gets or sets the maximum number of characters the user can type into the control
+        /// </summary>
         [Category("Options")]
         public int MaxLength
         {
@@ -139,6 +173,10 @@ namespace WinPaletter.UI.Retro
         }
 
         private bool _ReadOnly;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is read-only
+        /// </summary>
         [Category("Options")]
         public bool ReadOnly
         {
@@ -157,6 +195,10 @@ namespace WinPaletter.UI.Retro
         }
 
         private bool _UseSystemPasswordChar;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control should appear as the default password character
+        /// </summary>
         [Category("Options")]
         public bool UseSystemPasswordChar
         {
@@ -175,6 +217,10 @@ namespace WinPaletter.UI.Retro
         }
 
         private bool _Multiline;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is a multiline TextBox
+        /// </summary>
         [Category("Options")]
         public bool Multiline
         {
@@ -189,6 +235,7 @@ namespace WinPaletter.UI.Retro
                 {
                     TB.Multiline = value;
 
+                    // Set size of the masked TextBox based on the Multiline property correctly
                     if (value)
                     {
                         TB.Height = Height - 8;
@@ -202,6 +249,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the text associated with this control
+        /// </summary>
         [Category("Options")]
         public override string Text
         {
@@ -219,6 +269,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the font of the text displayed by the control
+        /// </summary>
         [Category("Options")]
         public override Font Font
         {
@@ -232,6 +285,8 @@ namespace WinPaletter.UI.Retro
                 if (TB is not null)
                 {
                     TB.Font = value;
+
+                    // Set location and size of the masked TextBox based on the font property correctly
                     TB.Location = new(4, 4);
                     TB.Width = Width - 8;
                     if (!_Multiline)
@@ -247,6 +302,9 @@ namespace WinPaletter.UI.Retro
         private Color buttonHilight = SystemColors.ButtonHighlight;
         private Color buttonLight = SystemColors.ControlLight;
 
+        /// <summary>
+        /// Gets or sets the color of the button shadow
+        /// </summary>
         public Color ButtonShadow
         {
             get { return buttonShadow; }
@@ -260,6 +318,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the button dark shadow
+        /// </summary>
         public Color ButtonDkShadow
         {
             get { return buttonDkShadow; }
@@ -273,6 +334,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the button hilight
+        /// </summary>
         public Color ButtonHilight
         {
             get { return buttonHilight; }
@@ -286,6 +350,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the button light
+        /// </summary>
         public Color ButtonLight
         {
             get { return buttonLight; }
@@ -299,6 +366,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the background color of the control
+        /// </summary>
         public new Color BackColor
         {
             get => base.BackColor;
@@ -321,6 +391,11 @@ namespace WinPaletter.UI.Retro
         #endregion
 
         #region Events/Overrides
+
+        /// <summary>
+        /// Void to handle the OnMouseDown event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -329,6 +404,10 @@ namespace WinPaletter.UI.Retro
             TB.Focus();
         }
 
+        /// <summary>
+        /// Void to handle the OnMouseUp event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
@@ -337,6 +416,10 @@ namespace WinPaletter.UI.Retro
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the OnMouseEnter event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
@@ -344,6 +427,10 @@ namespace WinPaletter.UI.Retro
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the OnMouseLeave event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
@@ -351,35 +438,75 @@ namespace WinPaletter.UI.Retro
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the OnCreateControl event
+        /// </summary>
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+
+            // Check if the TextBox is not already added to the control
             if (!Controls.Contains(TB))
             {
                 Controls.Add(TB);
             }
         }
 
+        /// <summary>
+        /// Changes the text of the control when the masked TextBox text changes
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
         private void OnBaseTextChanged(object s, EventArgs e)
         {
             Text = TB.Text;
         }
 
+        /// <summary>
+        /// Handles the KeyDown event for the masked TextBox
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
         private void OnBaseKeyDown(object s, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.A)
             {
+                // Ctrl + A: Select all text
                 TB.SelectAll();
                 e.SuppressKeyPress = true;
             }
             if (e.Control && e.KeyCode == Keys.C)
             {
+                // Ctrl + C: Copy selected text
                 TB.Copy();
                 e.SuppressKeyPress = true;
             }
+            if (e.Control && e.KeyCode == Keys.X)
+            {
+                // Ctrl + X: Cut selected text
+                TB.Cut();
+                e.SuppressKeyPress = true;
+            }
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                // Ctrl + V: Paste text
+                TB.Paste();
+                e.SuppressKeyPress = true;
+            }
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+                // Ctrl + Z: Undo
+                TB.Undo();
+                e.SuppressKeyPress = true;
+            }
+
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the OnResize event to adjust the size and location of the masked TextBox
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnResize(EventArgs e)
         {
             TB.Location = new(4, 4);
@@ -397,30 +524,54 @@ namespace WinPaletter.UI.Retro
             base.OnResize(e);
         }
 
+        /// <summary>
+        /// Void to handle the mouse down event for the masked TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TB_MouseDown(object sender, MouseEventArgs e)
         {
             State = MouseState.Down;
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the mouse enter event for the masked TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TB_MouseEnter(object sender, EventArgs e)
         {
             State = MouseState.Over;
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the mouse leave event for the masked TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TB_MouseLeave(object sender, EventArgs e)
         {
             State = MouseState.None;
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the lost focus event for the masked TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TB_LostFocus(object sender, EventArgs e)
         {
             State = MouseState.None;
             Invalidate();
         }
 
+        /// <summary>
+        /// Void to handle the dispose event
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -430,6 +581,10 @@ namespace WinPaletter.UI.Retro
 
         #endregion
 
+        /// <summary>
+        /// Void to handle the paint event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Bitmap B = new(Width, Height);
@@ -440,29 +595,29 @@ namespace WinPaletter.UI.Retro
 
             TB.ForeColor = ForeColor;
 
-            // ################################################################################# Customizer
-            Rectangle CheckRect = new(0, 0, Width - 1, Height - 1);
-            // #################################################################################
+            Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
+            // Draw the background
             G.Clear(BackColor);
 
+            // Draw 3D borders
             using (Pen penButtonShadow = new(ButtonShadow))
             using (Pen penButtonDkShadow = new(ButtonDkShadow))
             using (Pen penButtonLight = new(ButtonLight))
             using (Pen penButtonHilight = new(ButtonHilight))
             using (SolidBrush br = new(ForeColor))
             {
-                G.DrawLine(penButtonShadow, new Point(CheckRect.X, CheckRect.Y), new Point(CheckRect.Width - 1, CheckRect.Y));
-                G.DrawLine(penButtonShadow, new Point(CheckRect.X, CheckRect.Y), new Point(CheckRect.X, CheckRect.Height - 1));
+                G.DrawLine(penButtonShadow, new Point(rect.X, rect.Y), new Point(rect.Width - 1, rect.Y));
+                G.DrawLine(penButtonShadow, new Point(rect.X, rect.Y), new Point(rect.X, rect.Height - 1));
 
-                G.DrawLine(penButtonDkShadow, new Point(CheckRect.X, CheckRect.Y) + (Size)new Point(1, 1), new Point(CheckRect.Width - 2, CheckRect.Y + 1));
-                G.DrawLine(penButtonDkShadow, new Point(CheckRect.X, CheckRect.Y) + (Size)new Point(1, 1), new Point(CheckRect.X + 1, CheckRect.Height - 2));
+                G.DrawLine(penButtonDkShadow, new Point(rect.X, rect.Y) + (Size)new Point(1, 1), new Point(rect.Width - 2, rect.Y + 1));
+                G.DrawLine(penButtonDkShadow, new Point(rect.X, rect.Y) + (Size)new Point(1, 1), new Point(rect.X + 1, rect.Height - 2));
 
-                G.DrawLine(penButtonLight, new Point(CheckRect.Width - 1, 1), new Point(CheckRect.Width - 1, CheckRect.Height - 1));
-                G.DrawLine(penButtonLight, new Point(1, CheckRect.Height - 1), new Point(CheckRect.Width - 1, CheckRect.Height - 1));
+                G.DrawLine(penButtonLight, new Point(rect.Width - 1, 1), new Point(rect.Width - 1, rect.Height - 1));
+                G.DrawLine(penButtonLight, new Point(1, rect.Height - 1), new Point(rect.Width - 1, rect.Height - 1));
 
-                G.DrawLine(penButtonHilight, new Point(CheckRect.Width, CheckRect.X), new Point(CheckRect.Width, CheckRect.Height));
-                G.DrawLine(penButtonHilight, new Point(CheckRect.X, CheckRect.Height), new Point(CheckRect.Width, CheckRect.Height));
+                G.DrawLine(penButtonHilight, new Point(rect.Width, rect.X), new Point(rect.Width, rect.Height));
+                G.DrawLine(penButtonHilight, new Point(rect.X, rect.Height), new Point(rect.Width, rect.Height));
 
                 G.DrawString(TB.Text, Font, br, new Point(2, 4));
             }

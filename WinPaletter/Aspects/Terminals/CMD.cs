@@ -34,7 +34,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -100,7 +100,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -178,30 +178,30 @@ namespace WinPaletter
             {
                 case Edition.CMD:
                     {
-                        Text = Program.Lang.CommandPrompt;
+                        Text = Program.Lang.Strings.Aspects.CommandPrompt;
                         Icon = Properties.Resources.icons8_command_line;
-                        Button4.Text = Program.Lang.Open_Testing_CMD;
-                        data.AspectName = Program.Lang.CommandPrompt;
+                        Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_CMD;
+                        data.AspectName = Program.Lang.Strings.Aspects.CommandPrompt;
                         data.Enabled = Program.TM.CommandPrompt.Enabled;
                         break;
                     }
 
                 case Edition.PowerShellx86:
                     {
-                        Text = Program.Lang.PowerShellx86;
+                        Text = Program.Lang.Strings.Aspects.PowerShellx86;
                         Icon = Properties.Resources.icons8_PowerShell;
-                        Button4.Text = Program.Lang.Open_Testing_PowerShellx86;
-                        data.AspectName = Program.Lang.PowerShellx86;
+                        Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_PowerShellx86;
+                        data.AspectName = Program.Lang.Strings.Aspects.PowerShellx86;
                         data.Enabled = Program.TM.PowerShellx86.Enabled;
                         break;
                     }
 
                 case Edition.PowerShellx64:
                     {
-                        Text = Program.Lang.PowerShellx64;
+                        Text = Program.Lang.Strings.Aspects.PowerShellx64;
                         Icon = Properties.Resources.icons8_PowerShell;
-                        Button4.Text = Program.Lang.Open_Testing_PowerShellx64;
-                        data.AspectName = Program.Lang.PowerShellx64;
+                        Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_PowerShellx64;
+                        data.AspectName = Program.Lang.Strings.Aspects.PowerShellx64;
                         data.Enabled = Program.TM.PowerShellx64.Enabled;
                         break;
                     }
@@ -223,7 +223,7 @@ namespace WinPaletter
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 Focus();
                 BringToFront();
@@ -942,7 +942,7 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                using (Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight }))
+                using (Font temp = Font.FromLogFont(new GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight }))
                 {
                     F_cmd = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
                 }
@@ -1325,7 +1325,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            NativeMethods.GDI32.LogFont fx = new();
+            GDI32.LogFont fx = new();
             F_cmd = new(F_cmd.Name, F_cmd.Size, F_cmd.Style);
             F_cmd.ToLogFont(fx);
             fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
@@ -1367,7 +1367,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                CMD_PreviewCUR2.BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                CMD_PreviewCUR2.BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
                 return;
             }
 
@@ -1401,7 +1401,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 ApplyPreview();
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -1416,53 +1416,53 @@ namespace WinPaletter
                 { colorItem, new string[] { nameof(colorItem.BackColor) }},
             };
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable00) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable00)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable01) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable01)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable02) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable02)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable03) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable03)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable04) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable04)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable05) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable05)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable06) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable06)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable07) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable07)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable08) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable08)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable09) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable09)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable10) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable10)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable11) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable11)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable12) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable12)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable13) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable13)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable14) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable14)]);
 
-            if (((UI.Controllers.ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                CList.Add(CMD1, new string[] { nameof(CMD1.CMD_ColorTable15) });
+            if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
+                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable15)]);
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -1480,8 +1480,8 @@ namespace WinPaletter
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            Program.ToolTip.ToolTipText = Program.Lang.CMD_NotAllWeights;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Tip;
+            Program.ToolTip.ToolTipText = Program.Lang.Strings.Aspects.Consoles.CMD_NotAllWeights;
+            Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
             Program.ToolTip.Image = Assets.Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -1498,7 +1498,7 @@ namespace WinPaletter
                     F_cmd = dlg.Font;
                     FontName.Text = FontName.Font.Name;
                     CMD_FontSizeBar.Value = (int)Math.Round(dlg.Font.Size);
-                    NativeMethods.GDI32.LogFont fx = new();
+                    GDI32.LogFont fx = new();
                     F_cmd.ToLogFont(fx);
                     fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
                     using (Font temp = Font.FromLogFont(fx))

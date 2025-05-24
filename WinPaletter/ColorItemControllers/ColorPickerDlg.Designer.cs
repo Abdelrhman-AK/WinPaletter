@@ -260,7 +260,6 @@ namespace WinPaletter
             // 
             // ProgressBar1
             // 
-            this.ProgressBar1.AnimationDuration = 1000;
             this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
             this.ProgressBar1.Location = new System.Drawing.Point(3, 30);

@@ -48,7 +48,7 @@ namespace WinPaletter
             // Get all .scr files in the screensaver folder
             string[] screensavers = Directory.GetFiles(SysPaths.System32, "*.scr");
 
-            // Populate the ListView
+            // SetFormValues the ListView
             foreach (string screensaver in screensavers)
             {
                 string name = Path.GetFileNameWithoutExtension(screensaver);

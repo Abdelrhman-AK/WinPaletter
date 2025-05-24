@@ -476,6 +476,8 @@ namespace WinPaletter.UI.WP
 
                 tb.BackColor = scheme.Colors.Back(parentLevel);
             }
+
+
         }
     }
 }

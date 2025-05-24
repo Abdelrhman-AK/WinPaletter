@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace WinPaletter.Interfaces
 {
     /// <summary>
-    /// Represents the CTaskbarList class for managing taskbar-related operations.
+    /// Represents the CTaskbarList class for managing taskbar-related operations (Windows 7 and later; progress in taskbar app button, ...).
     /// </summary>
     [ComImport]
     [ClassInterface(ClassInterfaceType.None)]

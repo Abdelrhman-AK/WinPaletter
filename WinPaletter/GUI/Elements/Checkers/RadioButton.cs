@@ -225,8 +225,8 @@ namespace WinPaletter.UI.WP
 
             // #################################################################################
 
-            using (LinearGradientBrush lgb0 = new(InnerCircle_GradienceFix, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line_Hover(parentLevel)), Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line(parentLevel)), LinearGradientMode.Vertical))
+            using (LinearGradientBrush lgb0 = new(InnerCircle_GradienceFix, scheme.Colors.Back(parentLevel - 10), scheme.Colors.Back_Hover(parentLevel - 10), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(OuterCircle_GradienceFix, Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line_Hover(parentLevel - 10)), Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line(parentLevel - 10)), LinearGradientMode.Vertical))
             using (LinearGradientBrush lgb2 = new(OuterCircle_GradienceFix, Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha, scheme.Colors.AccentAlt), LinearGradientMode.Horizontal))
             using (Pen P0 = new(lgb1))
             using (Pen P1 = new(lgb2))
@@ -257,6 +257,8 @@ namespace WinPaletter.UI.WP
             format.Dispose();
 
             base.OnPaint(e);
+
+
         }
     }
 }

@@ -88,7 +88,7 @@ namespace WinPaletter.UI.WP
                 if (Program.Style.DarkMode) _color = _color.Dark(0.2f); else _color = _color.CB(0.5f);
             }
 
-            using (Style.Config.Colors_Collection colors = new(_color, _color, Program.Style.DarkMode))
+            using (Config.Colors_Collection colors = new(_color, _color, Program.Style.DarkMode))
             {
                 _color_line = colors.Line_Hover(parentLevel);
             }
@@ -123,6 +123,8 @@ namespace WinPaletter.UI.WP
                     G.DrawString(Text, f, B, new Rectangle(Rect.X + 10, Rect.Y, Rect.Width - 20, Rect.Height), sf);
                 }
             }
+
+
         }
     }
 }

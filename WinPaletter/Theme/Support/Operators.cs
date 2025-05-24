@@ -16,9 +16,11 @@
 
             if (Info != TMx.Info) _Equals = false;
 
+            if (Windows12 != TMx.Windows12) _Equals = false;
+
             if (Windows11 != TMx.Windows11) _Equals = false;
 
-            if (LogonUI10x != TMx.LogonUI10x) _Equals = false;
+            if (Windows10 != TMx.Windows10) _Equals = false;
 
             if (Windows81 != TMx.Windows81) _Equals = false;
 
@@ -40,11 +42,19 @@
 
             if (VisualStyles_Vista != TMx.VisualStyles_Vista) _Equals = false;
 
+            if (VisualStyles_XP != TMx.VisualStyles_XP) _Equals = false;
+
+            if (LogonUI10x != TMx.LogonUI10x) _Equals = false;
+
+            if (LogonUI81 != TMx.LogonUI81) _Equals = false;
+
             if (LogonUI7 != TMx.LogonUI7) _Equals = false;
 
             if (LogonUIXP != TMx.LogonUIXP) _Equals = false;
 
             if (Win32 != TMx.Win32) _Equals = false;
+
+            if (Accessibility != TMx.Accessibility) _Equals = false;
 
             if (WindowsEffects != TMx.WindowsEffects) _Equals = false;
 
@@ -74,47 +84,7 @@
 
             if (Icons != TMx.Icons) _Equals = false;
 
-
-            if (Cursors.Enabled != TMx.Cursors.Enabled) _Equals = false;
-
-            if (Cursors.Trails != TMx.Cursors.Trails) _Equals = false;
-
-            if (Cursors.Shadow != TMx.Cursors.Shadow) _Equals = false;
-
-            if (Cursors.Cursor_Arrow != TMx.Cursors.Cursor_Arrow) _Equals = false;
-
-            if (Cursors.Cursor_Help != TMx.Cursors.Cursor_Help) _Equals = false;
-
-            if (Cursors.Cursor_AppLoading != TMx.Cursors.Cursor_AppLoading) _Equals = false;
-
-            if (Cursors.Cursor_Busy != TMx.Cursors.Cursor_Busy) _Equals = false;
-
-            if (Cursors.Cursor_Move != TMx.Cursors.Cursor_Move) _Equals = false;
-
-            if (Cursors.Cursor_NS != TMx.Cursors.Cursor_NS) _Equals = false;
-
-            if (Cursors.Cursor_EW != TMx.Cursors.Cursor_EW) _Equals = false;
-
-            if (Cursors.Cursor_NESW != TMx.Cursors.Cursor_NESW) _Equals = false;
-
-            if (Cursors.Cursor_NWSE != TMx.Cursors.Cursor_NWSE) _Equals = false;
-
-            if (Cursors.Cursor_Up != TMx.Cursors.Cursor_Up) _Equals = false;
-
-            if (Cursors.Cursor_Pen != TMx.Cursors.Cursor_Pen) _Equals = false;
-
-            if (Cursors.Cursor_None != TMx.Cursors.Cursor_None) _Equals = false;
-
-            if (Cursors.Cursor_Link != TMx.Cursors.Cursor_Link) _Equals = false;
-
-            if (Cursors.Cursor_Pin != TMx.Cursors.Cursor_Pin) _Equals = false;
-
-            if (Cursors.Cursor_Person != TMx.Cursors.Cursor_Person) _Equals = false;
-
-            if (Cursors.Cursor_IBeam != TMx.Cursors.Cursor_IBeam) _Equals = false;
-
-            if (Cursors.Cursor_Cross != TMx.Cursors.Cursor_Cross) _Equals = false;
-
+            if (Cursors != TMx.Cursors) _Equals = false;
 
             if (CommandPrompt != TMx.CommandPrompt) _Equals = false;
 
@@ -132,16 +102,16 @@
         /// <summary>
         /// Checks if two theme managers are equal
         /// </summary>
-        /// <param name="TM1">Theme manager #1</param>
-        /// <param name="TM2">Theme manager #2</param>
+        /// <param name="TM1">WinTheme manager #1</param>
+        /// <param name="TM2">WinTheme manager #2</param>
         /// <returns></returns>
         public static bool operator ==(Manager TM1, Manager TM2) => TM1.Equals(TM2);
 
         /// <summary>
         /// Checks if two theme managers are not equal
         /// </summary>
-        /// <param name="TM1">Theme manager #1</param>
-        /// <param name="TM2">Theme manager #2</param>
+        /// <param name="TM1">WinTheme manager #1</param>
+        /// <param name="TM2">WinTheme manager #2</param>
         /// <returns></returns>
         public static bool operator !=(Manager TM1, Manager TM2) => !(TM1 == TM2);
 

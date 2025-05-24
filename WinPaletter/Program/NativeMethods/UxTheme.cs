@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace WinPaletter.NativeMethods
 {
     /// <summary>
-    /// Provides partial class implementation for interacting with the User Experience (UX) Theme APIs.
+    /// Provides partial class implementation for interacting with the User Experience (UX) WinTheme APIs.
     /// This partial class may contain additional members related to UxTheme functionality.
     /// </summary>
     public partial class UxTheme
@@ -21,7 +21,7 @@ namespace WinPaletter.NativeMethods
         public static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 
         /// <summary>
-        /// Set The Window's Theme Attributes
+        /// Set The Window's WinTheme Attributes
         /// </summary>
         /// <param name="hWnd">The Handle to the Window</param>
         /// <param name="wtype">What ButtonOverlay of Attributes</param>
@@ -39,11 +39,29 @@ namespace WinPaletter.NativeMethods
         [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int SetPreferredAppMode(PreferredAppMode preferredAppMode);
 
+        /// <summary>
+        /// The Preferred Application Mode (Dark, Light, System Default)
+        /// </summary>
         public enum PreferredAppMode
         {
+            /// <summary>
+            /// The default mode
+            /// </summary>
             Default = 0,
+
+            /// <summary>
+            /// The dark mode
+            /// </summary>
             Dark = 1,
+
+            /// <summary>
+            /// The light mode
+            /// </summary>
             Light = 2,
+
+            /// <summary>
+            /// The system default mode
+            /// </summary>
             SystemDefault = 3
         }
 
@@ -56,7 +74,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public static uint WTNCA_NODRAWICON = 0x2U;
         /// <summary>
-        /// Do Not Show the System contextMenu
+        /// Do Not Hide the System contextMenu
         /// </summary>
         public static uint WTNCA_NOSYSMENU = 0x4U;
         /// <summary>
@@ -223,52 +241,44 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Rectangle structure for specifying coordinates and dimensions.
         /// </summary>
+        /// <remarks>
+        /// Initializes a new instance of the <see cref="RECT"/> structure.
+        /// </remarks>
+        /// <param name="rect">A <see cref="Rectangle"/> specifying coordinates and dimensions.</param>
         [StructLayout(LayoutKind.Explicit)]
-        public struct RECT
+        public struct RECT(Rectangle rect)
         {
             /// <summary>
             /// Left coordinate of the rectangle.
             /// </summary>
             [FieldOffset(0)]
-            public int left;
+            public int left = rect.Left;
 
             /// <summary>
             /// Top coordinate of the rectangle.
             /// </summary>
             [FieldOffset(4)]
-            public int top;
+            public int top = rect.Top;
 
             /// <summary>
             /// Right coordinate of the rectangle.
             /// </summary>
             [FieldOffset(8)]
-            public int right;
+            public int right = rect.Right;
 
             /// <summary>
             /// Bottom coordinate of the rectangle.
             /// </summary>
             [FieldOffset(12)]
-            public int bottom;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="RECT"/> structure.
-            /// </summary>
-            /// <param name="rect">A <see cref="Rectangle"/> specifying coordinates and dimensions.</param>
-            public RECT(Rectangle rect)
-            {
-                this.left = rect.Left;
-                this.top = rect.Top;
-                this.right = rect.Right;
-                this.bottom = rect.Bottom;
-            }
+            public int bottom = rect.Bottom;
 
             /// <summary>
             /// Converts the RECT structure to a <see cref="Rectangle"/>.
             /// </summary>
             /// <returns>A <see cref="Rectangle"/> representing the coordinates and dimensions of the RECT structure.</returns>
-            public Rectangle ToRectangle()
+            public readonly Rectangle ToRectangle()
             {
-                return new Rectangle(this.left, this.top, this.right - this.left, this.bottom - this.top);
+                return new Rectangle(left, top, right - left, bottom - top);
             }
         }
 

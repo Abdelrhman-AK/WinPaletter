@@ -227,9 +227,9 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), Circle.Contains(this.PointToClient(MousePosition)) ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(alpha), Circle.Contains(PointToClient(MousePosition)) ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
-            else { alpha = Circle.Contains(this.PointToClient(MousePosition)) ? 255 : 0; }
+            else { alpha = Circle.Contains(PointToClient(MousePosition)) ? 255 : 0; }
 
             base.OnMouseMove(e);
         }
@@ -247,7 +247,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            if (Circle.Contains(this.PointToClient(MousePosition)))
+            if (Circle.Contains(PointToClient(MousePosition)))
             {
                 State = MouseState.Over;
 
@@ -366,7 +366,7 @@ namespace WinPaletter.UI.WP
 
             G.ResetClip();
 
-            Circle = new((int)Math.Round((Value / (double)Maximum) * Shaft.Width), 0, Height - 1, Height - 1);
+            Circle = new((int)Math.Round(Value / (double)Maximum * Shaft.Width), 0, Height - 1, Height - 1);
 
             using (SolidBrush br1 = new(scheme.Colors.Line_Hover(parentLevel)))
             {
@@ -384,6 +384,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

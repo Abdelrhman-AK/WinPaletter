@@ -14,87 +14,207 @@ namespace WinPaletter.NativeMethods
     {
         private partial class PrivateFunctions
         {
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref NONCLIENTMETRICS lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref ICONMETRICS lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref ANIMATIONINFO lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref HIGHCONTRAST lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref bool lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref int lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref uint lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, int lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, uint lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, uint uParam, int lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, string lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, bool lpvParam, SPIF fuWinIni);
 
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
             [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, bool uParam, int lpvParam, SPIF fuWinIni);
         }
 
+        /// <summary>
+        /// Logs the result of a SystemParametersInfo function call to a TreeView control.
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <param name="result"></param>
+        /// <param name="uAction"></param>
+        /// <param name="uParam"></param>
+        /// <param name="lpvParam"></param>
+        /// <param name="fuWinIni"></param>
         static void Verboser_SPI(TreeView treeView, bool result, SPI uAction, object uParam, object lpvParam, SPIF fuWinIni)
         {
             if (!result)
             {
+                // Get the last error code
                 int Error = Marshal.GetLastWin32Error();
 
+                // If the function call failed, log the error message
                 if (Error != 0)
                 {
+                    // Create a new Win32Exception with the error code
                     Win32Exception ex = new(Error);
 
+                    // Log the error message
                     if (treeView != null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
+                    // Add the exception to the appropriate list
                     if (uAction.ToString().StartsWith("SPI_GET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
+                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
                     }
                     else if (uAction.ToString().StartsWith("SPI_SET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
+                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
                     }
 
+                    // Return if the function call failed
                     return;
                 }
             }
 
+            // If the function call succeeded, log the result
             if (treeView != null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Verbose_User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()), "dll");
+                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()), "dll");
         }
 
         /// <summary>
@@ -115,29 +235,39 @@ namespace WinPaletter.NativeMethods
         {
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -176,31 +306,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, ref HIGHCONTRAST lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -240,31 +381,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, ref ICONMETRICS lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -304,31 +456,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, ref ANIMATIONINFO lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -368,31 +531,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, ref bool lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -432,31 +606,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, ref int lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -496,31 +681,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, ref uint lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -560,31 +756,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, int lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -624,31 +831,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, uint lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -688,31 +906,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, uint uParam, int lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -752,31 +981,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, string lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -816,31 +1056,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, int uParam, bool lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 
@@ -880,31 +1131,42 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         public static bool SystemParametersInfo(SPI uAction, bool uParam, int lpvParam, SPIF fuWinIni, TreeView treeView = null)
         {
+            // Create a boolean to track the result of the function call
             bool result = false;
 
+            // If the selected user is the same as current Windows user, perform the function call directly
             if (User.SID == User.AdminSID_GrantedUAC)
             {
                 result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
             }
 
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
             else
             {
+                // Create a boolean to track if the user has been impersonated
                 bool advapi_switched = false;
 
+                // Impersonate the selected user
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
+                    // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
+                    // If the user was impersonated, revert to the original user
                     if (advapi_switched) { advapi.RevertToSelf(); }
 
+                    // Undo the impersonation
                     wic.Undo();
                 }
             }
 
+            // Log the function call details
             Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
 
+            // Return the result of the function call
             return result;
         }
 

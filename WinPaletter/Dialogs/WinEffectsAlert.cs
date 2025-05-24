@@ -15,12 +15,16 @@ namespace WinPaletter.Dialogs
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (WinEffecter formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<WinEffecter>();
 
             checkBox1.Checked = !Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
             Forms.GlassWindow.Show();
 
             SystemSounds.Exclamation.Play();
+
+            BringToFront();
+            Activate();
+            Focus();
         }
 
         private void Button1_Click(object sender, EventArgs e)

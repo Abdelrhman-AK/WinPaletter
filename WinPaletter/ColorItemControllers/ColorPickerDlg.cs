@@ -15,10 +15,10 @@ namespace WinPaletter
     {
         private Color InitColor;
         private Image img;
-        private readonly List<Control> ChildControls_List = new();
-        private Dictionary<Control, string[]> ColorControls_List = new();
-        private readonly List<Form> Forms_List = new();
-        private List<Color> Colors_List = new();
+        private readonly List<Control> ChildControls_List = [];
+        private Dictionary<Control, string[]> ColorControls_List = [];
+        private readonly List<Form> Forms_List = [];
+        private List<Color> Colors_List = [];
         private bool enableAlpha;
         private Point newPoint = new();
         private Point xPoint = new();
@@ -313,7 +313,7 @@ namespace WinPaletter
 
             if (img is not null)
             {
-                Label4.Text = Program.Lang.Extracting;
+                Label4.Text = Program.Lang.Strings.Tips.PaletteExtraction;
                 Program.Animator.HideSync(Button6, true);
                 Program.Animator.HideSync(ImgPaletteContainer, true);
                 ProgressBar1.Visible = true;
@@ -376,7 +376,7 @@ namespace WinPaletter
 
         private void Button4_Click_1(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -387,7 +387,7 @@ namespace WinPaletter
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Palettes, Title = Program.Lang.Filter_OpenPalette })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Palettes, Title = Program.Lang.Strings.Extensions.OpenPalette })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -398,7 +398,7 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Filter_OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -509,7 +509,7 @@ namespace WinPaletter
 
                 ThemePaletteContainer.Controls.Clear();
 
-                List<Color> colors = new();
+                List<Color> colors = [];
                 colors.Clear();
 
                 if (System.IO.Path.GetExtension(TextBox2.Text).ToLower() == ".theme")
@@ -535,7 +535,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -590,7 +590,7 @@ namespace WinPaletter
                         }
                         catch
                         {
-                            MsgBox(Program.Lang.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }

@@ -4,8 +4,14 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// Theme license form for displaying the license of a theme.
+    /// </summary>
     public partial class Store_ThemeLicense
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Store_ThemeLicense"/> class.
+        /// </summary>
         public Store_ThemeLicense()
         {
             InitializeComponent();
@@ -16,7 +22,7 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             TextBox1.Font = Fonts.ConsoleLarge;
-            using (LicenseForm formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<LicenseForm>();
 
             SystemSounds.Exclamation.Play();
         }

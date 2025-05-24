@@ -224,6 +224,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

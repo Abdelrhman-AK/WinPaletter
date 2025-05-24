@@ -2,13 +2,8 @@
 
 namespace WinPaletter.UI.Retro
 {
-    public class EditorEventArgs : EventArgs
+    public class EditorEventArgs(string propertyName) : EventArgs
     {
-        public string PropertyName { get; }
-
-        public EditorEventArgs(string propertyName)
-        {
-            PropertyName = propertyName;
-        }
+        public string PropertyName { get; } = propertyName;
     }
 }

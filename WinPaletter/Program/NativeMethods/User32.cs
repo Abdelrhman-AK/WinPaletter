@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -14,7 +13,15 @@ namespace WinPaletter.NativeMethods
     public partial class User32
     {
         /// <summary>
-        /// Loads the specified cursor resource from the executable (.EXE) file associated with an application instance.
+        /// Retrieves the specified system metric or system configuration setting.
+        /// </summary>
+        /// <param name="nIndex"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(int nIndex);
+
+        /// <summary>
+        /// Loads the specified cursor resource from the executable (.EXE) File associated with an application instance.
         /// </summary>
         [DllImport("user32.dll")]
         public static extern int LoadCursor(int hInstance, int lpCursorName);
@@ -65,7 +72,7 @@ namespace WinPaletter.NativeMethods
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
         /// <summary>
-        /// Loads the specified cursor resource from a file.
+        /// Loads the specified cursor resource from a File.
         /// </summary>
         [DllImport("user32.dll", EntryPoint = "LoadCursorFromFileA")]
         public static extern IntPtr LoadCursorFromFile(string lpFileName);
@@ -147,7 +154,7 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr CreateIconIndirect(ref ICONINFO icon);
 
         /// <summary>
-        /// Loads an animated cursor from a file.
+        /// Loads an animated cursor from a File.
         /// </summary>
         /// <param name="hinst">A handle to the instance of the module that contains the image.</param>
         /// <param name="lpszName">The name or identifier of the image resource.</param>
@@ -202,10 +209,29 @@ namespace WinPaletter.NativeMethods
         [StructLayout(LayoutKind.Sequential)]
         public struct MSLLHOOKSTRUCT
         {
+            /// <summary>
+            /// The x- and y-coordinates of the cursor, in screen coordinates.
+            /// </summary>
             public POINT pt;
+
+            /// <summary>
+            /// If the message is WM_MOUSEWHEEL, the high-order word of this member is the wheel delta.
+            /// </summary>
             public uint mouseData;
+
+            /// <summary>
+            /// The event-injected flags.
+            /// </summary>
             public uint flags;
+
+            /// <summary>
+            /// The time stamp for this message.
+            /// </summary>
             public uint time;
+
+            /// <summary>
+            /// Additional information associated with the message.
+            /// </summary>
             public IntPtr dwExtraInfo;
         }
 
@@ -215,7 +241,14 @@ namespace WinPaletter.NativeMethods
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
         {
+            /// <summary>
+            /// The x-coordinate of the point.
+            /// </summary>
             public int x;
+
+            /// <summary>
+            /// The y-coordinate of the point.
+            /// </summary>
             public int y;
         }
 
@@ -230,7 +263,9 @@ namespace WinPaletter.NativeMethods
         public delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
 
-        // Constants for LoadImage
+        /// <summary>
+        /// Constant for LoadImage function specifying the type of image to load.
+        /// </summary>
         public const uint IMAGE_CURSOR = 2;
 
         /// <summary>
@@ -245,7 +280,7 @@ namespace WinPaletter.NativeMethods
             LR_DEFAULTSIZE = 0x00000040,
 
             /// <summary>
-            /// Load the image from a file (lpszName is the file path).
+            /// Load the image from a File (lpszName is the File path).
             /// </summary>
             LR_LOADFROMFILE = 0x00000010,
 
@@ -328,6 +363,9 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32")]
         public static extern bool GetIconInfo(IntPtr hIcon, out ICONINFO pIconInfo);
 
+        /// <summary>
+        /// Structure that contains information about the high contrast accessibility feature.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct HIGHCONTRAST
         {
@@ -521,6 +559,7 @@ namespace WinPaletter.NativeMethods
                 lfMessageFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
                 cursor += logFontSize;
 
+                // Check if there are enough bytes to read the iPaddedBorderWidth value as it is implemented in Windows Vista and later.
                 if (bytes.Length >= cursor + intSize)
                 {
                     iPaddedBorderWidth = BitConverter.ToInt32(bytes, cursor);
@@ -532,26 +571,28 @@ namespace WinPaletter.NativeMethods
             /// Convert a NONCLIENTMETRICS structure to a byte array.
             /// </summary>
             /// <returns></returns>
-            public byte[] ToByteArray()
+            public readonly byte[] ToByteArray()
             {
-                List<byte> byteArray = new();
-                byteArray.AddRange(BitConverter.GetBytes(cbSize));
-                byteArray.AddRange(BitConverter.GetBytes(iBorderWidth));
-                byteArray.AddRange(BitConverter.GetBytes(iScrollWidth));
-                byteArray.AddRange(BitConverter.GetBytes(iScrollHeight));
-                byteArray.AddRange(BitConverter.GetBytes(iCaptionWidth));
-                byteArray.AddRange(BitConverter.GetBytes(iCaptionHeight));
-                byteArray.AddRange(lfCaptionFont.ToBytes(60));
-                byteArray.AddRange(BitConverter.GetBytes(iSMCaptionWidth));
-                byteArray.AddRange(BitConverter.GetBytes(iSMCaptionHeight));
-                byteArray.AddRange(lfSMCaptionFont.ToBytes(60));
-                byteArray.AddRange(BitConverter.GetBytes(iMenuWidth));
-                byteArray.AddRange(BitConverter.GetBytes(iMenuHeight));
-                byteArray.AddRange(lfMenuFont.ToBytes(60));
-                byteArray.AddRange(lfStatusFont.ToBytes(60));
-                byteArray.AddRange(lfMessageFont.ToBytes(60));
-                byteArray.AddRange(BitConverter.GetBytes(iPaddedBorderWidth));
-                return byteArray.ToArray();
+                List<byte> byteArray =
+                [
+                    .. BitConverter.GetBytes(cbSize),
+                    .. BitConverter.GetBytes(iBorderWidth),
+                    .. BitConverter.GetBytes(iScrollWidth),
+                    .. BitConverter.GetBytes(iScrollHeight),
+                    .. BitConverter.GetBytes(iCaptionWidth),
+                    .. BitConverter.GetBytes(iCaptionHeight),
+                    .. lfCaptionFont.ToBytes(60),
+                    .. BitConverter.GetBytes(iSMCaptionWidth),
+                    .. BitConverter.GetBytes(iSMCaptionHeight),
+                    .. lfSMCaptionFont.ToBytes(60),
+                    .. BitConverter.GetBytes(iMenuWidth),
+                    .. BitConverter.GetBytes(iMenuHeight),
+                    .. lfMenuFont.ToBytes(60),
+                    .. lfStatusFont.ToBytes(60),
+                    .. lfMessageFont.ToBytes(60),
+                    .. BitConverter.GetBytes(iPaddedBorderWidth),
+                ];
+                return [.. byteArray];
             }
         }
 
@@ -615,16 +656,18 @@ namespace WinPaletter.NativeMethods
             /// Convert an ICONMETRICS structure to a byte array.
             /// </summary>
             /// <returns></returns>
-            public byte[] ToByteArray()
+            public readonly byte[] ToByteArray()
             {
-                List<byte> byteArray = new();
-                byteArray.AddRange(BitConverter.GetBytes(cbSize));
-                byteArray.AddRange(BitConverter.GetBytes(iHorzSpacing));
-                byteArray.AddRange(BitConverter.GetBytes(iVertSpacing));
-                byteArray.AddRange(BitConverter.GetBytes(iTitleWrap));
-                byteArray.AddRange(lfFont.ToBytes(60));
+                List<byte> byteArray =
+                [
+                    .. BitConverter.GetBytes(cbSize),
+                    .. BitConverter.GetBytes(iHorzSpacing),
+                    .. BitConverter.GetBytes(iVertSpacing),
+                    .. BitConverter.GetBytes(iTitleWrap),
+                    .. lfFont.ToBytes(60),
+                ];
 
-                return byteArray.ToArray();
+                return [.. byteArray];
             }
         }
 
@@ -871,7 +914,7 @@ namespace WinPaletter.NativeMethods
             OCR_CROSS = 32515,
 
             /// <summary>
-            /// Windows 2000/XP: Hand.
+            /// Windows 2000/WXP: Hand.
             /// </summary>
             OCR_HAND = 32649,
 
@@ -982,18 +1025,18 @@ namespace WinPaletter.NativeMethods
         public static List<IntPtr> GetChildWindowHandles(IWin32Window win32Window)
         {
             // List to store child window handles
-            List<IntPtr> childHandles = new();
+            List<IntPtr> childHandles = [];
 
             // Get the handle of the parent window
             IntPtr hWndParent = win32Window.Handle;
 
             // Callback function to process each child window
-            EnumChildProc childProc = (hWnd, lParam) =>
+            bool childProc(IntPtr hWnd, IntPtr lParam)
             {
                 // Add the handle to the list
                 childHandles.Add(hWnd);
                 return true; // Continue enumeration
-            };
+            }
 
             // Enumerate through all child windows of the parent window
             EnumChildWindows(hWndParent, childProc, IntPtr.Zero);

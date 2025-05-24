@@ -17,7 +17,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (Win32UI formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<Win32UI>();
 
             LoadGallery();
         }
@@ -26,7 +26,7 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
 
-            Control[] controlCollection = new Control[] { };
+            Control[] controlCollection = [];
 
             using (RetroDesktopColors RDC = new())
             {

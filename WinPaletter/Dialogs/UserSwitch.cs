@@ -12,8 +12,8 @@ namespace WinPaletter
         public UserSwitch()
         {
             InitializeComponent();
-            this.FormClosed += UserSwitch_FormClosed;
-            this.Shown += UserSwitch_Shown;
+            FormClosed += UserSwitch_FormClosed;
+            Shown += UserSwitch_Shown;
         }
 
         private void UserSwitch_Shown(object sender, EventArgs e)
@@ -22,7 +22,7 @@ namespace WinPaletter
         }
 
         private bool shown = false;
-        private Dictionary<string, string> _UsersList = new();
+        private Dictionary<string, string> _UsersList = [];
 
         private void UserSwitch_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -64,15 +64,15 @@ namespace WinPaletter
 
                 if (user.Key.ToUpper() == "S-1-5-18") { Scheme += " (Default users settings)"; }
 
-                Scheme += "\r\n" + $"{Program.Lang.UserSwitch_Computer}: {user.Value.Split('\\').First()}";
+                Scheme += "\r\n" + $"{Program.Lang.Strings.Users.Computer}: {user.Value.Split('\\').First()}";
 
                 if (user.Key.ToUpper() != "S-1-5-18" && user.Key.ToUpper() != "S-1-5-19" && user.Key.ToUpper() != "S-1-5-20")
                 {
-                    Scheme += "\r\n" + $"{(User.IsAdmin(user.Key) ? Program.Lang.UserSwitch_TypeAdministrator : Program.Lang.UserSwitch_TypeLocalUser)}";
+                    Scheme += "\r\n" + $"{(User.IsAdmin(user.Key) ? Program.Lang.Strings.Users.TypeAdministrator : Program.Lang.Strings.Users.TypeLocalUser)}";
                 }
                 else
                 {
-                    Scheme += "\r\n" + $"{Program.Lang.UserSwitch_TypeSystem}";
+                    Scheme += "\r\n" + $"{Program.Lang.Strings.Users.TypeSystem}";
                 }
 
                 RadioImage radio = new()
@@ -86,7 +86,7 @@ namespace WinPaletter
                     Tag = user.Key,
                     Image = NativeMethods.Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()).Resize(48, 48),
                     Text = Scheme,
-                    ForeColor = this.ForeColor
+                    ForeColor = ForeColor
                 };
 
                 radio.DoubleClick += Radio_DoubleClick;
@@ -105,14 +105,14 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Show a dialog with users and switch into the selected one
+        /// Hide a dialog with users and switch into the selected one
         /// </summary>
         /// <param name="UsersList"><c>Dictionary(String, String)</c>: Key is SID, value is Domain\Username</param>
         /// <returns></returns>
         public void PickUser(Dictionary<string, string> UsersList)
         {
             ListUsers(UsersList);
-            this.ShowDialog();
+            ShowDialog();
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -121,37 +121,37 @@ namespace WinPaletter
             {
                 if (radio.Checked)
                 {
+                    Visible = false;
+
                     if (radio.Tag.ToString() == "S-1-5-18" || radio.Tag.ToString() == "S-1-5-19" || radio.Tag.ToString() == "S-1-5-20")
                     {
-                        DialogResult msgResult = MsgBox(Program.Lang.UserSwitch_SYSTEM_Alert0, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, Program.Lang.UserSwitch_SYSTEM_Alert1);
+                        DialogResult msgResult = MsgBox(Program.Lang.Strings.Users.SYSTEM_Alert0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.Strings.Users.SYSTEM_Alert1);
 
-                        if (msgResult == DialogResult.Yes)
+                        if (msgResult == DialogResult.Yes && User.SID_Credentials_Result(radio.Tag.ToString()))
                         {
                             User.SID = radio.Tag.ToString();
+                            DialogResult = DialogResult.OK;
+                            Close();
                             break;
                         }
-
-                        else if (msgResult == DialogResult.No)
+                        else
                         {
-                            User.SID = User.AdminSID_GrantedUAC;
-                            break;
-                        }
-
-                        else if (msgResult == DialogResult.Cancel)
-                        {
+                            Visible = true;
                             return;
                         }
                     }
-                    else
+
+                    else if (User.SID_Credentials_Result(radio.Tag.ToString()))
                     {
                         User.SID = radio.Tag.ToString();
+                        DialogResult = DialogResult.OK;
+                        Close();
                         break;
                     }
+
+                    Visible = true;
                 }
             }
-
-            DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void Button2_Click(object sender, EventArgs e)

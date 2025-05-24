@@ -346,6 +346,8 @@ namespace WinPaletter.UI.Controllers
             #endregion
 
             base.OnPaint(e);
+
+
         }
 
         private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)
@@ -356,38 +358,19 @@ namespace WinPaletter.UI.Controllers
             int CenterWidth = (int)Math.Round(CenterWidthD, 2);
             int CenterHeight = (int)Math.Round(CenterHeightD, 2);
 
-            switch (contentAlignment)
+            return contentAlignment switch
             {
-                case ContentAlignment.TopLeft:
-                    return new(rect.X, rect.Y, size.Width, size.Height);
-
-                case ContentAlignment.TopRight:
-                    return new(rect.Right - size.Width, rect.Y, size.Width, size.Height);
-
-                case ContentAlignment.TopCenter:
-                    return new(CenterWidth, rect.Y, size.Width, size.Height);
-
-                case ContentAlignment.MiddleLeft:
-                    return new(rect.X, CenterHeight, size.Width, size.Height);
-
-                case ContentAlignment.MiddleCenter:
-                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
-
-                case ContentAlignment.MiddleRight:
-                    return new(rect.Right - size.Width, CenterHeight, size.Width, size.Height);
-
-                case ContentAlignment.BottomLeft:
-                    return new(rect.X, rect.Bottom - size.Height, size.Width, size.Height);
-
-                case ContentAlignment.BottomCenter:
-                    return new(CenterWidth, rect.Bottom - size.Height, size.Width, size.Height);
-
-                case ContentAlignment.BottomRight:
-                    return new(rect.Right - size.Width, rect.Bottom - size.Height, size.Width, size.Height);
-
-                default:
-                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
-            }
+                ContentAlignment.TopLeft => new(rect.X, rect.Y, size.Width, size.Height),
+                ContentAlignment.TopRight => new(rect.Right - size.Width, rect.Y, size.Width, size.Height),
+                ContentAlignment.TopCenter => new(CenterWidth, rect.Y, size.Width, size.Height),
+                ContentAlignment.MiddleLeft => new(rect.X, CenterHeight, size.Width, size.Height),
+                ContentAlignment.MiddleCenter => new(CenterWidth, CenterHeight, size.Width, size.Height),
+                ContentAlignment.MiddleRight => new(rect.Right - size.Width, CenterHeight, size.Width, size.Height),
+                ContentAlignment.BottomLeft => new(rect.X, rect.Bottom - size.Height, size.Width, size.Height),
+                ContentAlignment.BottomCenter => new(CenterWidth, rect.Bottom - size.Height, size.Width, size.Height),
+                ContentAlignment.BottomRight => new(rect.Right - size.Width, rect.Bottom - size.Height, size.Width, size.Height),
+                _ => new(CenterWidth, CenterHeight, size.Width, size.Height),
+            };
         }
 
     }

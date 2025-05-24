@@ -4,6 +4,9 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Tabs
 {
+    /// <summary>
+    /// The form that contains the tabs control.
+    /// </summary>
     public partial class TabsForm : Form
     {
         //protected override void WndProc(ref Message m)
@@ -19,7 +22,7 @@ namespace WinPaletter.Tabs
         //            DWMAPI.RECT rect = (DWMAPI.RECT)m.GetLParam(typeof(DWMAPI.RECT));
 
         //            // Adjust the rectangle to make room for the custom control in the title bar
-        //            rect.top -= tabsContainer1.Height - 6;
+        //            rect.top -= titlebarExtender1.Height - 6;
 
         //            // Update the non-client area rectangle
         //            Marshal.StructureToPtr(rect, m.LParam, true);
@@ -27,6 +30,9 @@ namespace WinPaletter.Tabs
         //    }
         //}
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TabsForm"/> class.
+        /// </summary>
         public TabsForm()
         {
             InitializeComponent();
@@ -42,7 +48,7 @@ namespace WinPaletter.Tabs
             CheckForIllegalCrossThreadCalls = false;
         }
 
-        private void tabsContainer1_DoubleClick(object sender, EventArgs e)
+        private void titlebarExtender1_DoubleClick(object sender, EventArgs e)
         {
             WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
         }

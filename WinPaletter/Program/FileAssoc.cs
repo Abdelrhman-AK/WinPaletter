@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -11,9 +10,10 @@ namespace WinPaletter
         /// <summary>
         /// Associate WinPaletter Files Types in Registry
         /// </summary>
-        /// <param name="extension">Extension is the file type to be registered (eg ".wpth")</param>
+        /// <param name="extension">Extension is the File type to be registered (eg ".wpth")</param>
         /// <param name="className">ClassName is the name of the associated class (eg "WinPaletter.WindowsXPThemePath")</param>
         /// <param name="description">Textual description (eg "WinPaletter WindowsXPThemePath")</param>
+        /// <param name="iconPath">IconPath is the path to the icon file (eg. Assembly.GetExecutingAssembly().Location)</param>
         /// <param name="exeProgram">ExeProgram is the app that manages that extension (eg. Assembly.GetExecutingAssembly().Location)</param>
         public static bool CreateFileAssociation(string extension, string className, string description, string iconPath, string exeProgram)
         {
@@ -27,7 +27,7 @@ namespace WinPaletter
 
             EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, className, RegistryValueKind.String);
             EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", string.Empty, description, RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Open", "Icon", $"{(exeProgram.Replace("\"", string.Empty))}, 0", RegistryValueKind.String);
+            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Open", "Icon", $"{exeProgram.Replace("\"", string.Empty)}, 0", RegistryValueKind.String);
             EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Open\\Command", string.Empty, $"{exeProgram} \"%1\"", RegistryValueKind.String);
 
             if ((className.ToLower() ?? string.Empty) == ("WinPaletter.ThemeFile".ToLower() ?? string.Empty))
@@ -42,13 +42,18 @@ namespace WinPaletter
             EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher", Application.CompanyName, RegistryValueKind.String);
             EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Version", Version, RegistryValueKind.String);
 
+            if (!isInstalledBefore)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "File Association for {extension} with class name {className} has been created", extension, className);
+            }
+
             return isInstalledBefore;
         }
 
         /// <summary>
         /// Removes WinPaletter Files Types Associate From Registry
         /// </summary>
-        /// <param name="extension">Extension is the file type to be removed (eg ".wpth")</param>
+        /// <param name="extension">Extension is the File type to be removed (eg ".wpth")</param>
         /// <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.WindowsXPThemePath")</param>
         public static void DeleteFileAssociation(string extension, string className)
         {
@@ -60,7 +65,7 @@ namespace WinPaletter
             DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher");
             DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Version");
 
-            // Notify Windows that file associations have changed
+            // Notify Windows that File associations have changed
             NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
         }
         #endregion

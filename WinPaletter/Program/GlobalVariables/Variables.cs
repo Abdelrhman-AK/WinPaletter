@@ -15,6 +15,11 @@ namespace WinPaletter
         public static Settings Settings = new(Settings.Source.Registry);
 
         /// <summary>
+        /// An instance of the Serilog logger class
+        /// </summary>
+        public static Serilog.Core.Logger Log;
+
+        /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
         /// </summary>
         public static Config Style = new(DefaultColors.PrimaryColor_Dark, DefaultColors.SecondaryColor_Dark, DefaultColors.TertiaryColor_Dark, DefaultColors.DisabledColor_Dark, DefaultColors.BackColor_Dark, DefaultColors.DisabledBackColor_Dark, true, true, true);
@@ -35,12 +40,12 @@ namespace WinPaletter
         public readonly static int AnimationDuration_Quick = 200;
 
         /// <summary>
-        /// WinPaletter executable file path
+        /// WinPaletter executable File path
         /// </summary>
         public readonly static string AppFile = Assembly.GetExecutingAssembly().Location;
 
         /// <summary>
-        /// WinPaletter executable file size in bytes
+        /// WinPaletter executable File size in bytes
         /// </summary>
         public readonly static long Length = new System.IO.FileInfo(AppFile).Length;
 
@@ -53,7 +58,7 @@ namespace WinPaletter
         /// Gets if WinPaletter's current version is designed as beta or not
         /// <br>Don't forget to make it <b>true</b> when you design a beta one</br>
         /// </summary>
-        public readonly static bool IsBeta = false;
+        public readonly static bool IsBeta = true;
 
         /// <summary>
         /// A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
@@ -68,12 +73,12 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// First visual styles file to be used in WinPaletter (Loaded at application startup)
+        /// First visual styles File to be used in WinPaletter (Loaded at application startup)
         /// </summary>
         public static string FirstVisualStyles = $"{SysPaths.Windows}\\Resources\\Themes\\aero\\aero.msstyles";
 
         /// <summary>
-        /// A class that represents WinPaletter's Language Strings (Loaded at application startup)
+        /// A class that represents WinPaletter's Language Strings_Cls (Loaded at application startup)
         /// </summary>
         public static Localizer Lang = new();
 
@@ -125,12 +130,12 @@ namespace WinPaletter
         public static ExplorerPatcher EP = new();
 
         /// <summary>
-        /// Gets if WinPaletter is opened by a file or not
+        /// Gets if WinPaletter is opened by a File or not
         /// </summary>
         public static bool ExternalLink = false;
 
         /// <summary>
-        /// Gets file that opened WinPaletter
+        /// Gets File that opened WinPaletter
         /// </summary>
         public static string ExternalLink_File = string.Empty;
 
@@ -145,7 +150,7 @@ namespace WinPaletter
         public static bool ExitAfterException = false;
 
         /// <summary>
-        /// Show What's new form after loading WinPaletter
+        /// Hide What's new form after loading WinPaletter
         /// </summary>
         public static bool ShowWhatsNew = false;
 
@@ -170,8 +175,45 @@ namespace WinPaletter
         public static bool UninstallDone = false;
 
         /// <summary>
+        /// The system partition letter
+        /// </summary>
+        public static char SystemPartition => Environment.SystemDirectory[0];
+
+        /// <summary>
+        /// Enumeration that represents the boot status of the system
+        /// </summary>
+        public enum BootStatuses
+        {
+            Normal,
+            SafeMode,
+        }
+
+        /// <summary>
+        /// Gets the current boot status of the system
+        /// </summary>
+        public static BootStatuses BootStatus
+        {
+            get
+            {
+                int bootMode = User32.GetSystemMetrics(67 /*SM_CLEANBOOT*/);
+
+                switch (bootMode)
+                {
+                    case 0:
+                        return BootStatuses.Normal;
+                    case 1:
+                        return BootStatuses.SafeMode;
+                    case 2: // with networking
+                        return BootStatuses.SafeMode;
+                    default:
+                        return BootStatuses.Normal;
+                }
+            }
+        }
+
+        /// <summary>
         /// Timeout for web requests in milliseconds
         /// </summary>
-        public static int Timeout => 30 * 1000;
+        public static int Timeout => 15 * 1000;
     }
 }

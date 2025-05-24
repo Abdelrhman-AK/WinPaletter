@@ -2,6 +2,9 @@
 
 namespace WinPaletter.GlobalVariables
 {
+    /// <summary>
+    /// ImageLists for the application (loaded at application startup) and used for the TreeView and ListView for logs.
+    /// </summary>
     public static class ImageLists
     {
         /// <summary>

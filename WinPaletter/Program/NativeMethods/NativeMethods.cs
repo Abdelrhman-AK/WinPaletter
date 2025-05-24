@@ -23,10 +23,10 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
-        /// Extracts a small icon from a file.
+        /// Extracts a small icon from a File.
         /// </summary>
-        /// <param name="Path">The path of the file.</param>
-        /// <param name="IconIndex">Optional index of the icon in the file. Default is 0.</param>
+        /// <param name="Path">The path of the File.</param>
+        /// <param name="IconIndex">Optional index of the icon in the File. Default is 0.</param>
         /// <returns>An Icon object representing the extracted small icon.</returns>
         public static object ExtractSmallIcon(string Path, int IconIndex = 0)
         {
@@ -108,7 +108,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="darkMode">True to apply dark mode, false to remove dark mode.</param>
         public static void DarkTitlebar(IntPtr hWnd, bool darkMode)
         {
-            // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
+            // Check if the operating system is Windows WXP, Vista, 7, 8, or 8.1
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x)
                 return;
 
@@ -142,9 +142,9 @@ namespace WinPaletter.NativeMethods
 
         #region Winmm
         /// <summary>
-        /// Plays an audio file.
+        /// Plays an audio File.
         /// </summary>
-        /// <param name="file">The path to the audio file.</param>
+        /// <param name="file">The path to the audio File.</param>
         public static void PlayAudio(string file)
         {
             if (System.IO.File.Exists(file))
@@ -152,10 +152,10 @@ namespace WinPaletter.NativeMethods
                 // Close any existing audio player
                 Winmm.mciSendString("close myWAV", null, 0, IntPtr.Zero);
 
-                // Open the specified audio file
+                // Open the specified audio File
                 Winmm.mciSendString($"open \"{file}\" type mpegvideo alias myWAV", null, 0, IntPtr.Zero);
 
-                // Play the audio file
+                // Play the audio File
                 Winmm.mciSendString("play myWAV", null, 0, IntPtr.Zero);
 
                 // Set the volume to maximum
@@ -169,10 +169,10 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public static void StopAudio()
         {
-            // Seek to the start of the audio file
+            // Seek to the start of the audio File
             Winmm.mciSendString("seek myWAV to start", null, 0, IntPtr.Zero);
 
-            // Stop playing the audio file
+            // Stop playing the audio File
             Winmm.mciSendString("stop myWAV", null, 0, IntPtr.Zero);
         }
         #endregion

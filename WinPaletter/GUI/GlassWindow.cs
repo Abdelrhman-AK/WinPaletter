@@ -5,8 +5,14 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// A form with glass effect using DWM API.
+    /// </summary>
     public class GlassWindow : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GlassWindow"/> class.
+        /// </summary>
         public GlassWindow()
         {
             BackColor = Color.Black;
@@ -21,22 +27,28 @@ namespace WinPaletter
             TransparencyKey = Color.Black;
             WindowState = FormWindowState.Maximized;
 
-            Load += new EventHandler(BK_Load);
+            Load += new EventHandler(GlassWindow_Load);
         }
 
-        private void BK_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Form.Load" /> event.
+        /// </summary>
+        private void GlassWindow_Load(object sender, EventArgs e)
         {
             if ((OS.W7 || OS.WVista) && DWMAPI.IsCompositionEnabled())
             {
+                // If the OS is Windows 7 or Vista and DWM is enabled, use Aero effect.
                 DWMAPI.DWM_BLURBEHIND blurBehind = new(true);
                 DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
             }
             else if (!OS.WXP && !OS.W8 && !OS.W81)
             {
+                // If the OS is not Windows WXP, 8 or 8.1 or even DWM composition is disabled, use Acrylic effect.
                 this.DropEffect(Padding.Empty, false, DWM.FormStyle.Acrylic);
             }
             else
             {
+                // If the OS is Windows WXP, 8 or 8.1, use transparent gray effect.
                 this.DrawTransparentGray();
             }
         }

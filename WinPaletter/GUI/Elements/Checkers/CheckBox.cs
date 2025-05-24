@@ -166,8 +166,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
@@ -215,8 +213,8 @@ namespace WinPaletter.UI.WP
 
             // #################################################################################
 
-            using (LinearGradientBrush lgb0 = new(InnerRect_GradienceFix, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line_Hover(parentLevel)), Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line(parentLevel)), LinearGradientMode.Vertical))
+            using (LinearGradientBrush lgb0 = new(InnerRect_GradienceFix, scheme.Colors.Back(parentLevel - 10), scheme.Colors.Back_Hover(parentLevel - 10), LinearGradientMode.Horizontal))
+            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line_Hover(parentLevel - 10)), Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line(parentLevel - 10)), LinearGradientMode.Vertical))
             using (LinearGradientBrush lgb2 = new(OuterRect_GradienceFix, Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha, scheme.Colors.Accent), LinearGradientMode.Horizontal))
             using (Pen P0 = new(lgb1))
             using (Pen P1 = new(lgb2))
@@ -237,8 +235,8 @@ namespace WinPaletter.UI.WP
 
                 using (Pen CheckSignPen = new(Color.FromArgb(alpha2, scheme.Colors.Back(parentLevel)), 1.9f))
                 {
-                    Point[] leftCheckPoints = new Point[] { new(x1_Left, y1_Left), new(x2_Left, y2_Left) };
-                    Point[] rightCheckPoints = new Point[] { new(x1_Right, y1_Right), new(x2_Right, y2_Right) };
+                    Point[] leftCheckPoints = [new(x1_Left, y1_Left), new(x2_Left, y2_Left)];
+                    Point[] rightCheckPoints = [new(x1_Right, y1_Right), new(x2_Right, y2_Right)];
 
                     G.DrawCurve(CheckSignPen, leftCheckPoints);
                     G.DrawCurve(CheckSignPen, rightCheckPoints);
@@ -256,6 +254,8 @@ namespace WinPaletter.UI.WP
             format.Dispose();
 
             base.OnPaint(e);
+
+
         }
     }
 }

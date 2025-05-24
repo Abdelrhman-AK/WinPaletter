@@ -23,7 +23,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Controls all Windows effects, including WindowAnimation and WindowShadow</summary>
         public bool WindowUIEffects = true;
 
-        /// <summary>Show contents of a window while dragging</summary>
+        /// <summary>Hide contents of a window while dragging</summary>
         public bool ShowWinContentDrag = true;
 
         /// <summary>Enable animation for controls inside window</summary>
@@ -56,7 +56,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>ToolTip appearance animation. It can be fade or scroll</summary>
         public MenuAnimType TooltipFade = MenuAnimType.Fade;
 
-        /// <summary>Show shadow in icons labels at desktop</summary>
+        /// <summary>Hide shadow in icons labels at desktop</summary>
         public bool IconsShadow = true;
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public uint Caret = 1U;
 
-        /// <summary>Show ballon or notification for milliseconds</summary>
+        /// <summary>Hide ballon or notification for milliseconds</summary>
         public int NotificationDuration = 5;
 
         /// <summary>
@@ -120,13 +120,13 @@ namespace WinPaletter.Theme.Structures
         public bool Win11ClassicContextMenu = false;
 
         /// <summary>
-        /// Make Windows Explorer shows items in SysListView32 style (that looks like Windows XP and Vista) in higher editions of Windows
+        /// Make Windows Explorer shows items in SysListView32 style (that looks like Windows WXP and Vista) in higher editions of Windows
         /// <br></br><b>- Targets Windows 7 and later</b>
         /// </summary>
         public bool SysListView32 = false;
 
         /// <summary>
-        /// Show seconds in taskbar clock
+        /// Hide seconds in taskbar clock
         /// <br></br><b>- Targets Windows 10, and 11 with Moment 3 update</b>
         /// </summary>
         public bool ShowSecondsInSystemClock = false;
@@ -160,12 +160,6 @@ namespace WinPaletter.Theme.Structures
         /// <br></br><b>- Targets Windows 10</b>
         /// </summary>
         public bool FullScreenStartMenu = false;
-
-        /// <summary>Enable accessibility feature: color filter</summary>
-        public bool ColorFilter_Enabled = false;
-
-        /// <summary>Color filter type</summary>
-        public ColorFilters ColorFilter = ColorFilters.Grayscale;
 
         /// <summary>
         /// Enable classic volume mixer
@@ -203,25 +197,6 @@ namespace WinPaletter.Theme.Structures
             /// <br>It is the default type in Windows Vista/7</br>
             /// </summary>
             Bar
-        }
-
-        /// <summary>
-        /// Enumeration for accessibility feature: color filters
-        /// </summary>
-        public enum ColorFilters
-        {
-            ///
-            Grayscale,
-            ///
-            Inverted,
-            ///
-            GrayscaleInverted,
-            ///
-            RedGreen_deuteranopia,
-            ///
-            RedGreen_protanopia,
-            ///
-            BlueYellow
         }
 
         /// <summary>
@@ -360,21 +335,12 @@ namespace WinPaletter.Theme.Structures
 
             else
             {
-                switch (GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (OS.W12 || OS.W11) ? 1 : 0))
+                Win11BootDots = GetReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (OS.W12 || OS.W11) ? 1 : 0) switch
                 {
-                    case 0:
-                        Win11BootDots = true;
-                        break;
-
-                    case 1:
-                        Win11BootDots = false;
-                        break;
-
-                    default:
-                        Win11BootDots = false;
-                        break;
-
-                }
+                    0 => true,
+                    1 => false,
+                    _ => false,
+                };
             }
 
             Win11ExplorerBar = (ExplorerBar)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", @default.Win11ExplorerBar));
@@ -390,14 +356,13 @@ namespace WinPaletter.Theme.Structures
 
             AutoHideScrollBars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", @default.AutoHideScrollBars));
             FullScreenStartMenu = Convert.ToBoolean(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", @default.FullScreenStartMenu ? 2 : 0)) == 2) ? true : false;
-            ColorFilter_Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", @default.ColorFilter_Enabled));
-            ColorFilter = (ColorFilters)GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", @default.ColorFilter);
         }
 
         /// <summary>
         /// Saves WinEffects data into registry
         /// </summary>
         /// <param name="treeView">treeView used as theme log</param>
+        /// <param name="silent">If true, no alert will be shown</param>
         public async void Apply(TreeView treeView = null, bool silent = false)
         {
             SaveToggleState(treeView);
@@ -408,6 +373,7 @@ namespace WinPaletter.Theme.Structures
                 {
                     WinEffects WE = (WinEffects)Clone();
 
+                    // Apply WinEffects in a new thread to prevent freezing the UI
                     await Task.Run(() =>
                     {
                         ANIMATIONINFO anim = new();
@@ -450,9 +416,6 @@ namespace WinPaletter.Theme.Structures
 
                     EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", AutoHideScrollBars);
 
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, Microsoft.Win32.RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", EnableAeroPeek ? 1 : 0);
                     EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", AlwaysHibernateThumbnails ? 1 : 0);
 
@@ -503,7 +466,7 @@ namespace WinPaletter.Theme.Structures
                                 if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll"))
                                 {
                                     if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, Program.Lang.Verbose_EnableExplorerBar, "file_rename");
+                                        ThemeLog.AddNode(treeView, Program.Lang.Strings.ThemeManager.Advanced.EnableExplorerBar, "file_rename");
 
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");
                                     Move_File($@"{SysPaths.System32}\UIRibbon.dll", $@"{SysPaths.System32}\UIRibbon.dll_bak");
@@ -517,7 +480,7 @@ namespace WinPaletter.Theme.Structures
                                 if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll_bak"))
                                 {
                                     if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, Program.Lang.Verbose_RestoreExplorerBar, "file_rename");
+                                        ThemeLog.AddNode(treeView, Program.Lang.Strings.ThemeManager.Advanced.RestoreExplorerBar, "file_rename");
 
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll_bak");
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");

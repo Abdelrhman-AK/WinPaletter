@@ -128,14 +128,14 @@ namespace WinPaletter.NativeMethods
             /// <b>Sets the desktop wallpaper.</b>
             /// <br></br>
             /// <br></br> • The value of the <b><c>pvParam</c></b> parameter determines the new wallpaper.
-            /// <br></br> • To specify a wallpaper bitmap, set <b><c>pvParam</c></b> to point to a null-terminated string containing the name of a bitmap file.
+            /// <br></br> • To specify a wallpaper bitmap, set <b><c>pvParam</c></b> to point to a null-terminated string containing the name of a bitmap File.
             /// <br></br> • Setting <b><c>pvParam</c></b> to <b><c>""</c></b> removes the wallpaper.
             /// <br></br> • Setting <b><c>pvParam</c></b> to <c>SETWALLPAPER_DEFAULT</c> or null reverts to the default wallpaper.
             /// </summary>
             SPI_SETDESKWALLPAPER = 0x0014,
 
             /// <summary>
-            /// <b>Sets the current desktop pattern by causing Windows to read the Pattern= setting from the WIN.INI file.</b>
+            /// <b>Sets the current desktop pattern by causing Windows to read the Pattern= setting from the WIN.INI File.</b>
             /// </summary>
             SPI_SETDESKPATTERN = 0x0015,
 
@@ -723,7 +723,7 @@ namespace WinPaletter.NativeMethods
             SPI_SETMOUSEKEYS = 0x0037,
 
             /// <summary>
-            /// <b>Determines whether the Show Sounds accessibility flag is on or off.</b>
+            /// <b>Determines whether the Hide Sounds accessibility flag is on or off.</b>
             /// <br></br>
             /// <br></br> • If it is on, the user requires an application to present information visually in situations where it would otherwise present the information only in audible form.
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a <b><c>bool</c></b> variable that receives <b><c>true</c></b> if the feature is on, or <b><c>false</c></b> if it is off.
@@ -778,7 +778,7 @@ namespace WinPaletter.NativeMethods
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a SERIALKEYS structure that receives the information.
             /// <br></br> • Set the <b><c>cbSize</c></b> member of this structure and the <b><c>uiParam</c></b> parameter to <b><c>sizeof(SERIALKEYS)</c></b>.
             /// <br></br>
-            /// <br></br> • <i> (!) Windows Server 2003, Windows XP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
+            /// <br></br> • <i> (!) Windows Server 2003, Windows WXP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
             /// </summary>
             SPI_GETSERIALKEYS = 0x003E,
 
@@ -788,7 +788,7 @@ namespace WinPaletter.NativeMethods
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a SERIALKEYS structure that contains the new parameters.
             /// <br></br> • Set the <b><c>cbSize</c></b> member of this structure and the <b><c>uiParam</c></b> parameter to <b><c>sizeof(SERIALKEYS)</c></b>.
             /// <br></br>
-            /// <br></br> • <i> (!) Windows Server 2003, Windows XP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
+            /// <br></br> • <i> (!) Windows Server 2003, Windows WXP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
             /// </summary>
             SPI_SETSERIALKEYS = 0x003F,
 
@@ -981,7 +981,7 @@ namespace WinPaletter.NativeMethods
             SPI_GETSCREENSAVERRUNNING = 0x0072,
 
             /// <summary>
-            /// <b>Retrieves the full path of the bitmap file for the desktop wallpaper.</b>
+            /// <b>Retrieves the full path of the bitmap File for the desktop wallpaper.</b>
             /// <br></br>
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a Buffer that receives a null-terminated path string.
             /// <br></br> • Set the <b><c>uiParam</c></b> parameter to the size, in characters, of the <b><c>pvParam</c></b> Buffer.

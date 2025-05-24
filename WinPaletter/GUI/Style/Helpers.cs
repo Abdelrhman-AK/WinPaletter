@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageProcessor.Imaging.Quantizers.WuQuantizer;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
@@ -8,86 +9,61 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Style
 {
+    /// <summary>
+    /// Class containing helper methods for applying styles to the program's UI.
+    /// </summary>
     public partial class Helpers
     {
         /// <summary>
         /// Determines whether rounded corners should be applied to the program's style.
         /// </summary>
-        public static void GetRoundedCorners()
+        public static void SetRoundedCorners()
         {
-            try
-            {
-                if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
-                {
-                    Program.Style.RoundedCorners = Program.Settings.Appearance.RoundedCorners;
-                }
-
-                // Check if running in design mode
-                else if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-                {
-                    Program.Style.RoundedCorners = false;
-                }
-
-                else if (OS.W12 || OS.W11)
-                {
-                    Program.Style.RoundedCorners = true;
-                }
-
-                else if (OS.W10 || OS.W8x)
-                {
-                    Program.Style.RoundedCorners = false;
-                }
-
-                else if (OS.W7 || OS.WXP || OS.WVista)
-                {
-                    Program.Style.RoundedCorners = !Program.ClassicThemeRunning;
-                }
-
-                else
-                {
-                    Program.Style.RoundedCorners = false;
-                }
-            }
-            catch
-            {
-                Program.Style.RoundedCorners = true;
-            }
+            Program.Style.RoundedCorners = GetRoundedCorners();
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter's style will be with {(Program.Style.RoundedCorners ? "rounded" : "sharp")} corners");
         }
 
         /// <summary>
         /// Returns if rounded corners should be applied to the program's style.
         /// </summary>
-        public static bool FetchRoundedCorners()
+        public static bool GetRoundedCorners()
         {
             try
             {
                 if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
                 {
+                    // Check if appearance is managed by theme and custom colors are enabled
                     return Program.Settings.Appearance.RoundedCorners;
                 }
                 else if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
                 {
+                    // Check if running in design mode. Drawing rounded corners in design mode is not necessary.
                     return false;
                 }
                 else if (OS.W12 || OS.W11)
                 {
+                    // Windows 11 (and maybe 12 in the future when it will be released) have rounded corners by default
                     return true;
                 }
                 else if (OS.W10 || OS.W8x)
                 {
+                    // Windows 10 and 8.x have sharp corners by default
                     return false;
                 }
                 else if (OS.W7 || OS.WXP || OS.WVista)
                 {
+                    // Windows 7, Vista and WXP have rounded corners when not using the classic theme
                     return !Program.ClassicThemeRunning;
                 }
                 else
                 {
+                    // Default to sharp corners
                     return false;
                 }
             }
             catch
             {
+                // Fall back to rounded corners if an exception occurs
                 return false;
             }
         }
@@ -135,6 +111,8 @@ namespace WinPaletter.UI.Style
             {
                 Program.Style.DarkMode = true;
             }
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter's style will be {(Program.Style.DarkMode ? "dark" : "light")} mode");
         }
 
         /// <summary>
@@ -190,6 +168,8 @@ namespace WinPaletter.UI.Style
             }
 
             TextRenderingHint textRenderingHint = Program.Style is not null ? Program.Style.TextRenderingHint : TextRenderingHint.SystemDefault;
+
+            // Set the style for the program by the specified parameters from the previous variables
             Program.Style = new(AccentColor, Secondary, Tertiary, Disabled, BackColor, Disabled_Background, DarkMode, RoundedCorners, Animations)
             {
                 TextRenderingHint = textRenderingHint
@@ -205,37 +185,44 @@ namespace WinPaletter.UI.Style
                 catch { } // ignored
             }
 
-            // Apply the style to all open forms
             if (Form is null)
             {
+                // Apply the style to all open forms
                 foreach (Form form in Application.OpenForms)
                 {
                     if (form != Forms.GlassWindow)
                     {
                         bool FormWasVisible = form.Visible;
-                        if (FormWasVisible)
-                            form.Visible = false;
+                        if (FormWasVisible) form.Visible = false;
 
                         //form.SuspendLayout();
                         form.BackColor = BackColor;
 
-                        if (!IgnoreTitleBar)
-                            DLLFunc.DarkTitlebar(form.Handle, DarkMode);
+                        // Make the title bar dark if application mode is dark
+                        if (!IgnoreTitleBar) DLLFunc.DarkTitlebar(form.Handle, DarkMode);
 
+                        //// Check if the font "Segoe UI" is available, if not, use "Tahoma" as a fallback
+                        //// This part is commented as it caused issues with the DPI scaling on some systems
+                        //// and also assiging the font to the form might increase the memory usage
                         //if (!Fonts.Exists("Segoe UI"))
                         //{
                         //    form.AutoScaleMode = AutoScaleMode.Dpi;
                         //    form.Font = new("Tahoma", form.Font.Size, form.Font.Style);
                         //}
 
+                        // Loop through all controls and apply the style to them
                         ApplyStyleToSubControls(form, DarkMode);
 
+                        // Make the form have rounded corners if the operating system is Windows 11 or 12
+                        // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
                         if (OS.W12 || OS.W11)
                         {
                             int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
                             DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
                         }
 
+                        // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+                        // Make both start by 'If' statement, not 'Else If'
                         if (CustomR && !Program.Settings.Appearance.RoundedCorners)
                         {
                             int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
@@ -243,7 +230,7 @@ namespace WinPaletter.UI.Style
                         }
 
                         // Refresh the main groupbox to avoid bugged UI after switching dark mode
-                        if (form is Home home) home.groupBox1.Invalidate();
+                        if (form is Home home) home.panel1.BackColor = home.BackColor;
 
                         if (FormWasVisible)
                         {
@@ -260,23 +247,31 @@ namespace WinPaletter.UI.Style
             {
                 Form.BackColor = BackColor;
 
-                if (!IgnoreTitleBar)
-                    DLLFunc.DarkTitlebar(Form.Handle, DarkMode);
+                // Make the title bar dark if application mode is dark
+                if (!IgnoreTitleBar) DLLFunc.DarkTitlebar(Form.Handle, DarkMode);
 
+                //// Check if the font "Segoe UI" is available, if not, use "Tahoma" as a fallback
+                //// This part is commented as it caused issues with the DPI scaling on some systems
+                //// and also assiging the font to the form might increase the memory usage
                 //if (!Fonts.Exists("Segoe UI"))
                 //{
                 //    Form.AutoScaleMode = AutoScaleMode.Dpi;
                 //    Form.Font = new("Tahoma", Form.Font.Size, Form.Font.Style);
                 //}
 
+                // Loop through all controls and apply the style to them
                 ApplyStyleToSubControls(Form, DarkMode);
 
+                // Make the form have rounded corners if the operating system is Windows 11 or 12
+                // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
                 if (OS.W12 || OS.W11)
                 {
                     int argpvAttribute2 = (int)DWMAPI.FormCornersType.Default;
                     DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
                 }
 
+                // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+                // Make both start by 'If' statement, not 'Else If'
                 if (CustomR && !Program.Settings.Appearance.RoundedCorners)
                 {
                     int argpvAttribute3 = (int)DWMAPI.FormCornersType.Rectangular;
@@ -284,10 +279,9 @@ namespace WinPaletter.UI.Style
                 }
 
                 // Refresh the main groupbox to avoid bugged UI after switching dark mode
-                if (Form is Home home) home.groupBox1.Invalidate();
+                if (Form is Home home) home.panel1.BackColor = home.BackColor;
 
-                if (Form.Visible)
-                    Form.Invalidate();
+                if (Form.Visible) Form.Invalidate();
             }
         }
 
@@ -303,10 +297,11 @@ namespace WinPaletter.UI.Style
 
             if (isWindow)
             {
-                // Apply dark titlebar style
+                // Make the title bar dark if application mode is dark
                 if (isWindow) DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
 
-                // Apply specific window corner preference for Windows 11/12
+                // Make the form have rounded corners if the operating system is Windows 11 or 12
+                // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
                 if (OS.W12 || OS.W11)
                 {
                     int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
@@ -314,6 +309,7 @@ namespace WinPaletter.UI.Style
                 }
 
                 // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+                // Make both start by 'If' statement, not 'Else If'
                 if (CustomR && !Program.Settings.Appearance.RoundedCorners)
                 {
                     int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
@@ -323,44 +319,27 @@ namespace WinPaletter.UI.Style
 
             //SetControlTheme(Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
             //IntPtr hDC = User32.GetDC(Handle);
-            //User32.SetBkColor(hDC, Program.Style.Schemes.Main.Palette.BackColor.ToArgb() & 0x00FFFFFF);
+            //User32.SetBkColor(hDC, Program.Style.Schemes.Main.Colors.BackColor.ToArgb() & 0x00FFFFFF);
             //User32.SetTextColor(hDC, (Program.Style.DarkMode ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
             //User32.ReleaseDC(Handle, hDC);
         }
 
+        /// <summary>
+        /// Applies a specific style to all sub-controls of a control.
+        /// </summary>
+        /// <param name="ctrl"></param>
+        /// <param name="DarkMode"></param>
         private static void ApplyStyleToSubControls(Control ctrl, bool DarkMode)
         {
             if (ctrl == null) return;
 
-            bool b = false;
-            if (ctrl is UI.Retro.ButtonR)
-                b = true;
-            if (ctrl is UI.Retro.PanelR)
-                b = true;
-            if (ctrl is UI.Retro.PanelRaisedR)
-                b = true;
-            if (ctrl is UI.Retro.TextBoxR)
-                b = true;
-            if (ctrl is UI.Retro.WindowR)
-                b = true;
-            if (ctrl is UI.WP.LabelAlt)
-                b = true;
-            if (ctrl is UI.Retro.LabelR)
-                b = true;
-            if (ctrl is UI.Retro.ContextMenuR)
-                b = true;
-            if (ctrl is UI.Retro.MenuBarR)
-                b = true;
-            if (ctrl is UI.Retro.AppWorkspaceR)
-                b = true;
-            if (ctrl is UI.Retro.ToolTipR)
-                b = true;
+            // Don't apply the style to certain controls (Classic controls)
+            bool b = ctrl.GetType().Name.ToUpper().StartsWith("RETRO.");
 
             if (!b)
             {
                 // This will make all control have a consistent dark\light mode.
-                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
-                    SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81) SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
 
                 switch (DarkMode)
                 {
@@ -379,36 +358,34 @@ namespace WinPaletter.UI.Style
                 //if (ctrl is not WinElement && ctrl is not Window && (ctrl.Font.Name == "Segoe UI" || ctrl.Font.Name == "Tahoma" || ctrl.Font.Name == "Microsoft Sans Serif") && !Fonts.Exists("Segoe UI")) ctrl.Font = new("Tahoma", ctrl.Font.Size == 9f ? 8.25f : ctrl.Font.Size, ctrl.Font.Style);
             }
 
-            if (ctrl is UI.WP.GroupBox)
+            if (ctrl is WP.GroupBox box)
             {
-                ((UI.WP.GroupBox)ctrl).BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.04d : -0.05d));
+                box.BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.04d : -0.05d));
             }
 
-            else if (ctrl is UI.WP.Button)
+            else if (ctrl is WP.Button button)
             {
-                ((UI.WP.Button)ctrl).UpdateStyleSchemes();
+                button.UpdateStyleSchemes();
             }
 
-            else if (ctrl is LinkLabel)
+            else if (ctrl is LinkLabel label)
             {
-                ((LinkLabel)ctrl).LinkColor = DarkMode ? Color.White : Color.Black;
+                label.LinkColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is UI.WP.LinkLabel)
+            else if (ctrl is WP.LinkLabel label1)
             {
-                ((UI.WP.LinkLabel)ctrl).LinkColor = DarkMode ? Color.White : Color.Black;
+                label1.LinkColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is TreeView)
+            else if (ctrl is TreeView temp1)
             {
-                TreeView temp1 = (TreeView)ctrl;
                 temp1.BackColor = ctrl.Parent.BackColor;
                 temp1.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is ListView)
+            else if (ctrl is ListView temp3)
             {
-                ListView temp3 = (ListView)ctrl;
                 temp3.BackColor = ctrl.Parent.BackColor;
                 temp3.ForeColor = DarkMode ? Color.White : Color.Black;
             }
@@ -418,66 +395,59 @@ namespace WinPaletter.UI.Style
                 ctrl.BackColor = ctrl.Parent.BackColor;
             }
 
-            else if (ctrl is CheckedListBox)
+            else if (ctrl is CheckedListBox temp4)
             {
-                CheckedListBox temp4 = (CheckedListBox)ctrl;
                 temp4.BackColor = ctrl.Parent.BackColor;
                 temp4.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is NumericUpDown)
+            else if (ctrl is NumericUpDown temp5)
             {
-                NumericUpDown temp5 = (NumericUpDown)ctrl;
                 temp5.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
                 temp5.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is System.Windows.Forms.ComboBox && ctrl is not UI.WP.ComboBox)
+            else if (ctrl is ComboBox box1 && ctrl is not UI.WP.ComboBox)
             {
-                ComboBox temp6 = (System.Windows.Forms.ComboBox)ctrl;
+                ComboBox temp6 = box1;
                 temp6.FlatStyle = FlatStyle.Flat;
                 temp6.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
                 temp6.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is Tabs.TitlebarExtender)
+            else if (ctrl is Tabs.TitlebarExtender titlebarExtender)
             {
-                Tabs.TitlebarExtender titlebarExtender = ctrl as Tabs.TitlebarExtender;
-                if (!titlebarExtender.DropDWMEffect)
-                {
-                    Config.Scheme scheme = titlebarExtender.Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-                    titlebarExtender.BackColor = scheme.Colors.Back_Hover(titlebarExtender.Level());
-                }
-
-                Forms.MainForm.tabsContainer1.Refresh();
+                titlebarExtender.UpdateBackDrop();
+                titlebarExtender.Refresh();
             }
 
-            else if (ctrl is DataGridView)
+            else if (ctrl is DataGridView dataGridView)
             {
                 Color Back = Program.Style.Schemes.Main.Colors.Back(ctrl.Level());
                 Color BackHover = Program.Style.Schemes.Main.Colors.Back_Hover(ctrl.Level());
                 Color Grid = Program.Style.Schemes.Main.Colors.Line_Hover(ctrl.Level());
 
-                (ctrl as DataGridView).EnableHeadersVisualStyles = false;
+                dataGridView.EnableHeadersVisualStyles = false;
 
-                foreach (DataGridViewColumn col in (ctrl as DataGridView).Columns)
+                foreach (DataGridViewColumn col in dataGridView.Columns)
                 {
                     col.HeaderCell.Style.BackColor = BackHover;
                     col.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
                 }
 
-                foreach (DataGridViewRow row in (ctrl as DataGridView).Rows)
+                foreach (DataGridViewRow row in dataGridView.Rows)
                 {
                     row.HeaderCell.Style.BackColor = BackHover;
                     row.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
                 }
 
-                (ctrl as DataGridView).BackColor = ctrl.Parent.BackColor;
-                (ctrl as DataGridView).BackgroundColor = ctrl.Parent.BackColor;
-                (ctrl as DataGridView).DefaultCellStyle.BackColor = Back;
-                (ctrl as DataGridView).GridColor = Grid;
+                dataGridView.BackColor = ctrl.Parent.BackColor;
+                dataGridView.BackgroundColor = ctrl.Parent.BackColor;
+                dataGridView.DefaultCellStyle.BackColor = Back;
+                dataGridView.GridColor = Grid;
             }
 
+            // Recursively apply the style to all sub-controls
             if (ctrl.HasChildren)
             {
                 foreach (Control c in ctrl.Controls)
@@ -488,6 +458,7 @@ namespace WinPaletter.UI.Style
                 }
             }
 
+            // Invalidate the control to apply the style changes
             ctrl.Invalidate();
         }
 
@@ -502,7 +473,7 @@ namespace WinPaletter.UI.Style
             None,
 
             /// <summary>
-            /// Theme resembling the Explorer theme.
+            /// WinTheme resembling the Explorer theme.
             /// </summary>
             Explorer,
 
@@ -525,6 +496,7 @@ namespace WinPaletter.UI.Style
         /// <returns>Zero if successful, otherwise an error code.</returns>
         public static int SetControlTheme(IntPtr handle, CtrlTheme theme)
         {
+            // Check if the handle is valid
             if (handle == IntPtr.Zero) return 0;
 
             try

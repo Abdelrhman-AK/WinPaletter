@@ -31,7 +31,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -69,7 +69,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI)
             {
-                MsgBox(Program.Lang.AspectDisabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.AspectDisabled_Apply_1);
+                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -100,7 +100,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.WindowStyle == WindowStyle.W81 ? Program.Lang.LockScreen : Program.Lang.LogonUIScreen,
+                AspectName = Program.WindowStyle == WindowStyle.W81 ? Program.Lang.Strings.Aspects.LockScreen : Program.Lang.Strings.Aspects.LogonUI,
                 Enabled = Program.TM.LogonUI7.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -122,7 +122,7 @@ namespace WinPaletter
 
             LoadFromTM(Program.TM);
             ApplyPreview();
-            using (LogonUI formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<LogonUI>();
 
             if (Program.WindowStyle == WindowStyle.W81)
             {
@@ -140,7 +140,7 @@ namespace WinPaletter
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 Focus();
                 BringToFront();
@@ -381,7 +381,7 @@ namespace WinPaletter
 
             else if (RadioButton2.Checked)
             {
-                using (Bitmap b = new Bitmap(Program.GetWallpaperFromRegistry()))
+                using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
                 {
                     bmpX = (Bitmap)b.Clone();
                 }
@@ -512,7 +512,7 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Filter_OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -532,7 +532,7 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
+                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     pnl_preview.BackgroundImage = ReturnBK();
@@ -552,7 +552,7 @@ namespace WinPaletter
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
-            ((UI.Controllers.ColorItem)sender).BackColor = Color.FromArgb(255, C);
+            ((ColorItem)sender).BackColor = Color.FromArgb(255, C);
 
             pnl_preview.BackgroundImage = ReturnBK();
 

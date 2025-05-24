@@ -41,7 +41,8 @@
             this.FakeIcon1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FakeIcon1.Icon = null;
             this.FakeIcon1.IconSize = 32;
-            this.FakeIcon1.Location = new System.Drawing.Point(3, 3);
+            this.FakeIcon1.Location = new System.Drawing.Point(4, 3);
+            this.FakeIcon1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.FakeIcon1.Name = "FakeIcon1";
             this.FakeIcon1.Size = new System.Drawing.Size(76, 70);
             this.FakeIcon1.TabIndex = 7;
@@ -56,7 +57,8 @@
             this.FakeIcon2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FakeIcon2.Icon = null;
             this.FakeIcon2.IconSize = 32;
-            this.FakeIcon2.Location = new System.Drawing.Point(3, 103);
+            this.FakeIcon2.Location = new System.Drawing.Point(4, 92);
+            this.FakeIcon2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.FakeIcon2.Name = "FakeIcon2";
             this.FakeIcon2.Size = new System.Drawing.Size(76, 70);
             this.FakeIcon2.TabIndex = 9;
@@ -72,6 +74,7 @@
             this.FakeIcon3.Icon = null;
             this.FakeIcon3.IconSize = 32;
             this.FakeIcon3.Location = new System.Drawing.Point(105, 3);
+            this.FakeIcon3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.FakeIcon3.Name = "FakeIcon3";
             this.FakeIcon3.Size = new System.Drawing.Size(76, 70);
             this.FakeIcon3.TabIndex = 8;
@@ -81,12 +84,14 @@
             // 
             // DesktopIcons
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.Controls.Add(this.FakeIcon1);
             this.Controls.Add(this.FakeIcon2);
             this.Controls.Add(this.FakeIcon3);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "DesktopIcons";
             this.Size = new System.Drawing.Size(399, 271);
             this.Load += new System.EventHandler(this.DesktopIcons_Load);

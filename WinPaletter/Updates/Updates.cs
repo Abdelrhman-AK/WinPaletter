@@ -13,15 +13,38 @@ namespace WinPaletter
     {
         private readonly DownloadManager DM = new();
 
+        /// <summary>
+        /// The URL of the update executable.
+        /// </summary>
         public string url = null;
+
+        /// <summary>
+        /// The version of the update.
+        /// </summary>
         public string ver;
+
         private int StableInt, BetaInt, UpdateChannel;
         private string OldName;
+
+        /// <summary>
+        /// The size of the update executable.
+        /// </summary>
         public decimal UpdateSize;
+
+        /// <summary>
+        /// The release date of the update.
+        /// </summary>
         public DateTime ReleaseDate;
         private bool _Shown = false;
-        public List<string> ls = new();
 
+        /// <summary>
+        /// The list of updates.
+        /// </summary>
+        public List<string> ls = [];
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Updates"/> class.
+        /// </summary>
         public Updates()
         {
             InitializeComponent();
@@ -31,8 +54,10 @@ namespace WinPaletter
 
         private async void Button1_Click(object sender, EventArgs e)
         {
+            // Reset updates flag in MainForm
             Forms.Home.NotifyUpdates.Visible = false;
 
+            // That means that MainForm didn't check for updates, so we need to check here
             if (url is null)
             {
                 Cursor = Cursors.AppStarting;
@@ -52,10 +77,12 @@ namespace WinPaletter
                 {
                     if (Program.IsNetworkAvailable)
                     {
-                        Label17.SetText(Program.Lang.Checking);
+                        Label17.SetText(Program.Lang.Strings.General.Checking);
 
                         string response = await DM.ReadStringAsync(Links.Updates);
-                        ls = response.Split('\n').ToList();
+
+                        // Split the response into lines
+                        ls = [.. response.Split('\n')];
 
                         foreach (string updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                         {
@@ -68,33 +95,38 @@ namespace WinPaletter
                             }
                         }
 
+                        // Get the update channel.
                         UpdateChannel = Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? StableInt : BetaInt;
 
+                        // Get the version of the update (it is the second element in the line) and compare it with the current version.
                         ver = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[1];
 
                         if (new Version(ver) > new Version(Program.Version))
                         {
+                            // Get the URL of the update executable, the size of the update executable and the release date of the update.
                             url = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[4];
                             UpdateSize = Conversions.ToDecimal(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
                             ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
 
-                            Label7.Text = $"{UpdateSize} {Program.Lang.MBSizeUnit}";
+                            // Hide the update information.
+                            Label7.Text = $"{UpdateSize} {Program.Lang.Strings.General.MBSizeUnit}";
                             Label9.Text = ReleaseDate.ToLongDateString();
 
                             LinkLabel3.Visible = true;
 
                             Program.Animator.Show(Panel1, true);
-                            Button1.Text = Program.Lang.DoAction_Update;
-                            AlertBox2.Text = $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}";
+                            Button1.Text = Program.Lang.Strings.General.DoAction;
+                            AlertBox2.Text = $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}";
                             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
                         }
                         else
                         {
+                            // No update available.
                             Label7.Text = string.Empty;
                             Label9.Text = string.Empty;
                             url = null;
-                            Button1.Text = Program.Lang.CheckForUpdates;
-                            AlertBox2.Text = string.Format(Program.Lang.NoUpdateAvailable);
+                            Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
+                            AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoUpdateAvailable);
                             AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success;
                         }
 
@@ -105,7 +137,7 @@ namespace WinPaletter
                         //HandleNoNetwork();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception ex) // An error occurred while checking for updates.
                 {
                     Forms.BugReport.ThrowError(ex);
                 }
@@ -118,6 +150,7 @@ namespace WinPaletter
             }
             else
             {
+                // There is an update available that is already checked in MainForm, so we need to download it.
                 ProgressBar1.Visible = false;
                 ProgressBar1.Value = 0;
 
@@ -139,9 +172,10 @@ namespace WinPaletter
                     await DM.DownloadFileAsync(url, OldName);
                 }
 
+                // Download the update executable.
                 if (RadioButton2.Checked)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.EXE, FileName = $"WinPaletter ({ver})", Title = Program.Lang.Filter_SaveUpdateEXE })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.EXE, FileName = $"WinPaletter ({ver})", Title = Program.Lang.Strings.Extensions.SaveUpdateEXE })
                     {
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -157,6 +191,7 @@ namespace WinPaletter
                     }
                 }
 
+                // Open the download page, if the user wants to download the update manually.
                 if (RadioButton3.Checked)
                 {
                     Process.Start(Links.Releases);
@@ -173,8 +208,8 @@ namespace WinPaletter
 
             LinkLabel3.Visible = false;
 
-            string format = Program.Lang.RightToLeft ? "{1}: {0}" : "{0} {1}";
-            Label3.Text = string.Format(format, (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable) ? Program.Lang.Stable : Program.Lang.Beta, Program.Lang.Channel);
+            string format = Program.Lang.Information.RightToLeft ? "{1}: {0}" : "{0} {1}";
+            Label3.Text = string.Format(format, (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable) ? Program.Lang.Strings.General.Stable : Program.Lang.Strings.General.Beta, Program.Lang.Strings.General.Channel);
 
             CheckBox1.Checked = Program.Settings.Updates.AutoCheck;
 
@@ -190,12 +225,13 @@ namespace WinPaletter
 
             Button1.Enabled = true;
             Panel1.Enabled = true;
-            Button1.Text = Program.Lang.CheckForUpdates;
+            Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
             Label2.Text = Program.Version;
             Label2.Font = Fonts.ConsoleMedium;
             Label7.Font = Fonts.ConsoleMedium;
             Label9.Font = Fonts.ConsoleMedium;
 
+            // Process data from MainForm if it is available
             if (ls.Count > 0)
             {
                 StableInt = 0;
@@ -215,22 +251,22 @@ namespace WinPaletter
 
                 UpdateChannel = Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? StableInt : BetaInt;
 
+                // Get the version of the update (it is the second element in the line) and compare it with the current version.
                 ver = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[1];
-
                 if (new Version(ver) > new Version(Program.Version))
                 {
                     url = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[4];
                     UpdateSize = Conversions.ToDecimal(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
                     ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
 
-                    Label7.Text = $"{UpdateSize} {Program.Lang.MBSizeUnit}";
+                    Label7.Text = $"{UpdateSize} {Program.Lang.Strings.General.MBSizeUnit}";
                     Label9.Text = $"{ReleaseDate.ToLongDateString()} {ReleaseDate.ToLongTimeString()}";
 
                     LinkLabel3.Visible = true;
 
                     Program.Animator.Show(Panel1, true);
-                    Button1.Text = Program.Lang.DoAction_Update;
-                    AlertBox2.Text = $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}";
+                    Button1.Text = Program.Lang.Strings.General.DoAction;
+                    AlertBox2.Text = $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}";
                     AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
 
                     Program.Animator.Show(AlertBox2, true);
@@ -241,17 +277,18 @@ namespace WinPaletter
                     Label7.Text = string.Empty;
                     Label9.Text = string.Empty;
                     url = null;
-                    Button1.Text = Program.Lang.CheckForUpdates;
-                    AlertBox2.Text = string.Format(Program.Lang.NoUpdateAvailable);
+                    Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
+                    AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoUpdateAvailable);
                     AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success;
                 }
             }
 
+            // Hide a warning if the user is using Windows WXP or Windows Vista as they don't support TLS 1.2.
             if (OS.WXP || OS.WVista)
             {
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
-                AlertBox2.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, OS.WXP ? Program.Lang.OS_WinXP : Program.Lang.OS_WinVista);
+                AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoTLS12, OS.WXP ? Program.Lang.Strings.Windows.WXP : Program.Lang.Strings.Windows.WVista);
             }
         }
 
@@ -296,7 +333,7 @@ namespace WinPaletter
             ProgressBar1.Visible = false;
             ProgressBar1.Value = 0;
             if (RadioButton2.Checked)
-                MsgBox(Program.Lang.Msgbox_Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Lang.Strings.Updates.Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (RadioButton1.Checked & !Disturbed)
             {
                 Process.Start(OldName);
@@ -318,6 +355,9 @@ namespace WinPaletter
 
         private bool Disturbed = false;
 
+        /// <summary>
+        /// Stop the download if the user closes the form.
+        /// </summary>
         public void DisturbActions()
         {
             if (DM.IsBusy)
@@ -325,6 +365,7 @@ namespace WinPaletter
                 Disturbed = true;
                 DM.StopDownload();
 
+                // Restore the old executable file if the user cancels the download.
                 if (RadioButton1.Checked)
                 {
                     try

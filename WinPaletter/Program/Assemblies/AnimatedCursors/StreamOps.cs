@@ -30,7 +30,7 @@ namespace EOFC
             int numRead = 0;
             for (int i = 0; i < count; i++)
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
 
                 // Read until EOF or null terminator
                 while (true)
@@ -75,8 +75,8 @@ namespace EOFC
         {
             byte[] buf = new byte[4];
             inS.Read(buf, 0, 4);
-            return (buf[0] | (((uint)buf[1]) << 8) |
-                (((uint)buf[2]) << 16) | (((uint)buf[3]) << 24));
+            return buf[0] | (((uint)buf[1]) << 8) |
+                (((uint)buf[2]) << 16) | (((uint)buf[3]) << 24);
         }
 
         public static int ReadUInts(Stream inS, uint[] destinationArray, int index, int count)

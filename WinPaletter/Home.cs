@@ -1,10 +1,8 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -14,21 +12,34 @@ using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// Home page of WinPaletter.
+    /// </summary>
     public partial class Home : Form
     {
         private bool RaiseUpdate = false;
         private string ver = string.Empty;
         private int StableInt, BetaInt, UpdateChannel;
         private int ChannelFixer;
-        private List<string> Updates_ls = new();
-        public string file = string.Empty;
+        private List<string> Updates_ls = [];
 
+        /// <summary>
+        /// File path of the theme File.
+        /// </summary>
+        public string File { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Old minimum size of the main form.
+        /// </summary>
         public Size oldMainFormMinSize;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Home"/> class.
+        /// </summary>
         public Home()
         {
             InitializeComponent();
-            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<MainForm>();
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -36,6 +47,7 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
 
+            // Reset the logging off flag to false.
             Forms.MainForm.LoggingOff = false;
 
             NotifyUpdates.Icon = Icon;
@@ -47,13 +59,23 @@ namespace WinPaletter
             oldMainFormMinSize = Forms.MainForm.MinimumSize;
 
             if (!Program.Elevated) apply_btn.Image = Properties.Resources.WP_Admin;
+
+            // Double buffer the flow layout panels to prevent flickering.
             flowLayoutPanel3.DoubleBuffer();
 
+            // Set the compact mode it it is enabled.
             processCompactMode();
+
+            // Load strings and images to cards according to current OS or selected OS from <see cref="Program.WindowStyle"/>.
             LoadOSData();
+
+            // Load data of current user and get his profile picture.
             LoadData();
+
+            // Load theme data from the theme manager.
             LoadFromTM(Program.TM);
 
+            // Add animations to toolbar buttons and cards.
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
                 button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
@@ -66,9 +88,9 @@ namespace WinPaletter
                 button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
-            foreach (UI.WP.Card card in flowLayoutPanel1.Controls)
+            foreach (Card card in flowLayoutPanel1.Controls)
             {
-                card.MouseEnter += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as UI.WP.Card).Color.Dark(0.7f) : (s as UI.WP.Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                card.MouseEnter += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 card.MouseLeave += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
         }
@@ -79,9 +101,12 @@ namespace WinPaletter
             processCompactMode();
         }
 
+        /// <summary>
+        /// Process the compact mode for the home page, suitable for small screens.
+        /// </summary>
         private void processCompactMode()
         {
-            foreach (UI.WP.Card card in flowLayoutPanel1.Controls)
+            foreach (Card card in flowLayoutPanel1.Controls)
             {
                 card.Compact = Program.Settings.General.CompactAspects;
                 card.Size = card.Compact ? new(144, 130) : new(277, 130);
@@ -92,6 +117,10 @@ namespace WinPaletter
             button1.ImageGlyph = Program.Settings.General.CompactAspects ? Properties.Resources.Glyph_Expand : Properties.Resources.Glyph_Compact;
         }
 
+        /// <summary>
+        /// Void to handle the form closing event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             e.Cancel = false;
@@ -100,12 +129,12 @@ namespace WinPaletter
             {
                 if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
                 {
-                    if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                    if (MsgBox(Program.Lang.Strings.Messages.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
                 }
 
                 if (!e.Cancel)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
                                                                                     //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
@@ -118,6 +147,7 @@ namespace WinPaletter
                 }
             }
 
+            // Continue with the closing event if the user has not cancelled it.
             if (!e.Cancel)
             {
                 Forms.MainForm.tabsContainer1.TabControl.Visible = false;
@@ -130,12 +160,18 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Load the user data to the user button.
+        /// </summary>
         public void LoadData()
         {
             userButton.Tag = User.UserName;
             userButton.Image = User.ProfilePicture.Resize(26, 26);
         }
 
+        /// <summary>
+        /// Load the OS data to the cards.
+        /// </summary>
         private void LoadOSData()
         {
             switch (Program.WindowStyle)
@@ -143,49 +179,49 @@ namespace WinPaletter
                 case WindowStyle.W12:
                     card1.Image = Assets.Banners.Win12;
                     winEdition.Image = Assets.WinLogos.Win12;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win12);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;
 
                 case WindowStyle.W11:
                     card1.Image = Assets.Banners.Win11;
                     winEdition.Image = Assets.WinLogos.Win11;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win11);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W11);
                     break;
 
                 case WindowStyle.W10:
                     card1.Image = Assets.Banners.Win10;
                     winEdition.Image = Assets.WinLogos.Win10;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win10);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W10);
                     break;
 
                 case WindowStyle.W81:
                     card1.Image = Assets.Banners.Win81;
                     winEdition.Image = Assets.WinLogos.Win81;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win8);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W7:
                     card1.Image = Assets.Banners.WinOld;
                     winEdition.Image = Assets.WinLogos.Win7;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win7);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W7);
                     break;
 
                 case WindowStyle.WVista:
                     card1.Image = Assets.Banners.WinOld;
                     winEdition.Image = Assets.WinLogos.WinVista;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_WinVista);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WVista);
                     break;
 
                 case WindowStyle.WXP:
                     card1.Image = Assets.Banners.WinOld;
                     winEdition.Image = Assets.WinLogos.WinXP;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_WinXP);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WXP);
                     break;
 
                 default:
                     card1.Image = Assets.Banners.Win12;
                     winEdition.Image = Assets.WinLogos.Win12;
-                    winEdition.Tag = string.Format(Program.Lang.OS_PreviewingAs, Program.Lang.OS_Win12);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;
             }
 
@@ -194,18 +230,27 @@ namespace WinPaletter
             //card14.Visible = Program.WindowStyle != WindowStyle.WXP;
         }
 
+        /// <summary>
+        /// Load the theme data from the theme manager.
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadFromTM(Theme.Manager TM)
         {
             labelAlt1.Text = $"{TM.Info.ThemeName}";
-            labelAlt2.Text = $"{Program.Lang.By} {TM.Info.Author}";
+            labelAlt2.Text = $"{Program.Lang.Strings.General.By} {TM.Info.Author}";
             labelAlt3.Text = TM.Info.ThemeVersion;
             groupBox1.UpdatePattern(TM.Info.Pattern);
         }
 
+        /// <summary>
+        /// Check for updates automatically when the form is loaded.
+        /// </summary>
         public async void AutoUpdatesCheck()
         {
+            // Do not check for updates on Windows WXP and Vista as the update server does not support these versions (Unsupported TLS version).
             if (OS.WXP || OS.WVista) return;
 
+            // Reset the update channel variables.
             StableInt = 0;
             BetaInt = 0;
             UpdateChannel = 0;
@@ -221,23 +266,28 @@ namespace WinPaletter
                         ver = string.Empty;
 
                         string result = await DM.ReadStringAsync(Links.Updates);
-                        Updates_ls = result.Split(new char[] { '\r', '\n' }).ToList();
+                        Updates_ls = [.. result.Split(['\r', '\n'])];
 
                         foreach (string updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
                         {
+                            // Split the update info into parts. An update info is a line that has spaces.
                             string[] updateParts = updateInfo.Split(' ');
 
                             if (updateParts.Length >= 2)
                             {
+                                // Check if the update is for the stable or beta channel.
                                 if ((updateParts[0] ?? "stable").ToLower() == "stable") StableInt = Updates_ls.IndexOf(updateInfo);
                                 if ((updateParts[0] ?? "stable").ToLower() == "beta") BetaInt = Updates_ls.IndexOf(updateInfo);
                             }
                         }
 
+                        // Determine the update channel to use.
                         UpdateChannel = (ChannelFixer == 0) ? StableInt : BetaInt;
 
+                        // Get the version of the update.
                         ver = Updates_ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[1];
 
+                        // Check if the update is newer than the current version.
                         RaiseUpdate = !string.IsNullOrEmpty(ver) && ver.CompareTo(Program.Version) == 1;
                     }
                 }
@@ -250,10 +300,15 @@ namespace WinPaletter
                 {
                     if (RaiseUpdate)
                     {
+                        // Pass the updates list to the updates form to save time.
                         Forms.Updates.ls = Updates_ls;
                         NotifyUpdates.Visible = true;
+
+                        // Change the update button image to the update notification image that has an indicator dot.
                         Button5.ImageGlyph = Properties.Resources.Glyph_Update_Dot;
-                        NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.NewUpdate}. {Program.Lang.Version} {ver}", ToolTipIcon.Info);
+
+                        // Hide the update notification.
+                        NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}", ToolTipIcon.Info);
                     }
                 });
             }
@@ -277,24 +332,24 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
+            Process.Start(Links.Releases);
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.RescueTools);
+            Forms.SOS.Show();
         }
 
         private void Button31_Click(object sender, EventArgs e)
         {
             if (OS.WXP)
             {
-                if (MsgBox(string.Format(Program.Lang.Store_WontWork_Protocol, Program.Lang.OS_WinXP), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                if (MsgBox(string.Format(Program.Lang.Strings.Store.WontWork_Protocol, Program.Lang.Strings.Windows.WXP), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
             }
             else if (OS.WVista)
             {
-                if (MsgBox(string.Format(Program.Lang.Store_WontWork_Protocol, Program.Lang.OS_WinVista), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                if (MsgBox(string.Format(Program.Lang.Strings.Store.WontWork_Protocol, Program.Lang.Strings.Windows.WVista), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
             }
 
@@ -379,7 +434,7 @@ namespace WinPaletter
             }
             else if (Program.WindowStyle == WindowStyle.WVista)
             {
-                MsgBox(Program.Lang.VistaLogonNotSupported, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MsgBox(Program.Lang.Strings.Messages.VistaLogonNotSupported, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -473,9 +528,9 @@ namespace WinPaletter
             else
             {
                 if (Program.WindowStyle == WindowStyle.WXP)
-                    MsgBox(string.Format(Program.Lang.AltTab_Unsupported, Program.Lang.OS_WinXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.Strings.Messages.AltTab_Unsupported, Program.Lang.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 if (Program.WindowStyle == WindowStyle.WVista)
-                    MsgBox(string.Format(Program.Lang.AltTab_Unsupported, Program.Lang.OS_WinVista), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.Strings.Messages.AltTab_Unsupported, Program.Lang.Strings.Windows.WVista), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -492,7 +547,7 @@ namespace WinPaletter
             {
                 Program.TM = new(Theme.Manager.Source.Registry);
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                file = null;
+                File = null;
                 Text = Application.ProductName;
                 LoadFromTM(Program.TM);
             }
@@ -504,7 +559,7 @@ namespace WinPaletter
             {
                 Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
                 Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                file = null;
+                File = null;
                 Text = Application.ProductName;
                 LoadFromTM(Program.TM);
             }
@@ -514,7 +569,7 @@ namespace WinPaletter
         {
             if (Forms.MainForm.ExitWithChangedFileResponse())
             {
-                using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+                using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = File, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
@@ -524,10 +579,10 @@ namespace WinPaletter
                             Program.TM.Save(Source.File, filename);
                         }
 
-                        file = dlg.FileName;
+                        File = dlg.FileName;
                         Program.TM = new(Theme.Manager.Source.File, dlg.FileName);
                         Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                        Text = System.IO.Path.GetFileName(file);
+                        Text = System.IO.Path.GetFileName(File);
                         LoadFromTM(Program.TM);
                     }
                 }
@@ -536,13 +591,13 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    file = dlg.FileNames[0];
-                    Program.TM.Save(Theme.Manager.Source.File, file);
-                    Text = System.IO.Path.GetFileName(file);
+                    File = dlg.FileNames[0];
+                    Program.TM.Save(Theme.Manager.Source.File, File);
+                    Text = System.IO.Path.GetFileName(File);
                     LoadFromTM(Program.TM);
                 }
             }
@@ -550,23 +605,23 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
             {
                 if (!System.IO.File.Exists(dlg.FileName))
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        file = dlg.FileNames[0];
-                        Program.TM.Save(Theme.Manager.Source.File, file);
-                        Text = System.IO.Path.GetFileName(file);
+                        File = dlg.FileNames[0];
+                        Program.TM.Save(Theme.Manager.Source.File, File);
+                        Text = System.IO.Path.GetFileName(File);
                         LoadFromTM(Program.TM);
                     }
                 }
                 else
                 {
-                    file = dlg.FileNames[0];
-                    Program.TM.Save(Theme.Manager.Source.File, file);
-                    Text = System.IO.Path.GetFileName(file);
+                    File = dlg.FileNames[0];
+                    Program.TM.Save(Theme.Manager.Source.File, File);
+                    Text = System.IO.Path.GetFileName(File);
                     LoadFromTM(Program.TM);
                 }
             }
@@ -582,11 +637,6 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
         }
 
-        private void button41_Click(object sender, EventArgs e)
-        {
-            Process.Start(Links.PayPal);
-        }
-
         private void Button13_Click(object sender, EventArgs e)
         {
             Close();
@@ -596,18 +646,20 @@ namespace WinPaletter
         {
             Forms.MainForm.LoggingOff = false;
 
-            if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Messages.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.Messages.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
             {
+                // Disable the file system redirection to access the system32 folder.
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
                 {
+                    // Set the logging off flag to true to make WinPaletter exits without confirmation.
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
+                    Microsoft.VisualBasic.Interaction.Shell($@"{SysPaths.System32}\logoff.exe", Microsoft.VisualBasic.AppWinStyle.Hide);
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Lang.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -660,9 +712,15 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.VisualStyles);
         }
 
+        private void card15_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.BackgroundImage = (sender as Card).Image;
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.AccessibilityEditor);
+        }
+
         //private void button1_Click(object sender, EventArgs e)
         //{
-        ////new UI.Style.SchemeEditor().Show();
+        ////new UI.Style.SchemeEditor().Hide();
         //}
 
         private void pin_button_Click(object sender, EventArgs e)
@@ -670,9 +728,10 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
+        // When the parent of the dashboard is changed, check if it is a tab page to hide the pin button.
         private void Dashboard_ParentChanged(object sender, EventArgs e)
         {
-            if (this.Parent != null && Parent is TabPage)
+            if (Parent != null && Parent is TabPage)
             {
                 pin_button.Visible = false;
             }

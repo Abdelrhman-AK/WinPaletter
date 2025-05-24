@@ -9,7 +9,7 @@ namespace WinPaletter.GlobalVariables
     public static class OS
     {
         /// <summary>
-        /// A boolean that determines if OS is Windows XP
+        /// A boolean that determines if OS is Windows WXP
         /// </summary>
         public static bool WXP { get; } = Environment.OSVersion.Version.Major == 5;
 
@@ -77,15 +77,15 @@ namespace WinPaletter.GlobalVariables
         {
             get
             {
-                if (W12) { return Program.Lang.OS_Win12; }
-                else if (W11) { return Program.Lang.OS_Win11; }
-                else if (W10) { return Program.Lang.OS_Win10; }
-                else if (W81) { return Program.Lang.OS_Win81; }
-                else if (W8) { return Program.Lang.OS_Win8; }
-                else if (W7) { return Program.Lang.OS_Win7; }
-                else if (WVista) { return Program.Lang.OS_WinVista; }
-                else if (WXP) { return Program.Lang.OS_WinXP; }
-                else { return Program.Lang.OS_WinUndefined; }
+                if (W12) { return Program.Lang.Strings.Windows.W12; }
+                else if (W11) { return Program.Lang.Strings.Windows.W11; }
+                else if (W10) { return Program.Lang.Strings.Windows.W10; }
+                else if (W81) { return Program.Lang.Strings.Windows.W81; }
+                else if (W8) { return Program.Lang.Strings.Windows.W8; }
+                else if (W7) { return Program.Lang.Strings.Windows.W7; }
+                else if (WVista) { return Program.Lang.Strings.Windows.WVista; }
+                else if (WXP) { return Program.Lang.Strings.Windows.WXP; }
+                else { return Program.Lang.Strings.Windows.Undefined; }
             }
         }
 
@@ -118,7 +118,7 @@ namespace WinPaletter.GlobalVariables
                 string X0 = RuntimeInformation.OSDescription.Replace("Microsoft Windows ", string.Empty);
                 X0 = X0.Replace("S", string.Empty).Trim();
 
-                string X1 = $".{(GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", 0))}";
+                string X1 = $".{GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", 0)}";
                 if (X1 == ".0") { X1 = string.Empty; }
 
                 return $"{X0}{X1}";
@@ -128,7 +128,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Get if current Windows edition is 32-bit or 64-bit, returned as string differs according to current WinPaletter language.
         /// </summary>
-        public static string Architecture => Environment.Is64BitOperatingSystem ? Program.Lang.OS_64Bit : Program.Lang.OS_32Bit;
+        public static string Architecture => Environment.Is64BitOperatingSystem ? Program.Lang.Strings.Windows.Arc_64Bit : Program.Lang.Strings.Windows.Arc_32Bit;
 
         /// <summary>
         /// Get if current Windows edition is 32-bit or 64-bit, in English.

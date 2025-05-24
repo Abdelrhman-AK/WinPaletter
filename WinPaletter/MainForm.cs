@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// The main form of WinPaletter.
+    /// </summary>
     public partial class MainForm
     {
         /// <summary>
@@ -11,8 +15,14 @@ namespace WinPaletter
         /// </summary>
         public bool LoggingOff = false;
 
+        /// <summary>
+        /// Flag to indicate if home page sent a close signal.
+        /// </summary>
         public bool closeSignalReceivedFromHomePage = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -20,15 +30,18 @@ namespace WinPaletter
 
         private void MainFrm_Load(object sender, EventArgs e)
         {
+            // Reset the flag that indicates if the user is closing the application from the home page.
             closeSignalReceivedFromHomePage = false;
 
+            // Set form properties.
             Size = new(Convert.ToInt32(Program.Settings.General.MainFormWidth), Convert.ToInt32(Program.Settings.General.MainFormHeight));
             CenterToScreen();
             WindowState = (FormWindowState)Convert.ToInt32(Program.Settings.General.MainFormStatus);
 
+            // Start showing home page tab.
             tabControl1.Visible = false;
             tabsContainer1.AddFormIntoTab(Forms.Home);
-            if (Program.ShowWhatsNew) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Whatsnew);
+            if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");
             if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Welcome);
             Program.Animator.ShowSync(tabControl1);
         }
@@ -43,12 +56,12 @@ namespace WinPaletter
         {
             if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && Program.TM != Program.TM_Original)
             {
-                DialogResult result = MsgBox(Program.Lang.SaveDialog_Question, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MsgBox(Program.Lang.Strings.Messages.SaveDialog_Question, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 bool sucess;
 
                 if (result == DialogResult.Yes)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         if (System.IO.File.Exists(dlg.FileName) || dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -76,6 +89,9 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Handles the FormClosing event of the MainForm control.
+        /// </summary>
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             e.Cancel = false;
@@ -84,12 +100,12 @@ namespace WinPaletter
             {
                 if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
                 {
-                    if (MsgBox(Program.Lang.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                    if (MsgBox(Program.Lang.Strings.Messages.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
                 }
 
                 if (!e.Cancel)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.file, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
                                                                                     //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
@@ -111,6 +127,7 @@ namespace WinPaletter
         {
             if (!Program.DeleteWinPaletteReg)
             {
+                // Save the form's position and size to the registry.
                 if (WindowState == FormWindowState.Normal)
                 {
                     Program.Settings.General.MainFormWidth = Size.Width;
@@ -122,6 +139,7 @@ namespace WinPaletter
                 }
                 Program.Settings.General.Save();
 
+                // Save WinPaletter appearance settings to the registry.
                 Settings old = new(Settings.Source.Registry);
                 {
                     ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;

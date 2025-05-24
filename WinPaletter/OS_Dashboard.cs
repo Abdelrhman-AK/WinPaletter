@@ -5,8 +5,14 @@ using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// A form to select the OS style.
+    /// </summary>
     public partial class OS_Dashboard
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OS_Dashboard"/> class.
+        /// </summary>
         public OS_Dashboard()
         {
             InitializeComponent();
@@ -14,8 +20,10 @@ namespace WinPaletter
 
         private void OS_Dashboard_Load(object sender, EventArgs e)
         {
-            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
+            // Set the form icon.
+            Icon = FormsExtensions.Icon<MainForm>();
 
+            // Select the current OS style.
             switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
@@ -51,22 +59,26 @@ namespace WinPaletter
                     break;
             }
 
+            // Set the form size and location.
             Size targetSize = Size;
             Point targetLocation = Forms.Home.winEdition.PointToScreen(Point.Empty) - new Size(Width, 0);
 
             Size = Forms.Home.winEdition.Size;
             Location = Forms.Home.winEdition.PointToScreen(Point.Empty);
 
+            // Animate the form.
             FluentTransitions.Transition
-                .With(this, nameof(this.Width), targetSize.Width)
-                .With(this, nameof(this.Height), targetSize.Height)
-                .With(this, nameof(this.Left), targetLocation.X)
-                .With(this, nameof(this.Top), targetLocation.Y)
+                .With(this, nameof(Width), targetSize.Width)
+                .With(this, nameof(Height), targetSize.Height)
+                .With(this, nameof(Left), targetLocation.X)
+                .With(this, nameof(Top), targetLocation.Y)
                 .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            // Set the OS style.
+
             if (radioImage7.Checked) Program.WindowStyle = WindowStyle.W12;
             else if (radioImage6.Checked) Program.WindowStyle = WindowStyle.W11;
             else if (radioImage5.Checked) Program.WindowStyle = WindowStyle.W10;
@@ -77,7 +89,7 @@ namespace WinPaletter
             else Program.WindowStyle = WindowStyle.W12;
 
             if (radioImage7.Checked)
-                MsgBox(Program.Lang.Win12_Preview_Msg0, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.Win12_Preview_Msg1);
+                MsgBox(Program.Lang.Strings.Messages.Win12_Preview_Msg0, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.Strings.Messages.Win12_Preview_Msg1);
 
             DialogResult = DialogResult.OK;
         }

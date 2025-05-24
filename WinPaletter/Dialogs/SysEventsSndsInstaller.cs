@@ -19,14 +19,14 @@ namespace WinPaletter
         public SysEventsSndsInstaller()
         {
             InitializeComponent();
-            this.Shown += BugReport_Show;
+            Shown += BugReport_Show;
         }
 
         const string SvcName = "WinPaletter.SystemEventsSounds";
 
         private void BugReport_Load(object sender, EventArgs e)
         {
-            using (SettingsX formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<SettingsX>();
             this.LoadLanguage();
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;
@@ -72,7 +72,7 @@ namespace WinPaletter
             Button2.Enabled = false;
             CheckBox1.Enabled = false;
 
-            textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Stopping, SvcName))}\r\n");
+            textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Stopping, SvcName)}\r\n");
             Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
             List<Process> Processes = Program.ProgramsRunning(SysPaths.SysEventsSounds);
@@ -80,7 +80,7 @@ namespace WinPaletter
 
             try
             {
-                textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Extracting, SvcName))}\r\n");
+                textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Extracting, SvcName)}\r\n");
                 if (!System.IO.Directory.Exists(SysPaths.SysEventsSoundsDir)) { System.IO.Directory.CreateDirectory(SysPaths.SysEventsSoundsDir); }
                 if (System.IO.File.Exists(SysPaths.SysEventsSounds))
                     System.IO.File.Delete(SysPaths.SysEventsSounds);
@@ -97,23 +97,23 @@ namespace WinPaletter
                 {
                     string installutil = installutils.ElementAt(0);
 
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName))}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Uninstalling, SvcName)}\r\n");
                     Program.SendCommand($"\"{installutil}\" /u \"{SysPaths.SysEventsSounds}\"");
 
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Installing, SvcName))}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Installing, SvcName)}\r\n");
                     Program.SendCommand($"\"{installutil}\" \"{SysPaths.SysEventsSounds}\"");
 
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Starting, SvcName))}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Starting, SvcName)}\r\n");
                     Program.SendCommand("net start WinPaletter.SystemEventsSounds");
 
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_InstallCompleted, SvcName))}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.InstallCompleted, SvcName)}\r\n");
 
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_MissingInstallutil, SvcName))}\r\n");
-                    MsgBox(Program.Lang.SvcInstaller_MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.MissingInstallutil, SvcName)}\r\n");
+                    MsgBox(Program.Lang.Strings.Services.MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -128,7 +128,7 @@ namespace WinPaletter
             Button2.Enabled = false;
             CheckBox1.Enabled = false;
 
-            textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Stopping, SvcName))}\r\n");
+            textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Stopping, SvcName)}\r\n");
             Program.SendCommand("net stop WinPaletter.SystemEventsSounds");
 
             List<Process> Processes = Program.ProgramsRunning(SysPaths.SysEventsSounds);
@@ -142,17 +142,17 @@ namespace WinPaletter
                 {
                     string installutil = installutils.ElementAt(0);
 
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_Uninstalling, SvcName))}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Uninstalling, SvcName)}\r\n");
                     Program.SendCommand($"\"{installutil}\" /u \"{SysPaths.SysEventsSounds}\"");
 
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_UninstallCompleted, SvcName))}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.UninstallCompleted, SvcName)}\r\n");
 
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    textBox1.SetText($"{textBox1.Text}• {(string.Format(Program.Lang.SvcInstaller_MissingInstallutil, SvcName))}\r\n");
-                    MsgBox(Program.Lang.SvcInstaller_MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.MissingInstallutil, SvcName)}\r\n");
+                    MsgBox(Program.Lang.Strings.Services.MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -180,22 +180,22 @@ namespace WinPaletter
             this.install_or_update = install_or_update;
             uninstall = false;
 
-            title.Text = install_or_update ? Program.Lang.SvcInstaller_Title_Install : Program.Lang.SvcInstaller_Title_Update;
-            textBox2.Text = Program.Lang.SvcInstaller_Description;
+            title.Text = install_or_update ? Program.Lang.Strings.Services.Title_Install : Program.Lang.Strings.Services.Title_Update;
+            textBox2.Text = Program.Lang.Strings.Services.Description;
 
-            this.ShowDialog();
+            ShowDialog();
         }
 
         public void Uninstall(bool quiet = false)
         {
             uninstall = true;
 
-            title.Text = Program.Lang.SvcInstaller_Title_Uninstall;
-            textBox2.Text = Program.Lang.SvcInstaller_Description;
+            title.Text = Program.Lang.Strings.Services.Title_Uninstall;
+            textBox2.Text = Program.Lang.Strings.Services.Description;
 
-            this.Opacity = quiet ? 0 : 1;
-            this.ShowDialog();
-            this.Opacity = 1;
+            Opacity = quiet ? 0 : 1;
+            ShowDialog();
+            Opacity = 1;
         }
 
         private void Button2_Click(object sender, EventArgs e)

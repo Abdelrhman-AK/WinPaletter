@@ -4,21 +4,35 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// Hover form for previewing themes in the store.
+    /// </summary>
     public partial class Store_Hover
     {
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Store_Hover"/> class.
+        /// </summary>
         public Store_Hover()
         {
             InitializeComponent();
         }
 
         private int index = 0;
+
+        /// <summary>
+        /// Image to display in the preview (modern Windows elements).
+        /// </summary>
         public Bitmap img0;
+
+        /// <summary>
+        /// Image to display in the preview (classic Windows elements).
+        /// </summary>
         public Bitmap img1;
 
         private void Store_Hover_Load(object sender, EventArgs e)
         {
-            using (Store formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<Store>();
 
             Point p;
             if (Forms.Store.selectedItem is not null)
@@ -52,7 +66,10 @@ namespace WinPaletter
             SwitchPreview();
         }
 
-        public void SwitchPreview()
+        /// <summary>
+        /// Switches the preview image between the two available images (modern and classic Windows elements).
+        /// </summary>
+        private void SwitchPreview()
         {
             if (index == 0)
             {

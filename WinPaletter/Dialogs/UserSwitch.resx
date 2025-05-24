@@ -120,44 +120,44 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABKRJREFUWEft
-        VGtMU2cYbjK2HwPGGD0tAym0yF0Iky27aDQ4FtSJYUskmxkoAktMFk2M2T8T5kSdykUHCGNeoCC0KqO2
-        4LCl5SYiQ38smdMWKJRbuQoCE6rw7nvP+RAmbLC1/FjikzzJm/f29HnPOeW9wP8SmjhHF20Cc7R6D6Os
-        juc3aXczN7W7+GptHF+tiRV8TdtWBg37mYSaBGa6JokBZHUiA7o9DJAfAVVxhLHMEdpqW9TtdXJu2Cds
-        QjEUrfmSgVrC+T9As4uByhhmWBnl4k/HbANdMs+uNolhxXXxnGD1cxdA9z/vYKAimoHyaH67YjvfkY5b
-        j6p4wV4tEa7/SgjGHG+4n+oNt/a7cScnrhsPeIA+wwcMpyWg3ikEVRQDyq3MPjpuPari+FIUMpf4wYQ2
-        DB7XvA+Ttethsm4DRxJjbqIqDLryfUG1jQHFVkE+Hbcemi8EOY0H3KYmqtYSoQ9gqn4jWBo+BMutjziS
-        GHNYwx7dbjeLcosgm45bD81O/iF9hrflD927rGNLQwQ8vb0Fppu2scQYc1jDnl8Piy2KSMEhOm49Kj8X
-        RHcXBHDub4bDk8ZImP4lCmbuRLPEGHNYwx7TuQAo2yz4hI5bj3tnRXeGy4LJ8nVEZBPnvnk7zNz9lCXG
-        mMMa9jxUhMBvmaJmOm49DEWenWOaUO4C9f9wAVLDnnF1KBiKRCY6bj1aCkVJ4+oQ9vnOvQObyfP/mCXG
-        898B7DVc8kyk47bBo8rAJ7NfwWQd+QrIuZ99BSTGHNawh/Ra6JjtMFruc3vsxhr2W39cvcj/AMlhDXtG
-        K3wa6JjtMKryiiSLp8cqg2CcvA8T2rfJud9hiTHmsEZ6no6oJBF0zLYYUYqTRsu9Zx5d9yNigaxbliTG
-        HNZGVOIE2r4y6Lwi+WbwmhiIEIyUSziSeFAhhg6ZVzJtWxnskMNLMtlnB38vEIOxRAy9Vzkai8WAueKi
-        mIM80kPbbYe3qh56rlUPnwi9Mdwdq6iAe/niRRkjV4Lvlb4u38t9xyXyHhEd/+8IksMrIZVD6SHXh6aC
-        K4ZgjWoQwpQm0EnXLRDXStdDYEkbSC71gLioB7yk3VOe0p7UsNzml+m6f4cgXb9DcPlQLYoGXhuAAMUA
-        +P/UD35X+2CD/C7kFSZAU34Iy1xpIrxX2Aye0m4Q5XeBx4UuWHW+E9x/NIF7nqlaWGC2p2uXj0DFgCKg
-        rB/8SzlRn8tmWC03g3dJL3HZO+sSPAuI6EUieIEInusENyL65g8d4JrTAcKz7SDIagcm01hK1y4PfqXm
-        TeRZgg8RXC3rBe9iFCWChT1zLlGUunTLI6K5nKggmwhmGYH/vRFczrTBGxmt4JzWCq+nGTbS9UtDIjOn
-        SYgo67JwzqUHcbnqmUsTuBJR1iWKZhJRIuhyug2c01GwFZxOtcBrJw3g+B3LU3T90iCnlf3FJYqiy9nT
-        LnBJRVNbONETBnA4rgf7Y3p4NeUBS/uUBzK6fmm4n+86gqdd1CWKEpd42uddsqJHOcGF1B+m65eBZLBz
-        zWoPF2a3RricoUzn6IQ8idRH2COPUX7793RIuR/OS9bZ0e0vMA883p+Suuum7FowYAAAAABJRU5ErkJg
-        gg==
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABLtJREFUWEft
+        lGtMk1ccxklk+zBwjNG3KGChxXKpSphs2UUiAVm8TAxbItnMRBAwMVk0MWbfTJjzNi/cpghDRSi3VmTU
+        FlylNxBQGfphyZxSoFBu5SqICFTxWc77ljEP4LbClyX+kic5+Z//+T99ztv3dXB4zf8RTexSN10Cc8yw
+        m1Ea4nkNujimTreLV6WL5VVpdvK/pfsXlfr9TEJ1AjNVncSAyJDIQL+bgS6OgTaWgXYnc4Q+syjc3Ovi
+        Wr/PvYGYEdPqPQxq9rz8AzS7GKhjmCFllFsAfX5B6JMdHGuSGNZcH88ZGqgbIOl/2c6gMppBRTSvTbGN
+        t5SeYzfaeP5eXTyD2m/cYcryxYMzvri134O78l0Mbh9YgaY0MYzpIlTtcIcqioFyC7OPnmM32lielBhZ
+        SvwxpgvBePXHmKgJxcTN9ZxqQtnamDYEnXl+UG1loNjCz6Pn2I3ma37W7QMek2PatRiv/gSTtWGw1m+A
+        9dannOo3sDWyR3r0cR5W5WZ+Jj3HbjQ7eIea0nytT/Ufsomt9ZF4fmczphq2siJrUiN7pOe3w0KrYiP/
+        ED3HbtRf8aO78gO59HXheHZ7I6Z+jcKLu9GsyJrUyB7pMV8MRPkm/uf0HLu5f15wd6h8Dcar12GyLoJL
+        37gNL+59wYqsSY3skZ5HiiD8flbQSM+xG2Ohd8eoJtj2/F9xA7XcDTypCoaxUGCm59hNc4Eg6UlVEPt8
+        Z/4DmzDV8Bkrsv77f4D0Gou8E+k5C+KxWvJs+i2YuBkGa13EzFtQF8HWpt+Cx2qJlT6/YEYqxHdGb6xm
+        3/VxwxzfAQP3HSA9I5Xievr8ghlR+WwcqRRPjapX4YkmGGO69/FU/wErsiY1sjdSKX4+rBJF0ucXhWGl
+        MGmkwvfF4+v+GFVL2LSs1BKQGtkbVgkT6HOLSkep6LuBa0IMq4QYrhBxUgkxoBCiXeaTTPcvKtvlWCKT
+        fXnwj3whTCVC9FzlZCoWgtSKC2MOOsixhD63YN7TPvJeWzV0MvjGUNdORSXu5wnnVIxcCb/S3k6/K70n
+        RPJuAT3nP7NKjjeD1IOpQdcHJ9dUDmK1agAhSjP00nWzzHXSUEhKWiEq6oawsBs+0q5Jb2n3mZDsxjfo
+        uf+KVfo+5zUVgzXEVHKtH4GKfgT83Af/q71YL7+HnIIENOQFscqWJuKjgkZ4S7sgyOvEitxOeF3qgOcF
+        MzxzzAb3fIsTPf8fkSj6FYHlfQgo40zFVyxYKbfAt6QHoqKe6ZTwzu+C4HInvHI74HmxAx4XzFj+UzuW
+        ZbXD/Xwb+OfawJw1ldHzX4l/mSXCr7QXYrkFK2U98C0mpt3wKeieSUlMbSk9csxYns2Z8jPbwJwzgfej
+        CW4ZrXg3rQWuKS14J8UYRvvMi0hmSREV21IWzKRckdsBr79SmrEs25aSmJ41gZfRCrf0VrimEsMWuJxu
+        xtunjFj6A6vTtM+8+Ei7ZC+lJKYk5fTVzkppMz3TzJmeNML5RBOcjjfhraMPWTkdfSijfebF81LnEXK1
+        c6Ykpunc1dIpWdNjnOFsNR2mfeYnGY7LzrWFu2e2RLpl2JTKyYXoFFFTpBPRcZu+n1/ORx+EOyTrHWmb
+        1xD+BJK666bDgVEQAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAYxJREFUOE/l
-        kr1OwmAUQElMnF2UYowBREoBAZ/BQR0dSNx8Bt+CuENAYlxAsIWCoPITfQIWB2I0iBBjS1uoTpoYY663
-        8IGi4kAn40lO0nuH0+G7hr+Ji4VJ8qmf5dLDpqesVsioD1/pcctbUt88RbVKVuPjK6t+b1F9xRgsFdDT
-        DrhPerqO2+DKt8GpmVOAOUKzCjhQJiPtkcQwGLvw9EMk9mMI1UKOjAw035UliWG8BXWV4cUnmhOATgkv
-        GKpjqO7MoUdKV4dmRq5jpKs9LdXplLxDEt8xhRtrVPDm2Riq1chKP9Ruc52KNs/IOJL52P2KgYUJMurH
-        HBeq5pgQ/zXK8JKb5hU/zbf8Nu6LyZ6WvgfinSUuAIZHR5mszNLk9expTQkWUygngY1tdV04RJMtsCZF
-        sCZEwDBGxRBJDIMnwQ5O4nNYi44KY9SaEM5JYhgm39nAgw1o0pq8PBDDH3JyYDZ0JZqClzAXvq7gD6ZJ
-        YnyoSKNKRZoV835jiqz0YYo0tmeit0Yy/l8MhnfpLjeUlq/b3QAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAZRJREFUOE/l
+        kstKAlEch4WgdZtyjIixzOPx3jO0qJYthHY9Q28h7ZMsoo2jNup466JRT+CmhURhNhLN1U6tCiLiHzOj
+        IocSnF30wbf5/eHbnONw/EkCPEzSm22W6y+b4QvSoHdbROuvW5E6+QrXSJO+jU30gsQiNfIZrhEInRMI
+        nT1D8NQycNKFQLULfsOKDrisAy7p4CvpgIvqId0yidTIdbgf6sV+DJWtkK+oARJMebplEjknq1iQ31BO
+        ApSXPgLVbttvWOm2/WXd1GdY1NpIsPQW1DbKazt0a4BrT1xjdu/fnYlWi77ZhtnvrDMHnUt6p5lPPa04
+        eJigd9uwnNRkUxI3MooFNYgEPYYEJebJUWYt3X3T8qObk4DlRkRxSeNR7/W8BUMVlvIqLOVU8PCK6eKx
+        AotZBRayMixkZHCnZWA5OUG3THBZ5wdfYjhsRH8LZ4ywdEW3THD1eQOX9LghMhS0gd7CkDktPpu4lV27
+        NzC3d9fw8Mo03RobJik2mWSnwR6JU/TNFq6kuD1z8OCk93/IN+kuN5TFG0dIAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="alertBox2.Text" xml:space="preserve">
-    <value>For unknown reasons, applying specific theme items to another user may result in the current user profile that opened WinPaletter being temporarily influenced by the theme until a logoff and log back on. Following this, you'll observe that the selected user's profile is appropriately themed, whereas the user who initiated WinPaletter retains their previous state and remains unaffected by the theme.</value>
+    <value>Applying theme items to a different user may temporarily affect the current user's profile (the one that launched WinPaletter) until you log off and log back in. After re-logging, the target user's profile will be correctly themed, and the initiating user's profile will return to normal. To prevent this, it’s recommended to run WinPaletter from within the target user profile.</value>
   </data>
   <data name="AlertBox1.Text" xml:space="preserve">
     <value>Certain theme items are shared among all users and are stored in HKEY_LOCAL_MACHINE. Therefore, modifying certain items for one user may impact others, as these shared settings can affect the appearance across multiple user profiles.</value>

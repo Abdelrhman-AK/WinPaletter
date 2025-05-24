@@ -12,7 +12,7 @@ namespace WinPaletter
         private void LogonUI8_Pics_Load(object sender, EventArgs e)
         {
             DialogResult = DialogResult.None;
-            using (LogonUI formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<LogonUI>();
 
             if (Forms.LogonUI7.ID == 0)
                 img0.Checked = true;

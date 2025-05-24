@@ -3,8 +3,14 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// SecureUxTheme Setup Form
+    /// </summary>
     public partial class SecureUxTheme_Setup : Form
     {
+        /// <summary>
+        /// Initialize SecureUxTheme Setup Form
+        /// </summary>
         public SecureUxTheme_Setup()
         {
             InitializeComponent();
@@ -21,8 +27,8 @@ namespace WinPaletter
 
         void LoadStatue()
         {
-            label14.Text = SecureUxTheme.Wrapper.IsSecureUxThemeInstalled ? Program.Lang.Yes : Program.Lang.No;
-            label13.Text = SecureUxTheme.Wrapper.IsSecureUxThemeRunning ? Program.Lang.Yes : Program.Lang.No;
+            label14.Text = SecureUxTheme.Wrapper.IsSecureUxThemeInstalled ? Program.Lang.Strings.General.Yes : Program.Lang.Strings.General.No;
+            label13.Text = SecureUxTheme.Wrapper.IsSecureUxThemeRunning ? Program.Lang.Strings.General.Yes : Program.Lang.Strings.General.No;
             pictureBox9.Image = SecureUxTheme.Wrapper.IsExplorerHooked ? Properties.Resources.on : Properties.Resources.off;
             pictureBox10.Image = SecureUxTheme.Wrapper.IsSystemSettingsHooked ? Properties.Resources.on : Properties.Resources.off;
             pictureBox11.Image = SecureUxTheme.Wrapper.IsLogonUIHooked ? Properties.Resources.on : Properties.Resources.off;
@@ -39,18 +45,18 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
 
-            if (OS.W10 && toggle20.Checked && MsgBox(Program.Lang.SecureUxTheme_HookExplorerWarning, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
+            if (OS.W10 && toggle20.Checked && MsgBox(Program.Lang.Strings.Messages.SecureUxTheme_HookExplorerWarning, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
 
             SecureUxTheme.Wrapper.Install(toggle20.Checked, toggle1.Checked, toggle2.Checked, toggle3.Checked);
             LoadStatue();
 
             if (SecureUxTheme.Wrapper.IsSecureUxThemeInstalled)
             {
-                MsgBox(Program.Lang.SecureUxTheme_Installed, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.SecureUxTheme_Restart);
+                MsgBox(Program.Lang.Strings.Messages.SecureUxTheme_Installed, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.Strings.Messages.SecureUxTheme_Restart);
             }
             else
             {
-                MsgBox(Program.Lang.SecureUxThemeNotInstalled0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.SecureUxThemeNotInstalled1, Program.Lang.CollapseNote, Program.Lang.ExpandNote, Links.SecureUxThemeRepository);
+                MsgBox(Program.Lang.Strings.Messages.SecureUxThemeNotInstalled0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.Messages.SecureUxThemeNotInstalled1, Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Links.SecureUxThemeRepository);
             }
 
             Cursor = Cursors.Default;
@@ -61,7 +67,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
             SecureUxTheme.Wrapper.Uninstall();
             LoadStatue();
-            MsgBox(Program.Lang.SecureUxTheme_Uninstalled, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.SecureUxTheme_Restart);
+            MsgBox(Program.Lang.Strings.Messages.SecureUxTheme_Uninstalled, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.Strings.Messages.SecureUxTheme_Restart);
             Cursor = Cursors.Default;
         }
 

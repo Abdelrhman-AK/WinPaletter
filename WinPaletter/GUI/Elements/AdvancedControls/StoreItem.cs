@@ -27,8 +27,8 @@ namespace WinPaletter.UI.Controllers
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
-        private List<Bitmap> DesignedFor_Badges = new();
+        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
+        private readonly List<Bitmap> DesignedFor_Badges = [];
         private TextureBrush pattern;
 
         public MouseState State = MouseState.None;
@@ -338,8 +338,8 @@ namespace WinPaletter.UI.Controllers
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-            Config.Scheme scheme_tertiary = Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
+            Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+            Scheme scheme_tertiary = Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
             Rectangle rect_outer = new(0, 0, Width - 1, Height - 1);
             Rectangle rect_inner = new(1, 1, Width - 3, Height - 3);
@@ -412,10 +412,10 @@ namespace WinPaletter.UI.Controllers
                 Color circle1_normal_pen_color = circle1_normal_color.CB(0.3f * (Program.Style.DarkMode ? +1f : -1f));
                 Color circle2_normal_pen_color = circle2_normal_color.CB(0.3f * (Program.Style.DarkMode ? +1f : -0.25f));
 
-                using (LinearGradientBrush circle1_lgb = new(Circle1_gradientFix, circle1_normal_color, Color.Transparent, 90f + (alpha / 255f) * 360f))
-                using (LinearGradientBrush circle1_lgb_P = new(Circle1_gradientFix, circle1_normal_pen_color, Color.Transparent, 90f + (alpha / 255f) * 360f))
-                using (LinearGradientBrush circle2_lgb = new(Circle2_gradientFix, Color.Transparent, circle2_normal_color, 90f + (alpha / 255f) * 360f))
-                using (LinearGradientBrush circle2_lgb_P = new(Circle2_gradientFix, Color.Transparent, circle2_normal_pen_color, 90f + (alpha / 255f) * 360f))
+                using (LinearGradientBrush circle1_lgb = new(Circle1_gradientFix, circle1_normal_color, Color.Transparent, 90f + alpha / 255f * 360f))
+                using (LinearGradientBrush circle1_lgb_P = new(Circle1_gradientFix, circle1_normal_pen_color, Color.Transparent, 90f + alpha / 255f * 360f))
+                using (LinearGradientBrush circle2_lgb = new(Circle2_gradientFix, Color.Transparent, circle2_normal_color, 90f + alpha / 255f * 360f))
+                using (LinearGradientBrush circle2_lgb_P = new(Circle2_gradientFix, Color.Transparent, circle2_normal_pen_color, 90f + alpha / 255f * 360f))
                 using (Pen circle1_P = new(circle1_lgb_P, 1.75f))
                 using (Pen circle2_P = new(circle2_lgb_P, 1.75f))
                 using (SolidBrush foreBrush = new(foreColor))
@@ -436,7 +436,7 @@ namespace WinPaletter.UI.Controllers
                         G.DrawImage(Assets.Store.DoneByUser, BadgeRect);
                     }
 
-                    G.DrawString($"{Program.Lang.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
+                    G.DrawString($"{Program.Lang.Strings.General.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
 
                     if (System.IO.File.Exists(URL_ThemeFile))
                     {
@@ -446,7 +446,7 @@ namespace WinPaletter.UI.Controllers
 
                     if (hasUpdate)
                     {
-                        G.DrawString(Program.Lang.NewUpdate, Fonts.Console, verBrush, lowerRect, sf);
+                        G.DrawString(Program.Lang.Strings.Updates.NewUpdate, Fonts.Console, verBrush, lowerRect, sf);
                         G.DrawString(TM.Info.ThemeVersion, Fonts.Console, verBrush, lowerRect, sf_version);
                         G.DrawRoundedRect_LikeW11(scheme_tertiary.Pens.Line_Checked_Hover, rect_inner);
                     }
@@ -467,6 +467,8 @@ namespace WinPaletter.UI.Controllers
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

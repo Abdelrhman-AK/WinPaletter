@@ -136,6 +136,8 @@ namespace WinPaletter.UI.WP
 
                 // Don't use base.OnPaint(e) to avoid doubling graphics bug
                 //// base.OnPaint(e);
+
+
             }
         }
     }

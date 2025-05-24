@@ -217,20 +217,53 @@ namespace WinPaletter
             Form.Opacity = 0.5d;
         }
 
+        /// <summary>
+        /// Enumeration of effects that can be applied to a form using DWM
+        /// </summary>
         public enum FormStyle
         {
+            /// <summary>
+            /// Automatically choose the best effect depending on the OS
+            /// </summary>
             Auto,
+            /// <summary>
+            /// Default effect according to the OS
+            /// </summary>
             Default,
+            /// <summary>
+            /// Mica effect (Windows 11 and later)
+            /// </summary>
             Mica,
+            /// <summary>
+            /// Acrylic effect (Windows 10 and later)
+            /// </summary>
             Acrylic,
+            /// <summary>
+            /// Tabbed effect (Windows 11 and later)
+            /// </summary>
             Tabbed,
+            /// <summary>
+            /// Aero effect (Windows Vista and later)
+            /// </summary>
             Aero,
+            /// <summary>
+            /// Transparent gray effect
+            /// </summary>
             Transparent
         }
 
+        /// <summary>
+        /// Enumeration of mica styles that can be applied to a form using DWM (Windows 11 and later)
+        /// </summary>
         public enum MicaStyle
         {
+            /// <summary>
+            /// Mica effect: Windows desktop image is highly blurred, noised and shown through the window as a background.
+            /// </summary>
             Mica,
+            /// <summary>
+            /// Tabbed effect: Similar to Mica, but colors are highly saturated.
+            /// </summary>
             Tabbed
         }
 

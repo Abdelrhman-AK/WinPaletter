@@ -134,16 +134,6 @@ namespace WinPaletter.UI.WP
                 if (ImageList is not null && i <= ImageList.Images.Count - 1)
                 {
                     img = ImageList.Images[i];
-
-                    if (img is not null)
-                    {
-                        using (Config.Colors_Collection colors = new(img.AverageColor(), default, Program.Style.DarkMode))
-                        {
-                            SelectedColor = colors.Back_Checked;
-                            SelectedColor2 = colors.Back_Checked_Hover;
-                            SideTabeColor = colors.AccentAlt;
-                        }
-                    }
                 }
 
                 if (i == SelectedIndex)
@@ -168,11 +158,11 @@ namespace WinPaletter.UI.WP
 
                     if (!RTL)
                     {
-                        imgRect = new(TabRect.X + 10, (int)Math.Round(TabRect.Y + (TabRect.Height - img.Height) / 2d), img.Width, img.Height);
+                        imgRect = new(TabRect.X + 10, (int)Math.Round(TabRect.Y + (TabRect.Height - img.Height) / 2d) + 1, img.Width, img.Height);
                     }
                     else
                     {
-                        imgRect = new(TabRect.X + TabRect.Width - img.Width - 8, (int)Math.Round(TabRect.Y + (TabRect.Height - img.Height) / 2d), img.Width, img.Height);
+                        imgRect = new(TabRect.X + TabRect.Width - img.Width - 8, (int)Math.Round(TabRect.Y + (TabRect.Height - img.Height) / 2d) + 1, img.Width, img.Height);
                     }
 
                     if (Alignment == TabAlignment.Right | Alignment == TabAlignment.Left)
@@ -238,6 +228,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

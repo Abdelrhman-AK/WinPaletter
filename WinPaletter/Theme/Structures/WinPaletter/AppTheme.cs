@@ -80,6 +80,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(treeView, Settings.Structures.REG_Appearance, "DisabledColor", DisabledColor.ToArgb());
             EditReg(treeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
 
+            // Apply settings to program settings
             {
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = Enabled;

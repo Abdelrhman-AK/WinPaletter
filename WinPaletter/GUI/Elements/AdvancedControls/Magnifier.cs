@@ -17,11 +17,13 @@ namespace WinPaletter.UI.Controllers
 
         #region Helpers
 
+        double DPI = Program.GetWindowsScreenScalingFactor(false);
+
         private Bitmap GetScreen()
         {
             if (!DesignMode)
             {
-                Point mousePosition = Cursor.Position;
+                Point mousePosition = new((int)(Cursor.Position.X * DPI), (int)(Cursor.Position.Y * DPI));
                 Rectangle sourceRectangle = new(mousePosition.X - Width / _zoom, mousePosition.Y - Height / _zoom, Width, Height);
                 Rectangle magnifiedRectangle = new(Width / (_zoom * 2), Height / (_zoom * 2), Width / _zoom, Height / _zoom);
 
@@ -56,6 +58,7 @@ namespace WinPaletter.UI.Controllers
 
                     if (!DesignMode && value)
                     {
+                        DPI = Program.GetWindowsScreenScalingFactor(false);
                         mouseHookProc = MouseHookCallback;
                         mouseHook = SetMouseHook(mouseHookProc);
                     }
@@ -111,7 +114,7 @@ namespace WinPaletter.UI.Controllers
                 Task.Run(() =>
                 {
                     Thread.Sleep(10);
-                    this.Invoke(() => Invalidate());
+                    Invoke(() => Invalidate());
                 }
                 );
             }
@@ -158,6 +161,8 @@ namespace WinPaletter.UI.Controllers
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

@@ -16,7 +16,7 @@ namespace WinPaletter
         }
 
         Thread th;
-        private Icon icon = Properties.Resources.fileextension;
+        private readonly Icon icon = Properties.Resources.fileextension;
 
         private void BackupThemes_List_Load(object sender, EventArgs e)
         {
@@ -31,9 +31,9 @@ namespace WinPaletter
             // Set up columns for the ListView
             listView1.View = View.Details;
             listView1.Columns.Clear();
-            listView1.Columns.Add(Program.Lang.Backup_ThemeName, 150);
-            listView1.Columns.Add(Program.Lang.Backup_FilePath, 400);
-            listView1.Columns.Add(Program.Lang.Backup_CreationDateTime, 150);
+            listView1.Columns.Add(Program.Lang.Strings.General.ThemeName, 150);
+            listView1.Columns.Add(Program.Lang.Strings.General.FilePath, 400);
+            listView1.Columns.Add(Program.Lang.Strings.General.CreationDateTime, 150);
 
             label3.Font = Fonts.ConsoleMedium;
 
@@ -61,34 +61,41 @@ namespace WinPaletter
             if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen"))
                 System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen");
 
-            string[] themes_onThemeApply = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
-            string[] themes_onAspectApply = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
-            string[] themes_onThemeOpen = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
-            string[] themes_onAppOpen = System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime).ToArray();
+            if (!System.IO.Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError"))
+                System.IO.Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError");
 
-            // Create three groups
-            ListViewGroup group1 = new(Program.Lang.Backup_Group_ThemeApply, HorizontalAlignment.Center);
-            ListViewGroup group2 = new(Program.Lang.Backup_Group_AspectApply, HorizontalAlignment.Center);
-            ListViewGroup group3 = new(Program.Lang.Backup_Group_AppOpen, HorizontalAlignment.Center);
-            ListViewGroup group4 = new(Program.Lang.Backup_Group_ThemeOpen, HorizontalAlignment.Center);
+            string[] themes_onThemeApply = [.. System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime)];
+            string[] themes_onAspectApply = [.. System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime)];
+            string[] themes_onThemeOpen = [.. System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime)];
+            string[] themes_onAppOpen = [.. System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime)];
+            string[] themes_onExErrors = [.. System.IO.Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", "*.wpth").OrderByDescending(file => new System.IO.FileInfo(file).CreationTime)];
+
+            // Create groups
+            ListViewGroup group1 = new(Program.Lang.Strings.Backup.Group_ThemeApply, HorizontalAlignment.Center);
+            ListViewGroup group2 = new(Program.Lang.Strings.Backup.Group_AspectApply, HorizontalAlignment.Center);
+            ListViewGroup group3 = new(Program.Lang.Strings.Backup.Group_AppOpen, HorizontalAlignment.Center);
+            ListViewGroup group4 = new(Program.Lang.Strings.Backup.Group_ThemeOpen, HorizontalAlignment.Center);
+            ListViewGroup group5 = new(Program.Lang.Strings.Backup.Group_ThemeExError, HorizontalAlignment.Center);
 
             // Add groups to the ListView
             listView1.Groups.Add(group1);
             listView1.Groups.Add(group2);
             listView1.Groups.Add(group3);
             listView1.Groups.Add(group4);
+            listView1.Groups.Add(group5);
 
             IEnumerable<string> backups = System.IO.Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", System.IO.SearchOption.AllDirectories);
-            label3.Text = backups.Sum(fileInfo => new System.IO.FileInfo(fileInfo).Length).SizeString();
-            label4.Text = $"{backups.Count()} {Program.Lang.Backup_NO}";
+            label3.Text = backups.Sum(fileInfo => new System.IO.FileInfo(fileInfo).Length).ToStringFileSize();
+            label4.Text = $"{backups.Count()} {Program.Lang.Strings.General.BackupsCount}";
 
             Task.Run(() =>
             {
-                // Populate the ListView
+                // SetFormValues the ListView
                 AddBackups(listView1, imageList1, themes_onThemeApply, group1);
                 AddBackups(listView1, imageList1, themes_onAspectApply, group2);
                 AddBackups(listView1, imageList1, themes_onAppOpen, group3);
                 AddBackups(listView1, imageList1, themes_onThemeOpen, group4);
+                AddBackups(listView1, imageList1, themes_onExErrors, group5);
 
                 // Resize the columns
                 listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -125,7 +132,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                if (MsgBox(Program.Lang.Backup_RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MsgBox(Program.Lang.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.TM = new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text);
                     Program.TM_Original = Program.TM.Clone() as Theme.Manager;
@@ -162,7 +169,13 @@ namespace WinPaletter
                     {
                         Cursor = Cursors.AppStarting;
                         Program.Animator.HideSync(windowsDesktop1);
-                        windowsDesktop1.LoadFromTM(new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, true, true));
+
+                        using (Theme.Manager TMx = new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, true, true))
+                        {
+                            windowsDesktop1.LoadFromTM(TMx);
+                            windowsDesktop1.BackgroundImage = Program.FetchSuitableWallpaper(TMx, Program.WindowStyle);
+                        }
+
                         Program.Animator.ShowSync(windowsDesktop1);
                         Cursor = Cursors.Default;
                     });
@@ -187,7 +200,7 @@ namespace WinPaletter
             {
                 if (System.IO.File.Exists(listView1.SelectedItems[0].SubItems[1].Text))
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -202,7 +215,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                if (MsgBox(Program.Lang.Backup_DeleteQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MsgBox(Program.Lang.Strings.Backup.DeleteQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.Animator.HideSync(windowsDesktop1);
                     System.IO.File.Delete(listView1.SelectedItems[0].SubItems[1].Text);
@@ -239,13 +252,14 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Backup_DeleteAllQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Backup.DeleteAllQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Program.Animator.HideSync(windowsDesktop1);
                 System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", true);
                 System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", true);
                 System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", true);
                 System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", true);
+                System.IO.Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", true);
                 PopulateThemesBackups();
             }
 
@@ -273,7 +287,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                if (MsgBox(Program.Lang.Backup_RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MsgBox(Program.Lang.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.TM = new(Theme.Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, false, true);
                     Program.TM_Original = Program.TM.Clone() as Theme.Manager;

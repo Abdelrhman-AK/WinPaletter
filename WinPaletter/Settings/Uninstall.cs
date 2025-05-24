@@ -8,8 +8,14 @@ using WinPaletter.Theme;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// Form for uninstalling the application
+    /// </summary>
     public partial class Uninstall
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Uninstall"/> class.
+        /// </summary>
         public Uninstall()
         {
             InitializeComponent();
@@ -68,6 +74,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
+            // Unassociate file extensions
             if (CheckBox1.Checked)
             {
                 Program.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
@@ -75,6 +82,7 @@ namespace WinPaletter
                 Program.DeleteFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack");
             }
 
+            // Delete the registry keys
             if (CheckBox3.Checked)
             {
                 try { Registry.CurrentUser.DeleteSubKeyTree(@"Software\WinPaletter", false); }
@@ -82,6 +90,7 @@ namespace WinPaletter
                 finally { Program.DeleteWinPaletteReg = true; }
             }
 
+            // Restore the patched Windows startup sound if it was changed in imageres.dll
             if (checkBox4.Checked)
             {
                 try
@@ -102,6 +111,7 @@ namespace WinPaletter
                 catch { } // Ignore restoring the sound if it fails
             }
 
+            // Restore the cursors
             if (checkBox5.Checked)
             {
                 if (!OS.WXP)
@@ -120,8 +130,10 @@ namespace WinPaletter
                 }
             }
 
+            // Uninstall the system events sounds service
             Forms.SysEventsSndsInstaller.Uninstall();
 
+            // Delete the folders
             if (CheckBox2.Checked)
             {
                 if (System.IO.Directory.Exists(SysPaths.appData))
@@ -136,6 +148,9 @@ namespace WinPaletter
                     catch { } // Ignore deleting the folder if it fails
                 }
             }
+
+            // Restore system restore frequency
+            DelValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "SystemRestorePointCreationFrequency");
 
             string guidText = Application.ProductName;
 
@@ -185,24 +200,34 @@ namespace WinPaletter
             Forms.BackupThemes_List.ShowDialog();
         }
 
+        /// <summary>
+        /// Restore a theme from a WinPaletter theme file before uninstalling
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button10_Click(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Filter_OpenWinPaletterTheme })
+            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
                         TMx.Save(Theme.Manager.Source.Registry);
 
                         if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 
-                        MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MsgBox(Program.Lang.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Restore the default theme before uninstalling
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button11_Click(object sender, EventArgs e)
         {
             using (Manager _Def = Theme.Default.Get())
@@ -211,13 +236,18 @@ namespace WinPaletter
 
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 
-                MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Lang.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
+        /// <summary>
+        /// Open the rescue tools form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button12_Click(object sender, EventArgs e)
         {
-            Forms.RescueTools.ShowDialog();
+            Forms.SOS.ShowDialog();
         }
 
         private void button13_Click(object sender, EventArgs e)
@@ -261,6 +291,11 @@ namespace WinPaletter
             button3.PerformClick();
         }
 
+        /// <summary>
+        /// Restore correct metrics and fonts to fix issue of wrong metrics and fonts with a high DPI.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button17_Click(object sender, EventArgs e)
         {
             using (Manager _Def = Theme.Default.Get())
@@ -268,11 +303,12 @@ namespace WinPaletter
                 _Def.MetricsFonts.Enabled = true;
                 _Def.MetricsFonts.Apply();
 
-                if (MsgBox(Program.Lang.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+                if (MsgBox(Program.Lang.Strings.Messages.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.Messages.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
                 {
                     Forms.MainForm.LoggingOff = false;
 
                     IntPtr intPtr = IntPtr.Zero;
+                    // Disable file system redirection to prevent the logoff.exe file from being redirected to SysWOW64
                     Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                     if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
                     {
@@ -281,12 +317,17 @@ namespace WinPaletter
                     }
                     else
                     {
-                        MsgBox(string.Format(Program.Lang.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MsgBox(string.Format(Program.Lang.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Apply correct metrics and fonts to fix issue of wrong metrics and fonts with a high DPI.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button18_Click(object sender, EventArgs e)
         {
             Program.TM.MetricsFonts.Enabled = false;
@@ -295,9 +336,14 @@ namespace WinPaletter
             Program.TM_FirstTime.MetricsFonts.Enabled = false;
             Program.TM_Original.MetricsFonts.Enabled = false;
 
-            MsgBox(Program.Lang.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Lang.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// Open the display settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button19_Click(object sender, EventArgs e)
         {
             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
@@ -317,6 +363,22 @@ namespace WinPaletter
         private void button7_Click(object sender, EventArgs e)
         {
             tablessControl1.SelectedIndex = 2;
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if (System.IO.File.Exists($"{SysPaths.System32}\\restore\\rstrui.exe"))
+            {
+                Process.Start($"{SysPaths.System32}\\restore\\rstrui.exe");
+            }
+            else if (System.IO.File.Exists($"{SysPaths.System32}\\rstrui.exe"))
+            {
+                Process.Start($"{SysPaths.System32}\\rstrui.exe");
+            }
+            else
+            {
+                Process.Start("control", "sysdm.cpl,,4");
+            }
         }
     }
 }

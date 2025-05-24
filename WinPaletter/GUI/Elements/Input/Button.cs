@@ -32,14 +32,14 @@ namespace WinPaletter.UI.WP
 
             Menu.ItemClicked += SplitMenuStrip_ItemClicked;
 
-            Menu.ItemHeight = Height;
+            Menu.ItemHeight = 24;
         }
 
         #region Variables
-        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this is not null && Visible && Parent is not null && Parent.Visible && FindForm() is not null && FindForm().Visible;
 
-        public UI.WP.ContextMenuStrip Menu = new() { ShowImageMargin = true, AllowTransparency = true };
-        private int MenuSplitterWidth = 15;
+        public ContextMenuStrip Menu = new() { ShowImageMargin = true, AllowTransparency = true };
+        private readonly int MenuSplitterWidth = 15;
         Rectangle MenuSplitterRectangle;
         bool isMouseOverMenuSplitter = false;
 
@@ -57,7 +57,7 @@ namespace WinPaletter.UI.WP
             Down
         }
 
-        private bool _ripple = true;
+        private readonly bool _ripple = true;
         private bool ForceUpdateImageGlyph = false;
 
         #endregion
@@ -101,20 +101,13 @@ namespace WinPaletter.UI.WP
             {
                 if (!DesignMode)
                 {
-                    switch (State)
+                    return State switch
                     {
-                        case MouseState.None:
-                            return Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert();
-
-                        case MouseState.Over:
-                            return _imageGlyphOver;
-
-                        case MouseState.Down:
-                            return _imageGlyphDown;
-
-                        default:
-                            return Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert();
-                    }
+                        MouseState.None => Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert(),
+                        MouseState.Over => _imageGlyphOver,
+                        MouseState.Down => _imageGlyphDown,
+                        _ => Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert(),
+                    };
                 }
                 else
                 {
@@ -125,22 +118,25 @@ namespace WinPaletter.UI.WP
             {
                 if (_imageGlyphUnmodified != value || ForceUpdateImageGlyph)
                 {
-                    _imageGlyphUnmodified = value;
-
-                    if (_imageGlyphEnabled) _color = Colorize();
-
-                    using (Config.Colors_Collection colors = new(_customColor, _customColor, Program.Style.DarkMode))
-                    {
-                        _imageGlyph = value;
-                        _imageGlyphOver = ((Bitmap)value)?.Tint(colors.ForeColor_Accent);
-                        _imageGlyphDown = ((Bitmap)value)?.Tint(colors.ForeColor_Accent);
-                    }
-
+                    UpdateImageGlyph(value);
                     Invalidate();
                 }
             }
         }
 
+        private void UpdateImageGlyph(Image glyph)
+        {
+            _imageGlyphUnmodified = glyph;
+
+            if (_imageGlyphEnabled) _color = Colorize();
+
+            using (Colors_Collection colors = new(_customColor, _customColor, Program.Style.DarkMode))
+            {
+                _imageGlyph = glyph;
+                _imageGlyphOver = ((Bitmap)glyph)?.Tint(colors.ForeColor_Accent);
+                _imageGlyphDown = ((Bitmap)glyph)?.Tint(colors.ForeColor_Accent);
+            }
+        }
 
         private Color _color;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -171,6 +167,7 @@ namespace WinPaletter.UI.WP
                     _customColor = value;
                     _color = Colorize();
                     _lineColor = LineColor(value);
+                    UpdateImageGlyph(_imageGlyphUnmodified);
                     Invalidate();
                 }
             }
@@ -229,8 +226,8 @@ namespace WinPaletter.UI.WP
                     }
             }
 
-            using (Config.Colors_Collection imageColors = new(imageColor, imageColor, Program.Style.DarkMode))
-            using (Config.Colors_Collection accentColors = new(AccentColor, AccentColor, Program.Style.DarkMode))
+            using (Colors_Collection imageColors = new(imageColor, imageColor, Program.Style.DarkMode))
+            using (Colors_Collection accentColors = new(AccentColor, AccentColor, Program.Style.DarkMode))
             {
                 switch (State)
                 {
@@ -382,9 +379,9 @@ namespace WinPaletter.UI.WP
             AlwaysCustomColor
         }
 
-        private Config.Scheme scheme1 => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-        private Config.Scheme scheme2 => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
-        private Config.Scheme scheme3 => Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
+        private Scheme scheme1 => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
+        private Scheme scheme2 => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
+        private Scheme scheme3 => Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
 
         private bool _imageGlyphEnabled = false;
@@ -483,28 +480,30 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            State = MouseState.Over;
+            State = ClientRectangle.Contains(e.Location) ? MouseState.Over : MouseState.None;
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus && State == MouseState.Over ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus ? Math.Max(Width, Height) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus && State == MouseState.Over ? Math.Max(Width, Height) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 }
             }
             else
             {
-                alpha = ContainsFocus ? 255 : 0;
-                HoverSize = ContainsFocus ? Math.Max(Width, Height) : 0;
+                alpha = ContainsFocus && State == MouseState.Over ? 255 : 0;
+                HoverSize = ContainsFocus && State == MouseState.Over ? Math.Max(Width, Height) : 0;
             }
 
             base.OnMouseUp(e);
         }
+
         #endregion
 
         #region OnKey
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             State = MouseState.Down;
@@ -541,6 +540,7 @@ namespace WinPaletter.UI.WP
 
             base.OnKeyUp(e);
         }
+
         #endregion
 
         public delegate void ItemClickedEventHandler(object sender, ToolStripItemClickedEventArgs e);
@@ -558,7 +558,7 @@ namespace WinPaletter.UI.WP
             {
                 if (MenuSplitterRectangle.Contains(PointToClient(MousePosition)))
                 {
-                    Menu.Show(this, new Point(0, this.Height), ToolStripDropDownDirection.Default);
+                    Menu.Show(this, new Point(15, Height));
                 }
                 else
                 {
@@ -584,17 +584,16 @@ namespace WinPaletter.UI.WP
             base.OnLeave(e);
         }
 
-        protected override async void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             isMouseOverMenuSplitter = Menu.Items.Count > 0 && MenuSplitterRectangle.Contains(PointToClient(MousePosition));
 
             if (CanAnimate && _ripple && State != MouseState.None)
             {
-                hoverPosition = this.PointToClient(MousePosition);
+                hoverPosition = e.Location;
                 hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
                 hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
 
-                await Task.Delay(10);
                 Invalidate();
             }
 
@@ -789,7 +788,7 @@ namespace WinPaletter.UI.WP
                     {
                         CenterPoint = hoverPosition,
                         CenterColor = Color.FromArgb(Math.Max(100, alpha), _rippleColor),
-                        SurroundColors = new Color[] { Color.Transparent }
+                        SurroundColors = [Color.Transparent]
                     };
 
                     G.FillEllipse(pgb, hoverRect);
@@ -941,6 +940,8 @@ namespace WinPaletter.UI.WP
                             textRect.Y = space.Y + 1;
                             textRect.Width = TextSize.Width;
                             textRect.Height = space.Height;
+
+                            imageRect.Y++;
                         }
 
                         else if (TextImageRelation == TextImageRelation.TextBeforeImage)
@@ -981,6 +982,8 @@ namespace WinPaletter.UI.WP
 
             // Never use base.OnPaint(e) for buttons, it will overwrite the previous graphics
             // base.OnPaint(e);
+
+
         }
 
         private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)
@@ -991,38 +994,19 @@ namespace WinPaletter.UI.WP
             int CenterWidth = (int)Math.Round(CenterWidthD, 2);
             int CenterHeight = (int)Math.Round(CenterHeightD, 2);
 
-            switch (contentAlignment)
+            return contentAlignment switch
             {
-                case ContentAlignment.TopLeft:
-                    return new(rect.X, rect.Y, size.Width, size.Height);
-
-                case ContentAlignment.TopRight:
-                    return new(rect.Right - size.Width, rect.Y, size.Width, size.Height);
-
-                case ContentAlignment.TopCenter:
-                    return new(CenterWidth, rect.Y, size.Width, size.Height);
-
-                case ContentAlignment.MiddleLeft:
-                    return new(rect.X, CenterHeight, size.Width, size.Height);
-
-                case ContentAlignment.MiddleCenter:
-                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
-
-                case ContentAlignment.MiddleRight:
-                    return new(rect.Right - size.Width, CenterHeight, size.Width, size.Height);
-
-                case ContentAlignment.BottomLeft:
-                    return new(rect.X, rect.Bottom - size.Height, size.Width, size.Height);
-
-                case ContentAlignment.BottomCenter:
-                    return new(CenterWidth, rect.Bottom - size.Height, size.Width, size.Height);
-
-                case ContentAlignment.BottomRight:
-                    return new(rect.Right - size.Width, rect.Bottom - size.Height, size.Width, size.Height);
-
-                default:
-                    return new(CenterWidth, CenterHeight, size.Width, size.Height);
-            }
+                ContentAlignment.TopLeft => new(rect.X, rect.Y, size.Width, size.Height),
+                ContentAlignment.TopRight => new(rect.Right - size.Width, rect.Y, size.Width, size.Height),
+                ContentAlignment.TopCenter => new(CenterWidth, rect.Y, size.Width, size.Height),
+                ContentAlignment.MiddleLeft => new(rect.X, CenterHeight, size.Width, size.Height),
+                ContentAlignment.MiddleCenter => new(CenterWidth, CenterHeight, size.Width, size.Height),
+                ContentAlignment.MiddleRight => new(rect.Right - size.Width, CenterHeight, size.Width, size.Height),
+                ContentAlignment.BottomLeft => new(rect.X, rect.Bottom - size.Height, size.Width, size.Height),
+                ContentAlignment.BottomCenter => new(CenterWidth, rect.Bottom - size.Height, size.Width, size.Height),
+                ContentAlignment.BottomRight => new(rect.Right - size.Width, rect.Bottom - size.Height, size.Width, size.Height),
+                _ => new(CenterWidth, CenterHeight, size.Width, size.Height),
+            };
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace libmsstyle
+﻿namespace libmsstyle
 {
     public enum Platform
     {
@@ -17,23 +14,16 @@ namespace libmsstyle
     {
         public static string ToDisplayString(this Platform p)
         {
-            switch (p)
+            return p switch
             {
-                case Platform.Vista:
-                    return "Windows Vista";
-                case Platform.Win7:
-                    return "Windows 7";
-                case Platform.Win8:
-                    return "Windows 8";
-                case Platform.Win81:
-                    return "Windows 8.1";
-                case Platform.Win10:
-                    return "Windows 10";
-                case Platform.Win11:
-                    return "Windows 11";
-                default:
-                    return "Unknown";
-            }
+                Platform.Vista => "Windows Vista",
+                Platform.Win7 => "Windows 7",
+                Platform.Win8 => "Windows 8",
+                Platform.Win81 => "Windows 8.1",
+                Platform.Win10 => "Windows 10",
+                Platform.Win11 => "Windows 11",
+                _ => "Unknown",
+            };
         }
     }
 }

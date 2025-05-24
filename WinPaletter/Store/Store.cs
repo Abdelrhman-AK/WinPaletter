@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -14,20 +12,26 @@ using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// WinPaletter Store form
+    /// </summary>
     public partial class Store
     {
         #region Variables
         private bool StartedAsOnlineOrOffline = true;
         private bool FinishedLoadingInitialTMs;
-        private Dictionary<string, Theme.Manager> TMList = new();
+        private readonly Dictionary<string, Manager> TMList = [];
 
         private readonly int w = 365;
         private readonly int h = 150;
 
-        public UI.Controllers.StoreItem selectedItem;
+        /// <summary>
+        /// The selected store item
+        /// </summary>
+        public StoreItem selectedItem;
 
         private bool _Shown = false;
-        private readonly List<UI.Controllers.CursorControl> AnimateList = new();
+        private readonly List<CursorControl> AnimateList = [];
         private float Angle = 180f;
         private readonly float Increment = 5f;
         private int Cycles = 0;
@@ -36,6 +40,9 @@ namespace WinPaletter
         private bool ApplyOrEditToggle = true;
         private Settings.Structures.Appearance oldAppearance;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Store"/> class.
+        /// </summary>
         public Store()
         {
             InitializeComponent();
@@ -44,7 +51,11 @@ namespace WinPaletter
 
         #region Preview Methods
 
-        public void Adjust_Preview(Theme.Manager TM)
+        /// <summary>
+        /// Adjusts the preview of the store form with the specified theme manager.
+        /// </summary>
+        /// <param name="TM"></param>
+        public void Adjust_Preview(Manager TM)
         {
             windowsDesktop1.WindowStyle = Program.WindowStyle;
             windowsDesktop1.BackgroundImage = Program.FetchSuitableWallpaper(TM, Program.WindowStyle);
@@ -54,6 +65,12 @@ namespace WinPaletter
             retroDesktopColors1.LoadMetrics(TM);
         }
 
+        /// <summary>
+        /// Apply Command Prompt preview with the specified console settings.
+        /// </summary>
+        /// <param name="CMD"></param>
+        /// <param name="Console"></param>
+        /// <param name="PS"></param>
         public void ApplyCMDPreview(UI.Simulation.WinCMD CMD, Theme.Structures.Console Console, bool PS)
         {
             CMD.CMD_ColorTable00 = Console.ColorTable00;
@@ -79,7 +96,7 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                Font temp = Font.FromLogFont(new NativeMethods.GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
+                Font temp = Font.FromLogFont(new GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
                 CMD.Font = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
             }
 
@@ -159,7 +176,11 @@ namespace WinPaletter
             CMD.Refresh();
         }
 
-        public void LoadCursorsFromTM(Theme.Manager TM)
+        /// <summary>
+        /// Load cursors preview from the specified theme manager.
+        /// </summary>
+        /// <param name="TM"></param>
+        public void LoadCursorsFromTM(Manager TM)
         {
             CursorTM_to_Cursor(Arrow, TM.Cursors.Cursor_Arrow);
             CursorTM_to_Cursor(Help, TM.Cursors.Cursor_Help);
@@ -179,7 +200,7 @@ namespace WinPaletter
             CursorTM_to_Cursor(IBeam, TM.Cursors.Cursor_IBeam);
             CursorTM_to_Cursor(Cross, TM.Cursors.Cursor_Cross);
 
-            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls)
+            foreach (CursorControl i in Cursors_Container.Controls)
             {
                 i.Prop_Scale = TM.Cursors.Size / 32f;
                 i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
@@ -188,7 +209,12 @@ namespace WinPaletter
             }
         }
 
-        public void CursorTM_to_Cursor(UI.Controllers.CursorControl CursorControl, Theme.Structures.Cursor Cursor)
+        /// <summary>
+        /// Converts the specified theme manager cursor to the specified cursor control.
+        /// </summary>
+        /// <param name="CursorControl"></param>
+        /// <param name="Cursor"></param>
+        public void CursorTM_to_Cursor(CursorControl CursorControl, Theme.Structures.Cursor Cursor)
         {
             CursorControl.Prop_ArrowStyle = Cursor.ArrowStyle;
             CursorControl.Prop_CircleStyle = Cursor.CircleStyle;
@@ -254,6 +280,7 @@ namespace WinPaletter
 
             this.LoadLanguage();
             ApplyStyle(this, true);
+            this.DropEffect(default, true, DWM.FormStyle.Acrylic);
 
             ThemesFetcher.RunWorkerAsync();
 
@@ -261,8 +288,6 @@ namespace WinPaletter
 
             Apply_btn.Image = Forms.Home.apply_btn.Image;
             RestartExplorer.Image = Forms.Home.restartExplorer_btn.Image;
-
-            windowsDesktop1.BackgroundImage = Program.Wallpaper;
 
             Status_lbl.Font = Fonts.ConsoleMedium;
             themeSize_lbl.Font = Fonts.ConsoleLarge;
@@ -284,7 +309,8 @@ namespace WinPaletter
             Program.Settings.Appearance = new();
             Program.Settings.Appearance.Load();
 
-            GetRoundedCorners();
+            // Reapply style to forms to prevent conflict with an open store theme
+            SetRoundedCorners();
             GetDarkMode();
             ApplyStyle(this, true);
             Program.Settings.Appearance.CustomColors = oldAppearance.CustomColors;
@@ -303,14 +329,14 @@ namespace WinPaletter
             foreach (Manager TMx in TMList.Values) TMx?.Dispose();
             TMList.Clear();
             selectedItem?.Dispose();
-            foreach (UI.Controllers.CursorControl i in AnimateList) i?.Dispose();
+            foreach (CursorControl i in AnimateList) i?.Dispose();
             AnimateList.Clear();
             DM?.Dispose();
         }
 
         private void Store_ParentChanged(object sender, EventArgs e)
         {
-            if (this.Parent != null && Parent is TabPage)
+            if (Parent != null && Parent is TabPage)
             {
                 pin_button.Visible = false;
             }
@@ -323,43 +349,42 @@ namespace WinPaletter
         #endregion
 
         #region Backgroundworkers to load Store themes managers
-        public void OnlineMode()
+
+        /// <summary>
+        /// Fetches themes from the online store.
+        /// </summary>
+        private void OnlineMode()
         {
+            // Flush DNS cache to ensure no outdated records are used
             Dnsapi.DnsFlushResolverCache();
 
-            List<string> response = new();
-            response.Clear();
-            List<string> repos_list = new();
-            repos_list.Clear();
-            List<string> items = new();
-            items.Clear();
+            // Initialize empty lists for storing responses, repository URLs, theme items, and theme data
+            List<string> response = [];
+            List<string> repos_list = [];
+            List<string> items = [];
+            List<ThemeData> allThemes = []; // Store all themes to be process later
 
-            // Check by Ping if repos DB URL is accessible or not
+            // Ping the online repositories to check their availability
             foreach (string DB in Program.Settings.Store.Online_Repositories)
             {
-                string var = string.Empty;
+                string repoUrl = DB.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? DB : $"https://{DB}";
+                Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.Ping, repoUrl));
 
-                if (!DB.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-                    var = $"https://{DB}";
-                else
-                    var = DB;
-
-                Status_lbl.SetText(string.Format(Program.Lang.Store_Ping, var));
-
-                if (Program.Ping(var))
+                // If repository is reachable, add it to the list
+                if (Program.Ping(repoUrl))
                 {
-                    repos_list.Add(var);
+                    repos_list.Add(repoUrl);
                 }
                 else
                 {
-                    Status_lbl.SetText(string.Format(Program.Lang.Store_PingFailed, var));
+                    Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.PingFailed, repoUrl));
                 }
             }
 
-            // Loop through all valid repos DBs
+            // Iterate through each reachable repository
             foreach (string DB in repos_list)
             {
-                // Try to generate a folder name dependent on the URL
+                // Generate a folder name based on the repository URL
                 string reposName;
                 if (DB.ToUpper().Contains("GITHUB.COM"))
                 {
@@ -372,139 +397,256 @@ namespace WinPaletter
                     reposName = string.Join("_", DB.Replace("https://", string.Empty).Replace("http://", string.Empty).Split(System.IO.Path.GetInvalidFileNameChars()));
                 }
 
-                // Get text of the DB from URL
-                Status_lbl.SetText(string.Format(Program.Lang.Store_Accessing, DB));
+                // Access the repository and fetch the theme data
                 response.Clear();
-                response = DM.ReadString(DB).Split('\n').ToList();
+                response = [.. DM.ReadString(DB).Split('\n')];
                 items.Clear();
 
-                // Add valid lines (Correct format) in a themes list
+                // Filter valid theme items based on a certain format
                 foreach (string item in response)
                 {
-                    bool valid = true;
-                    if (item.Contains("|") && item.Split('|').Count() >= 3)
+                    // Check if the item is valid and if it contains theme data
+                    if (item.Contains("|") && item.Split('|').Length >= 3 && item.Split('|').All(x => !string.IsNullOrWhiteSpace(x)))
                     {
-                        foreach (string x in item.Split('|'))
-                        {
-                            if (string.IsNullOrWhiteSpace(x))
-                            {
-                                valid = false;
-                                break;
-                            }
-                        }
+                        items.Add(item);
                     }
-                    else
-                    {
-                        valid = false;
-                    }
-
-                    if (valid) items.Add(item);
                 }
 
-                ThemesFetcher.ReportProgress(0);
-                BeginInvoke(() => ProgressBar1.Visible = true);
-
-                int i = 0;
-                int allProgress = items.Count * 2;
-
-                // Loop through valid lines from the themes list
+                // Collect theme data into a list for processing later
                 foreach (string item in items)
                 {
-                    string[] item_splitted = item.Split('|');
-
-                    string MD5_ThemeFile = item_splitted[0].ToUpper();
-                    string MD5_PackFile = item_splitted[1].ToUpper();
-                    string URL_ThemeFile = item_splitted[2];
-                    string URL_PackFile = item_splitted.Count() == 4 ? item_splitted[3] : string.Empty;
-
-                    // Create a folder inside AppData folder
-                    string temp = URL_ThemeFile.Replace("?raw=true", string.Empty);
-                    string FileName = temp.Split('/').Last();
-                    temp = temp.Replace($"/{FileName}", string.Empty);
-                    string FolderName = temp.Split('/').Last();
-                    string Dir = SysPaths.StoreCache;
-                    if (!string.IsNullOrWhiteSpace(FolderName)) Dir += $@"\{reposName}\{FolderName}";
-                    if (!System.IO.Directory.Exists(Dir)) System.IO.Directory.CreateDirectory(Dir);
-
-                    Status_lbl.SetText(string.Empty);
-
-                    // Download the theme (*.wpth)
-                    if (System.IO.File.Exists($@"{Dir}\{FileName}"))
+                    string[] itemDetails = item.Split('|');
+                    allThemes.Add(new ThemeData
                     {
-                        // If it exists, check MD5, if it is changed, redownload the theme
-                        if ((CalculateMD5($@"{Dir}\{FileName}") ?? string.Empty) != (MD5_ThemeFile ?? string.Empty))
-                        {
-                            System.IO.File.Delete($@"{Dir}\{FileName}");
-                            Status_lbl.SetText(string.Format(Program.Lang.Store_UpdateTheme, FileName, URL_ThemeFile));
-                            try
-                            {
-                                DM.DownloadFile(URL_ThemeFile, $"{Dir}\\{FileName}");
-                            }
-                            catch { } // Ignore a theme couldn't be downloaded
-                        }
-                    }
-                    else
-                    {
-                        Status_lbl.SetText(string.Format(Program.Lang.Store_DownloadTheme, FileName, URL_ThemeFile));
-                        try
-                        {
-                            DM.DownloadFile(URL_ThemeFile, $"{Dir}\\{FileName}");
-                        }
-                        catch { } // Ignore a theme couldn't be downloaded
-                    }
-
-                    i += 1;
-                    if (allProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
-
-                    // Convert themes managers into StoreItems, and exclude the old formats of OldFormat
-                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && Manager.GetEdition($@"{Dir}\{FileName}") == Manager.Editions.JSON)
-                    {
-                        try
-                        {
-                            Status_lbl.SetText(string.Format(Program.Lang.Store_LoadingTheme, FileName));
-
-                            using (Manager TM = new(Manager.Source.File, $"{Dir}\\{FileName}", true, true))
-                            {
-                                StoreItem ctrl = new()
-                                {
-                                    FileName = $@"{Dir}\{FileName}",
-                                    TM = TM,
-                                    MD5_ThemeFile = MD5_ThemeFile,
-                                    MD5_PackFile = MD5_PackFile,
-                                    DoneByWinPaletter = (DB.ToUpper() ?? string.Empty) == (Links.Store_MainDB.ToUpper() ?? string.Empty),
-                                    Size = new(w, h),
-                                    URL_ThemeFile = URL_ThemeFile,
-                                    URL_PackFile = URL_PackFile
-                                };
-
-                                if (ctrl.DoneByWinPaletter) ctrl.TM.Info.Author = Application.ProductName;
-
-                                ctrl.Click += StoreItem_Clicked;
-                                ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
-
-                                BeginInvoke(new Action(() => store_container.Controls.Add(ctrl)));
-                            }
-                        }
-                        catch (Exception) { } // Ignore a theme couldn't be loaded as a store item
-                    }
-
-                    Status_lbl.SetText(string.Empty);
-
-                    i += 1;
-
-                    if (allProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                        URL_ThemeFile = itemDetails[2],
+                        URL_PackFile = itemDetails.Length == 4 ? itemDetails[3] : string.Empty,
+                        MD5_ThemeFile = itemDetails[0].ToUpper(),
+                        MD5_PackFile = itemDetails[1].ToUpper(),
+                        ReposName = reposName,
+                        DB = DB
+                    });
                 }
-
-                // Finalizing
-                BeginInvoke(() => ProgressBar1.Visible = false);
-
-                TMList.Clear();
             }
 
+            // Now process all themes collected from all repositories
+            ThemesFetcher.ReportProgress(0);
+            BeginInvoke(() => ProgressBar1.Visible = true);
+
+            int i = 0;
+            int totalProgress = allThemes.Count;
+
+            // Loop through the collected theme data
+            foreach (ThemeData theme in allThemes)
+            {
+                Status_lbl.SetText(string.Empty);
+
+                // Create a folder for storing the theme
+                if (!System.IO.Directory.Exists(theme.FolderPath)) System.IO.Directory.CreateDirectory(theme.FolderPath);
+
+                string fileName = theme.FileName;
+
+                // Download the theme file if it doesn't exist or if MD5 mismatch occurs
+                DownloadThemeFile(theme);
+
+                // Create StoreItem if the theme is valid and of correct format
+                if (System.IO.File.Exists(theme.FullPath) && Manager.GetEdition(theme.FullPath) == Manager.Editions.JSON)
+                {
+                    AddThemeToStore(theme);
+                }
+
+                // Update progress bar
+                i++;
+                if (totalProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)totalProgress * 100d));
+            }
+
+            // Hide progress bar when done
+            BeginInvoke(() => ProgressBar1.Visible = false);
+
+            // Mark the process as finished
             FinishedLoadingInitialTMs = true;
         }
 
-        public void OfflineMode()
+        /// <summary>
+        /// Represents the theme data to be processed later.
+        /// </summary>
+        private class ThemeData
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ThemeData"/> class.
+            /// </summary>
+            public ThemeData()
+            {
+
+            }
+
+            /// <summary>
+            /// MD5 hash of the theme file
+            /// </summary>
+            public string MD5_ThemeFile { get; set; }
+
+            /// <summary>
+            /// MD5 hash of the pack file
+            /// </summary>
+            public string MD5_PackFile { get; set; }
+
+            /// <summary>
+            /// URL of the theme file
+            /// </summary>
+            public string URL_ThemeFile
+            {
+                get { return url_themeFile; }
+                set
+                {
+                    if (value != url_themeFile)
+                    {
+                        url_themeFile = value;
+                        fileName = value.Replace("?raw=true", string.Empty).Split('/').Last();
+                        dir = ValidFolderPath();
+                    }
+                }
+            }
+            private string url_themeFile;
+
+            /// <summary>
+            /// URL of the pack file
+            /// </summary>
+            public string URL_PackFile { get; set; }
+
+            /// <summary>
+            /// Name of the repository
+            /// </summary>
+            public string ReposName
+            {
+                get { return reposName; }
+                set
+                {
+                    if (value != reposName)
+                    {
+                        reposName = value;
+                        dir = ValidFolderPath();
+                    }
+                }
+            }
+            private string reposName;
+
+            /// <summary>
+            /// URL of the repository
+            /// </summary>
+            public string DB { get; set; }
+
+            /// <summary>
+            /// Returns the correct file name from the URL.
+            /// </summary>
+            public string FileName => fileName;
+            private string fileName;
+
+            /// <summary>
+            /// Returns the correct folder path for storing the theme file.
+            /// </summary>
+            public string FolderPath => dir;
+            private string dir;
+
+            /// <summary>
+            /// Returns the full path of the theme file.
+            /// </summary>
+            public string FullPath => $"{FolderPath}\\{FileName}";
+
+            /// <summary>
+            /// Returns the correct folder path for storing the theme file.
+            /// </summary>
+            /// <returns></returns>
+            private string ValidFolderPath()
+            {
+                string temp = URL_ThemeFile.Replace("?raw=true", string.Empty);
+                string fileName = temp.Split('/').Last();
+                temp = temp.Replace($"/{fileName}", string.Empty);
+                string folderName = temp.Split('/').Last();
+                string dir = SysPaths.StoreCache;
+
+                if (!string.IsNullOrWhiteSpace(folderName)) dir += $@"\{ReposName}\{folderName}";
+
+                return dir;
+            }
+        }
+
+        /// <summary>
+        /// Download the theme file if not present or if MD5 mismatch is found.
+        /// </summary>
+        private void DownloadThemeFile(ThemeData theme)
+        {
+            if (System.IO.File.Exists(theme.FullPath))
+            {
+                // If the theme file exists, check its MD5 hash
+                if ((Program.CalculateMD5(theme.FullPath) ?? string.Empty) != theme.MD5_ThemeFile)
+                {
+                    System.IO.File.Delete(theme.FullPath); // Delete the old file if MD5 doesn't match
+                    Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
+                    TryDownloadFile(theme);
+                }
+            }
+            else
+            {
+                Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.DownloadTheme, theme.FileName, theme.URL_ThemeFile));
+                TryDownloadFile(theme);
+            }
+        }
+
+        /// <summary>
+        /// Attempt to download the file from the given URL.
+        /// </summary>
+        private void TryDownloadFile(ThemeData theme)
+        {
+            DM.DownloadFile(theme.URL_ThemeFile, theme.FullPath);
+
+            //try
+            //{
+            //    DM.DownloadFile(theme.URL_ThemeFile, theme.FullPath);
+            //}
+            //catch
+            //{
+            //    // Ignore errors when downloading
+            //}
+        }
+
+        /// <summary>
+        /// Add the theme to the store container.
+        /// </summary>
+        private void AddThemeToStore(ThemeData theme)
+        {
+            try
+            {
+                using (Manager TM = new(Manager.Source.File, theme.FullPath, true, true))
+                {
+                    StoreItem storeItem = new()
+                    {
+                        FileName = theme.FullPath,
+                        TM = TM,
+                        MD5_ThemeFile = theme.MD5_ThemeFile,
+                        MD5_PackFile = theme.MD5_PackFile,
+                        DoneByWinPaletter = theme.DB.ToUpper() == Links.Store_MainDB.ToUpper(),
+                        Size = new(w, h),
+                        URL_ThemeFile = theme.URL_ThemeFile,
+                        URL_PackFile = theme.URL_PackFile
+                    };
+
+                    if (storeItem.DoneByWinPaletter) storeItem.TM.Info.Author = Application.ProductName;
+
+                    storeItem.Click += StoreItem_Clicked;
+                    storeItem.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
+
+                    BeginInvoke(() => store_container.Controls.Add(storeItem));
+                }
+            }
+            catch
+            {
+                // Ignore errors when adding theme to store
+            }
+        }
+
+        /// <summary>
+        /// Fetches themes from the offline store (local directory on a disk).
+        /// </summary>
+        private void OfflineMode()
         {
             BeginInvoke(() =>
                 {
@@ -514,7 +656,6 @@ namespace WinPaletter
 
             int i = 0;
             int allProgress = 0;
-
 
             foreach (string folder in Program.Settings.Store.Offline_Directories)
             {
@@ -540,7 +681,7 @@ namespace WinPaletter
 
                                 Status_lbl.SetText($"Enumerating themes: \"{file}\"");
 
-                                using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, true, true))
+                                using (Manager TMx = new(Theme.Manager.Source.File, file, true, true))
                                 {
                                     TMList.Add(file, TMx);
                                 }
@@ -564,7 +705,7 @@ namespace WinPaletter
                 {
                     FileName = StoreItem.Key,
                     TM = StoreItem.Value,
-                    MD5_ThemeFile = CalculateMD5(StoreItem.Key),
+                    MD5_ThemeFile = Program.CalculateMD5(StoreItem.Key),
                     DoneByWinPaletter = false,
                     Size = new(w, h),
                     URL_ThemeFile = new System.IO.FileInfo(StoreItem.Key).FullName
@@ -602,9 +743,9 @@ namespace WinPaletter
             {
                 if (!Program.IsNetworkAvailable)
                 {
-                    Status_lbl.SetText(Program.Lang.Store_NoNetwork);
+                    Status_lbl.SetText(Program.Lang.Strings.Store.NoNetwork);
 
-                    if (MsgBox(Program.Lang.Store_NoNetwork, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Store_TryOffline) == DialogResult.Yes)
+                    if (MsgBox(Program.Lang.Strings.Store.NoNetwork, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Store.TryOffline) == DialogResult.Yes)
                     {
                         StartedAsOnlineOrOffline = false;
                         OfflineMode();
@@ -641,17 +782,23 @@ namespace WinPaletter
 
         #region Store item events
 
-        public void StoreItem_Clicked(object sender, EventArgs e)
+        /// <summary>
+        /// Occurs when the store item is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StoreItem_Clicked(object sender, EventArgs e)
         {
-            switch (((MouseEventArgs)e).Button)
+            switch ((e as MouseEventArgs).Button)
             {
                 case MouseButtons.Right:
                     {
+                        // Hide a hover preview
                         using (WindowsDesktop windowsDesktop = new() { Size = windowsDesktop1.Size })
                         {
                             Forms.Store_Hover.Close();
                             selectedItem = (StoreItem)sender;
-                            Theme.Manager TMx = selectedItem.TM;
+                            Manager TMx = selectedItem.TM;
                             Forms.Store_Hover.Show();
 
                             windowsDesktop.WindowStyle = Program.WindowStyle;
@@ -669,195 +816,212 @@ namespace WinPaletter
                     }
 
                 default:
+                    selectedItem = sender as StoreItem;
+                    Cursor = Cursors.AppStarting;
+                    StoreItem1.TM = selectedItem.TM;
+                    StoreItem1.DoneByWinPaletter = selectedItem.DoneByWinPaletter;
+                    Theme_MD5_lbl.Text = $"MD5: {selectedItem.MD5_ThemeFile}";
+
+                    Program.Animator.HideSync(Tabs);
+                    search_panel.Visible = false;
+
+                    Titlebar_lbl.Text = $"{selectedItem.TM.Info.ThemeName} - {Program.Lang.Strings.General.By} {selectedItem.TM.Info.Author}";
+                    if (Fonts.Exists(selectedItem.TM.MetricsFonts.CaptionFont.Name))
                     {
-                        selectedItem = (UI.Controllers.StoreItem)sender;
-                        Cursor = Cursors.AppStarting;
-                        StoreItem1.TM = selectedItem.TM;
-                        StoreItem1.DoneByWinPaletter = selectedItem.DoneByWinPaletter;
-                        Theme_MD5_lbl.Text = $"MD5: {selectedItem.MD5_ThemeFile}";
-
-                        {
-                            UI.Controllers.StoreItem StoreItem = selectedItem;
-                            Program.Animator.HideSync(Tabs);
-                            search_panel.Visible = false;
-
-                            Titlebar_lbl.Text = $"{StoreItem.TM.Info.ThemeName} - {Program.Lang.By} {StoreItem.TM.Info.Author}";
-                            if (Fonts.Exists(StoreItem.TM.MetricsFonts.CaptionFont.Name))
-                            {
-                                Titlebar_lbl.Font = new(StoreItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
-                            }
-                            else
-                            {
-                                Titlebar_lbl.Font = new("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
-                            }
-
-                            if (StoreItem.TM.AppTheme.Enabled)
-                            {
-                                Program.Settings.Appearance.CustomColors = StoreItem.TM.AppTheme.Enabled;
-                                Program.Settings.Appearance.CustomTheme_DarkMode = StoreItem.TM.AppTheme.DarkMode;
-                                Program.Settings.Appearance.RoundedCorners = StoreItem.TM.AppTheme.RoundCorners;
-                                Program.Settings.Appearance.BackColor = StoreItem.TM.AppTheme.BackColor;
-                                Program.Settings.Appearance.AccentColor = StoreItem.TM.AppTheme.AccentColor;
-                                Program.Settings.Appearance.SecondaryColor = StoreItem.TM.AppTheme.SecondaryColor;
-                                Program.Settings.Appearance.TertiaryColor = StoreItem.TM.AppTheme.TertiaryColor;
-                                Program.Settings.Appearance.DisabledBackColor = StoreItem.TM.AppTheme.DisabledBackColor;
-                                Program.Settings.Appearance.DisabledColor = StoreItem.TM.AppTheme.DisabledColor;
-                                Program.Settings.Appearance.Animations = StoreItem.TM.AppTheme.Animations;
-
-                                ApplyStyle(this, true);
-                            }
-
-                            if (StoreItem.TM.AppTheme.Enabled)
-                            {
-                                Label14.ForeColor = StoreItem.TM.AppTheme.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
-                            }
-                            else
-                            {
-                                Label14.ForeColor = Program.Style.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
-                            }
-
-                            back_btn.CustomColor = StoreItem.TM.Info.Color2;
-
-                            Label6.ForeColor = Label14.ForeColor;
-                            Theme_MD5_lbl.ForeColor = Label14.ForeColor;
-
-                            FlowLayoutPanel1.ScrollControlIntoView(windowsDesktop1);
-
-                            Adjust_Preview(StoreItem.TM);
-                            ApplyCMDPreview(CMD1, StoreItem.TM.CommandPrompt, false);
-                            ApplyCMDPreview(CMD2, StoreItem.TM.PowerShellx86, true);
-                            ApplyCMDPreview(CMD3, StoreItem.TM.PowerShellx64, true);
-                            LoadCursorsFromTM(StoreItem.TM);
-                            Program.Style.TextRenderingHint = StoreItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-
-                            foreach (UI.Controllers.CursorControl i in Cursors_Container.Controls.OfType<CursorControl>()
-                                .Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
-                            {
-                                AnimateList.Add(i);
-                            }
-
-                            themeSize_lbl.Text = new System.IO.FileInfo(StoreItem.FileName).Length.SizeString();
-
-                            if (!string.IsNullOrWhiteSpace(StoreItem.MD5_PackFile) && StoreItem.MD5_PackFile != "0")
-                            {
-                                Task.Run(() =>
-                                        {
-                                            respacksize_lbl.SetText(Program.Lang.Store_Calculating);
-                                            long Pack_Size = GetFileSizeFromURL(StoreItem.URL_PackFile);
-                                            respacksize_lbl.SetText(Pack_Size > 0L ? Pack_Size.SizeString() : 0.SizeString());
-                                        });
-                            }
-                            else
-                            {
-                                respacksize_lbl.Text = 0.SizeString();
-                            }
-
-                            desc_txt.Text = StoreItem.TM.Info.Description;
-
-                            if (Program.Version.CompareTo(StoreItem.TM.Info.AppVersion) != -1)
-                            {
-                                VersionAlert_lbl.Visible = false;
-                            }
-                            else
-                            {
-                                VersionAlert_lbl.Visible = true;
-                                VersionAlert_lbl.Text = string.Format(Program.Lang.Store_LowAppVersionAlert, StoreItem.TM.Info.AppVersion, Program.Version);
-                            }
-
-                            List<string> os_list = new();
-                            os_list.Clear();
-
-                            //if (StoreItem.TM.Info.DesignedFor_Win12) os_list.Add(Program.Lang.OS_Win12);
-
-                            if (StoreItem.TM.Info.DesignedFor_Win11) os_list.Add(Program.Lang.OS_Win11);
-
-                            if (StoreItem.TM.Info.DesignedFor_Win11) os_list.Add(Program.Lang.OS_Win11);
-
-                            if (StoreItem.TM.Info.DesignedFor_Win10) os_list.Add(Program.Lang.OS_Win10);
-
-                            if (StoreItem.TM.Info.DesignedFor_Win81) os_list.Add(Program.Lang.OS_Win81);
-
-                            if (StoreItem.TM.Info.DesignedFor_Win7) os_list.Add(Program.Lang.OS_Win7);
-
-                            if (StoreItem.TM.Info.DesignedFor_WinVista) os_list.Add(Program.Lang.OS_WinVista);
-
-                            if (StoreItem.TM.Info.DesignedFor_WinXP) os_list.Add(Program.Lang.OS_WinXP);
-
-                            string os_format = string.Empty;
-                            if (os_list.Count == 1)
-                            {
-                                os_format = os_list[0];
-                            }
-                            else if (os_list.Count == 2)
-                            {
-                                os_format = $"{os_list[0]} && {os_list[1]}";
-                            }
-                            else if (os_list.Count > 2)
-                            {
-                                for (int i = 0, loopTo = os_list.Count - 3; i <= loopTo; i++)
-                                    os_format += $"{os_list[i]}, ";
-                                os_format += $"{os_list[os_list.Count - 2]} && {os_list[os_list.Count - 1]}";
-                            }
-                            SupportedOS_lbl.Text = os_format;
-                            if (os_list.Count < 6)
-                            {
-                                Label26.Text = Program.Lang.Store_ThemeDesignedFor0;
-                            }
-                            else
-                            {
-                                Label26.Text = Program.Lang.Store_ThemeDesignedFor1;
-                            }
-
-                            if (StoreItem.TM.AppTheme.Enabled)
-                            {
-                                desc_txt.ForeColor = StoreItem.TM.AppTheme.DarkMode ? Color.White : Color.Black;
-                            }
-                            else
-                            {
-                                desc_txt.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
-                            }
-
-                            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
-                                windowsDesktop1.Visible = StoreItem.TM.Windows12.Enabled;
-                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
-                                windowsDesktop1.Visible = StoreItem.TM.Windows11.Enabled;
-                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
-                                windowsDesktop1.Visible = StoreItem.TM.Windows10.Enabled;
-                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W81)
-                                windowsDesktop1.Visible = StoreItem.TM.Windows81.Enabled;
-                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
-                                windowsDesktop1.Visible = StoreItem.TM.Windows7.Enabled;
-                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WVista)
-                                windowsDesktop1.Visible = StoreItem.TM.WindowsVista.Enabled;
-                            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WXP)
-                                windowsDesktop1.Visible = StoreItem.TM.WindowsXP.Enabled;
-
-                            retroDesktopColors1.Visible = StoreItem.TM.Win32.Enabled;
-                            CMD1.Visible = StoreItem.TM.CommandPrompt.Enabled;
-                            CMD2.Visible = StoreItem.TM.PowerShellx86.Enabled;
-                            CMD3.Visible = StoreItem.TM.PowerShellx64.Enabled;
-                            Panel1.Visible = StoreItem.TM.Cursors.Enabled;
-                            author_url_button.Visible = !string.IsNullOrWhiteSpace(StoreItem.TM.Info.AuthorSocialMediaLink);
-
-                            Tabs.SelectedIndex = 1;
-
-                            Program.Animator.ShowSync(Tabs);
-                        }
-
-                        Cursor = Cursors.Default;
-                        break;
+                        Titlebar_lbl.Font = new(selectedItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
+                    }
+                    else
+                    {
+                        Titlebar_lbl.Font = new("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
                     }
 
+                    // Make application theme is the same as the selected theme
+                    if (selectedItem.TM.AppTheme.Enabled)
+                    {
+                        Program.Settings.Appearance.CustomColors = selectedItem.TM.AppTheme.Enabled;
+                        Program.Settings.Appearance.CustomTheme_DarkMode = selectedItem.TM.AppTheme.DarkMode;
+                        Program.Settings.Appearance.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
+                        Program.Settings.Appearance.BackColor = selectedItem.TM.AppTheme.BackColor;
+                        Program.Settings.Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
+                        Program.Settings.Appearance.SecondaryColor = selectedItem.TM.AppTheme.SecondaryColor;
+                        Program.Settings.Appearance.TertiaryColor = selectedItem.TM.AppTheme.TertiaryColor;
+                        Program.Settings.Appearance.DisabledBackColor = selectedItem.TM.AppTheme.DisabledBackColor;
+                        Program.Settings.Appearance.DisabledColor = selectedItem.TM.AppTheme.DisabledColor;
+                        Program.Settings.Appearance.Animations = selectedItem.TM.AppTheme.Animations;
+
+                        ApplyStyle(this, true);
+                    }
+
+                    if (selectedItem.TM.AppTheme.Enabled)
+                    {
+                        Label14.ForeColor = selectedItem.TM.AppTheme.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
+                    }
+                    else
+                    {
+                        Label14.ForeColor = Program.Style.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
+                    }
+
+                    back_btn.CustomColor = selectedItem.TM.Info.Color2;
+
+                    Label6.ForeColor = Label14.ForeColor;
+                    Theme_MD5_lbl.ForeColor = Label14.ForeColor;
+
+                    FlowLayoutPanel1.ScrollControlIntoView(windowsDesktop1);
+
+                    // Start processing the preview from the selected theme
+                    Adjust_Preview(selectedItem.TM);
+                    ApplyCMDPreview(CMD1, selectedItem.TM.CommandPrompt, false);
+                    ApplyCMDPreview(CMD2, selectedItem.TM.PowerShellx86, true);
+                    ApplyCMDPreview(CMD3, selectedItem.TM.PowerShellx64, true);
+                    LoadCursorsFromTM(selectedItem.TM);
+                    Program.Style.TextRenderingHint = selectedItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+
+                    foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>()
+                        .Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
+                    {
+                        AnimateList.Add(i);
+                    }
+
+                    themeSize_lbl.Text = new System.IO.FileInfo(selectedItem.FileName).Length.ToStringFileSize();
+
+                    // Get if there is a pack file and its size to be calculated in a separate thread to make loading faster and doesn't freeze the UI
+                    if (!string.IsNullOrWhiteSpace(selectedItem.MD5_PackFile) && selectedItem.MD5_PackFile != "0")
+                    {
+                        Task.Run(() =>
+                                {
+                                    respacksize_lbl.SetText(Program.Lang.Strings.General.Calculating);
+                                    long Pack_Size = DM.GetFileSizeFromUrl(selectedItem.URL_PackFile);
+                                    respacksize_lbl.SetText(Pack_Size > 0L ? Pack_Size.ToStringFileSize() : 0.ToStringFileSize());
+                                });
+                    }
+                    else
+                    {
+                        respacksize_lbl.Text = 0.ToStringFileSize();
+                    }
+
+                    desc_txt.Text = selectedItem.TM.Info.Description;
+
+                    // Check if the theme is designed for the current version of WinPaletter or not and show an alert if not
+                    if (Program.Version.CompareTo(selectedItem.TM.Info.AppVersion) != -1)
+                    {
+                        VersionAlert_lbl.Visible = false;
+                    }
+                    else
+                    {
+                        VersionAlert_lbl.Visible = true;
+                        VersionAlert_lbl.Text = string.Format(Program.Lang.Strings.Store.LowAppVersionAlert, selectedItem.TM.Info.AppVersion, Program.Version);
+                    }
+
+                    // Get the list of supported OS
+                    List<string> os_list = [];
+                    os_list.Clear();
+
+                    if (selectedItem.TM.Info.DesignedFor_Win12) os_list.Add(Program.Lang.Strings.Windows.W12);
+
+                    if (selectedItem.TM.Info.DesignedFor_Win11) os_list.Add(Program.Lang.Strings.Windows.W11);
+
+                    if (selectedItem.TM.Info.DesignedFor_Win10) os_list.Add(Program.Lang.Strings.Windows.W10);
+
+                    if (selectedItem.TM.Info.DesignedFor_Win81) os_list.Add(Program.Lang.Strings.Windows.W81);
+
+                    if (selectedItem.TM.Info.DesignedFor_Win7) os_list.Add(Program.Lang.Strings.Windows.W7);
+
+                    if (selectedItem.TM.Info.DesignedFor_WinVista) os_list.Add(Program.Lang.Strings.Windows.WVista);
+
+                    if (selectedItem.TM.Info.DesignedFor_WinXP) os_list.Add(Program.Lang.Strings.Windows.WXP);
+
+                    string os_format = string.Empty;
+                    if (os_list.Count == 1)
+                    {
+                        os_format = os_list[0];
+                    }
+                    else if (os_list.Count == 2)
+                    {
+                        os_format = $"{os_list[0]} {Program.Lang.Strings.General.And} {os_list[1]}";
+                    }
+                    else if (os_list.Count > 2)
+                    {
+                        for (int i = 0, loopTo = os_list.Count - 3; i <= loopTo; i++) os_format += $"{os_list[i]}, ";
+                        os_format += $"{os_list[os_list.Count - 2]} {Program.Lang.Strings.General.And} {os_list[os_list.Count - 1]}";
+                    }
+
+                    SupportedOS_lbl.Text = os_format;
+
+                    if (os_list.Count < 6)
+                    {
+                        Label26.Text = Program.Lang.Strings.Store.ThemeDesignedFor0;
+                    }
+                    else
+                    {
+                        Label26.Text = Program.Lang.Strings.Store.ThemeDesignedFor1;
+                    }
+
+                    // Get Windows aspects that will be modified
+                    List<string> aspects_list = Store_CPToggles.EnabledAspects(selectedItem.TM);
+
+                    string aspects_format = string.Empty;
+                    if (aspects_list.Count == 1)
+                    {
+                        aspects_format = aspects_list[0];
+                    }
+                    else if (aspects_list.Count == 2)
+                    {
+                        aspects_format = $"{aspects_list[0]} {Program.Lang.Strings.General.And} {aspects_list[1]}";
+                    }
+                    else if (aspects_list.Count > 2)
+                    {
+                        for (int i = 0, loopTo = aspects_list.Count - 3; i <= loopTo; i++) aspects_format += $"{aspects_list[i]}, ";
+                        aspects_format += $"{aspects_list[aspects_list.Count - 2]} {Program.Lang.Strings.General.And} {aspects_list[aspects_list.Count - 1]}";
+                    }
+
+                    aspects_lbl.Text = aspects_format;
+
+                    if (selectedItem.TM.AppTheme.Enabled)
+                    {
+                        desc_txt.ForeColor = selectedItem.TM.AppTheme.DarkMode ? Color.White : Color.Black;
+                    }
+                    else
+                    {
+                        desc_txt.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
+                    }
+
+                    if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                        windowsDesktop1.Visible = selectedItem.TM.Windows12.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                        windowsDesktop1.Visible = selectedItem.TM.Windows11.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                        windowsDesktop1.Visible = selectedItem.TM.Windows10.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W81)
+                        windowsDesktop1.Visible = selectedItem.TM.Windows81.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
+                        windowsDesktop1.Visible = selectedItem.TM.Windows7.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WVista)
+                        windowsDesktop1.Visible = selectedItem.TM.WindowsVista.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WXP)
+                        windowsDesktop1.Visible = selectedItem.TM.WindowsXP.Enabled;
+
+                    retroDesktopColors1.Visible = selectedItem.TM.Win32.Enabled;
+                    CMD1.Visible = selectedItem.TM.CommandPrompt.Enabled;
+                    CMD2.Visible = selectedItem.TM.PowerShellx86.Enabled;
+                    CMD3.Visible = selectedItem.TM.PowerShellx64.Enabled;
+                    Panel1.Visible = selectedItem.TM.Cursors.Enabled;
+                    author_url_button.Visible = !string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink);
+
+                    Tabs.SelectedIndex = 1;
+
+                    Program.Animator.ShowSync(Tabs);
+
+                    Cursor = Cursors.Default;
+                    break;
             }
         }
 
-        public void StoreItem_ThemeManagerChanged(object sender, EventArgs e)
+        // Occurs when the theme manager of the store item is changed
+        private void StoreItem_ThemeManagerChanged(object sender, EventArgs e)
         {
             if (FinishedLoadingInitialTMs)
             {
-                StoreItem temp = (UI.Controllers.StoreItem)sender;
-                Adjust_Preview(temp.TM);
-                temp.Refresh();
+                Adjust_Preview((sender as StoreItem).TM);
             }
         }
 
@@ -866,7 +1030,9 @@ namespace WinPaletter
         #region Methods\Functions
 
         #region    Store
-        public void Apply_Theme()
+
+        // Apply the theme of the selected store item
+        private void Apply_Theme()
         {
             ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
             Appearance.CustomColors = selectedItem.TM.AppTheme.Enabled;
@@ -877,18 +1043,19 @@ namespace WinPaletter
             oldAppearance = Appearance;
             ApplyStyle(null, true);
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.File, selectedItem.FileName, false, true))
+            using (Manager TMx = new(Theme.Manager.Source.File, selectedItem.FileName, false, true))
             {
                 if (selectedItem.DoneByWinPaletter)
                     TMx.Info.Author = Application.CompanyName;
 
                 Forms.ThemeLog.Apply_Theme(TMx, true);
 
-                Program.TM_Original = (Theme.Manager)TMx.Clone();
+                Program.TM_Original = (Manager)TMx.Clone();
             }
         }
 
-        public void DoActionsAfterPackDownload()
+        // After a pack is doenloaded, there are two remaining action; either apply the theme or edit it.
+        private void DoActionsAfterPackDownload()
         {
             if (ApplyOrEditToggle)
             {
@@ -899,7 +1066,7 @@ namespace WinPaletter
                     Apply_Theme();
                     if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
                     Program.TM = selectedItem.TM;
-                    Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                    Program.TM_Original = (Manager)Program.TM.Clone();
                     Forms.Home.LoadFromTM(Program.TM);
                     Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
                     UpdateTitlebarColors();
@@ -911,7 +1078,7 @@ namespace WinPaletter
                 {
                     // Edit button is pressed
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
-                    Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                    Program.TM_Original = (Manager)Program.TM.Clone();
                     Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName, false, true);
                     if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
                     Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
@@ -921,7 +1088,11 @@ namespace WinPaletter
             }
         }
 
-        public void RemoveAllStoreItems(FlowLayoutPanel Container)
+        /// <summary>
+        /// Remove all themes in the store as a cleanup process
+        /// </summary>
+        /// <param name="Container"></param>
+        private void RemoveAllStoreItems(FlowLayoutPanel Container)
         {
             int count = Container.Controls.Count - 1;
             for (int x = 0; x <= count; x++)
@@ -939,17 +1110,20 @@ namespace WinPaletter
             Container.Controls.Clear();
         }
 
-        public void PerformSearch()
+        /// <summary>
+        /// Do a search from the provided textbox and checked filters.
+        /// </summary>
+        private void PerformSearch()
         {
             string search_text = search_box.Text.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper();
 
             if (string.IsNullOrWhiteSpace(search_text))
                 return;
 
-            Dictionary<string, UI.Controllers.StoreItem> lst = new();
+            Dictionary<string, StoreItem> lst = [];
             lst.Clear();
 
-            foreach (StoreItem st_itm in store_container.Controls.OfType<UI.Controllers.StoreItem>())
+            foreach (StoreItem st_itm in store_container.Controls.OfType<StoreItem>())
                 lst.Add(st_itm.FileName, st_itm);
 
             RemoveAllStoreItems(search_results);
@@ -959,30 +1133,25 @@ namespace WinPaletter
             foreach (KeyValuePair<string, StoreItem> st_item in lst)
             {
                 if ((Program.Settings.Store.Search_ThemeNames && st_item.Value.TM.Info.ThemeName.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_AuthorsNames && st_item.Value.TM.Info.Author.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_Descriptions && st_item.Value.TM.Info.Description.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)))
-
-                {
-
                     found_sum += 1;
 
-                    UI.Controllers.StoreItem ctrl = new()
-                    {
-                        FileName = st_item.Key,
-                        TM = st_item.Value.TM,
-                        MD5_ThemeFile = CalculateMD5(st_item.Key),
-                        DoneByWinPaletter = st_item.Value.DoneByWinPaletter,
-                        Size = new(w, h),
-                        URL_ThemeFile = st_item.Value.URL_ThemeFile
-                    };
+                StoreItem ctrl = new()
+                {
+                    FileName = st_item.Key,
+                    TM = st_item.Value.TM,
+                    MD5_ThemeFile = Program.CalculateMD5(st_item.Key),
+                    DoneByWinPaletter = st_item.Value.DoneByWinPaletter,
+                    Size = new(w, h),
+                    URL_ThemeFile = st_item.Value.URL_ThemeFile
+                };
 
-                    if (ctrl.DoneByWinPaletter)
-                        ctrl.TM.Info.Author = Application.ProductName;
+                if (ctrl.DoneByWinPaletter)
+                    ctrl.TM.Info.Author = Application.ProductName;
 
-                    ctrl.Click += StoreItem_Clicked;
-                    ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
+                ctrl.Click += StoreItem_Clicked;
+                ctrl.ThemeManagerChanged += StoreItem_ThemeManagerChanged;
 
-                    BeginInvoke(new Action(() => search_results.Controls.Add(ctrl)));
-
-                }
+                BeginInvoke(new Action(() => search_results.Controls.Add(ctrl)));
             }
 
             Titlebar_lbl.Text = $"Search results ({found_sum})";
@@ -994,58 +1163,10 @@ namespace WinPaletter
         #endregion
 
         #region    Helpers
-        private string CalculateMD5(string path)
-        {
-            if (System.IO.File.Exists(path))
-            {
-                using (MD5 md5 = MD5.Create())
-                {
-                    byte[] hash = md5.ComputeHash(System.IO.File.ReadAllBytes(path));
-                    string result = BitConverter.ToString(hash).Replace("-", string.Empty);
-                    return result.ToUpper();
-                }
-            }
-            else
-            {
-                return "0";
-            }
-
-        }
-
-        public long GetFileSizeFromURL(string url)
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(url))
-                {
-                    long result = 0L;
-                    WebRequest req = WebRequest.Create(url);
-                    req.Method = "HEAD";
-                    long contentLength = default;
-
-                    using (WebResponse resp = req.GetResponse())
-                    {
-
-                        if (long.TryParse(resp.Headers.Get("Content-Length"), out contentLength))
-                        {
-                            result = contentLength;
-                        }
-                    }
-
-                    return result;
-                }
-                else
-                {
-                    return 0L;
-                }
-            }
-            catch // Couldn't get file size online
-            {
-                return 0L;
-            }
-        }
-
-        public void UpdateTitlebarColors()
+        /// <summary>
+        /// Change titlebar forecolors to make them suitable with theme
+        /// </summary>
+        private void UpdateTitlebarColors()
         {
             Titlebar_lbl.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
             search_box.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
@@ -1059,7 +1180,7 @@ namespace WinPaletter
         {
             if (!_Shown) return;
 
-            foreach (UI.Controllers.CursorControl i in AnimateList)
+            foreach (CursorControl i in AnimateList)
             {
                 i.Angle = Angle;
                 i.Refresh();
@@ -1093,7 +1214,7 @@ namespace WinPaletter
                 Program.Settings.Appearance = new();
                 Program.Settings.Appearance.Load();
 
-                GetRoundedCorners();
+                SetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle(this, true);
             }
@@ -1122,6 +1243,8 @@ namespace WinPaletter
 
             if (StartedAsOnlineOrOffline)
             {
+                // Online mode
+
                 string temp = selectedItem.URL_PackFile.Replace("?raw=true", string.Empty);
                 string FileName = temp.Split('/').Last();
                 temp = temp.Replace($"/{FileName}", string.Empty);
@@ -1140,7 +1263,7 @@ namespace WinPaletter
 
                 if (selectedItem.MD5_PackFile != "0")
                 {
-                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && (CalculateMD5($@"{Dir}\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !System.IO.File.Exists($@"{Dir}\{FileName}"))
+                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && (Program.CalculateMD5($"{Dir}\\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !System.IO.File.Exists($@"{Dir}\{FileName}"))
                     {
                         Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
                         Forms.Store_DownloadProgress.File = $@"{Dir}\{FileName}";
@@ -1162,7 +1285,7 @@ namespace WinPaletter
                         {
                             System.IO.File.Delete($@"{Dir}\{FileName}");
                         }
-                        catch { } // Couldn't delete the file
+                        catch { } // Couldn't delete the File
                     }
 
                     DoActionsAfterPackDownload();
@@ -1170,6 +1293,7 @@ namespace WinPaletter
             }
             else
             {
+                // Offline mode, do actions directly.
                 DoActionsAfterPackDownload();
             }
 
@@ -1227,8 +1351,7 @@ namespace WinPaletter
 
         private void Search_box_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '\r')
-                PerformSearch();
+            if (e.KeyChar == '\r') PerformSearch();
         }
 
         private Point newPoint = new();
@@ -1236,12 +1359,12 @@ namespace WinPaletter
 
         private void CustomTitlebar_MouseDown(object sender, MouseEventArgs e)
         {
-            if (this.Parent is not TabPage) oldPoint = MousePosition - (Size)Location;
+            if (Parent is not TabPage) oldPoint = MousePosition - (Size)Location;
         }
 
         private void CustomTitlebar_MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.Parent is not TabPage && e.Button == MouseButtons.Left)
+            if (Parent is not TabPage && e.Button == MouseButtons.Left)
             {
                 newPoint = MousePosition - (Size)oldPoint;
                 Location = newPoint;
@@ -1250,7 +1373,7 @@ namespace WinPaletter
 
         private void Author_url_button_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Store_AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
             {
                 try
                 {
@@ -1260,6 +1383,11 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Save the theme as a file to be used later
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button1_Click(object sender, EventArgs e)
         {
 
@@ -1289,12 +1417,11 @@ namespace WinPaletter
 
             if (!string.IsNullOrWhiteSpace(selectedPath) && System.IO.Directory.Exists(selectedPath))
             {
-                string filename = $@"{selectedPath}\{new System.IO.FileInfo(selectedItem.FileName).Name}";
+                string themeFileName = new System.IO.FileInfo(selectedItem.FileName).Name;
+                string filename = $"{selectedPath}\\{themeFileName}";
 
-                if (!System.IO.Directory.Exists(selectedPath))
-                    System.IO.Directory.CreateDirectory(selectedPath);
-                if (System.IO.File.Exists(filename))
-                    System.IO.File.Delete(filename);
+                if (!System.IO.Directory.Exists(selectedPath)) System.IO.Directory.CreateDirectory(selectedPath);
+                if (System.IO.File.Exists(filename)) System.IO.File.Delete(filename);
 
                 System.IO.File.Copy(selectedItem.FileName, filename);
 

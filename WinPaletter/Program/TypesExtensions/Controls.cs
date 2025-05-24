@@ -42,7 +42,7 @@ namespace WinPaletter.TypesExtensions
                 return (T)property.GetValue(obj);
             }
 
-            return default(T);
+            return default;
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace WinPaletter.TypesExtensions
                     lock (Control)
                     {
                         Control.DrawToBitmap(bmp, rect);
-                        return (Bitmap)bmp.Clone();
+                        return bmp.Clone() as Bitmap;
                     }
                 }
             }
@@ -102,12 +102,12 @@ namespace WinPaletter.TypesExtensions
 
         }
 
-        private static readonly object lockObject = new object();
+        private static readonly object lockObject = new();
 
         private static Bitmap DrawToBitmap(Control control)
         {
-            Bitmap bmp = new Bitmap(control.Width, control.Height);
-            List<Control> visibleChildControls = new List<Control>();
+            Bitmap bmp = new(control.Width, control.Height);
+            List<Control> visibleChildControls = [];
             Control[] childControls = control.Controls.Cast<Control>().ToArray();
             Array.Reverse(childControls);
 
@@ -206,8 +206,7 @@ namespace WinPaletter.TypesExtensions
             {
                 if (ctrl.HasChildren)
                 {
-                    foreach (Control c in ctrl.Controls)
-                        c.DoubleBuffer();
+                    foreach (Control c in ctrl.Controls) c.DoubleBuffer();
                 }
 
                 DoubleBufferedControl(ctrl, true);
@@ -237,7 +236,7 @@ namespace WinPaletter.TypesExtensions
                 }
                 else
                 {
-                    return new List<Control>();
+                    return [];
                 }
 
             }
@@ -250,7 +249,7 @@ namespace WinPaletter.TypesExtensions
                 }
                 else
                 {
-                    return new List<Control>();
+                    return [];
                 }
             }
         }

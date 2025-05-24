@@ -10,8 +10,14 @@ using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter.Templates
 {
+    /// <summary>
+    /// Windows classic theme with 3D effects preview template
+    /// </summary>
     public partial class RetroDesktopColors : UserControl
     {
+        /// <summary>
+        /// Create a new instance of <see cref="RetroDesktopColors"/>
+        /// </summary>
         public RetroDesktopColors()
         {
             DoubleBuffered = true;
@@ -305,7 +311,6 @@ namespace WinPaletter.Templates
         }
         private Color buttonHilight;
 
-
         /// <summary>
         /// Button light
         /// </summary>
@@ -333,7 +338,6 @@ namespace WinPaletter.Templates
         }
         private Color buttonLight;
 
-
         /// <summary>
         /// Forecolor of button and windows
         /// </summary>
@@ -357,7 +361,6 @@ namespace WinPaletter.Templates
             }
         }
         private Color buttonText;
-
 
         /// <summary>
         /// Second color for gradience in active titlebar
@@ -763,7 +766,16 @@ namespace WinPaletter.Templates
 
         #region Events/Overrides
 
+        /// <summary>
+        /// Event handler for color editing fon classic color elements on the preview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
+
+        /// <summary>
+        /// Event handler for color editing fon classic color elements on the preview
+        /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
         private void EditorInvoked(object sender, EditorEventArgs e)
@@ -771,6 +783,10 @@ namespace WinPaletter.Templates
             EditorInvoker?.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Validate the control added to the preview and attach the color editing event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnControlAdded(ControlEventArgs e)
         {
             if (!DesignMode)
@@ -801,6 +817,10 @@ namespace WinPaletter.Templates
             base.OnControlAdded(e);
         }
 
+        /// <summary>
+        /// Validate the control removed from the preview and detach the color editing event
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnControlRemoved(ControlEventArgs e)
         {
             if (!DesignMode)
@@ -858,12 +878,17 @@ namespace WinPaletter.Templates
             }
         }
 
+        /// <summary>
+        /// Load metrics from a <see cref="Theme.Manager"/> instance
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadMetrics(Theme.Manager TM)
         {
             if (TM is null) return;
 
             RetroShadow1.Visible = TM.WindowsEffects.WindowShadow;
 
+            // Create correct padding for the windows
             int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
             int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
             Padding _Padding = new(iP, iT, iP, iP);
@@ -888,16 +913,18 @@ namespace WinPaletter.Templates
                 WindowR.Padding = _Padding;
             }
 
+            // Set correct sizes of windows according to the metrics
             WindowR3.Height = 90 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR3.Font);
             WindowR2.Height = 120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR2.Font) + TM.MetricsFonts.MenuHeight;
 
             WindowR3.Top = WindowR2.Top + windowControlR1.Top + windowControlR1.Font.Height + 10;
             WindowR3.Left = WindowR2.Left + windowControlR1.Left + 15;
 
-            List<int> Tops = new();
-            List<int> Lefts = new();
-            List<int> Bottoms = new();
-            List<int> Rights = new();
+            // Centrize all window in the preview area after resizing
+            List<int> Tops = [];
+            List<int> Lefts = [];
+            List<int> Bottoms = [];
+            List<int> Rights = [];
 
             foreach (Control control in Controls)
             {
@@ -923,6 +950,11 @@ namespace WinPaletter.Templates
             }
         }
 
+        /// <summary>
+        /// Load colors from a theme database in <see cref="Theme.Schemes"/> 
+        /// </summary>
+        /// <param name="DB"></param>
+        /// <param name="ThemeName"></param>
         public void LoadFromWinThemeString(string DB, string ThemeName)
         {
             if (string.IsNullOrWhiteSpace(DB) || !DB.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) return;
@@ -954,20 +986,20 @@ namespace WinPaletter.Templates
 
                 if (x.StartsWith("activetitle=", StringComparison.OrdinalIgnoreCase))
                 {
-                    ActiveTitle = x.Split('=')[1].FromWin32RegToColor();
+                    ActiveTitle = x.Split('=')[1].ToColorFromWin32();
                     if (!FoundGradientActive)
                         GradientActiveTitle = ActiveTitle;
                 }
 
                 if (x.StartsWith("gradientactivetitle=", StringComparison.OrdinalIgnoreCase))
                 {
-                    GradientActiveTitle = x.Split('=')[1].FromWin32RegToColor();
+                    GradientActiveTitle = x.Split('=')[1].ToColorFromWin32();
                     FoundGradientActive = true;
                 }
 
                 if (x.StartsWith("inactivetitle=", StringComparison.OrdinalIgnoreCase))
                 {
-                    InactiveTitle = x.Split('=')[1].FromWin32RegToColor();
+                    InactiveTitle = x.Split('=')[1].ToColorFromWin32();
                     if (!FoundGradientInactive)
                         GradientInactiveTitle = InactiveTitle;
 
@@ -975,93 +1007,93 @@ namespace WinPaletter.Templates
 
                 if (x.StartsWith("gradientinactivetitle=", StringComparison.OrdinalIgnoreCase))
                 {
-                    GradientInactiveTitle = x.Split('=')[1].FromWin32RegToColor();
+                    GradientInactiveTitle = x.Split('=')[1].ToColorFromWin32();
                     FoundGradientInactive = true;
                 }
 
                 if (x.StartsWith("background=", StringComparison.OrdinalIgnoreCase))
-                    Background = x.Split('=')[1].FromWin32RegToColor();
+                    Background = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("hilight=", StringComparison.OrdinalIgnoreCase))
-                    Hilight = x.Split('=')[1].FromWin32RegToColor();
+                    Hilight = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("hilighttext=", StringComparison.OrdinalIgnoreCase))
-                    HilightText = x.Split('=')[1].FromWin32RegToColor();
+                    HilightText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("titletext=", StringComparison.OrdinalIgnoreCase))
-                    TitleText = x.Split('=')[1].FromWin32RegToColor();
+                    TitleText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("window=", StringComparison.OrdinalIgnoreCase))
-                    Window = x.Split('=')[1].FromWin32RegToColor();
+                    Window = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("windowtext=", StringComparison.OrdinalIgnoreCase))
-                    WindowText = x.Split('=')[1].FromWin32RegToColor();
+                    WindowText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("scrollbar=", StringComparison.OrdinalIgnoreCase))
-                    Scrollbar = x.Split('=')[1].FromWin32RegToColor();
+                    Scrollbar = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("menu=", StringComparison.OrdinalIgnoreCase))
-                    Menu = x.Split('=')[1].FromWin32RegToColor();
+                    Menu = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("windowframe=", StringComparison.OrdinalIgnoreCase))
-                    WindowFrame = x.Split('=')[1].FromWin32RegToColor();
+                    WindowFrame = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("menutext=", StringComparison.OrdinalIgnoreCase))
-                    MenuText = x.Split('=')[1].FromWin32RegToColor();
+                    MenuText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("activeborder=", StringComparison.OrdinalIgnoreCase))
-                    ActiveBorder = x.Split('=')[1].FromWin32RegToColor();
+                    ActiveBorder = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("inactiveborder=", StringComparison.OrdinalIgnoreCase))
-                    InactiveBorder = x.Split('=')[1].FromWin32RegToColor();
+                    InactiveBorder = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("appworkspace=", StringComparison.OrdinalIgnoreCase))
-                    AppWorkspace = x.Split('=')[1].FromWin32RegToColor();
+                    AppWorkspace = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("buttonface=", StringComparison.OrdinalIgnoreCase))
-                    ButtonFace = x.Split('=')[1].FromWin32RegToColor();
+                    ButtonFace = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("buttonshadow=", StringComparison.OrdinalIgnoreCase))
-                    ButtonShadow = x.Split('=')[1].FromWin32RegToColor();
+                    ButtonShadow = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("graytext=", StringComparison.OrdinalIgnoreCase))
-                    GrayText = x.Split('=')[1].FromWin32RegToColor();
+                    GrayText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("buttontext=", StringComparison.OrdinalIgnoreCase))
-                    ButtonText = x.Split('=')[1].FromWin32RegToColor();
+                    ButtonText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("inactivetitletext=", StringComparison.OrdinalIgnoreCase))
-                    InactiveTitleText = x.Split('=')[1].FromWin32RegToColor();
+                    InactiveTitleText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("buttonhilight=", StringComparison.OrdinalIgnoreCase))
-                    ButtonHilight = x.Split('=')[1].FromWin32RegToColor();
+                    ButtonHilight = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("buttondkshadow=", StringComparison.OrdinalIgnoreCase))
-                    ButtonDkShadow = x.Split('=')[1].FromWin32RegToColor();
+                    ButtonDkShadow = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("buttonlight=", StringComparison.OrdinalIgnoreCase))
-                    ButtonLight = x.Split('=')[1].FromWin32RegToColor();
+                    ButtonLight = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("infotext=", StringComparison.OrdinalIgnoreCase))
-                    InfoText = x.Split('=')[1].FromWin32RegToColor();
+                    InfoText = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("infowindow=", StringComparison.OrdinalIgnoreCase))
-                    InfoWindow = x.Split('=')[1].FromWin32RegToColor();
+                    InfoWindow = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("hottrackingcolor=", StringComparison.OrdinalIgnoreCase))
-                    HotTrackingColor = x.Split('=')[1].FromWin32RegToColor();
+                    HotTrackingColor = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("buttonalternateface=", StringComparison.OrdinalIgnoreCase))
-                    ButtonAlternateFace = x.Split('=')[1].FromWin32RegToColor();
+                    ButtonAlternateFace = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("menubar=", StringComparison.OrdinalIgnoreCase))
-                    MenuBar = x.Split('=')[1].FromWin32RegToColor();
+                    MenuBar = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("menuhilight=", StringComparison.OrdinalIgnoreCase))
-                    MenuHilight = x.Split('=')[1].FromWin32RegToColor();
+                    MenuHilight = x.Split('=')[1].ToColorFromWin32();
 
                 if (x.StartsWith("desktop=", StringComparison.OrdinalIgnoreCase))
-                    Desktop = x.Split('=')[1].FromWin32RegToColor();
+                    Desktop = x.Split('=')[1].ToColorFromWin32();
             }
 
             Refresh();
@@ -1070,6 +1102,10 @@ namespace WinPaletter.Templates
             RetroShadow1.Refresh();
         }
 
+        /// <summary>
+        /// Load colors from a <see cref="Theme.Manager"/>
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadColors(Theme.Manager TM)
         {
             Visible = false;
@@ -1110,6 +1146,10 @@ namespace WinPaletter.Templates
             Visible = true;
         }
 
+        /// <summary>
+        /// Load colors from a <see cref="Theme.Structures.Win32UI"/>
+        /// </summary>
+        /// <param name="win32ui"></param>
         public void LoadColors(Theme.Structures.Win32UI win32ui)
         {
             Visible = false;
@@ -1150,7 +1190,10 @@ namespace WinPaletter.Templates
             Visible = true;
         }
 
-
+        /// <summary>
+        /// Load colors from another template control
+        /// </summary>
+        /// <param name="retroDesktopColors"></param>
         public void LoadColors(RetroDesktopColors retroDesktopColors)
         {
             Visible = false;
@@ -1235,6 +1278,10 @@ namespace WinPaletter.Templates
 
         private bool _CursorMovingInBackground;
 
+        /// <summary>
+        /// Override the mouse move event to show the editor indicator (Dots grid)
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (EnableEditingColors)
@@ -1246,6 +1293,10 @@ namespace WinPaletter.Templates
             base.OnMouseMove(e);
         }
 
+        /// <summary>
+        /// Override the mouse leave event to hide the editor indicator (Dots grid)
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
             if (EnableEditingColors)
@@ -1257,6 +1308,10 @@ namespace WinPaletter.Templates
             base.OnMouseLeave(e);
         }
 
+        /// <summary>
+        /// Override the click event to show the editor for the selected color
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClick(EventArgs e)
         {
             if (!DesignMode && EnableEditingColors)
@@ -1267,6 +1322,10 @@ namespace WinPaletter.Templates
             base.OnClick(e);
         }
 
+        /// <summary>
+        /// Override the paint event to draw the editor indicator (Dots grid) for Windows desktop (background) color
+        /// </summary> 
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             #region Editor

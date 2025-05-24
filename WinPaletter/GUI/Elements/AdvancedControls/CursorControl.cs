@@ -674,8 +674,6 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
-
             Graphics G = e.Graphics;
 
             //Makes background drawn properly, and transparent
@@ -773,13 +771,15 @@ namespace WinPaletter.UI.Controllers
             }
 
             base.OnPaint(e);
+
+
         }
 
         private static int GetTotalFramesFromANI(string filePath)
         {
             using (FileStream fileStream = new(filePath, FileMode.Open, FileAccess.Read))
             {
-                // ANI file format: https://www.daubnet.com/en/file-format-ani
+                // ANI File format: https://www.daubnet.com/en/File-format-ani
                 // Skip to the position where the number of frames is stored
                 fileStream.Seek(6, SeekOrigin.Begin);
 

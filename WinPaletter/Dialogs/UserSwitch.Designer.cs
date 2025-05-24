@@ -48,7 +48,8 @@ namespace WinPaletter
             // 
             // checkBox1
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.Checked = false;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox1.ForeColor = System.Drawing.Color.White;
@@ -56,7 +57,7 @@ namespace WinPaletter
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(565, 24);
             this.checkBox1.TabIndex = 138;
-            this.checkBox1.Text = "Show system profiles (EXPERIMENTAL - DO IT AT YOUR OWN RISK!)";
+            this.checkBox1.Text = "Show system profiles (HIGH RISK!)";
             this.checkBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox1_CheckedChanged);
             // 
             // AnimatedBox1
@@ -94,8 +95,8 @@ namespace WinPaletter
             this.title.Name = "title";
             this.title.Size = new System.Drawing.Size(765, 35);
             this.title.TabIndex = 85;
-            this.title.Text = "Please choose a Windows user whose registry WinPaletter should access to retrieve" +
-    " and update data";
+            this.title.Text = "Please select the Windows user profile that WinPaletter will access for retrievin" +
+    "g and updating preferences";
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox1
@@ -130,8 +131,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
+            this.Button2.ImageGlyphEnabled = false;
             this.Button2.Location = new System.Drawing.Point(583, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(115, 34);
@@ -149,8 +150,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(704, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);

@@ -60,13 +60,13 @@ namespace WinPaletter.Theme.Structures
         public int DesktopIconSize = 48;
 
         /// <summary>
-        /// Size of shell icons (used in Windows XP)
+        /// Size of shell icons (used in Windows WXP)
         /// <br>Default: <b>32</b></br>
         /// </summary>
         public int ShellIconSize = 32;
 
         /// <summary>
-        /// Size of small icons (used in Windows XP)
+        /// Size of small icons (used in Windows WXP)
         /// <br>Default: <b>16</b></br>
         /// </summary>
         public int ShellSmallIconSize = 16;
@@ -134,7 +134,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Overwrite current metrics values by values inside a visual styles file opened by Devcorp advanced UxTheme wrapper
+        /// Overwrite current metrics values by values inside a visual styles File opened by Devcorp advanced UxTheme wrapper
         /// </summary>
         /// <param name="vs">Devcorp.Controls.VisualStyles.VisualStyleMetrics</param>
         public void Overwrite_Metrics(VisualStyleMetrics vs)
@@ -147,7 +147,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Overwrite current fonts values by values inside a visual styles file opened by Devcorp advanced UxTheme wrapper
+        /// Overwrite current fonts values by values inside a visual styles File opened by Devcorp advanced UxTheme wrapper
         /// </summary>
         /// <param name="vs">Devcorp.Controls.VisualStyles.VisualStyleMetrics</param>
         public void Overwrite_Fonts(VisualStyleMetrics vs)
@@ -180,6 +180,7 @@ namespace WinPaletter.Theme.Structures
             SmCaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", @default.SmCaptionHeight * -15)) / -15;
             SmCaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", @default.SmCaptionWidth * -15)) / -15;
 
+            // Get Shell Icon Size and Shell Small Icon Size only on Windows WXP
             if (OS.WXP)
             {
                 try { ShellIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", @default.ShellIconSize)); }
@@ -200,6 +201,7 @@ namespace WinPaletter.Theme.Structures
             ICONMETRICS ICO = new();
             ICO.cbSize = (uint)Marshal.SizeOf(ICO);
 
+            // Get fonts by using SystemParametersInfo
             SystemParametersInfo(null, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);
             SystemParametersInfo(null, SPI.SPI_GETNONCLIENTMETRICS, (int)NCM.cbSize, ref NCM, SPIF.SPIF_NONE);
 
@@ -210,6 +212,7 @@ namespace WinPaletter.Theme.Structures
             StatusFont = Font.FromLogFont(NCM.lfStatusFont);
             IconFont = Font.FromLogFont(ICO.lfFont);
 
+            // Get font smoothing state by using both registry and SystemParametersInfo
             bool temp = false;
             SystemParametersInfo(SPI.SPI_GETFONTSMOOTHING, default, ref temp, SPIF.SPIF_NONE);
             Fonts_SingleBitPP = !temp || Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", OS.WXP ? 1 : 2)) != 2;
@@ -227,6 +230,7 @@ namespace WinPaletter.Theme.Structures
             {
                 #region Metrics/Fonts override by msstyles
 
+                // Get visual styles data from ThemeManager, used to override Metrics/Fonts
                 VisualStyles _vs = new();
 
                 if (Program.TM is not null)
@@ -257,6 +261,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
+                // Override Metrics/Fonts by visual styles
                 if (_vs.Enabled && _vs.OverrideSizes)
                 {
                     if (System.IO.File.Exists(_vs.ThemeFile))
@@ -287,7 +292,7 @@ namespace WinPaletter.Theme.Structures
                                         Overwrite_Metrics(vs.Metrics);
                                         Overwrite_Fonts(vs.Metrics);
                                     }
-                                    catch { } // Couldn't load visual styles file.
+                                    catch { } // Couldn't load visual styles File.
                                 }
                             }
                         }
@@ -296,25 +301,27 @@ namespace WinPaletter.Theme.Structures
 
                 #endregion
 
+                // Get current DPI and set it to 100% to avoid DPI scaling issues
                 int OldDPI = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor()));
                 EditReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
 
-                NativeMethods.GDI32.LogFont lfCaptionFont = new();
+                // Convert fonts to LogFont
+                GDI32.LogFont lfCaptionFont = new();
                 CaptionFont.ToLogFont(lfCaptionFont);
 
-                NativeMethods.GDI32.LogFont lfIconFont = new();
+                GDI32.LogFont lfIconFont = new();
                 IconFont.ToLogFont(lfIconFont);
 
-                NativeMethods.GDI32.LogFont lfMenuFont = new();
+                GDI32.LogFont lfMenuFont = new();
                 MenuFont.ToLogFont(lfMenuFont);
 
-                NativeMethods.GDI32.LogFont lfMessageFont = new();
+                GDI32.LogFont lfMessageFont = new();
                 MessageFont.ToLogFont(lfMessageFont);
 
-                NativeMethods.GDI32.LogFont lfSMCaptionFont = new();
+                GDI32.LogFont lfSMCaptionFont = new();
                 SmCaptionFont.ToLogFont(lfSMCaptionFont);
 
-                NativeMethods.GDI32.LogFont lfStatusFont = new();
+                GDI32.LogFont lfStatusFont = new();
                 StatusFont.ToLogFont(lfStatusFont);
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
@@ -324,6 +331,7 @@ namespace WinPaletter.Theme.Structures
 
                 MetricsFonts MF = (MetricsFonts)Clone();
 
+                // Apply Metrics/Fonts in a new thread to avoid UI freeze when applying changes
                 await Task.Run(() =>
                 {
                     NONCLIENTMETRICS NCM = new();
@@ -354,10 +362,12 @@ namespace WinPaletter.Theme.Structures
                     ICO.iVertSpacing = MF.IconVerticalSpacing;
                     ICO.lfFont = lfIconFont;
 
+                    // Broadcast changes to all windows
                     SystemParametersInfo(treeView, SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.SPIF_WRITEANDNOTIFY);
                     SystemParametersInfo(treeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_WRITEANDNOTIFY);
                 });
 
+                // Apply Shell Icon Size and Shell Small Icon Size only on Windows WXP
                 if (OS.WXP)
                 {
                     EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
@@ -366,6 +376,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String);
 
+                // Apply metrics on HKEY_USERS\.DEFAULT (New users and default user) if it is set to overwrite in WinPaletter settings
                 if (Program.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToBytes(), RegistryValueKind.Binary);
@@ -393,11 +404,13 @@ namespace WinPaletter.Theme.Structures
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
                 }
 
+                // Apply font substitutes
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String);
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String);
 
                 if (string.IsNullOrWhiteSpace(FontSubstitute_SegoeUI))
                 {
+                    // Restore Segoe UI fonts
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String);
@@ -413,6 +426,7 @@ namespace WinPaletter.Theme.Structures
                 }
                 else
                 {
+                    // Remove Segoe UI fonts to use font substitute correctly
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", string.Empty, RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", string.Empty, RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", string.Empty, RegistryValueKind.String);
@@ -426,8 +440,11 @@ namespace WinPaletter.Theme.Structures
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", string.Empty, RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", string.Empty, RegistryValueKind.String);
                 }
+
+                // Apply SegoeUI font substitutes
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String);
 
+                // Restore DPI
                 EditReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", OldDPI);
             }
 
@@ -449,56 +466,56 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Retrun MetricsFonts structure into a string in format of Microsoft theme file (*.theme)
+        /// Retrun MetricsFonts structure into a string in format of Microsoft theme File (*.theme)
         /// </summary>
         /// <param name="win32UI">Win32UI structure to be included in the string</param>
-        public readonly string ToString(Theme.Structures.Win32UI? win32UI = null)
+        public readonly string ToString(Win32UI? win32UI = null)
         {
             StringBuilder s = new();
             s.Clear();
-            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_Copyrights, DateTime.Now.Year))}");
-            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_ProgrammedBy, Application.CompanyName))}");
-            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_CreatedFromAppVer, Program.TM.Info.AppVersion))}");
-            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_CreatedBy, Program.TM.Info.Author))}");
-            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_ThemeName, Program.TM.Info.ThemeName))}");
-            s.AppendLine($"; {(string.Format(Program.Lang.OldMSTheme_ThemeVersion, Program.TM.Info.ThemeVersion))}");
+            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.Copyrights, DateTime.Now.Year)}");
+            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.ProgrammedBy, Application.CompanyName)}");
+            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.CreatedFromAppVer, Program.TM.Info.AppVersion)}");
+            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.CreatedBy, Program.TM.Info.Author)}");
+            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.ThemeName, Program.TM.Info.ThemeName)}");
+            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.ThemeVersion, Program.TM.Info.ThemeVersion)}");
             s.AppendLine(string.Empty);
 
             if (win32UI is not null && win32UI.HasValue)
             {
                 s.AppendLine($"[Control Panel\\Colors]");
-                s.AppendLine($"ActiveTitle={win32UI.Value.ActiveTitle.ToWin32Reg()}");
-                s.AppendLine($"Background={win32UI.Value.Background.ToWin32Reg()}");
-                s.AppendLine($"Hilight={win32UI.Value.Hilight.ToWin32Reg()}");
-                s.AppendLine($"HilightText={win32UI.Value.HilightText.ToWin32Reg()}");
-                s.AppendLine($"TitleText={win32UI.Value.TitleText.ToWin32Reg()}");
-                s.AppendLine($"Window={win32UI.Value.Window.ToWin32Reg()}");
-                s.AppendLine($"WindowText={win32UI.Value.WindowText.ToWin32Reg()}");
-                s.AppendLine($"Scrollbar={win32UI.Value.Scrollbar.ToWin32Reg()}");
-                s.AppendLine($"InactiveTitle={win32UI.Value.InactiveTitle.ToWin32Reg()}");
-                s.AppendLine($"Menu={win32UI.Value.Menu.ToWin32Reg()}");
-                s.AppendLine($"WindowFrame={win32UI.Value.WindowFrame.ToWin32Reg()}");
-                s.AppendLine($"MenuText={win32UI.Value.MenuText.ToWin32Reg()}");
-                s.AppendLine($"ActiveBorder={win32UI.Value.ActiveBorder.ToWin32Reg()}");
-                s.AppendLine($"InactiveBorder={win32UI.Value.InactiveBorder.ToWin32Reg()}");
-                s.AppendLine($"AppWorkspace={win32UI.Value.AppWorkspace.ToWin32Reg()}");
-                s.AppendLine($"ButtonFace={win32UI.Value.ButtonFace.ToWin32Reg()}");
-                s.AppendLine($"ButtonShadow={win32UI.Value.ButtonShadow.ToWin32Reg()}");
-                s.AppendLine($"GrayText={win32UI.Value.GrayText.ToWin32Reg()}");
-                s.AppendLine($"ButtonText={win32UI.Value.ButtonText.ToWin32Reg()}");
-                s.AppendLine($"InactiveTitleText={win32UI.Value.InactiveTitleText.ToWin32Reg()}");
-                s.AppendLine($"ButtonHilight={win32UI.Value.ButtonHilight.ToWin32Reg()}");
-                s.AppendLine($"ButtonDkShadow={win32UI.Value.ButtonDkShadow.ToWin32Reg()}");
-                s.AppendLine($"ButtonLight={win32UI.Value.ButtonLight.ToWin32Reg()}");
-                s.AppendLine($"InfoText={win32UI.Value.InfoText.ToWin32Reg()}");
-                s.AppendLine($"InfoWindow={win32UI.Value.InfoWindow.ToWin32Reg()}");
-                s.AppendLine($"GradientActiveTitle={win32UI.Value.GradientActiveTitle.ToWin32Reg()}");
-                s.AppendLine($"GradientInactiveTitle={win32UI.Value.GradientInactiveTitle.ToWin32Reg()}");
-                s.AppendLine($"ButtonAlternateFace={win32UI.Value.ButtonAlternateFace.ToWin32Reg()}");
-                s.AppendLine($"HotTrackingColor={win32UI.Value.HotTrackingColor.ToWin32Reg()}");
-                s.AppendLine($"MenuHilight={win32UI.Value.MenuHilight.ToWin32Reg()}");
-                s.AppendLine($"MenuBar={win32UI.Value.MenuBar.ToWin32Reg()}");
-                s.AppendLine($"Desktop={win32UI.Value.Desktop.ToWin32Reg()}");
+                s.AppendLine($"ActiveTitle={win32UI.Value.ActiveTitle.ToStringWin32()}");
+                s.AppendLine($"Background={win32UI.Value.Background.ToStringWin32()}");
+                s.AppendLine($"Hilight={win32UI.Value.Hilight.ToStringWin32()}");
+                s.AppendLine($"HilightText={win32UI.Value.HilightText.ToStringWin32()}");
+                s.AppendLine($"TitleText={win32UI.Value.TitleText.ToStringWin32()}");
+                s.AppendLine($"Window={win32UI.Value.Window.ToStringWin32()}");
+                s.AppendLine($"WindowText={win32UI.Value.WindowText.ToStringWin32()}");
+                s.AppendLine($"Scrollbar={win32UI.Value.Scrollbar.ToStringWin32()}");
+                s.AppendLine($"InactiveTitle={win32UI.Value.InactiveTitle.ToStringWin32()}");
+                s.AppendLine($"Menu={win32UI.Value.Menu.ToStringWin32()}");
+                s.AppendLine($"WindowFrame={win32UI.Value.WindowFrame.ToStringWin32()}");
+                s.AppendLine($"MenuText={win32UI.Value.MenuText.ToStringWin32()}");
+                s.AppendLine($"ActiveBorder={win32UI.Value.ActiveBorder.ToStringWin32()}");
+                s.AppendLine($"InactiveBorder={win32UI.Value.InactiveBorder.ToStringWin32()}");
+                s.AppendLine($"AppWorkspace={win32UI.Value.AppWorkspace.ToStringWin32()}");
+                s.AppendLine($"ButtonFace={win32UI.Value.ButtonFace.ToStringWin32()}");
+                s.AppendLine($"ButtonShadow={win32UI.Value.ButtonShadow.ToStringWin32()}");
+                s.AppendLine($"GrayText={win32UI.Value.GrayText.ToStringWin32()}");
+                s.AppendLine($"ButtonText={win32UI.Value.ButtonText.ToStringWin32()}");
+                s.AppendLine($"InactiveTitleText={win32UI.Value.InactiveTitleText.ToStringWin32()}");
+                s.AppendLine($"ButtonHilight={win32UI.Value.ButtonHilight.ToStringWin32()}");
+                s.AppendLine($"ButtonDkShadow={win32UI.Value.ButtonDkShadow.ToStringWin32()}");
+                s.AppendLine($"ButtonLight={win32UI.Value.ButtonLight.ToStringWin32()}");
+                s.AppendLine($"InfoText={win32UI.Value.InfoText.ToStringWin32()}");
+                s.AppendLine($"InfoWindow={win32UI.Value.InfoWindow.ToStringWin32()}");
+                s.AppendLine($"GradientActiveTitle={win32UI.Value.GradientActiveTitle.ToStringWin32()}");
+                s.AppendLine($"GradientInactiveTitle={win32UI.Value.GradientInactiveTitle.ToStringWin32()}");
+                s.AppendLine($"ButtonAlternateFace={win32UI.Value.ButtonAlternateFace.ToStringWin32()}");
+                s.AppendLine($"HotTrackingColor={win32UI.Value.HotTrackingColor.ToStringWin32()}");
+                s.AppendLine($"MenuHilight={win32UI.Value.MenuHilight.ToStringWin32()}");
+                s.AppendLine($"MenuBar={win32UI.Value.MenuBar.ToStringWin32()}");
+                s.AppendLine($"Desktop={win32UI.Value.Desktop.ToStringWin32()}");
                 s.AppendLine(string.Empty);
             }
 

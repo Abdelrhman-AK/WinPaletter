@@ -7,8 +7,14 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
 {
+    /// <summary>
+    /// A control that simulates a classic window.
+    /// </summary>
     public class WindowControlR : Control
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowControlR"/> class.
+        /// </summary>
         public WindowControlR()
         {
             DoubleBuffered = true;
@@ -39,6 +45,9 @@ namespace WinPaletter.UI.Retro
         private Color buttonHilight = SystemColors.ButtonHighlight;
         private Color buttonLight = SystemColors.ControlLight;
 
+        /// <summary>
+        /// Gets or sets the color of the shadow of the button.
+        /// </summary>
         public Color ButtonShadow
         {
             get { return buttonShadow; }
@@ -52,6 +61,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the dark shadow of the button.
+        /// </summary>
         public Color ButtonDkShadow
         {
             get { return buttonDkShadow; }
@@ -65,6 +77,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the hilight of the button.
+        /// </summary>
         public Color ButtonHilight
         {
             get { return buttonHilight; }
@@ -78,6 +93,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the light of the button.
+        /// </summary>
         public Color ButtonLight
         {
             get { return buttonLight; }
@@ -91,6 +109,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Gets or sets the background color associated with this control.
+        /// </summary>
         public new Color BackColor
         {
             get => base.BackColor;
@@ -104,6 +125,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Enables the editing of colors by clicking on the control.
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingColors { get; set; } = false;
@@ -112,24 +136,46 @@ namespace WinPaletter.UI.Retro
 
         #region Events/Overrides
 
+        /// <summary>
+        /// Occurs when the editor is invoked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
+
+        /// <summary>
+        /// Occurs when the editor is invoked.
+        /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.FontChanged" /> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnFontChanged(EventArgs e)
         {
-            SetStyle();
+            SetPoints();
 
             base.OnFontChanged(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.Resize" /> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            SetStyle();
+            SetPoints();
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseLeave" /> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
+            // Reset editing flags
             if (!DesignMode && EnableEditingColors)
             {
                 CursorOnShadow = false;
@@ -144,8 +190,13 @@ namespace WinPaletter.UI.Retro
             base.OnMouseLeave(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.MouseMove" /> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            // If editing is enabled, check if the cursor is on a specific area of the control and set the flags accordingly
             if (!DesignMode && EnableEditingColors)
             {
                 CursorOnShadow = btnShadowPoints0.Contains(e.Location) || btnShadowPoints1.Contains(e.Location);
@@ -161,8 +212,13 @@ namespace WinPaletter.UI.Retro
             base.OnMouseMove(e);
         }
 
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.Click" /> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClick(EventArgs e)
         {
+            // If editing is enabled, invoke the editor event with the appropriate color name
             if (!DesignMode && EnableEditingColors)
             {
                 if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonShadow)));
@@ -180,21 +236,24 @@ namespace WinPaletter.UI.Retro
 
         #region Methods
 
-        private void SetStyle()
+        /// <summary>
+        /// Sets the points of the control for drawing.
+        /// </summary>
+        private void SetPoints()
         {
             Rect = new(0, 0, Width - 1, Height - 1);
 
-            btnShadowPoints0 = new PointF[] { new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1) };
-            btnShadowPoints1 = new PointF[] { new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1) };
+            btnShadowPoints0 = [new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1)];
+            btnShadowPoints1 = [new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1)];
 
-            btnDkShadowPoints0 = new PointF[] { new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height) };
-            btnDkShadowPoints1 = new PointF[] { new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height) };
+            btnDkShadowPoints0 = [new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height)];
+            btnDkShadowPoints1 = [new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height)];
 
-            btnHilightPoints0 = new PointF[] { new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1) };
-            btnHilightPoints1 = new PointF[] { new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2) };
+            btnHilightPoints0 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1)];
+            btnHilightPoints1 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2)];
 
-            btnLightPoints0 = new PointF[] { new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y) };
-            btnLightPoints1 = new PointF[] { new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1) };
+            btnLightPoints0 = [new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y)];
+            btnLightPoints1 = [new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1)];
 
             SizeF TextSize = Text.Measure(Font);
             RectText = new Rectangle(4, 4, (int)TextSize.Width, (int)TextSize.Height);
@@ -213,18 +272,25 @@ namespace WinPaletter.UI.Retro
         private bool _ColorEdit_Text => EnableEditingColors && CursorOnText;
 
         #endregion
-
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Forms.Control.Paint" /> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
+
+            // Create a rectangle that is 1 pixel less than the control's size
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
+            // Clear the control with the background color
             G.Clear(BackColor);
 
             #region Editor
 
+            // If editing is enabled and cursor is no face area, draw a hatch brush over the control
             if (_ColorEdit_Face)
             {
                 Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
@@ -233,6 +299,7 @@ namespace WinPaletter.UI.Retro
 
             #endregion
 
+            // Draw the window border
             using (Pen penButtonShadow = new(ButtonShadow))
             using (Pen penButtonDkShadow = new(ButtonDkShadow))
             using (Pen penButtonLight = new(ButtonLight))
@@ -253,6 +320,7 @@ namespace WinPaletter.UI.Retro
 
             #region Editor
 
+            // If editing is enabled and cursor is on a shadow line area, draw a line over the area
             if (_ColorEdit_Shadow)
             {
                 Color color = Color.FromArgb(200, 128, 0, 0);
@@ -263,6 +331,7 @@ namespace WinPaletter.UI.Retro
                 }
             }
 
+            // If editing is enabled and cursor is on a dark shadow line area, draw a line over the area
             if (_ColorEdit_DkShadow)
             {
                 Color color = Color.FromArgb(200, 128, 0, 0);
@@ -273,6 +342,7 @@ namespace WinPaletter.UI.Retro
                 }
             }
 
+            // If editing is enabled and cursor is on a hilight line area, draw a line over the area
             if (_ColorEdit_Hilight)
             {
                 Color color = Color.FromArgb(200, 128, 0, 0);
@@ -283,6 +353,7 @@ namespace WinPaletter.UI.Retro
                 }
             }
 
+            // If editing is enabled and cursor is on a light line area, draw a line over the area
             if (_ColorEdit_Light)
             {
                 Color color = Color.FromArgb(200, 128, 0, 0);
@@ -295,6 +366,7 @@ namespace WinPaletter.UI.Retro
 
             #endregion
 
+            // Draw the text (caption)
             using (SolidBrush br = new(ForeColor))
             {
                 G.DrawString(Text, Font, br, new Point(4, 4));
@@ -302,6 +374,7 @@ namespace WinPaletter.UI.Retro
 
             #region Editor
 
+            // If editing is enabled and cursor is on the caption area, draw a rectangle around the text
             if (_ColorEdit_Text)
             {
                 Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
@@ -316,6 +389,8 @@ namespace WinPaletter.UI.Retro
             #endregion
 
             base.OnPaint(e);
+
+
         }
     }
 }

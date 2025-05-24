@@ -6,10 +6,10 @@ namespace WinPaletter.UI.Controllers
 {
     public class ResizableControlHook : IDisposable
     {
-        private Control control;
+        private readonly Control control;
         private bool isResizing;
         private Point lastMousePos;
-        private int borderWidth = 4;
+        private readonly int borderWidth = 4;
         private bool isMouseOver;
 
         public ResizableControlHook(Control control)
@@ -145,7 +145,7 @@ namespace WinPaletter.UI.Controllers
         {
             if (isMouseOver)
             {
-                using (Pen pen = new Pen(Color.Black) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot })
+                using (Pen pen = new(Color.Black) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot })
                 {
                     e.Graphics.DrawRectangle(Pens.Gray, new Rectangle(0, 0, control.Width - 1, control.Height - 1));
                     e.Graphics.DrawRectangle(pen, new Rectangle(0, 0, control.Width - 1, control.Height - 1));

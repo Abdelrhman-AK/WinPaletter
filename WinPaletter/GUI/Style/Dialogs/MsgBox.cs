@@ -12,7 +12,14 @@ namespace WinPaletter.UI.Style
 {
     public partial class Dialogs
     {
+        /// <summary>
+        /// A class instance that provides modern task dialog.
+        /// </summary>
         private static TaskDialog _TD;
+
+        /// <summary>
+        /// A class instance that provides modern task dialog.
+        /// </summary>
 
         private static TaskDialog TD
         {
@@ -25,6 +32,7 @@ namespace WinPaletter.UI.Style
             [MethodImpl(MethodImplOptions.Synchronized)]
             set
             {
+                // Unsubscribe from the previous instance
                 if (_TD != null)
                 {
                     _TD.HyperlinkClicked -= TD_HyperlinkClicked;
@@ -37,7 +45,10 @@ namespace WinPaletter.UI.Style
                     _TD.Created -= TD_Created;
                 }
 
+                // Set the new instance
                 _TD = value;
+
+                // Subscribe to the new instance
                 if (_TD != null)
                 {
                     _TD.HyperlinkClicked += TD_HyperlinkClicked;
@@ -52,24 +63,34 @@ namespace WinPaletter.UI.Style
             }
         }
 
+        /// <summary>
+        /// Convert URLs to clickable links format
+        /// </summary>
+        /// <param name="String"></param>
+        /// <returns></returns>
         public static string ConvertToLink(string String)
         {
-            if (String == null)
-                return String;
+            // If the string is null, return it as it is
+            if (String == null) return String;
 
-            List<string> c = new();
+            List<string> c = [];
+
+            // Split the string by spaces
             foreach (string x in String.Split(' '))
             {
+                // Check if the string is a valid URL, if so, convert it to a clickable link
                 if (Uri.IsWellFormedUriString(x, UriKind.Absolute))
                 {
                     c.Add($"<a href=\"{x}\">{x}</a>");
                 }
                 else
                 {
+                    // If the string is not a valid URL, add it as it is
                     c.Add(x);
                 }
             }
 
+            // Return the formatted string
             return string.Join(" ", c);
         }
 
@@ -93,12 +114,14 @@ namespace WinPaletter.UI.Style
         {
             try
             {
+                // Windows WXP does not support the modern task dialog.
                 if (!OS.WXP)
                 {
+                    // Create a new instance of the modern task dialog.
                     TD = new()
                     {
                         EnableHyperlinks = true,
-                        RightToLeft = Program.Lang.RightToLeft,
+                        RightToLeft = Program.Lang.Information.RightToLeft,
                         ButtonStyle = TaskDialogButtonStyle.Standard,
                         Content = ConvertToLink((SubMessage ?? string.Empty).ToString()),
                         FooterIcon = FooterIcon,
@@ -111,20 +134,23 @@ namespace WinPaletter.UI.Style
                         Footer = ConvertToLink((Footer ?? string.Empty).ToString())
                     };
 
+                    // Get the icon of the footer
                     if (FooterCustomIcon is null)
                         FooterCustomIcon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
                     else
                         TD.CustomFooterIcon = FooterCustomIcon;
 
-                    TaskDialogButton okButton = new(ButtonType.Custom) { Text = Program.Lang.OK, ElevationRequired = RequireElevation };
-                    TaskDialogButton yesButton = new(ButtonType.Custom) { Text = Program.Lang.Yes, ElevationRequired = RequireElevation };
-                    TaskDialogButton noButton = new(ButtonType.Custom) { Text = Program.Lang.No };
-                    TaskDialogButton cancelButton = new(ButtonType.Custom) { Text = Program.Lang.Cancel };
-                    TaskDialogButton retryButton = new(ButtonType.Custom) { Text = Program.Lang.Retry, ElevationRequired = RequireElevation };
-                    TaskDialogButton closeButton = new(ButtonType.Custom) { Text = Program.Lang.Close };
+                    // Create the buttons of the dialog
+                    TaskDialogButton okButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.OK, ElevationRequired = RequireElevation };
+                    TaskDialogButton yesButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Yes, ElevationRequired = RequireElevation };
+                    TaskDialogButton noButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.No };
+                    TaskDialogButton cancelButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Cancel };
+                    TaskDialogButton retryButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Retry, ElevationRequired = RequireElevation };
+                    TaskDialogButton closeButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Close };
                     TaskDialogButton customButton = new(ButtonType.Custom);
                     TaskDialogIcon icon;
 
+                    // Set the buttons of the dialog based on the MessageBoxButtons
                     if (Buttons == MessageBoxButtons.YesNoCancel)
                     {
                         TD.Buttons.Add(yesButton);
@@ -155,28 +181,27 @@ namespace WinPaletter.UI.Style
                         TD.Buttons.Add(okButton);
                     }
 
-                    if (Icon == MessageBoxIcon.Information)
-                        icon = TaskDialogIcon.Information;
+                    // Set information icon based on MessageBoxIcon
+                    if (Icon == MessageBoxIcon.Information) icon = TaskDialogIcon.Information;
 
                     else if (Icon == MessageBoxIcon.Question)
                     {
                         try { SystemSounds.Exclamation.Play(); }
                         catch { } // catch is used as an exception may be thrown if there is no sound driver installed
 
+                        // Set question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower)
                         icon = TaskDialogIcon.Custom;
 
                         TD.CustomMainIcon = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);
                     }
 
-                    else if (Icon == MessageBoxIcon.Error)
-                        icon = TaskDialogIcon.Error;
+                    else if (Icon == MessageBoxIcon.Error) icon = TaskDialogIcon.Error;
 
-                    else if (Icon == MessageBoxIcon.Exclamation)
-                        icon = TaskDialogIcon.Warning;
+                    else if (Icon == MessageBoxIcon.Exclamation) icon = TaskDialogIcon.Warning;
 
-                    else
-                        icon = TaskDialogIcon.Custom;
+                    else icon = TaskDialogIcon.Custom;
 
+                    // Set the icon of the dialog
                     TD.MainIcon = icon;
 
                     DialogResult result = DialogResult.OK;
@@ -211,30 +236,46 @@ namespace WinPaletter.UI.Style
                         result = DialogResult.OK;
                     }
 
-                    TD.Dispose();
-                    resultButton.Dispose();
-                    okButton.Dispose();
-                    yesButton.Dispose();
-                    noButton.Dispose();
-                    cancelButton.Dispose();
-                    retryButton.Dispose();
-                    closeButton.Dispose();
-                    customButton.Dispose();
+                    // Dispose the dialog and its components to free up memory
+                    resultButton?.Dispose();
+                    okButton?.Dispose();
+                    yesButton?.Dispose();
+                    noButton?.Dispose();
+                    cancelButton?.Dispose();
+                    retryButton?.Dispose();
+                    closeButton?.Dispose();
+                    customButton?.Dispose();
+                    TD?.CustomFooterIcon?.Dispose();
+                    FooterCustomIcon?.Dispose();
+                    TD?.Dispose();
 
                     return result;
                 }
 
                 else
                 {
+                    // If the operating system is Windows WXP, use the classic message box dialog.
                     return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Buttons, Icon);
                 }
             }
             catch
             {
+                // If an error occurred, use the classic message box dialog.
                 return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Buttons, Icon);
             }
         }
 
+        /// <summary>
+        /// Windows WXP Styled MsgBox
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="ExpandedDetails"></param>
+        /// <param name="Footer"></param>
+        /// <param name="DialogTitle"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <returns></returns>
         private static DialogResult Msgbox_Classic(object Message, object SubMessage, object ExpandedDetails, object Footer, object DialogTitle, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information)
         {
             string SM = !string.IsNullOrWhiteSpace((SubMessage ?? string.Empty).ToString()) ? $"\r\n\r\n{SubMessage}" : string.Empty;
@@ -247,56 +288,167 @@ namespace WinPaletter.UI.Style
 
 
         #region MsgBox Functions Branches
+
+        /// <summary>
+        /// A function that shows a message box with a message and an OK button.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message)
         {
             return MsgBox(Message, MessageBoxButtons.OK, MessageBoxIcon.None, null, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message and buttons.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons)
         {
             return MsgBox(Message, Buttons, MessageBoxIcon.None, null, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, and an icon.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon)
         {
             return MsgBox(Message, Buttons, Icon, null, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, and a sub-message.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, a sub-message, and a collapsed text.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="CollapsedText"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, null, null, null, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, a sub-message, a collapsed text, and an expanded text.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="CollapsedText"></param>
+        /// <param name="ExpandedText"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, null, null, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, a sub-message, a collapsed text, an expanded text, and expanded details.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="CollapsedText"></param>
+        /// <param name="ExpandedText"></param>
+        /// <param name="ExpandedDetails"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, null, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, a sub-message, a collapsed text, an expanded text, expanded details, and a dialog title.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="CollapsedText"></param>
+        /// <param name="ExpandedText"></param>
+        /// <param name="ExpandedDetails"></param>
+        /// <param name="DialogTitle"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails, object DialogTitle)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, null, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, a sub-message, a collapsed text, an expanded text, expanded details, a dialog title, and a footer.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="CollapsedText"></param>
+        /// <param name="ExpandedText"></param>
+        /// <param name="ExpandedDetails"></param>
+        /// <param name="DialogTitle"></param>
+        /// <param name="Footer"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails, object DialogTitle, object Footer)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, TaskDialogIcon.Custom, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, a sub-message, a collapsed text, an expanded text, expanded details, a dialog title, a footer, and a footer icon.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="CollapsedText"></param>
+        /// <param name="ExpandedText"></param>
+        /// <param name="ExpandedDetails"></param>
+        /// <param name="DialogTitle"></param>
+        /// <param name="Footer"></param>
+        /// <param name="FooterIcon"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails, object DialogTitle, object Footer, TaskDialogIcon FooterIcon)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, FooterIcon, null, false);
         }
 
+        /// <summary>
+        /// A function that shows a message box with a message, buttons, an icon, a sub-message, a collapsed text, an expanded text, expanded details, a dialog title, a footer, a footer icon, and a custom footer icon.
+        /// </summary>
+        /// <param name="Message"></param>
+        /// <param name="Buttons"></param>
+        /// <param name="Icon"></param>
+        /// <param name="SubMessage"></param>
+        /// <param name="CollapsedText"></param>
+        /// <param name="ExpandedText"></param>
+        /// <param name="ExpandedDetails"></param>
+        /// <param name="DialogTitle"></param>
+        /// <param name="Footer"></param>
+        /// <param name="FooterIcon"></param>
+        /// <param name="FooterCustomIcon"></param>
+        /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails, object DialogTitle, object Footer, TaskDialogIcon FooterIcon, Icon FooterCustomIcon)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, FooterIcon, FooterCustomIcon, false);
@@ -305,11 +457,16 @@ namespace WinPaletter.UI.Style
         #endregion
 
         #region Events/Overrides
+
+        /// <summary>
+        /// A void that handles the HyperlinkClicked event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TD_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
         {
             // Check if e.Href is a valid URL
-            Uri uriResult;
-            bool isValidUrl = Uri.TryCreate(e.Href, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            bool isValidUrl = Uri.TryCreate(e.Href, UriKind.Absolute, out Uri uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
 
             if (isValidUrl)
             {
@@ -318,48 +475,89 @@ namespace WinPaletter.UI.Style
             }
         }
 
+        /// <summary>
+        /// A void that handles the RadioButtonClicked event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TD_RadioButtonClicked(object sender, TaskDialogItemClickedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// A void that handles the Timer event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TD_Timer(object sender, TimerEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// A void that handles the VerificationClicked event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TD_VerificationClicked(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// A void that handles the HelpRequested event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TD_HelpRequested(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// A void that handles the ExpandButtonClicked event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TD_ExpandButtonClicked(object sender, ExpandButtonClickedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// A void that handles the ButtonClicked event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TD_ButtonClicked(object sender, TaskDialogItemClickedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// A void that handles the Created event of the modern task dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static void TD_Created(object sender, EventArgs e)
         {
+            // The following code is used to apply the modern style to the dialog and its child controls.
+            // It used as a trial to make task dialogs have complete dark mode, but it is not fully functional yet.
+
+            // Get the handle of the dialog
             IntPtr hWnd = (sender as IWin32Window).Handle;
 
-            ApplyStyle(hWnd, true);
+            // Apply the modern style to the dialog: including titlebar dark/light mode, and rounded/sharp corners
+            //ApplyStyle(hWnd, true);
 
-            foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(sender as IWin32Window))
-            {
-                ApplyStyle(ChildHwnd, false);
-            }
+            //// Apply the modern style to the child controls of the dialog
+            //foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(sender as IWin32Window))
+            //{
+            //    ApplyStyle(ChildHwnd, false);
+            //}
         }
-        #endregion
 
+        #endregion
     }
 }

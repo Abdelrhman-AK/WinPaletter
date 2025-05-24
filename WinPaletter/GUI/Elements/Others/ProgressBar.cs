@@ -94,7 +94,7 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
-                Transition t1 = Transition.With(this, nameof(Value_Animation), Maximum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation2).Build(new FluentTransitions.Methods.ThrowAndCatch(TimeSpan.FromMilliseconds(AnimationDuration)));
+                Transition t1 = Transition.With(this, nameof(Value_Animation), Maximum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation2).Build(new ThrowAndCatch(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                 t1.Run();
             }
         }
@@ -103,7 +103,7 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
-                Transition t1 = Transition.With(this, nameof(Value_Animation), Minimum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation1).Build(new ThrowAndCatch(TimeSpan.FromMilliseconds(AnimationDuration)));
+                Transition t1 = Transition.With(this, nameof(Value_Animation), Minimum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation1).Build(new ThrowAndCatch(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                 t1.Run();
             }
         }
@@ -156,7 +156,7 @@ namespace WinPaletter.UI.WP
 
                     if (CanAnimate && Style != ProgressBarStyle.Marquee)
                     {
-                        FluentTransitions.Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(AnimationDuration));
+                        FluentTransitions.Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
                     else { Value_Animation = _value; }
 
@@ -207,7 +207,7 @@ namespace WinPaletter.UI.WP
                             }
                     }
 
-                    if (!DesignMode) { FluentTransitions.Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(AnimationDuration)); }
+                    if (!DesignMode) { FluentTransitions.Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
                     else { StateColor = color; }
 
                     UpdateTaskbar();
@@ -272,7 +272,6 @@ namespace WinPaletter.UI.WP
         }
 
         #region Properties for animation purposes only
-        public int AnimationDuration { get; set; } = 1000;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
@@ -471,6 +470,13 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+
+            if (Visible) { UpdateTaskbar(); } else { SetProgressState(TaskbarProgressBarState.NoProgress); }
+        }
+
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             //Leave it empty to make control background transparent
@@ -487,14 +493,14 @@ namespace WinPaletter.UI.WP
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            Rectangle rect = new(0, 0, Width, Height - 1);
+            Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
             if (Appearance == ProgressBarAppearance.Bar)
             {
                 float _percent = Style == ProgressBarStyle.Continuous ? Percentage : 0.5f;
                 float _startX = Style == ProgressBarStyle.Continuous ? 0 : Width * Percentage - 0.25f * Width;
 
-                Rectangle rectValue = new((int)_startX, 0, (int)(rect.Width * _percent), Height - 1);
+                RectangleF rectValue = new(_startX, 0, rect.Width * _percent, Height - 1);
 
                 int radius = Height / 3;
 
@@ -505,7 +511,7 @@ namespace WinPaletter.UI.WP
                     G.FillRoundedRect(br, rect, radius);
                 }
 
-                using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? StateColor.Dark(0.3f) : StateColor.Light(), StateColor, LinearGradientMode.Horizontal))
+                using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? StateColor.Dark(0.05f) : StateColor.Light(), StateColor, Percentage * 360f, true))
                 {
                     G.FillRoundedRect(br, rectValue, radius);
                 }
@@ -514,9 +520,11 @@ namespace WinPaletter.UI.WP
 
                 G.ResetClip();
 
-                using (Pen P = new(scheme.Colors.Line(parentLevel)))
+                using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
+                using (Pen P_Value = new(Color.FromArgb((int)(Percentage * 255), StateColor)))
                 {
-                    G.DrawRoundedRect_LikeW11(P, rect, radius);
+                    G.DrawRoundedRect(P, rect, radius);
+                    G.DrawRoundedRect(P_Value, rectValue, radius);
                 }
             }
 
@@ -526,16 +534,14 @@ namespace WinPaletter.UI.WP
                 float _percent = Style == ProgressBarStyle.Continuous ? Percentage : 0.5f;
                 float _startAngle = Style == ProgressBarStyle.Continuous ? -90 : Percentage * -360;
 
-                Rectangle CircleRect = new((int)PenWidth, (int)PenWidth, rect.Width - (int)PenWidth * 2, rect.Height - (int)PenWidth * 2 + 1);
+                RectangleF CircleRect = new(PenWidth, PenWidth, rect.Width - PenWidth * 2, rect.Height - PenWidth * 2 + 1);
 
                 if (CircleRect.Width < 10) { CircleRect.Width = 10; }
                 if (CircleRect.Height < 10) { CircleRect.Height = 10; }
 
-                Color StateColor2 = Program.Style.DarkMode ? StateColor.Light() : StateColor.Dark();
-
-                using (LinearGradientBrush brush = new(rect, StateColor, StateColor2, LinearGradientMode.ForwardDiagonal))
+                using (LinearGradientBrush br = new(rect, StateColor, Program.Style.DarkMode ? StateColor.Light() : StateColor.LightLight(), Percentage * 360f, true))
                 {
-                    using (Pen pen = new(brush, PenWidth))
+                    using (Pen pen = new(br, PenWidth))
                     {
                         using (Pen penNoise = new(Noise, PenWidth))
                         {
@@ -543,13 +549,12 @@ namespace WinPaletter.UI.WP
                             pen.EndCap = pen.StartCap;
 
                             using (LinearGradientBrush brush2 = new(rect, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.BackwardDiagonal))
+                            using (Pen pen_background = new(brush2, PenWidth))
+                            using (Pen pen_border = new(scheme.Colors.Line_Hover(parentLevel)))
                             {
-                                using (Pen pen2 = new(brush2, PenWidth))
-                                {
-                                    G.DrawArc(pen2, CircleRect, -90, 360);
-                                    G.DrawArc(pen, CircleRect, _startAngle, (int)Math.Round((double)(_percent * 360)));
-                                    G.DrawArc(penNoise, CircleRect, _startAngle, (int)Math.Round((double)(_percent * 360)));
-                                }
+                                G.DrawArc(pen_background, CircleRect, -90, 360);
+                                G.DrawArc(pen, CircleRect, _startAngle, (int)Math.Round((double)(_percent * 360)));
+                                G.DrawArc(penNoise, CircleRect, _startAngle, (int)Math.Round((double)(_percent * 360)));
                             }
                         }
                     }
@@ -559,6 +564,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+
+
         }
     }
 }

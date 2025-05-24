@@ -9,18 +9,21 @@ namespace WinPaletter.Theme
 {
     public partial class Manager
     {
-        private static RGBColorComparer colorComparer = new();
+        /// <summary>
+        /// A comparer for RGB colors. Useful for sorting lists of colors.
+        /// </summary>
+        private static readonly RGBColorComparer colorComparer = new();
 
         /// <summary>
-        /// Get all colors inside a .theme file
+        /// Get all colors inside a .theme File
         /// </summary>
-        /// <param name="Filename">.theme file</param>
+        /// <param name="Filename">.theme file path</param>
         /// <returns></returns>
         public static List<Color> ListColorsFromMSTheme(string Filename)
         {
             if (System.IO.File.Exists(Filename))
             {
-                List<Color> ls = new();
+                List<Color> ls = [];
                 ls.Clear();
 
                 foreach (string x in System.IO.File.ReadAllText(Filename).Split('\r'))
@@ -33,7 +36,7 @@ namespace WinPaletter.Theme
                         {
                             if (!u.All(char.IsDigit)) inx = false;
                         }
-                        if (inx) ls.Add(c.FromWin32RegToColor());
+                        if (inx) ls.Add(c.ToColorFromWin32());
                     }
                 }
 
@@ -48,17 +51,17 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Get all colors inside from a string
-        /// <br><b>Take a look at Properties.Resources.ClassicColorsDB</b></br>
+        /// Get all colors inside from a string.
+        /// <br><b>Take a look at <see cref="Schemes"/>. </b></br>
         /// </summary>
-        /// <param name="DB">DB that has .theme file data</param>
+        /// <param name="DB">DB that has .theme File data</param>
         /// <param name="ThemeName">Selected theme name</param>
         /// <returns></returns>
         public static List<Color> ListColorsFromString(string DB, string ThemeName)
         {
             if (string.IsNullOrWhiteSpace(DB) || !DB.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) { return null; }
 
-            List<Color> ls = new();
+            List<Color> ls = [];
             ls.Clear();
 
             string SelectedTheme = string.Empty;
@@ -103,23 +106,16 @@ namespace WinPaletter.Theme
         {
             get
             {
-                List<Color> CL = new();
+                List<Color> CL = [];
                 CL.Clear();
 
                 foreach (FieldInfo field in typeof(Windows10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
+                        CL.Add((Color)field.GetValue(Windows12));
                         CL.Add((Color)field.GetValue(Windows11));
                         CL.Add((Color)field.GetValue(Windows10));
-                    }
-                }
-
-                foreach (FieldInfo field in typeof(LogonUI10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)field.GetValue(LogonUI10x));
                     }
                 }
 
@@ -147,15 +143,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                foreach (FieldInfo field in typeof(WindowsXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)field.GetValue(WindowsXP));
-                    }
-                }
-
-                foreach (FieldInfo field in typeof(Theme.Structures.LogonUI7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                foreach (FieldInfo field in typeof(Structures.LogonUI7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
@@ -163,7 +151,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                foreach (FieldInfo field in typeof(Theme.Structures.LogonUIXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                foreach (FieldInfo field in typeof(Structures.LogonUIXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
@@ -171,7 +159,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                foreach (FieldInfo field in typeof(Theme.Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                foreach (FieldInfo field in typeof(Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
@@ -183,6 +171,7 @@ namespace WinPaletter.Theme
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
+                        CL.Add((Color)field.GetValue(WallpaperTone_W12));
                         CL.Add((Color)field.GetValue(WallpaperTone_W11));
                         CL.Add((Color)field.GetValue(WallpaperTone_W10));
                         CL.Add((Color)field.GetValue(WallpaperTone_W81));
@@ -192,7 +181,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                foreach (FieldInfo field in typeof(Theme.Structures.Console).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                foreach (FieldInfo field in typeof(Structures.Console).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
@@ -275,7 +264,7 @@ namespace WinPaletter.Theme
                 CL.Add(Terminal.Profiles.Defaults.TabColor);
                 CL.Add(TerminalPreview.Profiles.Defaults.TabColor);
 
-                foreach (FieldInfo field in typeof(Theme.Structures.Cursor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                foreach (FieldInfo field in typeof(Cursor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
@@ -305,8 +294,7 @@ namespace WinPaletter.Theme
 
                 if (CL.Contains(Color.FromArgb(0, 0, 0, 0)))
                 {
-                    while (CL.Contains(Color.FromArgb(0, 0, 0, 0)))
-                        CL.Remove(Color.FromArgb(0, 0, 0, 0));
+                    while (CL.Contains(Color.FromArgb(0, 0, 0, 0))) CL.Remove(Color.FromArgb(0, 0, 0, 0));
                 }
 
                 return CL;
@@ -314,7 +302,7 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// Decompress a WinPaletter theme file
+        /// Decompress a WinPaletter theme File
         /// </summary>
         private static IEnumerable<string> Decompress(string File)
         {

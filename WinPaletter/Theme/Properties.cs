@@ -23,7 +23,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Visual styles structure instance that contains data about Windows 12, and it can be customized.
         /// </summary>
-        public Theme.Structures.VisualStyles VisualStyles_12 = new();
+        public Structures.VisualStyles VisualStyles_12 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 11 colors and appearance, and it can be customized.
@@ -33,7 +33,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Visual styles structure instance that contains data about Windows 11, and it can be customized.
         /// </summary>
-        public Theme.Structures.VisualStyles VisualStyles_11 = new();
+        public Structures.VisualStyles VisualStyles_11 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 10 colors and appearance, and it can be customized.
@@ -57,7 +57,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Visual styles structure instance that contains data about Windows 10, and it can be customized.
         /// </summary>
-        public Theme.Structures.VisualStyles VisualStyles_10 = new();
+        public Structures.VisualStyles VisualStyles_10 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 8.1 colors and appearance, and it can be customized.
@@ -67,7 +67,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Visual styles structure instance that contains data about Windows 8.1, and it can be customized.
         /// </summary>
-        public Theme.Structures.VisualStyles VisualStyles_81 = new();
+        public Structures.VisualStyles VisualStyles_81 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 7 colors and appearance, and it can be customized.
@@ -77,7 +77,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Visual styles structure instance that contains data about Windows 7, and it can be customized.
         /// </summary>
-        public Theme.Structures.VisualStyles VisualStyles_7 = new();
+        public Structures.VisualStyles VisualStyles_7 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows Vista colors and appearance, and it can be customized.
@@ -87,22 +87,27 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Visual styles structure instance that contains data about Windows Vista, and it can be customized.
         /// </summary>
-        public Theme.Structures.VisualStyles VisualStyles_Vista = new();
+        public Structures.VisualStyles VisualStyles_Vista = new();
 
         /// <summary>
-        /// Structure instance that contains data about Windows XP colors and appearance, and it can be customized.
+        /// Structure instance that contains data about Windows WXP colors and appearance, and it can be customized.
         /// </summary>
         public WindowsXP WindowsXP = new();
 
         /// <summary>
-        /// Visual styles structure instance that contains data about Windows XP, and it can be customized.
+        /// Visual styles structure instance that contains data about Windows WXP, and it can be customized.
         /// </summary>
-        public Theme.Structures.VisualStyles VisualStyles_XP = new() { ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", SizeScheme = "Normal" };
+        public Structures.VisualStyles VisualStyles_XP = new() { ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", SizeScheme = "Normal" };
 
         /// <summary>
         /// Structure instance that contains data about classic Windows colors, and it can be customized.
         /// </summary>
         public Structures.Win32UI Win32 = new();
+
+        /// <summary>
+        /// Structure instance that contains data about Windows Accessibility, and it can be customized.
+        /// </summary>
+        public Accessibility Accessibility = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 10/11/12 LogonUI appearance, and it can be customized.
@@ -120,7 +125,7 @@ namespace WinPaletter.Theme
         public Structures.LogonUI7 LogonUI7 = new();
 
         /// <summary>
-        /// Structure instance that contains data about Windows XP LogonUI appearance, and it can be customized.
+        /// Structure instance that contains data about Windows WXP LogonUI appearance, and it can be customized.
         /// </summary>
         public Structures.LogonUIXP LogonUIXP = new();
 
@@ -173,7 +178,7 @@ namespace WinPaletter.Theme
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
-        /// <br></br>This property targets Windows XP (to avoid overlapping).
+        /// <br></br>This property targets Windows WXP (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
         public WallpaperTone WallpaperTone_WXP = new() { Image = $"{SysPaths.Windows}\\Web\\Wallpaper\\Bliss.bmp" };
@@ -211,22 +216,22 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows icons, and it can be customized.
         /// </summary>
-        public Structures.Icons Icons = new();
+        public Icons Icons = new();
 
         /// <summary>
         /// Structure instance that contains data about Command Prompt, and it can be customized.
         /// </summary>
-        public Structures.Console CommandPrompt = new();
+        public Console CommandPrompt = new();
 
         /// <summary>
         /// Structure instance that contains data about PowerShell x86, and it can be customized.
         /// </summary>
-        public Structures.Console PowerShellx86 = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx86 = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// Structure instance that contains data about PowerShell x64, and it can be customized.
         /// </summary>
-        public Structures.Console PowerShellx64 = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx64 = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// class that contains data about Windows Terminal Stable, and it can be customized.

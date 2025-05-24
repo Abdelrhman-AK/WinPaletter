@@ -8,9 +8,15 @@ using System.Windows.Forms;
 namespace WinPaletter.UI.Retro
 {
 
+    /// <summary>
+    /// A magnified preview of a 3D panel with Windows 9x style.
+    /// </summary>
     [Description("Retro 3D Panel Preview with Windows 9x style")]
     public class Preview3D : Control
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Preview3D"/> class.
+        /// </summary>
         public Preview3D()
         {
             DoubleBuffered = true;
@@ -25,6 +31,9 @@ namespace WinPaletter.UI.Retro
         private Color buttonLight = Color.FromArgb(192, 192, 192);
         private int lineSize = 6;
 
+        /// <summary>
+        /// BackColor property (button face color).
+        /// </summary>
         public new Color BackColor
         {
             get => base.BackColor;
@@ -38,6 +47,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Color of border of a focused 3D button.
+        /// </summary>
         public Color WindowFrame
         {
             get { return windowFrame; }
@@ -51,6 +63,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Color of the shadow of a 3D button.
+        /// </summary>
         public Color ButtonShadow
         {
             get { return buttonShadow; }
@@ -64,6 +79,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Color of the dark shadow of a 3D button.
+        /// </summary>
         public Color ButtonDkShadow
         {
             get { return buttonDkShadow; }
@@ -77,6 +95,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Color of the hilight of a 3D button.
+        /// </summary>
         public Color ButtonHilight
         {
             get { return buttonHilight; }
@@ -90,6 +111,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Color of the light of a 3D button.
+        /// </summary>
         public Color ButtonLight
         {
             get { return buttonLight; }
@@ -103,6 +127,9 @@ namespace WinPaletter.UI.Retro
             }
         }
 
+        /// <summary>
+        /// Size of the lines of the 3D button.
+        /// </summary>
         public int LineSize
         {
             get { return lineSize; }
@@ -118,6 +145,10 @@ namespace WinPaletter.UI.Retro
 
         #endregion
 
+        /// <summary>
+        /// Paints the control.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Bitmap B = new(Width, Height);

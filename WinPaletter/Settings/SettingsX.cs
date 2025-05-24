@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,19 +8,38 @@ using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
-
+    /// <summary>
+    /// Settings form for WinPaletter
+    /// </summary>
     public partial class SettingsX
     {
+        /// <summary>
+        /// A flag to determine if the settings is to be loaded from a file externally
+        /// </summary>
         public bool _External = false;
+
+        /// <summary>
+        /// The file to load the settings from
+        /// </summary>
         public string _File = null;
+
+        /// <summary>
+        /// A flag to determine if the settings has been changed
+        /// </summary>
         private bool Changed = false;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsX"/> class.
+        /// </summary>
         public SettingsX()
         {
             InitializeComponent();
         }
 
-        public void LoadSettings()
+        /// <summary>
+        /// Load WinPaletter settings
+        /// </summary>
+        private void LoadSettings()
         {
             Settings sets;
 
@@ -33,23 +51,28 @@ namespace WinPaletter
             Read(sets);
 
             ref Localizer lang = ref Program.Lang;
-            Label11.Text = lang.Name;
-            Label12.Text = lang.TranslationVersion;
-            Label14.Text = $"{lang.AppVer} {Program.Lang.AndBelow}";
-            Label19.Text = lang.Lang;
-            Label16.Text = lang.LangCode;
-            Label22.Text = !lang.RightToLeft ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft;
+            Label11.Text = lang.Information.Name;
+            Label12.Text = lang.Information.TranslationVersion;
+            Label14.Text = $"{lang.Information.AppVer} {Program.Lang.Strings.General.AndBelow}";
+            Label19.Text = lang.Information.Lang;
+            Label16.Text = lang.Information.LangCode;
+            Label22.Text = !lang.Information.RightToLeft ? Program.Lang.Strings.Languages.LeftToRight : Program.Lang.Strings.Languages.RightToLeft;
 
             TextBox3.Text = Program.Settings.Language.File;
         }
 
-        public void Read(Settings Sets)
+        /// <summary>
+        /// Read settings from the settings object
+        /// </summary>
+        /// <param name="Sets"></param>
+        private void Read(Settings Sets)
         {
             toggle6.Checked = Sets.FileTypeManagement.AutoAddExt;
 
             RadioButton1.Checked = Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
             RadioButton2.Checked = !Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt;
 
+            toggle38.Checked = Sets.ThemeApplyingBehavior.CreateSystemRestore;
             toggle8.Checked = Sets.ThemeApplyingBehavior.AutoRestartExplorer;
             toggle13.Checked = Sets.ThemeApplyingBehavior.ResetCursorsToAero;
 
@@ -168,11 +191,11 @@ namespace WinPaletter
             toggle12.Checked = Sets.ThemeApplyingBehavior.Show_WinEffects_Alert;
             toggle29.Checked = Sets.NerdStats.DragAndDrop;
 
-            Label38.Text = CalcStoreCache().SizeString();
-            Label43.Text = CalcThemesResCache().SizeString();
-            label2.Text = CalcBackupsCache().SizeString();
-            label5.Text = CalcExErrors().SizeString();
-            label7.Text = CalcAppCore().SizeString();
+            Label38.Text = CalcStoreCache().ToStringFileSize();
+            Label43.Text = CalcThemesResCache().ToStringFileSize();
+            label2.Text = CalcBackupsCache().ToStringFileSize();
+            label5.Text = CalcExErrors().ToStringFileSize();
+            label7.Text = CalcAppCore().ToStringFileSize();
 
             RadioImage1.Checked = Sets.Store.Online_or_Offline;
             RadioImage2.Checked = !Sets.Store.Online_or_Offline;
@@ -200,6 +223,8 @@ namespace WinPaletter
             toggle32.Checked = Sets.BackupTheme.AutoBackupOnApply;
             toggle36.Checked = Sets.BackupTheme.AutoBackupOnApplySingleAspect;
             toggle34.Checked = Sets.BackupTheme.AutoBackupOnThemeLoad;
+            toggle39.Checked = Sets.BackupTheme.AutoBackupOnExError;
+
             textBox4.Text = Sets.BackupTheme.BackupPath;
 
             toggle11.Checked = Sets.AspectsControl.Enabled;
@@ -217,6 +242,7 @@ namespace WinPaletter
             checkBox12.Checked = Sets.AspectsControl.AltTab;
             checkBox14.Checked = Sets.AspectsControl.Icons;
             checkBox15.Checked = Sets.AspectsControl.VisualStyles;
+            checkBox16.Checked = Sets.AspectsControl.Accessibility;
 
             checker_mode_advanced.Checked = Sets.AspectsControl.WinColors_Advanced;
             checker_mode_simple.Checked = !Sets.AspectsControl.WinColors_Advanced;
@@ -230,7 +256,10 @@ namespace WinPaletter
             radioImage9.Checked = !Sets.AspectsControl.Wallpaper_Advanced;
         }
 
-        public void SaveSettings()
+        /// <summary>
+        /// Save WinPaletter settings
+        /// </summary>
+        private void SaveSettings()
         {
             Cursor = Cursors.WaitCursor;
 
@@ -242,6 +271,7 @@ namespace WinPaletter
             bool ch_EP = false;
             //bool ch_WPElevator = false;
 
+            // A quick check for settings change
             {
                 ref Settings Settings = ref Program.Settings;
                 if (Settings.Appearance.DarkMode != toggle3.Checked)
@@ -297,7 +327,7 @@ namespace WinPaletter
 
             if (ch_appearance)
             {
-                GetRoundedCorners();
+                SetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle();
             }
@@ -378,7 +408,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.LanguageRestart, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MsgBox(Program.Lang.Strings.Languages.Restart, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
@@ -390,13 +420,20 @@ namespace WinPaletter
 
             Cursor = Cursors.Default;
 
-            MsgBox(Program.Lang.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Lang.Strings.Messages.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void Write(Settings Sets, Settings.Source Mode, string File = "")
+        /// <summary>
+        /// Write settings to the settings object
+        /// </summary>
+        /// <param name="Sets"></param>
+        /// <param name="Mode"></param>
+        /// <param name="File"></param>
+        private void Write(Settings Sets, Settings.Source Mode, string File = "")
         {
             Sets.FileTypeManagement.AutoAddExt = toggle6.Checked;
             Sets.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt = RadioButton1.Checked;
+            Sets.ThemeApplyingBehavior.CreateSystemRestore = toggle38.Checked;
             Sets.ThemeApplyingBehavior.AutoRestartExplorer = toggle8.Checked;
             Sets.ThemeApplyingBehavior.ResetCursorsToAero = toggle13.Checked;
 
@@ -455,6 +492,7 @@ namespace WinPaletter
             Sets.BackupTheme.AutoBackupOnApply = toggle32.Checked;
             Sets.BackupTheme.AutoBackupOnApplySingleAspect = toggle36.Checked;
             Sets.BackupTheme.AutoBackupOnThemeLoad = toggle34.Checked;
+            Sets.BackupTheme.AutoBackupOnExError = toggle39.Checked;
             Sets.BackupTheme.BackupPath = textBox4.Text;
 
             if (RadioButton5.Checked)
@@ -544,16 +582,22 @@ namespace WinPaletter
             Sets.AspectsControl.MetricsFonts_Advanced = radioImage8.Checked;
             Sets.AspectsControl.Wallpaper_Advanced = radioImage10.Checked;
             Sets.AspectsControl.VisualStyles = checkBox15.Checked;
+            Sets.AspectsControl.Accessibility = checkBox16.Checked;
 
             Sets.Save(Mode, File);
         }
 
+        /// <summary>
+        /// Void to be executed when the form is being closed
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Settings NewSets = new(Settings.Source.Empty);
 
             Changed = false;
 
+            // Full check for settings change
             {
                 ref Settings Settings = ref Program.Settings;
 
@@ -696,6 +740,8 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.ThemeApplyingBehavior.Show_WinEffects_Alert != toggle12.Checked)
                     Changed = true;
+                if (Settings.ThemeApplyingBehavior.CreateSystemRestore != toggle38.Checked)
+                    Changed = true;
 
                 if (Settings.Store.Online_or_Offline & !RadioImage1.Checked)
                     Changed = true;
@@ -722,6 +768,8 @@ namespace WinPaletter
                 if (Settings.BackupTheme.AutoBackupOnApplySingleAspect != toggle36.Checked)
                     Changed = true;
                 if (Settings.BackupTheme.AutoBackupOnThemeLoad != toggle34.Checked)
+                    Changed = true;
+                if (Settings.BackupTheme.AutoBackupOnExError != toggle39.Checked)
                     Changed = true;
                 if (Settings.BackupTheme.BackupPath != textBox4.Text)
                     Changed = true;
@@ -766,11 +814,13 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.AspectsControl.VisualStyles != checkBox15.Checked)
                     Changed = true;
+                if (Settings.AspectsControl.Accessibility != checkBox16.Checked)
+                    Changed = true;
             }
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)
             {
-                switch (MsgBox(Program.Lang.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                switch (MsgBox(Program.Lang.Strings.Messages.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.Cancel:
                         {
@@ -811,12 +861,13 @@ namespace WinPaletter
         private void SettingsX_Load(object sender, EventArgs e)
         {
             ComboBox2.Items.Clear();
-            ComboBox2.Items.Add(Program.Lang.Stable);
-            ComboBox2.Items.Add(Program.Lang.Beta);
+            ComboBox2.Items.Add(Program.Lang.Strings.General.Stable);
+            ComboBox2.Items.Add(Program.Lang.Strings.General.Beta);
             this.LoadLanguage();
             ApplyStyle(this);
             LoadSettings();
 
+            // Do some minor adjustments for appearance
             int w = 19;
             EP_Start_11.Image = Assets.WinLogos.Win11.Resize(w, w);
             EP_Start_10.Image = Assets.WinLogos.Win10.Resize(w, w);
@@ -837,20 +888,24 @@ namespace WinPaletter
             if (OS.WXP)
             {
                 AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinXP);
+                AlertBox17.Text = string.Format(Program.Lang.Strings.Updates.NoTLS12, Program.Lang.Strings.Windows.WXP);
             }
 
             else if (OS.WVista)
             {
                 AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(Program.Lang.UpdatesOSNoTLS12, Program.Lang.OS_WinVista);
+                AlertBox17.Text = string.Format(Program.Lang.Strings.Updates.NoTLS12, Program.Lang.Strings.Windows.WVista);
             }
 
             Label38.Font = Fonts.ConsoleMedium;
             Label43.Font = Fonts.ConsoleMedium;
         }
 
-        public int CalcStoreCache()
+        /// <summary>
+        /// Calculate the size of the store cache
+        /// </summary>
+        /// <returns></returns>
+        private int CalcStoreCache()
         {
             if (Directory.Exists(SysPaths.StoreCache))
             {
@@ -862,7 +917,11 @@ namespace WinPaletter
             }
         }
 
-        public int CalcThemesResCache()
+        /// <summary>
+        /// Calculate the size of the extracted themes resources cache
+        /// </summary>
+        /// <returns></returns>
+        private int CalcThemesResCache()
         {
             if (Directory.Exists(SysPaths.ThemeResPackCache))
             {
@@ -874,7 +933,11 @@ namespace WinPaletter
             }
         }
 
-        public int CalcBackupsCache()
+        /// <summary>
+        /// Calculate the size of the backups cache
+        /// </summary>
+        /// <returns></returns>
+        private int CalcBackupsCache()
         {
             if (Directory.Exists(Program.Settings.BackupTheme.BackupPath))
             {
@@ -886,7 +949,11 @@ namespace WinPaletter
             }
         }
 
-        public int CalcExErrors()
+        /// <summary>
+        /// Calculate the size of the exceptions errors cache
+        /// </summary>
+        /// <returns></returns>
+        private int CalcExErrors()
         {
             if (Directory.Exists($"{SysPaths.appData}\\Reports"))
             {
@@ -898,7 +965,11 @@ namespace WinPaletter
             }
         }
 
-        public int CalcAppCore()
+        /// <summary>
+        /// Calculate the size of the app core (Application data and Program files data)
+        /// </summary>
+        /// <returns></returns>
+        private int CalcAppCore()
         {
             int s0, s1;
 
@@ -938,7 +1009,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Filter_SaveWinPaletterSettings })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterSettings })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -950,7 +1021,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Filter_OpenWinPaletterSettings })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Strings.Extensions.OpenWinPaletterSettings })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -960,9 +1031,14 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Unregister the file associations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Empty, Program.Lang.CollapseNote, Program.Lang.ExpandNote, Program.Lang.RemoveExtMsgNote) == DialogResult.Yes)
+            if (MsgBox(Program.Lang.Strings.Messages.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Empty, Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Messages.RemoveExtMsgNote) == DialogResult.Yes)
             {
                 toggle6.Checked = false;
                 Program.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
@@ -976,9 +1052,14 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Uninstall);
         }
 
+        /// <summary>
+        /// Load JSON language file information to be displayed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -991,10 +1072,10 @@ namespace WinPaletter
                     {
                         Label11.Text = J["Information"]["name"] is not null ? J["Information"]["name"].ToString() : string.Empty;
                         Label12.Text = J["Information"]["translationversion"] is not null ? J["Information"]["translationversion"].ToString() : string.Empty;
-                        Label14.Text = $"{(J["Information"]["appver"] is not null ? J["Information"]["appver"] : Program.Version)} {Program.Lang.AndBelow}";
+                        Label14.Text = $"{(J["Information"]["appver"] is not null ? J["Information"]["appver"] : Program.Version)} {Program.Lang.Strings.General.AndBelow}";
                         Label19.Text = J["Information"]["lang"] is not null ? J["Information"]["lang"].ToString() : string.Empty;
                         Label16.Text = J["Information"]["langcode"] is not null ? J["Information"]["langcode"].ToString() : string.Empty;
-                        Label22.Text = J["Information"]["righttoleft"] is not null ? (!(bool)J["Information"]["righttoleft"] ? Program.Lang.Lang_HasLeftToRight : Program.Lang.Lang_HasRightToLeft) : Program.Lang.Lang_HasLeftToRight;
+                        Label22.Text = J["Information"]["righttoleft"] is not null ? (!(bool)J["Information"]["righttoleft"] ? Program.Lang.Strings.Languages.LeftToRight : Program.Lang.Strings.Languages.RightToLeft) : Program.Lang.Strings.Languages.LeftToRight;
                     }
                 }
             }
@@ -1007,7 +1088,7 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1021,7 +1102,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Filter_OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1040,7 +1121,7 @@ namespace WinPaletter
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            Forms.Lang_Dashboard.ShowDialog();
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Lang_Editor);
         }
 
         private void Button14_Click(object sender, EventArgs e)
@@ -1048,7 +1129,7 @@ namespace WinPaletter
             string inputText = string.Empty;
             if (ListBox1.SelectedItem is not null)
                 inputText = ListBox1.SelectedItem.ToString();
-            string response = InputBox(Program.Lang.InputThemeRepos, inputText, Program.Lang.InputThemeRepos_Notice);
+            string response = InputBox(Program.Lang.Strings.Messages.InputThemeRepos, inputText, Program.Lang.Strings.Messages.InputThemeRepos_Notice);
             if (!ListBox1.Items.Contains(response))
                 ListBox1.Items.Add(response);
         }
@@ -1069,15 +1150,13 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.Store_RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Lang.Strings.Store.RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
         }
 
         private void Button18_Click(object sender, EventArgs e)
         {
-
             if (!OS.WXP)
             {
                 Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new();
@@ -1113,6 +1192,11 @@ namespace WinPaletter
             }
         }
 
+        /// <summary>
+        /// Clean WinPaletter Store cache
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button19_Click(object sender, EventArgs e)
         {
             try
@@ -1128,9 +1212,14 @@ namespace WinPaletter
                 Forms.BugReport.ThrowError(ex);
             }
 
-            Label38.Text = CalcStoreCache().SizeString();
+            Label38.Text = CalcStoreCache().ToStringFileSize();
         }
 
+        /// <summary>
+        /// Clean WinPaletter Themes extracted resources cache
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button20_Click(object sender, EventArgs e)
         {
             try
@@ -1146,14 +1235,24 @@ namespace WinPaletter
                 Forms.BugReport.ThrowError(ex);
             }
 
-            Label43.Text = CalcThemesResCache().SizeString();
+            Label43.Text = CalcThemesResCache().ToStringFileSize();
         }
 
+        /// <summary>
+        /// Install WinPaletter System Events Sounds service
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button13_Click(object sender, EventArgs e)
         {
             Forms.SysEventsSndsInstaller.Install(true);
         }
 
+        /// <summary>
+        /// Uninstall WinPaletter System Events Sounds service
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button21_Click(object sender, EventArgs e)
         {
             Forms.SysEventsSndsInstaller.Uninstall();
@@ -1175,6 +1274,11 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
         }
 
+        /// <summary>
+        /// Open reports folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button26_Click(object sender, EventArgs e)
         {
             if (System.IO.Directory.Exists($@"{SysPaths.appData}\Reports"))
@@ -1183,10 +1287,15 @@ namespace WinPaletter
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Lang.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        /// <summary>
+        /// Clean WinPaletter exceptions errors cache
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button25_Click(object sender, EventArgs e)
         {
             try
@@ -1202,7 +1311,7 @@ namespace WinPaletter
                 Forms.BugReport.ThrowError(ex);
             }
 
-            label5.Text = CalcExErrors().SizeString();
+            label5.Text = CalcExErrors().ToStringFileSize();
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -1230,7 +1339,7 @@ namespace WinPaletter
 
         private void SettingsX_ParentChanged(object sender, EventArgs e)
         {
-            if (this.Parent != null && Parent is TabPage)
+            if (Parent != null && Parent is TabPage)
             {
                 pin_button.Visible = false;
             }
@@ -1286,11 +1395,21 @@ namespace WinPaletter
             Panel12.Enabled = toggle16.Checked;
         }
 
+        /// <summary>
+        /// Install SecureUxTheme
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button28_Click(object sender, EventArgs e)
         {
             Forms.SecureUxTheme_Setup.ShowDialog();
         }
 
+        /// <summary>
+        /// Visit official SecureUxTheme releases page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button29_Click(object sender, EventArgs e)
         {
             Process.Start(Links.SecureUxThemeReleases);

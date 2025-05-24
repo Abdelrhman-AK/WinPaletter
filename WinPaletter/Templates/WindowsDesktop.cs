@@ -12,8 +12,14 @@ using static WinPaletter.UI.Simulation.Window;
 
 namespace WinPaletter.Templates
 {
+    /// <summary>
+    /// Windows Desktop template
+    /// </summary>
     public partial class WindowsDesktop : UserControl
     {
+        /// <summary>
+        /// Create a new instance of <see cref="WindowsDesktop"/>
+        /// </summary>
         public WindowsDesktop()
         {
             DoubleBuffered = true;
@@ -21,7 +27,14 @@ namespace WinPaletter.Templates
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Property string used as reference for property editing event "SettingsIconsColor"
+        /// </summary>
         public static string prop_settingsIconsColor = "SettingsIconsColor";
+
+        /// <summary>
+        /// Property string used as reference for property editing event "LinksColor"
+        /// </summary>
         public static string prop_linksColor = "LinksColor";
 
         #region Variables
@@ -35,9 +48,9 @@ namespace WinPaletter.Templates
         private Color Win11_color => _darkMode_Win ? Color.FromArgb(28, 28, 28) : Color.FromArgb(255, 255, 255);
 
 
-        private bool WXP_VS_ReplaceColors = false;
-        private bool WXP_VS_ReplaceMetrics = false;
-        private bool WXP_VS_ReplaceFonts = false;
+        private readonly bool WXP_VS_ReplaceColors = false;
+        private readonly bool WXP_VS_ReplaceMetrics = false;
+        private readonly bool WXP_VS_ReplaceFonts = false;
 
         #endregion
 
@@ -65,7 +78,9 @@ namespace WinPaletter.Templates
         }
         private bool enableColorsEditing = false;
 
-
+        /// <summary>
+        /// <see cref="Theme.Manager"/> used for current preview
+        /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public Theme.Manager HookedTM
@@ -79,7 +94,9 @@ namespace WinPaletter.Templates
         }
         private Theme.Manager _hookedTM = Program.TM;
 
-
+        /// <summary>
+        /// Visual style resources used for Windows WXP preview
+        /// </summary>
         public VisualStylesRes resVS
         {
             get => _resVS;
@@ -104,7 +121,10 @@ namespace WinPaletter.Templates
         }
         private VisualStylesRes _resVS = null;
 
-        public Theme.Structures.Windows10x.Themes Windows_10x_Theme
+        /// <summary>
+        /// Windows 10/11/12 theme used in the preview
+        /// </summary>
+        public Themes Windows_10x_Theme
         {
             get => _windows_10x_Theme;
             set
@@ -116,8 +136,11 @@ namespace WinPaletter.Templates
                 }
             }
         }
-        private Theme.Structures.Windows10x.Themes _windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+        private Themes _windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
 
+        /// <summary>
+        /// Windows 7/8.1 theme used in the preview (and Vista for windows)
+        /// </summary>
         public Theme.Structures.Windows7.Themes Windows_7_8_Theme
         {
             get => _windows_7_8_Theme;
@@ -132,6 +155,9 @@ namespace WinPaletter.Templates
         }
         private Theme.Structures.Windows7.Themes _windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
 
+        /// <summary>
+        /// Windows WXP theme used in the preview
+        /// </summary>
         public Theme.Structures.WindowsXP.Themes WindowsXPTheme
         {
             get => _windowsXPTheme;
@@ -146,6 +172,9 @@ namespace WinPaletter.Templates
         }
         private Theme.Structures.WindowsXP.Themes _windowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaBlue;
 
+        /// <summary>
+        /// Windows WXP theme path used in the preview
+        /// </summary>
         public string WindowsXPThemePath
         {
             get => _windowsXPThemePath;
@@ -160,6 +189,9 @@ namespace WinPaletter.Templates
         }
         private string _windowsXPThemePath;
 
+        /// <summary>
+        /// Windows WXP theme color scheme used in the preview
+        /// </summary>
         public string WindowsXPThemeColorScheme
         {
             get => _windowsXPThemeColorScheme;
@@ -176,6 +208,9 @@ namespace WinPaletter.Templates
 
 
         private WindowStyle _windowStyle = WindowStyle.W11;
+        /// <summary>
+        /// Style of the windows in the preview
+        /// </summary>
         public WindowStyle WindowStyle
         {
             get { return _windowStyle; }
@@ -198,6 +233,9 @@ namespace WinPaletter.Templates
 
 
         private Preview_Enum _preview = Preview_Enum.W11;
+        /// <summary>
+        /// Preview style
+        /// </summary>
         public Preview_Enum Preview
         {
             get { return _preview; }
@@ -211,7 +249,7 @@ namespace WinPaletter.Templates
                     {
                         ActionCenter.Style = WinElement.Styles.ActionCenter11;
 
-                        if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.CanBeUsed)
                         {
                             {
                                 ref ExplorerPatcher EP = ref Program.EP;
@@ -330,6 +368,9 @@ namespace WinPaletter.Templates
 
 
         private bool _darkMode_App = true;
+        /// <summary>
+        /// Dark mode for applications
+        /// </summary>
         public bool DarkMode_App
         {
             get => _darkMode_App;
@@ -347,6 +388,9 @@ namespace WinPaletter.Templates
 
 
         private bool _darkMode_Win = true;
+        /// <summary>
+        /// Dark mode for windows
+        /// </summary>
         public bool DarkMode_Win
         {
             get => _darkMode_Win;
@@ -363,6 +407,9 @@ namespace WinPaletter.Templates
 
 
         private bool _winVista = false;
+        /// <summary>
+        /// Determine if Windows 7 windows preview will be manipulated a bit to simulate Windows Vista
+        /// </summary>
         public bool WinVista
         {
             get => _winVista;
@@ -434,6 +481,9 @@ namespace WinPaletter.Templates
 
 
         private bool _classic = false;
+        /// <summary>
+        /// Determine if the classic theme will be used
+        /// </summary>
         public bool Classic
         {
             get { return _classic; }
@@ -450,6 +500,9 @@ namespace WinPaletter.Templates
 
 
         private int _win7Alpha = 100;
+        /// <summary>
+        /// Windows 7 transparency level
+        /// </summary>
         public int Win7Alpha
         {
             get { return _win7Alpha; }
@@ -466,6 +519,9 @@ namespace WinPaletter.Templates
 
 
         private int _win7ColorBal = 100;
+        /// <summary>
+        /// Windows 7 color balance
+        /// </summary>
         public int Win7ColorBal
         {
             get { return _win7ColorBal; }
@@ -480,7 +536,9 @@ namespace WinPaletter.Templates
             }
         }
 
-
+        /// <summary>
+        /// Windows 7 glow balance
+        /// </summary>
         public int Win7GlowBal
         {
             get { return _win7GlowBal; }
@@ -498,6 +556,9 @@ namespace WinPaletter.Templates
 
 
         private float _Win7Noise = 0f;
+        /// <summary>
+        /// Windows 7 noise power
+        /// </summary>
         public float Win7Noise
         {
             get => _Win7Noise;
@@ -517,6 +578,9 @@ namespace WinPaletter.Templates
         #region Window Properties
 
         private bool _shadow = true;
+        /// <summary>
+        /// Enable shadow for windows
+        /// </summary>
         public bool Shadow
         {
             get { return _shadow; }
@@ -532,6 +596,9 @@ namespace WinPaletter.Templates
 
 
         private bool _AccentColor_Enabled = false;
+        /// <summary>
+        /// Enable accent color for titlebar
+        /// </summary>
         public bool TitlebarColor_Enabled
         {
             get => _AccentColor_Enabled;
@@ -547,6 +614,9 @@ namespace WinPaletter.Templates
 
 
         private Color _titlebarColor_Active = Color.FromArgb(0, 120, 212);
+        /// <summary>
+        /// Active titlebar color
+        /// </summary>
         public Color TitlebarColor_Active
         {
             get { return _titlebarColor_Active; }
@@ -568,6 +638,9 @@ namespace WinPaletter.Templates
 
 
         private Color _titlebarColor_Inactive = Color.FromArgb(32, 32, 32);
+        /// <summary>
+        /// Inactive titlebar color
+        /// </summary>
         public Color TitlebarColor_Inactive
         {
             get { return _titlebarColor_Inactive; }
@@ -581,8 +654,10 @@ namespace WinPaletter.Templates
             }
         }
 
-
         private Color _afterglowColor_Active = Color.FromArgb(0, 120, 212);
+        /// <summary>
+        /// Active afterglow color
+        /// </summary>
         public Color AfterGlowColor_Active
         {
             get { return _afterglowColor_Active; }
@@ -603,6 +678,9 @@ namespace WinPaletter.Templates
 
 
         private Color _afterglowColor2_Inactive = Color.FromArgb(32, 32, 32);
+        /// <summary>
+        /// Inactive afterglow color
+        /// </summary>
         public Color AfterGlowColor_Inactive
         {
             get { return _afterglowColor2_Inactive; }
@@ -618,6 +696,9 @@ namespace WinPaletter.Templates
 
 
         private int _Metrics_CaptionHeight = 22;
+        /// <summary>
+        /// Titlebar height in the preview
+        /// </summary>
         public int Metrics_CaptionHeight
         {
             get => _Metrics_CaptionHeight;
@@ -634,6 +715,9 @@ namespace WinPaletter.Templates
 
 
         private int _Metrics_CaptionWidth = 22;
+        /// <summary>
+        /// Titlebar buttons width in the preview if classic theme is enabled
+        /// </summary>
         public int Metrics_CaptionWidth
         {
             get => _Metrics_CaptionWidth;
@@ -649,6 +733,9 @@ namespace WinPaletter.Templates
 
 
         private int _Metrics_BorderWidth = 1;
+        /// <summary>
+        /// Border width in the preview
+        /// </summary>
         public int Metrics_BorderWidth
         {
             get => _Metrics_BorderWidth;
@@ -665,6 +752,9 @@ namespace WinPaletter.Templates
 
 
         private int _Metrics_PaddedBorderWidth = 4;
+        /// <summary>
+        /// Padded border width in the preview
+        /// </summary>
         public int Metrics_PaddedBorderWidth
         {
             get => _Metrics_PaddedBorderWidth;
@@ -681,6 +771,9 @@ namespace WinPaletter.Templates
 
 
         private Font _Metrics_CaptionFont = new("Segoe UI", 9f);
+        /// <summary>
+        /// Titlebar font in the preview
+        /// </summary>
         public Font Metrics_CaptionFont
         {
             get => _Metrics_CaptionFont;
@@ -707,6 +800,9 @@ namespace WinPaletter.Templates
 
 
         private bool _Transparency = true;
+        /// <summary>
+        /// Enable transparency for elements
+        /// </summary>
         public bool Transparency
         {
             get => _Transparency;
@@ -723,6 +819,9 @@ namespace WinPaletter.Templates
 
 
         private bool _increaseTBTransparency = false;
+        /// <summary>
+        /// Increase transparency for taskbar in Windows 10 only
+        /// </summary>
         public bool IncreaseTBTransparency
         {
             get => _increaseTBTransparency;
@@ -740,6 +839,9 @@ namespace WinPaletter.Templates
 
 
         private bool _tb_Blur = false;
+        /// <summary>
+        /// Enable blur for taskbar in Windows 10 only
+        /// </summary>
         public bool TB_Blur
         {
             get => _tb_Blur;
@@ -770,6 +872,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color1;
+        /// <summary>
+        /// Color 1 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color1
         {
             get => _color1;
@@ -781,7 +886,7 @@ namespace WinPaletter.Templates
 
                     if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
-                        if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.CanBeUsed)
                         {
                             if (DarkMode_Win)
                             {
@@ -853,6 +958,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color2;
+        /// <summary>
+        /// Color 2 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color2
         {
             get => _color2;
@@ -900,6 +1008,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color3;
+        /// <summary>
+        /// Color 3 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color3
         {
             get => _color3;
@@ -911,7 +1022,7 @@ namespace WinPaletter.Templates
 
                     if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
-                        if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.CanBeUsed)
                         {
                             taskbar.Background = _accentLevel == AccentTaskbarLevels.None ? Win11_color : value;
 
@@ -943,6 +1054,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color4;
+        /// <summary>
+        /// Color 4 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color4
         {
             get => _color4;
@@ -954,7 +1068,7 @@ namespace WinPaletter.Templates
 
                     if (WindowStyle == WindowStyle.W11 || WindowStyle == WindowStyle.W12)
                     {
-                        if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.CanBeUsed)
                         {
                             if ((bool)Program.EP?.UseStart10)
                             {
@@ -1039,6 +1153,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color5;
+        /// <summary>
+        /// Color 5 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color5
         {
             get => _color5;
@@ -1117,6 +1234,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color6;
+        /// <summary>
+        /// Color 6 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color6
         {
             get => _color6;
@@ -1141,6 +1261,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color7;
+        /// <summary>
+        /// Color 7 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color7
         {
             get => _color7;
@@ -1165,6 +1288,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color8;
+        /// <summary>
+        /// Color 8 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color8
         {
             get => _color8;
@@ -1193,6 +1319,9 @@ namespace WinPaletter.Templates
 
 
         private Color _color9;
+        /// <summary>
+        /// Color 9 for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public Color Color9
         {
             get => _color9;
@@ -1217,6 +1346,9 @@ namespace WinPaletter.Templates
 
 
         private AccentTaskbarLevels _accentLevel = AccentTaskbarLevels.None;
+        /// <summary>
+        /// Accent level for Windows 10/11/12 taskbar, start menu and action center
+        /// </summary>
         public AccentTaskbarLevels AccentLevel
         {
             get => _accentLevel;
@@ -1232,6 +1364,9 @@ namespace WinPaletter.Templates
 
 
         private bool _useWin11ORB_WithWin10 = false;
+        /// <summary>
+        /// Use Windows 11 start button with Windows 10 (ExplorerPatcher preview simulation option)
+        /// </summary>
         public bool UseWin11ORB_WithWin10
         {
             get => _useWin11ORB_WithWin10;
@@ -1247,6 +1382,9 @@ namespace WinPaletter.Templates
 
 
         private bool _useWin11RoundedCorners_WithWin10_Level1 = false;
+        /// <summary>
+        /// Use Windows 10 rounded corners start menu with Windows 11 (ExplorerPatcher preview simulation option)
+        /// </summary>
         public bool UseWin11RoundedCorners_WithWin10_Level1
         {
             get => _useWin11RoundedCorners_WithWin10_Level1;
@@ -1262,6 +1400,9 @@ namespace WinPaletter.Templates
 
 
         private bool _useWin11RoundedCorners_WithWin10_Level2 = false;
+        /// <summary>
+        /// Use Windows 11 rounded corners start menu with Windows 10 (ExplorerPatcher preview simulation option)
+        /// </summary>
         public bool UseWin11RoundedCorners_WithWin10_Level2
         {
             get => _useWin11RoundedCorners_WithWin10_Level2;
@@ -1766,7 +1907,7 @@ namespace WinPaletter.Templates
 
                         if (OS.W12 || OS.W11) Program.EP = new();
 
-                        if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.CanBeUsed)
                         {
                             ref ExplorerPatcher EP = ref Program.EP;
 
@@ -1846,13 +1987,13 @@ namespace WinPaletter.Templates
                         ActionCenter.Size = new(120, 85);
                         ActionCenter.Location = new(ActionCenter.Parent.Width - ActionCenter.Width - 10, taskbar.Top - ActionCenter.Height - 10);
 
-                        byte TB_Alpha = default, S_Alpha = default, AC_Alpha = default, TB_Blur = default(byte);
+                        byte TB_Alpha = default, S_Alpha = default, AC_Alpha = default, TB_Blur = default;
 
                         if (DarkMode_Win)
                         {
                             AC_Alpha = 90;
 
-                            if (ExplorerPatcher.IsAllowed())
+                            if (ExplorerPatcher.CanBeUsed)
                             {
                                 S_Alpha = (bool)Program.EP?.UseStart10 ? (byte)185 : (byte)90;
                                 (TB_Alpha, TB_Blur) = (bool)Program.EP?.UseTaskbar10 ? ((byte)185, (byte)8) : ((byte)105, (byte)8);
@@ -1867,7 +2008,7 @@ namespace WinPaletter.Templates
 
                             AC_Alpha = 180;
 
-                            if (ExplorerPatcher.IsAllowed())
+                            if (ExplorerPatcher.CanBeUsed)
                             {
                                 S_Alpha = (bool)Program.EP?.UseStart10 ? (byte)210 : (byte)180;
                                 (TB_Alpha, TB_Blur) = (bool)Program.EP?.UseTaskbar10 ? ((byte)210, (byte)8) : ((byte)180, (byte)8);
@@ -1892,7 +2033,7 @@ namespace WinPaletter.Templates
 
                         if (OS.W12 || OS.W11) Program.EP = new();
 
-                        if (ExplorerPatcher.IsAllowed())
+                        if (ExplorerPatcher.CanBeUsed)
                         {
                             ref ExplorerPatcher EP = ref Program.EP;
 
@@ -1972,13 +2113,13 @@ namespace WinPaletter.Templates
                         ActionCenter.Size = new(120, 85);
                         ActionCenter.Location = new(ActionCenter.Parent.Width - ActionCenter.Width - 10, taskbar.Top - ActionCenter.Height - 10);
 
-                        byte TB_Alpha = default, S_Alpha = default, AC_Alpha = default, TB_Blur = default(byte);
+                        byte TB_Alpha = default, S_Alpha = default, AC_Alpha = default, TB_Blur = default;
 
                         if (DarkMode_Win)
                         {
                             AC_Alpha = 90;
 
-                            if (ExplorerPatcher.IsAllowed())
+                            if (ExplorerPatcher.CanBeUsed)
                             {
                                 S_Alpha = (bool)Program.EP?.UseStart10 ? (byte)185 : (byte)90;
                                 (TB_Alpha, TB_Blur) = (bool)Program.EP?.UseTaskbar10 ? ((byte)185, (byte)8) : ((byte)105, (byte)8);
@@ -1993,7 +2134,7 @@ namespace WinPaletter.Templates
 
                             AC_Alpha = 180;
 
-                            if (ExplorerPatcher.IsAllowed())
+                            if (ExplorerPatcher.CanBeUsed)
                             {
                                 S_Alpha = (bool)Program.EP?.UseStart10 ? (byte)210 : (byte)180;
                                 (TB_Alpha, TB_Blur) = (bool)Program.EP?.UseTaskbar10 ? ((byte)210, (byte)8) : ((byte)180, (byte)8);
@@ -2188,6 +2329,9 @@ namespace WinPaletter.Templates
             if (!DesignMode && HookedTM is not null) LoadFromTM(HookedTM);
         }
 
+        /// <summary>
+        /// Refreshes the colors of the form
+        /// </summary>
         public void RefreshColors()
         {
             ForceRefresh = true;
@@ -2203,6 +2347,9 @@ namespace WinPaletter.Templates
             ForceRefresh = false;
         }
 
+        /// <summary>
+        /// Set the theme of the preview
+        /// </summary>
         private void SetTheme()
         {
             if (_windowStyle == WindowStyle.WXP)
@@ -2369,9 +2516,22 @@ namespace WinPaletter.Templates
 
         #endregion
 
+        /// <summary>
+        /// Event handler for editing elements on the preview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
+
+        /// <summary>
+        /// Event for editing elements on the preview
+        /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        /// <summary>
+        /// Load preferernces from a <see cref="Theme.Manager"/>
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadFromTM(Theme.Manager TM)
         {
             ForceRefresh = true;
@@ -2475,13 +2635,13 @@ namespace WinPaletter.Templates
             {
                 TitlebarColor_Active = HookedTM.WindowsVista.ColorizationColor;
                 TitlebarColor_Inactive = HookedTM.WindowsVista.ColorizationColor;
-                Win7ColorBal = (HookedTM.WindowsVista.Alpha / 255) * 100;
+                Win7ColorBal = HookedTM.WindowsVista.Alpha / 255 * 100;
                 TitlebarColor_Enabled = true;
                 AfterGlowColor_Active = Color.Transparent;
                 AfterGlowColor_Inactive = Color.Transparent;
                 Win7GlowBal = 0;
                 Win7Noise = 100f;
-                Win7Alpha = 100 - (HookedTM.WindowsVista.Alpha / 255) * 100;
+                Win7Alpha = 100 - HookedTM.WindowsVista.Alpha / 255 * 100;
                 Windows_7_8_Theme = HookedTM.WindowsVista.Theme;
             }
 
@@ -2503,6 +2663,10 @@ namespace WinPaletter.Templates
             ForceRefresh = false;
         }
 
+        /// <summary>
+        /// Load metrics and fonts from a <see cref="Theme.Manager"/>
+        /// </summary>
+        /// <param name="TM"></param>
         public void LoadMetricsFonts(Theme.Manager TM)
         {
             Metrics_BorderWidth = TM.MetricsFonts.BorderWidth;
@@ -2536,6 +2700,10 @@ namespace WinPaletter.Templates
             }
         }
 
+        /// <summary>
+        /// Load metrics and fonts from a <see cref="VisualStyleMetrics"/>
+        /// </summary>
+        /// <param name="vs"></param>
         public void LoadMetricsFonts(VisualStyleMetrics vs)
         {
             using (Theme.Manager TMx = new(Theme.Manager.Source.Empty))
@@ -2546,6 +2714,10 @@ namespace WinPaletter.Templates
             }
         }
 
+        /// <summary>
+        /// Load classic colors from a <see cref="Theme.Structures.Win32UI"/>
+        /// </summary>
+        /// <param name="w32ui"></param>
         public void LoadClassicColors(Theme.Structures.Win32UI w32ui)
         {
             EnableGradient = w32ui.EnableGradient;
@@ -2570,6 +2742,10 @@ namespace WinPaletter.Templates
             WindowText = w32ui.WindowText;
         }
 
+        /// <summary>
+        /// Load classic colors from a <see cref="VisualStyleMetrics"/>
+        /// </summary>
+        /// <param name="vs"></param>
         public void LoadClassicColors(VisualStyleMetrics vs)
         {
             EnableGradient = true;
@@ -2595,8 +2771,6 @@ namespace WinPaletter.Templates
         {
             if (!DesignMode)
             {
-                BackgroundImage = Program.Wallpaper;
-
                 LoadFromTM(HookedTM);
 
                 LoadMetricsFonts(HookedTM);
@@ -2606,10 +2780,18 @@ namespace WinPaletter.Templates
             }
         }
 
-        private void WindowsDesktop_BackgroundImageChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Background image of the desktop.
+        /// </summary>
+        public override Image BackgroundImage
         {
-            pnl_preview.BackgroundImage = BackgroundImage;
-            pnl_preview_classic.BackgroundImage = BackgroundImage;
+            get => base.BackgroundImage;
+            set
+            {
+                base.BackgroundImage = value;
+                pnl_preview.BackgroundImage = value;
+                pnl_preview_classic.BackgroundImage = value;
+            }
         }
 
         private void WindowX_EditorInvoker(object sender, EditorEventArgs e)

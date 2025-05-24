@@ -33,11 +33,11 @@ namespace WinPaletter
 
         private void About_Load(object sender, EventArgs e)
         {
-            using (MainForm formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<MainForm>();
             this.LoadLanguage();
             ApplyStyle(this);
             Label2.Text = Program.Version;
-            Label1.Text = $"{Program.Lang.By} {Application.CompanyName}";
+            Label1.Text = $"{Program.Lang.Strings.General.By} {Application.CompanyName}";
             Label17.Text = Application.ProductName;
 
             // Get the assembly of the current executing code
@@ -122,7 +122,7 @@ namespace WinPaletter
 
         private void About_ParentChanged(object sender, EventArgs e)
         {
-            if (this.Parent != null && Parent is TabPage)
+            if (Parent != null && Parent is TabPage)
             {
                 pin_button.Visible = false;
             }

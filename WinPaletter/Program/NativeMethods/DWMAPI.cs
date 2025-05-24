@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace WinPaletter.NativeMethods
 {
@@ -217,46 +219,39 @@ namespace WinPaletter.NativeMethods
             }
             catch { return false; }
         }
+
         #endregion
 
         #region Structures
         /// <summary>
         /// Struct that specifies Desktop Window Manager (DWM) blur behind settings.
         /// </summary>
+        /// <remarks>
+        /// Initializes a new instance of the DWM_BLURBEHIND structure.
+        /// </remarks>
+        /// <param name="enable">True to enable the blur effect; false to disable.</param>
         [StructLayout(LayoutKind.Sequential)]
-        public struct DWM_BLURBEHIND
+        public struct DWM_BLURBEHIND(bool enable)
         {
             /// <summary>
             /// Flags that indicate which members of this structure are valid.
             /// </summary>
-            public uint dwFlags;
+            public uint dwFlags = 0x00000003;
 
             /// <summary>
             /// True to enable the blur effect; false to disable.
             /// </summary>
-            public bool fEnable;
+            public bool fEnable = enable;
 
             /// <summary>
             /// Handle to the region where the blur should be applied.
             /// </summary>
-            public IntPtr hRgnBlur;
+            public IntPtr hRgnBlur = IntPtr.Zero;
 
             /// <summary>
             /// True to transition to a blurred representation when maximized; false otherwise.
             /// </summary>
-            public bool fTransitionOnMaximized;
-
-            /// <summary>
-            /// Initializes a new instance of the DWM_BLURBEHIND structure.
-            /// </summary>
-            /// <param name="enable">True to enable the blur effect; false to disable.</param>
-            public DWM_BLURBEHIND(bool enable)
-            {
-                dwFlags = 0x00000003; // DWM_BB_ENABLE | DWM_BB_BLURREGION
-                fEnable = enable;
-                hRgnBlur = IntPtr.Zero;
-                fTransitionOnMaximized = false;
-            }
+            public bool fTransitionOnMaximized = false;
         }
 
         /// <summary>
@@ -306,41 +301,35 @@ namespace WinPaletter.NativeMethods
         /// <summary>
         /// Struct that specifies a rectangle by the coordinates of its upper-left and lower-right corners.
         /// </summary>
+        /// <remarks>
+        /// Initializes a new instance of the RECT structure with specified coordinates.
+        /// </remarks>
+        /// <param name="left">The x-coordinate of the upper-left corner.</param>
+        /// <param name="top">The y-coordinate of the upper-left corner.</param>
+        /// <param name="right">The x-coordinate of the lower-right corner.</param>
+        /// <param name="bottom">The y-coordinate of the lower-right corner.</param>
         [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
+        public struct RECT(int left, int top, int right, int bottom)
         {
             /// <summary>
             /// The x-coordinate of the upper-left corner of the rectangle.
             /// </summary>
-            public int left;
+            public int left = left;
 
             /// <summary>
             /// The y-coordinate of the upper-left corner of the rectangle.
             /// </summary>
-            public int top;
+            public int top = top;
 
             /// <summary>
             /// The x-coordinate of the lower-right corner of the rectangle.
             /// </summary>
-            public int right;
+            public int right = right;
 
             /// <summary>
             /// The y-coordinate of the lower-right corner of the rectangle.
             /// </summary>
-            public int bottom;
-
-            /// <summary>
-            /// Initializes a new instance of the RECT structure with specified coordinates.
-            /// </summary>
-            /// <param name="left">The x-coordinate of the upper-left corner.</param>
-            /// <param name="top">The y-coordinate of the upper-left corner.</param>
-            /// <param name="right">The x-coordinate of the lower-right corner.</param>
-            /// <param name="bottom">The y-coordinate of the lower-right corner.</param>
-            public RECT(int left, int top, int right, int bottom)
-            {
-                this.left = left; this.top = top;
-                this.right = right; this.bottom = bottom;
-            }
+            public int bottom = bottom;
         }
 
         /// <summary>
@@ -524,6 +513,11 @@ namespace WinPaletter.NativeMethods
             /// Uses the host's backdrop brush.
             /// </summary>
             USE_HOSTBACKDROPBRUSH,
+
+            /// <summary>
+            /// Uses immersive dark mode before Windows 10, version 2004.
+            /// </summary>
+            USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
 
             /// <summary>
             /// Uses immersive dark mode.

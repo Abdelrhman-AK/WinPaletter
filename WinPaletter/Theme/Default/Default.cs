@@ -2,13 +2,16 @@
 
 namespace WinPaletter.Theme
 {
+    /// <summary>
+    /// A class that contains default Windows themes
+    /// </summary>
     public static partial class Default
     {
         /// <summary>
         /// Get default Windows theme, based on your selection
         /// </summary>
         /// <param name="PreviewStyle">Windows edition</param>
-        /// <returns><see cref="WinPaletter.Theme.Manager"/></returns>
+        /// <returns><see cref="Manager"/></returns>
         public static Manager Get(WindowStyle PreviewStyle)
         {
             return PreviewStyle switch
@@ -27,7 +30,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Get default Windows theme, based on current Windows edition
         /// </summary>
-        /// <returns><see cref="WinPaletter.Theme.Manager"/></returns>
+        /// <returns><see cref="Manager"/></returns>
         public static Manager Get()
         {
             if (OS.W12)

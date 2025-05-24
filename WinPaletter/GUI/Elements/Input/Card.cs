@@ -20,8 +20,8 @@ namespace WinPaletter.UI.WP
 
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        int shadowSize = 1;
-        int margin => (int)((alpha / 255f) * 0.6 * shadowSize);
+        readonly int shadowSize = 1;
+        int margin => (int)(alpha / 255f * 0.6 * shadowSize);
         Rectangle rect_all => new(0, 0, Width - 1, Height - 1);
         Rectangle rect => new(rect_all.X + shadowSize, rect_all.Y + shadowSize, rect_all.Width - shadowSize * 2, rect_all.Height - shadowSize * 2);
         Rectangle rect_margin => new(rect_all.X + shadowSize - margin, rect_all.Y + shadowSize - margin, rect_all.Width - shadowSize * 2 + margin * 2, rect_all.Height - shadowSize * 2 + margin * 2);
@@ -33,7 +33,7 @@ namespace WinPaletter.UI.WP
 
         private Point hoverPosition;
         private Rectangle hoverRect;
-        private int radius = 8;
+        private readonly int radius = 8;
 
         public enum MouseState
         {
@@ -85,8 +85,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                await Task.Run(() =>
+                {
+                    FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                });
             }
             else
             {
@@ -114,14 +117,17 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        protected override void OnMouseLeave(EventArgs e)
+        protected override async void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                await Task.Run(() =>
+                {
+                    FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                });
             }
             else
             {
@@ -129,28 +135,39 @@ namespace WinPaletter.UI.WP
                 HoverSize = 0;
             }
 
+            await Task.Delay(10);
             Animate();
+
             base.OnMouseLeave(e);
         }
 
-        protected override void OnLeave(EventArgs e)
+        protected override async void OnLeave(EventArgs e)
         {
             Animate();
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate)
+            {
+                await Task.Run(() =>
+                { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
+            }
             else { alpha = 0; }
+
+            await Task.Delay(10);
 
             base.OnLeave(e);
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
+        protected override async void OnMouseDown(MouseEventArgs e)
         {
             State = MouseState.Down;
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                await Task.Run(() =>
+                {
+                    FluentTransitions.Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                });
             }
             else
             {
@@ -158,19 +175,23 @@ namespace WinPaletter.UI.WP
                 HoverSize = (int)(Math.Min(Width, Height) * 1.5) * 5;
             }
 
+            await Task.Delay(10);
             Animate();
 
             base.OnMouseDown(e);
         }
 
-        protected override void OnMouseUp(MouseEventArgs e)
+        protected override async void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                await Task.Run(() =>
+                {
+                    FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                });
             }
             else
             {
@@ -178,6 +199,7 @@ namespace WinPaletter.UI.WP
                 HoverSize = ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0;
             }
 
+            await Task.Delay(10);
             Animate();
             base.OnMouseUp(e);
         }
@@ -186,7 +208,7 @@ namespace WinPaletter.UI.WP
         {
             if (CanAnimate && State != MouseState.None)
             {
-                hoverPosition = this.PointToClient(MousePosition);
+                hoverPosition = PointToClient(MousePosition);
                 hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
                 hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
 
@@ -197,7 +219,7 @@ namespace WinPaletter.UI.WP
             base.OnMouseMove(e);
         }
 
-        protected override void OnLostFocus(EventArgs e)
+        protected override async void OnLostFocus(EventArgs e)
         {
             State = MouseState.None;
 
@@ -205,8 +227,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                await Task.Run(() =>
+                {
+                    FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                });
             }
             else
             {
@@ -214,15 +239,19 @@ namespace WinPaletter.UI.WP
                 HoverSize = 0;
             }
 
+            await Task.Delay(10);
             base.OnLostFocus(e);
         }
 
-        protected override void OnClick(EventArgs e)
+        protected override async void OnClick(EventArgs e)
         {
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                await Task.Run(() =>
+                {
+                    FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                });
             }
             else
             {
@@ -230,6 +259,7 @@ namespace WinPaletter.UI.WP
                 HoverSize = 0;
             }
 
+            await Task.Delay(10);
             Animate();
 
             base.OnClick(e);
@@ -371,7 +401,7 @@ namespace WinPaletter.UI.WP
                         {
                             CenterPoint = hoverPosition,
                             CenterColor = Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black),
-                            SurroundColors = new Color[] { Color.Transparent }
+                            SurroundColors = [Color.Transparent]
                         })
                         {
                             G.FillEllipse(pgb, hoverRect);
@@ -419,7 +449,7 @@ namespace WinPaletter.UI.WP
                         {
                             CenterPoint = hoverPosition,
                             CenterColor = Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black),
-                            SurroundColors = new Color[] { Color.Transparent }
+                            SurroundColors = [Color.Transparent]
                         })
                         {
                             G.FillEllipse(pgb, hoverRect);
@@ -452,7 +482,7 @@ namespace WinPaletter.UI.WP
                 {
                     if (Tag != null && !string.IsNullOrWhiteSpace(Tag))
                     {
-                        descriptionSize = (Tag).Measure(Font, rect.Width) + new SizeF(0, 17);
+                        descriptionSize = Tag.Measure(Font, rect.Width) + new SizeF(0, 17);
 
                         int totalHeight = (int)(textSize.Height + descriptionSize.Height);
                         int centerY = rect.Y + ((rect.Height - totalHeight) / 2);
@@ -505,6 +535,8 @@ namespace WinPaletter.UI.WP
             }
 
             clipPath.Dispose();
+
+
         }
 
         public static float Lerp(float a, float b, float t)
@@ -515,7 +547,7 @@ namespace WinPaletter.UI.WP
         // Utility method for linear interpolation with integer values
         public static int Lerp(int a, int b, float t)
         {
-            return (int)Lerp((float)a, (float)b, t);
+            return (int)Lerp(a, (float)b, t);
         }
     }
 }

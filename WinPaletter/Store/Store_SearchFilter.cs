@@ -2,8 +2,14 @@
 
 namespace WinPaletter
 {
+    /// <summary>
+    /// Search filter form for the store.
+    /// </summary>
     public partial class Store_SearchFilter
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Store_SearchFilter"/> class.
+        /// </summary>
         public Store_SearchFilter()
         {
             InitializeComponent();
@@ -13,7 +19,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            using (Store formIcon = new()) { Icon = formIcon.Icon; }
+            Icon = FormsExtensions.Icon<Store>();
 
             CheckBox1.Checked = Program.Settings.Store.Search_ThemeNames;
             CheckBox2.Checked = Program.Settings.Store.Search_AuthorsNames;

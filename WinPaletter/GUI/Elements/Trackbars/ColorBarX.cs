@@ -62,7 +62,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        public UI.WP.ColorBar.ModesList Mode
+        public ColorBar.ModesList Mode
         {
             get { return colorBar1.Mode; }
             set
@@ -91,7 +91,7 @@ namespace WinPaletter.UI.WP
 
         private void value_btn_Click(object sender, EventArgs e)
         {
-            //string response = InputBox(Program.Lang.InputValue, ((UI.WP.Button)sender).Text, Program.Lang.ItMustBeNumerical);
+            //string response = InputBox(Program.modifiedLang.InputValue, ((UI.WP.Button)sender).Text, Program.modifiedLang.ItMustBeNumerical);
             //((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), colorBar1.Maximum), colorBar1.Minimum).ToString();
 
             //if (_animateChanges)
@@ -168,32 +168,32 @@ namespace WinPaletter.UI.WP
 
         private void reset_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as UI.WP.Button, string.Empty, Program.Lang.ClickToReset, null, new Point(0, (sender as UI.WP.Button).Height + 2));
+            Program.ToolTip.Show(sender as Button, string.Empty, Program.Lang.Strings.Tips.ClickToReset, null, new Point(0, (sender as Button).Height + 2));
         }
 
         private void reset_MouseLeave(object sender, EventArgs e)
         {
-            Program.ToolTip.Hide(sender as UI.WP.Button);
+            Program.ToolTip.Hide(sender as Button);
         }
 
         private void value_btn_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as UI.WP.Button, string.Empty, Program.Lang.ClickToEdit, null, new Point(0, (sender as UI.WP.Button).Height + 2));
+            Program.ToolTip.Show(sender as Button, string.Empty, Program.Lang.Strings.Tips.ClickToEdit, null, new Point(0, (sender as Button).Height + 2));
         }
 
         private void value_btn_MouseLeave(object sender, EventArgs e)
         {
-            Program.ToolTip.Hide(sender as UI.WP.Button);
+            Program.ToolTip.Hide(sender as Button);
         }
 
         private void textBox1_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as UI.WP.TextBox, string.Empty, $"• {Program.Lang.PressEnterToUseValue}\r\n• {Program.Lang.PressEscToDismissEditing}", null, new Point(0, (sender as UI.WP.TextBox).Height + 2));
+            Program.ToolTip.Show(sender as TextBox, string.Empty, $"• {Program.Lang.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Lang.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as TextBox).Height + 2));
         }
 
         private void textBox1_MouseLeave(object sender, EventArgs e)
         {
-            Program.ToolTip.Hide(sender as UI.WP.TextBox);
+            Program.ToolTip.Hide(sender as TextBox);
         }
     }
 }
