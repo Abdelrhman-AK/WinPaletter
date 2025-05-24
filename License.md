@@ -1,4 +1,4 @@
-SPDX-License-Identifier: MIT AND LGPL-2.1-or-later
+MIT AND LGPL-2.1-or-later
 
 MIT License
 
