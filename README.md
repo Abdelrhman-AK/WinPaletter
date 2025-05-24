@@ -1,22 +1,33 @@
-## 🛑 Announcement: Project Development Discontinuation:
-
-Dear WinPaletter Users,
-
-It is with a heavy heart that I announce the discontinuation of further development on the WinPaletter project. While there's an extremely slim possibility that I may find time in the distant future, perhaps years from now, to resume maintenance, I must inform you that version `1.0.9.3` marks the end of active development. Subsequent versions (`1.0.9.x`) has extremely weak possibility to be developed.
-
-In the coming days or weeks, I will proceed to archive this repository. However, please note that the existing version will remain accessible for continued use, albeit without updates or maintenance.
-
-You can certainly contribute to the WinPaletter Store for themes; this repository won't be archived. [Open the Wiki](https://github.com/Abdelrhman-AK/WinPaletter/wiki) and navigate to the WinPaletter Store section in the side panel.
-
-I want to express my deepest gratitude for your support and for choosing WinPaletter. Your enthusiasm and feedback have been invaluable throughout this journey. It has been an immense honor for me to contribute to a project that aimed to enhance your user experience. If WinPaletter has caused any inconvenience or disruption to your Windows setup, I sincerely apologize.
-
----
-
 # WinPaletter
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBannerIntro.jpg?raw=true)
 
 ![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?color=0078D4&style=for-the-badge) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge) [![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?color=F4870A&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network) [![GitHub license](https://img.shields.io/github/license/Abdelrhman-AK/WinPaletter?color=FF0C4F&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md) 
+
+## WinPaletter Returning in June 2025: Primary Development Objectives
+
+### Project Scope
+
+This return release concentrates on **cleaning up legacy issues** and providing a better-honed experience.
+While significant new features are not anticipated, the goal is to place the project in a stable, workable condition.
+
+| Area | Update Description | Progress |
+|---------------------------------|-----------------------------------------------------------|---------------------|
+| System Restore Point | Automatically create a restore point before applying any theme | ⌛ In progress |
+| Bugs fixes | Fix reported and non reported bugs and issues | ⌛ In progress |
+| Simplified UI Components | Streamlined user interface for enhanced workflow | ⌛ In progress |
+| Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ⌛ In progress |
+| Logging System | New "WinPaletter Log" for sophisticated user diagnostics | ⌛ In progress |
+| Developer Support | Better in-code documentation and organized comments for developers | ⌛ In progress |
+| WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ⌛ In progress |
+
+> [!IMPORTANT]
+> Development during this comeback phase will be limited. The developer will be available only one or two days per week (or every two weeks), and not for the full day. As a result, progress will be slower compared to the more active development period prior to archiving.
+
+> [!WARNING]
+> Development may stop in **February 2026**, and the project will be archived once more. This end is not confirmed.
+
+---
 
 #### WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
 
