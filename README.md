@@ -21,6 +21,9 @@ While significant new features are not anticipated, the goal is to place the pro
 | Developer Support | Better in-code documentation and organized comments for developers | ⌛ In progress |
 | WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ⌛ In progress |
 
+> [!IMPORTANT]
+> Development during this comeback phase will be limited. The developer will be available only one or two days per week (or every two weeks), and not for the full day. As a result, progress will be slower compared to the more active development period prior to archiving.
+
 > [!WARNING]
 > Development may stop in **February 2026**, and the project will be archived once more. This end is not confirmed.
 
