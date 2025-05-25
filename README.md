@@ -33,7 +33,8 @@ While significant new features are not anticipated, the goal is to place the pro
 
 <details>
   <summary>Toggle changelog</summary>
-
+  
+```
 **New features:**  
 - System restore points
 - New aspect: Accessibility (High Contrast + Color Filters)
@@ -70,7 +71,7 @@ While significant new features are not anticipated, the goal is to place the pro
 - Fixed an issue where the taskbar and Start menu showed a clipped, blurred portion of a different wallpaper if the theme had a wallpaper different from the current one.
 - Fixed icon label preview by correcting the shadow algorithm.
 - Fixed exception errors when deleting store cache and logs in Settings > Storage Details.
-
+```
 </details>
 
 ---
