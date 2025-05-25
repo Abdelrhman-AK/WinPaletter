@@ -504,12 +504,12 @@ namespace WinPaletter.UI.Retro
 
             Height = Math.Max(MenuHeight, Font.Height);
 
-            // Calculate the rectangles of the items.
+            // GetTextAndImageRectangles the rectangles of the items.
             item0 = new Rectangle(0, 0, (int)NormalStr.Measure(Font).Width, Height);
             item1 = new Rectangle(item0.Right, 0, (int)DisabledStr.Measure(Font).Width, Height);
             item2 = new Rectangle(item1.Right, 0, (int)SelectedStr.Measure(Font).Width, Height);
 
-            // Calculate the rectangles of the text of the items.
+            // GetTextAndImageRectangles the rectangles of the text of the items.
             SizeF item0Size = NormalStr.Measure(Font) - new Size(6, 6);
             SizeF item1Size = DisabledStr.Measure(Font) - new Size(6, 6);
             SizeF item2Size = SelectedStr.Measure(Font) - new Size(6, 6);

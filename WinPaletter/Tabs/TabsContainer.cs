@@ -29,24 +29,9 @@ namespace WinPaletter.Tabs
             AllowDrop = true;
 
             InitializeContextMenu();
-
-            Controls.Add(helpButton);
-            helpButton.Click += HelpButton_Click; ;
         }
 
         #region Variables
-
-        readonly UI.WP.Button helpButton = new()
-        {
-            Visible = false,
-            Text = string.Empty,
-            Size = new(20, 20),
-            Anchor = AnchorStyles.Right,
-            ImageGlyphEnabled = true,
-            ImageGlyph = Properties.Resources.Glyph_Help,
-            Flag = UI.WP.Button.Flags.CustomColorOnHover,
-            CustomColor = Color.FromArgb(193, 156, 0),
-        };
 
         /// <summary>
         /// Gets if the tabs container can be animated
@@ -102,10 +87,12 @@ namespace WinPaletter.Tabs
             ToolStripMenuItem closeAllToTheRight = new(Program.Lang.Strings.Tabs.Context_CloseToTheRight) { Image = Assets.Tabs.ContextBox_CloseRight };
             ToolStripMenuItem closeAllToTheLeft = new(Program.Lang.Strings.Tabs.Context_CloseToTheLeft) { Image = Assets.Tabs.ContextBox_CloseLeft };
             ToolStripMenuItem closeAll = new(Program.Lang.Strings.Tabs.Context_CloseAll) { Image = Assets.Tabs.ContextBox_CloseAll };
-            ToolStripSeparator toolStripSeparator = new();
+            ToolStripSeparator toolStripSeparator0 = new();
             ToolStripMenuItem detach = new(Program.Lang.Strings.Tabs.Context_Detach) { Image = Assets.Tabs.ContextBox_Detach };
             ToolStripMenuItem detachAll = new(Program.Lang.Strings.Tabs.Context_DetachAll) { Image = Assets.Tabs.ContextBox_DetachAll };
             ToolStripMenuItem detachAllButThis = new(Program.Lang.Strings.Tabs.Context_DetachOthers) { Image = Assets.Tabs.ContextBox_DetachAllButThis };
+            ToolStripSeparator toolStripSeparator1 = new();
+            ToolStripMenuItem helpButton = new(Program.Lang.Strings.General.Help) { Image = Assets.Tabs.ContextBox_Help };
 
             closeButton.Click += (s, e) => contextItemDropped.Form.Close();
             closeAllButThis.Click += (s, e) => CloseAllTabsButThis();
@@ -115,8 +102,14 @@ namespace WinPaletter.Tabs
             detach.Click += (s, e) => DetachTab(contextItemDropped);
             detachAll.Click += (s, e) => DetachAllTabs();
             detachAllButThis.Click += (s, e) => DetachAllTabsButThis();
+            helpButton.Click += (s, e) => TriggerHelp();
 
-            contextMenu.Items.AddRange([closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis, toolStripSeparator, detach, detachAll, detachAllButThis]);
+            contextMenu.Items.AddRange([closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis,
+                toolStripSeparator0, 
+                detach, detachAll, detachAllButThis,
+                toolStripSeparator1,
+                helpButton
+                ]);
         }
 
         /// <summary>
@@ -566,7 +559,7 @@ namespace WinPaletter.Tabs
             // If tabData movement is enabled, update the tabData's position and refresh the UI
             if (isMovingTab)
             {
-                // Calculate the new position of the tabData based on mouse movement
+                // GetTextAndImageRectangles the new position of the tabData based on mouse movement
                 tabNewPoint = MousePosition - (Size)tabOldPoint;
                 Refresh();
             }
@@ -685,6 +678,15 @@ namespace WinPaletter.Tabs
             }
         }
 
+        private void TriggerHelp()
+        {
+            IntPtr intPtr = SelectedTabData?.Form?.Handle ?? IntPtr.Zero;
+            if (intPtr != IntPtr.Zero)
+            {
+                User32.SendMessage(intPtr, 0x0112 /*WM_SYSCOMMAND*/, 0xF180 /*SC_CONTEXTHELP*/, 0);
+            }
+        }
+
         private void DetachForm(Form form)
         {
             form.Visible = false;
@@ -748,7 +750,6 @@ namespace WinPaletter.Tabs
                 {
                     forceChangeSelectedIndex = false;
                     _selectedIndex = AdjustSelectedIndex(value);
-                    helpButton.Visible = SelectedTabData?.Form != null && SelectedTabData.Form.HelpButton;
                     UpdateSelectedTab();
                     Refresh();
                 }
@@ -877,15 +878,6 @@ namespace WinPaletter.Tabs
             FormClosed?.Invoke(sender, e);
         }
 
-        private void HelpButton_Click(object sender, EventArgs e)
-        {
-            IntPtr intPtr = SelectedTabData?.Form?.Handle ?? IntPtr.Zero;
-            if (intPtr != IntPtr.Zero)
-            {
-                User32.SendMessage(intPtr, 0x0112 /*WM_SYSCOMMAND*/, 0xF180 /*SC_CONTEXTHELP*/, 0);
-            }
-        }
-
         private async void _tabControl_ControlAdded(object sender, ControlEventArgs e)
         {
             if (_tabControl != null && e.Control is TabPage)
@@ -963,9 +955,6 @@ namespace WinPaletter.Tabs
 
             SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Font) + new SizeF(2, 3);
             Rectangle betaRect = new(0 + Width - (int)betaSize.Width - 5 - 1, 0 + (int)((Height - 1 - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
-
-            helpButton.Left = Program.IsBeta ? betaRect.Left - helpButton.Width - 5 : betaRect.Right - helpButton.Width;
-            helpButton.Top = (Height - helpButton.Height) / 2;
 
             if (TabDataList != null && TabDataList.Count > 0)
             {
@@ -1231,13 +1220,14 @@ namespace WinPaletter.Tabs
             if (Program.IsBeta)
             {
                 Rectangle rect = new(0, 0, Width - 1, Height - 1);
-                SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Font) + new SizeF(2, 3);
+                SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
                 Rectangle betaRect = new(rect.X + rect.Width - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
                 G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
-                G.DrawRoundedRect_LikeW11(scheme_secondary.Pens.Line_Checked, betaRect);
+                G.DrawRoundedRectBeveled(scheme_secondary.Pens.Line_Checked, betaRect);
                 using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                 {
-                    G.DrawString(Program.Lang.Strings.General.Beta.ToUpper(), Font, scheme_secondary.Brushes.ForeColor_Accent, new Rectangle(betaRect.X, betaRect.Y + 1, betaRect.Width, betaRect.Height), sf);
+                    betaRect.Y++;
+                    G.DrawString(Program.Lang.Strings.General.Beta.ToUpper(), Fonts.ConsoleMedium, scheme_secondary.Brushes.ForeColor_Accent, betaRect, sf);
                 }
             }
 
@@ -1346,7 +1336,7 @@ namespace WinPaletter.Tabs
                         using (Pen P = new(lgb1))
                         {
                             G.FillRoundedRect(lgb0, closeRectangle(rect));
-                            G.DrawRoundedRect_LikeW11(P, closeRectangle(rect));
+                            G.DrawRoundedRectBeveled(P, closeRectangle(rect));
                         }
                     }
                 }

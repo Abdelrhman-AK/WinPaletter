@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.TypesExtensions;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.WP
@@ -68,14 +69,16 @@ namespace WinPaletter.UI.WP
         public new Color BackColor { get => Color.Transparent; set {; } }
 
         private Image _image;
+        private Image _imageDisabled;
         public new Image Image
         {
-            get => _image;
+            get => Enabled ? _image : _imageDisabled;
             set
             {
                 if (_image != value)
                 {
                     _image = value;
+                    _imageDisabled = value?.Grayscale() ?? null;
 
                     if (_image is not null)
                     {
@@ -95,23 +98,32 @@ namespace WinPaletter.UI.WP
         private Image _imageGlyph;
         private Image _imageGlyphOver;
         private Image _imageGlyphDown;
+        private Image _imageGlyphDisabled;
+
         public Image ImageGlyph
         {
             get
             {
-                if (!DesignMode)
+                if (Enabled)
                 {
-                    return State switch
+                    if (!DesignMode)
                     {
-                        MouseState.None => Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert(),
-                        MouseState.Over => _imageGlyphOver,
-                        MouseState.Down => _imageGlyphDown,
-                        _ => Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert(),
-                    };
+                        return State switch
+                        {
+                            MouseState.None => Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert().Fade(0.85f),
+                            MouseState.Over => _imageGlyphOver,
+                            MouseState.Down => _imageGlyphDown,
+                            _ => Program.Style.DarkMode ? _imageGlyph : ((Bitmap)_imageGlyph)?.Invert().Fade(0.85f),
+                        };
+                    }
+                    else
+                    {
+                        return _imageGlyph;
+                    }
                 }
                 else
                 {
-                    return _imageGlyph;
+                    return _imageGlyphDisabled;
                 }
             }
             set
@@ -135,6 +147,7 @@ namespace WinPaletter.UI.WP
                 _imageGlyph = glyph;
                 _imageGlyphOver = ((Bitmap)glyph)?.Tint(colors.ForeColor_Accent);
                 _imageGlyphDown = ((Bitmap)glyph)?.Tint(colors.ForeColor_Accent);
+                _imageGlyphDisabled = ((Bitmap)glyph)?.Grayscale();
             }
         }
 
@@ -241,7 +254,7 @@ namespace WinPaletter.UI.WP
                             {
                                 if (!_imageGlyphEnabled && _image != null)
                                 {
-                                    resultColor = imageColors.Back_Checked;
+                                    resultColor = Enabled ? imageColors.Back_Checked : accentColors.Back_Checked;
                                 }
 
                                 else
@@ -296,22 +309,22 @@ namespace WinPaletter.UI.WP
             }
 
             float coloringFactor_Circle_Over_Dark = 0.35f;
-            float coloringFactor_Circle_Over_Light = 0.04f;
+            float coloringFactor_Circle_Over_Light = -0.08f;
 
             float coloringFactor_Circle_Down_Dark = 0.3f;
-            float coloringFactor_Circle_Down_Light = 0.06f;
+            float coloringFactor_Circle_Down_Light = -0.1f;
 
             switch (State)
             {
                 case MouseState.Over:
                     {
-                        _rippleColor = Program.Style.DarkMode ? resultColor.Light(coloringFactor_Circle_Over_Dark) : resultColor.Dark(coloringFactor_Circle_Over_Light);
+                        _rippleColor = Program.Style.DarkMode ? resultColor.Light(coloringFactor_Circle_Over_Dark) : resultColor.CB(coloringFactor_Circle_Over_Light);
                         break;
                     }
 
                 case MouseState.Down:
                     {
-                        _rippleColor = Program.Style.DarkMode ? resultColor.Light(coloringFactor_Circle_Down_Dark) : resultColor.Dark(coloringFactor_Circle_Down_Light);
+                        _rippleColor = Program.Style.DarkMode ? resultColor.Light(coloringFactor_Circle_Down_Dark) : resultColor.CB(coloringFactor_Circle_Down_Light);
                         break;
                     }
             }
@@ -329,21 +342,21 @@ namespace WinPaletter.UI.WP
             {
                 case MouseState.None:
                     {
-                        return _color.CB(Color.IsDark() ? 0.02f : -0.04f);
+                        return baseColor.CB(Color.IsDark() ? 0.01f : -0.07f);
                     }
 
                 case MouseState.Over:
                     {
-                        return _color.CB(Color.IsDark() ? 0.07f : -0.1f);
+                        return baseColor.CB(Color.IsDark() ? 0.07f : -0.1f);
                     }
 
                 case MouseState.Down:
                     {
-                        return _color.CB(Color.IsDark() ? 0.1f : -0.08f);
+                        return baseColor.CB(Color.IsDark() ? 0.1f : -0.08f);
                     }
                 default:
                     {
-                        return _color.CB(Color.IsDark() ? 0.02f : -0.04f);
+                        return baseColor.CB(Color.IsDark() ? 0.02f : -0.04f);
                     }
             }
         }
@@ -660,7 +673,6 @@ namespace WinPaletter.UI.WP
         {
             base.Dispose(disposing);
 
-            //Noise?.Dispose();
             //Menu?.Dispose();
             //_image?.Dispose();   
             //_imageGlyph?.Dispose();
@@ -765,8 +777,8 @@ namespace WinPaletter.UI.WP
 
                 using (Pen P = new(Color.FromArgb(255, _lineColor)))
                 {
-                    if (State != MouseState.Down) G.DrawRoundedRect_LikeW11(P, RectInner);
-                    else G.DrawRoundedRect(P, RectInner);
+                    if (State != MouseState.Down) G.DrawRoundedRectBeveled(P, RectInner);
+                    else G.DrawRoundedRectBeveledReverse(P, RectInner);
                 }
             }
 
@@ -814,158 +826,44 @@ namespace WinPaletter.UI.WP
             {
                 using (Pen P = new(Color.FromArgb(255, _lineColor)))
                 {
-                    G.DrawLine(P, Rect_Menu.Left - 1, RectInner.Y, Rect_Menu.Left - 1, RectInner.Y + RectInner.Height);
+                    G.DrawLine(P, Rect_Menu.Left - 1, RectInner.Y + 1, Rect_Menu.Left - 1, RectInner.Y + RectInner.Height - 1);
                 }
             }
 
             // Button border
             using (Pen P = new(Color.FromArgb(alpha, _lineColor)))
             {
-                if (State != MouseState.Down)
-                    G.DrawRoundedRect_LikeW11(P, Rect);
+                if (State == MouseState.Down)
+                    G.DrawRoundedRectBeveledReverse(P, Rect);
                 else
-                    G.DrawRoundedRect(P, Rect);
+                    G.DrawRoundedRectBeveled(P, Rect);
             }
 
             #endregion
 
             #region Text and image render
-            using (StringFormat sf = TextAlign.ToStringFormat((int)base.RightToLeft == 1))
-            using (SolidBrush fc = new(ForeColor))
+
+            this.GetTextAndImageRectangles(TextAndImageRect, out RectangleF imageRectF, out RectangleF textRectF);
+
+            Image img = !_imageGlyphEnabled ? Image : ImageGlyph;
+
+            // Draw image
+            if (img != null) G.DrawImage(img, Rectangle.Round(imageRectF));
+
+            // Draw text
+            if (!string.IsNullOrEmpty(Text))
             {
-                Image img = !_imageGlyphEnabled ? Image : ImageGlyph;
+                if (TextAndImageRect.Height % 2 == 0) textRectF.Y += 0.5f;
 
-                if (img == null)
+                if (Enabled)
                 {
-                    //Fix label maladjustment in center position
-                    if (TextAlign == ContentAlignment.MiddleCenter)
-                    {
-                        if (Width % 2 != 0) TextAndImageRect.Offset(1, 0);
-                        if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
-                    }
-
-                    G.DrawString(Text, Font, fc, TextAndImageRect, sf);
+                    TextRenderer.DrawText(G, Text, Font, Rectangle.Round(textRectF), ForeColor, TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter);
                 }
-
-                else if (string.IsNullOrWhiteSpace(Text) && img != null)
-                {
-                    Rectangle imageRect = GetImageRectangle(TextAndImageRect, img.Size, ImageAlign);
-
-                    //Fix image maladjustment in center position
-                    if (ImageAlign == ContentAlignment.MiddleCenter)
-                    {
-                        if (Width % img.Width != 0) imageRect.Offset(1, 0);
-                        if (Height % img.Height != 0) imageRect.Offset(0, 1);
-                    }
-
-                    G.DrawImage(Enabled ? img : img.Grayscale(), imageRect);
-                }
-
                 else
                 {
-                    if (TextImageRelation == TextImageRelation.Overlay)
-                    {
-                        Rectangle imageRect = GetImageRectangle(TextAndImageRect, img.Size, ImageAlign);
-
-                        //Fix image maladjustment in center position
-                        if (ImageAlign == ContentAlignment.MiddleCenter)
-                        {
-                            if (Width % img.Width != 0) imageRect.Offset(1, 0);
-                            if (Height % img.Height != 0) imageRect.Offset(0, 1);
-                        }
-
-                        //Fix label maladjustment in center position
-                        if (TextAlign == ContentAlignment.MiddleCenter)
-                        {
-                            if (Width % 2 != 0) TextAndImageRect.Offset(1, 0);
-                            if (Height % 2 != 0) TextAndImageRect.Offset(0, 1);
-                        }
-
-                        G.DrawImage(Enabled ? img : img.Grayscale(), imageRect);
-                        G.DrawString(Text, Font, fc, TextAndImageRect, sf);
-                    }
-                    else
-                    {
-                        int innerSpacing = 1;
-                        Size ImageSize = img.Size;
-                        SizeF TextSizeF = G.MeasureString(Text, Font, TextAndImageRect.Size, sf);
-                        Size TextSize = new((int)TextSizeF.Width + innerSpacing * 2, (int)TextSizeF.Height);
-
-                        Rectangle space = new();
-                        Rectangle textRect = new();
-                        Rectangle imageRect = new();
-
-                        if (TextImageRelation == TextImageRelation.ImageAboveText)
-                        {
-                            space.Width = Math.Max(ImageSize.Width, TextSize.Width);
-                            space.Height = ImageSize.Height + TextSize.Height + innerSpacing;
-
-                            space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
-
-                            imageRect = GetImageRectangle(space, img.Size, ImageAlign);
-                            imageRect.Y = space.Y;
-
-                            textRect.Width = space.Width;
-                            textRect.Height = TextSize.Height;
-                            textRect.X = space.X;
-                            textRect.Y = imageRect.Bottom + innerSpacing;
-                        }
-
-                        else if (TextImageRelation == TextImageRelation.TextAboveImage)
-                        {
-                            space.Width = Math.Max(ImageSize.Width, TextSize.Width);
-                            space.Height = ImageSize.Height + TextSize.Height + innerSpacing;
-
-                            space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
-
-                            textRect.Width = space.Width;
-                            textRect.Height = TextSize.Height;
-                            textRect.X = space.X;
-                            textRect.Y = space.Y;
-
-                            imageRect = GetImageRectangle(space, img.Size, ImageAlign);
-                            imageRect.Y = textRect.Bottom + innerSpacing;
-                        }
-
-                        else if (TextImageRelation == TextImageRelation.ImageBeforeText)
-                        {
-                            space.Width = ImageSize.Width + TextSize.Width + innerSpacing;
-                            space.Height = Math.Max(ImageSize.Height, TextSize.Height);
-
-                            space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
-
-                            imageRect = GetImageRectangle(space, ImageSize, ContentAlignment.MiddleLeft);
-
-                            textRect.X = imageRect.Right + innerSpacing;
-                            textRect.Y = space.Y + 1;
-                            textRect.Width = TextSize.Width;
-                            textRect.Height = space.Height;
-
-                            imageRect.Y++;
-                        }
-
-                        else if (TextImageRelation == TextImageRelation.TextBeforeImage)
-                        {
-                            space.Width = ImageSize.Width + TextSize.Width + innerSpacing;
-                            space.Height = Math.Max(ImageSize.Height, TextSize.Height);
-
-                            space = GetImageRectangle(TextAndImageRect, space.Size, ImageAlign);
-
-                            textRect.X = space.X;
-                            textRect.Y = space.Y;
-                            textRect.Width = TextSize.Width;
-                            textRect.Height = space.Height;
-
-                            imageRect.X = textRect.Right + innerSpacing;
-                            imageRect.Y = space.Y;
-                            imageRect.Width = ImageSize.Width;
-                            imageRect.Height = ImageSize.Height;
-                        }
-
-                        G.DrawImage(Enabled ? img : img.Grayscale(), imageRect);
-                        G.DrawString(Text, Font, fc, textRect, sf);
-                    }
+                    ControlPaint.DrawStringDisabled(G, Text, Font, ForeColor, Rectangle.Round(textRectF), TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter);
                 }
+
             }
 
             if (Menu.Items.Count > 0)
@@ -982,31 +880,6 @@ namespace WinPaletter.UI.WP
 
             // Never use base.OnPaint(e) for buttons, it will overwrite the previous graphics
             // base.OnPaint(e);
-
-
-        }
-
-        private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)
-        {
-            float CenterWidthD = rect.X + (float)(rect.Width - size.Width) / 2;
-            float CenterHeightD = rect.Y + (float)(rect.Height - size.Height) / 2;
-
-            int CenterWidth = (int)Math.Round(CenterWidthD, 2);
-            int CenterHeight = (int)Math.Round(CenterHeightD, 2);
-
-            return contentAlignment switch
-            {
-                ContentAlignment.TopLeft => new(rect.X, rect.Y, size.Width, size.Height),
-                ContentAlignment.TopRight => new(rect.Right - size.Width, rect.Y, size.Width, size.Height),
-                ContentAlignment.TopCenter => new(CenterWidth, rect.Y, size.Width, size.Height),
-                ContentAlignment.MiddleLeft => new(rect.X, CenterHeight, size.Width, size.Height),
-                ContentAlignment.MiddleCenter => new(CenterWidth, CenterHeight, size.Width, size.Height),
-                ContentAlignment.MiddleRight => new(rect.Right - size.Width, CenterHeight, size.Width, size.Height),
-                ContentAlignment.BottomLeft => new(rect.X, rect.Bottom - size.Height, size.Width, size.Height),
-                ContentAlignment.BottomCenter => new(CenterWidth, rect.Bottom - size.Height, size.Width, size.Height),
-                ContentAlignment.BottomRight => new(rect.Right - size.Width, rect.Bottom - size.Height, size.Width, size.Height),
-                _ => new(CenterWidth, CenterHeight, size.Width, size.Height),
-            };
         }
     }
 }

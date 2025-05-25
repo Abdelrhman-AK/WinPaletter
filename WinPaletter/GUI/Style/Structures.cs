@@ -366,13 +366,13 @@ namespace WinPaletter.UI.Style
             /// </summary>
             /// <param name="accent"></param>
             /// <param name="backcolor"></param>
-            /// <param name="isDark"></param>
-            public Colors_Collection(Color accent, Color backcolor, bool isDark)
+            /// <param name="Dark"></param>
+            public Colors_Collection(Color accent, Color backcolor, bool Dark)
             {
                 Accent = accent;
                 BackColor = backcolor;
 
-                if (isDark)
+                if (Dark)
                 {
                     Accent_Method = Method.CB;
                     Accent_Factor = 0f;

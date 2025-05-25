@@ -560,7 +560,7 @@ namespace WinPaletter.UI.Controllers
                         }
                     }
 
-                    using (Pen P = new(LineColor)) { G.DrawRoundedRect_LikeW11(P, RectInner); }
+                    using (Pen P = new(LineColor)) { G.DrawRoundedRectBeveled(P, RectInner); }
                 }
 
                 else if (!DesignMode && DragDropMouseHovering && CanAnimate)
@@ -590,7 +590,7 @@ namespace WinPaletter.UI.Controllers
                         G.ResetClip();
                     }
 
-                    using (Pen P = new(base.BackColor.IsDark() ? Color.White : Color.Black, 1.5f) { DashStyle = DashStyle.Dot }) { G.DrawRoundedRect_LikeW11(P, Rect); }
+                    using (Pen P = new(base.BackColor.IsDark() ? Color.White : Color.Black, 1.5f) { DashStyle = DashStyle.Dot }) { G.DrawRoundedRectBeveled(P, Rect); }
                 }
 
                 else
@@ -601,9 +601,9 @@ namespace WinPaletter.UI.Controllers
 
                     using (SolidBrush br = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), BackColor))) { G.FillRoundedRect(br, Rect); }
 
-                    using (Pen P = new(Color.FromArgb((int)((255f - alpha) / 255f * BackColor.A), LineColor))) { G.DrawRoundedRect_LikeW11(P, RectInner); }
+                    using (Pen P = new(Color.FromArgb((int)((255f - alpha) / 255f * BackColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, RectInner); }
 
-                    using (Pen P = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), LineColor))) { G.DrawRoundedRect_LikeW11(P, Rect); }
+                    using (Pen P = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, Rect); }
                 }
 
                 if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)

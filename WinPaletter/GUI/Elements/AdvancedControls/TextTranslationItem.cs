@@ -175,19 +175,19 @@ namespace WinPaletter.UI.Controllers
             if (_SearchHighlight is not null && !string.IsNullOrWhiteSpace(_SearchHighlight) && Text.ToLower().Trim().Contains(_SearchHighlight.ToLower().Trim()))
             {
                 G.FillRoundedRect(Program.Style.Schemes.Tertiary.Brushes.Back_Checked_Hover, rect);
-                G.DrawRoundedRect_LikeW11(Program.Style.Schemes.Tertiary.Pens.Line_Checked_Hover, rect);
+                G.DrawRoundedRectBeveled(Program.Style.Schemes.Tertiary.Pens.Line_Checked_Hover, rect);
             }
 
             else if (!string.IsNullOrWhiteSpace(Text) && (Text.Trim() ?? string.Empty) == (Text_English.Trim() ?? string.Empty))
             {
                 G.FillRoundedRect(Program.Style.Schemes.Secondary.Brushes.Back_Checked, rect);
-                G.DrawRoundedRect_LikeW11(Program.Style.Schemes.Secondary.Pens.Line_Checked, rect);
+                G.DrawRoundedRectBeveled(Program.Style.Schemes.Secondary.Pens.Line_Checked, rect);
             }
 
             else if (Tag is not null && !string.IsNullOrWhiteSpace(Tag.ToString()) && (Tag.ToString().Trim() ?? string.Empty) == (Tag_English.Trim() ?? string.Empty))
             {
                 G.FillRoundedRect(Program.Style.Schemes.Secondary.Brushes.Back_Checked, rect);
-                G.DrawRoundedRect_LikeW11(Program.Style.Schemes.Secondary.Pens.Line_Checked, rect);
+                G.DrawRoundedRectBeveled(Program.Style.Schemes.Secondary.Pens.Line_Checked, rect);
             }
 
             else
@@ -196,14 +196,14 @@ namespace WinPaletter.UI.Controllers
                 using (Pen P = new(Program.Style.Schemes.Secondary.Colors.Line(0)))
                 {
                     G.FillRoundedRect(br, rect);
-                    G.DrawRoundedRect_LikeW11(P, rect);
+                    G.DrawRoundedRectBeveled(P, rect);
                 }
             }
 
             if (Pressed)
             {
                 G.FillRoundedRect(Program.Style.Schemes.Main.Brushes.Back_Checked, rect);
-                G.DrawRoundedRect_LikeW11(Program.Style.Schemes.Main.Pens.Line_Checked, rect);
+                G.DrawRoundedRectBeveled(Program.Style.Schemes.Main.Pens.Line_Checked, rect);
             }
 
             #region Text and Image Render

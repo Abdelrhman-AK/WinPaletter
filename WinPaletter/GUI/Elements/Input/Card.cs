@@ -26,8 +26,8 @@ namespace WinPaletter.UI.WP
         Rectangle rect => new(rect_all.X + shadowSize, rect_all.Y + shadowSize, rect_all.Width - shadowSize * 2, rect_all.Height - shadowSize * 2);
         Rectangle rect_margin => new(rect_all.X + shadowSize - margin, rect_all.Y + shadowSize - margin, rect_all.Width - shadowSize * 2 + margin * 2, rect_all.Height - shadowSize * 2 + margin * 2);
 
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.45f));
-        private readonly TextureBrush NoiseHover = new(Properties.Resources.Noise.Fade(0.9f));
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.45f));
+        private readonly static TextureBrush NoiseHover = new(Properties.Resources.Noise.Fade(0.9f));
 
         public MouseState State = MouseState.None;
 
@@ -410,8 +410,8 @@ namespace WinPaletter.UI.WP
 
                     G.ResetClip();
 
-                    G.DrawRoundedRect_LikeW11(P0, rect_margin, radius);
-                    G.DrawRoundedRect_LikeW11(P1, rect_margin, radius);
+                    G.DrawRoundedRectBeveled(P0, rect_margin, radius);
+                    G.DrawRoundedRectBeveled(P1, rect_margin, radius);
                 }
             }
             else
@@ -466,7 +466,7 @@ namespace WinPaletter.UI.WP
 
                 using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked)))
                 {
-                    G.DrawRoundedRect_LikeW11(P, rect_margin, radius);
+                    G.DrawRoundedRectBeveled(P, rect_margin, radius);
                 }
             }
 
@@ -501,10 +501,10 @@ namespace WinPaletter.UI.WP
 
                     if (descriptionSize != SizeF.Empty)
                     {
-                        // Calculate the initial centerY
+                        // GetTextAndImageRectangles the initial centerY
                         int centerY = rect.Y + (rect.Height - (int)textSize.Height) / 2;
 
-                        // Calculate the center of the title and description combined
+                        // GetTextAndImageRectangles the center of the title and description combined
                         int combinedCenterY = rect.Y + (rect.Height - (int)(textSize.Height + descriptionSize.Height)) / 2;
 
                         // Interpolate between the two states based on the alpha_hover value

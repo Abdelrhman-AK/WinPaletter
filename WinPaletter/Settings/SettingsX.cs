@@ -902,7 +902,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Calculate the size of the store cache
+        /// GetTextAndImageRectangles the size of the store cache
         /// </summary>
         /// <returns></returns>
         private int CalcStoreCache()
@@ -918,7 +918,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Calculate the size of the extracted themes resources cache
+        /// GetTextAndImageRectangles the size of the extracted themes resources cache
         /// </summary>
         /// <returns></returns>
         private int CalcThemesResCache()
@@ -934,7 +934,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Calculate the size of the backups cache
+        /// GetTextAndImageRectangles the size of the backups cache
         /// </summary>
         /// <returns></returns>
         private int CalcBackupsCache()
@@ -950,7 +950,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Calculate the size of the exceptions errors cache
+        /// GetTextAndImageRectangles the size of the exceptions errors cache
         /// </summary>
         /// <returns></returns>
         private int CalcExErrors()
@@ -966,7 +966,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Calculate the size of the app core (Application data and Program files data)
+        /// GetTextAndImageRectangles the size of the app core (Application data and Program files data)
         /// </summary>
         /// <returns></returns>
         private int CalcAppCore()
@@ -1201,7 +1201,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(SysPaths.StoreCache, true);
+                if (Directory.Exists(SysPaths.StoreCache)) Directory.Delete(SysPaths.StoreCache, true);
             }
             catch (UnauthorizedAccessException ex0)
             {
@@ -1224,7 +1224,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete(SysPaths.ThemeResPackCache, true);
+                if (Directory.Exists(SysPaths.ThemeResPackCache)) Directory.Delete(SysPaths.ThemeResPackCache, true);
             }
             catch (UnauthorizedAccessException ex0)
             {
@@ -1300,7 +1300,7 @@ namespace WinPaletter
         {
             try
             {
-                Directory.Delete($"{SysPaths.appData}\\Reports", true);
+                if (Directory.Exists(SysPaths.Reports)) Directory.Delete(SysPaths.Reports, true);
             }
             catch (UnauthorizedAccessException ex0)
             {
@@ -1413,6 +1413,17 @@ namespace WinPaletter
         private void button29_Click(object sender, EventArgs e)
         {
             Process.Start(Links.SecureUxThemeReleases);
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            Program.Settings.General.SetupCompleted = false;
+            Program.Settings.General.Save();
+
+            if (MsgBox(Program.Lang.Strings.Messages.RerunSetup_Msg0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.ExitWinPaletter) == DialogResult.Yes)
+            {
+                Program.ForceExit();
+            }
         }
     }
 }

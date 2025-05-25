@@ -240,7 +240,7 @@ namespace WinPaletter.UI.WP
                 // Checked part
                 using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt))) { G.FillRoundedRect(br, MainRect, 9, true); }
 
-                using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt))) { G.DrawRoundedRect_LikeW11(P, MainRect, 9, true); }
+                using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt))) { G.DrawRoundedRectBeveled(P, MainRect, 9, true); }
 
                 using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt.IsDark() ? Color.Black : Color.White))) { G.FillEllipse(br, CheckC); }
 
@@ -296,9 +296,9 @@ namespace WinPaletter.UI.WP
                     }
                 }
 
-                using (Pen P = new(lgborderChecked)) { G.DrawRoundedRect_LikeW11(P, MainRect, 9, true); }
+                using (Pen P = new(lgborderChecked)) { G.DrawRoundedRectBeveled(P, MainRect, 9, true); }
 
-                using (Pen P = new(lgborderNonChecked)) { G.DrawRoundedRect_LikeW11(P, MainRect, 9, true); }
+                using (Pen P = new(lgborderNonChecked)) { G.DrawRoundedRectBeveled(P, MainRect, 9, true); }
             }
 
             base.OnPaint(e);

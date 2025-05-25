@@ -245,9 +245,9 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.FillRoundedRect(br, SideRect); }
 
-            using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.Line(parentLevel)))) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+            using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.Line(parentLevel)))) { G.DrawRoundedRectBeveled(P, InnerRect); }
 
-            using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
+            using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover))) { G.DrawRoundedRectBeveled(P, OuterRect); }
 
             using (SolidBrush SignBrush = new(Color.FromArgb(255 - alpha, scheme.Colors.Line_Checked_Hover)))
             {

@@ -218,7 +218,7 @@ namespace WinPaletter.NativeMethods
             DTT_BORDERSIZE = 32,
 
             /// <summary>
-            /// Calculate the rectangle size without writing the text.
+            /// GetTextAndImageRectangles the rectangle size without writing the text.
             /// </summary>
             DTT_CALCRECT = 512,
 

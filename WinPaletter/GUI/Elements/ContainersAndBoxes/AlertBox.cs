@@ -114,6 +114,9 @@ namespace WinPaletter.UI.WP
             Config.Scheme scheme2 = Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
             Config.Scheme scheme3 = Enabled ? Program.Style.Schemes.Tertiary : Program.Style.Schemes.Disabled;
 
+            Rectangle rect = new(0, 0, Width - 1, Height - 1);
+            Rectangle innerRect = new(5, 5, Width - 11, Height - 11);
+
             switch (_alertStyle)
             {
                 case Style.Simple:
@@ -211,61 +214,32 @@ namespace WinPaletter.UI.WP
                     }
             }
 
-            using (SolidBrush br = new(innerColor)) { G.FillRoundedRect(br, new Rectangle(0, 0, Width - 1, Height - 1)); }
+            using (SolidBrush br = new(innerColor)) { G.FillRoundedRect(br, rect); }
 
-            using (Pen P = new(borderColor)) { G.DrawRoundedRect(P, new Rectangle(0, 0, Width - 1, Height - 1)); }
+            using (Pen P = new(borderColor)) { G.DrawRoundedRect(P, rect); }
 
-            int TextX = 5;
-
-            if (Image is not null) { G?.DrawImage(Image, new Rectangle(!RTL ? 5 : Width - 5 - Image.Width, 5, Image.Width, Image.Height)); }
-
-            if (!CenterText)
+            using (StringFormat sf = !CenterText ? ContentAlignment.MiddleLeft.ToStringFormat(RTL) : ContentAlignment.MiddleCenter.ToStringFormat(RTL))
             {
-                if (Image is null)
+                sf.FormatFlags = StringFormatFlags.LineLimit; // Limit to lines fitting layout rectangle
+                sf.Trimming = StringTrimming.EllipsisCharacter; // Optional: add ellipsis if overflow
+                float maxWidth = innerRect.Width;
+
+                Image img = _image;
+                SizeF imageSize = img?.Size ?? SizeF.Empty;
+                SizeF textSize = G.MeasureString(Text, Font, new SizeF(maxWidth, float.MaxValue), sf);
+
+                GraphicsExtensions.GetTextAndImageRectangles(innerRect, imageSize, textSize, ContentAlignment.TopLeft, !CenterText ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter, TextImageRelation.ImageBeforeText,
+                    out RectangleF imageRect, out RectangleF textRect);
+
+                if (img != null) G.DrawImage(img, Rectangle.Round(imageRect));
+
+                using (SolidBrush br = new(textColor))
                 {
-                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
-                    {
-                        using (SolidBrush br = new(textColor))
-                        {
-                            G.DrawString(Text, Font, br, new Rectangle(TextX, 0, Width, Height), sf);
-                        }
-                    }
-                }
-                else if (!RTL)
-                {
-                    using (StringFormat sf = ContentAlignment.TopLeft.ToStringFormat())
-                    {
-                        using (SolidBrush br = new(textColor))
-                        {
-                            G.DrawString(Text, Font, br, new Rectangle(10 + Image.Width, 7, Width - (5 + Image.Width), Height - 10), sf);
-                        }
-                    }
-                }
-                else
-                {
-                    using (StringFormat sf = ContentAlignment.TopLeft.ToStringFormat(RTL))
-                    {
-                        using (SolidBrush br = new(textColor))
-                        {
-                            G.DrawString(Text, Font, br, new Rectangle(0, 7, Width - (10 + Image.Width), Height - 10), sf);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat(RTL))
-                {
-                    using (SolidBrush br = new(textColor))
-                    {
-                        G.DrawString(Text, Font, br, new Rectangle(1, 0, Width, Height), sf);
-                    }
+                    G.DrawString(Text, Font, br, textRect, sf);
                 }
             }
 
             base.OnPaint(e);
-
-
         }
     }
 }

@@ -232,7 +232,7 @@ namespace WinPaletter.UI.WP
             using (Pen penBorder = new(bordersPen))
             {
                 Rectangle borders = new(e.Bounds.X, e.Bounds.Y, e.Bounds.Width - 1, e.Bounds.Height - 1);
-                G.DrawRoundedRect_LikeW11(penBorder, borders, 1, true);
+                G.DrawRoundedRectBeveled(penBorder, borders, 1, true);
             }
 
             if (_image != null)
@@ -253,7 +253,7 @@ namespace WinPaletter.UI.WP
                 {
                     Rectangle rectImage = new(rectImageSide.X + (rectImageSide.Width - 24) / 2 + 1, e.Bounds.Y + (e.Bounds.Height - 24) / 2, 24, 24);
                     G.FillRoundedRect(br, rectImage, 1, true);
-                    G.DrawRoundedRect_LikeW11(P2, rectImage, 1, true);
+                    G.DrawRoundedRectBeveled(P2, rectImage, 1, true);
                     G.DrawLine(P, rectImageSide.Right + padding_inner + 2, e.Bounds.Top + padding_inner * 2, rectImageSide.Right + padding_inner + 2, e.Bounds.Bottom - padding_inner * 2);
                 }
             }

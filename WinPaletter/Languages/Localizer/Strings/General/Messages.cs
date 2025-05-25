@@ -57,6 +57,8 @@
                 public string SysRestore_Msg0 { get; set; } = "A system restore point creation query is required to help you revert to a previous Windows theme if you encounter issues.";
                 public string SysRestore_Msg1 { get; set; } = "Do you want to enable system restore for system partition `{0}:\\`?";
                 public string SysRestore_Msg2 { get; set; } = "System restore point is created successfully.";
+                public string RerunSetup_Msg0 { get; set; } = "WinPaletter will launch setup in the next application session.";
+                public string ExitWinPaletter { get; set; } = "Do you want to exit WinPaletter now?";
             }
         }
     }

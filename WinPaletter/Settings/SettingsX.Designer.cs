@@ -502,6 +502,7 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
+            this.button30 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -722,9 +723,10 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.flowLayoutPanel1.Controls.Add(this.pin_button);
-            this.flowLayoutPanel1.Controls.Add(this.Button5);
             this.flowLayoutPanel1.Controls.Add(this.Button4);
             this.flowLayoutPanel1.Controls.Add(this.Button3);
+            this.flowLayoutPanel1.Controls.Add(this.button30);
+            this.flowLayoutPanel1.Controls.Add(this.Button5);
             this.flowLayoutPanel1.Controls.Add(this.Button6);
             this.flowLayoutPanel1.Controls.Add(this.button27);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 6);
@@ -759,7 +761,7 @@ namespace WinPaletter
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
             this.Button5.ImageGlyph = null;
             this.Button5.ImageGlyphEnabled = false;
-            this.Button5.Location = new System.Drawing.Point(43, 3);
+            this.Button5.Location = new System.Drawing.Point(269, 3);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(200, 34);
             this.Button5.TabIndex = 19;
@@ -771,18 +773,17 @@ namespace WinPaletter
             // Button4
             // 
             this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button4.CustomColor = System.Drawing.Color.Empty;
-            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
-            this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
-            this.Button4.ImageGlyph = null;
-            this.Button4.ImageGlyphEnabled = false;
-            this.Button4.Location = new System.Drawing.Point(249, 3);
+            this.Button4.Image = null;
+            this.Button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.Button4.ImageGlyphEnabled = true;
+            this.Button4.Location = new System.Drawing.Point(43, 3);
             this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(130, 34);
+            this.Button4.Size = new System.Drawing.Size(34, 34);
             this.Button4.TabIndex = 17;
-            this.Button4.Text = "Import";
             this.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button4.UseVisualStyleBackColor = false;
             this.Button4.Click += new System.EventHandler(this.Button4_Click);
@@ -790,18 +791,17 @@ namespace WinPaletter
             // Button3
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(89)))), ((int)(((byte)(174)))));
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
-            this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
-            this.Button3.ImageGlyph = null;
-            this.Button3.ImageGlyphEnabled = false;
-            this.Button3.Location = new System.Drawing.Point(385, 3);
+            this.Button3.Image = null;
+            this.Button3.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Save;
+            this.Button3.ImageGlyphEnabled = true;
+            this.Button3.Location = new System.Drawing.Point(83, 3);
             this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(130, 34);
+            this.Button3.Size = new System.Drawing.Size(34, 34);
             this.Button3.TabIndex = 16;
-            this.Button3.Text = "Export";
             this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
@@ -816,7 +816,7 @@ namespace WinPaletter
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
             this.Button6.ImageGlyph = null;
             this.Button6.ImageGlyphEnabled = false;
-            this.Button6.Location = new System.Drawing.Point(521, 3);
+            this.Button6.Location = new System.Drawing.Point(475, 3);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(130, 34);
             this.Button6.TabIndex = 20;
@@ -835,7 +835,7 @@ namespace WinPaletter
             this.button27.Image = ((System.Drawing.Image)(resources.GetObject("button27.Image")));
             this.button27.ImageGlyph = null;
             this.button27.ImageGlyphEnabled = false;
-            this.button27.Location = new System.Drawing.Point(657, 3);
+            this.button27.Location = new System.Drawing.Point(611, 3);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(200, 34);
             this.button27.TabIndex = 126;
@@ -6819,6 +6819,25 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
+            // button30
+            // 
+            this.button30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button30.CustomColor = System.Drawing.Color.Empty;
+            this.button30.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button30.ForeColor = System.Drawing.Color.White;
+            this.button30.Image = ((System.Drawing.Image)(resources.GetObject("button30.Image")));
+            this.button30.ImageGlyph = null;
+            this.button30.ImageGlyphEnabled = false;
+            this.button30.Location = new System.Drawing.Point(123, 3);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(140, 34);
+            this.button30.TabIndex = 127;
+            this.button30.Text = "Re-run setup";
+            this.button30.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button30.UseVisualStyleBackColor = false;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -7489,5 +7508,6 @@ namespace WinPaletter
         internal Label label62;
         private UI.WP.Toggle toggle39;
         internal PictureBox pictureBox69;
+        internal UI.WP.Button button30;
     }
 }

@@ -153,6 +153,15 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events/Overrides
+
+        TabControl? GetTabControl(TabPage page)
+        {
+            for (Control? p = page.Parent; p != null; p = p.Parent)
+                if (p is TabControl tc && tc.TabPages.Contains(page))
+                    return tc;
+            return null;
+        }
+
         protected override void OnHandleCreated(EventArgs e)
         {
             if (!DesignMode)

@@ -22,7 +22,6 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             TextBox1.Font = Fonts.ConsoleLarge;
-            Icon = FormsExtensions.Icon<LicenseForm>();
 
             SystemSounds.Exclamation.Play();
         }

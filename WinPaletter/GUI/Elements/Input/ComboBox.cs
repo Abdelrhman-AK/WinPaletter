@@ -37,8 +37,8 @@ namespace WinPaletter.UI.WP
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.3f));
-        private readonly TextureBrush Noise2 = new(Properties.Resources.Noise.Fade(0.9f));
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.3f));
+        private readonly static TextureBrush Noise2 = new(Properties.Resources.Noise.Fade(0.9f));
 
         #endregion
 
@@ -124,9 +124,6 @@ namespace WinPaletter.UI.WP
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            Noise?.Dispose();
-            Noise2?.Dispose();
         }
 
         int parentLevel = 0;
@@ -230,12 +227,12 @@ namespace WinPaletter.UI.WP
             Rectangle TextRect = new(5, 0, Width - 1, Height - 1);
 
             Color FadeInColor = Color.FromArgb(alpha, scheme.Colors.Line_Checked);
-            Color FadeOutColor = Color.FromArgb(255 - alpha, scheme.Colors.Line(parentLevel));
+            Color FadeOutColor = Color.FromArgb(255 - alpha, scheme.Colors.Line_Hover(parentLevel + 5));
 
-            Color BackColor0 = Program.Style.DarkMode ? scheme.Colors.Back(parentLevel) : scheme.Colors.Back_Hover(parentLevel);
-            Color BackColor1 = Program.Style.DarkMode ? scheme.Colors.Back_Hover(parentLevel) : scheme.Colors.Back(parentLevel);
-            Color HoverColor0 = Program.Style.DarkMode ? Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover) : Color.FromArgb(alpha, scheme.Colors.Back_Checked);
-            Color HoverColor1 = Program.Style.DarkMode ? Color.FromArgb(alpha, scheme.Colors.Back_Checked) : Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
+            Color BackColor0 = Program.Style.DarkMode ? scheme.Colors.Back_Hover(parentLevel) : scheme.Colors.Back(parentLevel);
+            Color BackColor1 = Program.Style.DarkMode ? scheme.Colors.Back(parentLevel) : scheme.Colors.Back_Hover(parentLevel);
+            Color HoverColor0 = Program.Style.DarkMode ? Color.FromArgb(alpha, scheme.Colors.Back_Checked) : Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
+            Color HoverColor1 = Program.Style.DarkMode ? Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover) : Color.FromArgb(alpha, scheme.Colors.Back_Checked);
 
             using (LinearGradientBrush lgb0 = new(InnerRect, BackColor0, BackColor1, LinearGradientMode.Vertical))
             using (LinearGradientBrush lgb1 = new(OuterRect, HoverColor0, HoverColor1, LinearGradientMode.Horizontal))
@@ -246,9 +243,9 @@ namespace WinPaletter.UI.WP
 
             G.FillRoundedRect(Noise, InnerRect);
 
-            using (Pen P = new(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
+            using (Pen P = new(FadeInColor)) { G.DrawRoundedRectBeveled(P, OuterRect); }
 
-            using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+            using (Pen P = new(FadeOutColor)) { G.DrawRoundedRectBeveled(P, InnerRect); }
 
             int ArrowHeight = 5;
             int Arrow_Y_1 = (int)Math.Round((Height - ArrowHeight) / 2d - 1d);

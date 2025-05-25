@@ -741,9 +741,9 @@ namespace WinPaletter.UI.Controllers
 
             using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
 
-            using (Pen P = new(line)) { G.DrawRoundedRect_LikeW11(P, MainRectInner); }
+            using (Pen P = new(line)) { G.DrawRoundedRectBeveled(P, MainRectInner); }
 
-            using (Pen P = new(line_hover)) { G.DrawRoundedRect_LikeW11(P, MainRect); }
+            using (Pen P = new(line_hover)) { G.DrawRoundedRectBeveled(P, MainRect); }
 
             if (CurOptions.UseFromFile && System.IO.File.Exists(CurOptions.File) && System.IO.Path.GetExtension(CurOptions.File).ToUpper() == ".ANI")
             {

@@ -23,7 +23,7 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
         #endregion
 
         #region Events/Overrides
@@ -81,8 +81,6 @@ namespace WinPaletter.UI.WP
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            Noise?.Dispose();
         }
 
         #endregion
@@ -147,7 +145,7 @@ namespace WinPaletter.UI.WP
 
                     using (SolidBrush br = new(SideTabeColor)) { G.FillRoundedRect(br, SideTape, 2); }
 
-                    using (Pen p = new(SelectedColor)) { G.DrawRoundedRect_LikeW11(p, TabRect); }
+                    using (Pen p = new(SelectedColor)) { G.DrawRoundedRectBeveled(p, TabRect); }
 
                     TextColor = SelectedColor.IsDark() ? Color.White : Color.Black;
                 }

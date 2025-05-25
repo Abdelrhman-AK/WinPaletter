@@ -459,7 +459,14 @@ namespace WinPaletter.UI.WP
             {
                 G.FillRoundedRect(scheme.Brushes.Back_Checked, OuterRect);
 
-                G.DrawRoundedRect_LikeW11(scheme.Pens.Line_Checked_Hover, OuterRect);
+                if (Program.Style.DarkMode)
+                {
+                    G.DrawRoundedRectBeveledReverse(scheme.Pens.Line_Checked_Hover, OuterRect);
+                }
+                else
+                {
+                    G.DrawRoundedRectBeveled(scheme.Pens.Line_Checked_Hover, OuterRect);
+                }
 
                 tb.BackColor = scheme.Colors.Back_Checked;
             }
@@ -470,14 +477,19 @@ namespace WinPaletter.UI.WP
 
                 using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.Back(parentLevel)))) { G.FillRoundedRect(br, OuterRect); }
 
-                using (Pen P = new(FadeInColor)) { G.DrawRoundedRect_LikeW11(P, OuterRect); }
-
-                using (Pen P = new(FadeOutColor)) { G.DrawRoundedRect_LikeW11(P, InnerRect); }
+                if (Program.Style.DarkMode)
+                {
+                    using (Pen P = new(FadeInColor)) { G.DrawRoundedRectBeveledReverse(P, OuterRect); }
+                    using (Pen P = new(FadeOutColor)) { G.DrawRoundedRectBeveledReverse(P, InnerRect); }
+                }
+                else
+                {
+                    using (Pen P = new(FadeInColor)) { G.DrawRoundedRectBeveled(P, OuterRect); }
+                    using (Pen P = new(FadeOutColor)) { G.DrawRoundedRectBeveled(P, InnerRect); }
+                }
 
                 tb.BackColor = scheme.Colors.Back(parentLevel);
             }
-
-
         }
     }
 }

@@ -196,7 +196,7 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(bkC)) { G.FillRoundedRect(br, MainRect); }
 
-            using (Pen P = new(lC)) { G.DrawRoundedRect_LikeW11(P, MainRect); }
+            using (Pen P = new(lC)) { G.DrawRoundedRectBeveled(P, MainRect); }
 
             using (SolidBrush br = new(bkC.IsDark() ? Color.White : Color.Black)) { G.DrawString(Text, Font, br, MainRect, ContentAlignment.MiddleCenter.ToStringFormat()); }
 

@@ -22,7 +22,7 @@ namespace WinPaletter.UI.WP
                 itemRectangle.Height -= 1;
 
                 G.FillRoundedRect(Program.Style.Schemes.Main.Brushes.Back_Checked_Hover, itemRectangle);
-                G.DrawRoundedRect_LikeW11(Program.Style.Schemes.Main.Pens.Line_Checked_Hover, itemRectangle);
+                G.DrawRoundedRectBeveled(Program.Style.Schemes.Main.Pens.Line_Checked_Hover, itemRectangle);
             }
             else
             {
@@ -66,7 +66,7 @@ namespace WinPaletter.UI.WP
                 Rectangle itemRectangle = e.Item.ContentRectangle;
 
                 G.FillRoundedRect(Program.Style.Schemes.Tertiary.Brushes.Back_Checked_Hover, itemRectangle);
-                G.DrawRoundedRect_LikeW11(Program.Style.Schemes.Tertiary.Pens.Line_Checked_Hover, itemRectangle);
+                G.DrawRoundedRectBeveled(Program.Style.Schemes.Tertiary.Pens.Line_Checked_Hover, itemRectangle);
             }
         }
 
@@ -140,39 +140,16 @@ namespace WinPaletter.UI.WP
             BlurredBackground = null;
         }
 
-        private void CaptureBlurredBackground(Control control, Point screenLocation)
-        {
-            if (control is not null)
-            {
-                screenLocation = control.PointToScreen(screenLocation);
-            }
-            else if (screenLocation == Point.Empty)
-            {
-                screenLocation = RectangleToScreen(Bounds).Location;
-            }
-
-            // Use preferred size or a default estimate if still zero
-            Size size = this.GetPreferredSize(Size.Empty);
-            if (size.Width <= 0 || size.Height <= 0) return;
-
-            using (Bitmap bmp = new(size.Width, size.Height))
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                // Copy the screen at the location where the menu WILL appear
-                g.CopyFromScreen(screenLocation, Point.Empty, size);
-
-                Background?.Dispose();
-                BlurredBackground?.Dispose();
-
-                Background = (Bitmap)bmp.Clone();
-                BlurredBackground = Background.Blur(6);
-            }
-        }
-
         protected override void OnOpening(CancelEventArgs e)
         {
             base.OnOpening(e);
-            CaptureBlurredBackground(null, Bounds.Location);
+            //CaptureFromScreen(null, Bounds.Location);
+
+            Background?.Dispose();
+            Background = GraphicsExtensions.CaptureFromScreen(Bounds);
+
+            BlurredBackground?.Dispose();
+            BlurredBackground = Background.Blur(6);
         }
 
         protected override void OnPaint(PaintEventArgs e)

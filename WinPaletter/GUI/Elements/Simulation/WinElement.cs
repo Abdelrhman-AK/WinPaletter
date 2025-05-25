@@ -648,9 +648,6 @@ namespace WinPaletter.UI.Simulation
         {
             base.Dispose(disposing);
 
-            Noise7?.Dispose();
-            Noise7Start?.Dispose();
-            Noise?.Dispose();
             back?.Dispose();
             back_blurred?.Dispose();
         }
@@ -899,7 +896,7 @@ namespace WinPaletter.UI.Simulation
                         }
                         using (Pen P = new(Cx1.Light(0.15f)))
                         {
-                            G.DrawRoundedRect_LikeW11(P, Button1, Radius, true);
+                            G.DrawRoundedRectBeveled(P, Button1, Radius, true);
                         }
                         using (SolidBrush br = new(Cx2))
                         {
@@ -992,7 +989,7 @@ namespace WinPaletter.UI.Simulation
                         }
                         using (Pen P = new(BorderC))
                         {
-                            G.DrawRoundedRect_LikeW11(P, StartBtnRect, 3);
+                            G.DrawRoundedRectBeveled(P, StartBtnRect, 3);
                         }
                         G.DrawImage(DarkMode ? Assets.Win11Preview.StartBtn_11Dark : Assets.Win11Preview.StartBtn_11Light, StartImgRect);
 
@@ -1002,7 +999,7 @@ namespace WinPaletter.UI.Simulation
                         }
                         using (Pen P = new(BorderC))
                         {
-                            G.DrawRoundedRect_LikeW11(P, AppBtnRect, 3);
+                            G.DrawRoundedRectBeveled(P, AppBtnRect, 3);
                         }
                         G.DrawImage(Properties.Resources.SampleApp_Active, AppImgRect);
                         using (SolidBrush br = new(_AppUnderline))

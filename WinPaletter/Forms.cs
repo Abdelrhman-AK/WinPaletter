@@ -131,11 +131,11 @@ namespace WinPaletter
         /// </summary>
         public static ArgsHelp ArgsHelp => (_ArgsHelp == null || _ArgsHelp.IsDisposed) ? (_ArgsHelp = CreateInstance(_ArgsHelp)) : _ArgsHelp;
 
-        private static LicenseForm _LicenseForm;
+        private static Setup _Setup;
         /// <summary>
-        /// Gets the instance of the form <see cref="LicenseForm"/> to show the license.
+        /// Gets the instance of the form <see cref="Setup"/> to show the setup dialog.
         /// </summary>
-        public static LicenseForm LicenseForm => (_LicenseForm == null || _LicenseForm.IsDisposed) ? (_LicenseForm = CreateInstance(_LicenseForm)) : _LicenseForm;
+        public static Setup Setup => (_Setup == null || _Setup.IsDisposed) ? (_Setup = CreateInstance(_Setup)) : _Setup;
 
         private static PE_Warning _PE_Warning;
         /// <summary>

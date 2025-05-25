@@ -189,14 +189,14 @@ namespace WinPaletter.TypesExtensions
                 // Get the current screen size
                 Size screenSize = Screen.PrimaryScreen.Bounds.Size;
 
-                // Calculate scaling factors for width and height to maintain aspect ratio
+                // GetTextAndImageRectangles scaling factors for width and height to maintain aspect ratio
                 decimal nPercentW = screenSize.Width / (decimal)bitmap.Width;
                 decimal nPercentH = screenSize.Height / (decimal)bitmap.Height;
 
                 // Choose the maximum scaling factor to maintain the aspect ratio and fill the screen
                 decimal nPercent = Math.Max(nPercentW, nPercentH);
 
-                // Calculate the destination width and height based on the scaling factor
+                // GetTextAndImageRectangles the destination width and height based on the scaling factor
                 int destWidth = (int)Math.Round(bitmap.Width * nPercent);
                 int destHeight = (int)Math.Round(bitmap.Height * nPercent);
 
@@ -205,7 +205,7 @@ namespace WinPaletter.TypesExtensions
 
                 bmPhoto.SetResolution(bitmap.HorizontalResolution, bitmap.VerticalResolution);
 
-                // Calculate the starting position for centering the image on the screen
+                // GetTextAndImageRectangles the starting position for centering the image on the screen
                 int x = Math.Max((screenSize.Width - destWidth) / 2, 0);
                 int y = Math.Max((screenSize.Height - destHeight) / 2, 0);
 

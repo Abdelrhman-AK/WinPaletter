@@ -21,7 +21,7 @@ namespace WinPaletter
     internal partial class Program
     {
         /// <summary>
-        /// Calculate the MD5 hash of a file
+        /// GetTextAndImageRectangles the MD5 hash of a file
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -253,20 +253,20 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Check if the license is accepted. If not, show the license form and exit if the user does not accept it
+        /// Check if the setup has been completed. If not, show the setup form and exit if the user does not continue with the setup.
         /// </summary>
-        public static void CheckIfLicenseIsAccepted()
+        public static void CheckIfSetupIsComplete()
         {
-            if (!Settings.General.LicenseAccepted)
+            if (!Settings.General.SetupCompleted)
             {
-                if (Forms.LicenseForm.ShowDialog() != DialogResult.OK)
+                if (Forms.Setup.ShowDialog() != DialogResult.OK)
                 {
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"The license is not accepted, WinPaletter will exit.");
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"The setup has not been completed, WinPaletter will exit.");
                     Program.ForceExit();
                 }
             }
 
-            Log?.Write(Serilog.Events.LogEventLevel.Information, $"License is accepted, continuing...");
+            Log?.Write(Serilog.Events.LogEventLevel.Information, $"The setup has not been completed, continuing...");
         }
 
         /// <summary>

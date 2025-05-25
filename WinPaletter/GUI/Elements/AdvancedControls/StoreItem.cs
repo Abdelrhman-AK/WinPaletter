@@ -27,9 +27,9 @@ namespace WinPaletter.UI.Controllers
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
-        private readonly List<Bitmap> DesignedFor_Badges = [];
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
         private TextureBrush pattern;
+        private readonly List<Bitmap> DesignedFor_Badges = [];
 
         public MouseState State = MouseState.None;
 
@@ -142,7 +142,6 @@ namespace WinPaletter.UI.Controllers
         {
             _TM?.Dispose();
             pattern?.Dispose();
-            Noise?.Dispose();
 
             foreach (Bitmap bmp in DesignedFor_Badges) { bmp?.Dispose(); }
 
@@ -378,8 +377,8 @@ namespace WinPaletter.UI.Controllers
                 line_hover0 = Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover);
             }
 
-            using (Pen P = new(line)) { G.DrawRoundedRect_LikeW11(P, rect_inner); }
-            using (Pen P = new(line_hover0)) { G.DrawRoundedRect_LikeW11(P, rect_outer); }
+            using (Pen P = new(line)) { G.DrawRoundedRectBeveled(P, rect_inner); }
+            using (Pen P = new(line_hover0)) { G.DrawRoundedRectBeveled(P, rect_outer); }
 
             if (TM is not null)
             {
@@ -448,7 +447,7 @@ namespace WinPaletter.UI.Controllers
                     {
                         G.DrawString(Program.Lang.Strings.Updates.NewUpdate, Fonts.Console, verBrush, lowerRect, sf);
                         G.DrawString(TM.Info.ThemeVersion, Fonts.Console, verBrush, lowerRect, sf_version);
-                        G.DrawRoundedRect_LikeW11(scheme_tertiary.Pens.Line_Checked_Hover, rect_inner);
+                        G.DrawRoundedRectBeveled(scheme_tertiary.Pens.Line_Checked_Hover, rect_inner);
                     }
                     else if (!string.IsNullOrWhiteSpace(TM.Info.ThemeVersion))
                     {

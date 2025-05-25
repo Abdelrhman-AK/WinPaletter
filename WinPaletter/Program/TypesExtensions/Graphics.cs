@@ -1,7 +1,10 @@
-﻿using ImageProcessor;
+﻿using Cyotek.Windows.Forms;
+using ImageProcessor;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Net.NetworkInformation;
+using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -409,178 +412,56 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        private static readonly float[] Positions = [0f, 0.02f, 0.5f, 0.98f, 1.0f];
+
         /// <summary>
-        /// Draw a rounded rectangle like Windows 11 buttons (top or bottom border has a different color tone)
+        /// Draws a rounded rectangle similar to Windows 11 buttons (with top or bottom bevel effect).
         /// </summary>
-        /// <param name="G"></param>
-        /// <param name="pen"></param>
-        /// <param name="rectangle"></param>
-        /// <param name="radius"></param>
-        /// <param name="forcedRoundCorner"></param>
-        public static void DrawRoundedRect_LikeW11(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false)
+        public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, bool ReverseBevel = false)
         {
-            if (G is null) return;
-            if (pen is null) return;
-            if (pen.Brush is null) return;
+            if (G == null || pen?.Brush == null || rectangle.Width <= 0 || rectangle.Height <= 0) return;
 
-            if (rectangle.Width <= 0 || rectangle.Height <= 0) return;
-            bool Dark = Program.Style.DarkMode;
-
+            bool dark = Program.Style.DarkMode;
             if (radius == -1) radius = Program.Style.Radius;
             radius *= 2;
 
-            bool Rounded = (Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0;
+            Color baseColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;
+            Color bevelColor = baseColor.CB(dark ? 0.09f : -0.15f);
 
-            Color penColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;
-
-            Pen SidePen = new(penColor, pen.Width) { DashStyle = pen.DashStyle, DashOffset = pen.DashOffset };
-            using (Pen Pen1 = new(penColor, pen.Width) { DashStyle = pen.DashStyle, DashOffset = pen.DashOffset })
-            using (Pen Pen2 = new(penColor, pen.Width) { DashStyle = pen.DashStyle, DashOffset = pen.DashOffset })
+            using LinearGradientBrush bevelBrush = new(rectangle, bevelColor, baseColor, 180f)
             {
-                if (Dark)
+                InterpolationColors = new(5)
                 {
-                    Pen1.Color = penColor.CB(0.06f);
-                    Pen2.Color = penColor;
+                    Colors = [baseColor, bevelColor, bevelColor, bevelColor, baseColor],
+                    Positions = Positions
                 }
-                else
-                {
-                    Pen1.Color = penColor;
-                    Pen2.Color = penColor.CB(-0.12f);
-                }
+            };
 
-                LinearGradientBrush differentBorder;
-                Color CColor = Pen2.Color.CB((float)(Dark ? 0.03d : -0.05d));
+            using Pen bevelPen = new(bevelBrush, pen.Width)
+            {
+                DashStyle = pen.DashStyle,
+                DashOffset = pen.DashOffset
+            };
 
-                if (Dark)
-                {
-                    differentBorder = new(rectangle, CColor, Pen1.Color, 180f);
-                    ColorBlend cblend = new(5)
-                    {
-                        Colors = [CColor, Pen1.Color, Pen1.Color, Pen1.Color, CColor],
-                        Positions = Rounded ?
-                        [0f, 0.1f, 0.5f, 0.9f, 1.0f] :
-                        [0f, 0.1f, 0.5f, 0.9f, 1.0f]
-                    };
-                    differentBorder.InterpolationColors = cblend;
-                }
-                else
-                {
-                    differentBorder = new(rectangle, Pen1.Color, CColor, 180f);
-                    ColorBlend cblend = new(5)
-                    {
-                        Colors = [Pen1.Color, CColor, CColor, CColor, Pen1.Color],
-                        Positions = [0f, 0.1f, 0.5f, 0.9f, 1.0f]
-                    };
-                    differentBorder.InterpolationColors = cblend;
-                }
+            G.DrawRoundedRect(pen, rectangle, radius / 2, forcedRoundCorner);
 
-                using (Pen PenG = new(differentBorder, pen.Width) { DashStyle = pen.DashStyle, DashOffset = pen.DashOffset })
-                {
-                    Point P_T1 = new((int)Math.Round(rectangle.X + radius / 2d), rectangle.Y);
-                    Point P_T2 = new((int)Math.Round(rectangle.X + rectangle.Width - radius / 2d), rectangle.Y);
+            float x1 = rectangle.X + radius / 2f;
+            float x2 = rectangle.X + rectangle.Width - radius / 2f;
+            float yTop = rectangle.Y;
+            float yBottom = rectangle.Y + rectangle.Height;
 
-                    Point P_B1 = new((int)Math.Round(rectangle.X + radius / 2d), rectangle.Y + rectangle.Height);
-                    Point P_B2 = new((int)Math.Round(rectangle.X + rectangle.Width - radius / 2d), rectangle.Y + rectangle.Height);
+            if (dark ^ ReverseBevel)
+                G.DrawLine(bevelPen, x1, yTop, x2, yTop);
+            else
+                G.DrawLine(bevelPen, x1, yBottom, x2, yBottom);
+        }
 
-                    Point P_LB = new(rectangle.X, rectangle.Y + rectangle.Height);
-                    Point P_RB = new(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height);
-
-                    Point P_LT = new(rectangle.X, rectangle.Y);
-                    Point P_RT = new(rectangle.X + rectangle.Width, rectangle.Y);
-
-                    Point P_L1 = new(rectangle.X, (int)Math.Round(rectangle.Y + radius / 2d));
-                    Point P_L2 = new(rectangle.X, (int)Math.Round(rectangle.Y + rectangle.Height - radius / 2.5d));
-
-                    Point P_R1 = new(rectangle.X + rectangle.Width, (int)Math.Round(rectangle.Y + radius / 2d));
-                    Point P_R2 = new(rectangle.X + rectangle.Width, (int)Math.Round(rectangle.Y + rectangle.Height - radius / 2.5d));
-
-                    if (Dark)
-                    {
-                        G.DrawLine(Pen2, P_B1, P_B2);
-
-                        if (Rounded)
-                        {
-                            G.DrawArc(Pen2, rectangle.X, rectangle.Y + rectangle.Height - radius, radius, radius, 90, 90);
-                            G.DrawArc(Pen2, rectangle.X + rectangle.Width - radius, rectangle.Y + rectangle.Height - radius, radius, radius, 0, 90);
-                        }
-                        else
-                        {
-                            G.DrawLine(Pen2, P_B1, P_LB);
-                            G.DrawLine(Pen2, P_LB, P_L1);
-
-                            G.DrawLine(Pen2, P_B2, P_RB);
-                            G.DrawLine(Pen2, P_RB, P_R1);
-                        }
-
-                        SidePen = Pen2;
-
-                        G.DrawLine(SidePen, P_L1, P_L2);
-
-                        G.DrawLine(SidePen, P_R1, P_R2);
-
-                        if (Rounded)
-                        {
-                            G.DrawArc(PenG, rectangle.X, rectangle.Y, radius, radius, 180, 90);
-                            G.DrawArc(PenG, rectangle.X + rectangle.Width - radius, rectangle.Y, radius, radius, 270, 90);
-                        }
-                        else
-                        {
-                            G.DrawLine(Pen1, P_T1, P_LT);
-                            G.DrawLine(SidePen, P_LT, P_L1);
-
-                            G.DrawLine(Pen1, P_T2, P_RT);
-                            G.DrawLine(SidePen, P_RT, P_R1);
-                        }
-
-                        G.DrawLine(PenG, P_T1, P_T2);
-                    }
-
-                    else
-                    {
-                        G.DrawLine(Pen2, P_B1, P_B2);
-
-                        if (Rounded)
-                        {
-                            G.DrawArc(PenG, rectangle.X, rectangle.Y + rectangle.Height - radius, radius, radius, 90, 90);
-                            G.DrawArc(PenG, rectangle.X + rectangle.Width - radius, rectangle.Y + rectangle.Height - radius, radius, radius, 0, 90);
-                        }
-                        else
-                        {
-                            G.DrawLine(Pen2, P_B1, P_LB);
-                            G.DrawLine(SidePen, P_LB, P_L1);
-
-                            G.DrawLine(Pen2, P_B2, P_RB);
-                            G.DrawLine(SidePen, P_RB, P_R1);
-                        }
-
-                        SidePen = Pen1;
-
-                        G.DrawLine(SidePen, P_L1, P_L2);
-
-                        G.DrawLine(SidePen, P_R1, P_R2);
-
-                        if (Rounded)
-                        {
-                            G.DrawArc(Pen1, rectangle.X, rectangle.Y, radius, radius, 180, 90);
-                            G.DrawArc(Pen1, rectangle.X + rectangle.Width - radius, rectangle.Y, radius, radius, 270, 90);
-                        }
-                        else
-                        {
-                            G.DrawLine(Pen1, P_T1, P_LT);
-                            G.DrawLine(Pen1, P_LT, P_L1);
-
-                            G.DrawLine(Pen1, P_T2, P_RT);
-                            G.DrawLine(Pen1, P_RT, P_R1);
-                        }
-
-                        G.DrawLine(Pen1, P_T1, P_T2);
-                    }
-                }
-
-                differentBorder?.Dispose();
-            }
-
-            SidePen?.Dispose();
+        /// <summary>
+        /// Draws a rounded rectangle similar to Windows 11 buttons (with top or bottom bevel effect but reversed to what <see cref="DrawRoundedRectBeveled"/> does.
+        /// </summary>
+        public static void DrawRoundedRectBeveledReverse(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false)
+        {
+            DrawRoundedRectBeveled(G, pen, rectangle, radius, forcedRoundCorner, true);
         }
 
         /// <summary>
@@ -644,6 +525,240 @@ namespace WinPaletter.TypesExtensions
 
             return (isOnBorderX && pointToCheck.Y >= rectangle.Top && pointToCheck.Y <= rectangle.Bottom) ||
                    (isOnBorderY && pointToCheck.X >= rectangle.Left && pointToCheck.X <= rectangle.Right);
+        }
+
+        /// <summary>
+        /// Get the rectangles for text and image in a button, based on its properties.
+        /// </summary>
+        /// <param name="button"></param>
+        /// <param name="bounds"></param>
+        /// <param name="imageRect"></param>
+        /// <param name="textRect"></param>
+        public static void GetTextAndImageRectangles(this UI.WP.Button button, Rectangle bounds, out RectangleF imageRect, out RectangleF textRect)
+        {
+            Image img = !button.ImageGlyphEnabled ? button.Image : button.ImageGlyph;
+            SizeF imageSize = img?.Size ?? SizeF.Empty;
+            SizeF textSize;
+
+            using (Graphics G = button.CreateGraphics())
+            {
+                textSize = string.IsNullOrEmpty(button.Text) ? SizeF.Empty : TextRenderer.MeasureText(G, button.Text, button.Font);
+            }
+
+            GetTextAndImageRectangles(
+                bounds,
+                imageSize,
+                textSize,
+                button.ImageAlign,
+                button.TextAlign,
+                button.TextImageRelation,
+                out imageRect,
+                out textRect);
+        }
+
+        /// <summary>
+        /// Get the rectangles for text and image in a radio image button, based on its properties.
+        /// </summary>
+        /// <param name="button"></param>
+        /// <param name="bounds"></param>
+        /// <param name="imageRect"></param>
+        /// <param name="textRect"></param>
+        public static void GetTextAndImageRectangles(this UI.WP.RadioImage button, Rectangle bounds, out RectangleF imageRect, out RectangleF textRect)
+        {
+            Image img = button.Image;
+            SizeF imageSize = img?.Size ?? SizeF.Empty;
+            SizeF textSize;
+
+            using (Graphics G = button.CreateGraphics())
+            {
+                textSize = string.IsNullOrEmpty(button.Text) ? SizeF.Empty : TextRenderer.MeasureText(G, button.Text, button.Font);
+            }
+
+            GetTextAndImageRectangles(
+                bounds,
+                imageSize,
+                textSize,
+                button.ImageAlign,
+                button.TextAlign,
+                button.TextImageRelation,
+                out imageRect,
+                out textRect);
+        }
+
+        /// <summary>
+        /// Get the rectangles for text and image based on provided properties.
+        /// </summary>
+        /// <param name="bounds"></param>
+        /// <param name="imageSize"></param>
+        /// <param name="textSize"></param>
+        /// <param name="imageAlign"></param>
+        /// <param name="textAlign"></param>
+        /// <param name="relation"></param>
+        /// <param name="imageRect"></param>
+        /// <param name="textRect"></param>
+        public static void GetTextAndImageRectangles(
+          RectangleF bounds,
+          SizeF imageSize,
+          SizeF textSize,
+          ContentAlignment imageAlign,
+          ContentAlignment textAlign,
+          TextImageRelation relation,
+          out RectangleF imageRect,
+          out RectangleF textRect)
+        {
+            imageRect = RectangleF.Empty;
+            textRect = RectangleF.Empty;
+
+            bool hasImage = imageSize != SizeF.Empty && imageSize.Width > 0 && imageSize.Height > 0;
+            bool hasText = textSize != SizeF.Empty && textSize.Width > 0 && textSize.Height > 0;
+
+            // If no image, just align text to full bounds based on textAlign
+            if (!hasImage && hasText)
+            {
+                textRect = AlignIn(bounds, textSize, textAlign);
+                return;
+            }
+
+            // If no text, just align image to full bounds based on imageAlign
+            if (hasImage && !hasText)
+            {
+                imageRect = AlignIn(bounds, imageSize, imageAlign);
+                return;
+            }
+
+            // If neither image nor text, both rects remain empty
+            if (!hasImage && !hasText)
+                return;
+
+            // Both image and text present - proceed with relation logic
+            float spacing = 4f;
+
+            switch (relation)
+            {
+                case TextImageRelation.Overlay:
+                    imageRect = AlignIn(bounds, imageSize, imageAlign);
+                    textRect = AlignIn(bounds, textSize, textAlign);
+                    break;
+
+                case TextImageRelation.ImageBeforeText:
+                    {
+                        float totalWidth = imageSize.Width + spacing + textSize.Width;
+                        float maxHeight = Math.Max(imageSize.Height, textSize.Height);
+
+                        // Use imageAlign to align the block
+                        RectangleF totalRect = AlignIn(bounds, new SizeF(totalWidth, maxHeight), imageAlign);
+
+                        RectangleF imageRegion = new RectangleF(totalRect.X, totalRect.Y, imageSize.Width, maxHeight);
+                        RectangleF textRegion = new RectangleF(imageRegion.Right + spacing, totalRect.Y, textSize.Width, maxHeight);
+
+                        imageRect = AlignIn(imageRegion, imageSize, imageAlign);
+                        textRect = AlignIn(textRegion, textSize, textAlign);
+                    }
+                    break;
+
+                case TextImageRelation.TextBeforeImage:
+                    {
+                        float totalWidth = imageSize.Width + spacing + textSize.Width;
+                        float maxHeight = Math.Max(imageSize.Height, textSize.Height);
+
+                        // Use textAlign to align the block
+                        RectangleF totalRect = AlignIn(bounds, new SizeF(totalWidth, maxHeight), textAlign);
+
+                        RectangleF textRegion = new RectangleF(totalRect.X, totalRect.Y, textSize.Width, maxHeight);
+                        RectangleF imageRegion = new RectangleF(textRegion.Right + spacing, totalRect.Y, imageSize.Width, maxHeight);
+
+                        imageRect = AlignIn(imageRegion, imageSize, imageAlign);
+                        textRect = AlignIn(textRegion, textSize, textAlign);
+                    }
+                    break;
+
+                case TextImageRelation.ImageAboveText:
+                    {
+                        float totalHeight = imageSize.Height + spacing + textSize.Height;
+                        float maxWidth = Math.Max(imageSize.Width, textSize.Width);
+
+                        // Use imageAlign to align the block
+                        RectangleF totalRect = AlignIn(bounds, new SizeF(maxWidth, totalHeight), imageAlign);
+
+                        RectangleF imageRegion = new RectangleF(totalRect.X, totalRect.Y, maxWidth, imageSize.Height);
+                        RectangleF textRegion = new RectangleF(totalRect.X, imageRegion.Bottom + spacing, maxWidth, textSize.Height);
+
+                        imageRect = AlignIn(imageRegion, imageSize, imageAlign);
+                        textRect = AlignIn(textRegion, textSize, textAlign);
+                    }
+                    break;
+
+                case TextImageRelation.TextAboveImage:
+                    {
+                        float totalHeight = imageSize.Height + spacing + textSize.Height;
+                        float maxWidth = Math.Max(imageSize.Width, textSize.Width);
+
+                        // Use textAlign to align the block
+                        RectangleF totalRect = AlignIn(bounds, new SizeF(maxWidth, totalHeight), textAlign);
+
+                        RectangleF textRegion = new RectangleF(totalRect.X, totalRect.Y, maxWidth, textSize.Height);
+                        RectangleF imageRegion = new RectangleF(totalRect.X, textRegion.Bottom + spacing, maxWidth, imageSize.Height);
+
+                        imageRect = AlignIn(imageRegion, imageSize, imageAlign);
+                        textRect = AlignIn(textRegion, textSize, textAlign);
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Aligns the content of given size inside the container rectangle based on alignment.
+        /// </summary>
+        private static RectangleF AlignIn(RectangleF container, SizeF content, ContentAlignment align)
+        {
+            float x = container.X;
+            float y = container.Y;
+
+            switch (align)
+            {
+                case ContentAlignment.TopLeft:
+                    break;
+                case ContentAlignment.TopCenter:
+                    x += (container.Width - content.Width) / 2f;
+                    break;
+                case ContentAlignment.TopRight:
+                    x += container.Width - content.Width;
+                    break;
+                case ContentAlignment.MiddleLeft:
+                    y += (container.Height - content.Height) / 2f;
+                    break;
+                case ContentAlignment.MiddleCenter:
+                    x += (container.Width - content.Width) / 2f;
+                    y += (container.Height - content.Height) / 2f;
+                    break;
+                case ContentAlignment.MiddleRight:
+                    x += container.Width - content.Width;
+                    y += (container.Height - content.Height) / 2f;
+                    break;
+                case ContentAlignment.BottomLeft:
+                    y += container.Height - content.Height;
+                    break;
+                case ContentAlignment.BottomCenter:
+                    x += (container.Width - content.Width) / 2f;
+                    y += container.Height - content.Height;
+                    break;
+                case ContentAlignment.BottomRight:
+                    x += container.Width - content.Width;
+                    y += container.Height - content.Height;
+                    break;
+            }
+
+            return new RectangleF(x, y, content.Width, content.Height);
+        }
+
+        public static Bitmap CaptureFromScreen(Rectangle rectangleToScreen)
+        {
+            using (Bitmap bmp = new(rectangleToScreen.Width, rectangleToScreen.Height))
+            using (Graphics G = Graphics.FromImage(bmp))
+            {
+                G.CopyFromScreen(rectangleToScreen.Location, Point.Empty, rectangleToScreen.Size);
+                return bmp.Clone() as Bitmap;
+            }
         }
     }
 }

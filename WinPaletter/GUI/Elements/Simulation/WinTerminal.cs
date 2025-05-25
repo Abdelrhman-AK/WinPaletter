@@ -23,7 +23,7 @@ namespace WinPaletter.UI.Simulation
         #region Variables
         readonly Timer Timer = new() { Enabled = false, Interval = 500 };
 
-        private TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
+        private static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
         private Bitmap adaptedBack;
         private Bitmap adaptedBackBlurred;
         private bool tick = false;

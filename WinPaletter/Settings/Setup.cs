@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -23,6 +17,11 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
+            DLLFunc.RemoveFormTitlebarTextAndIcon(Handle);
+            Icon = FormsExtensions.Icon<MainForm>();    
+
+            labelAlt1.Text = Text;
+            next_btn.Text = Program.Lang.Strings.General.Next;
 
             textBox1.Font = Fonts.ConsoleLarge;
             textBox1.Text = Properties.Resources.LICENSE;
@@ -34,30 +33,87 @@ namespace WinPaletter
             AssemblyCopyrightAttribute copyrightAttribute = (AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyCopyrightAttribute));
 
             copyrightsLabel.Text = $"{copyrightAttribute.Copyright}, {Application.CompanyName}";
+
+            Program.Settings.General.SetupCompleted = false;
+            Program.Settings.General.Save();
+
+            LoadSettings();
+        }
+
+        void LoadSettings()
+        {
+            toggle38.Checked = Program.Settings.ThemeApplyingBehavior.CreateSystemRestore;
+
+            toggle31.Checked = Program.Settings.BackupTheme.Enabled;
+            textBox2.Text = Program.Settings.BackupTheme.BackupPath;
+            toggle33.Checked = Program.Settings.BackupTheme.AutoBackupOnAppOpen;
+            toggle32.Checked = Program.Settings.BackupTheme.AutoBackupOnApply;
+            toggle36.Checked = Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect;
+            toggle34.Checked = Program.Settings.BackupTheme.AutoBackupOnThemeLoad;
+            toggle39.Checked = Program.Settings.BackupTheme.AutoBackupOnExError;
+
+            toggle8.Checked = Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer;
+            toggle12.Checked = Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
+        }
+
+        void SaveSettings()
+        {
+            Program.Settings.ThemeApplyingBehavior.CreateSystemRestore = toggle38.Checked;
+
+            Program.Settings.BackupTheme.Enabled = toggle31.Checked;
+            Program.Settings.BackupTheme.BackupPath = textBox2.Text;
+            Program.Settings.BackupTheme.AutoBackupOnAppOpen = toggle33.Checked;
+            Program.Settings.BackupTheme.AutoBackupOnApply = toggle32.Checked;
+            Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect = toggle36.Checked;
+            Program.Settings.BackupTheme.AutoBackupOnThemeLoad = toggle34.Checked;
+            Program.Settings.BackupTheme.AutoBackupOnExError = toggle39.Checked;
+
+            Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer = toggle8.Checked;
+            Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert = toggle12.Checked;
+
+            Program.Settings.Save(Settings.Source.Registry);
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
+            if (tablessControl1.SelectedIndex == tablessControl1.TabCount - 1)
+            {
+                SaveSettings();
+
+                Program.Settings.General.SetupCompleted = true;
+                Program.Settings.General.Save();
+
+                DialogResult = DialogResult.OK;
+                Close();
+                return;
+            }
+
             tablessControl1.SelectedIndex = tablessControl1.SelectedIndex + 1 > tablessControl1.TabCount - 1 ? tablessControl1.TabCount - 1 : tablessControl1.SelectedIndex + 1;
+
+            // Enable or disable the next button based on the license tab and radio button state
+            if (tablessControl1.SelectedIndex == 1 && !radioButton1.Checked) next_btn.Enabled = false;
+            else next_btn.Enabled = true;
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             tablessControl1.SelectedIndex = tablessControl1.SelectedIndex - 1 < 0 ? 0 : tablessControl1.SelectedIndex - 1;
+            next_btn.Enabled = true;
+            next_btn.Text = tablessControl1.SelectedIndex == tablessControl1.TabCount - 1 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
         }
 
         private void button23_Click(object sender, EventArgs e)
         {
             if (!OS.WXP)
             {
-                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new())
+                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new() { SelectedPath = textBox2.Text })
                 {
                     if (FD.ShowDialog() == DialogResult.OK) textBox2.Text = FD.SelectedPath;
                 }
             }
             else
             {
-                using (FolderBrowserDialog FD = new())
+                using (FolderBrowserDialog FD = new() { SelectedPath = textBox2.Text })
                 {
                     if (FD.ShowDialog() == DialogResult.OK) textBox2.Text = FD.SelectedPath;
                 }
@@ -101,6 +157,31 @@ namespace WinPaletter
             Cursor = Cursors.Default;
 
             MsgBox(Program.Lang.Strings.Messages.SysRestore_Msg2, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void tablessControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            back_btn.Enabled = tablessControl1.SelectedIndex > 0;
+            next_btn.Text = tablessControl1.SelectedIndex == tablessControl1.TabCount - 1 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+        }
+
+        private void radioButtons_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tablessControl1.SelectedIndex == 1)
+            {
+                // Enable or disable the next button based on the license tab and radio button state
+                next_btn.Enabled = radioButton1.Checked;
+            }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+
+            Program.Settings.General.SetupCompleted = false;
+            Program.Settings.General.Save();
+
+            Close();
         }
     }
 }

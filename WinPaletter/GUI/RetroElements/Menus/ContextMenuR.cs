@@ -465,7 +465,7 @@ namespace WinPaletter.UI.Retro
             // Static rectangle and border of the context menu
             Border = new(2, 2, Width - 5, Height - 5);
 
-            // Calculate the size of the menu items
+            // GetTextAndImageRectangles the size of the menu items
             item0Size = str_MenuItem.Measure(Font);
             item1Size = str_Selection.Measure(Font);
             item2Size = str_DisabledItem.Measure(Font);

@@ -96,7 +96,7 @@ namespace WinPaletter
 
         private void ThemeDownloader_DownloadProgressChanged(object sender, DownloadManager.DownloadProgressEventArgs e)
         {
-            // Calculate the download speed
+            // GetTextAndImageRectangles the download speed
             long Speed = (long)Math.Round(e.BytesReceived / SW.Elapsed.TotalSeconds, 2);
             Label3.SetText(Speed.ToStringFileSize(true));
 

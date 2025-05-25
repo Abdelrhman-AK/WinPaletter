@@ -1103,7 +1103,7 @@ namespace WinPaletter.UI.Retro
                                     ButtonString.Alignment = StringAlignment.Center;
                                     ButtonString.LineAlignment = StringAlignment.Near;
 
-                                    // Calculate the image position, offsets are made to make image shown in its possition correctly
+                                    // GetTextAndImageRectangles the image position, offsets are made to make image shown in its possition correctly
                                     int alx = (int)Math.Round((Height - (Image.Height + 4 + base.Text.Measure(base.Font).Height)) / 2f);
                                     if (string.IsNullOrEmpty(Text))
                                     {
@@ -1123,7 +1123,7 @@ namespace WinPaletter.UI.Retro
                                 {
                                     ButtonString.Alignment = StringAlignment.Near;
                                     ButtonString.LineAlignment = StringAlignment.Center;
-                                    // Calculate the image position, offsets are made to make image shown in its possition correctly
+                                    // GetTextAndImageRectangles the image position, offsets are made to make image shown in its possition correctly
                                     int alx = (int)Math.Round((Width - (Image.Width + 4 + base.Text.Measure(base.Font).Width)) / 2f);
                                     G.DrawImage(Image, new Rectangle(alx, imgY - 1, Image.Width, Image.Height));
                                     G.DrawString(Text, Font, foreBrush, new Rectangle(alx + Image.Width, 0, Width, Height), ButtonString);

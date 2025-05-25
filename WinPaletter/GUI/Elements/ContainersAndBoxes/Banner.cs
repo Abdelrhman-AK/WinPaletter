@@ -19,7 +19,7 @@ namespace WinPaletter.UI.WP
             BackColor = Color.Transparent;
         }
 
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
 
         private Bitmap _image;
         [Description("Image to display on the banner")]
@@ -49,7 +49,6 @@ namespace WinPaletter.UI.WP
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            Noise?.Dispose();
         }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)

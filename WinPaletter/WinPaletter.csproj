@@ -917,12 +917,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Languages\Localizer\Localizer.cs" />
-    <Compile Include="Dialogs\LicenseForm.Designer.cs">
-      <DependentUpon>LicenseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\LicenseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Aspects\LogonUI\LogonUI.Designer.cs">
       <DependentUpon>LogonUI.cs</DependentUpon>
     </Compile>
@@ -1163,6 +1157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ContextBox_Help.png" />
     <Content Include="Resources\LICENSE.txt" />
     <None Include="Resources\Restorepoint.png" />
     <None Include="Resources\MetricsFontsDB" />
@@ -1317,9 +1312,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_Add_Snippet.resx">
       <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LicenseForm.resx">
-      <DependentUpon>LicenseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Lang_Editor.resx">
       <DependentUpon>Lang_Editor.cs</DependentUpon>

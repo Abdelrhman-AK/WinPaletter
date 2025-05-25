@@ -48,7 +48,7 @@ namespace WinPaletter
 
             if (Program.BootStatus == BootStatuses.SafeMode) Forms.SOS.Show();
 
-            SingleInstanceApplication.Run(new Setup()/*Forms.MainForm*/, StartupNextInstanceEventHandler);
+            SingleInstanceApplication.Run(Forms.MainForm, StartupNextInstanceEventHandler);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace WinPaletter
                 // Data of following methods depends on current selected user, so they were not executed alone in Main() void
                 ExtractLuna();
 
-                CheckIfLicenseIsAccepted();
+                CheckIfSetupIsComplete();
                 AssociateFiles();
                 StartMonitors();
 

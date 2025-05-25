@@ -28,7 +28,7 @@ namespace WinPaletter.UI.WP
 
         readonly Interfaces.ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (Interfaces.ITaskbarList3)new Interfaces.CTaskbarList() : null;
         private IntPtr FormHwnd = IntPtr.Zero;
-        private readonly TextureBrush Noise = new(Properties.Resources.Noise);
+        private readonly static TextureBrush Noise = new(Properties.Resources.Noise);
         #endregion
 
         #region Events/Overrides
@@ -122,8 +122,6 @@ namespace WinPaletter.UI.WP
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
-            Noise?.Dispose();
         }
 
         int parentLevel = 0;

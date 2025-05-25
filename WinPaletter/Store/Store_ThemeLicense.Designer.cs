@@ -35,6 +35,7 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Store_ThemeLicense));
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.TextBox1 = new WinPaletter.UI.WP.TextBox();
@@ -50,8 +51,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
+            this.Button2.ImageGlyphEnabled = false;
             this.Button2.Location = new System.Drawing.Point(578, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
@@ -68,8 +69,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(492, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(80, 34);
@@ -120,6 +121,7 @@ namespace WinPaletter
             this.Controls.Add(this.bottom_buttons);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
