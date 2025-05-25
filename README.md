@@ -29,7 +29,7 @@ While significant new features are not anticipated, the goal is to place the pro
 
 ---
 
-## WinPaletter 1.0.9.4 changelog (Spoiler)
+## WinPaletter 1.0.9.4 changelog (still in progress) (Spoiler)
 
 <details>
   <summary>Toggle changelog</summary>
