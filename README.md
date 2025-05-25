@@ -129,10 +129,6 @@ While significant new features are not anticipated, the goal is to place the pro
 
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md) to view all changes that have been made to WinPaletter since its initial release.
 
-## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/PayPal.png?raw=true) Support me
-
-[PayPal](https://www.paypal.me/AbdelrhmanAK)
-
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages
 
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/tree/master/Languages) to get languages for WinPaletter.
