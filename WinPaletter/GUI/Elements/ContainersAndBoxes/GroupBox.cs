@@ -193,6 +193,9 @@ namespace WinPaletter.UI.WP
                 Color ParentColor = this.GetParentColor();
 
                 G.Clear(ParentColor);
+
+                ParentColor = Enabled ? ParentColor : Program.Style.Schemes.Disabled.Colors.Back(parentLevel);
+
                 BackColor = ParentColor.CB((float)(ParentColor.IsDark() ? 0.04d : -0.05d));
 
                 using (SolidBrush br = new(BackColor))
@@ -224,8 +227,6 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
-
-
         }
     }
 }

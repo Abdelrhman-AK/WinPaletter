@@ -412,48 +412,61 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        private static readonly float[] Positions = [0f, 0.02f, 0.5f, 0.98f, 1.0f];
+        private static readonly float[] Positions = [0f, 0.005f, 0.5f, 0.995f, 1.0f];
 
         /// <summary>
         /// Draws a rounded rectangle similar to Windows 11 buttons (with top or bottom bevel effect).
         /// </summary>
         public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, bool ReverseBevel = false)
         {
-            if (G == null || pen?.Brush == null || rectangle.Width <= 0 || rectangle.Height <= 0) return;
+            if (G == null || pen?.Brush == null || rectangle.Width <= 0 || rectangle.Height <= 0)
+                return;
 
             bool dark = Program.Style.DarkMode;
-            if (radius == -1) radius = Program.Style.Radius;
+            bool useRoundedCorners = (Program.Style.RoundedCorners || forcedRoundCorner);
+            if (radius == -1)
+                radius = Program.Style.Radius;
+
             radius *= 2;
 
             Color baseColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;
             Color bevelColor = baseColor.CB(dark ? 0.09f : -0.15f);
 
-            using LinearGradientBrush bevelBrush = new(rectangle, bevelColor, baseColor, 180f)
+            bool drawTop = dark ^ ReverseBevel;
+
+            if (useRoundedCorners && radius > 0)
             {
-                InterpolationColors = new(5)
+                float halfRadius = radius / 2f;
+                float x1 = rectangle.X + halfRadius;
+                float x2 = rectangle.X + rectangle.Width - halfRadius;
+                float yTop = rectangle.Y;
+                float yBottom = rectangle.Y + rectangle.Height;
+
+                using var bevelBrush = new LinearGradientBrush(rectangle, bevelColor, baseColor, 180f)
                 {
-                    Colors = [baseColor, bevelColor, bevelColor, bevelColor, baseColor],
-                    Positions = Positions
-                }
-            };
+                    InterpolationColors = new ColorBlend(5)
+                    {
+                        Colors = [baseColor, bevelColor, bevelColor, bevelColor, baseColor],
+                        Positions = Positions
+                    }
+                };
+                using var bevelPen = new Pen(bevelBrush, pen.Width)
+                {
+                    DashStyle = pen.DashStyle,
+                    DashOffset = pen.DashOffset
+                };
 
-            using Pen bevelPen = new(bevelBrush, pen.Width)
-            {
-                DashStyle = pen.DashStyle,
-                DashOffset = pen.DashOffset
-            };
-
-            G.DrawRoundedRect(pen, rectangle, radius / 2, forcedRoundCorner);
-
-            float x1 = rectangle.X + radius / 2f;
-            float x2 = rectangle.X + rectangle.Width - radius / 2f;
-            float yTop = rectangle.Y;
-            float yBottom = rectangle.Y + rectangle.Height;
-
-            if (dark ^ ReverseBevel)
-                G.DrawLine(bevelPen, x1, yTop, x2, yTop);
+                G.DrawRoundedRect(pen, rectangle, (int)halfRadius, forcedRoundCorner);
+                G.DrawLine(bevelPen, x1, drawTop ? yTop : yBottom, x2, drawTop ? yTop : yBottom);
+            }
             else
-                G.DrawLine(bevelPen, x1, yBottom, x2, yBottom);
+            {
+                using var bevelBrush = new SolidBrush(bevelColor);
+                using var bevelPen = new Pen(bevelBrush, pen.Width);
+
+                G.DrawRectangle(pen, rectangle);
+                G.DrawLine(bevelPen, rectangle.Left, drawTop ? rectangle.Top : rectangle.Bottom, rectangle.Right, drawTop ? rectangle.Top : rectangle.Bottom);
+            }
         }
 
         /// <summary>
@@ -751,6 +764,11 @@ namespace WinPaletter.TypesExtensions
             return new RectangleF(x, y, content.Width, content.Height);
         }
 
+        /// <summary>
+        /// Capture a screenshot of a part of screen.
+        /// </summary>
+        /// <param name="rectangleToScreen"></param>
+        /// <returns></returns>
         public static Bitmap CaptureFromScreen(Rectangle rectangleToScreen)
         {
             using (Bitmap bmp = new(rectangleToScreen.Width, rectangleToScreen.Height))

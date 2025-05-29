@@ -117,6 +117,51 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAoNJREFUSEvd
+        1d9PklEYB/B3c83uvair/ovaHK7VuuqiyVIEpNwMzDml1tZytspcLo1A4OWdBIRYszTKrKys5YgYhalT
+        UTQYibm0H+aPEh3Mod/2UjQ4QL7Und/tbO/N+Zyz55zzvBS1pUPDn22K9B9pjvR1MmtvJumwc1Eddiwq
+        V+2TiqDtXsOPXgmNp9nkPE5pwVChcX1wSh95C2bNBTrshDrkgHLVDkXQhoblF6j//hx1Sz2BCwtPCsj5
+        aWOFNcuMIa1xfQAccNQuPMa5b49QM/dQLYA1i/SSYsYwkzn+ANVf7uP0p7ta0kvIdQzz/wPHqdk7G/LZ
+        24dINxoLXm7nWPN0OE58bEfVdFtA7qeTD94YGRBlip/53IkDlpModihjOCo+3MTxgEVA+lRzpK8jUzxX
+        K0WOZDd2le+Pw1shnWy5RfoUs+byk/j5mS5cWnqWGqelyDm6BzuO8SC0X4nDzSh9b/KSPkWHncF4XO5u
+        wU5ZHvYZKlE7352I62S/cBkPwleKRNxvQonPsEz6lDrkWIkvS9WIObo7Ftp7rQI1X7tQHcXLNsMh8eqT
+        F1Cu2H1kzaV9uj+L5DWXI5f5vXMpD0X2xnQ4xOPMO9KnFEFbR6oDLe1noqViYXaw3yLn1fT4BAOhR5t8
+        yI3BXhGJx+55iUsThbngRR4ahaOa5GtqwOC2uqUeH4nHHlHx6yaInapN8YJRjUdgTdOTLs5381PhiY/o
+        L/iYZiPf3ZS6VcRydq7r8j/iyHer6kkvKWzLZbtipjjfrVKnLU2qyGfaCyun26Y44AG+W8X9hxMftiuW
+        TVlEsoD5RqnfOF7iM4QkXn1IPMGMF3l0rYfHNMKDqTrnlspPxO3PfOILzuMAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>WinPaletter can create a theme backup when an event occurs. This feature is similar to a Windows System Restore Point, but less comprehensive. It focuses on restoring theme-related registry entries and preferences only.
+
+Theme backups are useful when your system is already stable and you simply want to revert to a previous theme configuration. However, if your system is unstable or has been significantly affected, it's recommended to use Windows System Restore Points instead for a more complete recovery.</value>
+  </data>
+  <data name="banner3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABCNJREFUWEft
+        lUtoY1UcxltREXRE0dLMo7l53N487itpEdzIQAVdCC5cuBAZcK9rQdApIiIMQhuRmS6cMe80SZM0yU1u
+        mjpduxAcZNQBmVp636+Oo5JOqDlyb5I2PU1qMra7+cG3uefLyZf/PefL2Ngj+mC7uukYmwePw8+7zLLq
+        2SC7Q1M1bY6q3ZubWTcoYl2ehH0Pzbml39O2pc3U2PzGfgiaUTGS1b4gq/ptqqoDitUBbarWVmDNMPVj
+        oG58Nls37Id3HBGbGeDaXTD51a8MWuEuEIx2lWC0JlnRgKWqBqwQA4LQa0YjUDeuBDZ2noP3Hgrbtbvp
+        iYWfweSXt4C/KP+Jl1VAlDVAMG0dCcL2DxJYM7Zn6vrL8P7/ycTCL+nJhVvAt6r84y+pADdVtvSAYNRl
+        oqy9a72S8r3ngxVxgqoZBFXRLtE1PU2xevMgiBXib7quvw5/x7HYFn+66c3LLX9RAf6i2lZJ/cPLqBjs
+        hSFrmpdm9TVrIp1p0DXjPl3fCcLegbjCm7/5Coo5AUs9QYp4GjwJ+48wDx6jqvplitVbPUG2PavqGdja
+        Fywr3vDmZeA1QxwJonwE+wdBsvrHvWckUNOvwJ7TBYBxktHLPTemSdT0Kdh2quCsgpIV7cHBjdGGnuCJ
+        gTNaoefq3obXHwr6po4HvzNCwfWdxeC67ofXeyEZ9Z2eDmnhG8ozsGckSMYgyYq2a421XUANmtVx2NcF
+        r+h+q8w6IaiSOgN7RsJbUEL7t6JTUgSjLcC+LlRNerqnzABRVt+APSMxnZFCWFYC2IoEPDkZePIy8OWV
+        gQG8ufsvmD1ihSipgCyqF2HPSLhiEulKCrvulADcyyJA02IDzYoDX4E3p2K9rer7v6/AxP7tFo5E+JAj
+        xi/aY+Kxh9BfUN7rlhleVPbM/xDYc6p4C0p2v1WL8vfwel+cKeE1JKqehZ+Pijl+T17e61a7Z1X+FPYc
+        wp3kpxwJPudM8MCZFArw+kgAMI5l5YJ1UE0V5IZnVT0H2w6BxPivHTEeOOJtOeP8+7BnWDwZ8UPzpmAr
+        7QBYXgrBniOg18UJJMariBmiHWTPmeA/gH3HAsA4mpEvT2ek1rR5XbMS8KxIW1hJeBG29gWJcHNIlGua
+        IXqCJC+Et8/DXhhnmvegabGKpkWAZkQwnZFMNbAV8SXYeyz2KPc2EuV2kSh3ECLGN5AYF0XiwlvOuIDM
+        LoEnHDc2n0JSgs+dEi+5loWcOyU2zW7o9IOpv9C09Ca8/1BMRYVX7GGOt0JED02jez6AMyFYciU7SrXl
+        TlkhBFdqxF8OY7suTtgjXNge4fZGCNJ0pYQFe3zr5ArnfJjD7BHucyTC3UGiXKtfEFec/8GRED9xxben
+        4c+fKJ5v1DNImA/aY9yrjoh4EYkIPjSmPwv7HjEM/wJ9zDDSGPuRawAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="label2.Text" xml:space="preserve">
     <value>WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
 
@@ -130,7 +175,6 @@ This wizard will help you set up and customize WinPaletter preferences to suit y
 
 To continue, click on `Next &gt;`</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -461,7 +505,7 @@ To continue, click on `Next &gt;`</value>
 
 WinPaletter supports the creation of System Restore Points directly from within the app. Before applying any visual changes, you can create a restore point to ensure you have a safety net in case you need to undo the modifications. WinPaletter makes this process easy and integrated, helping you protect your system while you customize its appearance.
 
-Keep in mind that each restore point can take up around 100 MB of disk space. Frequently applying themes and creating restore points may consume significant storage over time. If your system is stable, consider reviewing and deleting older restore points to free up space. Always keep an eye on your system partition's free space to avoid running into performance or update issues.</value>
+Keep in mind that each restore point can take up around 100–300 MB of disk space, or even more. Frequently applying themes and creating restore points may consume significant storage over time. If your system is stable, consider reviewing and deleting older restore points to free up space. Always keep an eye on your system partition's free space to avoid running into performance or update issues.</value>
   </data>
   <data name="banner2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -614,50 +658,6 @@ Keep in mind that each restore point can take up around 100 MB of disk space. Fr
         hPhyzSE0kzGC0WISDObEF/15SDHi5ysNRWjmDxz5xbIJsZRKPkYspd4rdE6hwfpdaLCAYDDDr5Halncx
         bdMl0GgyeyaT+cVyRny0M/n8ZVV3llX1U5+q9FNBZf0TodHauW0wW2J1lsNo/t/nBwhwnsoM9R5fAAAA
         AElFTkSuQmCC
-</value>
-  </data>
-  <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAoNJREFUSEvd
-        1d9PklEYB/B3c83uvair/ovaHK7VuuqiyVIEpNwMzDml1tZytspcLo1A4OWdBIRYszTKrKys5YgYhalT
-        UTQYibm0H+aPEh3Mod/2UjQ4QL7Und/tbO/N+Zyz55zzvBS1pUPDn22K9B9pjvR1MmtvJumwc1Eddiwq
-        V+2TiqDtXsOPXgmNp9nkPE5pwVChcX1wSh95C2bNBTrshDrkgHLVDkXQhoblF6j//hx1Sz2BCwtPCsj5
-        aWOFNcuMIa1xfQAccNQuPMa5b49QM/dQLYA1i/SSYsYwkzn+ANVf7uP0p7ta0kvIdQzz/wPHqdk7G/LZ
-        24dINxoLXm7nWPN0OE58bEfVdFtA7qeTD94YGRBlip/53IkDlpModihjOCo+3MTxgEVA+lRzpK8jUzxX
-        K0WOZDd2le+Pw1shnWy5RfoUs+byk/j5mS5cWnqWGqelyDm6BzuO8SC0X4nDzSh9b/KSPkWHncF4XO5u
-        wU5ZHvYZKlE7352I62S/cBkPwleKRNxvQonPsEz6lDrkWIkvS9WIObo7Ftp7rQI1X7tQHcXLNsMh8eqT
-        F1Cu2H1kzaV9uj+L5DWXI5f5vXMpD0X2xnQ4xOPMO9KnFEFbR6oDLe1noqViYXaw3yLn1fT4BAOhR5t8
-        yI3BXhGJx+55iUsThbngRR4ahaOa5GtqwOC2uqUeH4nHHlHx6yaInapN8YJRjUdgTdOTLs5381PhiY/o
-        L/iYZiPf3ZS6VcRydq7r8j/iyHer6kkvKWzLZbtipjjfrVKnLU2qyGfaCyun26Y44AG+W8X9hxMftiuW
-        TVlEsoD5RqnfOF7iM4QkXn1IPMGMF3l0rYfHNMKDqTrnlspPxO3PfOILzuMAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>WinPaletter can create a theme backup when an event occurs. This feature is similar to a Windows System Restore Point, but less comprehensive. It focuses on restoring theme-related registry entries and preferences only.
-
-Theme backups are useful when your system is already stable and you simply want to revert to a previous theme configuration. However, if your system is unstable or has been significantly affected, it's recommended to use Windows System Restore Points instead for a more complete recovery.</value>
-  </data>
-  <data name="banner3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABCNJREFUWEft
-        lUtoY1UcxltREXRE0dLMo7l53N487itpEdzIQAVdCC5cuBAZcK9rQdApIiIMQhuRmS6cMe80SZM0yU1u
-        mjpduxAcZNQBmVp636+Oo5JOqDlyb5I2PU1qMra7+cG3uefLyZf/PefL2Ngj+mC7uukYmwePw8+7zLLq
-        2SC7Q1M1bY6q3ZubWTcoYl2ehH0Pzbml39O2pc3U2PzGfgiaUTGS1b4gq/ptqqoDitUBbarWVmDNMPVj
-        oG58Nls37Id3HBGbGeDaXTD51a8MWuEuEIx2lWC0JlnRgKWqBqwQA4LQa0YjUDeuBDZ2noP3Hgrbtbvp
-        iYWfweSXt4C/KP+Jl1VAlDVAMG0dCcL2DxJYM7Zn6vrL8P7/ycTCL+nJhVvAt6r84y+pADdVtvSAYNRl
-        oqy9a72S8r3ngxVxgqoZBFXRLtE1PU2xevMgiBXib7quvw5/x7HYFn+66c3LLX9RAf6i2lZJ/cPLqBjs
-        hSFrmpdm9TVrIp1p0DXjPl3fCcLegbjCm7/5Coo5AUs9QYp4GjwJ+48wDx6jqvplitVbPUG2PavqGdja
-        Fywr3vDmZeA1QxwJonwE+wdBsvrHvWckUNOvwJ7TBYBxktHLPTemSdT0Kdh2quCsgpIV7cHBjdGGnuCJ
-        gTNaoefq3obXHwr6po4HvzNCwfWdxeC67ofXeyEZ9Z2eDmnhG8ozsGckSMYgyYq2a421XUANmtVx2NcF
-        r+h+q8w6IaiSOgN7RsJbUEL7t6JTUgSjLcC+LlRNerqnzABRVt+APSMxnZFCWFYC2IoEPDkZePIy8OWV
-        gQG8ufsvmD1ihSipgCyqF2HPSLhiEulKCrvulADcyyJA02IDzYoDX4E3p2K9rer7v6/AxP7tFo5E+JAj
-        xi/aY+Kxh9BfUN7rlhleVPbM/xDYc6p4C0p2v1WL8vfwel+cKeE1JKqehZ+Pijl+T17e61a7Z1X+FPYc
-        wp3kpxwJPudM8MCZFArw+kgAMI5l5YJ1UE0V5IZnVT0H2w6BxPivHTEeOOJtOeP8+7BnWDwZ8UPzpmAr
-        7QBYXgrBniOg18UJJMariBmiHWTPmeA/gH3HAsA4mpEvT2ek1rR5XbMS8KxIW1hJeBG29gWJcHNIlGua
-        IXqCJC+Et8/DXhhnmvegabGKpkWAZkQwnZFMNbAV8SXYeyz2KPc2EuV2kSh3ECLGN5AYF0XiwlvOuIDM
-        LoEnHDc2n0JSgs+dEi+5loWcOyU2zW7o9IOpv9C09Ca8/1BMRYVX7GGOt0JED02jez6AMyFYciU7SrXl
-        TlkhBFdqxF8OY7suTtgjXNge4fZGCNJ0pYQFe3zr5ArnfJjD7BHucyTC3UGiXKtfEFec/8GRED9xxben
-        4c+fKJ5v1DNImA/aY9yrjoh4EYkIPjSmPwv7HjEM/wJ9zDDSGPuRawAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="pictureBox14.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class SysEventsSndsInstaller : Form
+    public partial class ServiceInstaller : Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -35,10 +35,9 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SysEventsSndsInstaller));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServiceInstaller));
             this.textBox2 = new WinPaletter.UI.WP.TextBox();
             this.textBox1 = new WinPaletter.UI.WP.TextBox();
-            this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
@@ -91,29 +90,16 @@ namespace WinPaletter
             this.textBox1.UseSystemPasswordChar = false;
             this.textBox1.WordWrap = true;
             // 
-            // CheckBox1
-            // 
-            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox1.Checked = false;
-            this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(12, 12);
-            this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(608, 24);
-            this.CheckBox1.TabIndex = 129;
-            this.CheckBox1.Text = "Always show this dialog";
-            // 
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
+            this.Button2.ImageGlyphEnabled = false;
             this.Button2.Location = new System.Drawing.Point(632, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(115, 34);
@@ -131,8 +117,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(753, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);
@@ -184,14 +170,13 @@ namespace WinPaletter
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Controls.Add(this.Button2);
-            this.bottom_buttons.Controls.Add(this.CheckBox1);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottom_buttons.Location = new System.Drawing.Point(0, 446);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(874, 48);
             this.bottom_buttons.TabIndex = 132;
             // 
-            // SysEventsSndsInstaller
+            // ServiceInstaller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -208,7 +193,7 @@ namespace WinPaletter
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(645, 435);
-            this.Name = "SysEventsSndsInstaller";
+            this.Name = "ServiceInstaller";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Service installer";
@@ -223,7 +208,6 @@ namespace WinPaletter
         internal PictureBox PictureBox1;
         internal Label title;
         internal UI.WP.AnimatedBox AnimatedBox1;
-        internal UI.WP.CheckBox CheckBox1;
         internal UI.WP.Button Button2;
         internal UI.WP.Button Button1;
         private UI.WP.TextBox textBox1;

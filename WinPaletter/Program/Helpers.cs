@@ -471,13 +471,9 @@ namespace WinPaletter
             {
                 if (System.IO.File.Exists(SysPaths.SysEventsSounds) && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(SysPaths.SysEventsSounds)))
                 {
-                    //Update
-                    if (Settings.UsersServices.ShowSysEventsSoundsInstaller)
-                    {
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, $"SysEventsSounds service is not up to date, updating it.");
-                        Forms.SysEventsSndsInstaller.Install(false);
-                        return;
-                    }
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"SysEventsSounds service is not up to date, updating it.");
+                    Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Update);
+                    return;
                 }
             }
         }

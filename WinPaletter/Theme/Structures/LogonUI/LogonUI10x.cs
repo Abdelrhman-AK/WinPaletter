@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -49,6 +50,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows 10/11 LogonUI data structure</param>
         public void Load(LogonUI10x @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 10/11/12 lock screen preferences from registry.");
+
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\Windows10x", string.Empty, @default.Enabled));
 
             if (OS.W12 || OS.W11 || OS.W10)

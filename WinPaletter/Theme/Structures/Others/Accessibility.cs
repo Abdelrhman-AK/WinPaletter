@@ -54,6 +54,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Accessibility data structure</param>
         public void Load(Accessibility @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Accessibility settings from registry and User32.SystemParametersInfo");
+
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Accessibility", string.Empty, @default.Enabled));
 
             // Get high contrast settings using SystemParametersInfo from User32.dll

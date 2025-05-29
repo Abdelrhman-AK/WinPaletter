@@ -94,7 +94,7 @@ namespace WinPaletter
             }
 
             // Uninstall SysEventsSnds service silently
-            Forms.SysEventsSndsInstaller.Uninstall(true);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall, true);
 
             // Delete the program data folder
             if (System.IO.Directory.Exists(SysPaths.ProgramFilesData))

@@ -322,6 +322,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Sounds data structure</param>
         public void Load(Sounds @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows sounds settings from registry.");
+
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", string.Empty, @default.Enabled));
             Snd_Imageres_SystemStart = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", @default.Snd_Imageres_SystemStart).ToString();
             Snd_ChargerConnected = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", @default.Snd_ChargerConnected).ToString();

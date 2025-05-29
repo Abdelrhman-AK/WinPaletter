@@ -121,6 +121,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">String edition mark</param>
         public void Load(string edition, Windows10x @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} colors and appearance preferences from registry.");
+
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled));
 
             if (OS.W12 || OS.W11 || OS.W10)

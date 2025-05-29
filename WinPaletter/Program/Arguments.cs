@@ -33,6 +33,12 @@ namespace WinPaletter
             public bool Uninstall_Quiet { get; set; }
 
             /// <summary>
+            /// Run WinPaletter setup wizard.
+            /// </summary>
+            [Option('x', "Setup", Required = false, HelpText = "Run WinPaletter setup wizard.")]
+            public bool Setup { get; set; }
+
+            /// <summary>
             /// Apply a WinPaletter theme file.
             /// </summary>
             [Option('a', "apply", Required = false, HelpText = "Apply a WinPaletter theme file.")]
@@ -167,6 +173,13 @@ namespace WinPaletter
                         MsgBox(Lang.Strings.Languages.Exported, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         shouldExit = true;
                         Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments export language requested.");
+                    }
+
+                    if (o.Setup)
+                    {
+                        Forms.Setup.ShowDialog();
+                        shouldExit = false;
+                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments setup requested.");
                     }
 
                     if (o.Uninstall)

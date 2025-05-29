@@ -99,12 +99,26 @@ namespace WinPaletter.UI.WP
             using (LinearGradientBrush lgb1 = new(Rect_Fix, scheme.Colors.Line_Hover(parentLevel), _color_line, LinearGradientMode.Horizontal))
             using (Pen P = new(lgb1))
             {
-                G.FillRoundedRect(lgb0, Rect);
-                G.DrawRoundedRect(P, Rect);
+                if (Dock == DockStyle.None)
+                {
+                    G.FillRoundedRect(lgb0, Rect);
+                    G.DrawRoundedRect(P, Rect);
+                }
+                else
+                {
+                    G.FillRectangle(lgb0, Rect);
+                }
             }
 
             //Draw noise
-            G.FillRoundedRect(Noise, Rect);
+            if (Dock == DockStyle.None)
+            {
+                G.FillRoundedRect(Noise, Rect);
+            }
+            else
+            {
+                G.FillRectangle(Noise, Rect);
+            }
 
             using (SolidBrush B = new(ForeColor))
             using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())

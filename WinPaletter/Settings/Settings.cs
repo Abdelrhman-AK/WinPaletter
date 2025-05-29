@@ -971,11 +971,6 @@ namespace WinPaletter
             public struct UsersServices
             {
                 /// <summary>
-                /// Hide WinPaletter System Events Sounds Installer dialog when installing or updating it
-                /// </summary>
-                public bool ShowSysEventsSoundsInstaller = true;
-
-                /// <summary>
                 /// Create new instance of UsersServices settings structure with default values
                 /// </summary>
                 public UsersServices() { }
@@ -985,7 +980,7 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    ShowSysEventsSoundsInstaller = Conversions.ToBoolean(GetReg(REG_UsersServices, "ShowSysEventsSoundsInstaller", true));
+
                 }
 
                 /// <summary>
@@ -993,7 +988,7 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_UsersServices, "ShowSysEventsSoundsInstaller", ShowSysEventsSoundsInstaller, RegistryValueKind.DWord);
+
                 }
             }
 

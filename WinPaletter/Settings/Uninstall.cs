@@ -131,7 +131,7 @@ namespace WinPaletter
             }
 
             // Uninstall the system events sounds service
-            Forms.SysEventsSndsInstaller.Uninstall();
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
 
             // Delete the folders
             if (CheckBox2.Checked)

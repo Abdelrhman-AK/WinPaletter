@@ -210,7 +210,7 @@ namespace SecureUxTheme
         }
 
         /// <summary>
-        /// Install SecureUxTheme in your system.
+        /// Run SecureUxTheme in your system.
         /// </summary>
         /// <param name="hookExplorer">Hook <c>explorer.exe</c> so that users can use "Personalization" to set a patched theme</param>
         /// <param name="hookSystemSettings">Hook <c>SystemSettings.exe</c> so that users can can use "Themes" in settings to set a patched theme</param>

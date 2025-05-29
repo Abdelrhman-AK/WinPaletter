@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -55,11 +56,13 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Loads Windows8x data from registry
         /// </summary>
-        /// <param name="Edition">Windows edition</param>
+        /// <param name="edition">Windows edition</param>
         /// <param name="default">Default Windows8x data structure</param>
-        public void Load(string Edition, Windows8x @default)
+        public void Load(string edition, Windows8x @default)
         {
-            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{Edition}", string.Empty, @default.Enabled));
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} colors and appearance preferences from registry.");
+
+            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled));
 
             if (OS.W8x)
             {

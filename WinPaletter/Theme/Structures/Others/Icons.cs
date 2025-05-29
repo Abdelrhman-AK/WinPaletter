@@ -181,6 +181,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Icons data structure</param>
         public void Load(Icons @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows icons from registry.");
+
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled));
 
             Shell32Wrapper = [];

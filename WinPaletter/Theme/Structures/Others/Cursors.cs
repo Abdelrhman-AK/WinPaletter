@@ -134,6 +134,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Cursors data structure</param>
         public void Load(Cursors @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows cursors settings from registry and User32.SystemParametersInfo");
+
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled));
 
             if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref Shadow, SPIF.SPIF_NONE))

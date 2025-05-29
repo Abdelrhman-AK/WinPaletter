@@ -171,6 +171,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="subKey">Subkey of cursor inside registry key HKEY_CURRENT_USER\Software\WinPaletter\Cursors</param>
         public void Load(string subKey)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Cursor to be loaded: `{subKey}`");
+
             UseFromFile = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", false));
             File = GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", string.Empty).ToString();
 

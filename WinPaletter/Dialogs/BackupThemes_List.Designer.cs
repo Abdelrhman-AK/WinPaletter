@@ -455,6 +455,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Themes backups";
             this.Load += new System.EventHandler(this.BackupThemes_List_Load);
+            this.ParentChanged += new System.EventHandler(this.BackupThemes_List_ParentChanged);
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();

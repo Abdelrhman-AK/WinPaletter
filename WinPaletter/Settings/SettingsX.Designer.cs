@@ -41,9 +41,10 @@ namespace WinPaletter
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
-            this.Button5 = new WinPaletter.UI.WP.Button();
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
+            this.button30 = new WinPaletter.UI.WP.Button();
+            this.Button5 = new WinPaletter.UI.WP.Button();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.button27 = new WinPaletter.UI.WP.Button();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
@@ -415,6 +416,12 @@ namespace WinPaletter
             this.PictureBox42 = new System.Windows.Forms.PictureBox();
             this.CheckBox11 = new WinPaletter.UI.WP.CheckBox();
             this.tabPage23 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.button31 = new WinPaletter.UI.WP.Button();
+            this.label97 = new System.Windows.Forms.Label();
+            this.pictureBox70 = new System.Windows.Forms.PictureBox();
+            this.button32 = new WinPaletter.UI.WP.Button();
+            this.label98 = new System.Windows.Forms.Label();
             this.groupBox55 = new WinPaletter.UI.WP.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
@@ -502,7 +509,6 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
-            this.button30 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -648,6 +654,8 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox27)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).BeginInit();
             this.tabPage23.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox70)).BeginInit();
             this.groupBox55.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             this.groupBox54.SuspendLayout();
@@ -751,25 +759,6 @@ namespace WinPaletter
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
             // 
-            // Button5
-            // 
-            this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button5.CustomColor = System.Drawing.Color.Empty;
-            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button5.ForeColor = System.Drawing.Color.White;
-            this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.ImageGlyph = null;
-            this.Button5.ImageGlyphEnabled = false;
-            this.Button5.Location = new System.Drawing.Point(269, 3);
-            this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(200, 34);
-            this.Button5.TabIndex = 19;
-            this.Button5.Text = "Disassociate file extensions";
-            this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button5.UseVisualStyleBackColor = false;
-            this.Button5.Click += new System.EventHandler(this.Button5_Click);
-            // 
             // Button4
             // 
             this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -805,6 +794,44 @@ namespace WinPaletter
             this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
+            // 
+            // button30
+            // 
+            this.button30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button30.CustomColor = System.Drawing.Color.Empty;
+            this.button30.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button30.ForeColor = System.Drawing.Color.White;
+            this.button30.Image = ((System.Drawing.Image)(resources.GetObject("button30.Image")));
+            this.button30.ImageGlyph = null;
+            this.button30.ImageGlyphEnabled = false;
+            this.button30.Location = new System.Drawing.Point(123, 3);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(140, 34);
+            this.button30.TabIndex = 127;
+            this.button30.Text = "Re-run setup";
+            this.button30.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button30.UseVisualStyleBackColor = false;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // Button5
+            // 
+            this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Button5.CustomColor = System.Drawing.Color.Empty;
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button5.ForeColor = System.Drawing.Color.White;
+            this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
+            this.Button5.ImageGlyph = null;
+            this.Button5.ImageGlyphEnabled = false;
+            this.Button5.Location = new System.Drawing.Point(269, 3);
+            this.Button5.Name = "Button5";
+            this.Button5.Size = new System.Drawing.Size(200, 34);
+            this.Button5.TabIndex = 19;
+            this.Button5.Text = "Disassociate file extensions";
+            this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button5.UseVisualStyleBackColor = false;
+            this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
             // Button6
             // 
@@ -993,7 +1020,7 @@ namespace WinPaletter
             this.label59.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label59.Location = new System.Drawing.Point(41, 7);
             this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(616, 34);
+            this.label59.Size = new System.Drawing.Size(603, 34);
             this.label59.TabIndex = 18;
             this.label59.Text = "Automatic check for updates every time WinPaletter is opened";
             this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1029,9 +1056,9 @@ namespace WinPaletter
             this.AlertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox4.Image = null;
-            this.AlertBox4.Location = new System.Drawing.Point(663, 14);
+            this.AlertBox4.Location = new System.Drawing.Point(650, 14);
             this.AlertBox4.Name = "AlertBox4";
-            this.AlertBox4.Size = new System.Drawing.Size(97, 20);
+            this.AlertBox4.Size = new System.Drawing.Size(110, 20);
             this.AlertBox4.TabIndex = 10;
             this.AlertBox4.TabStop = false;
             this.AlertBox4.Text = "Recommended";
@@ -1722,7 +1749,7 @@ namespace WinPaletter
             this.label67.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label67.Location = new System.Drawing.Point(41, 7);
             this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(616, 34);
+            this.label67.Size = new System.Drawing.Size(603, 34);
             this.label67.TabIndex = 18;
             this.label67.Text = "Save theme files compressed (to save space and make loading a store theme quick)";
             this.label67.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1747,9 +1774,9 @@ namespace WinPaletter
             this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(663, 14);
+            this.alertBox2.Location = new System.Drawing.Point(650, 14);
             this.alertBox2.Name = "alertBox2";
-            this.alertBox2.Size = new System.Drawing.Size(97, 20);
+            this.alertBox2.Size = new System.Drawing.Size(110, 20);
             this.alertBox2.TabIndex = 10;
             this.alertBox2.TabStop = false;
             this.alertBox2.Text = "Recommended";
@@ -1852,7 +1879,7 @@ namespace WinPaletter
             this.label66.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label66.Location = new System.Drawing.Point(41, 7);
             this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(616, 34);
+            this.label66.Size = new System.Drawing.Size(603, 34);
             this.label66.TabIndex = 18;
             this.label66.Text = "Automatically register the extensions of theme and settings files (*.wpth, *.wpsf" +
     ", *.wptp) in the registry each time the program is opened";
@@ -1878,9 +1905,9 @@ namespace WinPaletter
             this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox1.Image = null;
-            this.alertBox1.Location = new System.Drawing.Point(663, 14);
+            this.alertBox1.Location = new System.Drawing.Point(650, 14);
             this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(97, 20);
+            this.alertBox1.Size = new System.Drawing.Size(110, 20);
             this.alertBox1.TabIndex = 10;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = "Recommended";
@@ -2300,7 +2327,7 @@ namespace WinPaletter
             this.label68.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label68.Location = new System.Drawing.Point(41, 7);
             this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(602, 34);
+            this.label68.Size = new System.Drawing.Size(589, 34);
             this.label68.TabIndex = 18;
             this.label68.Text = "Automatically restart Explorer every time a theme is applied";
             this.label68.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2325,9 +2352,9 @@ namespace WinPaletter
             this.alertBox5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox5.Image = null;
-            this.alertBox5.Location = new System.Drawing.Point(649, 14);
+            this.alertBox5.Location = new System.Drawing.Point(636, 14);
             this.alertBox5.Name = "alertBox5";
-            this.alertBox5.Size = new System.Drawing.Size(97, 20);
+            this.alertBox5.Size = new System.Drawing.Size(110, 20);
             this.alertBox5.TabIndex = 10;
             this.alertBox5.TabStop = false;
             this.alertBox5.Text = "Recommended";
@@ -5647,6 +5674,7 @@ namespace WinPaletter
             // tabPage23
             // 
             this.tabPage23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage23.Controls.Add(this.groupBox1);
             this.tabPage23.Controls.Add(this.groupBox55);
             this.tabPage23.Controls.Add(this.groupBox54);
             this.tabPage23.Controls.Add(this.groupBox53);
@@ -5658,6 +5686,92 @@ namespace WinPaletter
             this.tabPage23.Size = new System.Drawing.Size(823, 591);
             this.tabPage23.TabIndex = 15;
             this.tabPage23.Text = "Storage details";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.button31);
+            this.groupBox1.Controls.Add(this.label97);
+            this.groupBox1.Controls.Add(this.pictureBox70);
+            this.groupBox1.Controls.Add(this.button32);
+            this.groupBox1.Controls.Add(this.label98);
+            this.groupBox1.Location = new System.Drawing.Point(3, 437);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(817, 80);
+            this.groupBox1.TabIndex = 75;
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.CustomColor = System.Drawing.Color.Empty;
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button31.ForeColor = System.Drawing.Color.White;
+            this.button31.Image = null;
+            this.button31.ImageGlyph = null;
+            this.button31.ImageGlyphEnabled = false;
+            this.button31.Location = new System.Drawing.Point(597, 41);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(123, 28);
+            this.button31.TabIndex = 58;
+            this.button31.Text = "Show logs form";
+            this.button31.UseVisualStyleBackColor = false;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
+            // 
+            // label97
+            // 
+            this.label97.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label97.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label97.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label97.Location = new System.Drawing.Point(41, 7);
+            this.label97.Name = "label97";
+            this.label97.Size = new System.Drawing.Size(765, 34);
+            this.label97.TabIndex = 18;
+            this.label97.Text = "WinPaletter logs";
+            this.label97.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox70
+            // 
+            this.pictureBox70.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox70.Image")));
+            this.pictureBox70.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox70.Name = "pictureBox70";
+            this.pictureBox70.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox70.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox70.TabIndex = 54;
+            this.pictureBox70.TabStop = false;
+            // 
+            // button32
+            // 
+            this.button32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button32.CustomColor = System.Drawing.Color.Empty;
+            this.button32.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover)));
+            this.button32.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button32.ForeColor = System.Drawing.Color.White;
+            this.button32.Image = null;
+            this.button32.ImageGlyph = null;
+            this.button32.ImageGlyphEnabled = false;
+            this.button32.Location = new System.Drawing.Point(726, 41);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(80, 28);
+            this.button32.TabIndex = 57;
+            this.button32.Text = "Clean";
+            this.button32.UseVisualStyleBackColor = false;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
+            // 
+            // label98
+            // 
+            this.label98.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label98.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label98.Location = new System.Drawing.Point(43, 41);
+            this.label98.Name = "label98";
+            this.label98.Size = new System.Drawing.Size(591, 28);
+            this.label98.TabIndex = 56;
+            this.label98.Text = "0";
+            this.label98.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox55
             // 
@@ -5717,7 +5831,7 @@ namespace WinPaletter
             this.groupBox54.Controls.Add(this.pictureBox8);
             this.groupBox54.Controls.Add(this.button25);
             this.groupBox54.Controls.Add(this.label5);
-            this.groupBox54.Location = new System.Drawing.Point(3, 437);
+            this.groupBox54.Location = new System.Drawing.Point(3, 521);
             this.groupBox54.Name = "groupBox54";
             this.groupBox54.Size = new System.Drawing.Size(817, 80);
             this.groupBox54.TabIndex = 73;
@@ -6819,25 +6933,6 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // button30
-            // 
-            this.button30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button30.CustomColor = System.Drawing.Color.Empty;
-            this.button30.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button30.ForeColor = System.Drawing.Color.White;
-            this.button30.Image = ((System.Drawing.Image)(resources.GetObject("button30.Image")));
-            this.button30.ImageGlyph = null;
-            this.button30.ImageGlyphEnabled = false;
-            this.button30.Location = new System.Drawing.Point(123, 3);
-            this.button30.Name = "button30";
-            this.button30.Size = new System.Drawing.Size(140, 34);
-            this.button30.TabIndex = 127;
-            this.button30.Text = "Re-run setup";
-            this.button30.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button30.UseVisualStyleBackColor = false;
-            this.button30.Click += new System.EventHandler(this.button30_Click);
-            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -7005,6 +7100,8 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox27)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).EndInit();
             this.tabPage23.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox70)).EndInit();
             this.groupBox55.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             this.groupBox54.ResumeLayout(false);
@@ -7509,5 +7606,11 @@ namespace WinPaletter
         private UI.WP.Toggle toggle39;
         internal PictureBox pictureBox69;
         internal UI.WP.Button button30;
+        private UI.WP.GroupBox groupBox1;
+        internal UI.WP.Button button31;
+        internal Label label97;
+        internal PictureBox pictureBox70;
+        internal UI.WP.Button button32;
+        internal Label label98;
     }
 }

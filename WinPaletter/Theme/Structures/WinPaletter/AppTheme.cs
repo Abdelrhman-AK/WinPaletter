@@ -50,6 +50,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default AppTheme data structure</param>
         public void Load(AppTheme @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading WinPaletter application theme (appearance) from registry.");
+
             Enabled = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "CustomColors", @default.Enabled));
             Animations = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "Animations", @default.Animations));
             BackColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "BackColor", @default.BackColor.ToArgb())));

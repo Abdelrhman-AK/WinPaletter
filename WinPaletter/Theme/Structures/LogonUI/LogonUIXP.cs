@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -45,6 +46,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows WXP LogonUI data structure</param>
         public void Load(LogonUIXP @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
+
             if (OS.WXP)
             {
                 Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled));

@@ -1545,6 +1545,15 @@
         QmCC
 </value>
   </data>
+  <data name="button4.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAADNSURBVEhL7ZUxCgIxFES3WQS9hsdS8Ba2VuqFXA9jY7WCJ7DyyYckhImR/SKCiw/SJDPzYQJJ
+        04wOoAV2wJnhmNY8reYVBOG7bDWvAOjV5aDXvARwUjVwAKaqjQAz4JgbVJMAVsA6FwMbYAncZd+wvUXQ
+        JDS3IBcH8zwMfrbsbNiASkVxgF38XpbtuQZ4K7p9oiK75IlqInYGdLlBNYlKRW40N1GpyI3mFqjBi+Yl
+        /hVFNC8xqoouanJQf64j3/hw4pd5VfcLTDvsy/w5Hl/f9z+/24hPAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="Button12.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAR9JREFUSEvd

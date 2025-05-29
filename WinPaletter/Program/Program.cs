@@ -76,17 +76,19 @@ namespace WinPaletter
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 // Initialize log
-                string logFileName = $"winpaletter.txt"; //-{DateTime.Now:yyyyMMdd_HHmmss}
+                if (!System.IO.Directory.Exists(SysPaths.Logs)) { System.IO.Directory.CreateDirectory(SysPaths.Logs); }
+                string logFileName = $"{SysPaths.Logs}\\WinPaletter_Log_{DateTime.Now:yyyyMMdd_HHmmss}.json";
                 if (File.Exists(logFileName)) using (FileStream fs = new(logFileName, FileMode.Truncate)) { }
                 LoggerConfiguration log = new();
-                log.WriteTo.File(new Serilog.Formatting.Compact.CompactJsonFormatter(), logFileName); //,outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{Exception}{NewLine}"
+                log.WriteTo.File(new Serilog.Formatting.Json.JsonFormatter(), logFileName);
                 Log = log.CreateLogger();
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}.");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter version: {Version}.");
+                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
+                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter version: {Version}");
                 Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
                 Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
                 Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter file MD5: {Program.CalculateMD5(AppFile)}");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter started with user: {User.Identity.Name}.");
+                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter log file path: {logFileName}");
+                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
 
                 // Initialize the animator. It must be here to avoid some issues and bugs with its assembly
                 Animator = new() { Interval = 10, TimeStep = 0.05f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };

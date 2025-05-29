@@ -16,7 +16,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Name of current WinPaletter theme</summary>
         public string ThemeName = Program.Lang.Strings.General.MyTheme;
 
-        /// <summary>Description of current WinPaletter theme. It can include tags that are useful for search in WinPaletter Store.</summary>
+        /// <summary>Description_SysEventsSounds of current WinPaletter theme. It can include tags that are useful for search in WinPaletter Store.</summary>
         public string Description = string.Empty;
 
         /// <summary>Make saving this theme export theme resources pack that has sounds and images used in theme and are not located in system directories.</summary>
@@ -95,6 +95,8 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public void Load()
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Loading WinPaletter theme information from registry.");
+
             ThemeName = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Lang.Strings.General.MyTheme).ToString();
             ThemeVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0").ToString();
             Author = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", User.UserName).ToString();

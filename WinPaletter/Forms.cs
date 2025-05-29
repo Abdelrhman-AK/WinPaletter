@@ -94,17 +94,25 @@ namespace WinPaletter
         /// </summary>
         public static About About => (_About == null || _About.IsDisposed) ? (_About = CreateInstance(_About)) : _About;
 
-        private static SysEventsSndsInstaller _SysEventsSndsInstaller;
+        private static ServiceInstaller _ServiceInstaller;
         /// <summary>
-        /// Gets the instance of the form <see cref="SysEventsSndsInstaller"/> to install system events sounds.
+        /// Gets the instance of the form <see cref="ServiceInstaller"/> to install system events sounds.
         /// </summary>
-        public static SysEventsSndsInstaller SysEventsSndsInstaller => (_SysEventsSndsInstaller == null || _SysEventsSndsInstaller.IsDisposed) ? (_SysEventsSndsInstaller = CreateInstance(_SysEventsSndsInstaller)) : _SysEventsSndsInstaller;
+        public static ServiceInstaller ServiceInstaller => (_ServiceInstaller == null || _ServiceInstaller.IsDisposed) ? (_ServiceInstaller = CreateInstance(_ServiceInstaller)) : _ServiceInstaller;
 
         private static ThemeLog _ThemeLog;
         /// <summary>
         /// Gets the instance of the form <see cref="ThemeLog"/> to show the theme log.
         /// </summary>
         public static ThemeLog ThemeLog => (_ThemeLog == null || _ThemeLog.IsDisposed) ? (_ThemeLog = CreateInstance(_ThemeLog)) : _ThemeLog;
+
+
+        private static Logs _logs;
+        /// <summary>
+        /// Gets the instance of the form <see cref="ThemeLog"/> to show the theme log.
+        /// </summary>
+        public static Logs Logs => (_logs == null || _logs.IsDisposed) ? (_logs = CreateInstance(_logs)) : _logs;
+
 
         private static SOS _SOS;
         /// <summary>

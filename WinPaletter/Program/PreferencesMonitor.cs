@@ -8,6 +8,7 @@ using System.Management;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
+using WinPaletter.Tabs;
 
 namespace WinPaletter
 {
@@ -115,7 +116,7 @@ namespace WinPaletter
         /// <returns></returns>
         public static Bitmap FetchSuitableWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle previewConfig)
         {
-            Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching suitable wallpaper for {previewConfig}", previewConfig);
+            Log?.Write(Serilog.Events.LogEventLevel.Information, $"Fetching suitable wallpaper for {previewConfig}");
 
             // Create a PictureBox to mimic the Windows desktop ratio and wallpaper style
             using (PictureBox picbox = new() { Size = Forms.Win11Colors.windowsDesktop1.Size, BackColor = TM.Win32.Background })
@@ -257,10 +258,10 @@ namespace WinPaletter
                 scaleH = Screen.PrimaryScreen.Bounds.Height / targetSize.Height;
             }
 
-            // Resize the wallpaper according to the scale and preview area size
+            // Resize the wallpaper according to the scale and preview area siz
             wallpaper = wallpaper.Resize((int)Math.Round(wallpaper.Width / scaleW), (int)Math.Round(wallpaper.Height / scaleH));
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Rescaling wallpaper preview to {width}x{height} and adjusting its style", wallpaper.Width, wallpaper.Height);
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
 
             // Apply the wallpaper style
             return wallpaperStyle switch
@@ -362,6 +363,9 @@ namespace WinPaletter
                     SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
                 }
 
+                RegisterRegistryChangeEvent(User.Identity.User.Value, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", PreferencesRelatedToTitlebarExtenderChanged);
+                RegisterRegistryChangeEvent(User.Identity.User.Value, @"SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", PreferencesRelatedToTitlebarExtenderChanged);
+
                 Application.ApplicationExit += (sender, e) => StopWatchers();
 
                 wic.Undo();
@@ -427,6 +431,17 @@ namespace WinPaletter
         private static void Wallpaper_Changed_EventHandler(object sender, EventArgs e)
         {
             Wallpaper_Changed();
+        }
+
+        /// <summary>
+        /// Event handler for the wallpaper change event to update the wallpaper in all open forms previews
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void PreferencesRelatedToTitlebarExtenderChanged(object sender, EventArgs e)
+        {
+            TitlebarExtender.Transparency = (int)GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
+            TitlebarExtender.AccentOnTitlebars = (int)GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1) == 1;
         }
 
         /// <summary>

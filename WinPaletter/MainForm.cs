@@ -152,5 +152,10 @@ namespace WinPaletter
                 }
             }
         }
+
+        private void tabsContainer1_UserSwitchRequest(object sender, EventArgs e)
+        {
+            User.Login(true);
+        }
     }
 }

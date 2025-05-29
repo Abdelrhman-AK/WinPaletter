@@ -244,9 +244,9 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(back)) { G.FillRoundedRect(br, MainRect); }
 
-            using (Pen P = new(line)) { G.DrawRoundedRectBeveled(P, MainRectInner); }
+            using (Pen P = new(line)) { G.DrawRoundedRectBeveledReverse(P, MainRectInner); }
 
-            using (Pen P = new(line_hover)) { G.DrawRoundedRectBeveled(P, MainRect); }
+            using (Pen P = new(line_hover)) { G.DrawRoundedRectBeveledReverse(P, MainRect); }
 
             this.GetTextAndImageRectangles(TextAndImageRect, out RectangleF imageRectF, out RectangleF textRectF);
 
@@ -260,11 +260,13 @@ namespace WinPaletter.UI.WP
 
                 if (Enabled)
                 {
-                    TextRenderer.DrawText(G, Text, Font, Rectangle.Round(textRectF), ForeColor, TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter);
+                    TextRenderer.DrawText(G, Text, Font, Rectangle.Round(textRectF), ForeColor, TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter);
                 }
                 else
                 {
-                    ControlPaint.DrawStringDisabled(G, Text, Font, ForeColor, Rectangle.Round(textRectF), TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter);
+                    Rectangle disabledTextRect = Rectangle.Round(textRectF);
+                    disabledTextRect.X--; disabledTextRect.Y--;
+                    ControlPaint.DrawStringDisabled(G, Text, Font, ForeColor, disabledTextRect, TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter);
                 }
             }
 

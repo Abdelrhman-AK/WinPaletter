@@ -151,7 +151,6 @@ namespace WinPaletter.UI.WP
 
                     else { _value = value; }
 
-
                     if (CanAnimate && Style != ProgressBarStyle.Marquee)
                     {
                         FluentTransitions.Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
@@ -205,7 +204,7 @@ namespace WinPaletter.UI.WP
                             }
                     }
 
-                    if (!DesignMode) { FluentTransitions.Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
+                    if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
                     else { StateColor = color; }
 
                     UpdateTaskbar();

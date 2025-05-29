@@ -216,6 +216,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WinEffects data structure</param>
         public void Load(WinEffects @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Effects settings from registry and User32.SystemParametersInfo");
+
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, true));
 
             if (!SystemParametersInfo(SPI.SPI_GETDROPSHADOW, 0, ref WindowShadow, SPIF.SPIF_NONE))

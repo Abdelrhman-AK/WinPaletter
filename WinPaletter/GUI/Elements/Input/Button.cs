@@ -147,7 +147,7 @@ namespace WinPaletter.UI.WP
                 _imageGlyph = glyph;
                 _imageGlyphOver = ((Bitmap)glyph)?.Tint(colors.ForeColor_Accent);
                 _imageGlyphDown = ((Bitmap)glyph)?.Tint(colors.ForeColor_Accent);
-                _imageGlyphDisabled = ((Bitmap)glyph)?.Grayscale();
+                _imageGlyphDisabled = ((Bitmap)glyph)?.Fade(0.5f);
             }
         }
 
@@ -857,13 +857,14 @@ namespace WinPaletter.UI.WP
 
                 if (Enabled)
                 {
-                    TextRenderer.DrawText(G, Text, Font, Rectangle.Round(textRectF), ForeColor, TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter);
+                    TextRenderer.DrawText(G, Text, Font, Rectangle.Round(textRectF), ForeColor, TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter);
                 }
                 else
                 {
-                    ControlPaint.DrawStringDisabled(G, Text, Font, ForeColor, Rectangle.Round(textRectF), TextFormatFlags.EndEllipsis | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter);
+                    Rectangle disabledTextRect = Rectangle.Round(textRectF);
+                    disabledTextRect.X--; disabledTextRect.Y--;
+                    ControlPaint.DrawStringDisabled(G, Text, Font, ForeColor, disabledTextRect, TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter);
                 }
-
             }
 
             if (Menu.Items.Count > 0)

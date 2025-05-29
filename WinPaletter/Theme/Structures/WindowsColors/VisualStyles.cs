@@ -57,6 +57,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default VisualStyles data structure</param>
         public void Load(string edition, VisualStyles @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} Visual Styles using UxTheme.GetCurrentVS");
+
             Enabled = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\VisualStyles\\{edition}", string.Empty, @default.Enabled));
 
             Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();

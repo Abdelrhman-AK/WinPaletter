@@ -1,6 +1,6 @@
 // Author:          Evan Olds
 // Creation Date:   February 10, 2008
-// Description:     Class for loading icon or cursor data from streams
+// Description_SysEventsSounds:     Class for loading icon or cursor data from streams
 using EOFC;
 using System;
 using System.Drawing;

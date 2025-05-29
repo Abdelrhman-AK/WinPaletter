@@ -29,6 +29,7 @@ namespace WinPaletter.Tabs
             AllowDrop = true;
 
             InitializeContextMenu();
+            InitializeUsersButton();
         }
 
         #region Variables
@@ -42,6 +43,8 @@ namespace WinPaletter.Tabs
         /// List of tab data included in current control
         /// </summary>
         public List<TabData> TabDataList = [];
+
+        private UI.WP.Button usersButton = new() { Size = new(32, 32), ImageAlign = ContentAlignment.MiddleCenter, Text = string.Empty, Anchor = AnchorStyles.Top | AnchorStyles.Right };
 
         private Rectangle hoveredRectangle;
         private bool overCloseButton = false;
@@ -88,9 +91,9 @@ namespace WinPaletter.Tabs
             ToolStripMenuItem closeAllToTheLeft = new(Program.Lang.Strings.Tabs.Context_CloseToTheLeft) { Image = Assets.Tabs.ContextBox_CloseLeft };
             ToolStripMenuItem closeAll = new(Program.Lang.Strings.Tabs.Context_CloseAll) { Image = Assets.Tabs.ContextBox_CloseAll };
             ToolStripSeparator toolStripSeparator0 = new();
-            ToolStripMenuItem detach = new(Program.Lang.Strings.Tabs.Context_Detach) { Image = Assets.Tabs.ContextBox_Detach };
-            ToolStripMenuItem detachAll = new(Program.Lang.Strings.Tabs.Context_DetachAll) { Image = Assets.Tabs.ContextBox_DetachAll };
-            ToolStripMenuItem detachAllButThis = new(Program.Lang.Strings.Tabs.Context_DetachOthers) { Image = Assets.Tabs.ContextBox_DetachAllButThis };
+            ToolStripMenuItem detach = new(Program.Lang.Strings.Tabs.Context_Unpin) { Image = Assets.Tabs.ContextBox_Detach };
+            ToolStripMenuItem detachAll = new(Program.Lang.Strings.Tabs.Context_UnpinAll) { Image = Assets.Tabs.ContextBox_DetachAll };
+            ToolStripMenuItem detachAllButThis = new(Program.Lang.Strings.Tabs.Context_UnpinOthers) { Image = Assets.Tabs.ContextBox_DetachAllButThis };
             ToolStripSeparator toolStripSeparator1 = new();
             ToolStripMenuItem helpButton = new(Program.Lang.Strings.General.Help) { Image = Assets.Tabs.ContextBox_Help };
 
@@ -112,6 +115,24 @@ namespace WinPaletter.Tabs
                 ]);
         }
 
+        void InitializeUsersButton()
+        {
+            AdjustUsersButtonLayout();
+
+            this.Controls.Add(usersButton);
+
+            usersButton.Click += (s, e) => UserSwitchRequest(s, e);
+        }
+
+        void AdjustUsersButtonLayout()
+        {
+            usersButton.Width = Height - 4;
+            usersButton.Height = usersButton.Width;
+
+            usersButton.Left = Width - usersButton.Width - 3;
+            usersButton.Top = (Height - usersButton.Width) / 2 - 2;
+        }
+
         /// <summary>
         /// Generate a tab page that have form inside, and add it into the tab control
         /// </summary>
@@ -126,6 +147,7 @@ namespace WinPaletter.Tabs
                 {
                     TabControl.SelectedTab = TPx;
                     Cursor = Cursors.Default;
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"`{form.Name}` form is already shown and added into tabs, re-focusing it.");
                     return;
                 }
             }
@@ -175,6 +197,8 @@ namespace WinPaletter.Tabs
                 if (!DesignMode) Program.Animator.ShowSync(TabControl);
             }
             catch { }
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"`{form.Name}` form has been shown and added into tabs.");
 
             Cursor = Cursors.Default;
         }
@@ -738,6 +762,20 @@ namespace WinPaletter.Tabs
         }
         private TabControl _tabControl;
 
+        private Bitmap _userImage;
+        public Bitmap UserImage
+        {
+            get => _userImage;
+            set
+            {
+                if (value != _userImage)
+                {
+                    _userImage = value;
+                    usersButton.Image = value;
+                }
+            }
+        }
+
         /// <summary>
         /// Selected index of tabs and tabpage in current TabControl
         /// </summary>
@@ -788,6 +826,13 @@ namespace WinPaletter.Tabs
         #region Events/Overrides
 
         /// <summary>
+        /// Delegate to UserSwitchRequestDelegate event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void UserSwitchRequestDelegate(object sender, EventArgs e);
+
+        /// <summary>
         /// Delegate to FormShown event
         /// </summary>
         /// <param name="sender"></param>
@@ -822,6 +867,11 @@ namespace WinPaletter.Tabs
         /// Associated form in tab is being closed
         /// </summary>
         public event FormClosingDelegate FormClosing;
+
+        /// <summary>
+        /// Event that is triggered when user requests to switch user
+        /// </summary>
+        public event UserSwitchRequestDelegate UserSwitchRequest;
 
         /// <summary>
         /// Delegate to FormTextChanged event
@@ -952,6 +1002,8 @@ namespace WinPaletter.Tabs
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+
+            AdjustUsersButtonLayout();
 
             SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Font) + new SizeF(2, 3);
             Rectangle betaRect = new(0 + Width - (int)betaSize.Width - 5 - 1, 0 + (int)((Height - 1 - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
@@ -1221,7 +1273,7 @@ namespace WinPaletter.Tabs
             {
                 Rectangle rect = new(0, 0, Width - 1, Height - 1);
                 SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
-                Rectangle betaRect = new(rect.X + rect.Width - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
+                Rectangle betaRect = new(usersButton.Left - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
                 G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
                 G.DrawRoundedRectBeveled(scheme_secondary.Pens.Line_Checked, betaRect);
                 using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
@@ -1342,7 +1394,6 @@ namespace WinPaletter.Tabs
                 }
             }
 
-            using (SolidBrush br = new(ForeColor))
             using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
             using (StringFormat sf_close = ContentAlignment.MiddleCenter.ToStringFormat())
             {
@@ -1353,11 +1404,8 @@ namespace WinPaletter.Tabs
                 Rectangle closeRect = closeRectangle(rect);
                 Rectangle iconRect = iconRectangle(rect);
 
-                closeRect.X++;
-                closeRect.Y++;
-
                 // Draw close button on tab
-                G.DrawString("✕", Fonts.ConsoleMedium, br, closeRect, sf_close);
+                DrawTextOnGlass(G, "✕", Fonts.ConsoleMedium, ForeColor, closeRect, sf_close);
 
                 // Draw icon and text on tab
                 if (icon != null) G.DrawImage(icon, iconRect);

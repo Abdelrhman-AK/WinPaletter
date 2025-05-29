@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -38,11 +39,13 @@ namespace WinPaletter
             Program.Settings.General.Save();
 
             LoadSettings();
+
+            Forms.GlassWindow.Show();
         }
 
         void LoadSettings()
         {
-            toggle38.Checked = Program.Settings.ThemeApplyingBehavior.CreateSystemRestore;
+            radioImage1.Checked = Program.Settings.ThemeApplyingBehavior.CreateSystemRestore;
 
             toggle31.Checked = Program.Settings.BackupTheme.Enabled;
             textBox2.Text = Program.Settings.BackupTheme.BackupPath;
@@ -54,11 +57,14 @@ namespace WinPaletter
 
             toggle8.Checked = Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer;
             toggle12.Checked = Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
+
+            groupBox50.Enabled = toggle31.Checked;
+            groupBox51.Enabled = toggle31.Checked;
         }
 
         void SaveSettings()
         {
-            Program.Settings.ThemeApplyingBehavior.CreateSystemRestore = toggle38.Checked;
+            Program.Settings.ThemeApplyingBehavior.CreateSystemRestore = radioImage1.Checked | radioImage2.Checked;
 
             Program.Settings.BackupTheme.Enabled = toggle31.Checked;
             Program.Settings.BackupTheme.BackupPath = textBox2.Text;
@@ -87,6 +93,33 @@ namespace WinPaletter
                 Close();
                 return;
             }
+            else if (tablessControl1.SelectedIndex == tablessControl1.TabCount - 2 && (radioImage1.Checked || radioImage3.Checked))
+            {
+                Task.Run(() =>
+                {
+                    Invoke(() =>
+                    {
+                        progressBar1.Visible = true;
+                        label9.Visible = true;
+                        next_btn.Enabled = false;
+                        back_btn.Enabled = false;
+                        button1.Enabled = false;
+                        ControlBox = false;
+                    });
+
+                    SystemRestoreHelper.CreateRestorePoint(Program.Lang.Strings.General.RestorePoint_FirstTime);
+
+                    Invoke(() =>
+                    {
+                        progressBar1.Visible = false;
+                        label9.Visible = false;
+                        next_btn.Enabled = true;
+                        back_btn.Enabled = true;
+                        button1.Enabled = true;
+                        ControlBox = true;
+                    });
+                });
+            }
 
             tablessControl1.SelectedIndex = tablessControl1.SelectedIndex + 1 > tablessControl1.TabCount - 1 ? tablessControl1.TabCount - 1 : tablessControl1.SelectedIndex + 1;
 
@@ -99,7 +132,7 @@ namespace WinPaletter
         {
             tablessControl1.SelectedIndex = tablessControl1.SelectedIndex - 1 < 0 ? 0 : tablessControl1.SelectedIndex - 1;
             next_btn.Enabled = true;
-            next_btn.Text = tablessControl1.SelectedIndex == tablessControl1.TabCount - 1 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -122,12 +155,12 @@ namespace WinPaletter
 
         private void button13_Click(object sender, EventArgs e)
         {
-            Forms.SysEventsSndsInstaller.Install(true);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
 
         private void button21_Click(object sender, EventArgs e)
         {
-            Forms.SysEventsSndsInstaller.Uninstall();
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
         }
 
         private void button28_Click(object sender, EventArgs e)
@@ -140,29 +173,10 @@ namespace WinPaletter
             Process.Start(Links.SecureUxThemeReleases);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            SystemRestoreHelper.CreateRestorePoint(Program.Lang.Strings.General.RestorePoint_FirstTime);
-            toggle38.Checked = false;
-            Cursor = Cursors.Default;
-
-            MsgBox(Program.Lang.Strings.Messages.SysRestore_Msg2, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            SystemRestoreHelper.CreateRestorePoint(Program.Lang.Strings.General.RestorePoint_FirstTime);
-            Cursor = Cursors.Default;
-
-            MsgBox(Program.Lang.Strings.Messages.SysRestore_Msg2, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void tablessControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             back_btn.Enabled = tablessControl1.SelectedIndex > 0;
-            next_btn.Text = tablessControl1.SelectedIndex == tablessControl1.TabCount - 1 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
         }
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
@@ -182,6 +196,17 @@ namespace WinPaletter
             Program.Settings.General.Save();
 
             Close();
+        }
+
+        private void Setup_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Forms.GlassWindow.Close();
+        }
+
+        private void toggle31_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox50.Enabled = toggle31.Checked;
+            groupBox51.Enabled = toggle31.Checked;
         }
     }
 }

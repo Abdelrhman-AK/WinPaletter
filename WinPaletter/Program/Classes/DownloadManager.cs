@@ -569,7 +569,7 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Download is cancelled.");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Download is stopped.");
                 cancellationTokenSource?.Cancel();
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
                 // Additional cleanup if needed

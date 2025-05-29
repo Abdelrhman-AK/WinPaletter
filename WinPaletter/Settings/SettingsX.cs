@@ -196,6 +196,7 @@ namespace WinPaletter
             label2.Text = CalcBackupsCache().ToStringFileSize();
             label5.Text = CalcExErrors().ToStringFileSize();
             label7.Text = CalcAppCore().ToStringFileSize();
+            label98.Text = CalcLogs().ToStringFileSize();
 
             RadioImage1.Checked = Sets.Store.Online_or_Offline;
             RadioImage2.Checked = !Sets.Store.Online_or_Offline;
@@ -902,7 +903,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// GetTextAndImageRectangles the size of the store cache
+        /// Gets the size of the store cache
         /// </summary>
         /// <returns></returns>
         private int CalcStoreCache()
@@ -918,7 +919,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// GetTextAndImageRectangles the size of the extracted themes resources cache
+        /// Gets the size of the extracted themes resources cache
         /// </summary>
         /// <returns></returns>
         private int CalcThemesResCache()
@@ -934,7 +935,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// GetTextAndImageRectangles the size of the backups cache
+        /// Gets the size of the backups cache
         /// </summary>
         /// <returns></returns>
         private int CalcBackupsCache()
@@ -950,7 +951,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// GetTextAndImageRectangles the size of the exceptions errors cache
+        /// Gets the size of the exceptions errors cache
         /// </summary>
         /// <returns></returns>
         private int CalcExErrors()
@@ -966,7 +967,23 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// GetTextAndImageRectangles the size of the app core (Application data and Program files data)
+        /// Gets the size of the exceptions errors cache
+        /// </summary>
+        /// <returns></returns>
+        private int CalcLogs()
+        {
+            if (Directory.Exists($"{SysPaths.Logs}"))
+            {
+                return (int)Directory.EnumerateFiles($"{SysPaths.Logs}", "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of the app core (Application data and Program files data)
         /// </summary>
         /// <returns></returns>
         private int CalcAppCore()
@@ -1239,13 +1256,13 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Install WinPaletter System Events Sounds service
+        /// Run WinPaletter System Events Sounds service
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void button13_Click(object sender, EventArgs e)
         {
-            Forms.SysEventsSndsInstaller.Install(true);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
 
         /// <summary>
@@ -1255,7 +1272,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button21_Click(object sender, EventArgs e)
         {
-            Forms.SysEventsSndsInstaller.Uninstall();
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -1396,7 +1413,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Install SecureUxTheme
+        /// Run SecureUxTheme
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1424,6 +1441,38 @@ namespace WinPaletter
             {
                 Program.ForceExit();
             }
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(SysPaths.Logs))
+            {
+                foreach (string file in System.IO.Directory.GetFiles(SysPaths.Logs))
+                {
+                    try
+                    {
+                        if (File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    catch (UnauthorizedAccessException ex0)
+                    {
+                        Forms.BugReport.ThrowError(ex0);
+                    }
+                    catch (Exception ex)
+                    {
+                        Forms.BugReport.ThrowError(ex);
+                    }
+                }
+            }
+
+            label98.Text = CalcLogs().ToStringFileSize();
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Logs);
         }
     }
 }

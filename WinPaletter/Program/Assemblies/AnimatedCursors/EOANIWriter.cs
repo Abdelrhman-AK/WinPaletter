@@ -1,6 +1,6 @@
 // Author:          Evan Olds
 // Creation Date:   May 26, 2007
-// Description:     Class to write animated cursor files to a stream.
+// Description_SysEventsSounds:     Class to write animated cursor files to a stream.
 // Notes:           The stream must support seeking.
 
 using System;

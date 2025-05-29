@@ -93,6 +93,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition</param>
         public void Load(string edition, LogonUI7 @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} LogonUI screen preferences from registry.");
+
             Enabled = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", string.Empty, @default.Enabled));
             ImagePath = GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "ImagePath", string.Empty).ToString();
             Color = Color.FromArgb(Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Color", Color.Black.ToArgb())));

@@ -59,6 +59,9 @@
                 public string SysRestore_Msg2 { get; set; } = "System restore point is created successfully.";
                 public string RerunSetup_Msg0 { get; set; } = "WinPaletter will launch setup in the next application session.";
                 public string ExitWinPaletter { get; set; } = "Do you want to exit WinPaletter now?";
+                public string LogToClipboard { get; set; } = "Log content has been copied to the clipboard. You can paste it into a text editor or report it to WinPaletter' GitHub issues.";
+                public string LogSaved { get; set; } = "Log file has been saved as '{0}'";
+                public string LogCopied { get; set; } = "Log file has been copied to '{0}'";
             }
         }
     }

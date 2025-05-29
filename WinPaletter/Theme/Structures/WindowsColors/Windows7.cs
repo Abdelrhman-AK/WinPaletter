@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -71,6 +72,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows7 data structure</param>
         public void Load(Windows7 @default)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 7 colors and appearance preferences from registry.");
+
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows7", string.Empty, @default.Enabled));
 
             if (OS.W7 | OS.W8x)

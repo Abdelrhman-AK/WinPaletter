@@ -1124,7 +1124,7 @@ namespace WinPaletter
 
         private void button347_Click(object sender, EventArgs e)
         {
-            Forms.SysEventsSndsInstaller.Install(true);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
     }
 }

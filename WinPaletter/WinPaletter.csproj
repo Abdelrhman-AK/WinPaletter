@@ -321,6 +321,12 @@
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\Logs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\Logs.Designer.cs">
+      <DependentUpon>Logs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Welcome.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -355,6 +361,7 @@
     <Compile Include="Languages\Localizer\Strings\General\Extensions.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Languages\Localizer\Strings.cs" />
+    <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
@@ -534,11 +541,11 @@
     <Compile Include="Program\NativeMethods\UxTheme.cs" />
     <Compile Include="Program\NativeMethods\Wininet.cs" />
     <Compile Include="Program\NativeMethods\Winmm.cs" />
-    <Compile Include="Dialogs\SysEventsSndsInstaller.cs">
+    <Compile Include="Dialogs\ServiceInstaller.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\SysEventsSndsInstaller.Designer.cs">
-      <DependentUpon>SysEventsSndsInstaller.cs</DependentUpon>
+    <Compile Include="Dialogs\ServiceInstaller.Designer.cs">
+      <DependentUpon>ServiceInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SOS.cs">
       <SubType>Form</SubType>
@@ -1240,6 +1247,9 @@
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\Logs.resx">
+      <DependentUpon>Logs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Welcome.resx">
       <DependentUpon>Welcome.cs</DependentUpon>
     </EmbeddedResource>
@@ -1255,8 +1265,8 @@
     <EmbeddedResource Include="Dialogs\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\SysEventsSndsInstaller.resx">
-      <DependentUpon>SysEventsSndsInstaller.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\ServiceInstaller.resx">
+      <DependentUpon>ServiceInstaller.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\PE_Warning.resx">
       <DependentUpon>PE_Warning.cs</DependentUpon>

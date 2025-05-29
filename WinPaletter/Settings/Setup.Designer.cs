@@ -44,11 +44,12 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.separatorH2 = new WinPaletter.UI.WP.SeparatorH();
             this.groupBox62 = new WinPaletter.UI.WP.GroupBox();
-            this.button4 = new WinPaletter.UI.WP.Button();
-            this.button3 = new WinPaletter.UI.WP.Button();
+            this.radioImage4 = new WinPaletter.UI.WP.RadioImage();
+            this.radioImage2 = new WinPaletter.UI.WP.RadioImage();
+            this.radioImage3 = new WinPaletter.UI.WP.RadioImage();
+            this.radioImage1 = new WinPaletter.UI.WP.RadioImage();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.label96 = new System.Windows.Forms.Label();
-            this.toggle38 = new WinPaletter.UI.WP.Toggle();
             this.pictureBox63 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.banner2 = new WinPaletter.UI.WP.Banner();
@@ -112,6 +113,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.banner4 = new WinPaletter.UI.WP.Banner();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.progressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.banner6 = new WinPaletter.UI.WP.Banner();
@@ -346,7 +349,7 @@
             this.separatorH2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH2.Location = new System.Drawing.Point(8, 239);
+            this.separatorH2.Location = new System.Drawing.Point(8, 241);
             this.separatorH2.Name = "separatorH2";
             this.separatorH2.Size = new System.Drawing.Size(735, 1);
             this.separatorH2.TabIndex = 56;
@@ -358,48 +361,87 @@
             this.groupBox62.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox62.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox62.Controls.Add(this.button4);
-            this.groupBox62.Controls.Add(this.button3);
+            this.groupBox62.Controls.Add(this.radioImage4);
+            this.groupBox62.Controls.Add(this.radioImage2);
+            this.groupBox62.Controls.Add(this.radioImage3);
+            this.groupBox62.Controls.Add(this.radioImage1);
             this.groupBox62.Controls.Add(this.separatorH1);
             this.groupBox62.Controls.Add(this.label96);
-            this.groupBox62.Controls.Add(this.toggle38);
             this.groupBox62.Controls.Add(this.pictureBox63);
-            this.groupBox62.Location = new System.Drawing.Point(8, 246);
+            this.groupBox62.Location = new System.Drawing.Point(8, 253);
             this.groupBox62.Name = "groupBox62";
-            this.groupBox62.Size = new System.Drawing.Size(735, 135);
+            this.groupBox62.Size = new System.Drawing.Size(735, 210);
             this.groupBox62.TabIndex = 55;
             // 
-            // button4
+            // radioImage4
             // 
-            this.button4.CustomColor = System.Drawing.Color.Empty;
-            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button4.Image = null;
-            this.button4.ImageGlyph = null;
-            this.button4.ImageGlyphEnabled = false;
-            this.button4.Location = new System.Drawing.Point(11, 94);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(710, 32);
-            this.button4.TabIndex = 26;
-            this.button4.Text = "Create a Windows system restorepoint and keep this setting unchanged";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.radioImage4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioImage4.Checked = false;
+            this.radioImage4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage4.ForeColor = System.Drawing.Color.White;
+            this.radioImage4.Image = null;
+            this.radioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage4.Location = new System.Drawing.Point(11, 168);
+            this.radioImage4.Name = "radioImage4";
+            this.radioImage4.Size = new System.Drawing.Size(713, 32);
+            this.radioImage4.TabIndex = 30;
+            this.radioImage4.Text = "Do nothing (unrecommended)";
+            this.radioImage4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // button3
+            // radioImage2
             // 
-            this.button3.CustomColor = System.Drawing.Color.Empty;
-            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button3.Image = null;
-            this.button3.ImageGlyph = null;
-            this.button3.ImageGlyphEnabled = false;
-            this.button3.Location = new System.Drawing.Point(11, 56);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(710, 32);
-            this.button3.TabIndex = 25;
-            this.button3.Text = "Create a Windows system restorepoint for once and then disable this setting";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.radioImage2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioImage2.Checked = false;
+            this.radioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage2.ForeColor = System.Drawing.Color.White;
+            this.radioImage2.Image = null;
+            this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage2.Location = new System.Drawing.Point(11, 92);
+            this.radioImage2.Name = "radioImage2";
+            this.radioImage2.Size = new System.Drawing.Size(713, 32);
+            this.radioImage2.TabIndex = 29;
+            this.radioImage2.Text = "Set WinPaletter to always create a Windows restore point before applying a full t" +
+    "heme only";
+            this.radioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // radioImage3
+            // 
+            this.radioImage3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioImage3.Checked = false;
+            this.radioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage3.ForeColor = System.Drawing.Color.White;
+            this.radioImage3.Image = null;
+            this.radioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage3.Location = new System.Drawing.Point(11, 130);
+            this.radioImage3.Name = "radioImage3";
+            this.radioImage3.Size = new System.Drawing.Size(713, 32);
+            this.radioImage3.TabIndex = 28;
+            this.radioImage3.Text = "Create a Windows restore point at the end of setup only";
+            this.radioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // radioImage1
+            // 
+            this.radioImage1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioImage1.Checked = false;
+            this.radioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage1.ForeColor = System.Drawing.Color.White;
+            this.radioImage1.Image = null;
+            this.radioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage1.Location = new System.Drawing.Point(11, 54);
+            this.radioImage1.Name = "radioImage1";
+            this.radioImage1.Size = new System.Drawing.Size(713, 32);
+            this.radioImage1.TabIndex = 27;
+            this.radioImage1.Text = "Create a Windows restore point at the end of setup, then set WinPaletter to alway" +
+    "s create one before applying a full theme";
+            this.radioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // separatorH1
             // 
@@ -423,19 +465,8 @@
             this.label96.Name = "label96";
             this.label96.Size = new System.Drawing.Size(637, 34);
             this.label96.TabIndex = 18;
-            this.label96.Text = "Always create a system restore point before applying a full theme";
+            this.label96.Text = "What should WinPaletter do at the end of setup?";
             this.label96.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toggle38
-            // 
-            this.toggle38.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.toggle38.Checked = true;
-            this.toggle38.DarkLight_Toggler = false;
-            this.toggle38.Location = new System.Drawing.Point(684, 14);
-            this.toggle38.Name = "toggle38";
-            this.toggle38.Size = new System.Drawing.Size(40, 20);
-            this.toggle38.TabIndex = 0;
-            this.toggle38.Text = "toggle38";
             // 
             // pictureBox63
             // 
@@ -492,7 +523,7 @@
             this.separatorH3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH3.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH3.Location = new System.Drawing.Point(8, 165);
+            this.separatorH3.Location = new System.Drawing.Point(8, 162);
             this.separatorH3.Name = "separatorH3";
             this.separatorH3.Size = new System.Drawing.Size(735, 1);
             this.separatorH3.TabIndex = 206;
@@ -820,6 +851,7 @@
             this.toggle31.Size = new System.Drawing.Size(40, 20);
             this.toggle31.TabIndex = 0;
             this.toggle31.Text = "toggle31";
+            this.toggle31.CheckedChanged += new System.EventHandler(this.toggle31_CheckedChanged);
             // 
             // pictureBox2
             // 
@@ -839,7 +871,7 @@
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(8, 58);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(735, 104);
+            this.label3.Size = new System.Drawing.Size(735, 101);
             this.label3.TabIndex = 7;
             this.label3.Text = resources.GetString("label3.Text");
             // 
@@ -953,7 +985,7 @@
             this.label68.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label68.Location = new System.Drawing.Point(41, 7);
             this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(534, 34);
+            this.label68.Size = new System.Drawing.Size(521, 34);
             this.label68.TabIndex = 18;
             this.label68.Text = "Automatically restart Explorer every time a theme is applied";
             this.label68.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -978,9 +1010,9 @@
             this.alertBox5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox5.Image = null;
-            this.alertBox5.Location = new System.Drawing.Point(581, 14);
+            this.alertBox5.Location = new System.Drawing.Point(568, 14);
             this.alertBox5.Name = "alertBox5";
-            this.alertBox5.Size = new System.Drawing.Size(97, 20);
+            this.alertBox5.Size = new System.Drawing.Size(110, 20);
             this.alertBox5.TabIndex = 10;
             this.alertBox5.TabStop = false;
             this.alertBox5.Text = "Recommended";
@@ -1046,7 +1078,7 @@
             this.separatorH4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH4.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH4.Location = new System.Drawing.Point(8, 117);
+            this.separatorH4.Location = new System.Drawing.Point(8, 119);
             this.separatorH4.Name = "separatorH4";
             this.separatorH4.Size = new System.Drawing.Size(735, 1);
             this.separatorH4.TabIndex = 212;
@@ -1063,7 +1095,7 @@
             this.groupBox48.Controls.Add(this.pictureBox75);
             this.groupBox48.Controls.Add(this.button21);
             this.groupBox48.Controls.Add(this.button13);
-            this.groupBox48.Location = new System.Drawing.Point(8, 124);
+            this.groupBox48.Location = new System.Drawing.Point(8, 133);
             this.groupBox48.Name = "groupBox48";
             this.groupBox48.Size = new System.Drawing.Size(735, 150);
             this.groupBox48.TabIndex = 211;
@@ -1154,7 +1186,7 @@
             this.groupBox61.Controls.Add(this.button28);
             this.groupBox61.Controls.Add(this.label52);
             this.groupBox61.Controls.Add(this.pictureBox60);
-            this.groupBox61.Location = new System.Drawing.Point(8, 280);
+            this.groupBox61.Location = new System.Drawing.Point(8, 289);
             this.groupBox61.Name = "groupBox61";
             this.groupBox61.Size = new System.Drawing.Size(735, 48);
             this.groupBox61.TabIndex = 210;
@@ -1243,6 +1275,8 @@
             // tabPage7
             // 
             this.tabPage7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage7.Controls.Add(this.label9);
+            this.tabPage7.Controls.Add(this.progressBar1);
             this.tabPage7.Controls.Add(this.label8);
             this.tabPage7.Controls.Add(this.pictureBox3);
             this.tabPage7.Controls.Add(this.banner6);
@@ -1251,6 +1285,34 @@
             this.tabPage7.Size = new System.Drawing.Size(751, 503);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "6";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(25, 427);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(700, 24);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "WinPaletter is taking a Windows restorepoint. Please wait...";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label9.Visible = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.progressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.progressBar1.Location = new System.Drawing.Point(25, 457);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(700, 14);
+            this.progressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.progressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 5;
+            this.progressBar1.TaskbarBroadcast = true;
+            this.progressBar1.Visible = false;
             // 
             // label8
             // 
@@ -1425,6 +1487,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter Setup";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Setup_FormClosed);
             this.Load += new System.EventHandler(this.Setup_Load);
             this.tablessControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -1488,10 +1551,7 @@
         private System.Windows.Forms.Label label5;
         private UI.WP.GroupBox groupBox62;
         internal System.Windows.Forms.Label label96;
-        private UI.WP.Toggle toggle38;
         internal System.Windows.Forms.PictureBox pictureBox63;
-        private UI.WP.Button button4;
-        private UI.WP.Button button3;
         private UI.WP.SeparatorH separatorH1;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Label label3;
@@ -1562,5 +1622,11 @@
         private UI.WP.SeparatorH separatorH2;
         private UI.WP.SeparatorH separatorH3;
         private UI.WP.SeparatorH separatorH4;
+        private UI.WP.RadioImage radioImage1;
+        private UI.WP.RadioImage radioImage4;
+        private UI.WP.RadioImage radioImage2;
+        private UI.WP.RadioImage radioImage3;
+        private UI.WP.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -9,6 +9,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.CMD;
 using static WinPaletter.NativeMethods.User32;
 using static WinPaletter.PreviewHelpers;
 
@@ -165,6 +166,8 @@ namespace WinPaletter.Theme.Structures
             {
                 case Sources.Registry:
                     {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows classic colors (Win32) from registry.");
+
                         Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, true));
 
                         // Set some flags like EnableTheming and EnableGradient
@@ -212,6 +215,8 @@ namespace WinPaletter.Theme.Structures
 
                 case Sources.VisualStyles:
                     {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows classic colors (Win32) from the provided Visual Styles.");
+
                         // There are some commented values that are not supported by DevCorp visual style processor
 
                         EnableTheming = vs.FlatMenus;

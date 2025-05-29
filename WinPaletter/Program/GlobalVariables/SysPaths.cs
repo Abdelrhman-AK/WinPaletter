@@ -63,6 +63,11 @@ namespace WinPaletter.GlobalVariables
         public static string Reports => $"{appData}\\Reports";
 
         /// <summary>
+        /// Directory for storing exceptions logs
+        /// </summary>
+        public static string Logs => $"{appData}\\Logs";
+
+        /// <summary>
         /// WinPaletter services directory
         /// </summary>
         public static string Services => $"{ProgramFilesData}\\Services";

@@ -194,7 +194,7 @@ namespace WinPaletter.UI.Style
             /// <returns></returns>
             public Color Back(int level = 0)
             {
-                float factor = incrementFactor * level * (DarkMode ? -1 : +1);
+                float factor = incrementFactor * level * (DarkMode ? -0.5f : +0.5f);
                 return ApplyMethod(BackColor, Back_Method, Back_Factor + factor);
             }
 
@@ -215,7 +215,7 @@ namespace WinPaletter.UI.Style
             /// <returns></returns>
             public Color Line(int level = 0)
             {
-                float factor = incrementFactor * level * (DarkMode ? -1 : +1);
+                float factor = incrementFactor * level * (DarkMode ? -0.5f : +0.5f);
                 return ApplyMethod(BackColor, Line_Method, Line_Factor + factor);
             }
 

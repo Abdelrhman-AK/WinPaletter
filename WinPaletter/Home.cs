@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Dialogs;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
@@ -165,8 +166,10 @@ namespace WinPaletter
         /// </summary>
         public void LoadData()
         {
-            userButton.Tag = User.UserName;
-            userButton.Image = User.ProfilePicture.Resize(26, 26);
+            //userButton.Tag = User.UserName;
+            //userButton.Image = User.ProfilePicture.Resize(26, 26);
+
+            Forms.MainForm.tabsContainer1.UserImage = User.ProfilePicture.Resize(22, 22);
         }
 
         /// <summary>
@@ -716,6 +719,11 @@ namespace WinPaletter
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.AccessibilityEditor);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Logs);
         }
 
         //private void button1_Click(object sender, EventArgs e)

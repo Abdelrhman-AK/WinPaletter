@@ -304,5 +304,17 @@ namespace WinPaletter
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
+
+        private void BackupThemes_List_ParentChanged(object sender, EventArgs e)
+        {
+            if (Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
+        }
     }
 }

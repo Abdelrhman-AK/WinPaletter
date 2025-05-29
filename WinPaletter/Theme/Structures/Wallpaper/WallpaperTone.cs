@@ -44,6 +44,8 @@ namespace WinPaletter.Theme.Structures
         /// </param>
         public void Load(string SubKey)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading WinPaletter Wallpaper Tone from registry, targeting {SubKey}");
+
             string wallpaper = SubKey.ToLower() != "winxp" ? $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
 
             if (!File.Exists(wallpaper)) wallpaper = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper).ToString();

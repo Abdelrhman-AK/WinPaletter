@@ -38,17 +38,48 @@ namespace WinPaletter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditInfo));
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
+            this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
+            this.PictureBox16 = new System.Windows.Forms.PictureBox();
+            this.pictureBox19 = new System.Windows.Forms.PictureBox();
+            this.Label9 = new System.Windows.Forms.Label();
+            this.StoreItem1 = new WinPaletter.UI.Controllers.StoreItem();
+            this.checkBox8 = new WinPaletter.UI.WP.CheckBox();
+            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox2 = new WinPaletter.UI.WP.AlertBox();
+            this.PictureBox14 = new System.Windows.Forms.PictureBox();
+            this.Label11 = new System.Windows.Forms.Label();
+            this.PictureBox8 = new System.Windows.Forms.PictureBox();
+            this.PictureBox13 = new System.Windows.Forms.PictureBox();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
+            this.Label8 = new System.Windows.Forms.Label();
+            this.PictureBox15 = new System.Windows.Forms.PictureBox();
+            this.PictureBox12 = new System.Windows.Forms.PictureBox();
+            this.trackBarX1 = new WinPaletter.UI.Controllers.TrackBarX();
+            this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
+            this.Label10 = new System.Windows.Forms.Label();
+            this.PictureBox11 = new System.Windows.Forms.PictureBox();
             this.Label2 = new System.Windows.Forms.Label();
+            this.CheckBox2 = new WinPaletter.UI.WP.CheckBox();
             this.Label1 = new System.Windows.Forms.Label();
+            this.PictureBox10 = new System.Windows.Forms.PictureBox();
             this.TextBox4 = new WinPaletter.UI.WP.TextBox();
+            this.CheckBox3 = new WinPaletter.UI.WP.CheckBox();
+            this.PictureBox6 = new System.Windows.Forms.PictureBox();
+            this.PictureBox9 = new System.Windows.Forms.PictureBox();
+            this.Label12 = new System.Windows.Forms.Label();
+            this.CheckBox4 = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
+            this.CheckBox6 = new WinPaletter.UI.WP.CheckBox();
             this.TextBox5 = new WinPaletter.UI.WP.TextBox();
+            this.CheckBox5 = new WinPaletter.UI.WP.CheckBox();
             this.Label3 = new System.Windows.Forms.Label();
+            this.Label6 = new System.Windows.Forms.Label();
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
+            this.PictureBox17 = new System.Windows.Forms.PictureBox();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
+            this.color1 = new WinPaletter.UI.Controllers.ColorItem();
             this.Label4 = new System.Windows.Forms.Label();
+            this.color2 = new WinPaletter.UI.Controllers.ColorItem();
             this.TextBox1 = new WinPaletter.UI.WP.TextBox();
             this.PictureBox5 = new System.Windows.Forms.PictureBox();
             this.TextBox2 = new WinPaletter.UI.WP.TextBox();
@@ -63,60 +94,29 @@ namespace WinPaletter
             this.Label14 = new System.Windows.Forms.Label();
             this.PictureBox18 = new System.Windows.Forms.PictureBox();
             this.TextBox6 = new WinPaletter.UI.WP.TextBox();
-            this.pictureBox19 = new System.Windows.Forms.PictureBox();
-            this.checkBox8 = new WinPaletter.UI.WP.CheckBox();
-            this.trackBarX1 = new WinPaletter.UI.Controllers.TrackBarX();
-            this.Label12 = new System.Windows.Forms.Label();
-            this.PictureBox16 = new System.Windows.Forms.PictureBox();
-            this.Label11 = new System.Windows.Forms.Label();
-            this.PictureBox17 = new System.Windows.Forms.PictureBox();
-            this.Label10 = new System.Windows.Forms.Label();
-            this.PictureBox15 = new System.Windows.Forms.PictureBox();
-            this.Label9 = new System.Windows.Forms.Label();
-            this.StoreItem1 = new WinPaletter.UI.Controllers.StoreItem();
-            this.PictureBox14 = new System.Windows.Forms.PictureBox();
-            this.PictureBox13 = new System.Windows.Forms.PictureBox();
-            this.PictureBox12 = new System.Windows.Forms.PictureBox();
-            this.PictureBox11 = new System.Windows.Forms.PictureBox();
-            this.PictureBox10 = new System.Windows.Forms.PictureBox();
-            this.PictureBox9 = new System.Windows.Forms.PictureBox();
-            this.CheckBox6 = new WinPaletter.UI.WP.CheckBox();
-            this.CheckBox5 = new WinPaletter.UI.WP.CheckBox();
-            this.CheckBox4 = new WinPaletter.UI.WP.CheckBox();
-            this.CheckBox3 = new WinPaletter.UI.WP.CheckBox();
-            this.CheckBox2 = new WinPaletter.UI.WP.CheckBox();
-            this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
-            this.PictureBox8 = new System.Windows.Forms.PictureBox();
-            this.Label8 = new System.Windows.Forms.Label();
-            this.color2 = new WinPaletter.UI.Controllers.ColorItem();
-            this.color1 = new WinPaletter.UI.Controllers.ColorItem();
-            this.PictureBox6 = new System.Windows.Forms.PictureBox();
-            this.Label6 = new System.Windows.Forms.Label();
             this.pin_button = new WinPaletter.UI.WP.Button();
-            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
-            this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
             this.TabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox11)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -200,6 +200,99 @@ namespace WinPaletter
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Main info";
             // 
+            // separatorV2
+            // 
+            this.separatorV2.AlternativeLook = false;
+            this.separatorV2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorV2.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV2.Location = new System.Drawing.Point(465, 156);
+            this.separatorV2.Name = "separatorV2";
+            this.separatorV2.Size = new System.Drawing.Size(1, 237);
+            this.separatorV2.TabIndex = 144;
+            this.separatorV2.TabStop = false;
+            this.separatorV2.Text = "separatorV2";
+            // 
+            // PictureBox16
+            // 
+            this.PictureBox16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox16.Image = global::WinPaletter.Assets.Store.DoneByWinPaletter;
+            this.PictureBox16.Location = new System.Drawing.Point(472, 339);
+            this.PictureBox16.Name = "PictureBox16";
+            this.PictureBox16.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox16.TabIndex = 39;
+            this.PictureBox16.TabStop = false;
+            // 
+            // pictureBox19
+            // 
+            this.pictureBox19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox19.Image = global::WinPaletter.Assets.Store.DesignedFor12;
+            this.pictureBox19.Location = new System.Drawing.Point(39, 185);
+            this.pictureBox19.Name = "pictureBox19";
+            this.pictureBox19.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox19.TabIndex = 49;
+            this.pictureBox19.TabStop = false;
+            // 
+            // Label9
+            // 
+            this.Label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label9.BackColor = System.Drawing.Color.Transparent;
+            this.Label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label9.Location = new System.Drawing.Point(472, 311);
+            this.Label9.Name = "Label9";
+            this.Label9.Size = new System.Drawing.Size(365, 24);
+            this.Label9.TabIndex = 36;
+            this.Label9.Text = "This is the look of this theme as an item inside WinPaletter Store";
+            this.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // StoreItem1
+            // 
+            this.StoreItem1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.StoreItem1.DoneByWinPaletter = false;
+            this.StoreItem1.FileName = null;
+            this.StoreItem1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.StoreItem1.Location = new System.Drawing.Point(472, 156);
+            this.StoreItem1.MD5_PackFile = null;
+            this.StoreItem1.MD5_ThemeFile = null;
+            this.StoreItem1.Name = "StoreItem1";
+            this.StoreItem1.Size = new System.Drawing.Size(365, 150);
+            this.StoreItem1.TabIndex = 35;
+            this.StoreItem1.TM = null;
+            this.StoreItem1.URL_PackFile = null;
+            this.StoreItem1.URL_ThemeFile = null;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox8.Checked = true;
+            this.checkBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox8.ForeColor = System.Drawing.Color.White;
+            this.checkBox8.Location = new System.Drawing.Point(69, 186);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(387, 22);
+            this.checkBox8.TabIndex = 48;
+            this.checkBox8.Text = "Windows 12";
+            this.checkBox8.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox8_CheckedChanged);
+            // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox1.CenterText = true;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = null;
+            this.alertBox1.Location = new System.Drawing.Point(427, 96);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(360, 24);
+            this.alertBox1.TabIndex = 143;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = "Descriptive colors convey a theme\'s main and most used colors";
+            // 
             // AlertBox2
             // 
             this.AlertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
@@ -218,6 +311,51 @@ namespace WinPaletter
             this.AlertBox2.Text = "You can include tags in descriptions to make searching in WinPaletter Store easie" +
     "r";
             // 
+            // PictureBox14
+            // 
+            this.PictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox14.Image = global::WinPaletter.Assets.Store.DesignedForXP;
+            this.PictureBox14.Location = new System.Drawing.Point(39, 365);
+            this.PictureBox14.Name = "PictureBox14";
+            this.PictureBox14.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox14.TabIndex = 34;
+            this.PictureBox14.TabStop = false;
+            // 
+            // Label11
+            // 
+            this.Label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label11.BackColor = System.Drawing.Color.Transparent;
+            this.Label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label11.Location = new System.Drawing.Point(502, 339);
+            this.Label11.Name = "Label11";
+            this.Label11.Size = new System.Drawing.Size(335, 24);
+            this.Label11.TabIndex = 40;
+            this.Label11.Text = "This icon signifies a WinPaletter-designed theme.";
+            this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PictureBox8
+            // 
+            this.PictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox8.Image")));
+            this.PictureBox8.Location = new System.Drawing.Point(6, 156);
+            this.PictureBox8.Name = "PictureBox8";
+            this.PictureBox8.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox8.TabIndex = 21;
+            this.PictureBox8.TabStop = false;
+            // 
+            // PictureBox13
+            // 
+            this.PictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox13.Image = global::WinPaletter.Assets.Store.DesignedForVista;
+            this.PictureBox13.Location = new System.Drawing.Point(39, 335);
+            this.PictureBox13.Name = "PictureBox13";
+            this.PictureBox13.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox13.TabIndex = 33;
+            this.PictureBox13.TabStop = false;
+            // 
             // PictureBox2
             // 
             this.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -228,6 +366,97 @@ namespace WinPaletter
             this.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox2.TabIndex = 8;
             this.PictureBox2.TabStop = false;
+            // 
+            // Label8
+            // 
+            this.Label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label8.BackColor = System.Drawing.Color.Transparent;
+            this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Label8.Location = new System.Drawing.Point(36, 156);
+            this.Label8.Name = "Label8";
+            this.Label8.Size = new System.Drawing.Size(423, 24);
+            this.Label8.TabIndex = 22;
+            this.Label8.Text = "This theme is designed to work better under:";
+            this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PictureBox15
+            // 
+            this.PictureBox15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PictureBox15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox15.Image = global::WinPaletter.Assets.Store.DoneByUser;
+            this.PictureBox15.Location = new System.Drawing.Point(472, 369);
+            this.PictureBox15.Name = "PictureBox15";
+            this.PictureBox15.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox15.TabIndex = 37;
+            this.PictureBox15.TabStop = false;
+            // 
+            // PictureBox12
+            // 
+            this.PictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox12.Image = global::WinPaletter.Assets.Store.DesignedFor7;
+            this.PictureBox12.Location = new System.Drawing.Point(39, 305);
+            this.PictureBox12.Name = "PictureBox12";
+            this.PictureBox12.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox12.TabIndex = 32;
+            this.PictureBox12.TabStop = false;
+            // 
+            // trackBarX1
+            // 
+            this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX1.AnimateChanges = true;
+            this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarX1.DefaultValue = 1;
+            this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackBarX1.Location = new System.Drawing.Point(170, 126);
+            this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trackBarX1.Maximum = 17;
+            this.trackBarX1.Minimum = 0;
+            this.trackBarX1.Name = "trackBarX1";
+            this.trackBarX1.Size = new System.Drawing.Size(669, 24);
+            this.trackBarX1.TabIndex = 47;
+            this.trackBarX1.Value = 0;
+            this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
+            // 
+            // CheckBox1
+            // 
+            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox1.Checked = true;
+            this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox1.ForeColor = System.Drawing.Color.White;
+            this.CheckBox1.Location = new System.Drawing.Point(69, 216);
+            this.CheckBox1.Name = "CheckBox1";
+            this.CheckBox1.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox1.TabIndex = 23;
+            this.CheckBox1.Text = "Windows 11";
+            this.CheckBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox1_CheckedChanged);
+            // 
+            // Label10
+            // 
+            this.Label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label10.BackColor = System.Drawing.Color.Transparent;
+            this.Label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label10.Location = new System.Drawing.Point(502, 369);
+            this.Label10.Name = "Label10";
+            this.Label10.Size = new System.Drawing.Size(335, 24);
+            this.Label10.TabIndex = 38;
+            this.Label10.Text = "This icon signifies a user-designed theme.";
+            this.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PictureBox11
+            // 
+            this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox11.Image = global::WinPaletter.Assets.Store.DesignedFor8;
+            this.PictureBox11.Location = new System.Drawing.Point(39, 275);
+            this.PictureBox11.Name = "PictureBox11";
+            this.PictureBox11.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox11.TabIndex = 31;
+            this.PictureBox11.TabStop = false;
             // 
             // Label2
             // 
@@ -240,6 +469,20 @@ namespace WinPaletter
             this.Label2.Text = "Theme name:";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // CheckBox2
+            // 
+            this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox2.Checked = true;
+            this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox2.ForeColor = System.Drawing.Color.White;
+            this.CheckBox2.Location = new System.Drawing.Point(69, 246);
+            this.CheckBox2.Name = "CheckBox2";
+            this.CheckBox2.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox2.TabIndex = 24;
+            this.CheckBox2.Text = "Windows 10";
+            this.CheckBox2.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox2_CheckedChanged);
+            // 
             // Label1
             // 
             this.Label1.BackColor = System.Drawing.Color.Transparent;
@@ -250,6 +493,17 @@ namespace WinPaletter
             this.Label1.TabIndex = 11;
             this.Label1.Text = "Theme version:";
             this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PictureBox10
+            // 
+            this.PictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox10.Image = global::WinPaletter.Assets.Store.DesignedFor10;
+            this.PictureBox10.Location = new System.Drawing.Point(39, 245);
+            this.PictureBox10.Name = "PictureBox10";
+            this.PictureBox10.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox10.TabIndex = 30;
+            this.PictureBox10.TabStop = false;
             // 
             // TextBox4
             // 
@@ -272,6 +526,67 @@ namespace WinPaletter
             this.TextBox4.WordWrap = true;
             this.TextBox4.TextChanged += new System.EventHandler(this.TextBox4_TextChanged);
             // 
+            // CheckBox3
+            // 
+            this.CheckBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox3.Checked = true;
+            this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox3.ForeColor = System.Drawing.Color.White;
+            this.CheckBox3.Location = new System.Drawing.Point(69, 276);
+            this.CheckBox3.Name = "CheckBox3";
+            this.CheckBox3.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox3.TabIndex = 25;
+            this.CheckBox3.Text = "Windows 8.1";
+            this.CheckBox3.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox3_CheckedChanged);
+            // 
+            // PictureBox6
+            // 
+            this.PictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox6.Image")));
+            this.PictureBox6.Location = new System.Drawing.Point(6, 96);
+            this.PictureBox6.Name = "PictureBox6";
+            this.PictureBox6.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox6.TabIndex = 12;
+            this.PictureBox6.TabStop = false;
+            // 
+            // PictureBox9
+            // 
+            this.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox9.Image = global::WinPaletter.Assets.Store.DesignedFor11;
+            this.PictureBox9.Location = new System.Drawing.Point(39, 215);
+            this.PictureBox9.Name = "PictureBox9";
+            this.PictureBox9.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox9.TabIndex = 29;
+            this.PictureBox9.TabStop = false;
+            // 
+            // Label12
+            // 
+            this.Label12.BackColor = System.Drawing.Color.Transparent;
+            this.Label12.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Label12.Location = new System.Drawing.Point(36, 126);
+            this.Label12.Name = "Label12";
+            this.Label12.Size = new System.Drawing.Size(124, 24);
+            this.Label12.TabIndex = 43;
+            this.Label12.Text = "Background pattern:";
+            this.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // CheckBox4
+            // 
+            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox4.Checked = true;
+            this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox4.ForeColor = System.Drawing.Color.White;
+            this.CheckBox4.Location = new System.Drawing.Point(69, 306);
+            this.CheckBox4.Name = "CheckBox4";
+            this.CheckBox4.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox4.TabIndex = 26;
+            this.CheckBox4.Text = "Windows 7";
+            this.CheckBox4.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox4_CheckedChanged);
+            // 
             // PictureBox1
             // 
             this.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -282,6 +597,20 @@ namespace WinPaletter
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox1.TabIndex = 10;
             this.PictureBox1.TabStop = false;
+            // 
+            // CheckBox6
+            // 
+            this.CheckBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox6.Checked = true;
+            this.CheckBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox6.ForeColor = System.Drawing.Color.White;
+            this.CheckBox6.Location = new System.Drawing.Point(69, 366);
+            this.CheckBox6.Name = "CheckBox6";
+            this.CheckBox6.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox6.TabIndex = 28;
+            this.CheckBox6.Text = "Windows XP";
+            this.CheckBox6.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox6_CheckedChanged);
             // 
             // TextBox5
             // 
@@ -303,6 +632,20 @@ namespace WinPaletter
             this.TextBox5.UseSystemPasswordChar = false;
             this.TextBox5.WordWrap = true;
             // 
+            // CheckBox5
+            // 
+            this.CheckBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckBox5.Checked = true;
+            this.CheckBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckBox5.ForeColor = System.Drawing.Color.White;
+            this.CheckBox5.Location = new System.Drawing.Point(69, 336);
+            this.CheckBox5.Name = "CheckBox5";
+            this.CheckBox5.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox5.TabIndex = 27;
+            this.CheckBox5.Text = "Windows Vista";
+            this.CheckBox5.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox5_CheckedChanged);
+            // 
             // Label3
             // 
             this.Label3.BackColor = System.Drawing.Color.Transparent;
@@ -313,6 +656,17 @@ namespace WinPaletter
             this.Label3.TabIndex = 13;
             this.Label3.Text = "Theme description:";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Label6
+            // 
+            this.Label6.BackColor = System.Drawing.Color.Transparent;
+            this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Label6.Location = new System.Drawing.Point(36, 96);
+            this.Label6.Name = "Label6";
+            this.Label6.Size = new System.Drawing.Size(124, 24);
+            this.Label6.TabIndex = 13;
+            this.Label6.Text = "Descriptive colors:";
+            this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox4
             // 
@@ -325,6 +679,17 @@ namespace WinPaletter
             this.PictureBox4.TabIndex = 20;
             this.PictureBox4.TabStop = false;
             // 
+            // PictureBox17
+            // 
+            this.PictureBox17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.PictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox17.Image")));
+            this.PictureBox17.Location = new System.Drawing.Point(6, 126);
+            this.PictureBox17.Name = "PictureBox17";
+            this.PictureBox17.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox17.TabIndex = 42;
+            this.PictureBox17.TabStop = false;
+            // 
             // PictureBox3
             // 
             this.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -336,6 +701,20 @@ namespace WinPaletter
             this.PictureBox3.TabIndex = 12;
             this.PictureBox3.TabStop = false;
             // 
+            // color1
+            // 
+            this.color1.AllowDrop = true;
+            this.color1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.color1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.color1.DontShowInfo = false;
+            this.color1.Location = new System.Drawing.Point(170, 96);
+            this.color1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.color1.Name = "color1";
+            this.color1.Size = new System.Drawing.Size(121, 24);
+            this.color1.TabIndex = 19;
+            this.color1.Click += new System.EventHandler(this.Color1_Click);
+            this.color1.DragDrop += new System.Windows.Forms.DragEventHandler(this.Color1_2_DragDrop);
+            // 
             // Label4
             // 
             this.Label4.BackColor = System.Drawing.Color.Transparent;
@@ -346,6 +725,20 @@ namespace WinPaletter
             this.Label4.TabIndex = 21;
             this.Label4.Text = "Social media link:";
             this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // color2
+            // 
+            this.color2.AllowDrop = true;
+            this.color2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(9)))), ((int)(((byte)(9)))));
+            this.color2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(9)))), ((int)(((byte)(9)))));
+            this.color2.DontShowInfo = false;
+            this.color2.Location = new System.Drawing.Point(299, 96);
+            this.color2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.color2.Name = "color2";
+            this.color2.Size = new System.Drawing.Size(121, 24);
+            this.color2.TabIndex = 20;
+            this.color2.Click += new System.EventHandler(this.Color2_Click);
+            this.color2.DragDrop += new System.Windows.Forms.DragEventHandler(this.Color1_2_DragDrop);
             // 
             // TextBox1
             // 
@@ -567,371 +960,6 @@ namespace WinPaletter
             this.TextBox6.UseSystemPasswordChar = false;
             this.TextBox6.WordWrap = true;
             // 
-            // pictureBox19
-            // 
-            this.pictureBox19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox19.Image = global::WinPaletter.Assets.Store.DesignedFor12;
-            this.pictureBox19.Location = new System.Drawing.Point(39, 185);
-            this.pictureBox19.Name = "pictureBox19";
-            this.pictureBox19.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox19.TabIndex = 49;
-            this.pictureBox19.TabStop = false;
-            // 
-            // checkBox8
-            // 
-            this.checkBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox8.Checked = true;
-            this.checkBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.checkBox8.ForeColor = System.Drawing.Color.White;
-            this.checkBox8.Location = new System.Drawing.Point(69, 186);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(387, 22);
-            this.checkBox8.TabIndex = 48;
-            this.checkBox8.Text = "Windows 12";
-            this.checkBox8.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox8_CheckedChanged);
-            // 
-            // trackBarX1
-            // 
-            this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBarX1.AnimateChanges = true;
-            this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarX1.DefaultValue = 1;
-            this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX1.Location = new System.Drawing.Point(170, 126);
-            this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 17;
-            this.trackBarX1.Minimum = 0;
-            this.trackBarX1.Name = "trackBarX1";
-            this.trackBarX1.Size = new System.Drawing.Size(669, 24);
-            this.trackBarX1.TabIndex = 47;
-            this.trackBarX1.Value = 0;
-            this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
-            // 
-            // Label12
-            // 
-            this.Label12.BackColor = System.Drawing.Color.Transparent;
-            this.Label12.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label12.Location = new System.Drawing.Point(36, 126);
-            this.Label12.Name = "Label12";
-            this.Label12.Size = new System.Drawing.Size(124, 24);
-            this.Label12.TabIndex = 43;
-            this.Label12.Text = "Background pattern:";
-            this.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // PictureBox16
-            // 
-            this.PictureBox16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PictureBox16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox16.Image = global::WinPaletter.Assets.Store.DoneByWinPaletter;
-            this.PictureBox16.Location = new System.Drawing.Point(472, 339);
-            this.PictureBox16.Name = "PictureBox16";
-            this.PictureBox16.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox16.TabIndex = 39;
-            this.PictureBox16.TabStop = false;
-            // 
-            // Label11
-            // 
-            this.Label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label11.BackColor = System.Drawing.Color.Transparent;
-            this.Label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label11.Location = new System.Drawing.Point(502, 339);
-            this.Label11.Name = "Label11";
-            this.Label11.Size = new System.Drawing.Size(335, 24);
-            this.Label11.TabIndex = 40;
-            this.Label11.Text = "This icon signifies a WinPaletter-designed theme.";
-            this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // PictureBox17
-            // 
-            this.PictureBox17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox17.Image")));
-            this.PictureBox17.Location = new System.Drawing.Point(6, 126);
-            this.PictureBox17.Name = "PictureBox17";
-            this.PictureBox17.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox17.TabIndex = 42;
-            this.PictureBox17.TabStop = false;
-            // 
-            // Label10
-            // 
-            this.Label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label10.BackColor = System.Drawing.Color.Transparent;
-            this.Label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label10.Location = new System.Drawing.Point(502, 369);
-            this.Label10.Name = "Label10";
-            this.Label10.Size = new System.Drawing.Size(335, 24);
-            this.Label10.TabIndex = 38;
-            this.Label10.Text = "This icon signifies a user-designed theme.";
-            this.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // PictureBox15
-            // 
-            this.PictureBox15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PictureBox15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox15.Image = global::WinPaletter.Assets.Store.DoneByUser;
-            this.PictureBox15.Location = new System.Drawing.Point(472, 369);
-            this.PictureBox15.Name = "PictureBox15";
-            this.PictureBox15.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox15.TabIndex = 37;
-            this.PictureBox15.TabStop = false;
-            // 
-            // Label9
-            // 
-            this.Label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label9.BackColor = System.Drawing.Color.Transparent;
-            this.Label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label9.Location = new System.Drawing.Point(472, 311);
-            this.Label9.Name = "Label9";
-            this.Label9.Size = new System.Drawing.Size(365, 24);
-            this.Label9.TabIndex = 36;
-            this.Label9.Text = "This is the look of this theme as an item inside WinPaletter Store";
-            this.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // StoreItem1
-            // 
-            this.StoreItem1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.StoreItem1.DoneByWinPaletter = false;
-            this.StoreItem1.FileName = null;
-            this.StoreItem1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.StoreItem1.Location = new System.Drawing.Point(472, 156);
-            this.StoreItem1.MD5_PackFile = null;
-            this.StoreItem1.MD5_ThemeFile = null;
-            this.StoreItem1.Name = "StoreItem1";
-            this.StoreItem1.Size = new System.Drawing.Size(365, 150);
-            this.StoreItem1.TabIndex = 35;
-            this.StoreItem1.TM = null;
-            this.StoreItem1.URL_PackFile = null;
-            this.StoreItem1.URL_ThemeFile = null;
-            // 
-            // PictureBox14
-            // 
-            this.PictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox14.Image = global::WinPaletter.Assets.Store.DesignedForXP;
-            this.PictureBox14.Location = new System.Drawing.Point(39, 365);
-            this.PictureBox14.Name = "PictureBox14";
-            this.PictureBox14.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox14.TabIndex = 34;
-            this.PictureBox14.TabStop = false;
-            // 
-            // PictureBox13
-            // 
-            this.PictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox13.Image = global::WinPaletter.Assets.Store.DesignedForVista;
-            this.PictureBox13.Location = new System.Drawing.Point(39, 335);
-            this.PictureBox13.Name = "PictureBox13";
-            this.PictureBox13.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox13.TabIndex = 33;
-            this.PictureBox13.TabStop = false;
-            // 
-            // PictureBox12
-            // 
-            this.PictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox12.Image = global::WinPaletter.Assets.Store.DesignedFor7;
-            this.PictureBox12.Location = new System.Drawing.Point(39, 305);
-            this.PictureBox12.Name = "PictureBox12";
-            this.PictureBox12.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox12.TabIndex = 32;
-            this.PictureBox12.TabStop = false;
-            // 
-            // PictureBox11
-            // 
-            this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox11.Image = global::WinPaletter.Assets.Store.DesignedFor8;
-            this.PictureBox11.Location = new System.Drawing.Point(39, 275);
-            this.PictureBox11.Name = "PictureBox11";
-            this.PictureBox11.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox11.TabIndex = 31;
-            this.PictureBox11.TabStop = false;
-            // 
-            // PictureBox10
-            // 
-            this.PictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox10.Image = global::WinPaletter.Assets.Store.DesignedFor10;
-            this.PictureBox10.Location = new System.Drawing.Point(39, 245);
-            this.PictureBox10.Name = "PictureBox10";
-            this.PictureBox10.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox10.TabIndex = 30;
-            this.PictureBox10.TabStop = false;
-            // 
-            // PictureBox9
-            // 
-            this.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox9.Image = global::WinPaletter.Assets.Store.DesignedFor11;
-            this.PictureBox9.Location = new System.Drawing.Point(39, 215);
-            this.PictureBox9.Name = "PictureBox9";
-            this.PictureBox9.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox9.TabIndex = 29;
-            this.PictureBox9.TabStop = false;
-            // 
-            // CheckBox6
-            // 
-            this.CheckBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox6.Checked = true;
-            this.CheckBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox6.ForeColor = System.Drawing.Color.White;
-            this.CheckBox6.Location = new System.Drawing.Point(69, 366);
-            this.CheckBox6.Name = "CheckBox6";
-            this.CheckBox6.Size = new System.Drawing.Size(387, 22);
-            this.CheckBox6.TabIndex = 28;
-            this.CheckBox6.Text = "Windows XP";
-            this.CheckBox6.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox6_CheckedChanged);
-            // 
-            // CheckBox5
-            // 
-            this.CheckBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox5.Checked = true;
-            this.CheckBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox5.ForeColor = System.Drawing.Color.White;
-            this.CheckBox5.Location = new System.Drawing.Point(69, 336);
-            this.CheckBox5.Name = "CheckBox5";
-            this.CheckBox5.Size = new System.Drawing.Size(387, 22);
-            this.CheckBox5.TabIndex = 27;
-            this.CheckBox5.Text = "Windows Vista";
-            this.CheckBox5.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox5_CheckedChanged);
-            // 
-            // CheckBox4
-            // 
-            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox4.Checked = true;
-            this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox4.ForeColor = System.Drawing.Color.White;
-            this.CheckBox4.Location = new System.Drawing.Point(69, 306);
-            this.CheckBox4.Name = "CheckBox4";
-            this.CheckBox4.Size = new System.Drawing.Size(387, 22);
-            this.CheckBox4.TabIndex = 26;
-            this.CheckBox4.Text = "Windows 7";
-            this.CheckBox4.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox4_CheckedChanged);
-            // 
-            // CheckBox3
-            // 
-            this.CheckBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox3.Checked = true;
-            this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox3.ForeColor = System.Drawing.Color.White;
-            this.CheckBox3.Location = new System.Drawing.Point(69, 276);
-            this.CheckBox3.Name = "CheckBox3";
-            this.CheckBox3.Size = new System.Drawing.Size(387, 22);
-            this.CheckBox3.TabIndex = 25;
-            this.CheckBox3.Text = "Windows 8.1";
-            this.CheckBox3.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox3_CheckedChanged);
-            // 
-            // CheckBox2
-            // 
-            this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox2.Checked = true;
-            this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox2.ForeColor = System.Drawing.Color.White;
-            this.CheckBox2.Location = new System.Drawing.Point(69, 246);
-            this.CheckBox2.Name = "CheckBox2";
-            this.CheckBox2.Size = new System.Drawing.Size(387, 22);
-            this.CheckBox2.TabIndex = 24;
-            this.CheckBox2.Text = "Windows 10";
-            this.CheckBox2.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox2_CheckedChanged);
-            // 
-            // CheckBox1
-            // 
-            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox1.Checked = true;
-            this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(69, 216);
-            this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(387, 22);
-            this.CheckBox1.TabIndex = 23;
-            this.CheckBox1.Text = "Windows 11";
-            this.CheckBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox1_CheckedChanged);
-            // 
-            // PictureBox8
-            // 
-            this.PictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox8.Image")));
-            this.PictureBox8.Location = new System.Drawing.Point(6, 156);
-            this.PictureBox8.Name = "PictureBox8";
-            this.PictureBox8.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox8.TabIndex = 21;
-            this.PictureBox8.TabStop = false;
-            // 
-            // Label8
-            // 
-            this.Label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label8.BackColor = System.Drawing.Color.Transparent;
-            this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label8.Location = new System.Drawing.Point(36, 156);
-            this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(423, 24);
-            this.Label8.TabIndex = 22;
-            this.Label8.Text = "This theme is designed to work better under:";
-            this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // color2
-            // 
-            this.color2.AllowDrop = true;
-            this.color2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(9)))), ((int)(((byte)(9)))));
-            this.color2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(122)))), ((int)(((byte)(9)))), ((int)(((byte)(9)))));
-            this.color2.DontShowInfo = false;
-            this.color2.Location = new System.Drawing.Point(299, 96);
-            this.color2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.color2.Name = "color2";
-            this.color2.Size = new System.Drawing.Size(121, 24);
-            this.color2.TabIndex = 20;
-            this.color2.Click += new System.EventHandler(this.Color2_Click);
-            this.color2.DragDrop += new System.Windows.Forms.DragEventHandler(this.Color1_2_DragDrop);
-            // 
-            // color1
-            // 
-            this.color1.AllowDrop = true;
-            this.color1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
-            this.color1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
-            this.color1.DontShowInfo = false;
-            this.color1.Location = new System.Drawing.Point(170, 96);
-            this.color1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.color1.Name = "color1";
-            this.color1.Size = new System.Drawing.Size(121, 24);
-            this.color1.TabIndex = 19;
-            this.color1.Click += new System.EventHandler(this.Color1_Click);
-            this.color1.DragDrop += new System.Windows.Forms.DragEventHandler(this.Color1_2_DragDrop);
-            // 
-            // PictureBox6
-            // 
-            this.PictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox6.Image")));
-            this.PictureBox6.Location = new System.Drawing.Point(6, 96);
-            this.PictureBox6.Name = "PictureBox6";
-            this.PictureBox6.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox6.TabIndex = 12;
-            this.PictureBox6.TabStop = false;
-            // 
-            // Label6
-            // 
-            this.Label6.BackColor = System.Drawing.Color.Transparent;
-            this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Label6.Location = new System.Drawing.Point(36, 96);
-            this.Label6.Name = "Label6";
-            this.Label6.Size = new System.Drawing.Size(124, 24);
-            this.Label6.TabIndex = 13;
-            this.Label6.Text = "Descriptive colors:";
-            this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // pin_button
             // 
             this.pin_button.CustomColor = System.Drawing.Color.Empty;
@@ -948,34 +976,6 @@ namespace WinPaletter
             this.pin_button.UseVisualStyleBackColor = false;
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
-            // 
-            // alertBox1
-            // 
-            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox1.CenterText = false;
-            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.alertBox1.Image = null;
-            this.alertBox1.Location = new System.Drawing.Point(427, 96);
-            this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(349, 24);
-            this.alertBox1.TabIndex = 143;
-            this.alertBox1.TabStop = false;
-            this.alertBox1.Text = "Descriptive colors convey a theme\'s main and most used colors";
-            // 
-            // separatorV2
-            // 
-            this.separatorV2.AlternativeLook = false;
-            this.separatorV2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorV2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV2.Location = new System.Drawing.Point(465, 156);
-            this.separatorV2.Name = "separatorV2";
-            this.separatorV2.Size = new System.Drawing.Size(1, 237);
-            this.separatorV2.TabIndex = 144;
-            this.separatorV2.TabStop = false;
-            this.separatorV2.Text = "separatorV2";
             // 
             // EditInfo
             // 
@@ -1000,26 +1000,26 @@ namespace WinPaletter
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();
             this.TabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox11)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).EndInit();
             this.ResumeLayout(false);
 
         }

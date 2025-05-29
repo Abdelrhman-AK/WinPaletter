@@ -24,6 +24,32 @@ namespace WinPaletter.Tabs
             UpdateBackDrop();
         }
 
+        public static bool Transparency
+        {
+            get => _transparency;
+            set
+            {
+                if (_transparency != value)
+                {
+                    _transparency = value;
+                }
+            }
+        }
+        private static bool _transparency = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1)) == 1;
+
+        public static bool AccentOnTitlebars
+        {
+            get => accentOnTitlebars;
+            set
+            {
+                if (accentOnTitlebars != value)
+                {
+                    accentOnTitlebars = value;
+                }
+            }
+        }
+        private static bool accentOnTitlebars = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1)) == 1;
+
         Config.Scheme scheme => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
         /// <summary>
@@ -75,14 +101,11 @@ namespace WinPaletter.Tabs
                     }
                     else
                     {
-                        bool transparency = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1)) == 1;
-                        bool accentOnTitlebars = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1)) == 1;
-
-                        if (accentOnTitlebars)
+                        if (AccentOnTitlebars)
                         {
                             return TitlebarTypes.ColorPrevalence;
                         }
-                        else if (transparency)
+                        else if (Transparency)
                         {
                             return TitlebarTypes.DWM;
                         }
