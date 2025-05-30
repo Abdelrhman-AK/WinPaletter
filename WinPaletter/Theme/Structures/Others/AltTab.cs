@@ -58,6 +58,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Alt+Tab switcher settings into registry");
+
             SaveToggleState(treeView);
 
             if (Enabled)

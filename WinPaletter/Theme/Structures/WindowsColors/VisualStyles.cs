@@ -81,6 +81,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(string edition, TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows {edition} Visual Styles using UxTheme.SetSystemVisualStyle and writing into registry.");
+
             SaveToggleState(edition, treeView);
 
             if (Enabled)
@@ -195,7 +197,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
             }
-            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows WXP theme
+            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows XP theme
             {
                 try
                 {

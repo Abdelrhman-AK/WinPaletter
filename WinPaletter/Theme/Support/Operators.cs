@@ -96,6 +96,8 @@
 
             //if (TerminalPreview != TMx.TerminalPreview) _Equals = false;
 
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Debug, $"Comparing WinPaletter themes: {Info.ThemeName} == {TMx.Info.ThemeName} => {_Equals}");
+
             return _Equals;
         }
 

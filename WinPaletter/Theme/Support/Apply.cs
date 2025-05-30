@@ -14,6 +14,8 @@ namespace WinPaletter.Theme
         {
             if (CommandPrompt.Enabled)
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Applying Command Prompt preferences...");
+
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", string.Empty, CommandPrompt, treeView);
                 if (Program.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences)
                     Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_cmd.exe", CommandPrompt, treeView);
@@ -34,6 +36,8 @@ namespace WinPaletter.Theme
         {
             if (PowerShellx86.Enabled & Directory.Exists($@"{Environment.GetEnvironmentVariable("WINDIR")}\System32\WindowsPowerShell\v1.0"))
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Applying PowerShell x86 preferences...");
+
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", PowerShellx86, treeView);
                 if (Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
@@ -50,6 +54,8 @@ namespace WinPaletter.Theme
         {
             if (PowerShellx64.Enabled & Directory.Exists($@"{Environment.GetEnvironmentVariable("WINDIR")}\SysWOW64\WindowsPowerShell\v1.0"))
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Applying PowerShell x64 preferences...");
+
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", PowerShellx64, treeView);
                 if (Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {

@@ -109,7 +109,7 @@ namespace WinPaletter
                 winIcon.IconSize = Program.TM.MetricsFonts.DesktopIconSize;
             }
 
-            winIcon2.Text = User.UserName;
+            winIcon2.Text = User.Name;
             winIcon1.Text = OS.W8x || OS.W10 || OS.W11 || OS.W12 ? "This PC" : "Computer";
             label3.Text = winIcon1.Text;
 

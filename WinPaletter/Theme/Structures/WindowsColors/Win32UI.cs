@@ -364,6 +364,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows classic colors (Win32) into registry and by using User32.SetSysColors and User32.SystemParametersInfo");
+
             SaveToggleState(treeView);
 
             if (Enabled)
@@ -391,6 +393,8 @@ namespace WinPaletter.Theme.Structures
                 // If visual styles are enabled and colors are overriden by msstyles, then apply them
                 if (_vs.Enabled && _vs.OverrideColors)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying colors from visual styles file instead of the aspect itself: {_vs.ThemeFile}");
+
                     if (System.IO.File.Exists(_vs.ThemeFile))
                     {
                         try
@@ -436,6 +440,8 @@ namespace WinPaletter.Theme.Structures
                 // Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
                 if (isClassic)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Hiding all visible forms to avoid a bug in classic mode when it is enabled.");
+
                     foreach (Form f in Application.OpenForms)
                     {
                         if (f.Visible)
@@ -629,6 +635,8 @@ namespace WinPaletter.Theme.Structures
                 {
                     if (fl.Count > 0)
                     {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Restoring visibility of all forms that were hidden before applying the classic theme colors.");
+
                         System.Threading.Thread.Sleep(100);
                         for (int i = 0, loopTo = fl.Count - 1; i <= loopTo; i++)
                         {
@@ -642,6 +650,8 @@ namespace WinPaletter.Theme.Structures
                 // Apply the colors to the default user if overriden in WinPaletter settings
                 if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying classic colors to the default user registry (HKEY_USERS\\.DEFAULT) as it is enabled in WinPaletter settings.");
+
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToStringWin32(), RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToStringWin32(), RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToStringWin32(), RegistryValueKind.String);
@@ -679,6 +689,8 @@ namespace WinPaletter.Theme.Structures
                 // Override some colors in the HKEY_Local_Machine registry if overriden in WinPaletter settings
                 if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying classic colors to the HKEY_LOCAL_MACHINE registry as it is enabled in WinPaletter settings.");
+
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse(true).ToArgb(), RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse(true).ToArgb(), RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse(true).ToArgb(), RegistryValueKind.String);
@@ -696,6 +708,8 @@ namespace WinPaletter.Theme.Structures
 
                 else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Restoring classic colors to the default values in the HKEY_LOCAL_MACHINE registry as it is enabled in WinPaletter settings.");
+
                     Win32UI @default;
                     if (Program.WindowStyle == WindowStyle.W12)
                     {
@@ -747,6 +761,8 @@ namespace WinPaletter.Theme.Structures
 
                 else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Erasing classic colors from the HKEY_LOCAL_MACHINE registry as it is enabled in WinPaletter settings.");
+
                     DelValue_AdministratorDeflector(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard");
                 }
             }

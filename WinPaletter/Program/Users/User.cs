@@ -214,7 +214,7 @@ namespace WinPaletter
                     if (value == "S-1-5-18" || value == "S-1-5-19" || value == "S-1-5-20")
                     {
                         // Try to login into system profile without password
-                        try { UpdateToken(Domain, UserName, null, false); } catch (Exception ex) { Forms.BugReport.ThrowError(ex); }
+                        try { UpdateToken(Domain, Name, null, false); } catch (Exception ex) { Forms.BugReport.ThrowError(ex); }
 
                         // Raise user change event after switching user
                         UserSwitch(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
@@ -223,7 +223,7 @@ namespace WinPaletter
                     // Check if selected user is the same as the user who opened WinPaletter after granting UAC dialog
                     else if (_sid != AdminSID_GrantedUAC)
                     {
-                        if (UpdateToken(Domain, UserName, Password, true) && Password != null)
+                        if (UpdateToken(Domain, Name, Password, true) && Password != null)
                         {
                             // Raise user change event after switching user
                             UserSwitch(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
@@ -430,12 +430,12 @@ namespace WinPaletter
         /// <summary>
         /// Name of current user
         /// </summary>
-        public static string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').Last(); ; } }
+        public static string Name => new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').Last();
 
         /// <summary>
         /// Name of computer hosting current user
         /// </summary>
-        public static string Domain { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First(); ; } }
+        public static string Domain => new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First();
 
         /// <summary>
         /// Return if current user is administrator or not
@@ -445,12 +445,12 @@ namespace WinPaletter
         /// <summary>
         /// Path of current user profile picture
         /// </summary>
-        public static string ProfilePicturePath => NativeMethods.Shell32.GetUserTilePath(UserName);
+        public static string ProfilePicturePath => NativeMethods.Shell32.GetUserTilePath(Name);
 
         /// <summary>
         /// Path of current user profile picture
         /// </summary>
-        public static Bitmap ProfilePicture => NativeMethods.Shell32.GetUserAccountPicture(UserName) as Bitmap;
+        public static Bitmap ProfilePicture => NativeMethods.Shell32.GetUserAccountPicture(Name) as Bitmap;
 
         /// <summary>
         /// Handle to current user profile

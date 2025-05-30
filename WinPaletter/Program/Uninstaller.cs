@@ -45,6 +45,8 @@ namespace WinPaletter
         // Uninstall the application quietly without user interaction
         public static void Uninstall_Quiet()
         {
+            Program.Log.Information("Uninstalling WinPaletter quietly...");
+
             // Delete file associations
             DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
             DeleteFileAssociation(".wpsf", "WinPaletter.SettingsFile");

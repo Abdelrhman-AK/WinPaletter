@@ -14,8 +14,7 @@ namespace WinPaletter
 
         static MemoryFonts()
         {
-            if (Pfc is null)
-                Pfc = new();
+            Pfc ??= new();
         }
 
         /// <summary>

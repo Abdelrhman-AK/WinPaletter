@@ -38,6 +38,8 @@ namespace WinPaletter
 
                     treeView.SelectedNode = treeView.Nodes[treeView.Nodes.Count - 1];
                 });
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"An item is added to themes log: `{Text}` with image key `{ImageKey}`");
             }
         }
 

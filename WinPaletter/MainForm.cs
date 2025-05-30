@@ -40,9 +40,11 @@ namespace WinPaletter
 
             // Start showing home page tab.
             tabControl1.Visible = false;
+
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");
             if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Welcome);
+
             Program.Animator.ShowSync(tabControl1);
         }
 

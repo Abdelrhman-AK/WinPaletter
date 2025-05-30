@@ -149,6 +149,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(Manager TM, TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7 colors and appearance preferences into registry.");
+
             SaveToggleState(treeView);
 
             if (Enabled)

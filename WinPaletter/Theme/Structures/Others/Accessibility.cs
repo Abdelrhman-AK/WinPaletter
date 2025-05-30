@@ -73,6 +73,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Accessibility settings into registry and by using User32.SystemParametersInfo");
+
             // Save Accessibility toggle state
             SaveToggleState(treeView);
 

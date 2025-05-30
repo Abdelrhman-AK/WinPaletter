@@ -120,7 +120,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Console structure that has default data</param>
         public void Load(string RegKey, string Signature_Of_Enable, Console @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Console colors settings from registry.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading console settings from registry.");
 
             Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)) == 1;
 
@@ -238,6 +238,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used as a theme log</param>
         public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving console settings into registry.");
+
             string RegAddress = $@"{scopeReg}\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
 
             try

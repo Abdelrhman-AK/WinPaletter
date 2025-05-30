@@ -1213,6 +1213,8 @@ namespace WinPaletter
                 // Load Windows Terminal settings from JSON File
                 case Mode.JSONFile:
                     {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Terminal settings from JSON file `{File}`.");
+
                         WinTerminal result = new(string.Empty, Mode.Empty, Version);
 
                         if (System.IO.File.Exists(File))
@@ -1241,6 +1243,8 @@ namespace WinPaletter
                 // Load Windows Terminal settings from WinPaletter theme File
                 case Mode.WinPaletterFile:
                     {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Terminal settings from WinPaletter theme file `{File}`.");
+
                         using (Theme.Manager TMx = new(WinPaletter.Theme.Manager.Source.File, File))
                         {
                             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
@@ -1262,6 +1266,8 @@ namespace WinPaletter
 
                 case Mode.Empty:
                     {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"An empty instance of Windows Terminal settings has been created.");
+
                         break;
                     }
             }
@@ -1301,6 +1307,8 @@ namespace WinPaletter
                                         SettingsFile = SysPaths.TerminalJSON;
                                     }
 
+                                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Terminal settings into JSON file `{SettingsFile}`.");
+
                                     break;
                                 }
 
@@ -1318,6 +1326,8 @@ namespace WinPaletter
                                     {
                                         SettingsFile = SysPaths.TerminalPreviewJSON;
                                     }
+
+                                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Terminal Preview settings into JSON file `{SettingsFile}`.");
 
                                     break;
                                 }
@@ -1351,6 +1361,8 @@ namespace WinPaletter
 
                         // Remove default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does)
                         {
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Removing default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does).");
+
                             // Retrieve the list of profiles and the defaults JObject
                             JArray profilesList = (JArray)existingJson["profiles"]["list"];
                             JObject defaults = existingJson["profiles"]["defaults"] as JObject;
@@ -1392,6 +1404,8 @@ namespace WinPaletter
                         {
                             streamWriter.Write(result);
                         }
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving `{SettingsFile}` has just been completed.");
 
                         return result;
                     }

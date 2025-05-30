@@ -412,7 +412,7 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        private static readonly float[] Positions = [0f, 0.005f, 0.5f, 0.995f, 1.0f];
+        private static readonly float[] Positions = [0f, 0.0005f, 0.5f, 0.9995f, 1.0f];
 
         /// <summary>
         /// Draws a rounded rectangle similar to Windows 11 buttons (with top or bottom bevel effect).
@@ -442,11 +442,11 @@ namespace WinPaletter.TypesExtensions
                 float yTop = rectangle.Y;
                 float yBottom = rectangle.Y + rectangle.Height;
 
-                using var bevelBrush = new LinearGradientBrush(rectangle, bevelColor, baseColor, 180f)
+                using var bevelBrush = new LinearGradientBrush(rectangle, bevelColor, Color.Transparent, 180f)
                 {
                     InterpolationColors = new ColorBlend(5)
                     {
-                        Colors = [baseColor, bevelColor, bevelColor, bevelColor, baseColor],
+                        Colors = [Color.Transparent, bevelColor, bevelColor, bevelColor, Color.Transparent],
                         Positions = Positions
                     }
                 };

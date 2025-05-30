@@ -147,6 +147,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(bool SkipSettingWallpaper = false, TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Wallpaper settings into registry and by using User32.SystemParametersInfo");
+
             SaveToggleState(treeView);
 
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", SlideShow_Folder_or_ImagesList);

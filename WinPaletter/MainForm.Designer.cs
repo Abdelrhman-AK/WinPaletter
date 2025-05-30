@@ -44,7 +44,6 @@ namespace WinPaletter
             // 
             this.tabsContainer1.Size = new System.Drawing.Size(1156, 34);
             this.tabsContainer1.TabControl = this.tabControl1;
-            this.tabsContainer1.UserSwitchRequest += new WinPaletter.Tabs.TabsContainer.UserSwitchRequestDelegate(this.tabsContainer1_UserSwitchRequest);
             // 
             // tabControl1
             // 

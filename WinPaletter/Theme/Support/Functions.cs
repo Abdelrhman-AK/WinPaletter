@@ -40,8 +40,11 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                ls = ls.Distinct().ToList();
+                ls = [.. ls.Distinct()];
                 ls.Sort(colorComparer);
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {ls.Count} colors in `{Filename}`.");
+
                 return ls;
             }
             else
@@ -93,8 +96,11 @@ namespace WinPaletter.Theme
                 }
             }
 
-            ls = ls.Distinct().ToList();
+            ls = [.. ls.Distinct()];
             ls.Sort(colorComparer);
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {ls.Count} colors in `{ThemeName}` inside WinPaletter's themes database.");
+
             return ls;
         }
 
@@ -288,7 +294,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                CL = CL.Distinct().ToList();
+                CL = [.. CL.Distinct()];
 
                 CL.Sort(colorComparer);
 
@@ -296,6 +302,8 @@ namespace WinPaletter.Theme
                 {
                     while (CL.Contains(Color.FromArgb(0, 0, 0, 0))) CL.Remove(Color.FromArgb(0, 0, 0, 0));
                 }
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {CL.Count} colors in current WinPaletter theme.");
 
                 return CL;
             }
@@ -308,6 +316,7 @@ namespace WinPaletter.Theme
         {
             IEnumerable<string> DecompressedData;
 
+            // Don't remove .ToList() to avoid error in loading theme
             try
             {
                 DecompressedData = System.IO.File.ReadAllText(File).Decompress().Split('\n').ToList();

@@ -29,7 +29,7 @@ namespace WinPaletter.Theme.Structures
         public string ThemeVersion = "1.0.0.0";
 
         /// <summary>Person's name that designed this theme</summary>
-        public string Author = User.UserName;
+        public string Author = User.Name;
 
         /// <summary>Person's social media link that designed this theme</summary>
         public string AuthorSocialMediaLink = string.Empty;
@@ -99,7 +99,7 @@ namespace WinPaletter.Theme.Structures
 
             ThemeName = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Lang.Strings.General.MyTheme).ToString();
             ThemeVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0").ToString();
-            Author = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", User.UserName).ToString();
+            Author = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", User.Name).ToString();
             AuthorSocialMediaLink = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", string.Empty).ToString();
             AppVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AppVersion", Program.Version).ToString();
             Description = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", string.Empty).ToString();
@@ -127,6 +127,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Saving WinPaletter theme information into registry.");
+
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", ThemeName, RegistryValueKind.String);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", Author, RegistryValueKind.String);

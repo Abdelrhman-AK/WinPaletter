@@ -94,7 +94,11 @@ namespace WinPaletter.Theme.Structures
         /// <exception cref="IOException"></exception>
         public void Apply(TreeView treeView = null)
         {
-            if (!File.Exists(Image)) throw new IOException("Couldn't Find image");
+            if (!File.Exists(Image))
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't find base image file: `{Image}`.");
+                return;
+            }
 
             string path;
             if (!OS.WXP & !OS.WVista)
@@ -106,8 +110,12 @@ namespace WinPaletter.Theme.Structures
                 path = Path.Combine(SysPaths.Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
             }
 
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving WinPaletter Wallpaper Tone into registry and by rendering a custom image.");
+
             if (treeView is not null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.SettingHSLImage, path), "pe_patch");
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Rendering a custom image with HSL values: H={H}, S={S}, L={L}.");
 
             // Process the image
             using (ImageProcessor.ImageFactory ImgF = new())

@@ -37,9 +37,8 @@ namespace WinPaletter.Theme
                             // Get the theme data from the registry and use @default to help WinPaletter know the default values
                             using (Manager @default = Theme.Default.Get(Program.WindowStyle))
                             {
-
                                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "A request to load all Windows aspects into WinPaletter theme is made.");
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"This request is targeting user: {User.Domain}\\{User.UserName}");
+                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"This request is targeting user: {User.Domain}\\{User.Name}");
 
                                 // Clear the exception list that has theme load exceptions
                                 Exceptions.ThemeLoad.Clear();

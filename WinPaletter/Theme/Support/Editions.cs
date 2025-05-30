@@ -17,6 +17,8 @@ namespace WinPaletter.Theme
                 bool JSON = IsValidJson(txt);
                 bool WPTH = txt.StartsWith("<WinPaletter - ", StringComparison.OrdinalIgnoreCase);
 
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Getting edition of theme file: {File} - IsJSONNewFormat: {JSON} - IsWPTHOldFormat: {WPTH}");
+
                 if (JSON)
                 {
                     return Editions.JSON;

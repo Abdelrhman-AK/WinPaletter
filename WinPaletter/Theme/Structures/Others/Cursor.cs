@@ -224,6 +224,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used for theme log</param>
         public static void Save_Cursors_To_Registry(string subKey, Cursor Cursor, TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Cursor to be saved: `{subKey}`");
+
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", Cursor.UseFromFile);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", Cursor.File, RegistryValueKind.String);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "ArrowStyle", (int)Cursor.ArrowStyle);

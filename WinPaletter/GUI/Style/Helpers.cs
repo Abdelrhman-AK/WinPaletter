@@ -122,6 +122,8 @@ namespace WinPaletter.UI.Style
         /// <param name="IgnoreTitleBar">Flag indicating whether to ignore the title bar when applying the style.</param>
         public static void ApplyStyle(Form Form = null, bool IgnoreTitleBar = false)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
+
             bool DarkMode;
             bool RoundedCorners;
             bool Animations = true;

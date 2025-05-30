@@ -44,7 +44,7 @@ namespace WinPaletter
 
             if (!isInstalledBefore)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "File Association for {extension} with class name {className} has been created", extension, className);
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File Association for {extension} with class name {className} has been created");
             }
 
             return isInstalledBefore;
@@ -57,7 +57,15 @@ namespace WinPaletter
         /// <param name="className">ClassName is the name of the associated class to be removed (eg "WinPaletter.WindowsXPThemePath")</param>
         public static void DeleteFileAssociation(string extension, string className)
         {
+            if (string.IsNullOrEmpty(extension) || string.IsNullOrEmpty(className))
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, "DeleteFileAssociation called with null or empty parameters.");
+                return;
+            }
+
             if (extension.Substring(0, 1) != ".") extension = $".{extension}";
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting File Association for {extension} with class name {className}");
 
             DelKey($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}");
             DelKey($"HKEY_CURRENT_USER\\Software\\Classes\\{className}");
@@ -66,6 +74,9 @@ namespace WinPaletter
             DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Version");
 
             // Notify Windows that File associations have changed
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"A NativeMethods.Shell32.SHChangeNotify request has been sent to notify Windows that File associations have changed.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command is: NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0)");
+
             NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
         }
         #endregion

@@ -226,6 +226,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public async void Apply(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Metrics and Fonts settings into registry and by using User32.SystemParametersInfo");
+
             SaveToggleState(treeView);
 
             if (Enabled)
@@ -336,6 +338,9 @@ namespace WinPaletter.Theme.Structures
                 // Apply Metrics/Fonts in a new thread to avoid UI freeze when applying changes
                 await Task.Run(() =>
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Metrics and Fonts settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
+
                     NONCLIENTMETRICS NCM = new();
                     NCM.cbSize = (uint)Marshal.SizeOf(NCM);
                     ICONMETRICS ICO = new();
@@ -381,6 +386,8 @@ namespace WinPaletter.Theme.Structures
                 // Apply metrics on HKEY_USERS\.DEFAULT (New users and default user) if it is set to overwrite in WinPaletter settings
                 if (Program.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying Metrics and Fonts settings to HKEY_USERS\\.DEFAULT registry key.");
+
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToBytes(), RegistryValueKind.Binary);
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToBytes(), RegistryValueKind.Binary);
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToBytes(), RegistryValueKind.Binary);
@@ -407,6 +414,9 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 // Apply font substitutes
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying font substitutes to HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes registry key.");
+
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String);
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String);
 
@@ -449,7 +459,6 @@ namespace WinPaletter.Theme.Structures
                 // Restore DPI
                 EditReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", OldDPI);
             }
-
         }
 
         /// <summary>

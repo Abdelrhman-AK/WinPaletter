@@ -166,10 +166,8 @@ namespace WinPaletter
         /// </summary>
         public void LoadData()
         {
-            //userButton.Tag = User.UserName;
-            //userButton.Image = User.ProfilePicture.Resize(26, 26);
-
-            Forms.MainForm.tabsContainer1.UserImage = User.ProfilePicture.Resize(22, 22);
+            userButton.Tag = User.Name;
+            userButton.Image = User.ProfilePicture.Resize(26, 26);
         }
 
         /// <summary>

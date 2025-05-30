@@ -119,6 +119,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="applyAsWin8x">Apply as Windows 8x</param>
         public void Apply(string edition, bool applyAsWin8x = false, TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7/8.1 LogonUI screen data into registry.");
+
             SaveToggleState(edition, treeView);
 
             EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", Enabled ? 1 : 0);
@@ -156,6 +158,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         private void SaveAsWin7(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7 LogonUI screen extended data into registry.");
+
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
@@ -185,7 +189,11 @@ namespace WinPaletter.Theme.Structures
                     {
                         // Windows 7 Default LogonUI Backgrounds are stored in imageres.dll from index 5031 to 5043
                         for (int i = 5031; i <= 5043; i += +1)
+                        {
                             bmpList.Add(PE.GetPNG(SysPaths.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Extracting default Windows 7 LogonUI background with ID `{i}` from `{SysPaths.imageres}`.");
+                        }
+
                         break;
                     }
 
@@ -200,12 +208,15 @@ namespace WinPaletter.Theme.Structures
                             bmpList.Add(Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
                         }
 
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Custom image `{ImagePath ?? "null"}` will be used as a Windows 7 LogonUI background.");
+
                         break;
                     }
 
                 case Theme.Structures.LogonUI7.Sources.SolidColor:
                     {
                         bmpList.Add(Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Solid color to be used as LogonUI screen background is `{Color}`.");
                         break;
                     }
 
@@ -215,6 +226,8 @@ namespace WinPaletter.Theme.Structures
                         {
                             bmpList.Add((Bitmap)b.Resize(Screen.PrimaryScreen.Bounds.Size).Clone());
                         }
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using current wallpaper as a LogonUI screen.");
 
                         break;
                     }
@@ -234,6 +247,8 @@ namespace WinPaletter.Theme.Structures
                     if (ReportProgress_Detailed)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Grayscaling LogonUI screen image number `{x}`.");
+
                     bmpList[x] = bmpList[x].Grayscale();
                 }
 
@@ -241,6 +256,8 @@ namespace WinPaletter.Theme.Structures
                 {
                     if (ReportProgress_Detailed)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring LogonUI screen image number `{x}` with radius `{Blur_Intensity}`.");
 
                     ImageProcessor.ImageFactory imgF = new();
 
@@ -257,6 +274,8 @@ namespace WinPaletter.Theme.Structures
                     if (ReportProgress_Detailed)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating noise effect for LogonUI screen image number `{x}` with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
+
                     bmpList[x] = bmpList[x].Noise(Noise_Mode, (float)(Noise_Intensity / 100d));
                 }
             }
@@ -266,11 +285,15 @@ namespace WinPaletter.Theme.Structures
                 if (Program.Elevated)
                 {
                     bmpList[0].Save($@"{DirX}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{DirX}\\backgroundDefault.jpg`.");
                 }
                 else
                 {
                     bmpList[0].Save($@"{SysPaths.appData}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                     Reg_IO.Move_File($@"{SysPaths.appData}\backgroundDefault.jpg", $@"{DirX}\backgroundDefault.jpg");
+
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{SysPaths.appData}\\backgroundDefault.jpg` and moved to `{DirX}\\backgroundDefault.jpg`.");
                 }
 
                 if (ReportProgress_Detailed)
@@ -283,18 +306,23 @@ namespace WinPaletter.Theme.Structures
                     if (Program.Elevated)
                     {
                         bmpList[x].Save($"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
                     }
                     else
                     {
                         bmpList[x].Save($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
                         Reg_IO.Move_File($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}");
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{SysPaths.appData}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg` and moved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
                     }
 
                     if (ReportProgress_Detailed)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgNUMSaved, $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", x + 1), "info");
-
                 }
             }
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating LogonUI screen image\\s is done.");
 
             // Restore WOW64 redirection
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -306,6 +334,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         private void SaveAsWin8(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 8\\8.1 lock screen extended data into registry.");
+
             bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
             bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
@@ -345,6 +375,8 @@ namespace WinPaletter.Theme.Structures
                             bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                         }
 
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Image to be used as lock screen is `{syslock ?? "null"}` with ID `{LockScreenSystemID.ToString() ?? "null"}`.");
+
                         break;
                     }
 
@@ -359,12 +391,17 @@ namespace WinPaletter.Theme.Structures
                             bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                         }
 
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Custom image to be used as lock screen is `{ImagePath ?? "null"}`.");
+
                         break;
                     }
 
                 case Theme.Structures.LogonUI7.Sources.SolidColor:
                     {
                         bmp = Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Solid color to be used as lock screen background is `{Color}`.");
+
                         break;
                     }
 
@@ -375,12 +412,17 @@ namespace WinPaletter.Theme.Structures
                             bmp = (Bitmap)b.Clone();
                         }
 
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using current wallpaper as a lock screen.");
+
                         break;
                     }
 
                 default:
                     {
                         bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Black color is used as lock screen background as a default fallback option.");
+
                         break;
                     }
 
@@ -396,6 +438,8 @@ namespace WinPaletter.Theme.Structures
             {
                 if (ReportProgress_Detailed)
                     ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Grayscaling lock screen image.");
                 bmp = bmp.Grayscale();
             }
 
@@ -403,6 +447,9 @@ namespace WinPaletter.Theme.Structures
             {
                 if (ReportProgress_Detailed)
                     ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring lock screen image with radius `{Blur_Intensity}`.");
+
                 ImageProcessor.ImageFactory ImgF = new();
                 using (Bitmap b = new(bmp))
                 {
@@ -417,14 +464,18 @@ namespace WinPaletter.Theme.Structures
             {
                 if (ReportProgress_Detailed)
                     ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating noise effect for lock screen image with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
+
                 bmp = bmp.Noise(Noise_Mode, Noise_Intensity / 100f);
             }
 
-            if (System.IO.File.Exists(lockimg))
-                System.IO.File.Delete(lockimg);
+            if (System.IO.File.Exists(lockimg)) System.IO.File.Delete(lockimg);
 
             if (ReportProgress_Detailed)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LockScreen, lockimg), "info");
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating lock screen image is done.");
 
             bmp.Save(lockimg);
         }

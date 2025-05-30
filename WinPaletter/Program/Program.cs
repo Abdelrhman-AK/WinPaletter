@@ -58,6 +58,8 @@ namespace WinPaletter
         /// <param name="e"></param>
         private static void OnExit(object sender, EventArgs e)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
+
             DeleteUpdateResiduals();
 
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
@@ -65,6 +67,8 @@ namespace WinPaletter
             Application.ThreadException -= ThreadExceptionHandler;
             User.UserSwitch -= User.OnUserSwitch;
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "WinPaletter has exited successfully.");
         }
 
         /// <summary>

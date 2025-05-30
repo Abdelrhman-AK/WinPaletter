@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -240,6 +241,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(string edition, TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows {edition} colors and appearance preferences into registry.");
+
             SaveToggleState(edition, treeView);
 
             if (Enabled)
@@ -347,8 +350,14 @@ namespace WinPaletter.Theme.Structures
                     EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (!TB_Blur) ? 1 : 0);
                 }
 
-                // Broadcast the system message to notify about the setting change
-                User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                {
+                    // Broadcast the system message to notify about the setting change
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
+                    User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
+                    wic.Undo();
+                }
+
             }
         }
 

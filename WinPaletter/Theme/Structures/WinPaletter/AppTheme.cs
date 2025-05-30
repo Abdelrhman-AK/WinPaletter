@@ -70,6 +70,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving WinPaletter application theme (appearance) into registry.");
+
             SaveToggleState(treeView);
 
             EditReg(treeView, Settings.Structures.REG_Appearance, "BackColor", BackColor.ToArgb());
@@ -84,6 +86,8 @@ namespace WinPaletter.Theme.Structures
 
             // Apply settings to program settings
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
+
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = Enabled;
                 Appearance.BackColor = BackColor;

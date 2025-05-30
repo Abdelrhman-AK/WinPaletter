@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -29,7 +30,6 @@ namespace WinPaletter.Tabs
             AllowDrop = true;
 
             InitializeContextMenu();
-            InitializeUsersButton();
         }
 
         #region Variables
@@ -43,8 +43,6 @@ namespace WinPaletter.Tabs
         /// List of tab data included in current control
         /// </summary>
         public List<TabData> TabDataList = [];
-
-        private UI.WP.Button usersButton = new() { Size = new(32, 32), ImageAlign = ContentAlignment.MiddleCenter, Text = string.Empty, Anchor = AnchorStyles.Top | AnchorStyles.Right };
 
         private Rectangle hoveredRectangle;
         private bool overCloseButton = false;
@@ -113,24 +111,6 @@ namespace WinPaletter.Tabs
                 toolStripSeparator1,
                 helpButton
                 ]);
-        }
-
-        void InitializeUsersButton()
-        {
-            AdjustUsersButtonLayout();
-
-            this.Controls.Add(usersButton);
-
-            usersButton.Click += (s, e) => UserSwitchRequest(s, e);
-        }
-
-        void AdjustUsersButtonLayout()
-        {
-            usersButton.Width = Height - 4;
-            usersButton.Height = usersButton.Width;
-
-            usersButton.Left = Width - usersButton.Width - 3;
-            usersButton.Top = (Height - usersButton.Width) / 2 - 2;
         }
 
         /// <summary>
@@ -762,20 +742,6 @@ namespace WinPaletter.Tabs
         }
         private TabControl _tabControl;
 
-        private Bitmap _userImage;
-        public Bitmap UserImage
-        {
-            get => _userImage;
-            set
-            {
-                if (value != _userImage)
-                {
-                    _userImage = value;
-                    usersButton.Image = value;
-                }
-            }
-        }
-
         /// <summary>
         /// Selected index of tabs and tabpage in current TabControl
         /// </summary>
@@ -826,13 +792,6 @@ namespace WinPaletter.Tabs
         #region Events/Overrides
 
         /// <summary>
-        /// Delegate to UserSwitchRequestDelegate event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public delegate void UserSwitchRequestDelegate(object sender, EventArgs e);
-
-        /// <summary>
         /// Delegate to FormShown event
         /// </summary>
         /// <param name="sender"></param>
@@ -867,11 +826,6 @@ namespace WinPaletter.Tabs
         /// Associated form in tab is being closed
         /// </summary>
         public event FormClosingDelegate FormClosing;
-
-        /// <summary>
-        /// Event that is triggered when user requests to switch user
-        /// </summary>
-        public event UserSwitchRequestDelegate UserSwitchRequest;
 
         /// <summary>
         /// Delegate to FormTextChanged event
@@ -1003,15 +957,9 @@ namespace WinPaletter.Tabs
         {
             base.OnResize(e);
 
-            AdjustUsersButtonLayout();
-
-            SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Font) + new SizeF(2, 3);
-            Rectangle betaRect = new(0 + Width - (int)betaSize.Width - 5 - 1, 0 + (int)((Height - 1 - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
-
             if (TabDataList != null && TabDataList.Count > 0)
             {
                 UpdateTabPositions(TabDataList);
-
                 Refresh();
             }
         }
@@ -1273,7 +1221,7 @@ namespace WinPaletter.Tabs
             {
                 Rectangle rect = new(0, 0, Width - 1, Height - 1);
                 SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
-                Rectangle betaRect = new(usersButton.Left - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
+                Rectangle betaRect = new(Width - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
                 G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
                 G.DrawRoundedRectBeveled(scheme_secondary.Pens.Line_Checked, betaRect);
                 using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())

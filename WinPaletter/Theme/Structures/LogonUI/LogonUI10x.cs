@@ -75,6 +75,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as a theme log</param>
         public void Apply(TreeView treeView = null)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Wiindows 10/11 lock screen data into registry.");
+
             SaveToggleState(treeView);
 
             if (Enabled)

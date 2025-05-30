@@ -28,9 +28,14 @@ namespace WinPaletter
         public void Write(string Section, string Key, string Value)
         {
             if (!System.IO.File.Exists(path))
+            {
                 System.IO.File.WriteAllText(path, string.Empty);
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"INI file created as `{path}`");
+            }
+               
 
             Kernel32.WritePrivateProfileString(Section, Key, Value, path);
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"INI file written at `{path}` with Section: {Section}, Key: {Key}, Value: {Value}");
         }
 
         /// <summary>
@@ -44,6 +49,12 @@ namespace WinPaletter
         {
             StringBuilder SB = new(65535);
             int i = Kernel32.GetPrivateProfileString(Section, Key, DefaultValue, SB, SB.Capacity, path);
+            if (i == 0)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"Failed to read INI file at `{path}` with Section: {Section}, Key: {Key}");
+                return DefaultValue;
+            }
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"INI file read at `{path}` with Section: {Section}, Key: {Key}, Value: {SB}");
             return SB.ToString();
         }
 
@@ -54,6 +65,7 @@ namespace WinPaletter
         public void DeleteSection(string Section)
         {
             Kernel32.WritePrivateProfileString(Section, null, null, path);
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"INI section deleted at `{path}` with Section: {Section}");
         }
 
         /// <summary>
@@ -64,6 +76,7 @@ namespace WinPaletter
         public void DeleteKey(string Section, string Key)
         {
             Kernel32.WritePrivateProfileString(Section, Key, null, path);
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"INI key deleted at `{path}` with Section: {Section}, Key: {Key}");
         }
 
         /// <summary>

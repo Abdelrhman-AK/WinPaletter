@@ -367,6 +367,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="silent">If true, no alert will be shown</param>
         public async void Apply(TreeView treeView = null, bool silent = false)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Effects settings into registry and by using User32.SystemParametersInfo");
+
             SaveToggleState(treeView);
 
             if (Enabled)
@@ -378,6 +380,9 @@ namespace WinPaletter.Theme.Structures
                     // Apply WinEffects in a new thread to prevent freezing the UI
                     await Task.Run(() =>
                     {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Windows Effects settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
+
                         ANIMATIONINFO anim = new();
                         anim.cbSize = (uint)Marshal.SizeOf(anim);
                         anim.IMinAnimate = WE.WindowAnimation ? 1 : 0;
@@ -431,34 +436,17 @@ namespace WinPaletter.Theme.Structures
 
                     EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", Win11ExplorerBar);
 
-                    try
+                    if (RegKeyExists("HKEY_CURRENT_USER\\Software\\ExplorerPatcher"))
                     {
-                        if (RegKeyExists("HKEY_CURRENT_USER\\Software\\ExplorerPatcher"))
-                        {
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar);
-                        }
-                    }
-                    catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
-                    finally
-                    {
-                        Microsoft.Win32.Registry.CurrentUser.Close();
+                        EditReg(treeView, @"HKEY_CURRENT_USER\Software\ExplorerPatcher", "FileExplorerCommandUI", Win11ExplorerBar);
                     }
 
-                    try
+                    if (RegKeyExists("HKEY_CURRENT_USER\\Software\\StartIsBack"))
                     {
-                        if (RegKeyExists("HKEY_CURRENT_USER\\Software\\StartIsBack"))
-                        {
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar);
-                        }
-                    }
-                    catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
-                    finally
-                    {
-                        Microsoft.Win32.Registry.CurrentUser.Close();
+                        EditReg(treeView, @"HKEY_CURRENT_USER\Software\StartIsBack", "FrameStyle", Win11ExplorerBar);
                     }
 
-                    if (OS.W12 || OS.W11)
-                        EditReg(treeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots) ? 1 : 0);
+                    if (OS.W12 || OS.W11) EditReg(treeView, @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", (!Win11BootDots) ? 1 : 0);
 
                     if (OS.W8x || OS.W10 || OS.W11 || OS.W12)
                     {
@@ -497,41 +485,15 @@ namespace WinPaletter.Theme.Structures
                             if (Win11ExplorerBar != ExplorerBar.Default)
                             {
                                 // Windows 11 22H2 and higher
-                                try
-                                {
-                                    if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > (default)", "reg_add");
-                                    Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", true).SetValue(string.Empty, "CLSID_ItemsViewAdapter", Microsoft.Win32.RegistryValueKind.String);
-
-                                    if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > (default)", "reg_add");
-                                    Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", true).SetValue(string.Empty, "File Explorer Xaml Island View Adapter", Microsoft.Win32.RegistryValueKind.String);
-
-                                    if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0} > InprocServer32", "reg_add");
-                                    using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", true).CreateSubKey("InprocServer32", true))
-                                    {
-                                        key.SetValue(string.Empty, "C:\\Windows\\System32\\Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
-                                        key.SetValue("ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
-                                    }
-
-                                    if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33} > InprocServer32", "reg_add");
-                                    using (Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", true).CreateSubKey("InprocServer32", true))
-                                    {
-                                        key.SetValue(string.Empty, $"{SysPaths.System32}\\Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
-                                        key.SetValue("ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
-                                    }
-                                }
-                                catch { } // Access to HKEY_CURRENT_USER\Software\Classes\CLSID\... is denied, ignore it.
-                                finally
-                                {
-                                    Microsoft.Win32.Registry.CurrentUser.Close();
-                                }
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", string.Empty, "CLSID_ItemsViewAdapter", Microsoft.Win32.RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", string.Empty, "File Explorer Xaml Island View Adapter", Microsoft.Win32.RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InprocServer32", string.Empty, SysPaths.System32 + "Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InprocServer32", "ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}\InprocServer32", string.Empty, SysPaths.System32 + "Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}\InprocServer32", "ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
 
                                 // Windows 11 lower than 22H2
                                 DelValue(treeView, "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}");
-
                             }
                             else
                             {
@@ -565,65 +527,35 @@ namespace WinPaletter.Theme.Structures
 
                     if (OS.W12 || OS.W11)
                     {
-                        try
+                        if (Win11ClassicContextMenu)
                         {
-                            if (Win11ClassicContextMenu)
-                            {
-                                if (treeView is not null)
-                                    ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2} > InprocServer32", "reg_add");
-                                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
-                            }
-                            else
-                            {
-                                DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}");
-                            }
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32", string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
                         }
-                        catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
-                        finally
+                        else
                         {
-                            Microsoft.Win32.Registry.CurrentUser.Close();
+                            DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}");
                         }
                     }
 
                     if (!OS.WXP && !OS.WVista)
                     {
-                        try
+                        if (SysListView32)
                         {
-                            if (SysListView32)
-                            {
-                                if (treeView is not null)
-                                    ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39} > InprocServer32", "reg_add");
-                                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
-                            }
-                            else
-                            {
-                                DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}");
-                            }
-                        }
-                        catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
-                        finally
-                        {
-                            Microsoft.Win32.Registry.CurrentUser.Close();
-                        }
-                    }
-
-                    try
-                    {
-                        if (DisableNavBar)
-                        {
-                            if (treeView is not null)
-                                ThemeLog.AddNode(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}, InprocServer32", "reg_add");
-                            Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}", true).CreateSubKey("InprocServer32", true).SetValue(string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32", string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
                         }
                         else
                         {
-                            DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}");
+                            DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}");
                         }
                     }
-                    catch { } // Access to HKEY_CURRENT_USER\Software\ExplorerPatcher is denied, ignore it.
-                    finally
+
+                    if (DisableNavBar)
                     {
-                        Microsoft.Win32.Registry.CurrentUser.Close();
+                        EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32", string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    }
+                    else
+                    {
+                        DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}");
                     }
                 }
             }

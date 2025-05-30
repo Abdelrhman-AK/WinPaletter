@@ -514,6 +514,8 @@ namespace WinPaletter
             {
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Refreshing DWM colorization parameters from the given Theme Manager for user `{User.Domain}\\{User.Name}`.");
+
                     if (DWMAPI.IsCompositionEnabled())
                     {
                         if (OS.W8x)
@@ -710,6 +712,8 @@ namespace WinPaletter
         /// </summary>
         public static void ForceExit()
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Exiting WinPaletter by force.");
+
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
             using (Process process = Process.GetCurrentProcess())
             {
