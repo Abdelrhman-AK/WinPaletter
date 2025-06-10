@@ -93,16 +93,18 @@ While significant new features are not anticipated, the goal is to place the pro
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/GettingStarted.png?raw=true) Getting Started
 
 1. **Requirements:**
-   
-   | Windows   | WinPaletter ... and higher | Frameworks                                                                                                                                                                                                  |
-   | ------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-   | **11, 10** | `Any version`                                    | You might need to [update .NET framework](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) in outdated Windows 10 or build less than 1709                                                |
-   | **8.1, 7** | `1.0.5.0`                                        | [.NET Framework 4.7.2, or 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)                                                                                                          |
-   | **8**      | `Not supported` :x:                              | Not supported as .NET framework 4.7.2 or 4.8 can't be installed at all                                                                                                                                      |
-   | **Vista**  | `1.0.7.1`                                        | .NET Framework 4.8 Repacked. Read [Windows Vista's documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista) |
-   | **XP**     | `1.0.7.1`                                        | OneCoreAPI + .NET Framework 4.8 Repacked. You must read its [documentation](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)       |
 
-2. **Download:** 
+| **Windows Version** | **Supported WinPaletter Version** | **.NET Framework 4.8 Requirement** |
+|---------------------|-----------------------------------|------------------------------------|
+| **11**              | `Any version`                     | Pre-installed                      |
+| **10**              | `Any version`                     | Might require [manual update](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) if build is less than `1709` |
+| **8.1**             | `1.0.5.0+`                        | Install from [Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) |
+| **8**               | `1.0.9.5+`                        | Install via [custom method](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Install-.NET-Framework-4.8-on-Windows-8-Build-9200) |
+| **7**               | `1.0.5.0+`                        | Install from [Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) |
+| **Vista**           | `1.0.7.1+`                        | Requires repacked version — [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter#2-windows-vista) |
+| **XP**              | `1.0.7.1+`                        | Requires OneCoreAPI + repacked version — [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter) |
+
+3. **Download:** 
    
    - You can download the latest release from the [releases page](https://github.com/Abdelrhman-AK/WinPaletter/releases).
      > **Note:** It is the first source to be updated.
@@ -119,7 +121,7 @@ While significant new features are not anticipated, the goal is to place the pro
      
      - [Visit this](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Get-WinPaletter) for advanced instructions.
 
-3. **Launch:** Once downloaded, launch WinPaletter and start exploring its features to enhance your desktop aesthetics.
+4. **Launch:** Once downloaded, launch WinPaletter and start exploring its features to enhance your desktop aesthetics.
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) Wiki (Help)
 
