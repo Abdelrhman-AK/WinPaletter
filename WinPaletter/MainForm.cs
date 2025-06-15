@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Media;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -40,6 +42,12 @@ namespace WinPaletter
 
             // Start showing home page tab.
             tabControl1.Visible = false;
+
+            using (SoundPlayer SP = new(Assets.Sounds.Startup))
+            {
+                SP.Load();
+                SP.Play();
+            }
 
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");

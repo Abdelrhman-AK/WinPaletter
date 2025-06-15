@@ -451,7 +451,9 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MIT/LGPL Dual License
+        ///   Looks up a localized string similar to SPDX-License-Identifier: MIT AND LGPL-2.1-or-later
+        ///
+        ///MIT License
         ///
         ///Copyright (c) 2022-2025 Abdelrhman-AK
         ///
@@ -460,9 +462,7 @@ namespace WinPaletter.Properties {
         ///in the Software without restriction, including without limitation the rights
         ///to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
         ///copies of the Software, and to permit persons to whom the Software is
-        ///furnished to do so, subject to the following conditions:
-        ///
-        ///The a [rest of string was truncated]&quot;;.
+        ///furnished to do so, s [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LICENSE {
             get {

@@ -115,7 +115,6 @@ namespace WinPaletter
             AltPlayingMethod = false;
             snd = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0).Text;
 
-
             if (TextBox2.Text.ToUpper().Trim() == "CURRENT")
             {
                 if (!OS.WXP)

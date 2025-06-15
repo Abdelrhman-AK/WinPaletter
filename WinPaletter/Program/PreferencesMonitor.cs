@@ -381,16 +381,29 @@ namespace WinPaletter
         /// <param name="eventHandler"></param>
         private static void RegisterRegistryChangeEvent(string SID, string keyPath, string valueName, EventArrivedEventHandler eventHandler)
         {
-            string query = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{SID}\\{keyPath.Replace(@"\", @"\\")}' AND ValueName='{valueName}'";
-            WqlEventQuery eventQuery = new(query);
-            ManagementEventWatcher watcher = new(eventQuery);
-            watcher.EventArrived += eventHandler;
-            watcher.Start();
+            try
+            {
+                if (!RegValueExists($"HKEY_USERS\\{SID}\\{keyPath}", valueName))
+                {
+                    Program.Log?.Debug("Registry value {valueName} does not exist in {keyPath}, skipping event registration.", valueName, keyPath);
+                    return;
+                }
 
-            // Store the watcher for later cleanup
-            Watchers.Add(new Tuple<ManagementEventWatcher, EventArrivedEventHandler>(watcher, eventHandler));
+                string query = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{SID}\\{keyPath.Replace(@"\", @"\\")}' AND ValueName='{valueName}'";
+                WqlEventQuery eventQuery = new(query);
+                ManagementEventWatcher watcher = new(eventQuery);
+                watcher.EventArrived += eventHandler;
+                watcher.Start();
 
-            Program.Log?.Debug("Registered registry change event for {keyPath}\\{valueName}", keyPath, valueName);
+                // Store the watcher for later cleanup
+                Watchers.Add(new Tuple<ManagementEventWatcher, EventArrivedEventHandler>(watcher, eventHandler));
+
+                Program.Log?.Debug($"Registered registry change event for HKEY_USERS\\{SID}\\{keyPath}\\{valueName}");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Error(ex, $"Failed to register registry change event for HKEY_USERS\\{SID}\\{keyPath}\\{valueName}");
+            }
         }
 
         /// <summary>

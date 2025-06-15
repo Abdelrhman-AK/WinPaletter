@@ -29,8 +29,13 @@ namespace WinPaletter
             /// <returns></returns>
             public static Icon PEIconGroup_ToIcon(PortableExecutable PE, ResourceIdentifier iconGroupResourceIdentifier)
             {
+                if (PE is null) throw new ArgumentNullException(nameof(PE));
+                if (iconGroupResourceIdentifier is null) throw new ArgumentNullException(nameof(iconGroupResourceIdentifier));
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Extracting icon group '{iconGroupResourceIdentifier}' from PE file '{PE.FilePath}'.");
+
                 int structureSize = 14;
-                byte[] iconBytes = PE.GetResource(iconGroupResourceIdentifier).Data.Skip(6).ToArray();
+                byte[] iconBytes = [.. PE.GetResource(iconGroupResourceIdentifier).Data.Skip(6)];
 
                 List<IconInfo> icons = [];
                 icons.Clear();
@@ -47,7 +52,7 @@ namespace WinPaletter
                     iconWidth = iconWidth == 0 ? 256 : iconWidth;
                     iconHeight = iconHeight == 0 ? 256 : iconHeight;
 
-                    Resource resource = PE.TryGetResource(new ResourceIdentifier(Ressy.ResourceType.Icon, Ressy.ResourceName.FromCode(iconIndex)));
+                    Resource resource = PE.TryGetResource(new(Ressy.ResourceType.Icon, Ressy.ResourceName.FromCode(iconIndex)));
                     if (resource is not null) icons.Add(new() { Width = iconWidth, Height = iconHeight, ColorCount = iconColors, Buffer = resource.Data });
                 }
 
@@ -58,6 +63,9 @@ namespace WinPaletter
 
                     // Reset the stream position before reading the icon data
                     stream.Seek(0, System.IO.SeekOrigin.Begin);
+
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Successfully extracted {icons.Count} icons from PE file '{PE.FilePath}'.");
+
                     return new Icon(stream);
                 }
             }
@@ -198,6 +206,7 @@ namespace WinPaletter
         /// <returns></returns>
         public static byte[] GetResource(string SourceFile, string ResourceType, int ID, ushort LangID = 1033)
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Getting resource '{ResourceType}' with ID '{ID}' from PE file '{SourceFile}'.");
             PortableExecutable PE_File = new(SourceFile);
             return PE_File.GetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID))).Data;
         }
@@ -227,14 +236,14 @@ namespace WinPaletter
         /// <param name="treeView"></param>
         public static void ReplaceResource(string SourceFile, string ResourceType, int ID, byte[] NewRes, ushort LangID = 1033, TreeView treeView = null)
         {
-
             if (System.IO.Path.GetFullPath(SourceFile).ToLower().StartsWith(SysPaths.Windows, StringComparison.OrdinalIgnoreCase))
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Replacing resource '{ResourceType}' with ID '{ID}' in PE file '{SourceFile}'.");
+
                 // It is a system PE File that needs rights/permissions modification.
 
                 if (Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Program.Settings.ThemeApplyingBehavior.PE_ModifyByDefault || !Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Forms.PE_Warning.NotifyAction(SourceFile, ResourceType, ID, LangID) == DialogResult.OK)
                 {
-
                     string TempFile = System.IO.Path.GetTempFileName();
 
                     if (treeView is not null)
@@ -259,6 +268,7 @@ namespace WinPaletter
                                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
                             PortableExecutable PE_File = new(SourceFile);
                             PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
 
                             if (treeView is not null)
                                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
@@ -277,6 +287,7 @@ namespace WinPaletter
                     ThemeLog.AddNode(treeView, $"Replacing '{System.IO.Path.GetFileName(SourceFile)}' resources", "pe_patch");
                 PortableExecutable PE_File = new(SourceFile);
                 PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
             }
 
         }
@@ -292,6 +303,7 @@ namespace WinPaletter
             {
                 try
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting old PE backup file `{backupFile}`");
                     System.IO.File.Delete(backupFile);
                 }
                 catch { } // Ignore deleting backup File if it fails
@@ -306,10 +318,13 @@ namespace WinPaletter
 
                 System.IO.File.Move(SourceFile, backupFile);
                 System.IO.File.Copy(backupFile, SourceFile);
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"A backup to PE file has been created as `{backupFile}`");
                 return result;
             }
             catch
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't backup PE file `{SourceFile}");
                 return false;
             }
         }
@@ -335,6 +350,8 @@ namespace WinPaletter
             accessControl.AddAccessRule(AccessRule);
             System.IO.File.SetAccessControl(SourceFile, accessControl);
 
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been backed up to `{BackupFile}`");
+
             return true;
         }
 
@@ -352,6 +369,9 @@ namespace WinPaletter
 
             System.IO.File.SetAccessControl(SourceFile, BackupAccessControl);
             System.IO.File.Delete(BackupFile);
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been restored from `{BackupFile}`");
+
             return true;
         }
 
@@ -361,6 +381,9 @@ namespace WinPaletter
         /// <exception cref="Exception"></exception>
         private static void PreparePrivileges()
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Preparing privileges for PE file modification.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Enabling SeTakeOwnershipPrivilege, SeSecurityPrivilege, SeRestorePrivilege, and SeBackupPrivilege.");
+
             if (!NativeMethods.advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
             if (!NativeMethods.advapi.EnablePrivilege("SeSecurityPrivilege", false)) throw new Exception("Failed to get SeSecurityPrivilege");
             if (!NativeMethods.advapi.EnablePrivilege("SeRestorePrivilege", false)) throw new Exception("Failed to get SeRestorePrivilege");

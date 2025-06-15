@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Media;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +21,7 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
             DLLFunc.RemoveFormTitlebarTextAndIcon(Handle);
-            Icon = FormsExtensions.Icon<MainForm>();    
+            Icon = FormsExtensions.Icon<MainForm>();
 
             labelAlt1.Text = Text;
             next_btn.Text = Program.Lang.Strings.General.Next;

@@ -4,8 +4,10 @@ using Serilog;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Media;
 using System.Net;
 using System.Security.Principal;
+using System.ServiceProcess;
 using System.Threading;
 using System.Windows.Forms;
 

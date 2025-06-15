@@ -349,7 +349,7 @@
             this.separatorH2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH2.Location = new System.Drawing.Point(8, 241);
+            this.separatorH2.Location = new System.Drawing.Point(8, 248);
             this.separatorH2.Name = "separatorH2";
             this.separatorH2.Size = new System.Drawing.Size(735, 1);
             this.separatorH2.TabIndex = 56;
@@ -368,7 +368,7 @@
             this.groupBox62.Controls.Add(this.separatorH1);
             this.groupBox62.Controls.Add(this.label96);
             this.groupBox62.Controls.Add(this.pictureBox63);
-            this.groupBox62.Location = new System.Drawing.Point(8, 253);
+            this.groupBox62.Location = new System.Drawing.Point(8, 260);
             this.groupBox62.Name = "groupBox62";
             this.groupBox62.Size = new System.Drawing.Size(735, 210);
             this.groupBox62.TabIndex = 55;
@@ -485,7 +485,7 @@
             this.label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(8, 58);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(735, 170);
+            this.label5.Size = new System.Drawing.Size(735, 192);
             this.label5.TabIndex = 5;
             this.label5.Text = resources.GetString("label5.Text");
             // 

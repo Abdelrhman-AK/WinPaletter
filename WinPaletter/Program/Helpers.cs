@@ -36,11 +36,15 @@ namespace WinPaletter
                     byte[] hash = md5.ComputeHash(System.IO.File.ReadAllBytes(path));
                     string result = BitConverter.ToString(hash).Replace("-", string.Empty);
                     MD5_str = result.ToUpper();
+
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MD5 hash of the file `{path}` is: {MD5_str}");
                 }
             }
             else
             {
                 MD5_str = "0";
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"File `{path}` does not exist, MD5 hash cannot be calculated. Returning 0.");
             }
 
             return MD5_str;
@@ -58,6 +62,8 @@ namespace WinPaletter
 
             if (!System.IO.File.Exists(fullFilePath))
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File `{fullFilePath}` does not exist, returning it as unique file name.");
+
                 // The File with the given name does not exist, so it is already unique
                 return fullFilePath;
             }
@@ -74,6 +80,8 @@ namespace WinPaletter
                 counter++;
             }
             while (System.IO.File.Exists(fullFilePath));
+
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File `{fullFilePath}` already exists, returning a unique file name: {fullFilePath}.");
 
             return fullFilePath;
         }
@@ -100,8 +108,10 @@ namespace WinPaletter
                     }
                 })
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Sending command to Command Prompt as Administrator: {command}");
                     process.Start();
                     process.WaitForExit();
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command executed successfully: {command}");
                 }
 
                 wic.Undo();
@@ -124,6 +134,15 @@ namespace WinPaletter
                     processes.Add(p);
             }
 
+            if (processes.Count > 0)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {processes.Count} running processes with the FullPath: {FullPath}");
+            }
+            else
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"No running processes found with the FullPath: {FullPath}");
+            }
+
             return processes;
         }
 
@@ -132,6 +151,8 @@ namespace WinPaletter
         /// </summary>
         private static void LoadThemeManager()
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Theme Manager and setting Window Style for the preview.");
+
             if (OS.W12)
                 WindowStyle = PreviewHelpers.WindowStyle.W12;
 
@@ -228,6 +249,8 @@ namespace WinPaletter
             }
             catch
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"Failed to load JetBrains Mono font from memory, falling back to Lucida Console.");
+
                 Fonts.Console = new("Lucida Console", 7.5f);
                 Fonts.ConsoleMedium = new("Lucida Console", 9f);
                 Fonts.ConsoleLarge = new("Lucida Console", 10f);
@@ -243,10 +266,12 @@ namespace WinPaletter
             {
                 try
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading language file: {Settings.Language.File}");
                     Lang.Load(Settings.Language.File);
                 }
                 catch (Exception ex)
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, ex, $"Failed to load language file: {Settings.Language.File}. Using default language instead.");
                     Forms.BugReport.ThrowError(ex);
                 }
             }
@@ -278,14 +303,7 @@ namespace WinPaletter
 
             if (!OS.WXP)
             {
-                try { Monitor(); }
-                catch (Exception ex)
-                {
-                    if (MsgBox(Lang.Strings.Messages.MonitorIssue, MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, $"{Lang.Strings.Messages.MonitorIssue2}\r\n{Lang.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK}") == DialogResult.OK)
-                    {
-                        Forms.BugReport.ThrowError(ex);
-                    }
-                }
+                Monitor();
             }
             else
             {
@@ -492,7 +510,7 @@ namespace WinPaletter
 
                 // Update version information
                 List<string> versionHistory = [Version, .. Settings.General.WhatsNewRecord];
-                versionHistory = versionHistory.Distinct().ToList();
+                versionHistory = [.. versionHistory.Distinct()];
                 Settings.General.WhatsNewRecord = [.. versionHistory];
 
                 // Save updated settings
@@ -566,9 +584,11 @@ namespace WinPaletter
                     sw.Reset();
                     sw.Start();
 
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}`.");
                     Program.ExplorerKiller.Start();
                     Program.ExplorerKiller.WaitForExit();
                     Program.Explorer_exe.Start();
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Windows Explorer process restarted successfully.");
 
                     sw.Stop();
 
@@ -665,6 +685,7 @@ namespace WinPaletter
         {
             try
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Pinging URL: {url}");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Timeout = Timeout;
                 request.AllowAutoRedirect = false;
@@ -672,11 +693,13 @@ namespace WinPaletter
 
                 using (request.GetResponse())
                 {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Ping to URL `{url}` was successful.");
                     return true;
                 }
             }
             catch
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"Ping to URL `{url}` failed.");
                 return false;
             }
         }
@@ -690,6 +713,8 @@ namespace WinPaletter
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Getting Windows Screen Scaling Factor. Returning as percentage: {percentage}");
+
                 Graphics GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
                 IntPtr DeviceContextHandle = GraphicsObject.GetHdc();
                 int LogicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
@@ -703,6 +728,8 @@ namespace WinPaletter
                 GraphicsObject.Dispose();
 
                 wic.Undo();
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Windows Screen Scaling Factor: {ScreenScalingFactor} (as percentage: {percentage})");
                 return ScreenScalingFactor;
             }
         }
