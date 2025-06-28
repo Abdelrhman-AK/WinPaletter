@@ -88,6 +88,7 @@ namespace WinPaletter
             UI.WP.Button button_load = buttons.Where(b => b.Name.StartsWith("btn_load_into_theme")).FirstOrDefault() ?? null; ;
             UI.WP.Button button_apply = buttons.Where(b => b.Name.StartsWith("btn_apply")).FirstOrDefault() ?? null; ;
             UI.WP.Button button_cancel = buttons.Where(b => b.Name.StartsWith("btn_cancel")).FirstOrDefault() ?? null; ;
+            UI.WP.Button button_CPL = buttons.Where(b => b.Name.StartsWith("btn_CPL")).FirstOrDefault() ?? null; ;
 
             UI.WP.RadioImage mode_advanced = modes.Where(b => b.Name.StartsWith("checker_mode_advanced")).FirstOrDefault() ?? null;
             UI.WP.RadioImage mode_simple = modes.Where(b => b.Name.StartsWith("checker_mode_simple")).FirstOrDefault() ?? null;
@@ -111,6 +112,7 @@ namespace WinPaletter
             button_import.Text = Program.Lang.Strings.Previewer.Import_wpth;
             button_palette_generate.Text = Program.Lang.Strings.Previewer.GeneratePalette_image;
             button_saveas_MSTheme.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme;
+            button_CPL.Text = Program.Lang.Strings.Previewer.Open_in_CPL;
             mode_advanced.Text = Program.Lang.Strings.Previewer.Mode_advanced;
             mode_simple.Text = Program.Lang.Strings.Previewer.Mode_simple;
             button_load.Text = Program.Lang.Strings.Previewer.Load_into_current_theme;
@@ -272,6 +274,9 @@ namespace WinPaletter
             if (button_palette_generate != null)
                 button_palette_generate.Click += _data.OnGeneratePaletteFromImage ?? null;
 
+            if (button_CPL != null)
+                button_CPL.Click += _data.OpenInControlPanel ?? null;
+
             if (button_saveas_MSTheme != null)
                 button_saveas_MSTheme.Click += _data.OnSaveAsMSTheme ?? null;
 
@@ -354,6 +359,9 @@ namespace WinPaletter
 
                 if (button_saveas_MSTheme != null)
                     button_saveas_MSTheme.Click -= _data.OnSaveAsMSTheme ?? null;
+
+                if (button_CPL != null)
+                    button_CPL.Click -= _data.OpenInControlPanel ?? null;
 
                 if (import_current != null)
                     import_current.Click -= _data.OnImportFromCurrentApplied ?? null;
@@ -460,6 +468,20 @@ namespace WinPaletter
         /// Flag that controls if form can be dragged over by a ColorItem
         /// </summary>
         public bool CanDragOver = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item can be opened in the Control Panel.
+        /// </summary>
+        public bool CanOpenInControlPanel
+        {
+            get => _canOpenInControlPanel;
+            set
+            {
+                _canOpenInControlPanel = value;
+                btn_CPL.Visible = value;
+            }
+        }
+        private bool _canOpenInControlPanel = false;
 
         #endregion
 
@@ -710,6 +732,11 @@ namespace WinPaletter
         /// EventHandler associated with clicking on 'Import from scheme > Windows WXP' button
         /// </summary>
         public EventHandler OnImportFromScheme_XP { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handler that is triggered to open the control panel.
+        /// </summary>
+        public EventHandler OpenInControlPanel { get; set; }
 
         /// <summary>
         /// Controls if user can switch between advanced and simple modes

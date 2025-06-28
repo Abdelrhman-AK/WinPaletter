@@ -6,6 +6,7 @@ using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.Retro;
 
 namespace WinPaletter.UI.Style
 {
@@ -336,7 +337,7 @@ namespace WinPaletter.UI.Style
             if (ctrl == null) return;
 
             // Don't apply the style to certain controls (Classic controls)
-            bool b = ctrl.GetType().Name.ToUpper().StartsWith("RETRO.");
+            bool b = ctrl.GetType().Namespace.ToUpper() == typeof(WindowR).Namespace.ToUpper();
 
             if (!b)
             {

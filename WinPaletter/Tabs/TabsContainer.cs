@@ -1298,7 +1298,12 @@ namespace WinPaletter.Tabs
                             if (OS.WVista || OS.W7 || OS.W8x)
                             {
                                 // Draw a line around the tab to fix appearance issue that doesn't fit Windows style
-                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 128, 0, 0, 0))) { G.DrawPath(Px, path); }
+                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 128, 255, 255, 255))) 
+                                { 
+                                    G.ExcludeClip(new Rectangle(rect.X, rect.Y + rect.Height - 2, rect.Width + 1, 2));
+                                    G.DrawPath(Px, path);
+                                    G.ResetClip();
+                                }
                             }
                             else
                             {

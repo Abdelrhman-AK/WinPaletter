@@ -21,8 +21,11 @@ namespace WinPaletter.Tabs
         {
             BackColor = Color.Black;
             DoubleBuffered = true;
+            UpdateColors();
             UpdateBackDrop();
         }
+
+        Color activeTtl, inactiveTtl, activeTtlG, inactiveTtlG;
 
         public static bool Transparency
         {
@@ -86,6 +89,8 @@ namespace WinPaletter.Tabs
             System = 1,
         }
 
+        private bool isCompositionEnabled = DWMAPI.IsCompositionEnabled();
+
         /// <summary>
         /// Gets the type of the titlebar according to the OS settings.
         /// </summary>
@@ -93,7 +98,7 @@ namespace WinPaletter.Tabs
         {
             get
             {
-                if (DWMAPI.IsCompositionEnabled())
+                if (isCompositionEnabled)
                 {
                     if (OS.WVista || OS.W7 || OS.W8x)
                     {
@@ -117,8 +122,7 @@ namespace WinPaletter.Tabs
                 }
                 else
                 {
-                    if (Program.ClassicThemeRunning) return TitlebarTypes.Classic;
-                    else return TitlebarTypes.Basic;
+                    return Program.ClassicThemeRunning ? TitlebarTypes.Classic : TitlebarTypes.Basic;
                 }
             }
         }
@@ -215,9 +219,30 @@ namespace WinPaletter.Tabs
 
         private void OnSystemColorsUpdated(object sender, UserPreferenceChangedEventArgs e)
         {
+            isCompositionEnabled = DWMAPI.IsCompositionEnabled();
+
             if (e.Category == UserPreferenceCategory.Color || e.Category == UserPreferenceCategory.VisualStyle)
             {
+                UpdateColors();
                 if (!DesignMode) UpdateBackDrop();
+            }
+        }
+
+        private void UpdateColors()
+        {
+            if (TitlebarType == TitlebarTypes.ColorPrevalence)
+            {
+                activeTtl = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse().ToArgb()))).Reverse();
+                inactiveTtl = Color.FromArgb(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse().ToArgb()))).Reverse();
+                activeTtlG = activeTtl;
+                inactiveTtlG = inactiveTtl;
+            }
+            else
+            {
+                activeTtl = TitlebarType == TitlebarTypes.Basic ? Color.FromArgb(185, 209, 234) : SystemColors.ActiveCaption;
+                inactiveTtl = TitlebarType == TitlebarTypes.Basic ? Color.FromArgb(215, 228, 242) : SystemColors.InactiveCaption;
+                activeTtlG = TitlebarType == TitlebarTypes.Basic ? activeTtl : SystemColors.GradientActiveCaption;
+                inactiveTtlG = TitlebarType == TitlebarTypes.Basic ? inactiveTtl : SystemColors.GradientInactiveCaption;
             }
         }
 
@@ -342,38 +367,35 @@ namespace WinPaletter.Tabs
 
                 form?.ResetEffect();
 
-                if (TitlebarType == TitlebarTypes.DWM)
+                if (Flag ==  Flags.System)
                 {
-                    BackColor = Color.Black;
-                    if (p != Padding.Empty) form?.DropEffect(p);
-                }
+                    TitlebarTypes type = TitlebarType;
 
-                else if (TitlebarType == TitlebarTypes.ColorPrevalence)
-                {
-                    Color activeTtl, inactiveTtl;
+                    if (type == TitlebarTypes.DWM)
+                    {
+                        BackColor = Color.Black;
+                        if (p != Padding.Empty) form?.DropEffect(p);
+                    }
 
-                    object y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse().ToArgb());
-                    activeTtl = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+                    else if (type == TitlebarTypes.ColorPrevalence)
+                    {
+                        BackColor = _formFocused ? activeTtl : inactiveTtl;
+                    }
 
-                    y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse().ToArgb());
-                    inactiveTtl = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+                    else if (type == TitlebarTypes.AppMode)
+                    {
+                        BackColor = Program.Style.DarkMode ? Color.FromArgb(32, 32, 32) : OS.W10 ? Color.White : Color.FromArgb(243, 243, 243);
+                    }
 
-                    BackColor = _formFocused ? activeTtl : inactiveTtl;
-                }
+                    else if (type == TitlebarTypes.Basic)
+                    {
+                        BackColor = Color.Black;
+                    }
 
-                else if (TitlebarType == TitlebarTypes.AppMode)
-                {
-                    BackColor = Program.Style.DarkMode ? Color.FromArgb(32, 32, 32) : OS.W10 ? Color.White : Color.FromArgb(243, 243, 243);
-                }
-
-                else if (TitlebarType == TitlebarTypes.Basic)
-                {
-                    BackColor = Color.Black;
-                }
-
-                else if (TitlebarType == TitlebarTypes.Classic)
-                {
-                    BackColor = Color.Black;
+                    else if (type == TitlebarTypes.Classic)
+                    {
+                        BackColor = Color.Black;
+                    }
                 }
             }
         }
@@ -391,12 +413,12 @@ namespace WinPaletter.Tabs
             // Inferior border
             using (Pen P = new(scheme.Colors.Line_Hover(0))) { G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); }
 
-            if (TitlebarType == TitlebarTypes.Classic || TitlebarType == TitlebarTypes.Basic)
+            if (Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic || TitlebarType == TitlebarTypes.Basic))
             {
                 Rectangle rect = new(0, 0, Width, Height);
                 using (LinearGradientBrush brush = new(rect,
-                    _formFocused ? SystemColors.ActiveCaption : SystemColors.InactiveCaption,
-                    _formFocused ? SystemColors.GradientActiveCaption : SystemColors.GradientInactiveCaption, LinearGradientMode.Horizontal))
+                    _formFocused ? activeTtl : inactiveTtl,
+                    _formFocused ? activeTtlG : inactiveTtlG, LinearGradientMode.Horizontal))
                 {
                     G.FillRectangle(brush, rect);
                 }

@@ -2032,6 +2032,7 @@ namespace WinPaletter
             this.retroDesktopColors1.EnableEditingColors = true;
             this.retroDesktopColors1.EnableGradient = true;
             this.retroDesktopColors1.EnableTheming = false;
+            this.retroDesktopColors1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.retroDesktopColors1.GradientActiveTitle = System.Drawing.Color.Empty;
             this.retroDesktopColors1.GradientInactiveTitle = System.Drawing.Color.Empty;
             this.retroDesktopColors1.GrayText = System.Drawing.Color.Empty;
@@ -2044,6 +2045,7 @@ namespace WinPaletter
             this.retroDesktopColors1.InfoText = System.Drawing.Color.Empty;
             this.retroDesktopColors1.InfoWindow = System.Drawing.Color.Empty;
             this.retroDesktopColors1.Location = new System.Drawing.Point(0, 0);
+            this.retroDesktopColors1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.retroDesktopColors1.Menu = System.Drawing.Color.Empty;
             this.retroDesktopColors1.MenuBar = System.Drawing.Color.Empty;
             this.retroDesktopColors1.MenuHilight = System.Drawing.Color.Empty;

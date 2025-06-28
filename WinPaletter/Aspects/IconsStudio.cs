@@ -319,12 +319,12 @@ namespace WinPaletter
             //winIcon5?.Icon?.Dispose();
             //winIcon6?.Icon?.Dispose();
 
-            pictureBox1?.Image?.Dispose();
-            pictureBox6?.Image?.Dispose();
-            pictureBox9?.Image?.Dispose();
-            pictureBox2?.Image?.Dispose();
-            pictureBox5?.Image?.Dispose();
-            pictureBox8?.Image?.Dispose();
+            //pictureBox1?.Image?.Dispose();
+            //pictureBox6?.Image?.Dispose();
+            //pictureBox9?.Image?.Dispose();
+            //pictureBox2?.Image?.Dispose();
+            //pictureBox5?.Image?.Dispose();
+            //pictureBox8?.Image?.Dispose();
         }
 
         public void LoadFromTM(Theme.Manager TM)

@@ -581,31 +581,22 @@ namespace WinPaletter
                 {
                     System.IO.File.Delete(theme.FullPath); // Delete the old file if MD5 doesn't match
                     Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
-                    TryDownloadFile(theme);
+                    Download(theme);
                 }
             }
             else
             {
                 Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.DownloadTheme, theme.FileName, theme.URL_ThemeFile));
-                TryDownloadFile(theme);
+                Download(theme);
             }
         }
 
         /// <summary>
         /// Attempt to download the file from the given URL.
         /// </summary>
-        private void TryDownloadFile(ThemeData theme)
+        private void Download(ThemeData theme)
         {
             DM.DownloadFile(theme.URL_ThemeFile, theme.FullPath);
-
-            //try
-            //{
-            //    DM.DownloadFile(theme.URL_ThemeFile, theme.FullPath);
-            //}
-            //catch
-            //{
-            //    // Ignore errors when downloading
-            //}
         }
 
         /// <summary>

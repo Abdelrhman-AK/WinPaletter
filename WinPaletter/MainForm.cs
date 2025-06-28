@@ -43,12 +43,6 @@ namespace WinPaletter
             // Start showing home page tab.
             tabControl1.Visible = false;
 
-            using (SoundPlayer SP = new(Assets.Sounds.Startup))
-            {
-                SP.Load();
-                SP.Play();
-            }
-
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");
             if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Welcome);

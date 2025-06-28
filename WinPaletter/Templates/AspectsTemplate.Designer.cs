@@ -41,6 +41,7 @@
             this.btn_import = new WinPaletter.UI.WP.Button();
             this.btn_palette_generate = new WinPaletter.UI.WP.Button();
             this.btn_saveas_MSTheme = new WinPaletter.UI.WP.Button();
+            this.btn_CPL = new WinPaletter.UI.WP.Button();
             this.checker = new WinPaletter.UI.WP.Toggle();
             this.checker_img = new System.Windows.Forms.PictureBox();
             this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
@@ -61,7 +62,7 @@
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottom_buttons.Location = new System.Drawing.Point(0, 513);
             this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(884, 48);
+            this.bottom_buttons.Size = new System.Drawing.Size(1048, 48);
             this.bottom_buttons.TabIndex = 118;
             // 
             // btn_apply
@@ -75,7 +76,7 @@
             this.btn_apply.Image = ((System.Drawing.Image)(resources.GetObject("btn_apply.Image")));
             this.btn_apply.ImageGlyph = null;
             this.btn_apply.ImageGlyphEnabled = false;
-            this.btn_apply.Location = new System.Drawing.Point(498, 6);
+            this.btn_apply.Location = new System.Drawing.Point(662, 6);
             this.btn_apply.Name = "btn_apply";
             this.btn_apply.Size = new System.Drawing.Size(115, 36);
             this.btn_apply.TabIndex = 213;
@@ -111,7 +112,7 @@
             this.btn_cancel.Image = null;
             this.btn_cancel.ImageGlyph = null;
             this.btn_cancel.ImageGlyphEnabled = false;
-            this.btn_cancel.Location = new System.Drawing.Point(412, 6);
+            this.btn_cancel.Location = new System.Drawing.Point(576, 6);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(80, 36);
             this.btn_cancel.TabIndex = 212;
@@ -148,7 +149,7 @@
             this.btn_load_into_theme.Image = ((System.Drawing.Image)(resources.GetObject("btn_load_into_theme.Image")));
             this.btn_load_into_theme.ImageGlyph = null;
             this.btn_load_into_theme.ImageGlyphEnabled = false;
-            this.btn_load_into_theme.Location = new System.Drawing.Point(619, 6);
+            this.btn_load_into_theme.Location = new System.Drawing.Point(783, 6);
             this.btn_load_into_theme.Name = "btn_load_into_theme";
             this.btn_load_into_theme.Size = new System.Drawing.Size(260, 36);
             this.btn_load_into_theme.TabIndex = 211;
@@ -167,7 +168,7 @@
             this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender1.Name = "titlebarExtender1";
-            this.titlebarExtender1.Size = new System.Drawing.Size(884, 51);
+            this.titlebarExtender1.Size = new System.Drawing.Size(1048, 51);
             this.titlebarExtender1.TabIndex = 115;
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             // 
@@ -181,9 +182,10 @@
             this.flowLayoutPanel1.Controls.Add(this.btn_import);
             this.flowLayoutPanel1.Controls.Add(this.btn_palette_generate);
             this.flowLayoutPanel1.Controls.Add(this.btn_saveas_MSTheme);
+            this.flowLayoutPanel1.Controls.Add(this.btn_CPL);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(7, 6);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(772, 39);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(936, 39);
             this.flowLayoutPanel1.TabIndex = 124;
             // 
             // pin_button
@@ -254,12 +256,30 @@
             this.btn_saveas_MSTheme.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_saveas_MSTheme.UseVisualStyleBackColor = false;
             // 
+            // btn_CPL
+            // 
+            this.btn_CPL.CustomColor = System.Drawing.Color.Empty;
+            this.btn_CPL.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.btn_CPL.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_CPL.ForeColor = System.Drawing.Color.White;
+            this.btn_CPL.Image = ((System.Drawing.Image)(resources.GetObject("btn_CPL.Image")));
+            this.btn_CPL.ImageGlyph = null;
+            this.btn_CPL.ImageGlyphEnabled = false;
+            this.btn_CPL.Location = new System.Drawing.Point(731, 3);
+            this.btn_CPL.Name = "btn_CPL";
+            this.btn_CPL.Size = new System.Drawing.Size(200, 34);
+            this.btn_CPL.TabIndex = 125;
+            this.btn_CPL.Text = "0";
+            this.btn_CPL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_CPL.UseVisualStyleBackColor = false;
+            this.btn_CPL.Visible = false;
+            // 
             // checker
             // 
             this.checker.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.checker.Checked = false;
             this.checker.DarkLight_Toggler = false;
-            this.checker.Location = new System.Drawing.Point(836, 15);
+            this.checker.Location = new System.Drawing.Point(1000, 15);
             this.checker.Name = "checker";
             this.checker.Size = new System.Drawing.Size(40, 20);
             this.checker.TabIndex = 121;
@@ -269,7 +289,7 @@
             // 
             this.checker_img.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.checker_img.Image = global::WinPaletter.Properties.Resources.checker_disabled;
-            this.checker_img.Location = new System.Drawing.Point(794, 10);
+            this.checker_img.Location = new System.Drawing.Point(958, 10);
             this.checker_img.Name = "checker_img";
             this.checker_img.Size = new System.Drawing.Size(35, 31);
             this.checker_img.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -282,7 +302,7 @@
             this.separatorV1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorV1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV1.Location = new System.Drawing.Point(785, 7);
+            this.separatorV1.Location = new System.Drawing.Point(949, 7);
             this.separatorV1.Name = "separatorV1";
             this.separatorV1.Size = new System.Drawing.Size(1, 37);
             this.separatorV1.TabIndex = 113;
@@ -294,7 +314,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(884, 561);
+            this.ClientSize = new System.Drawing.Size(1048, 561);
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.titlebarExtender1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -334,5 +354,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         public Tabs.TitlebarExtender titlebarExtender1;
         internal UI.WP.Button pin_button;
+        internal UI.WP.Button btn_CPL;
     }
 }
