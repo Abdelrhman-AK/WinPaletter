@@ -11,13 +11,14 @@ While significant new features are not anticipated, the goal is to place the pro
 
 | Area | Update Description | Progress |
 |---------------------------------|-----------------------------------------------------------|---------------------|
-| System Restore Point | Automatically create a restore point before applying any theme | ✔️ Done |
 | Windows 8 Support | Adding support for Windows 8 build 9200 (and builds below Windows 8.1) | ⌛ In progress |
 | Bugs fixes | Fix reported and non reported bugs and issues | ⌛ In progress |
 | Simplified UI Components | Streamlined user interface for enhanced workflow | ⌛ In progress |
-| Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ✔️ Done |
+| Wiki rewrite | Wiki will be improved and rewritten to make users can understand WinPaletter more after its massive UI refresh | ⌛ In progress |
 | Logging System | New "WinPaletter Log" for sophisticated user diagnostics | ⌛ In progress |
 | Developer Support | Better in-code documentation and organized comments for developers | ⌛ In progress |
+| System Restore Point | Automatically create a restore point before applying any theme | ✔️ Done |
+| Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ✔️ Done |
 | WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ✔️ Done |
 
 > [!IMPORTANT]
