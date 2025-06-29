@@ -117,6 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pictureBox63.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAA21JREFUSEvd
+        1dtrE1kcB/CgrPugVPGCwvqyvut/IL6JFUERKpb1BoW2ZA1SmzSNTScnc5/MJYmTmVptZVXEy4OXrRfQ
+        XbC2Fi+tNhRDI+rulsXt0j6EpsVJy/QnZ8iU5NiI+qZfGAic5DPhd76H4/F810EILeHj5h5R0zeTa5xs
+        bonKqd34O+TaZ4WLm9V83HzNawZwqjHOqcYhWZaXI8NYwSqpw3RM/z8qnQQkJV8jIbmD/P0nI2hmI68Z
+        80XceVgl5TyMrAMd06GIQ0RMACXE59sFrZF0KkZQzZovwKGd1yDMx/eSTsXwamoXiXOqWdCM7pxqdOVo
+        WS+U4ZwGIUbdSToVw2mG5uJC3LRu9Nyxh4fTkMlkIJvNwmg2C3fu/WlHY0kL4ydYFVoZRSGdRcNr5jZO
+        NSwH10yrt68fRkZG4N7AMIiX+yF2dQAeDmVgbGwM0iMvoV1IWCFGgVZafh+gY1tJbyG4jpxqnONUY84d
+        y41bd22M85f6YE3dJag6fBGqDl2AdUfOQ/L6ExgfH4f7D/rtVlqGYDQGASTN+iPCuaY2cTfpezjVeFs+
+        c2M2nU7D/YFhWFuCrzz4G6z6pRs2HOyCF6P/wMTEBIRoeS4QkaCZEqApzMOxNvYN6eMXOGNx24I3E89c
+        uNz/Eb669jSs2d8BHTefwtTUFIjJzlwJDr4Q8570PaySmi6tomZ05fCGSlcGFsXX7ktBZ88zmJmZAT5+
+        KleCw9EgnSd9D6umhhhZt92e07I+i9uCNxTPnMQ31uow+vd/kM/nwR8R50pw29uCBknfCRLMTbSU7HEP
+        Ea4ibkvi2mNYf+DMAv5TrQ5nbw+CZVnQ++ip7eK/Bunfj/qZn0m3LAihZREx8QIfIiQlCriKuC1Dmb+c
+        meOxZN6+c/Cxf9/BcUqYLf7z5/X1nT+Q3qKhxESDe0Jxz//ofWRPTk46G4pnns9PQ9/jQbuZEq0iDt6W
+        aB3pVAzFxavdE1o8RNDGqgXp5OmckDyVCyCpUDJz8LYg8AbQdtKpmDCnhkpx5xCV97wMb/RHoMFPBUmn
+        YkKsciLEKPMEnm0KC4ljbWzS18q8KsXrm6n5uuPhEOl8MsGoUh2MSlkHjwhnamquLnXX8GdvEHUX8dG6
+        pvCXXThu8HXop0R8LS4j13w+348Nfurrr8xvJh8AHKbowbid1DsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Windows System Restore Points are snapshots of your system files and settings at a specific moment in time. They allow you to revert your system back to a previous, stable state if something goes wrong—without affecting your personal files. This feature is especially useful before making system-level changes, like installing drivers, updates, or customization tools.
+
+WinPaletter supports the creation of System Restore Points directly from within the app. Before applying any visual changes, you can create a restore point to ensure you have a safety net in case you need to undo the modifications. WinPaletter makes this process easy and integrated, helping you protect your system while you customize its appearance.
+
+Keep in mind that each restore point can take up around 100–300 MB of disk space, or even more. Frequently applying themes and creating restore points may consume significant storage over time. If your system is stable, consider reviewing and deleting older restore points to free up space. Always keep an eye on your system partition's free space to avoid running into performance or update issues.</value>
+  </data>
+  <data name="banner2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABHBJREFUWEft
+        lm1MU1cYx5/pMj/MzMmrcWZOV1iltJeWhGTJQrZlZi/JPmmBqBQYL4Ji6YYJEefC3Ob2SbN9WpbMbFnm
+        FuKQl77c297SAspLCRWL7IMaWOIEob291WVCifRZzr3Y1cNbrfLNX/KkSfu/53fPc889pwBPSQCVa3pj
+        riug1DrFfC0feifXEXxDxd5Jis0w9uA3Gi7YGvvdY5Fjv5Oh7RQ/1/HioI4XI1peRC0fRK0jiDmk7FL9
+        ybDCSRUbyGM4YUbDCnP0jT0yefzd5Fyn+J3OKc7pnES6pBgZTpCLFVDDBm9qyKdNQDUrlNFjxo3OGXpb
+        5xQDK4sX5JI4WnOS3BZAtVWw0OPGha4zVKBzirPLiGcZNuhlWIHXcAG3mhVGNZxwb0H6tyyWK9sSmFOb
+        Q5vp8VdEywuva/kF+cPiEYYTCskipK9RWIUXsjnhqNoqhBfE0VKZ/W/R+WXRWv9J1fLiBCW+z9iDDfpm
+        XE/nY1FbhO9jxBGV2d+vMvtNb7rwWTq7LFq78K0kXpAz9uC8hhX20LmlyLYEJrMtgYFss//oLou4nf59
+        VTRcaEeOIxiOXdk5XOA4nVszGLtwknqlrq7W9icKwwnDD71S1oCBzqwZua67KVGxTapwzgXxRTq3ZqhY
+        kYnuXrYAaqzCZTqzpqitwfdjNxCVxW+lMwljGt0LRp8Dar0OqPG0g+Hiy3QEXvrUfSJ2A9n549gUnUmY
+        Op8N6nwItV6E6kGE8p736AhsaXAUSHKztHPhqz//9S+dSRjTyJX/b8CDUNGtoSOQ8gmfScRSdfhRce5m
+        BEpdj78Ia3yboc43J93AYekGIlDeu/QRrTh7415Whx+z2v2obLmN6w84Ez9KH2DylUpy4xWEQ0MIVf1D
+        dCTKti/7nVnt07irTa7njT0ToB99js7FzZHrG8B0dVxu/2WEmkGEiouNdCxKaj2Xr2yZlOTK1mlMaRpC
+        KOY/o3NxYxppkmc/jHB4COHgwCyUX1r5jNj2tWeYyJUXpvCVs2MIRdYIlHWV0LlVkVsfkVpPnj2ZfWXv
+        aTq2iOR6Tqn4ZXz+tZYpJLXR2IWw3x6Bsp7j0ORa/VglGaPvhCwnM38g77sFBj6Zji9JeoOzMrN5AjP/
+        mMLtP9zAZwo7yKNA+KjnGlT2VUorm+bj0SQw+qrgyPB1SUyeOWm7PPMZMHTn0ZesSPox15mM3ycw4/xt
+        TPvKi7C3A+EAj1DWRQYMQ7XHC9WDPBwaIuWFWm9Ymi2RktVOxAcHECouzUCpW0+PHxdpx9zFO34av69o
+        nsSkxn6EPW0I+ziEEhfpBkJFL3mtEKoHUNpgSBFpVR8RI5R2j4GBX7zpPAqpxo6Mrac8wzt/u4Vpp7y4
+        rqAVQW9G2GdHMHQilLjlrpR1y1XaRb4LQ7HzDOjZpTecREiq43anfeHp2np6JLSpvjuyTt8qd6TAjFBo
+        RSiyzUORzQNFlibQtyno658oaY396Zvq3bs3FJx/Fz74NR8+PKcEffOif8pPiYf/APrFFUB5lmc4AAAA
+        AElFTkSuQmCC
+</value>
+  </data>
   <data name="label2.Text" xml:space="preserve">
     <value>WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
 
@@ -130,7 +183,6 @@ This wizard will help you set up and customize WinPaletter preferences to suit y
 
 To continue, click on `Next &gt;`</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -434,58 +486,6 @@ To continue, click on `Next &gt;`</value>
         D3f1jB09iUufPOHwCPUmBrHCe3Nf6WZQrK4urOaT6G1KH9efQdiiiJB5QoTNj/BrvVu/19OUPsGdwwT5
         wKqli0P81Jw5zPeXE93Rj53vL6ugb5YuCn/byuGa6G4h85U/4Fp7Tgz6sif4+koV3Jk9Sb34+rIK7557
         n6/Vqt/2zL3H195K0/+hZ5IQg4yGAgAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="pictureBox63.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAA21JREFUSEvd
-        1dtrE1kcB/CgrPugVPGCwvqyvut/IL6JFUERKpb1BoW2ZA1SmzSNTScnc5/MJYmTmVptZVXEy4OXrRfQ
-        XbC2Fi+tNhRDI+rulsXt0j6EpsVJy/QnZ8iU5NiI+qZfGAic5DPhd76H4/F810EILeHj5h5R0zeTa5xs
-        bonKqd34O+TaZ4WLm9V83HzNawZwqjHOqcYhWZaXI8NYwSqpw3RM/z8qnQQkJV8jIbmD/P0nI2hmI68Z
-        80XceVgl5TyMrAMd06GIQ0RMACXE59sFrZF0KkZQzZovwKGd1yDMx/eSTsXwamoXiXOqWdCM7pxqdOVo
-        WS+U4ZwGIUbdSToVw2mG5uJC3LRu9Nyxh4fTkMlkIJvNwmg2C3fu/WlHY0kL4ydYFVoZRSGdRcNr5jZO
-        NSwH10yrt68fRkZG4N7AMIiX+yF2dQAeDmVgbGwM0iMvoV1IWCFGgVZafh+gY1tJbyG4jpxqnONUY84d
-        y41bd22M85f6YE3dJag6fBGqDl2AdUfOQ/L6ExgfH4f7D/rtVlqGYDQGASTN+iPCuaY2cTfpezjVeFs+
-        c2M2nU7D/YFhWFuCrzz4G6z6pRs2HOyCF6P/wMTEBIRoeS4QkaCZEqApzMOxNvYN6eMXOGNx24I3E89c
-        uNz/Eb669jSs2d8BHTefwtTUFIjJzlwJDr4Q8570PaySmi6tomZ05fCGSlcGFsXX7ktBZ88zmJmZAT5+
-        KleCw9EgnSd9D6umhhhZt92e07I+i9uCNxTPnMQ31uow+vd/kM/nwR8R50pw29uCBknfCRLMTbSU7HEP
-        Ea4ibkvi2mNYf+DMAv5TrQ5nbw+CZVnQ++ip7eK/Bunfj/qZn0m3LAihZREx8QIfIiQlCriKuC1Dmb+c
-        meOxZN6+c/Cxf9/BcUqYLf7z5/X1nT+Q3qKhxESDe0Jxz//ofWRPTk46G4pnns9PQ9/jQbuZEq0iDt6W
-        aB3pVAzFxavdE1o8RNDGqgXp5OmckDyVCyCpUDJz8LYg8AbQdtKpmDCnhkpx5xCV97wMb/RHoMFPBUmn
-        YkKsciLEKPMEnm0KC4ljbWzS18q8KsXrm6n5uuPhEOl8MsGoUh2MSlkHjwhnamquLnXX8GdvEHUX8dG6
-        pvCXXThu8HXop0R8LS4j13w+348Nfurrr8xvJh8AHKbowbid1DsAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Windows System Restore Points are snapshots of your system files and settings at a specific moment in time. They allow you to revert your system back to a previous, stable state if something goes wrong—without affecting your personal files. This feature is especially useful before making system-level changes, like installing drivers, updates, or customization tools.
-
-WinPaletter supports the creation of System Restore Points directly from within the app. Before applying any visual changes, you can create a restore point to ensure you have a safety net in case you need to undo the modifications. WinPaletter makes this process easy and integrated, helping you protect your system while you customize its appearance.
-
-Keep in mind that each restore point can take up around 100–300 MB of disk space, or even more. Frequently applying themes and creating restore points may consume significant storage over time. If your system is stable, consider reviewing and deleting older restore points to free up space. Always keep an eye on your system partition's free space to avoid running into performance or update issues.</value>
-  </data>
-  <data name="banner2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAABHBJREFUWEft
-        lm1MU1cYx5/pMj/MzMmrcWZOV1iltJeWhGTJQrZlZi/JPmmBqBQYL4Ji6YYJEefC3Ob2SbN9WpbMbFnm
-        FuKQl77c297SAspLCRWL7IMaWOIEob291WVCifRZzr3Y1cNbrfLNX/KkSfu/53fPc889pwBPSQCVa3pj
-        riug1DrFfC0feifXEXxDxd5Jis0w9uA3Gi7YGvvdY5Fjv5Oh7RQ/1/HioI4XI1peRC0fRK0jiDmk7FL9
-        ybDCSRUbyGM4YUbDCnP0jT0yefzd5Fyn+J3OKc7pnES6pBgZTpCLFVDDBm9qyKdNQDUrlNFjxo3OGXpb
-        5xQDK4sX5JI4WnOS3BZAtVWw0OPGha4zVKBzirPLiGcZNuhlWIHXcAG3mhVGNZxwb0H6tyyWK9sSmFOb
-        Q5vp8VdEywuva/kF+cPiEYYTCskipK9RWIUXsjnhqNoqhBfE0VKZ/W/R+WXRWv9J1fLiBCW+z9iDDfpm
-        XE/nY1FbhO9jxBGV2d+vMvtNb7rwWTq7LFq78K0kXpAz9uC8hhX20LmlyLYEJrMtgYFss//oLou4nf59
-        VTRcaEeOIxiOXdk5XOA4nVszGLtwknqlrq7W9icKwwnDD71S1oCBzqwZua67KVGxTapwzgXxRTq3ZqhY
-        kYnuXrYAaqzCZTqzpqitwfdjNxCVxW+lMwljGt0LRp8Dar0OqPG0g+Hiy3QEXvrUfSJ2A9n549gUnUmY
-        Op8N6nwItV6E6kGE8p736AhsaXAUSHKztHPhqz//9S+dSRjTyJX/b8CDUNGtoSOQ8gmfScRSdfhRce5m
-        BEpdj78Ia3yboc43J93AYekGIlDeu/QRrTh7415Whx+z2v2obLmN6w84Ez9KH2DylUpy4xWEQ0MIVf1D
-        dCTKti/7nVnt07irTa7njT0ToB99js7FzZHrG8B0dVxu/2WEmkGEiouNdCxKaj2Xr2yZlOTK1mlMaRpC
-        KOY/o3NxYxppkmc/jHB4COHgwCyUX1r5jNj2tWeYyJUXpvCVs2MIRdYIlHWV0LlVkVsfkVpPnj2ZfWXv
-        aTq2iOR6Tqn4ZXz+tZYpJLXR2IWw3x6Bsp7j0ORa/VglGaPvhCwnM38g77sFBj6Zji9JeoOzMrN5AjP/
-        mMLtP9zAZwo7yKNA+KjnGlT2VUorm+bj0SQw+qrgyPB1SUyeOWm7PPMZMHTn0ZesSPox15mM3ycw4/xt
-        TPvKi7C3A+EAj1DWRQYMQ7XHC9WDPBwaIuWFWm9Ymi2RktVOxAcHECouzUCpW0+PHxdpx9zFO34av69o
-        nsSkxn6EPW0I+ziEEhfpBkJFL3mtEKoHUNpgSBFpVR8RI5R2j4GBX7zpPAqpxo6Mrac8wzt/u4Vpp7y4
-        rqAVQW9G2GdHMHQilLjlrpR1y1XaRb4LQ7HzDOjZpTecREiq43anfeHp2np6JLSpvjuyTt8qd6TAjFBo
-        RSiyzUORzQNFlibQtyno658oaY396Zvq3bs3FJx/Fz74NR8+PKcEffOif8pPiYf/APrFFUB5lmc4AAAA
-        AElFTkSuQmCC
 </value>
   </data>
   <data name="pictureBox79.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -900,35 +900,34 @@ Keep in mind that each restore point can take up around 100–300 MB of disk spa
   </data>
   <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAJUSURBVDhPvdTJbtNAGAdwU7jTvgCCtCJA06bNvjeOkyYhiZPQJXLDgRPP0QuqVPXKgUUslYAH
-        QFCoABFoUVheASFAXsZJHMfOJacPjUsS27EgPcBfsmyNZn6aGX8zBPE/A5ubE2qu4lBz66SavkKqy2UH
-        bjP3+2vk3MZUl2Z21Pw6Ui6vg5JZhU56BTqpMshUCckUvd2OlybN4yyj0huxLs0gNV8BCwzkBA3teAGk
-        WI6XIpmIebwhSvFqtEszvTEwkCJZaIXSPSmQCpsdLe3StckuzQjHwKAZSEHTR3GSO3na7BHdArOlx/jq
-        dWjtPgERg78xlChA8/4jYEvVPgYNNwmia+mGAYN4/JSarzT0M2s9fAw4Su0AEFUEgSyA8va91ta4/WCI
-        LS6B6IwIsLZ2cjg7mpk3L1NMFEHe29cAtf4F1Ppn7bv9dA84f0KHRQHNhYG/FJ4dgJ1sJWu1Z4gsgPzi
-        lQZp2LOXlpgwGwTRHszowNWsGTvaMxrUD58GoHpQBy6QHMGEC37g7N4hKGVW5i2xw49HM3u+r80OR3l3
-        CKyHNGD8eR/wM97hkoEgTshU6ae+NBp3dzWg86YGXDAFnI8C+XVNa0M37xgwbsbzAxsDEEdOFLb0dcaW
-        qxqKsf6esfh96x58Txb1GHDTLmPZ4OCz2Y7lBFPRWv4AA2ZzcV9t7tHCxpHC6Sg+TsfAeuyZBeuj148Y
-        Wo41fRQaA+M5m/PPl0M/8lxkCi3Gd0RnFI1iXsSec21/O7sw3vWlDxDEhHAx5ODtfhI/wrTHgdvM/f5p
-        fgGitm02/PuNbwAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAlRJREFUOE+9
+        1Mlu00AYB3BTuNO+AIK0IkDTps2+N46TJiGJk9AlcsOBE8/RC6pU9cqBRSyVgAdAUKgAEWhRWF4BIUBe
+        xkkcx84lpw+NSxLbsSA9wF+ybI1mfpoZfzME8T8Dm5sTaq7iUHPrpJq+QqrLZQduM/f7a+TcxlSXZnbU
+        /DpSLq+DklmFTnoFOqkyyFQJyRS93Y6XJs3jLKPSG7EuzSA1XwELDOQEDe14AaRYjpcimYh5vCFK8Wq0
+        SzO9MTCQIllohdI9KZAKmx0t7dK1yS7NCMfAoBlIQdNHcZI7edrsEd0Cs6XH+Op1aO0+ARGDvzGUKEDz
+        /iNgS9U+Bg03CaJr6YYBg3j8lJqvNPQzaz18DDhK7QAQVQSBLIDy9r3W1rj9YIgtLoHojAiwtnZyODua
+        mTcvU0wUQd7b1wC1/gXU+mftu/10Dzh/QodFAc2Fgb8Unh2AnWwla7VniCyA/OKVBmnYs5eWmDAbBNEe
+        zOjA1awZO9ozGtQPnwagelAHLpAcwYQLfuDs3iEoZVbmLbHDj0cze76vzQ5HeXcIrIc0YPx5H/Az3uGS
+        gSBOyFTpp740Gnd3NaDzpgZcMAWcjwL5dU1rQzfvGDBuxvMDGwMQR04UtvR1xparGoqx/p6x+H3rHnxP
+        FvUYcNMuY9ng4LPZjuUEU9Fa/gADZnNxX23u0cLGkcLpKD5Ox8B67JkF66PXjxhajjV9FBoD4zmb88+X
+        Qz/yXGQKLcZ3RGcUjWJexJ5zbX87uzDe9aUPEMSEcDHk4O1+Ej/CtMeB28z9/ml+AaK2bTb8+41vAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <data name="next_btn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAKDSURBVDhPvdTLTxNRFAbwEV0ynXunnUFcGPYSFoosFAjsNG6g03Y6paUDRBPDxrVuujEk2BeP
-        vixQXn1hAgtXrli6UokxcePCR1La+Bd0dcy506HToYFEE0/yJZOm9zd3vtwZjvuvE4n09C5UBnvnq5Ms
-        C5VB/M3+t0tHCBSpEC5FHXq54dDLwOsV4OcwVUyD1yvLRD8i9nVdh4SL48LsfsMR3gdHuNhKCRBu4ww+
-        5ecPRu3rO4YG98aE0E5TCO2CMIvZA2EWYRNH2MB5zFylyYer9+0OG6IXCAkW6iRYABLcBhLaAYHFhE3c
-        umuG1+iTA8HucXRmc4nObAKZ2QISxLTgFi4vFkEIFbrivF5+2alNRK7RQP43DeSBBjYA4TaOcAGGyycw
-        cviFXXeppM55D66eeVRLD4laDkTtNQvC/U93YeD5IQy8OGIZffcNpmoAI28+A8GbdVSyC2J4+1YbVNMP
-        RX8GRH8WGOzPwsTxDwZ0y53Sx9bu25U4goUHHaBTTQMLwmoGJo6/n4PMDFc+sWqsfYtWUNbSQy7fOjh9
-        KXCqmDT0L+Th5rPiWe69/Wo8cvUEqJZltVj7FjXLI3McXHF5V3+5fGuAcSLOYAN3qhm4W/oAt7feg6im
-        jFosfdPAxk80LCDHSUpyyeVdAZd31QjDcdcGfuNxHpzqmlGJtW8tB9Sfsx0bPNhTCSJ5EnXJkwTJg7CJ
-        G7u24h19+7M16s2dP9g4kic+JivxpuRJgAFfhCO83qS+TPdXzxzJHR2XlVhDUuLAYsFtlZxK3tTFHwdz
-        hEdLVHZHo7I71pCVmAErCDO84VKSy1iRfd3lE4n09E2/Grzujk1i+qZX/u4D+y/zB/0z+EABc71TAAAA
-        AElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAoNJREFUOE+9
+        1MtPE1EUBvARXTKde6edQVwY9hIWiiwUCOw0bqDTdjqlpQNEE8PGtW66MSTYF4++LFBefWECC1euWLpS
+        iTFx48JHUtr4F3R1zLnTodOhgUQTT/Ilk6b3N3e+3BmO+68TifT0LlQGe+erkywLlUH8zf63S0cIFKkQ
+        LkUdernh0MvA6xXg5zBVTIPXK8tEPyL2dV2HhIvjwux+wxHeB0e42EoJEG7jDD7l5w9G7es7hgb3xoTQ
+        TlMI7YIwi9kDYRZhE0fYwHnMXKXJh6v37Q4bohcICRbqJFgAEtwGEtoBgcWETdy6a4bX6JMDwe5xdGZz
+        ic5sApnZAhLEtOAWLi8WQQgVuuK8Xn7ZqU1ErtFA/jcN5IEGNgDhNo5wAYbLJzBy+IVdd6mkznkPrp55
+        VEsPiVoORO01C8L9T3dh4PkhDLw4Yhl99w2magAjbz4DwZt1VLILYnj7VhtU0w9FfwZEfxYY7M/CxPEP
+        BnTLndLH1u7blTiChQcdoFNNAwvCagYmjr+fg8wMVz6xaqx9i1ZQ1tJDLt86OH0pcKqYNPQv5OHms+JZ
+        7r39ajxy9QSolmW1WPsWNcsjcxxccXlXf7l8a4BxIs5gA3eqGbhb+gC3t96DqKaMWix908DGTzQsIMdJ
+        SnLJ5V0Bl3fVCMNx1wZ+43EenOqaUYm1by0H1J+zHRs82FMJInkSdcmTBMmDsIkbu7biHX37szXqzZ0/
+        2DiSJz4mK/Gm5EmAAV+EI7zepL5M91fPHMkdHZeVWENS4sBiwW2VnEre1MUfB3OER0tUdkejsjvWkJWY
+        ASsIM7zhUpLLWJF93eUTifT0Tb8avO6OTWL6plf+7gP7L/MH/TP4QAFzvVMAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="pictureBox4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

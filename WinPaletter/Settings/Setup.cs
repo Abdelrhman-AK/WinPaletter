@@ -49,7 +49,7 @@ namespace WinPaletter
 
         void LoadSettings()
         {
-            radioImage1.Checked = Program.Settings.ThemeApplyingBehavior.CreateSystemRestore;
+            radioImage2.Checked = Program.Settings.ThemeApplyingBehavior.CreateSystemRestore;
 
             toggle31.Checked = Program.Settings.BackupTheme.Enabled;
             textBox2.Text = Program.Settings.BackupTheme.BackupPath;
@@ -68,7 +68,7 @@ namespace WinPaletter
 
         void SaveSettings()
         {
-            Program.Settings.ThemeApplyingBehavior.CreateSystemRestore = radioImage1.Checked | radioImage2.Checked;
+            Program.Settings.ThemeApplyingBehavior.CreateSystemRestore = radioImage2.Checked;
 
             Program.Settings.BackupTheme.Enabled = toggle31.Checked;
             Program.Settings.BackupTheme.BackupPath = textBox2.Text;
@@ -97,7 +97,7 @@ namespace WinPaletter
                 Close();
                 return;
             }
-            else if (tablessControl1.SelectedIndex == tablessControl1.TabCount - 2 && (radioImage1.Checked || radioImage3.Checked))
+            else if (tablessControl1.SelectedIndex == tablessControl1.TabCount - 2 && (checkBox1.Checked))
             {
                 if (!OS.WXP)
                 {
