@@ -96,9 +96,6 @@ namespace WinPaletter
                 Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter log file path: {logFileName}");
                 Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
 
-                // Initialize the animator. It must be here to avoid some issues and bugs with its assembly
-                Animator = new() { Interval = 10, TimeStep = 0.05f, DefaultAnimation = AnimatorNS.Animation.Transparent, AnimationType = AnimatorNS.AnimationType.Transparent };
-
                 // Create the data directory if it does not exist
                 if (!System.IO.Directory.Exists(SysPaths.ProgramFilesData))
                 {

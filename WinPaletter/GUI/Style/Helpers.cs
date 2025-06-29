@@ -451,15 +451,22 @@ namespace WinPaletter.UI.Style
             }
 
             // Recursively apply the style to all sub-controls
-            if (ctrl.HasChildren)
+            if (ctrl is WP.TabControl tabControl)
+            {
+                foreach (TabPage tabPage in tabControl.TabPages)
+                {
+                    tabPage.BackColor = ctrl.Parent.BackColor;
+                    ApplyStyleToSubControls(tabPage, DarkMode);
+                }
+            }
+            else if (ctrl.HasChildren)
             {
                 foreach (Control c in ctrl.Controls)
                 {
-                    if (c is TabPage) { c.BackColor = ctrl.Parent.BackColor; }
-
                     ApplyStyleToSubControls(c, DarkMode);
                 }
             }
+
 
             // Invalidate the control to apply the style changes
             ctrl.Invalidate();
@@ -504,9 +511,6 @@ namespace WinPaletter.UI.Style
 
             try
             {
-                // Load the uxtheme.dll library
-                IntPtr uxtheme = Kernel32.LoadLibrary("uxtheme.dll");
-
                 switch (theme)
                 {
                     case CtrlTheme.None:
@@ -539,9 +543,6 @@ namespace WinPaletter.UI.Style
                             break;
                         }
                 }
-
-                // Free the library
-                Kernel32.FreeLibrary(uxtheme);
 
                 return 1;
             }

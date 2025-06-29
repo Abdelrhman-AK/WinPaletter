@@ -157,7 +157,7 @@ namespace WinPaletter
         /// <summary>
         /// AnimatorNS control to be exposed globally to all forms and classes
         /// </summary>
-        public static AnimatorNS.Animator Animator;
+        public static WinPaletter.Animator Animator = new();
 
         /// <summary>
         /// A global ToolTip to be used in all forms

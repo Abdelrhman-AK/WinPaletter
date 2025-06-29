@@ -40,6 +40,8 @@ namespace WinPaletter
             Program.Settings.General.SetupCompleted = false;
             Program.Settings.General.Save();
 
+            progressBar1.Maximum = (tablessControl1.TabCount - 1) * 100;
+
             LoadSettings();
 
             Forms.GlassWindow.Show();
@@ -97,44 +99,53 @@ namespace WinPaletter
             }
             else if (tablessControl1.SelectedIndex == tablessControl1.TabCount - 2 && (radioImage1.Checked || radioImage3.Checked))
             {
-                Task.Run(() =>
+                if (!OS.WXP)
                 {
-                    Invoke(() =>
+                    Ookii.Dialogs.WinForms.ProgressDialog dlg = new()
                     {
-                        progressBar1.Visible = true;
-                        label9.Visible = true;
-                        next_btn.Enabled = false;
-                        back_btn.Enabled = false;
-                        button1.Enabled = false;
-                        ControlBox = false;
-                    });
+                        Animation = Ookii.Dialogs.WinForms.AnimationResource.GetShellAnimation(Ookii.Dialogs.WinForms.ShellAnimation.FlyingPapers),
+                        Text = Program.Lang.Strings.General.RestorePoint_FirstTime_DialogTitle,
+                        Description = Program.Lang.Strings.General.RestorePoint_FirstTime_Desc,
+                        ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
+                        ShowCancelButton = false,
+                        MinimizeBox = false,
+                        WindowTitle = Application.ProductName,
+                    };
+                    dlg.DoWork += (s, args) =>
+                    {
+                        // Create a system restore point
+                        SystemRestoreHelper.CreateRestorePoint(Program.Lang.Strings.General.RestorePoint_FirstTime);
+                    };
 
+                    dlg.ShowDialog();
+                }
+                else
+                {
                     SystemRestoreHelper.CreateRestorePoint(Program.Lang.Strings.General.RestorePoint_FirstTime);
+                }
 
-                    Invoke(() =>
-                    {
-                        progressBar1.Visible = false;
-                        label9.Visible = false;
-                        next_btn.Enabled = true;
-                        back_btn.Enabled = true;
-                        button1.Enabled = true;
-                        ControlBox = true;
-                    });
-                });
+                tablessControl1.SelectedIndex += 1;
+
+                return;
             }
 
-            tablessControl1.SelectedIndex = tablessControl1.SelectedIndex + 1 > tablessControl1.TabCount - 1 ? tablessControl1.TabCount - 1 : tablessControl1.SelectedIndex + 1;
-
             // Enable or disable the next button based on the license tab and radio button state
-            if (tablessControl1.SelectedIndex == 1 && !radioButton1.Checked) next_btn.Enabled = false;
+            if (tablessControl1.SelectedIndex + 1 == 1 && !radioButton1.Checked) next_btn.Enabled = false;
             else next_btn.Enabled = true;
+
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = tablessControl1.SelectedIndex + 1 > tablessControl1.TabCount - 1 ? tablessControl1.TabCount - 1 : tablessControl1.SelectedIndex + 1;
+            Program.Animator.ShowSync(tablessControl1);
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            tablessControl1.SelectedIndex = tablessControl1.SelectedIndex - 1 < 0 ? 0 : tablessControl1.SelectedIndex - 1;
             next_btn.Enabled = true;
             next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = tablessControl1.SelectedIndex - 1 < 0 ? 0 : tablessControl1.SelectedIndex - 1;
+            Program.Animator.ShowSync(tablessControl1);
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -179,6 +190,8 @@ namespace WinPaletter
         {
             back_btn.Enabled = tablessControl1.SelectedIndex > 0;
             next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+
+            progressBar1.Value = tablessControl1.SelectedIndex * 100;
         }
 
         private void radioButtons_CheckedChanged(object sender, EventArgs e)
@@ -192,12 +205,13 @@ namespace WinPaletter
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-
-            Program.Settings.General.SetupCompleted = false;
-            Program.Settings.General.Save();
-
-            Close();
+            if (MsgBox(Program.Lang.Strings.Messages.ExitWinPaletter, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SaveSettings();
+                Program.Settings.General.SetupCompleted = false;
+                Program.Settings.General.Save();
+                Application.Exit();
+            }
         }
 
         private void Setup_FormClosed(object sender, FormClosedEventArgs e)

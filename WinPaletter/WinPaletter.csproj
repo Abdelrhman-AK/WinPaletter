@@ -362,6 +362,7 @@
     <Compile Include="Languages\Localizer\Strings\General\Extensions.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Languages\Localizer\Strings.cs" />
+    <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />

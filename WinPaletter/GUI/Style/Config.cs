@@ -32,22 +32,6 @@ namespace WinPaletter.UI.Style
             Schemes.Secondary = new(Secondary, BackColor, Dark);
             Schemes.Tertiary = new(Tertiary, BackColor, Dark);
             Schemes.Disabled = new(Disabled, DisabledBackColor, Dark);
-
-            if (Program.Animator != null)
-            {
-                if (Animations)
-                {
-                    Program.Animator.AnimationType = AnimatorNS.AnimationType.Transparent;
-                    Program.Animator.Interval = 10;
-                    Program.Animator.TimeStep = 0.05f;
-                }
-                else
-                {
-                    Program.Animator.AnimationType = AnimatorNS.AnimationType.Custom;
-                    Program.Animator.Interval = 10;
-                    Program.Animator.TimeStep = 0.05f;
-                }
-            }
         }
 
         /// <summary>
