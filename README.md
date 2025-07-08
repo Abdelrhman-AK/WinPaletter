@@ -4,75 +4,28 @@
 
 ![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?color=0078D4&style=for-the-badge) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge) [![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?color=F4870A&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network) [![License: MIT AND LGPL-2.1](https://img.shields.io/badge/License-MIT%20AND%20LGPL--2.1-FF0C4F?style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
 
-## WinPaletter Returning in June 2025: Primary Development Objectives
-
-### Project Scope
+## WinPaletter is back! Project Scope:
 
 This return release concentrates on **cleaning up legacy issues** and providing a better-honed experience.
 While significant new features are not anticipated, the goal is to place the project in a stable, workable condition.
 
 | Area | Update Description | Progress |
 |---------------------------------|-----------------------------------------------------------|---------------------|
-| System Restore Point | Automatically create a restore point before applying any theme | ⌛ In progress |
+| Windows 8 Support | Adding support for Windows 8 build 9200 (and builds below Windows 8.1) | ⌛ In progress |
 | Bugs fixes | Fix reported and non reported bugs and issues | ⌛ In progress |
 | Simplified UI Components | Streamlined user interface for enhanced workflow | ⌛ In progress |
-| Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ⌛ In progress |
+| Wiki rewrite | Wiki will be improved and rewritten to make users can understand WinPaletter more after its massive UI refresh | ⌛ In progress |
 | Logging System | New "WinPaletter Log" for sophisticated user diagnostics | ⌛ In progress |
 | Developer Support | Better in-code documentation and organized comments for developers | ⌛ In progress |
-| WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ⌛ In progress |
+| System Restore Point | Automatically create a restore point before applying any theme | ✔️ Done |
+| Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ✔️ Done |
+| WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ✔️ Done |
 
 > [!IMPORTANT]
 > Development during this comeback phase will be limited. The developer will be available only one or two days per week (or every two weeks), and not for the full day. As a result, progress will be slower compared to the more active development period prior to archiving.
 
 > [!WARNING]
 > Development may stop in **February 2026**, and the project will be archived once more. This end is not confirmed.
-
----
-
-## WinPaletter 1.0.9.4 changelog (still in progress) (Spoiler)
-
-<details>
-  <summary>Toggle changelog</summary>
-  
-```
-**New features:**  
-- System restore points
-- New aspect: Accessibility (High Contrast + Color Filters)
-
-**User Profiles Switching:**  
-- Switching to a user profile protected by a password now uses the Windows Security (Credentials) dialog for better security, instead of WinPaletter's own password prompt.  
-- Opening WinPaletter will no longer show a list of users; it will directly target the user who launched WinPaletter (mimicking Windows 10/11 login behavior). If you want to switch to another user in the current session, do so from the main form. (This method slightly improves startup speed, but you likely won’t notice the difference.)  
-- The option to continue without a password has been removed to avoid conflicts between two users (the target user and the user who opened WinPaletter).
-
-**Other improvements:**  
-- The .NET Framework dependency has been upgraded from version 4.7.2 to 4.8, which is now required (Not a problem to any user).
-- The "What's New" form has been removed (the GitHub releases page is a better alternative).  
-- Bug and crash report system redesigned, now includes the ability to save theme files.  
-- Added "Plus! 95 For Kids" CD schemes for classic colors, metrics, and fonts.  
-- Rescue tools renamed to SOS, with command line options: `WinPaletter -f` or `WinPaletter --SOS`.  
-- SOS mode will automatically activate when WinPaletter is opened in safe mode.  
-- When you download a theme from WinPaletter store, there is a check list of aspects will be edited. In this dialog, a button called "Proceed with all selected" is removed and replaced by two buttons "Check all" and "Uncheck all" to eliminate ambiguity.  
-- Improved default Windows themes; now all aspects will be restored correctly.  
-- Significant speed improvements in languages and the Language Editor.  
-- Startup speed has been slightly optimized.  
-- WinPaletter Store massive speed improvements.  
-- The "Save as theme" feature now recommends a filename based on the theme name instead of an empty string.  
-- Minor memory usage optimizations.
-
-**Bugs fixes:**  
-- Fixed store items not being downloaded and listed.
-- Fixed an issue where pressing "Apply" in the Lighthouse at sunset theme store and then returning to the Windows previewer in the store caused an exception error.
-- Fixed an issue where the store previewer did not show the wallpaper of a downloaded theme pack the first time in the current session, but displayed it correctly on subsequent attempts.
-- Skipping listing the WsiAccount user as it is part of system users.
-- Closing the theme applying process form when Explorer is already killed now correctly restores Explorer.
-- The Windows Effects alert dialog is now brought to the top. Previously, it was hidden behind the applying form, causing confusion that the applying process was not working.
-- Fixed the magnifier with high DPI settings not centering correctly on the cursor position in classic colors.
-- Fixed an issue where applying Classic Colors reset the cursors.
-- Fixed an issue where the taskbar and Start menu showed a clipped, blurred portion of a different wallpaper if the theme had a wallpaper different from the current one.
-- Fixed icon label preview by correcting the shadow algorithm.
-- Fixed exception errors when deleting store cache and logs in Settings > Storage Details.
-```
-</details>
 
 ---
 
