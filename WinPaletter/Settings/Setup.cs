@@ -176,16 +176,6 @@ namespace WinPaletter
             Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
         }
 
-        private void button28_Click(object sender, EventArgs e)
-        {
-            Forms.SecureUxTheme_Setup.ShowDialog();
-        }
-
-        private void button29_Click(object sender, EventArgs e)
-        {
-            Process.Start(Links.SecureUxThemeReleases);
-        }
-
         private void tablessControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             back_btn.Enabled = tablessControl1.SelectedIndex > 0;

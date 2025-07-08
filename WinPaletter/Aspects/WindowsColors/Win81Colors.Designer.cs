@@ -545,7 +545,7 @@
             this.Label24.Name = "Label24";
             this.Label24.Size = new System.Drawing.Size(64, 22);
             this.Label24.TabIndex = 43;
-            this.Label24.Text = "Aero 8";
+            this.Label24.Text = "Aero 8.1";
             this.Label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // theme_aerolite

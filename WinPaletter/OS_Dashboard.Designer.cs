@@ -46,6 +46,7 @@ namespace WinPaletter
             this.radioImage1 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage2 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage7 = new WinPaletter.UI.WP.RadioImage();
+            this.radioImage8 = new WinPaletter.UI.WP.RadioImage();
             this.SuspendLayout();
             // 
             // radioImage6
@@ -55,7 +56,7 @@ namespace WinPaletter
             this.radioImage6.ForeColor = System.Drawing.Color.White;
             this.radioImage6.Image = ((System.Drawing.Image)(resources.GetObject("radioImage6.Image")));
             this.radioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage6.Location = new System.Drawing.Point(323, 39);
+            this.radioImage6.Location = new System.Drawing.Point(386, 39);
             this.radioImage6.Name = "radioImage6";
             this.radioImage6.Size = new System.Drawing.Size(57, 68);
             this.radioImage6.TabIndex = 109;
@@ -70,7 +71,7 @@ namespace WinPaletter
             this.radioImage5.ForeColor = System.Drawing.Color.White;
             this.radioImage5.Image = ((System.Drawing.Image)(resources.GetObject("radioImage5.Image")));
             this.radioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage5.Location = new System.Drawing.Point(260, 39);
+            this.radioImage5.Location = new System.Drawing.Point(323, 39);
             this.radioImage5.Name = "radioImage5";
             this.radioImage5.Size = new System.Drawing.Size(57, 68);
             this.radioImage5.TabIndex = 108;
@@ -89,7 +90,7 @@ namespace WinPaletter
             this.button7.Image = null;
             this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(423, 10);
+            this.button7.Location = new System.Drawing.Point(485, 10);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(20, 20);
             this.button7.TabIndex = 103;
@@ -104,7 +105,7 @@ namespace WinPaletter
             this.radioImage4.ForeColor = System.Drawing.Color.White;
             this.radioImage4.Image = ((System.Drawing.Image)(resources.GetObject("radioImage4.Image")));
             this.radioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage4.Location = new System.Drawing.Point(197, 39);
+            this.radioImage4.Location = new System.Drawing.Point(260, 39);
             this.radioImage4.Name = "radioImage4";
             this.radioImage4.Size = new System.Drawing.Size(57, 68);
             this.radioImage4.TabIndex = 107;
@@ -164,7 +165,7 @@ namespace WinPaletter
             this.radioImage7.ForeColor = System.Drawing.Color.White;
             this.radioImage7.Image = ((System.Drawing.Image)(resources.GetObject("radioImage7.Image")));
             this.radioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage7.Location = new System.Drawing.Point(386, 39);
+            this.radioImage7.Location = new System.Drawing.Point(449, 39);
             this.radioImage7.Name = "radioImage7";
             this.radioImage7.Size = new System.Drawing.Size(57, 68);
             this.radioImage7.TabIndex = 110;
@@ -172,15 +173,31 @@ namespace WinPaletter
             this.radioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // radioImage8
+            // 
+            this.radioImage8.Checked = false;
+            this.radioImage8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage8.ForeColor = System.Drawing.Color.White;
+            this.radioImage8.Image = ((System.Drawing.Image)(resources.GetObject("radioImage8.Image")));
+            this.radioImage8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage8.Location = new System.Drawing.Point(197, 39);
+            this.radioImage8.Name = "radioImage8";
+            this.radioImage8.Size = new System.Drawing.Size(57, 68);
+            this.radioImage8.TabIndex = 111;
+            this.radioImage8.Text = "8";
+            this.radioImage8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // OS_Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.CancelButton = this.button7;
-            this.ClientSize = new System.Drawing.Size(451, 115);
+            this.ClientSize = new System.Drawing.Size(513, 115);
             this.CloseOnLostFocus = false;
             this.ControlBox = false;
+            this.Controls.Add(this.radioImage8);
             this.Controls.Add(this.radioImage7);
             this.Controls.Add(this.radioImage6);
             this.Controls.Add(this.radioImage5);
@@ -208,5 +225,6 @@ namespace WinPaletter
         private UI.WP.RadioImage radioImage2;
         private UI.WP.RadioImage radioImage1;
         private UI.WP.RadioImage radioImage7;
+        private UI.WP.RadioImage radioImage8;
     }
 }

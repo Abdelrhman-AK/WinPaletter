@@ -9,7 +9,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows 7 appearance
     /// </summary>
-    public struct Windows7 : ICloneable
+    public class Windows7 : ICloneable
     {
         /// <summary> Controls if Windows 7 colors editing is enabled or not </summary> 
         public bool Enabled = true;
@@ -50,7 +50,7 @@ namespace WinPaletter.Theme.Structures
 
         /// <summary>
         /// Enumeration of Windows stock themes.
-        /// <br><b>It can be used in Windows8x and Windows Vista structures.</b></br>
+        /// <br><b>It can be used in Windows81 and Windows Vista structures.</b></br>
         /// </summary>
         public enum Themes
         {
@@ -232,7 +232,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Windows7 structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

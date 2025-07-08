@@ -163,6 +163,7 @@ namespace WinPaletter
             CheckBox1.Checked = TM.Info.DesignedFor_Win11;
             CheckBox2.Checked = TM.Info.DesignedFor_Win10;
             CheckBox3.Checked = TM.Info.DesignedFor_Win81;
+            checkBox9.Checked = TM.Info.DesignedFor_Win8;
             CheckBox4.Checked = TM.Info.DesignedFor_Win7;
             CheckBox5.Checked = TM.Info.DesignedFor_WinVista;
             CheckBox6.Checked = TM.Info.DesignedFor_WinXP;
@@ -186,6 +187,7 @@ namespace WinPaletter
             TM.Info.DesignedFor_Win11 = CheckBox1.Checked;
             TM.Info.DesignedFor_Win10 = CheckBox2.Checked;
             TM.Info.DesignedFor_Win81 = CheckBox3.Checked;
+            TM.Info.DesignedFor_Win8 = checkBox9.Checked;
             TM.Info.DesignedFor_Win7 = CheckBox4.Checked;
             TM.Info.DesignedFor_WinVista = CheckBox5.Checked;
             TM.Info.DesignedFor_WinXP = CheckBox6.Checked;
@@ -282,6 +284,15 @@ namespace WinPaletter
             if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_Win81 = ((UI.WP.CheckBox)sender).Checked;
             StoreItem1.UpdateBadges();
         }
+        private void checkBox9_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!CheckAllOS())
+                ((UI.WP.CheckBox)sender).Checked = true;
+
+            if (StoreItem1.TM is not null) StoreItem1.TM.Info.DesignedFor_Win8 = ((UI.WP.CheckBox)sender).Checked;
+            StoreItem1.UpdateBadges();
+        }
+
 
         private void CheckBox4_CheckedChanged(object sender, EventArgs e)
         {
@@ -312,7 +323,7 @@ namespace WinPaletter
 
         public bool CheckAllOS()
         {
-            return checkBox8.Checked | CheckBox1.Checked | CheckBox2.Checked | CheckBox3.Checked | CheckBox4.Checked | CheckBox5.Checked | CheckBox6.Checked;
+            return checkBox8.Checked | CheckBox1.Checked | CheckBox2.Checked | CheckBox3.Checked | CheckBox4.Checked | CheckBox5.Checked | CheckBox6.Checked | checkBox9.Checked;
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)

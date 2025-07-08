@@ -7,7 +7,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Lock screen structure for Windows 10/11/12
     /// </summary>
-    public struct LogonUI10x : ICloneable
+    public class LogonUI10x : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = true;
@@ -39,7 +39,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones LogonUI10x structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }
@@ -48,11 +48,12 @@ namespace WinPaletter.Theme.Structures
         /// Loads Windows 10/11 LogonUI data from registry
         /// </summary>
         /// <param name="default">Default Windows 10/11 LogonUI data structure</param>
-        public void Load(LogonUI10x @default)
+        /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
+        public void Load(string edition, LogonUI10x @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 10/11/12 lock screen preferences from registry.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\Windows10x", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, @default.Enabled));
 
             if (OS.W12 || OS.W11 || OS.W10)
             {
@@ -73,11 +74,12 @@ namespace WinPaletter.Theme.Structures
         /// Saves Windows 10/11 LogonUI data into registry
         /// </summary>
         /// <param name="treeView">treeView used as a theme log</param>
-        public void Apply(TreeView treeView = null)
+        /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
+        public void Apply(string edition, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Wiindows 10/11 lock screen data into registry.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
 
-            SaveToggleState(treeView);
+            SaveToggleState(edition, treeView);
 
             if (Enabled)
             {
@@ -91,9 +93,10 @@ namespace WinPaletter.Theme.Structures
         /// Saves the toggle state of Windows 10/11 LogonUI
         /// </summary>
         /// <param name="treeView"></param>
-        public void SaveToggleState(TreeView treeView = null)
+        /// <param name="edition"></param>
+        public void SaveToggleState(string edition, TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\Windows10x", string.Empty, Enabled);
+            EditReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, Enabled);
         }
 
         /// <summary>

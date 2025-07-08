@@ -23,9 +23,6 @@ namespace WinPaletter.Theme
 
             TM.Windows10.Enabled = true;
 
-            ref Structures.LogonUI10x logonUI = ref TM.LogonUI10x;
-            logonUI.Enabled = true;
-
             ref Structures.Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable05 = Color.FromArgb(136, 23, 152);

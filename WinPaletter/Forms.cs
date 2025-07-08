@@ -46,6 +46,12 @@ namespace WinPaletter
         /// </summary>
         public static Win81Colors Win81Colors => (_Win81Colors == null || _Win81Colors.IsDisposed) ? (_Win81Colors = CreateInstance(_Win81Colors)) : _Win81Colors;
 
+        private static Win8Colors _Win8Colors;
+        /// <summary>
+        /// Gets the instance of the form <see cref="Win81Colors"/> to manage Windows 8 colors and theme.
+        /// </summary>
+        public static Win8Colors Win8Colors => (_Win8Colors == null || _Win8Colors.IsDisposed) ? (_Win8Colors = CreateInstance(_Win8Colors)) : _Win8Colors;
+
         private static Win7Colors _Win7Colors;
         /// <summary>
         /// Gets the instance of the form <see cref="Win7Colors"/> to manage Windows 7 colors and theme.
@@ -163,12 +169,6 @@ namespace WinPaletter
         /// </summary>
         public static Saving_ex_list Saving_ex_list => (_Saving_ex_list == null || _Saving_ex_list.IsDisposed) ? (_Saving_ex_list = CreateInstance(_Saving_ex_list)) : _Saving_ex_list;
 
-        private static SecureUxTheme_Setup _SecureUxTheme_Setup;
-        /// <summary>
-        /// Gets the instance of the form <see cref="SecureUxTheme_Setup"/> to setup SecureUxTheme.
-        /// </summary>
-        public static SecureUxTheme_Setup SecureUxTheme_Setup => (_SecureUxTheme_Setup == null || _SecureUxTheme_Setup.IsDisposed) ? (_SecureUxTheme_Setup = CreateInstance(_SecureUxTheme_Setup)) : _SecureUxTheme_Setup;
-
         private static AltTabEditor _AltTabEditor;
         /// <summary>
         /// Gets the instance of the form <see cref="AltTabEditor"/> to edit Alt+Tab window.
@@ -199,11 +199,11 @@ namespace WinPaletter
         /// </summary>
         public static Sounds_Editor Sounds_Editor => (_Sounds_Editor == null || _Sounds_Editor.IsDisposed) ? (_Sounds_Editor = CreateInstance(_Sounds_Editor)) : _Sounds_Editor;
 
-        private static Start8Selector _Start8Selector;
+        private static Start81Selector _Start81Selector;
         /// <summary>
-        /// Gets the instance of the form <see cref="Start8Selector"/> to select Windows 8.1 start screen style.
+        /// Gets the instance of the form <see cref="Start81Selector"/> to select Windows 8.1 start screen style.
         /// </summary>
-        public static Start8Selector Start8Selector => (_Start8Selector == null || _Start8Selector.IsDisposed) ? (_Start8Selector = CreateInstance(_Start8Selector)) : _Start8Selector;
+        public static Start81Selector Start81Selector => (_Start81Selector == null || _Start81Selector.IsDisposed) ? (_Start81Selector = CreateInstance(_Start81Selector)) : _Start81Selector;
 
         private static Wallpaper_Editor _Wallpaper_Editor;
         /// <summary>
@@ -249,9 +249,15 @@ namespace WinPaletter
 
         private static LogonUI7 _LogonUI7;
         /// <summary>
-        /// Gets the instance of the form <see cref="LogonUI7"/> to manage Windows 7/8.1 logon screen.
+        /// Gets the instance of the form <see cref="LogonUI7"/> to manage Windows 7 logon screen.
         /// </summary>
         public static LogonUI7 LogonUI7 => (_LogonUI7 == null || _LogonUI7.IsDisposed) ? (_LogonUI7 = CreateInstance(_LogonUI7)) : _LogonUI7;
+
+        private static LogonUI81 _LogonUI81;
+        /// <summary>
+        /// Gets the instance of the form <see cref="LogonUI81"/> to manage Windows 8.1 logon screen.
+        /// </summary>
+        public static LogonUI81 LogonUI81 => (_LogonUI81 == null || _LogonUI81.IsDisposed) ? (_LogonUI81 = CreateInstance(_LogonUI81)) : _LogonUI81;
 
         private static LogonUI8_Pics _LogonUI8_Pics;
         /// <summary>

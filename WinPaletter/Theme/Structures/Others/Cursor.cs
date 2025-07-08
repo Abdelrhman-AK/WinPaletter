@@ -8,7 +8,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for a single WinPaletter themed cursor inside <see cref="Cursors"/> structure instance.
     /// </summary>
-    public struct Cursor : ICloneable
+    public class Cursor : ICloneable
     {
         /// <summary>Use a cursor file instead of rendering a new style using WinPaletter</summary>
         public bool UseFromFile = false;
@@ -275,7 +275,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Cursor structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

@@ -46,11 +46,8 @@ namespace WinPaletter
             this.VS_SizesList = new WinPaletter.UI.WP.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button29 = new WinPaletter.UI.WP.Button();
-            this.button28 = new WinPaletter.UI.WP.Button();
             this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.alertBox3 = new WinPaletter.UI.WP.AlertBox();
-            this.alertBox4 = new WinPaletter.UI.WP.AlertBox();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.VS_ReplaceColors = new WinPaletter.UI.WP.CheckBox();
             this.VS_ReplaceMetrics = new WinPaletter.UI.WP.CheckBox();
@@ -61,7 +58,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.alertBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -207,40 +203,6 @@ namespace WinPaletter
             this.label1.Text = "Size scheme:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button29
-            // 
-            this.button29.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button29.CustomColor = System.Drawing.Color.Empty;
-            this.button29.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button29.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button29.Image = null;
-            this.button29.ImageGlyph = null;
-            this.button29.ImageGlyphEnabled = false;
-            this.button29.Location = new System.Drawing.Point(540, 10);
-            this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(240, 28);
-            this.button29.TabIndex = 22;
-            this.button29.Text = "Get an official release (recommended)";
-            this.button29.UseVisualStyleBackColor = true;
-            this.button29.Click += new System.EventHandler(this.button29_Click);
-            // 
-            // button28
-            // 
-            this.button28.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button28.CustomColor = System.Drawing.Color.Empty;
-            this.button28.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button28.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button28.Image = null;
-            this.button28.ImageGlyph = null;
-            this.button28.ImageGlyphEnabled = false;
-            this.button28.Location = new System.Drawing.Point(786, 10);
-            this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(75, 28);
-            this.button28.TabIndex = 21;
-            this.button28.Text = "Setup";
-            this.button28.UseVisualStyleBackColor = true;
-            this.button28.Click += new System.EventHandler(this.button28_Click);
-            // 
             // alertBox2
             // 
             this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
@@ -275,26 +237,6 @@ namespace WinPaletter
             this.alertBox3.TabStop = false;
             this.alertBox3.Text = "Rendering a preview is not supported. If you want to test a visual styles, press " +
     "on \'Apply\' with the toggle above enabled.";
-            // 
-            // alertBox4
-            // 
-            this.alertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.alertBox4.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox4.CenterText = false;
-            this.alertBox4.Controls.Add(this.button28);
-            this.alertBox4.Controls.Add(this.button29);
-            this.alertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.alertBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.alertBox4.Image = null;
-            this.alertBox4.Location = new System.Drawing.Point(10, 362);
-            this.alertBox4.Name = "alertBox4";
-            this.alertBox4.Size = new System.Drawing.Size(869, 48);
-            this.alertBox4.TabIndex = 213;
-            this.alertBox4.TabStop = false;
-            this.alertBox4.Text = "Your Windows must have UxTheme.dll patched to use unsigned and patched visual sty" +
-    "les.\r\nYou can use SecureUxTheme setup wrapper (for Windows 8.1 and higher)";
             // 
             // separatorH1
             // 
@@ -409,7 +351,6 @@ namespace WinPaletter
             this.Controls.Add(this.VS_ReplaceMetrics);
             this.Controls.Add(this.VS_ReplaceColors);
             this.Controls.Add(this.separatorH1);
-            this.Controls.Add(this.alertBox4);
             this.Controls.Add(this.alertBox3);
             this.Controls.Add(this.alertBox2);
             this.Controls.Add(this.VS_SizesList);
@@ -444,7 +385,6 @@ namespace WinPaletter
             this.Controls.SetChildIndex(this.VS_SizesList, 0);
             this.Controls.SetChildIndex(this.alertBox2, 0);
             this.Controls.SetChildIndex(this.alertBox3, 0);
-            this.Controls.SetChildIndex(this.alertBox4, 0);
             this.Controls.SetChildIndex(this.separatorH1, 0);
             this.Controls.SetChildIndex(this.VS_ReplaceColors, 0);
             this.Controls.SetChildIndex(this.VS_ReplaceMetrics, 0);
@@ -456,7 +396,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.alertBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -471,11 +410,8 @@ namespace WinPaletter
         internal UI.WP.ComboBox VS_SizesList;
         internal PictureBox pictureBox1;
         internal Label label1;
-        private UI.WP.Button button29;
-        private UI.WP.Button button28;
         private UI.WP.AlertBox alertBox2;
         private UI.WP.AlertBox alertBox3;
-        private UI.WP.AlertBox alertBox4;
         private UI.WP.SeparatorH separatorH1;
         internal UI.WP.CheckBox VS_ReplaceColors;
         internal UI.WP.CheckBox VS_ReplaceMetrics;

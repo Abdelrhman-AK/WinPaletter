@@ -18,7 +18,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing classic Windows colors
     /// </summary>
-    public struct Win32UI : ICloneable
+    public class Win32UI : ICloneable
     {
         /// <summary> Controls if Classic Colors editing is enabled or not </summary> 
         public bool Enabled = true;
@@ -401,7 +401,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             using (libmsstyle.VisualStyle vs = new(_vs.ThemeFile))
                             {
-                                this = vs.ClassicColors();
+                                this.CopyFrom(vs.ClassicColors());
                                 Enabled = true;
                             }
                         }
@@ -819,7 +819,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Win32UI structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }
@@ -840,7 +840,7 @@ namespace WinPaletter.Theme.Structures
         /// Retrun Win32UI structure into a string in format of Microsoft theme File (*.theme)
         /// </summary>
         /// <param name="metricsFonts">MetricsFonts structure to be included in the string</param>
-        public readonly string ToString(MetricsFonts? metricsFonts = null)
+        public string ToString(MetricsFonts? metricsFonts = null)
         {
             StringBuilder s = new();
             s.Clear();
@@ -887,48 +887,48 @@ namespace WinPaletter.Theme.Structures
             s.AppendLine($"Desktop={Desktop.ToStringWin32()}");
             s.AppendLine();
 
-            if (metricsFonts is not null && metricsFonts.HasValue)
+            if (metricsFonts is not null)
             {
                 NONCLIENTMETRICS ncm = new();
                 ncm.cbSize = (uint)Marshal.SizeOf(ncm);
-                ncm.iCaptionWidth = metricsFonts.Value.CaptionWidth;
-                ncm.iCaptionHeight = metricsFonts.Value.CaptionHeight;
-                ncm.iSMCaptionWidth = metricsFonts.Value.SmCaptionWidth;
-                ncm.iSMCaptionHeight = metricsFonts.Value.SmCaptionHeight;
-                ncm.iBorderWidth = metricsFonts.Value.BorderWidth;
-                ncm.iPaddedBorderWidth = metricsFonts.Value.PaddedBorderWidth;
-                ncm.iMenuWidth = metricsFonts.Value.MenuWidth;
-                ncm.iMenuHeight = metricsFonts.Value.MenuHeight;
-                ncm.iScrollWidth = metricsFonts.Value.ScrollWidth;
-                ncm.iScrollHeight = metricsFonts.Value.ScrollHeight;
+                ncm.iCaptionWidth = metricsFonts.CaptionWidth;
+                ncm.iCaptionHeight = metricsFonts.CaptionHeight;
+                ncm.iSMCaptionWidth = metricsFonts.SmCaptionWidth;
+                ncm.iSMCaptionHeight = metricsFonts.SmCaptionHeight;
+                ncm.iBorderWidth = metricsFonts.BorderWidth;
+                ncm.iPaddedBorderWidth = metricsFonts.PaddedBorderWidth;
+                ncm.iMenuWidth = metricsFonts.MenuWidth;
+                ncm.iMenuHeight = metricsFonts.MenuHeight;
+                ncm.iScrollWidth = metricsFonts.ScrollWidth;
+                ncm.iScrollHeight = metricsFonts.ScrollHeight;
 
                 GDI32.LogFont lfCaptionFont = new();
-                metricsFonts.Value.CaptionFont.ToLogFont(lfCaptionFont);
+                metricsFonts.CaptionFont.ToLogFont(lfCaptionFont);
                 ncm.lfCaptionFont = lfCaptionFont;
 
                 GDI32.LogFont lfMenuFont = new();
-                metricsFonts.Value.MenuFont.ToLogFont(lfMenuFont);
+                metricsFonts.MenuFont.ToLogFont(lfMenuFont);
                 ncm.lfMenuFont = lfMenuFont;
 
                 GDI32.LogFont lfMessageFont = new();
-                metricsFonts.Value.MessageFont.ToLogFont(lfMessageFont);
+                metricsFonts.MessageFont.ToLogFont(lfMessageFont);
                 ncm.lfMessageFont = lfMessageFont;
 
                 GDI32.LogFont lfSMCaptionFont = new();
-                metricsFonts.Value.SmCaptionFont.ToLogFont(lfSMCaptionFont);
+                metricsFonts.SmCaptionFont.ToLogFont(lfSMCaptionFont);
                 ncm.lfSMCaptionFont = lfSMCaptionFont;
 
                 GDI32.LogFont lfStatusFont = new();
-                metricsFonts.Value.StatusFont.ToLogFont(lfStatusFont);
+                metricsFonts.StatusFont.ToLogFont(lfStatusFont);
                 ncm.lfStatusFont = lfStatusFont;
 
                 ICONMETRICS icm = new();
                 icm.cbSize = (uint)Marshal.SizeOf(icm);
-                icm.iHorzSpacing = metricsFonts.Value.IconSpacing;
-                icm.iVertSpacing = metricsFonts.Value.IconVerticalSpacing;
+                icm.iHorzSpacing = metricsFonts.IconSpacing;
+                icm.iVertSpacing = metricsFonts.IconVerticalSpacing;
 
                 GDI32.LogFont lfIconFont = new();
-                metricsFonts.Value.IconFont.ToLogFont(lfIconFont);
+                metricsFonts.IconFont.ToLogFont(lfIconFont);
                 icm.lfFont = lfIconFont;
 
                 s.AppendLine(string.Format("[Metrics]"));

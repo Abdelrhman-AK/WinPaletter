@@ -13,6 +13,30 @@ namespace WinPaletter.NativeMethods
     public partial class User32
     {
         /// <summary>
+        /// Retrieves a handle to the Shell's desktop window.
+        /// </summary>
+        /// <remarks>The Shell's desktop window is typically the main window of the Windows Shell, which
+        /// provides the desktop and taskbar. This method is commonly used in scenarios where interaction with the
+        /// Shell's desktop window is required.</remarks>
+        /// <returns>A handle to the Shell's desktop window, or <see cref="IntPtr.Zero"/> if no Shell window is present.</returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetShellWindow();
+
+        /// <summary>
+        /// Retrieves the identifier of the thread that created the specified window and, optionally, the identifier of
+        /// the process that created the window.
+        /// </summary>
+        /// <remarks>This method is a wrapper for the native Windows API function in the "user32.dll"
+        /// library.  The caller is responsible for ensuring that the <paramref name="hWnd"/> parameter is a valid
+        /// window handle.</remarks>
+        /// <param name="hWnd">A handle to the window whose thread and process identifiers are to be retrieved.</param>
+        /// <param name="lpdwProcessId">When this method returns, contains the process identifier of the window. This parameter is passed
+        /// uninitialized.</param>
+        /// <returns>The identifier of the thread that created the specified window.</returns>
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        /// <summary>
         /// Retrieves the specified system metric or system configuration setting.
         /// </summary>
         /// <param name="nIndex"></param>
@@ -202,6 +226,68 @@ namespace WinPaletter.NativeMethods
         /// If the function fails, the return value is IntPtr.Zero.</returns>
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Sends a message to the specified window and waits for the operation to complete or for a timeout period to
+        /// elapse.
+        /// </summary>
+        /// <remarks>This function is typically used for inter-process communication or to send messages
+        /// to windows in other threads. Use caution when sending messages to avoid potential deadlocks or performance
+        /// issues, especially when specifying a long timeout.</remarks>
+        /// <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see
+        /// langword="IntPtr.Zero"/>, the message is sent to all top-level windows in the system.</param>
+        /// <param name="Msg">The message to be sent.</param>
+        /// <param name="wParam">Additional message-specific information. The meaning of this parameter depends on the value of <paramref
+        /// name="Msg"/>.</param>
+        /// <param name="lParam">A string containing additional message-specific information. The meaning of this parameter depends on the
+        /// value of <paramref name="Msg"/>.</param>
+        /// <param name="fuFlags">The behavior of the function. This parameter can be a combination of one or more
+        /// <c>SendMessageTimeoutFlags</c> values.</param>
+        /// <param name="uTimeout">The duration, in milliseconds, to wait for the message to be processed. If the timeout elapses, the function
+        /// returns without completing the operation.</param>
+        /// <param name="lpdwResult">When the function returns, contains the result of the message processing. This parameter is set to <see
+        /// langword="UIntPtr.Zero"/> if the function times out.</param>
+        /// <returns>If the function succeeds, the return value is a handle to the window that processed the message. If the
+        /// function times out or encounters an error, the return value is <see langword="IntPtr.Zero"/>. Call
+        /// <c>Marshal.GetLastWin32Error</c> to retrieve extended error information.</returns>
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
+
+        /// <summary>
+        /// Represents the Windows message identifier for a system-wide setting change notification.
+        /// </summary>
+        /// <remarks>This constant is used to identify the <c>WM_SETTINGCHANGE</c> message, which is sent
+        /// to all top-level windows when a system-wide setting or policy has changed. Applications can handle this
+        /// message to respond to changes in system settings, such as environment variables or user
+        /// preferences.</remarks>
+        public const uint WM_SETTINGCHANGE = 0x001A;
+
+        /// <summary>
+        /// Specifies that the message should be sent only if the receiving application is responsive.
+        /// </summary>
+        /// <remarks>This constant is used with the <c>SendMessageTimeout</c> function to indicate that
+        /// the operation  should be aborted if the receiving application is not responding.</remarks>
+        public const uint SMTO_ABORTIFHUNG = 0x0002;
+
+        /// <summary>
+        /// Notifies the system that a setting has changed, allowing applications to update accordingly.
+        /// </summary>
+        /// <remarks>This method broadcasts a system-wide message to inform applications of the specified
+        /// setting change. Use this method to notify other applications or components when a configuration or system
+        /// setting has been updated. The default section, "ImmersiveColorSet", is commonly used for theme or
+        /// color-related changes.</remarks>
+        /// <param name="section">The name of the setting section that has changed. Defaults to "ImmersiveColorSet".</param>
+        public static void NotifySettingChanged(string section = "ImmersiveColorSet")
+        {
+            SendMessageTimeout(
+                new IntPtr(HWND_BROADCAST),
+                WM_SETTINGCHANGE,
+                UIntPtr.Zero,
+                section,
+                SMTO_ABORTIFHUNG,
+                100,
+                out _);
+        }
 
         /// <summary>
         /// MSLLHOOKSTRUCT structure: Contains information about a low-level mouse input event.

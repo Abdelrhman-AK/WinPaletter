@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace WinPaletter
 {
-    public partial class Start8Selector
+    public partial class Start81Selector
     {
-        public Start8Selector()
+        public Start81Selector()
         {
             InitializeComponent();
         }

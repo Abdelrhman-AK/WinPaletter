@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Assets;
+using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -135,6 +137,7 @@ namespace WinPaletter
             ToolStripMenuItem import_scheme_11 = new();
             ToolStripMenuItem import_scheme_10 = new();
             ToolStripMenuItem import_scheme_81 = new();
+            ToolStripMenuItem import_scheme_8 = new();
             ToolStripMenuItem import_scheme_7 = new();
             ToolStripMenuItem import_scheme_Vista = new();
             ToolStripMenuItem import_scheme_XP = new();
@@ -150,6 +153,7 @@ namespace WinPaletter
             import_scheme_11.Text = Program.Lang.Strings.Windows.W11;
             import_scheme_10.Text = Program.Lang.Strings.Windows.W10;
             import_scheme_81.Text = Program.Lang.Strings.Windows.W81;
+            import_scheme_8.Text = Program.Lang.Strings.Windows.W8;
             import_scheme_7.Text = Program.Lang.Strings.Windows.W7;
             import_scheme_Vista.Text = Program.Lang.Strings.Windows.WVista;
             import_scheme_XP.Text = Program.Lang.Strings.Windows.WXP;
@@ -178,6 +182,10 @@ namespace WinPaletter
             {
                 import_defaultWindows.Image = WinLogos.Add_Win81_20px;
             }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W8)
+            {
+                import_defaultWindows.Image = WinLogos.Add_Win81_20px;
+            }
             else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
             {
                 import_defaultWindows.Image = WinLogos.Add_Win7_20px;
@@ -199,6 +207,7 @@ namespace WinPaletter
             import_scheme_11.Image = WinLogos.Add_Win11_20px;
             import_scheme_10.Image = WinLogos.Add_Win10_20px;
             import_scheme_81.Image = WinLogos.Add_Win81_20px;
+            import_scheme_8.Image = WinLogos.Add_Win81_20px;
             import_scheme_7.Image = WinLogos.Add_Win7_20px;
             import_scheme_Vista.Image = WinLogos.Add_WinVista_20px;
             import_scheme_XP.Image = WinLogos.Add_WinXP_20px;
@@ -213,6 +222,7 @@ namespace WinPaletter
             import_scheme.DropDown.Items.Add(import_scheme_11);
             import_scheme.DropDown.Items.Add(import_scheme_10);
             import_scheme.DropDown.Items.Add(import_scheme_81);
+            import_scheme.DropDown.Items.Add(import_scheme_8);
             import_scheme.DropDown.Items.Add(import_scheme_7);
             import_scheme.DropDown.Items.Add(import_scheme_Vista);
             import_scheme.DropDown.Items.Add(import_scheme_XP);
@@ -298,6 +308,9 @@ namespace WinPaletter
             if (import_scheme_81 != null)
                 import_scheme_81.Click += _data.OnImportFromScheme_81;
 
+            if (import_scheme_8 != null)
+                import_scheme_8.Click += _data.OnImportFromScheme_8;
+
             if (import_scheme_7 != null)
                 import_scheme_7.Click += _data.OnImportFromScheme_7;
 
@@ -380,6 +393,9 @@ namespace WinPaletter
 
                 if (import_scheme_81 != null)
                     import_scheme_81.Click -= _data.OnImportFromScheme_81;
+
+                if (import_scheme_8 != null)
+                    import_scheme_8.Click -= _data.OnImportFromScheme_8;
 
                 if (import_scheme_7 != null)
                     import_scheme_7.Click -= _data.OnImportFromScheme_7;
@@ -561,21 +577,33 @@ namespace WinPaletter
 
         private void applyWithRP_Click(object sender, EventArgs e)
         {
-            // Create a restore point in a separate thread to avoid UI freeze, followed by applying the aspect
-            Task.Run(() =>
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.WaitCursor));
+                bool advapi_switched = false;
 
-                SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Lang.Strings.General.RestorePoint_Aspect, _data.AspectName));
+                // Impersonate the user if a token is available using the advapi32 library
+                if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
 
-                Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.Default));
-
-                Invoke(() =>
+                // Create a restore point in a separate thread to avoid UI freeze, followed by applying the aspect
+                Task.Run(() =>
                 {
-                    _data.OnApply?.Invoke((sender as ToolStripMenuItem).GetCurrentParent().Parent, e);
-                });
-            });
+                    Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.WaitCursor));
 
+                    SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Lang.Strings.General.RestorePoint_Aspect, _data.AspectName));
+
+                    Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.Default));
+
+                    Invoke(() =>
+                    {
+                        _data.OnApply?.Invoke((sender as ToolStripMenuItem).GetCurrentParent().Parent, e);
+                    });
+                });
+
+                // Revert impersonation
+                if (advapi_switched) { advapi.RevertToSelf(); }
+
+                wic.Undo();
+            }
         }
 
         private void btn_apply_Click(object sender, EventArgs e)
@@ -717,6 +745,11 @@ namespace WinPaletter
         /// EventHandler associated with clicking on 'Import from scheme > Windows 8.1' button
         /// </summary>
         public EventHandler OnImportFromScheme_81 { get; set; }
+
+        /// <summary>
+        /// EventHandler associated with clicking on 'Import from scheme > Windows 8' button
+        /// </summary>
+        public EventHandler OnImportFromScheme_8 { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Import from scheme > Windows 7' button

@@ -30,9 +30,6 @@ namespace WinPaletter.Theme
             Win7.ColorizationGlassReflectionIntensity = 0;
             Win7.Theme = Structures.Windows7.Themes.Aero;
 
-            ref Structures.LogonUI7 logonUI = ref TM.LogonUI7;
-            logonUI.Enabled = true;
-
             ref Structures.Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable05 = Color.FromArgb(136, 23, 152);

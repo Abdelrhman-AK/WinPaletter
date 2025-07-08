@@ -491,11 +491,6 @@ namespace WinPaletter
             this.toggle31 = new WinPaletter.UI.WP.Toggle();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.TabPage6 = new System.Windows.Forms.TabPage();
-            this.groupBox61 = new WinPaletter.UI.WP.GroupBox();
-            this.button29 = new WinPaletter.UI.WP.Button();
-            this.button28 = new WinPaletter.UI.WP.Button();
-            this.label52 = new System.Windows.Forms.Label();
-            this.pictureBox60 = new System.Windows.Forms.PictureBox();
             this.groupBox60 = new WinPaletter.UI.WP.GroupBox();
             this.label42 = new System.Windows.Forms.Label();
             this.toggle37 = new WinPaletter.UI.WP.Toggle();
@@ -684,8 +679,6 @@ namespace WinPaletter
             this.groupBox49.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.TabPage6.SuspendLayout();
-            this.groupBox61.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox60)).BeginInit();
             this.groupBox60.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox50)).BeginInit();
             this.groupBox52.SuspendLayout();
@@ -6677,7 +6670,6 @@ namespace WinPaletter
             // TabPage6
             // 
             this.TabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage6.Controls.Add(this.groupBox61);
             this.TabPage6.Controls.Add(this.groupBox60);
             this.TabPage6.Controls.Add(this.banner13);
             this.TabPage6.Controls.Add(this.groupBox52);
@@ -6686,77 +6678,6 @@ namespace WinPaletter
             this.TabPage6.Size = new System.Drawing.Size(823, 591);
             this.TabPage6.TabIndex = 5;
             this.TabPage6.Text = "Miscellaneous";
-            // 
-            // groupBox61
-            // 
-            this.groupBox61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox61.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox61.Controls.Add(this.button29);
-            this.groupBox61.Controls.Add(this.button28);
-            this.groupBox61.Controls.Add(this.label52);
-            this.groupBox61.Controls.Add(this.pictureBox60);
-            this.groupBox61.Location = new System.Drawing.Point(3, 161);
-            this.groupBox61.Name = "groupBox61";
-            this.groupBox61.Size = new System.Drawing.Size(817, 48);
-            this.groupBox61.TabIndex = 209;
-            // 
-            // button29
-            // 
-            this.button29.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button29.CustomColor = System.Drawing.Color.Empty;
-            this.button29.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button29.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button29.Image = null;
-            this.button29.ImageGlyph = null;
-            this.button29.ImageGlyphEnabled = false;
-            this.button29.Location = new System.Drawing.Point(540, 12);
-            this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(185, 24);
-            this.button29.TabIndex = 22;
-            this.button29.Text = "Get an official release";
-            this.button29.UseVisualStyleBackColor = true;
-            this.button29.Click += new System.EventHandler(this.button29_Click);
-            // 
-            // button28
-            // 
-            this.button28.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button28.CustomColor = System.Drawing.Color.Empty;
-            this.button28.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button28.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button28.Image = null;
-            this.button28.ImageGlyph = null;
-            this.button28.ImageGlyphEnabled = false;
-            this.button28.Location = new System.Drawing.Point(731, 12);
-            this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(75, 24);
-            this.button28.TabIndex = 21;
-            this.button28.Text = "Start";
-            this.button28.UseVisualStyleBackColor = true;
-            this.button28.Click += new System.EventHandler(this.button28_Click);
-            // 
-            // label52
-            // 
-            this.label52.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label52.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(41, 7);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(493, 34);
-            this.label52.TabIndex = 18;
-            this.label52.Text = "SecureUxTheme setup wrapper";
-            this.label52.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox60
-            // 
-            this.pictureBox60.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox60.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox60.Image")));
-            this.pictureBox60.Location = new System.Drawing.Point(11, 12);
-            this.pictureBox60.Name = "pictureBox60";
-            this.pictureBox60.Padding = new System.Windows.Forms.Padding(2);
-            this.pictureBox60.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox60.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox60.TabIndex = 20;
-            this.pictureBox60.TabStop = false;
             // 
             // groupBox60
             // 
@@ -6839,7 +6760,7 @@ namespace WinPaletter
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(719, 34);
             this.label57.TabIndex = 18;
-            this.label57.Text = "Preview every color change of Windows colors in real-time (Windows 7 and 8.1)";
+            this.label57.Text = "Preview every color change of Windows colors in real-time (Windows 7, 8 and 8.1)";
             this.label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toggle35
@@ -7130,8 +7051,6 @@ namespace WinPaletter
             this.groupBox49.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.TabPage6.ResumeLayout(false);
-            this.groupBox61.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox60)).EndInit();
             this.groupBox60.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox50)).EndInit();
             this.groupBox52.ResumeLayout(false);
@@ -7591,11 +7510,6 @@ namespace WinPaletter
         internal Label label42;
         private UI.WP.Toggle toggle37;
         internal PictureBox pictureBox50;
-        private UI.WP.GroupBox groupBox61;
-        private UI.WP.Button button28;
-        internal Label label52;
-        internal PictureBox pictureBox60;
-        private UI.WP.Button button29;
         internal UI.WP.CheckBox checkBox15;
         internal UI.WP.CheckBox checkBox16;
         private UI.WP.GroupBox groupBox62;

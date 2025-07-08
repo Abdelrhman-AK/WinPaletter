@@ -50,7 +50,10 @@ namespace WinPaletter
             if (OS.WVista && TM.VisualStyles_Vista.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
             if (OS.WXP && TM.VisualStyles_XP.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
 
-            if (TM.LogonUI10x.Enabled & (OS.W10 || OS.W11 || OS.W12)) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+            if (OS.W12 && TM.LogonUI12.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+            if (OS.W11 && TM.LogonUI11.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+            if (OS.W10 && TM.LogonUI10.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+
             if (TM.LogonUI81.Enabled & (OS.W8x)) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
             if (TM.LogonUI7.Enabled & (OS.W7)) aspects_list.Add(Program.Lang.Strings.Aspects.LogonUI);
             if (TM.LogonUIXP.Enabled & OS.WXP) aspects_list.Add(Program.Lang.Strings.Aspects.LogonUI);
@@ -146,9 +149,17 @@ namespace WinPaletter
                     {
                         TM.LogonUI81.Enabled = CheckedListBox1.GetItemChecked(i);
                     }
-                    else if (OS.W10 || OS.W11 || OS.W12)
+                    else if (OS.W10)
                     {
-                        TM.LogonUI10x.Enabled = CheckedListBox1.GetItemChecked(i);
+                        TM.LogonUI10.Enabled = CheckedListBox1.GetItemChecked(i);
+                    }
+                    else if (OS.W11)
+                    {
+                        TM.LogonUI11.Enabled = CheckedListBox1.GetItemChecked(i);
+                    }
+                    else if (OS.W12)
+                    {
+                        TM.LogonUI12.Enabled = CheckedListBox1.GetItemChecked(i);
                     }
                 }
 

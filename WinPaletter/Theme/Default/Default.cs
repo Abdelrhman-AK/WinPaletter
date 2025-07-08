@@ -20,6 +20,7 @@ namespace WinPaletter.Theme
                 WindowStyle.W11 => Windows11(),
                 WindowStyle.W10 => Windows10(),
                 WindowStyle.W81 => Windows81(),
+                WindowStyle.W8 => Windows8(),
                 WindowStyle.W7 => Windows7(),
                 WindowStyle.WVista => WindowsVista(),
                 WindowStyle.WXP => WindowsXP(),
@@ -42,8 +43,11 @@ namespace WinPaletter.Theme
             else if (OS.W10)
                 return Windows10();
 
-            else if (OS.W81 || OS.W8)
+            else if (OS.W81)
                 return Windows81();
+
+            else if (OS.W8)
+                return Windows8();
 
             else if (OS.W7)
                 return Windows7();

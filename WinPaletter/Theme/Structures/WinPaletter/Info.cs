@@ -8,7 +8,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for handling information about WinPaletter theme
     /// </summary>
-    public struct Info : ICloneable
+    public class Info : ICloneable
     {
         /// <summary>WinPaletter version that designed this theme</summary>
         public string AppVersion = Program.Version;
@@ -68,6 +68,12 @@ namespace WinPaletter.Theme.Structures
         public bool DesignedFor_Win81 = true;
 
         /// <summary>
+        /// This theme is designed especially for Windows 8.1
+        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
+        public bool DesignedFor_Win8 = true;
+
+        /// <summary>
         /// This theme is designed especially for Windows 7
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
@@ -116,6 +122,7 @@ namespace WinPaletter.Theme.Structures
             DesignedFor_Win11 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", true));
             DesignedFor_Win10 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", true));
             DesignedFor_Win81 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", true));
+            DesignedFor_Win8 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", true));
             DesignedFor_Win7 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", true));
             DesignedFor_WinVista = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", true));
             DesignedFor_WinXP = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", true));
@@ -145,6 +152,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", DesignedFor_Win11 ? 1 : 0, RegistryValueKind.DWord);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", DesignedFor_Win10 ? 1 : 0, RegistryValueKind.DWord);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", DesignedFor_Win81 ? 1 : 0, RegistryValueKind.DWord);
+            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8", DesignedFor_Win8 ? 1 : 0, RegistryValueKind.DWord);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", DesignedFor_Win7 ? 1 : 0, RegistryValueKind.DWord);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", DesignedFor_WinVista ? 1 : 0, RegistryValueKind.DWord);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP ? 1 : 0, RegistryValueKind.DWord);
@@ -163,7 +171,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Info structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

@@ -9,7 +9,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows effects and animations
     /// </summary>
-    public struct WinEffects : ICloneable
+    public class WinEffects : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -583,7 +583,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones WinEffects structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

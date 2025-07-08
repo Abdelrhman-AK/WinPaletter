@@ -10,7 +10,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows accessibility settings
     /// </summary>
-    public struct Accessibility : ICloneable
+    public class Accessibility : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -136,7 +136,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Accessibility structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

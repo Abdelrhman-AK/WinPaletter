@@ -32,6 +32,7 @@ namespace WinPaletter
                 PreviewHelpers.WindowStyle.W11 => Program.Lang.Strings.Windows.W11,
                 PreviewHelpers.WindowStyle.W10 => Program.Lang.Strings.Windows.W10,
                 PreviewHelpers.WindowStyle.W81 => Program.Lang.Strings.Windows.W81,
+                PreviewHelpers.WindowStyle.W8 => Program.Lang.Strings.Windows.W8,
                 PreviewHelpers.WindowStyle.W7 => Program.Lang.Strings.Windows.W7,
                 PreviewHelpers.WindowStyle.WVista => Program.Lang.Strings.Windows.WVista,
                 PreviewHelpers.WindowStyle.WXP => Program.Lang.Strings.Windows.WXP,
@@ -62,6 +63,8 @@ namespace WinPaletter
                                 LoadFromTM(TMx.VisualStyles_10); break;
                             case WindowStyle.W81:
                                 LoadFromTM(TMx.VisualStyles_81); break;
+                            case WindowStyle.W8:
+                                LoadFromTM(TMx.VisualStyles_8); break;
                             case WindowStyle.W7:
                                 LoadFromTM(TMx.VisualStyles_7); break;
                             case WindowStyle.WVista:
@@ -88,6 +91,8 @@ namespace WinPaletter
                         visualStyles = TMx.VisualStyles_10; break;
                     case WindowStyle.W81:
                         visualStyles = TMx.VisualStyles_81; break;
+                    case WindowStyle.W8:
+                        visualStyles = TMx.VisualStyles_8; break;
                     case WindowStyle.W7:
                         visualStyles = TMx.VisualStyles_7; break;
                     case WindowStyle.WVista:
@@ -114,6 +119,8 @@ namespace WinPaletter
                         visualStyles = TMx.VisualStyles_10; break;
                     case WindowStyle.W81:
                         visualStyles = TMx.VisualStyles_81; break;
+                    case WindowStyle.W8:
+                        visualStyles = TMx.VisualStyles_8; break;
                     case WindowStyle.W7:
                         visualStyles = TMx.VisualStyles_7; break;
                     case WindowStyle.WVista:
@@ -138,6 +145,8 @@ namespace WinPaletter
                     ApplyToTM(ref Program.TM.VisualStyles_10); break;
                 case WindowStyle.W81:
                     ApplyToTM(ref Program.TM.VisualStyles_81); break;
+                case WindowStyle.W8:
+                    ApplyToTM(ref Program.TM.VisualStyles_8); break;
                 case WindowStyle.W7:
                     ApplyToTM(ref Program.TM.VisualStyles_7); break;
                 case WindowStyle.WVista:
@@ -187,6 +196,10 @@ namespace WinPaletter
                         ApplyToTM(ref Program.TM.VisualStyles_81);
                         ApplyToTM(ref Program.TM_Original.VisualStyles_81);
                         break;
+                    case WindowStyle.W8:
+                        ApplyToTM(ref Program.TM.VisualStyles_8);
+                        ApplyToTM(ref Program.TM_Original.VisualStyles_8);
+                        break;
                     case WindowStyle.W7:
                         ApplyToTM(ref Program.TM.VisualStyles_7);
                         ApplyToTM(ref Program.TM_Original.VisualStyles_7);
@@ -205,6 +218,7 @@ namespace WinPaletter
                 else if (OS.W11) visualStyles.Apply("11");
                 else if (OS.W10) visualStyles.Apply("10");
                 else if (OS.W81) visualStyles.Apply("8.1");
+                else if (OS.W8) visualStyles.Apply("8");
                 else if (OS.W7) visualStyles.Apply("7");
                 else if (OS.WVista) visualStyles.Apply("Vista");
                 else if (OS.WXP) visualStyles.Apply("XP");
@@ -241,9 +255,6 @@ namespace WinPaletter
 
             LoadData(data);
 
-            button28.Visible = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8;
-            button29.Visible = button28.Visible;
-
             alertBox2.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, GetOSName(Program.WindowStyle));
 
             switch (Program.WindowStyle)
@@ -256,6 +267,8 @@ namespace WinPaletter
                     visualStyles = Program.TM.VisualStyles_10; break;
                 case WindowStyle.W81:
                     visualStyles = Program.TM.VisualStyles_81; break;
+                case WindowStyle.W8:
+                    visualStyles = Program.TM.VisualStyles_8; break;
                 case WindowStyle.W7:
                     visualStyles = Program.TM.VisualStyles_7; break;
                 case WindowStyle.WVista:
@@ -346,6 +359,10 @@ namespace WinPaletter
                     else if (vs.Platform == libmsstyle.Platform.Win81 && Program.WindowStyle != WindowStyle.W81)
                     {
                         return new(false, Program.Lang.Strings.Windows.W81);
+                    }
+                    else if (vs.Platform == libmsstyle.Platform.Win8 && Program.WindowStyle != WindowStyle.W8)
+                    {
+                        return new(false, Program.Lang.Strings.Windows.W8);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Win7 && Program.WindowStyle != WindowStyle.W7)
                     {
@@ -450,16 +467,6 @@ namespace WinPaletter
             }
         }
 
-        private void button29_Click(object sender, EventArgs e)
-        {
-            Process.Start(Links.SecureUxThemeReleases);
-        }
-
-        private void button28_Click(object sender, EventArgs e)
-        {
-            Forms.SecureUxTheme_Setup.ShowDialog();
-        }
-
         private void button21_Click(object sender, EventArgs e)
         {
             using (Manager TMx = Default.Get())
@@ -477,6 +484,9 @@ namespace WinPaletter
                         break;
                     case WindowStyle.W81:
                         VS_textbox.Text = TMx.VisualStyles_81.ThemeFile;
+                        break;
+                    case WindowStyle.W8:
+                        VS_textbox.Text = TMx.VisualStyles_8.ThemeFile;
                         break;
                     case WindowStyle.W7:
                         VS_textbox.Text = TMx.VisualStyles_7.ThemeFile;

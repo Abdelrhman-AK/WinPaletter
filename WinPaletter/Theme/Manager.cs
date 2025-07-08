@@ -48,7 +48,8 @@ namespace WinPaletter.Theme
                                 Windows12.Load("12", @default.Windows12);
                                 Windows11.Load("11", @default.Windows11);
                                 Windows10.Load("10", @default.Windows10);
-                                Windows81.Load("8.1", @default.Windows81);
+                                Windows81.Load(@default.Windows81);
+                                Windows8.Load(@default.Windows8);
                                 Windows7.Load(@default.Windows7);
                                 WindowsVista.Load(@default.WindowsVista);
                                 WindowsXP.Load(@default.WindowsXP);
@@ -56,12 +57,16 @@ namespace WinPaletter.Theme
                                 VisualStyles_11.Load("11", @default.VisualStyles_11);
                                 VisualStyles_10.Load("10", @default.VisualStyles_10);
                                 VisualStyles_81.Load("8.1", @default.VisualStyles_81);
+                                VisualStyles_8.Load("8", @default.VisualStyles_8);
                                 VisualStyles_7.Load("7", @default.VisualStyles_7);
                                 VisualStyles_Vista.Load("Vista", @default.VisualStyles_Vista);
                                 VisualStyles_XP.Load("XP", @default.VisualStyles_Vista);
-                                LogonUI10x.Load(@default.LogonUI10x);
-                                LogonUI81.Load("8.1", @default.LogonUI7);
-                                LogonUI7.Load("7", @default.LogonUI7);
+                                LogonUI12.Load("12", @default.LogonUI12);
+                                LogonUI11.Load("11", @default.LogonUI11);
+                                LogonUI10.Load("10", @default.LogonUI10);
+                                LogonUI81.Load(@default.LogonUI81);
+                                //LogonUI8.Load(@default.LogonUI8);
+                                LogonUI7.Load(@default.LogonUI7);
                                 LogonUIXP.Load(@default.LogonUIXP);
                                 Win32.Load();
                                 Accessibility.Load(@default.Accessibility);
@@ -77,6 +82,7 @@ namespace WinPaletter.Theme
                                 WallpaperTone_W11.Load("Win11");
                                 WallpaperTone_W10.Load("Win10");
                                 WallpaperTone_W81.Load("Win8.1");
+                                WallpaperTone_W8.Load("Win8");
                                 WallpaperTone_W7.Load("Win7");
                                 WallpaperTone_WVista.Load("WinVista");
                                 WallpaperTone_WXP.Load("WinXP");

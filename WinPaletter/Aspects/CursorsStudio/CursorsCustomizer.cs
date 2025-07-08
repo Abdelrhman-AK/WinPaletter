@@ -2837,6 +2837,9 @@ namespace WinPaletter
 
     public class CursorOptions
     {
+        public CursorOptions()
+        { }
+
         public CursorOptions(Theme.Structures.Cursor Cursor = default)
         {
             if (Cursor != null)

@@ -8,7 +8,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows screen saver
     /// </summary>
-    public struct ScreenSaver : ICloneable
+    public class ScreenSaver : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -78,7 +78,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones ScreenSaver structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

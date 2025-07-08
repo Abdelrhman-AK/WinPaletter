@@ -8,7 +8,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows sounds
     /// </summary>
-    public struct Sounds : ICloneable, IDisposable
+    public class Sounds : ICloneable, IDisposable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -680,7 +680,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Sounds structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

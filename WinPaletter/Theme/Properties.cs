@@ -21,6 +21,11 @@ namespace WinPaletter.Theme
         public Windows10x Windows12 = new();
 
         /// <summary>
+        /// Structure instance that contains data about Windows 12 LogonUI appearance, and it can be customized.
+        /// </summary>
+        public LogonUI10x LogonUI12 = new();
+
+        /// <summary>
         /// Visual styles structure instance that contains data about Windows 12, and it can be customized.
         /// </summary>
         public Structures.VisualStyles VisualStyles_12 = new();
@@ -29,6 +34,11 @@ namespace WinPaletter.Theme
         /// Structure instance that contains data about Windows 11 colors and appearance, and it can be customized.
         /// </summary>
         public Windows10x Windows11 = new();
+
+        /// <summary>
+        /// Structure instance that contains data about Windows 11 LogonUI appearance, and it can be customized.
+        /// </summary>
+        public LogonUI10x LogonUI11 = new();
 
         /// <summary>
         /// Visual styles structure instance that contains data about Windows 11, and it can be customized.
@@ -55,6 +65,11 @@ namespace WinPaletter.Theme
         };
 
         /// <summary>
+        /// Structure instance that contains data about Windows 10 LogonUI appearance, and it can be customized.
+        /// </summary>
+        public LogonUI10x LogonUI10 = new();
+
+        /// <summary>
         /// Visual styles structure instance that contains data about Windows 10, and it can be customized.
         /// </summary>
         public Structures.VisualStyles VisualStyles_10 = new();
@@ -62,12 +77,22 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows 8.1 colors and appearance, and it can be customized.
         /// </summary>
-        public Windows8x Windows81 = new();
+        public Windows81 Windows81 = new();
 
         /// <summary>
         /// Visual styles structure instance that contains data about Windows 8.1, and it can be customized.
         /// </summary>
         public Structures.VisualStyles VisualStyles_81 = new();
+
+        /// <summary>
+        /// Structure instance that contains data about Windows 8 colors and appearance, and it can be customized.
+        /// </summary>
+        public Windows8 Windows8 = new();
+
+        /// <summary>
+        /// Visual styles structure instance that contains data about Windows 8, and it can be customized.
+        /// </summary>
+        public Structures.VisualStyles VisualStyles_8 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 7 colors and appearance, and it can be customized.
@@ -110,14 +135,9 @@ namespace WinPaletter.Theme
         public Accessibility Accessibility = new();
 
         /// <summary>
-        /// Structure instance that contains data about Windows 10/11/12 LogonUI appearance, and it can be customized.
-        /// </summary>
-        public LogonUI10x LogonUI10x = new();
-
-        /// <summary>
         /// Structure instance that contains data about Windows 8.1 LogonUI appearance, and it can be customized.
         /// </summary>
-        public Structures.LogonUI7 LogonUI81 = new();
+        public Structures.LogonUI81 LogonUI81 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 7 LogonUI appearance, and it can be customized.
@@ -161,6 +181,13 @@ namespace WinPaletter.Theme
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
         public WallpaperTone WallpaperTone_W81 = new();
+
+        /// <summary>
+        /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property targets Windows 8 (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
+        /// </summary>
+        public WallpaperTone WallpaperTone_W8 = new();
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.

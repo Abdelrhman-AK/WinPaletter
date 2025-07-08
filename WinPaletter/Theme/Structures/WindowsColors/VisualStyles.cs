@@ -13,7 +13,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing VisualStyles, provided that patched themes can be applied
     /// </summary>
-    public struct VisualStyles : ICloneable
+    public class VisualStyles : ICloneable
     {
         /// <summary> 
         /// Controls if VisualStyles editing is enabled or not 
@@ -249,7 +249,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones VisualStyles structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

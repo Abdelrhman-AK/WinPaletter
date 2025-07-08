@@ -7,7 +7,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing WinPaletter appearance
     /// </summary>
-    public struct AppTheme : ICloneable
+    public class AppTheme : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -125,7 +125,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones AppTheme structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

@@ -75,7 +75,7 @@ namespace WinPaletter.Templates
         private string msstyles;
 
         bool Win7;
-        bool Win81;
+        bool Win8x;
         bool WinXP;
 
         #endregion
@@ -724,7 +724,7 @@ namespace WinPaletter.Templates
 
                     foreach (Window window in this.GetAllControls().OfType<Window>()) window.AccentColor_Active = value;
 
-                    if (WindowStyle == WindowStyle.W81 || WindowStyle == WindowStyle.W7 || WindowStyle == WindowStyle.WVista)
+                    if (WindowStyle == WindowStyle.W81 || WindowStyle == WindowStyle.W8 || WindowStyle == WindowStyle.W7 || WindowStyle == WindowStyle.WVista)
                     {
                         foreach (WinElement element in this.GetAllControls().OfType<WinElement>()) element.Background = value;
                     }
@@ -759,7 +759,7 @@ namespace WinPaletter.Templates
                     _afterglowColor_Active = value;
                     foreach (Window window in this.GetAllControls().OfType<Window>()) window.AccentColor2_Active = value;
 
-                    if (WindowStyle == WindowStyle.W81 || WindowStyle == WindowStyle.W7 || WindowStyle == WindowStyle.WVista)
+                    if (WindowStyle == WindowStyle.W81 || WindowStyle == WindowStyle.W8 || WindowStyle == WindowStyle.W7 || WindowStyle == WindowStyle.WVista)
                     {
                         foreach (WinElement element in this.GetAllControls().OfType<WinElement>()) element.Background2 = value;
                     }
@@ -1332,12 +1332,12 @@ namespace WinPaletter.Templates
             toolStripMenuItem1.ForeColor = statusForeColor;
             toolStripMenuItem2.ForeColor = statusForeColor;
 
-            Win81 = WindowStyle == WindowStyle.W81;
+            Win8x = WindowStyle == WindowStyle.W81 || WindowStyle == WindowStyle.W8;
             Win7 = WindowStyle == WindowStyle.W7;
             WinVista = WindowStyle == WindowStyle.WVista;
             WinXP = WindowStyle == WindowStyle.WXP;
 
-            if (!WinXP && !WinVista && !Win7 && !Win81)
+            if (!WinXP && !WinVista && !Win7 && !Win8x)
             {
                 msgLbl.ForeColor = Window1.DarkMode ? Color.White : Color.Black;
                 MenuStrip1.BackColor = Window1.DarkMode ? Color.FromArgb(35, 35, 35) : Color.FromArgb(255, 255, 255);
@@ -1448,7 +1448,7 @@ namespace WinPaletter.Templates
                 Refresh();
             }
 
-            else if (_windowStyle == WindowStyle.WVista || _windowStyle == WindowStyle.W7 || _windowStyle == WindowStyle.W81)
+            else if (_windowStyle == WindowStyle.WVista || _windowStyle == WindowStyle.W7 || _windowStyle == WindowStyle.W8 || _windowStyle == WindowStyle.W81)
             {
                 WinVista = _windowStyle == WindowStyle.WVista;
 
@@ -1456,14 +1456,14 @@ namespace WinPaletter.Templates
                 {
                     case Theme.Structures.Windows7.Themes.AeroOpaque:
                         {
-                            Preview = WindowStyle != WindowStyle.W81 ? Preview_Enum.W7Opaque : Preview_Enum.W8Lite;
+                            Preview = (WindowStyle != WindowStyle.W8 && WindowStyle != WindowStyle.W81) ? Preview_Enum.W7Opaque : Preview_Enum.W8Lite;
                             Classic = false;
                             break;
                         }
 
                     case Theme.Structures.Windows7.Themes.AeroLite:
                         {
-                            Preview = WindowStyle == WindowStyle.W81 ? Preview_Enum.W8Lite : Preview_Enum.W7Opaque;
+                            Preview = (WindowStyle == WindowStyle.W8 || WindowStyle == WindowStyle.W81) ? Preview_Enum.W8Lite : Preview_Enum.W7Opaque;
                             Classic = false;
                             break;
                         }
@@ -1483,7 +1483,7 @@ namespace WinPaletter.Templates
 
                     default:
                         {
-                            Preview = WindowStyle != WindowStyle.W81 ? Preview_Enum.W7Aero : Preview_Enum.W8;
+                            Preview = (WindowStyle != WindowStyle.W8 && WindowStyle != WindowStyle.W81) ? Preview_Enum.W7Aero : Preview_Enum.W8;
                             break;
                         }
                 }
@@ -1559,6 +1559,19 @@ namespace WinPaletter.Templates
                 Win7ColorBal = HookedTM.Windows81.ColorizationColorBalance;
                 TitlebarColor_Enabled = true;
                 Windows_7_8_Theme = HookedTM.Windows81.Theme;
+            }
+
+            else if (WindowStyle == WindowStyle.W8)
+            {
+                Win7GlowBal = 100;
+                Win7Noise = 100f;
+                Win7Alpha = 100;
+
+                TitlebarColor_Active = HookedTM.Windows8.ColorizationColor;
+                TitlebarColor_Inactive = HookedTM.Windows8.ColorizationColor;
+                Win7ColorBal = HookedTM.Windows8.ColorizationColorBalance;
+                TitlebarColor_Enabled = true;
+                Windows_7_8_Theme = HookedTM.Windows8.Theme;
             }
 
             else if (WindowStyle == WindowStyle.W7)

@@ -20,7 +20,7 @@ namespace WinPaletter.Theme
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
 
-            ref Structures.Windows8x Win81 = ref TM.Windows81;
+            ref Structures.Windows81 Win81 = ref TM.Windows81;
             Win81.Enabled = true;
             Win81.ColorizationColor = Color.FromArgb(246, 195, 74);
             Win81.ColorizationColorBalance = 78;
@@ -30,9 +30,6 @@ namespace WinPaletter.Theme
             Win81.AccentColor = Color.FromArgb(72, 29, 178);
             Win81.Start = 0;
             Win81.Theme = Structures.Windows7.Themes.Aero;
-
-            ref Structures.LogonUI7 logonUI = ref TM.LogonUI81;
-            logonUI.Enabled = true;
 
             ref Structures.Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;

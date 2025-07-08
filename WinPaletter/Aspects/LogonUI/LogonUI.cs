@@ -11,6 +11,15 @@ namespace WinPaletter
     {
         Bitmap back_unblurred = null;
         Bitmap back_blurred = null;
+
+        /// <summary>
+        /// Represents the LogonUI structure for version 10.x of the theme.
+        /// </summary>
+        /// <remarks>This field provides access to the LogonUI configuration specific to version 10.x of
+        /// the theme. It is used to define and manage the appearance and behavior of the logon user
+        /// interface.</remarks>
+        public Theme.Structures.LogonUI10x LogonUI10x;
+
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.LogonUI_10x);
@@ -37,7 +46,14 @@ namespace WinPaletter
                 {
                     using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
                     {
-                        LoadFromTM(TMx);
+                        if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                            LoadFromTM(TMx.LogonUI12);
+                        else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                            LoadFromTM(TMx.LogonUI11);
+                        else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                            LoadFromTM(TMx.LogonUI10);
+                        else
+                            LoadFromTM(TMx.LogonUI12);
                     }
                 }
             }
@@ -47,7 +63,14 @@ namespace WinPaletter
         {
             using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
             {
-                LoadFromTM(TMx);
+                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                    LoadFromTM(TMx.LogonUI12);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                    LoadFromTM(TMx.LogonUI11);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                    LoadFromTM(TMx.LogonUI10);
+                else
+                    LoadFromTM(TMx.LogonUI12);
             }
         }
 
@@ -55,13 +78,20 @@ namespace WinPaletter
         {
             using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle))
             {
-                LoadFromTM(TMx);
+                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                    LoadFromTM(TMx.LogonUI12);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                    LoadFromTM(TMx.LogonUI11);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                    LoadFromTM(TMx.LogonUI10);
+                else
+                    LoadFromTM(TMx.LogonUI12);
             }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {
-            ApplyToTM(Program.TM);
+            ApplyToTM(ref LogonUI10x);
             Close();
         }
 
@@ -83,10 +113,32 @@ namespace WinPaletter
                     TMx.Save(Theme.Manager.Source.File, filename);
                 }
 
-                ApplyToTM(TMx);
-                ApplyToTM(Program.TM);
-                ApplyToTM(Program.TM_Original);
-                TMx.LogonUI10x.Apply();
+                ApplyToTM(ref LogonUI10x);
+
+                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                {
+                    TMx.LogonUI12.Apply("12");
+                    ApplyToTM(ref Program.TM.LogonUI12);
+                    ApplyToTM(ref Program.TM_Original.LogonUI12);
+                }
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                {
+                    TMx.LogonUI11.Apply("11");
+                    ApplyToTM(ref Program.TM.LogonUI11);
+                    ApplyToTM(ref Program.TM_Original.LogonUI11);
+                }
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                {
+                    TMx.LogonUI10.Apply("10x");
+                    ApplyToTM(ref Program.TM.LogonUI10);
+                    ApplyToTM(ref Program.TM_Original.LogonUI10);
+                }
+                else
+                {
+                    TMx.LogonUI12.Apply("12");
+                    ApplyToTM(ref Program.TM.LogonUI12);
+                    ApplyToTM(ref Program.TM_Original.LogonUI12);
+                }
             }
 
             Cursor = Cursors.Default;
@@ -97,7 +149,7 @@ namespace WinPaletter
             DesignerData data = new(this)
             {
                 AspectName = Program.Lang.Strings.Aspects.LockScreen,
-                Enabled = Program.TM.LogonUI10x.Enabled,
+                Enabled = LogonUI10x.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
                 GeneratePalette = false,
@@ -131,7 +183,7 @@ namespace WinPaletter
             back_unblurred = CaptureLockScreen();
             back_blurred = back_unblurred.Blur(7).Noise(BitmapExtensions.NoiseMode.Acrylic, 0.7f);
 
-            LoadFromTM(Program.TM);
+            LoadFromTM(LogonUI10x);
 
             // Make them all black after ApplyStyle(this);
             for (int i = 0; i <= tabs_preview_1.TabCount - 1; i++) { tabs_preview_1.TabPages[i].BackColor = Color.Black; }
@@ -142,22 +194,22 @@ namespace WinPaletter
             label2.ForeColor = Color.White;
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Theme.Structures.LogonUI10x logonUI)
         {
-            AspectEnabled = TM.LogonUI10x.Enabled;
+            AspectEnabled = logonUI.Enabled;
 
-            LogonUI_Acrylic_Toggle.Checked = !TM.LogonUI10x.DisableAcrylicBackgroundOnLogon;
-            LogonUI_Background_Toggle.Checked = !TM.LogonUI10x.DisableLogonBackgroundImage;
-            LogonUI_Lockscreen_Toggle.Checked = TM.LogonUI10x.NoLockScreen;
+            LogonUI_Acrylic_Toggle.Checked = !logonUI.DisableAcrylicBackgroundOnLogon;
+            LogonUI_Background_Toggle.Checked = !logonUI.DisableLogonBackgroundImage;
+            LogonUI_Lockscreen_Toggle.Checked = logonUI.NoLockScreen;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(ref Theme.Structures.LogonUI10x logonUI)
         {
-            TM.LogonUI10x.Enabled = AspectEnabled;
+            logonUI.Enabled = AspectEnabled;
 
-            TM.LogonUI10x.DisableAcrylicBackgroundOnLogon = !LogonUI_Acrylic_Toggle.Checked;
-            TM.LogonUI10x.DisableLogonBackgroundImage = !LogonUI_Background_Toggle.Checked;
-            TM.LogonUI10x.NoLockScreen = LogonUI_Lockscreen_Toggle.Checked;
+            logonUI.DisableAcrylicBackgroundOnLogon = !LogonUI_Acrylic_Toggle.Checked;
+            logonUI.DisableLogonBackgroundImage = !LogonUI_Background_Toggle.Checked;
+            logonUI.NoLockScreen = LogonUI_Lockscreen_Toggle.Checked;
         }
 
         private void UpdatePreview()

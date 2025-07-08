@@ -223,6 +223,12 @@
     <Compile Include="Aspects\AccessibilityEditor.Designer.cs">
       <DependentUpon>AccessibilityEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Aspects\LogonUI\LogonUI81.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Aspects\LogonUI\LogonUI81.Designer.cs">
+      <DependentUpon>LogonUI81.cs</DependentUpon>
+    </Compile>
     <Compile Include="Aspects\WindowsColors\VisualStyles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -240,6 +246,12 @@
     </Compile>
     <Compile Include="Aspects\WindowsColors\Win12Colors.Designer.cs">
       <DependentUpon>Win12Colors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Aspects\WindowsColors\Win8Colors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Aspects\WindowsColors\Win8Colors.Designer.cs">
+      <DependentUpon>Win8Colors.cs</DependentUpon>
     </Compile>
     <Compile Include="Assets\Accessibility_Vision.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -368,17 +380,10 @@
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
     <Compile Include="Program\TypesExtensions\Types.cs" />
-    <Compile Include="SecureUxTheme\SecureUxTheme.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\GlobalVariables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
-    <Compile Include="SecureUxTheme\SecureUxTheme_Setup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SecureUxTheme\SecureUxTheme_Setup.Designer.cs">
-      <DependentUpon>SecureUxTheme_Setup.cs</DependentUpon>
-    </Compile>
     <Compile Include="Settings\Setup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -657,10 +662,12 @@
     <Compile Include="Theme\Default\WindowsVista.cs" />
     <Compile Include="Theme\Default\WindowsXP.cs" />
     <Compile Include="Theme\Save.cs" />
+    <Compile Include="Theme\Structures\LogonUI\LogonUI81.cs" />
     <Compile Include="Theme\Structures\Others\Cursors.cs" />
     <Compile Include="Theme\Structures\Others\Icons.cs" />
     <Compile Include="Theme\Structures\Others\Accessibility.cs" />
     <Compile Include="Theme\Structures\WindowsColors\VisualStyles.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows8.cs" />
     <Compile Include="Theme\Support\CloneSupport.cs" />
     <Compile Include="Theme\Support\DisposeSupport.cs" />
     <Compile Include="Theme\Support\Editions.cs" />
@@ -685,7 +692,7 @@
     <Compile Include="Theme\Structures\WindowsColors\Win32UI.cs" />
     <Compile Include="Theme\Structures\WindowsColors\Windows10x.cs" />
     <Compile Include="Theme\Structures\WindowsColors\Windows7.cs" />
-    <Compile Include="Theme\Structures\WindowsColors\Windows8x.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows81.cs" />
     <Compile Include="Theme\Structures\WindowsColors\WindowsVista.cs" />
     <Compile Include="Theme\Structures\WindowsColors\WindowsXP.cs" />
     <Compile Include="Theme\Structures\Others\WinEffects.cs" />
@@ -1177,6 +1184,9 @@
     <EmbeddedResource Include="Aspects\AccessibilityEditor.resx">
       <DependentUpon>AccessibilityEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Aspects\LogonUI\LogonUI81.resx">
+      <DependentUpon>LogonUI81.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WindowsColors\VisualStyles.resx">
       <DependentUpon>VisualStyles.cs</DependentUpon>
     </EmbeddedResource>
@@ -1185,6 +1195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WindowsColors\Win12Colors.resx">
       <DependentUpon>Win12Colors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Aspects\WindowsColors\Win8Colors.resx">
+      <DependentUpon>Win8Colors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1370,9 +1383,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\BackupThemes_List.resx">
       <DependentUpon>BackupThemes_List.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SecureUxTheme\SecureUxTheme_Setup.resx">
-      <DependentUpon>SecureUxTheme_Setup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings\SettingsX.resx">
       <DependentUpon>SettingsX.cs</DependentUpon>

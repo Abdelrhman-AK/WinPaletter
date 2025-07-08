@@ -23,6 +23,8 @@ namespace WinPaletter
             W10,
             /// <summary>Windows 8.1</summary>
             W81,
+            /// <summary>Windows 8</summary>
+            W8,
             /// <summary>Windows 7</summary>
             W7,
             /// <summary>Windows Vista</summary>
@@ -469,17 +471,6 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Refreshes all controls and subcontrols
-        /// </summary>
-        /// <param name="Parent">Parent that has all controls and subcontrols</param>
-        public static void ReValidateLivePreview(Control Parent)
-        {
-            Parent.Refresh();
-            foreach (Control ctrl in Parent.GetAllControls())
-            { ctrl.Refresh(); }
-        }
-
-        /// <summary>
         /// Apply selected Windows 8.1 start background in W81_start button in Windows 8.1 editing form
         /// </summary>
         /// <param name="ID">Selected Windows 8.1 start background ID</param>
@@ -491,92 +482,92 @@ namespace WinPaletter
             {
                 case 1:
                     {
-                        W81_start.Image = Forms.Start8Selector.img1.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img1.Image.Resize(48, 48);
                         break;
                     }
                 case 2:
                     {
-                        W81_start.Image = Forms.Start8Selector.img2.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img2.Image.Resize(48, 48);
                         break;
                     }
                 case 3:
                     {
-                        W81_start.Image = Forms.Start8Selector.img3.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img3.Image.Resize(48, 48);
                         break;
                     }
                 case 4:
                     {
-                        W81_start.Image = Forms.Start8Selector.img4.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img4.Image.Resize(48, 48);
                         break;
                     }
                 case 5:
                     {
-                        W81_start.Image = Forms.Start8Selector.img5.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img5.Image.Resize(48, 48);
                         break;
                     }
                 case 6:
                     {
-                        W81_start.Image = Forms.Start8Selector.img6.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img6.Image.Resize(48, 48);
                         break;
                     }
                 case 7:
                     {
-                        W81_start.Image = Forms.Start8Selector.img7.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img7.Image.Resize(48, 48);
                         break;
                     }
                 case 8:
                     {
-                        W81_start.Image = Forms.Start8Selector.img8.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img8.Image.Resize(48, 48);
                         break;
                     }
                 case 9:
                     {
-                        W81_start.Image = Forms.Start8Selector.img9.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img9.Image.Resize(48, 48);
                         break;
                     }
                 case 10:
                     {
-                        W81_start.Image = Forms.Start8Selector.img10.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img10.Image.Resize(48, 48);
                         break;
                     }
                 case 11:
                     {
-                        W81_start.Image = Forms.Start8Selector.img11.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img11.Image.Resize(48, 48);
                         break;
                     }
                 case 12:
                     {
-                        W81_start.Image = Forms.Start8Selector.img12.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img12.Image.Resize(48, 48);
                         break;
                     }
                 case 13:
                     {
-                        W81_start.Image = Forms.Start8Selector.img13.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img13.Image.Resize(48, 48);
                         break;
                     }
                 case 14:
                     {
-                        W81_start.Image = Forms.Start8Selector.img14.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img14.Image.Resize(48, 48);
                         break;
                     }
                 case 15:
                     {
-                        W81_start.Image = Forms.Start8Selector.img15.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img15.Image.Resize(48, 48);
                         break;
                     }
                 case 16:
                     {
-                        W81_start.Image = Forms.Start8Selector.img16.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img16.Image.Resize(48, 48);
                         break;
                     }
                 case 17:
                     {
-                        W81_start.Image = Forms.Start8Selector.img17.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img17.Image.Resize(48, 48);
                         break;
                     }
                 case 18:
                     {
-                        W81_start.Image = Forms.Start8Selector.img18.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img18.Image.Resize(48, 48);
                         break;
                     }
                 case 19:
@@ -592,7 +583,7 @@ namespace WinPaletter
 
                 default:
                     {
-                        W81_start.Image = Forms.Start8Selector.img1.Image.Resize(48, 48);
+                        W81_start.Image = Forms.Start81Selector.img1.Image.Resize(48, 48);
                         break;
                     }
             }

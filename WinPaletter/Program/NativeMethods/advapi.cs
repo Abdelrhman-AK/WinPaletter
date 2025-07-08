@@ -182,6 +182,290 @@ namespace WinPaletter.NativeMethods
             }
         }
 
+        /// <summary>
+        /// Opens the access token associated with a specified process.
+        /// </summary>
+        /// <remarks>The caller is responsible for closing the token handle returned in <paramref
+        /// name="TokenHandle"/> using the <see cref="CloseHandle"/> function to avoid resource leaks.</remarks>
+        /// <param name="ProcessHandle">A handle to the process whose access token is to be opened. This handle must have the <see
+        /// langword="PROCESS_QUERY_INFORMATION"/> or <see langword="PROCESS_QUERY_LIMITED_INFORMATION"/> access right.</param>
+        /// <param name="DesiredAccess">A bitmask specifying the desired access rights for the token. For example, use <see langword="TOKEN_QUERY"/>
+        /// or <see langword="TOKEN_DUPLICATE"/>.</param>
+        /// <param name="TokenHandle">When the method returns, contains a handle to the newly opened access token if the operation succeeds.</param>
+        /// <returns><see langword="true"/> if the function succeeds; otherwise, <see langword="false"/>. Call <see
+        /// cref="Marshal.GetLastWin32Error"/> to retrieve extended error information if the function fails.</returns>
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+
+        /// <summary>
+        /// Creates a duplicate of an existing access token with specified access rights, attributes, impersonation
+        /// level, and token type.
+        /// </summary>
+        /// <remarks>The caller is responsible for closing the handle returned in <paramref
+        /// name="phNewToken"/> using the <see cref="CloseHandle"/> function.</remarks>
+        /// <param name="hExistingToken">A handle to the existing access token to duplicate. This handle must have the <see
+        /// langword="TOKEN_DUPLICATE"/> access right.</param>
+        /// <param name="dwDesiredAccess">Specifies the access rights for the new token. Use standard access rights or a combination of access masks.</param>
+        /// <param name="lpTokenAttributes">A pointer to a <see cref="SECURITY_ATTRIBUTES"/> structure that specifies the security attributes for the
+        /// new token. Can be <see langword="IntPtr.Zero"/> for default attributes.</param>
+        /// <param name="ImpersonationLevel">Specifies the impersonation level for the new token. Use a value from the <see
+        /// cref="SECURITY_IMPERSONATION_LEVEL"/> enumeration.</param>
+        /// <param name="TokenType">Specifies the type of token to create. Use a value from the <see cref="TOKEN_TYPE"/> enumeration.</param>
+        /// <param name="phNewToken">When the method returns, contains a handle to the newly created token if the operation succeeds.</param>
+        /// <returns><see langword="true"/> if the token was successfully duplicated; otherwise, <see langword="false"/>. Call
+        /// <see cref="Marshal.GetLastWin32Error"/> to retrieve extended error information if the method fails.</returns>
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern bool DuplicateTokenEx(IntPtr hExistingToken, uint dwDesiredAccess, IntPtr lpTokenAttributes, int ImpersonationLevel, int TokenType, out IntPtr phNewToken);
+
+        /// <summary>
+        /// Creates a new process and its primary thread using the specified token, application name, and command line.
+        /// </summary>
+        /// <remarks>This method is a P/Invoke wrapper for the Windows API function
+        /// <c>CreateProcessWithTokenW</c>. It requires the calling process to have the necessary privileges to use the
+        /// specified token.</remarks>
+        /// <param name="hToken">A handle to the primary token that represents a user. This handle must have the <see
+        /// langword="TOKEN_ASSIGN_PRIMARY"/> and <see langword="TOKEN_DUPLICATE"/> access rights.</param>
+        /// <param name="dwLogonFlags">The logon option flags. Use 0 for default behavior or <see langword="LOGON_WITH_PROFILE"/> to load the
+        /// user's profile.</param>
+        /// <param name="lpApplicationName">The name of the module to execute. Can be <see langword="null"/> if the module name is included in <paramref
+        /// name="lpCommandLine"/>.</param>
+        /// <param name="lpCommandLine">The command line to execute. If <paramref name="lpApplicationName"/> is <see langword="null"/>, the module
+        /// name must be the first token in this string.</param>
+        /// <param name="dwCreationFlags">The flags that control the priority class and creation of the process. For example, <see
+        /// langword="CREATE_NEW_CONSOLE"/> or <see langword="CREATE_SUSPENDED"/>.</param>
+        /// <param name="lpEnvironment">A pointer to the environment block for the new process. Use <see langword="IntPtr.Zero"/> to inherit the
+        /// environment of the calling process.</param>
+        /// <param name="lpCurrentDirectory">The full path to the current directory for the process. Use <see langword="null"/> to use the current
+        /// directory of the calling process.</param>
+        /// <param name="lpStartupInfo">A reference to a <see cref="STARTUPINFO"/> structure that specifies the window station, desktop, standard
+        /// handles, and appearance of the main window for the new process.</param>
+        /// <param name="lpProcessInformation">When the method returns, contains a <see cref="PROCESS_INFORMATION"/> structure with information about the
+        /// newly created process and its primary thread.</param>
+        /// <returns><see langword="true"/> if the process and its primary thread are successfully created; otherwise, <see
+        /// langword="false"/>. Call <see cref="Marshal.GetLastWin32Error"/> to retrieve extended error information if
+        /// the method fails.</returns>
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool CreateProcessWithTokenW(IntPtr hToken, int dwLogonFlags, string lpApplicationName, string lpCommandLine, int dwCreationFlags, IntPtr lpEnvironment, string lpCurrentDirectory, [In] ref STARTUPINFO lpStartupInfo, out PROCESS_INFORMATION lpProcessInformation);
+
+        /// <summary>
+        /// Contains information about a newly created process and its primary thread.
+        /// </summary>
+        /// <remarks>This structure is typically used with process creation functions, such as <see
+        /// cref="CreateProcess"/>,  to retrieve handles and identifiers for the new process and its primary thread. 
+        /// The caller is responsible for closing the handles when they are no longer needed by using  <see
+        /// cref="CloseHandle"/> to avoid resource leaks.</remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PROCESS_INFORMATION
+        {
+            /// <summary>
+            /// A handle to the process associated with this instance.
+            /// </summary>
+            /// <remarks>This handle can be used to perform operations on the associated process, such
+            /// as reading or writing memory, or querying process information. Ensure proper permissions are granted for
+            /// the intended operations.</remarks>
+            public IntPtr hProcess;
+
+            /// <summary>
+            /// A handle to the thread represented as an <see cref="IntPtr"/>.
+            /// </summary>
+            /// <remarks>This handle can be used to interact with the thread at a low level, such as
+            /// for thread management or synchronization. Ensure proper usage and disposal to avoid resource
+            /// leaks.</remarks>
+            public IntPtr hThread;
+
+            /// <summary>
+            /// Represents the unique identifier of a process.
+            /// </summary>
+            /// <remarks>This field stores the process ID as an unsigned integer. It is typically used
+            /// to identify a specific process in the system.</remarks>
+            public uint dwProcessId;
+
+            /// <summary>
+            /// Represents the unique identifier of a thread.
+            /// </summary>
+            /// <remarks>This field stores the thread ID as an unsigned 32-bit integer. It is
+            /// typically used to identify a specific thread within a process.</remarks>
+            public uint dwThreadId;
+        }
+
+        /// <summary>
+        /// Represents the startup information passed to a new process when using the Windows API to create a process.
+        /// </summary>
+        /// <remarks>This structure is used with functions such as <see cref="CreateProcess"/> to specify
+        /// details about the appearance and behavior of the new process's main window, as well as its standard input,
+        /// output, and error handles.  Callers should initialize the <see cref="cb"/> field to the size of this
+        /// structure before using it in API calls. Other fields can be set as needed to customize the process startup
+        /// behavior.</remarks>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct STARTUPINFO
+        {
+            /// <summary>
+            /// Gets or sets the size, in bytes, of a buffer or data structure.
+            /// </summary>
+            public int cb;
+
+            /// <summary>
+            /// Reserved for future use. This field is not currently used.
+            /// </summary>
+            public string lpReserved;
+
+            /// <summary>
+            /// Gets or sets the name of the desktop associated with the process.
+            /// </summary>
+            /// <remarks>This property specifies the desktop that the process will use. If the value
+            /// is not set,  the process will use the default desktop.</remarks>
+            public string lpDesktop;
+
+            /// <summary>
+            /// Gets or sets the title associated with the object.
+            /// </summary>
+            public string lpTitle;
+
+            /// <summary>
+            /// Represents the X-coordinate of a point in a 2D space.
+            /// </summary>
+            public int dwX;
+
+            /// <summary>
+            /// Represents the Y-coordinate of a point in a 2D space.
+            /// </summary>
+            public int dwY;
+
+            /// <summary>
+            /// Represents the horizontal size of an object or area, in device units.
+            /// </summary>
+            /// <remarks>This field typically specifies the width of an object or area in a graphical
+            /// context. The value is measured in device-specific units, such as pixels.</remarks>
+            public int dwXSize;
+
+            /// <summary>
+            /// Represents the vertical size of an object, typically in pixels or units.
+            /// </summary>
+            /// <remarks>The specific meaning and unit of measurement for this value depend on the
+            /// context in which it is used.</remarks>
+            public int dwYSize;
+
+            /// <summary>
+            /// Gets or sets the number of character cells in the horizontal direction of the console screen buffer.
+            /// </summary>
+            public int dwXCountChars;
+
+            /// <summary>
+            /// Gets or sets the number of character rows in the console screen buffer.
+            /// </summary>
+            public int dwYCountChars;
+
+            /// <summary>
+            /// Represents the fill attribute for a console screen buffer.
+            /// </summary>
+            /// <remarks>This value specifies the foreground and background color attributes used to
+            /// fill a console screen buffer. The value is typically a combination of color constants defined in the
+            /// console API.</remarks>
+            public int dwFillAttribute;
+
+            /// <summary>
+            /// Represents a set of flags as an integer value.
+            /// </summary>
+            /// <remarks>The meaning of the flags is determined by the specific context in which this
+            /// field is used. Refer to the associated documentation for details on the possible values and their
+            /// effects.</remarks>
+            public int dwFlags;
+
+            /// <summary>
+            /// Specifies the command to be sent to the window to determine how it is to be shown.
+            /// </summary>
+            public short wShowWindow;
+
+            /// <summary>
+            /// Reserved for future use. This field is not currently used.
+            /// </summary>
+            public short cbReserved2;
+
+            /// <summary>
+            /// Reserved for system use. This field is not intended to be used directly in application code.
+            /// </summary>
+            public IntPtr lpReserved2;
+
+            /// <summary>
+            /// Represents a handle to the standard input stream.
+            /// </summary>
+            /// <remarks>This field typically holds a pointer to the standard input stream for a
+            /// process. It is commonly used in interop scenarios or when working with unmanaged code.</remarks>
+            public IntPtr hStdInput;
+
+            /// <summary>
+            /// Represents a handle to the standard output stream.
+            /// </summary>
+            /// <remarks>This field typically holds a pointer to the standard output stream for a
+            /// process. It is commonly used in interop scenarios or when working with unmanaged code.</remarks>
+            public IntPtr hStdOutput;
+
+            /// <summary>
+            /// Represents a handle to the standard error output stream for a process.
+            /// </summary>
+            /// <remarks>This field typically holds a pointer to the standard error stream used by a
+            /// process.  It is commonly used in scenarios where process input/output redirection is required.</remarks>
+            public IntPtr hStdError;
+        }
+
+        /// <summary>
+        /// Represents the access right that allows a token to be duplicated.
+        /// </summary>
+        /// <remarks>This constant is used when specifying access rights for token-related operations,
+        /// such as duplicating a security token.</remarks>
+        public const uint TOKEN_DUPLICATE = 0x0002;
+
+        /// <summary>
+        /// Represents the access right required to assign the primary token of a process.
+        /// </summary>
+        /// <remarks>This constant is used in security-related operations to specify the permission needed
+        /// to assign a primary token to a process. It is typically used in conjunction with Windows API functions that
+        /// manage process tokens.</remarks>
+        public const uint TOKEN_ASSIGN_PRIMARY = 0x0001;
+
+        /// <summary>
+        /// Represents the access right required to adjust the default owner, primary group, or default discretionary
+        /// access control list (DACL) of a token.
+        /// </summary>
+        /// <remarks>This constant is used in security-related operations involving access tokens, such as
+        /// when modifying token privileges or attributes.</remarks>
+        public const uint TOKEN_ADJUST_DEFAULT = 0x0080;
+
+        /// <summary>
+        /// Represents the constant value used to specify the adjustment of a session ID in token-related operations.
+        /// </summary>
+        /// <remarks>This constant is typically used in conjunction with Windows API functions that
+        /// require token access rights.</remarks>
+        public const uint TOKEN_ADJUST_SESSIONID = 0x0100;
+
+        /// <summary>
+        /// Represents the security impersonation level used in access control operations.
+        /// </summary>
+        /// <remarks>The value of <see langword="2"/> corresponds to the "SecurityImpersonation" level, 
+        /// which allows a server process to impersonate the security context of a client.</remarks>
+        public const int SecurityImpersonation = 2;
+
+        /// <summary>
+        /// Represents the primary token identifier used for internal processing.
+        /// </summary>
+        public const int TokenPrimary = 1;
+
+        /// <summary>
+        /// Represents the flag used to specify the creation of a new console when starting a process.
+        /// </summary>
+        /// <remarks>This constant is typically used in process creation scenarios, such as when invoking
+        /// native APIs like <c>CreateProcess</c>, to indicate that a new console should be created for the
+        /// process.</remarks>
+        public const int CREATE_NEW_CONSOLE = 0x00000010;
+
+        /// <summary>
+        /// Represents the flag used to specify that the logon operation should load the user's profile.
+        /// </summary>
+        /// <remarks>This constant is typically used in conjunction with logon-related functions to
+        /// indicate that the user's profile  should be loaded during the logon process. The value of this constant is
+        /// <c>0x00000001</c>.</remarks>
+        public const int LOGON_WITH_PROFILE = 0x00000001;
+
         #endregion
     }
 }

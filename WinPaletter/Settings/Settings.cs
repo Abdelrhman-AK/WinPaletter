@@ -50,7 +50,7 @@ namespace WinPaletter
             /// <summary>
             /// General settings structure
             /// </summary>
-            public struct General
+            public class General
             {
                 /// <summary>
                 /// A flag to determine if the setup has been completed or not.
@@ -118,7 +118,7 @@ namespace WinPaletter
             /// <summary>
             /// Updates structure
             /// </summary>
-            public struct Updates
+            public class Updates
             {
                 /// <summary>
                 /// Automatic check for updates at WinPaletter startup
@@ -172,7 +172,7 @@ namespace WinPaletter
             /// <summary>
             /// File type management settings structure
             /// </summary>
-            public struct FileTypeMgr
+            public class FileTypeMgr
             {
                 /// <summary>
                 /// Automatic add File extension to theme files, settings files, and theme resources pack files at WinPaletter startup
@@ -220,7 +220,7 @@ namespace WinPaletter
             /// <summary>
             /// WinTheme applying behavior settings structure
             /// </summary>
-            public struct ThemeApplyingBehavior
+            public class ThemeApplyingBehavior
             {
                 /// <summary>
                 /// Automatically create a system restore point before applying theme
@@ -396,7 +396,7 @@ namespace WinPaletter
             /// <summary>
             /// Appearance settings structure
             /// </summary>
-            public struct Appearance
+            public class Appearance
             {
                 /// <summary>
                 /// WinPaletter dark mode
@@ -512,7 +512,7 @@ namespace WinPaletter
             /// <summary>
             /// Language settings structure
             /// </summary>
-            public struct Language
+            public class Language
             {
                 /// <summary>
                 /// Enable using language File from <c>File</c>
@@ -551,7 +551,7 @@ namespace WinPaletter
             /// <summary>
             /// ExplorerPatch settings structure
             /// </summary>
-            public struct EP
+            public class EP
             {
                 /// <summary>
                 /// Enable ExplorerPatcher synchronization with Windows 11 preview
@@ -618,7 +618,7 @@ namespace WinPaletter
             /// <summary>
             /// WinTheme verbose log settings structure
             /// </summary>
-            public struct ThemeLog
+            public class ThemeLog
             {
                 /// <summary>
                 /// Level of verbose theme log
@@ -696,7 +696,7 @@ namespace WinPaletter
             /// <summary>
             /// Windows Terminal settings structure
             /// </summary>
-            public struct WindowsTerminal
+            public class WindowsTerminal
             {
                 /// <summary>
                 /// Bypass error message that Windows Terminal is not installed and use either <c>Terminal_Stable_Path</c> or <c>Terminal_Preview_Path</c> directly
@@ -756,7 +756,7 @@ namespace WinPaletter
             /// <summary>
             /// WinPaletter Store settings structure
             /// </summary>
-            public struct Store
+            public class Store
             {
                 /// <summary>
                 /// Search filter (themes names)
@@ -863,7 +863,7 @@ namespace WinPaletter
             /// <summary>
             /// Color info settings structure
             /// </summary>
-            public struct NerdStats
+            public class NerdStats
             {
                 /// <summary>
                 /// Enable showing color info in a color picking control
@@ -968,7 +968,7 @@ namespace WinPaletter
             /// <summary>
             /// Users and services settings structure
             /// </summary>
-            public struct UsersServices
+            public class UsersServices
             {
                 /// <summary>
                 /// Create new instance of UsersServices settings structure with default values
@@ -995,7 +995,7 @@ namespace WinPaletter
             /// <summary>
             /// Miscellaneous settings structure
             /// </summary>
-            public struct Miscellaneous
+            public class Miscellaneous
             {
                 /// <summary>
                 /// Change Windows 7/8.1 DWM colors in real-time with changing values in WinPaletter
@@ -1034,7 +1034,7 @@ namespace WinPaletter
             /// <summary>
             /// WinPaletter themes backup settings structure
             /// </summary>
-            public struct BackupTheme
+            public class BackupTheme
             {
                 /// <summary>
                 /// Enable WinPaletter themes backup
@@ -1108,7 +1108,7 @@ namespace WinPaletter
             /// <summary>
             /// Aspects control settings structure
             /// </summary>
-            public struct AspectsControl
+            public class AspectsControl
             {
                 /// <summary>
                 /// Enable strict control over WinPaletter aspects applying (to avoid applying unwanted aspects)

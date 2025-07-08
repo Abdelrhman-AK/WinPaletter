@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.CMD;
@@ -9,11 +10,11 @@ using static WinPaletter.CMD;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// Structure responsible for managing Windows 8/8.1 appearance
+    /// Structure responsible for managing Windows 8.1 appearance
     /// </summary>
-    public struct Windows8x : ICloneable
+    public class Windows81 : ICloneable
     {
-        /// <summary> Controls if Windows 8x colors editing is enabled or not </summary> 
+        /// <summary> Controls if Windows 8.1 colors editing is enabled or not </summary> 
         public bool Enabled = true;
 
         /// <summary>Start screen background ID. It can be any number from 1 to 20.</summary>
@@ -49,22 +50,21 @@ namespace WinPaletter.Theme.Structures
         public Color PersonalColors_Accent = Color.FromArgb(72, 29, 178);
 
         /// <summary>
-        /// Creates new Windows8x data structure
+        /// Creates new Windows81 data structure
         /// </summary>
-        public Windows8x() { }
+        public Windows81() { }
 
         /// <summary>
-        /// Loads Windows8x data from registry
+        /// Loads Windows81 data from registry
         /// </summary>
-        /// <param name="edition">Windows edition</param>
-        /// <param name="default">Default Windows8x data structure</param>
-        public void Load(string edition, Windows8x @default)
+        /// <param name="default">Default Windows81 data structure</param>
+        public void Load(Windows81 @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} colors and appearance preferences from registry.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 8.1 colors and appearance preferences from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8.1", string.Empty, @default.Enabled));
 
-            if (OS.W8x)
+            if (OS.W81)
             {
                 object y;
 
@@ -113,16 +113,15 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Saves Windows8x data into registry
+        /// Saves Windows81 data into registry
         /// </summary>
-        /// <param name="edition">Windows edition</param>
-        /// <param name="TM">Theme manager used for refreshing DWM colors</param>
+        /// <param name="TM">Theme manager</param>
         /// <param name="treeView">treeView used as theme log</param>
-        public void Apply(Manager TM, string edition, TreeView treeView = null)
+        public void Apply(Theme.Manager TM, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows {edition} colors and appearance preferences into registry.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 8.1 colors and appearance preferences into registry.");
 
-            SaveToggleState(edition, treeView);
+            SaveToggleState(treeView);
 
             if (Enabled)
             {
@@ -155,6 +154,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", StartColor.Reverse().ToArgb());
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", StartColor.Reverse().ToArgb());
+                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultStartColor", StartColor.Reverse().ToArgb());
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse().ToArgb());
 
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start);
@@ -162,42 +162,54 @@ namespace WinPaletter.Theme.Structures
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.ToStringHex(false)}", RegistryValueKind.String);
 
                 Program.RefreshDWM(TM);
+
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                {
+                    // Broadcast the system message to notify about the setting change
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
+
+                    User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
+                    User32.NotifySettingChanged("ImmersiveColorSet");  // for theme/accent
+                    User32.NotifySettingChanged("WindowsThemeElement"); // Win8-style themes
+
+                    wic.Undo();
+                }
             }
         }
 
         /// <summary>
-        /// Saves Windows8x toggle state into registry
+        /// Saves Windows81 toggle state into registry
         /// </summary>
-        public void SaveToggleState(string edition, TreeView treeView = null)
+        public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8x\{edition}", string.Empty, Enabled);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8.1", string.Empty, Enabled);
         }
 
-        /// <summary>Operator to check if two Windows8x structures are equal</summary>
-        public static bool operator ==(Windows8x First, Windows8x Second)
+        /// <summary>Operator to check if two Windows81 structures are equal</summary>
+        public static bool operator ==(Windows81 First, Windows81 Second)
         {
             return First.Equals(Second);
         }
 
-        /// <summary>Operator to check if two Windows8x structures are not equal</summary>
-        public static bool operator !=(Windows8x First, Windows8x Second)
+        /// <summary>Operator to check if two Windows81 structures are not equal</summary>
+        public static bool operator !=(Windows81 First, Windows81 Second)
         {
             return !First.Equals(Second);
         }
 
-        /// <summary>Clones Windows8x structure</summary>
-        public readonly object Clone()
+        /// <summary>Clones Windows81 structure</summary>
+        public object Clone()
         {
             return MemberwiseClone();
         }
 
-        /// <summary>Checks if two Windows8x structures are equal or not</summary>
+        /// <summary>Checks if two Windows81 structures are equal or not</summary>
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
         }
 
-        /// <summary>Get hash code of Windows8x structure</summary>
+        /// <summary>Get hash code of Windows81 structure</summary>
         public override int GetHashCode()
         {
             return base.GetHashCode();

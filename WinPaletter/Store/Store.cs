@@ -38,7 +38,7 @@ namespace WinPaletter
         private readonly DownloadManager DM = new();
 
         private bool ApplyOrEditToggle = true;
-        private Settings.Structures.Appearance oldAppearance;
+        private Settings.Structures.Appearance oldAppearance = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Store"/> class.
@@ -915,6 +915,8 @@ namespace WinPaletter
 
                     if (selectedItem.TM.Info.DesignedFor_Win81) os_list.Add(Program.Lang.Strings.Windows.W81);
 
+                    if (selectedItem.TM.Info.DesignedFor_Win8) os_list.Add(Program.Lang.Strings.Windows.W8);
+
                     if (selectedItem.TM.Info.DesignedFor_Win7) os_list.Add(Program.Lang.Strings.Windows.W7);
 
                     if (selectedItem.TM.Info.DesignedFor_WinVista) os_list.Add(Program.Lang.Strings.Windows.WVista);
@@ -984,6 +986,8 @@ namespace WinPaletter
                         windowsDesktop1.Visible = selectedItem.TM.Windows10.Enabled;
                     else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W81)
                         windowsDesktop1.Visible = selectedItem.TM.Windows81.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W8)
+                        windowsDesktop1.Visible = selectedItem.TM.Windows8.Enabled;
                     else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
                         windowsDesktop1.Visible = selectedItem.TM.Windows7.Enabled;
                     else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WVista)

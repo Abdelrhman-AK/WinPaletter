@@ -44,7 +44,11 @@
 
             if (VisualStyles_XP != TMx.VisualStyles_XP) _Equals = false;
 
-            if (LogonUI10x != TMx.LogonUI10x) _Equals = false;
+            if (LogonUI12 != TMx.LogonUI12) _Equals = false;
+
+            if (LogonUI11 != TMx.LogonUI11) _Equals = false;
+
+            if (LogonUI10 != TMx.LogonUI10) _Equals = false;
 
             if (LogonUI81 != TMx.LogonUI81) _Equals = false;
 

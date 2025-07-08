@@ -1412,26 +1412,6 @@ namespace WinPaletter
             Panel12.Enabled = toggle16.Checked;
         }
 
-        /// <summary>
-        /// Run SecureUxTheme
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button28_Click(object sender, EventArgs e)
-        {
-            Forms.SecureUxTheme_Setup.ShowDialog();
-        }
-
-        /// <summary>
-        /// Visit official SecureUxTheme releases page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button29_Click(object sender, EventArgs e)
-        {
-            Process.Start(Links.SecureUxThemeReleases);
-        }
-
         private void button30_Click(object sender, EventArgs e)
         {
             Program.Settings.General.SetupCompleted = false;

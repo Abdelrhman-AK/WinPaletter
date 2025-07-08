@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using WinPaletter.NativeMethods;
@@ -109,18 +110,6 @@ namespace WinPaletter
                 Arguments = "/F /IM explorer.exe",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = true
-            }
-        };
-
-        /// <summary>
-        /// Process that starts Windows Explorer
-        /// </summary>
-        public static readonly Process Explorer_exe = new()
-        {
-            StartInfo = new()
-            {
-                FileName = SysPaths.Explorer,
-                WindowStyle = ProcessWindowStyle.Normal
             }
         };
 

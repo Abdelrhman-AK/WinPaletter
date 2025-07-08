@@ -224,7 +224,7 @@ namespace WinPaletter.UI.WP
             Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
             Rectangle MainRectInner = new(1, 1, Width - 3, Height - 3);
             Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
-            Rectangle TextAndImageRect = new(3 + PaddingRect.X, 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2, Height - 7 - PaddingRect.Height * 2);
+            Rectangle TextAndImageRect = new(3 + PaddingRect.X, 3 + PaddingRect.Y, Width - 6 - PaddingRect.Width * 2, Height - 6 - PaddingRect.Height * 2);
 
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);

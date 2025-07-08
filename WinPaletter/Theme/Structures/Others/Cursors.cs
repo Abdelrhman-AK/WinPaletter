@@ -13,7 +13,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows cursors, either rendered by WinPaletter or loaded from files.
     /// </summary>
-    public struct Cursors : ICloneable
+    public class Cursors : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -726,7 +726,7 @@ namespace WinPaletter.Theme.Structures
 
             // Broadcast registry change to system
             SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
-            SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, Size, SPIF.SPIF_WRITEANDNOTIFY);
+            if (OS.W10 || OS.W11 || OS.W12) SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, Size, SPIF.SPIF_WRITEANDNOTIFY);
         }
 
         /// <summary>
@@ -863,7 +863,7 @@ namespace WinPaletter.Theme.Structures
 
                 // Broadcast registry change to system
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
+                if (OS.W10 || OS.W11 || OS.W12) SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
             }
 
             catch (Exception ex)
@@ -939,7 +939,7 @@ namespace WinPaletter.Theme.Structures
 
                 // Broadcast registry change to system
                 SystemParametersInfo(treeView, SPI.SPI_SETCURSORS, 0, 0, SPIF.SPIF_UPDATEINIFILE);
-                SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
+                if (OS.W10 || OS.W11 || OS.W12) SystemParametersInfo(treeView, SPI.SPI_SETCURSORSSIZE, 0, 32, SPIF.SPIF_WRITEANDNOTIFY);
             }
 
             catch (Exception ex)
@@ -962,7 +962,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Cursors structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

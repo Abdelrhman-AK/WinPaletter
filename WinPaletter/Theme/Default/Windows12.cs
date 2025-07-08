@@ -24,12 +24,6 @@ namespace WinPaletter.Theme
             TM.Windows12.Enabled = true;
             TM.Windows12.Titlebar_Inactive = Color.FromArgb(32, 32, 32);
 
-            TM.Windows11.Enabled = true;
-            TM.Windows11.Titlebar_Inactive = Color.FromArgb(32, 32, 32);
-
-            ref Structures.LogonUI10x logonUI = ref TM.LogonUI10x;
-            logonUI.Enabled = true;
-
             ref Structures.Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable05 = Color.FromArgb(136, 23, 152);

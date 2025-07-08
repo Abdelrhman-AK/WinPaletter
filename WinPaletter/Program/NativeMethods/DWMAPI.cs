@@ -176,6 +176,17 @@ namespace WinPaletter.NativeMethods
         public static extern void DwmSetColorizationParameters(ref DWM_COLORIZATION_PARAMS parameters, bool unknown);
 
         /// <summary>
+        /// Retrieves the current colorization parameters used by the Desktop Window Manager (DWM).
+        /// </summary>
+        /// <remarks>This method is a P/Invoke wrapper for the DWM API function and requires the
+        /// "dwmapi.dll" library. It does not set the last error, so error handling should be implemented based on the
+        /// context of usage.</remarks>
+        /// <param name="parameters">When this method returns, contains the <see cref="DWM_COLORIZATION_PARAMS"/> structure with the current
+        /// colorization settings. This parameter is passed uninitialized.</param>
+        [DllImport("dwmapi.dll", EntryPoint = "#127", SetLastError = false)]
+        public static extern void DwmGetColorizationParameters(out DWM_COLORIZATION_PARAMS parameters);
+
+        /// <summary>
         /// Retrieves the value of Desktop Window Manager (DWM) non-client rendering attributes for a window.
         /// </summary>
         /// <param name="hwnd">A handle to the window.</param>

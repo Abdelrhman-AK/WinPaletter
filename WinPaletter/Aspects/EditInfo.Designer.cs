@@ -38,6 +38,8 @@ namespace WinPaletter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditInfo));
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.checkBox9 = new WinPaletter.UI.WP.CheckBox();
             this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
             this.PictureBox16 = new System.Windows.Forms.PictureBox();
             this.pictureBox19 = new System.Windows.Forms.PictureBox();
@@ -97,6 +99,7 @@ namespace WinPaletter
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).BeginInit();
@@ -146,6 +149,8 @@ namespace WinPaletter
             // TabPage1
             // 
             this.TabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.TabPage1.Controls.Add(this.pictureBox7);
+            this.TabPage1.Controls.Add(this.checkBox9);
             this.TabPage1.Controls.Add(this.separatorV2);
             this.TabPage1.Controls.Add(this.PictureBox16);
             this.TabPage1.Controls.Add(this.pictureBox19);
@@ -199,6 +204,29 @@ namespace WinPaletter
             this.TabPage1.Size = new System.Drawing.Size(843, 596);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Main info";
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox7.Image = global::WinPaletter.Assets.Store.DesignedFor8;
+            this.pictureBox7.Location = new System.Drawing.Point(39, 245);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox7.TabIndex = 146;
+            this.pictureBox7.TabStop = false;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.Checked = true;
+            this.checkBox9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox9.ForeColor = System.Drawing.Color.White;
+            this.checkBox9.Location = new System.Drawing.Point(69, 246);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(157, 22);
+            this.checkBox9.TabIndex = 145;
+            this.checkBox9.Text = "Windows 8";
+            this.checkBox9.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox9_CheckedChanged);
             // 
             // separatorV2
             // 
@@ -266,14 +294,12 @@ namespace WinPaletter
             // 
             // checkBox8
             // 
-            this.checkBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox8.Checked = true;
             this.checkBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox8.ForeColor = System.Drawing.Color.White;
             this.checkBox8.Location = new System.Drawing.Point(69, 186);
             this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(387, 22);
+            this.checkBox8.Size = new System.Drawing.Size(157, 22);
             this.checkBox8.TabIndex = 48;
             this.checkBox8.Text = "Windows 12";
             this.checkBox8.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox8_CheckedChanged);
@@ -315,7 +341,7 @@ namespace WinPaletter
             // 
             this.PictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox14.Image = global::WinPaletter.Assets.Store.DesignedForXP;
-            this.PictureBox14.Location = new System.Drawing.Point(39, 365);
+            this.PictureBox14.Location = new System.Drawing.Point(232, 275);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);
             this.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -349,7 +375,7 @@ namespace WinPaletter
             // 
             this.PictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox13.Image = global::WinPaletter.Assets.Store.DesignedForVista;
-            this.PictureBox13.Location = new System.Drawing.Point(39, 335);
+            this.PictureBox13.Location = new System.Drawing.Point(39, 275);
             this.PictureBox13.Name = "PictureBox13";
             this.PictureBox13.Size = new System.Drawing.Size(24, 24);
             this.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -396,7 +422,7 @@ namespace WinPaletter
             // 
             this.PictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox12.Image = global::WinPaletter.Assets.Store.DesignedFor7;
-            this.PictureBox12.Location = new System.Drawing.Point(39, 305);
+            this.PictureBox12.Location = new System.Drawing.Point(232, 245);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
             this.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -423,14 +449,12 @@ namespace WinPaletter
             // 
             // CheckBox1
             // 
-            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox1.Checked = true;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(69, 216);
+            this.CheckBox1.Location = new System.Drawing.Point(262, 186);
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox1.Size = new System.Drawing.Size(157, 22);
             this.CheckBox1.TabIndex = 23;
             this.CheckBox1.Text = "Windows 11";
             this.CheckBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox1_CheckedChanged);
@@ -451,7 +475,7 @@ namespace WinPaletter
             // 
             this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox11.Image = global::WinPaletter.Assets.Store.DesignedFor8;
-            this.PictureBox11.Location = new System.Drawing.Point(39, 275);
+            this.PictureBox11.Location = new System.Drawing.Point(232, 215);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
             this.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -471,14 +495,12 @@ namespace WinPaletter
             // 
             // CheckBox2
             // 
-            this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox2.Checked = true;
             this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox2.ForeColor = System.Drawing.Color.White;
-            this.CheckBox2.Location = new System.Drawing.Point(69, 246);
+            this.CheckBox2.Location = new System.Drawing.Point(69, 216);
             this.CheckBox2.Name = "CheckBox2";
-            this.CheckBox2.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox2.Size = new System.Drawing.Size(157, 22);
             this.CheckBox2.TabIndex = 24;
             this.CheckBox2.Text = "Windows 10";
             this.CheckBox2.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox2_CheckedChanged);
@@ -498,7 +520,7 @@ namespace WinPaletter
             // 
             this.PictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox10.Image = global::WinPaletter.Assets.Store.DesignedFor10;
-            this.PictureBox10.Location = new System.Drawing.Point(39, 245);
+            this.PictureBox10.Location = new System.Drawing.Point(39, 215);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
             this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -528,14 +550,12 @@ namespace WinPaletter
             // 
             // CheckBox3
             // 
-            this.CheckBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox3.Checked = true;
             this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox3.ForeColor = System.Drawing.Color.White;
-            this.CheckBox3.Location = new System.Drawing.Point(69, 276);
+            this.CheckBox3.Location = new System.Drawing.Point(262, 216);
             this.CheckBox3.Name = "CheckBox3";
-            this.CheckBox3.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox3.Size = new System.Drawing.Size(157, 22);
             this.CheckBox3.TabIndex = 25;
             this.CheckBox3.Text = "Windows 8.1";
             this.CheckBox3.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox3_CheckedChanged);
@@ -555,7 +575,7 @@ namespace WinPaletter
             // 
             this.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.PictureBox9.Image = global::WinPaletter.Assets.Store.DesignedFor11;
-            this.PictureBox9.Location = new System.Drawing.Point(39, 215);
+            this.PictureBox9.Location = new System.Drawing.Point(232, 185);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
             this.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -575,14 +595,12 @@ namespace WinPaletter
             // 
             // CheckBox4
             // 
-            this.CheckBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox4.Checked = true;
             this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox4.ForeColor = System.Drawing.Color.White;
-            this.CheckBox4.Location = new System.Drawing.Point(69, 306);
+            this.CheckBox4.Location = new System.Drawing.Point(262, 246);
             this.CheckBox4.Name = "CheckBox4";
-            this.CheckBox4.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox4.Size = new System.Drawing.Size(157, 22);
             this.CheckBox4.TabIndex = 26;
             this.CheckBox4.Text = "Windows 7";
             this.CheckBox4.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox4_CheckedChanged);
@@ -600,14 +618,12 @@ namespace WinPaletter
             // 
             // CheckBox6
             // 
-            this.CheckBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox6.Checked = true;
             this.CheckBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox6.ForeColor = System.Drawing.Color.White;
-            this.CheckBox6.Location = new System.Drawing.Point(69, 366);
+            this.CheckBox6.Location = new System.Drawing.Point(262, 276);
             this.CheckBox6.Name = "CheckBox6";
-            this.CheckBox6.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox6.Size = new System.Drawing.Size(157, 22);
             this.CheckBox6.TabIndex = 28;
             this.CheckBox6.Text = "Windows XP";
             this.CheckBox6.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox6_CheckedChanged);
@@ -634,14 +650,12 @@ namespace WinPaletter
             // 
             // CheckBox5
             // 
-            this.CheckBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox5.Checked = true;
             this.CheckBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox5.ForeColor = System.Drawing.Color.White;
-            this.CheckBox5.Location = new System.Drawing.Point(69, 336);
+            this.CheckBox5.Location = new System.Drawing.Point(69, 276);
             this.CheckBox5.Name = "CheckBox5";
-            this.CheckBox5.Size = new System.Drawing.Size(387, 22);
+            this.CheckBox5.Size = new System.Drawing.Size(157, 22);
             this.CheckBox5.TabIndex = 27;
             this.CheckBox5.Text = "Windows Vista";
             this.CheckBox5.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox5_CheckedChanged);
@@ -1000,6 +1014,7 @@ namespace WinPaletter
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).EndInit();
@@ -1083,5 +1098,7 @@ namespace WinPaletter
         internal UI.WP.CheckBox checkBox8;
         internal UI.WP.AlertBox alertBox1;
         private UI.WP.SeparatorV separatorV2;
+        internal PictureBox pictureBox7;
+        internal UI.WP.CheckBox checkBox9;
     }
 }

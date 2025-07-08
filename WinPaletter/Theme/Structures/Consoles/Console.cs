@@ -9,7 +9,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Windows console (Command Prompt, PowerShell x86, PowerShell x64 or other consoles)
     /// </summary>
-    public struct Console : ICloneable
+    public class Console : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -321,7 +321,7 @@ namespace WinPaletter.Theme.Structures
         /// Clone console structure
         /// </summary>
         /// <returns></returns>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

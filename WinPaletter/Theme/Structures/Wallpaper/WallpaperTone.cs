@@ -10,7 +10,7 @@ namespace WinPaletter.Theme.Structures
     /// Structure responsible for managing Wallpaper Tone
     /// <br>Wallpaper Tone is a feature by WinPaletter (not a feature in Windows). It modifies images HSL filter to alter wallpaper colors.</br>
     /// </summary>
-    public struct WallpaperTone : ICloneable
+    public class WallpaperTone : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -146,7 +146,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones WallpaperTone structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

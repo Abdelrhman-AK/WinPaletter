@@ -42,6 +42,10 @@ namespace WinPaletter
                     radioImage4.Checked = true;
                     break;
 
+                case WindowStyle.W8:
+                    radioImage8.Checked = true;
+                    break;
+
                 case WindowStyle.W7:
                     radioImage3.Checked = true;
                     break;
@@ -83,6 +87,7 @@ namespace WinPaletter
             else if (radioImage6.Checked) Program.WindowStyle = WindowStyle.W11;
             else if (radioImage5.Checked) Program.WindowStyle = WindowStyle.W10;
             else if (radioImage4.Checked) Program.WindowStyle = WindowStyle.W81;
+            else if (radioImage8.Checked) Program.WindowStyle = WindowStyle.W8;
             else if (radioImage3.Checked) Program.WindowStyle = WindowStyle.W7;
             else if (radioImage2.Checked) Program.WindowStyle = WindowStyle.WVista;
             else if (radioImage1.Checked) Program.WindowStyle = WindowStyle.WXP;

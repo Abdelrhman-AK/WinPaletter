@@ -9,7 +9,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows Vista appearance
     /// </summary>
-    public struct WindowsVista : ICloneable
+    public class WindowsVista : ICloneable
     {
         /// <summary> Controls if Windows Vista colors editing is enabled or not </summary> 
         public bool Enabled = true;
@@ -174,7 +174,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones WindowsVista structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

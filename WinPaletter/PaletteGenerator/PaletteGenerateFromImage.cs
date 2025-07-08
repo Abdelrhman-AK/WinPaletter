@@ -106,6 +106,30 @@ namespace WinPaletter
                 };
             }
 
+            else if (Application.OpenForms.OfType<Win81Colors>().Count() > 0)
+            {
+                Left = Forms.Win81Colors.Left + 10;
+
+                backup = new Theme.Structures.Windows81()
+                {
+                    ColorizationColor = Forms.Win7Colors.ColorizationColor_pick.BackColor,
+                    PersonalColors_Background = Forms.Win81Colors.personalcls_background_pick.BackColor,
+                    PersonalColors_Accent = Forms.Win81Colors.personalcolor_accent_pick.BackColor,
+                    AccentColor = Forms.Win81Colors.accent_pick.BackColor,
+                    StartColor = Forms.Win81Colors.start_pick.BackColor,
+                };
+            }
+
+            else if (Application.OpenForms.OfType<Win8Colors>().Count() > 0)
+            {
+                Left = Forms.Win8Colors.Left + 10;
+
+                backup = new Theme.Structures.Windows8()
+                {
+                    ColorizationColor = Forms.Win8Colors.ColorizationColor_pick.BackColor,
+                };
+            }
+
             else if (Application.OpenForms.OfType<Win7Colors>().Count() > 0)
             {
                 Left = Forms.Win7Colors.Left + 10;
@@ -114,20 +138,6 @@ namespace WinPaletter
                 {
                     ColorizationColor = Forms.Win7Colors.ColorizationColor_pick.BackColor,
                     ColorizationAfterglow = Forms.Win7Colors.ColorizationAfterglow_pick.BackColor
-                };
-            }
-
-            else if (Application.OpenForms.OfType<Win81Colors>().Count() > 0)
-            {
-                Left = Forms.Win81Colors.Left + 10;
-
-                backup = new Theme.Structures.Windows8x()
-                {
-                    ColorizationColor = Forms.Win7Colors.ColorizationColor_pick.BackColor,
-                    PersonalColors_Background = Forms.Win81Colors.personalcls_background_pick.BackColor,
-                    PersonalColors_Accent = Forms.Win81Colors.personalcolor_accent_pick.BackColor,
-                    AccentColor = Forms.Win81Colors.accent_pick.BackColor,
-                    StartColor = Forms.Win81Colors.start_pick.BackColor,
                 };
             }
         }
@@ -415,26 +425,6 @@ namespace WinPaletter
                     actions.Last().Invoke();
                 }
 
-                else if (Application.OpenForms.OfType<Win7Colors>().Count() > 0)
-                {
-                    Color color0 = Colors_List[arr[0]];
-                    Color color1 = Colors_List[arr[1]];
-
-                    actions.Add(() =>
-                    {
-                        Forms.Win7Colors.ColorizationColor_pick.BackColor = color0;
-                        Forms.Win7Colors.ColorizationAfterglow_pick.BackColor = color1;
-                        Forms.Win7Colors.windowsDesktop1.TitlebarColor_Active = color0;
-                        Forms.Win7Colors.windowsDesktop1.TitlebarColor_Inactive = color0;
-                        Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Active = color1;
-                        Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Inactive = color1;
-                    });
-
-                    listBox1.Items.Add(DateTime.Now.ToLongTimeString());
-
-                    actions.Last().Invoke();
-                }
-
                 else if (Application.OpenForms.OfType<Win81Colors>().Count() > 0)
                 {
                     Color color0 = Colors_List[arr[0]];
@@ -448,6 +438,40 @@ namespace WinPaletter
                         Forms.Win81Colors.accent_pick.BackColor = color1;
                         Forms.Win81Colors.personalcls_background_pick.BackColor = color2;
                         Forms.Win81Colors.start_pick.BackColor = color2;
+                    });
+
+                    listBox1.Items.Add(DateTime.Now.ToLongTimeString());
+
+                    actions.Last().Invoke();
+                }
+
+                else if (Application.OpenForms.OfType<Win8Colors>().Count() > 0)
+                {
+                    Color color0 = Colors_List[arr[0]];
+
+                    actions.Add(() =>
+                    {
+                        Forms.Win8Colors.ColorizationColor_pick.BackColor = color0;
+                    });
+
+                    listBox1.Items.Add(DateTime.Now.ToLongTimeString());
+
+                    actions.Last().Invoke();
+                }
+
+                else if (Application.OpenForms.OfType<Win7Colors>().Count() > 0)
+                {
+                    Color color0 = Colors_List[arr[0]];
+                    Color color1 = Colors_List[arr[1]];
+
+                    actions.Add(() =>
+                    {
+                        Forms.Win7Colors.ColorizationColor_pick.BackColor = color0;
+                        Forms.Win7Colors.ColorizationAfterglow_pick.BackColor = color1;
+                        Forms.Win7Colors.windowsDesktop1.TitlebarColor_Active = color0;
+                        Forms.Win7Colors.windowsDesktop1.TitlebarColor_Inactive = color0;
+                        Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Active = color1;
+                        Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Inactive = color1;
                     });
 
                     listBox1.Items.Add(DateTime.Now.ToLongTimeString());
@@ -548,6 +572,20 @@ namespace WinPaletter
                 Forms.Win10Colors.windowsDesktop1.Color9 = ((Theme.Structures.Windows10x)backup).Color_Index7;
             }
 
+            else if (Application.OpenForms.OfType<Win81Colors>().Count() > 0)
+            {
+                Forms.Win81Colors.ColorizationColor_pick.BackColor = ((Theme.Structures.Windows81)backup).ColorizationColor;
+                Forms.Win81Colors.personalcls_background_pick.BackColor = ((Theme.Structures.Windows81)backup).PersonalColors_Background;
+                Forms.Win81Colors.accent_pick.BackColor = ((Theme.Structures.Windows81)backup).AccentColor;
+                Forms.Win81Colors.personalcolor_accent_pick.BackColor = ((Theme.Structures.Windows81)backup).PersonalColors_Accent;
+                Forms.Win81Colors.start_pick.BackColor = ((Theme.Structures.Windows81)backup).StartColor;
+            }
+
+            else if (Application.OpenForms.OfType<Win8Colors>().Count() > 0)
+            {
+                Forms.Win8Colors.ColorizationColor_pick.BackColor = ((Theme.Structures.Windows8)backup).ColorizationColor;
+            }
+
             else if (Application.OpenForms.OfType<Win7Colors>().Count() > 0)
             {
                 Forms.Win7Colors.ColorizationColor_pick.BackColor = ((Theme.Structures.Windows7)backup).ColorizationColor;
@@ -556,15 +594,6 @@ namespace WinPaletter
                 Forms.Win7Colors.windowsDesktop1.TitlebarColor_Inactive = ((Theme.Structures.Windows7)backup).ColorizationColor;
                 Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Active = ((Theme.Structures.Windows7)backup).ColorizationAfterglow;
                 Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Inactive = ((Theme.Structures.Windows7)backup).ColorizationAfterglow;
-            }
-
-            else if (Application.OpenForms.OfType<Win81Colors>().Count() > 0)
-            {
-                Forms.Win81Colors.ColorizationColor_pick.BackColor = ((Theme.Structures.Windows8x)backup).ColorizationColor;
-                Forms.Win81Colors.personalcls_background_pick.BackColor = ((Theme.Structures.Windows8x)backup).PersonalColors_Background;
-                Forms.Win81Colors.accent_pick.BackColor = ((Theme.Structures.Windows8x)backup).AccentColor;
-                Forms.Win81Colors.personalcolor_accent_pick.BackColor = ((Theme.Structures.Windows8x)backup).PersonalColors_Accent;
-                Forms.Win81Colors.start_pick.BackColor = ((Theme.Structures.Windows8x)backup).StartColor;
             }
 
             Close();

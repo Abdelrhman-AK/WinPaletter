@@ -77,6 +77,11 @@ namespace WinPaletter
             using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
+        private void ImportWin8Preset(object sender, EventArgs e)
+        {
+            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
+        }
+
         private void ImportWin7Preset(object sender, EventArgs e)
         {
             using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
@@ -164,7 +169,7 @@ namespace WinPaletter
 
         public Theme.Structures.Cursor Cursor_to_CursorTM(CursorControl CursorControl)
         {
-            Theme.Structures.Cursor Cursor;
+            Theme.Structures.Cursor Cursor = new();
             Cursor.UseFromFile = CursorControl.Prop_UseFromFile;
             Cursor.File = CursorControl.Prop_File;
             Cursor.ArrowStyle = CursorControl.Prop_ArrowStyle;
@@ -299,6 +304,7 @@ namespace WinPaletter
                 OnImportFromScheme_11 = ImportWin11Preset,
                 OnImportFromScheme_10 = ImportWin10Preset,
                 OnImportFromScheme_81 = ImportWin81Preset,
+                OnImportFromScheme_8 = ImportWin8Preset,
                 OnImportFromScheme_7 = ImportWin7Preset,
                 OnImportFromScheme_Vista = ImportWinVistaPreset,
                 OnImportFromScheme_XP = ImportWinXPPreset,

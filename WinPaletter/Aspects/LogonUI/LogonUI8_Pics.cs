@@ -14,17 +14,17 @@ namespace WinPaletter
             DialogResult = DialogResult.None;
             Icon = FormsExtensions.Icon<LogonUI>();
 
-            if (Forms.LogonUI7.ID == 0)
+            if (Forms.LogonUI81.ID == 0)
                 img0.Checked = true;
-            if (Forms.LogonUI7.ID == 1)
+            if (Forms.LogonUI81.ID == 1)
                 img1.Checked = true;
-            if (Forms.LogonUI7.ID == 2)
+            if (Forms.LogonUI81.ID == 2)
                 img2.Checked = true;
-            if (Forms.LogonUI7.ID == 3)
+            if (Forms.LogonUI81.ID == 3)
                 img3.Checked = true;
-            if (Forms.LogonUI7.ID == 4)
+            if (Forms.LogonUI81.ID == 4)
                 img4.Checked = true;
-            if (Forms.LogonUI7.ID == 5)
+            if (Forms.LogonUI81.ID == 5)
                 img5.Checked = true;
         }
 
@@ -38,17 +38,17 @@ namespace WinPaletter
         {
             DialogResult = DialogResult.OK;
             if (img0.Checked)
-                Forms.LogonUI7.ID = 0;
+                Forms.LogonUI81.ID = 0;
             if (img1.Checked)
-                Forms.LogonUI7.ID = 1;
+                Forms.LogonUI81.ID = 1;
             if (img2.Checked)
-                Forms.LogonUI7.ID = 2;
+                Forms.LogonUI81.ID = 2;
             if (img3.Checked)
-                Forms.LogonUI7.ID = 3;
+                Forms.LogonUI81.ID = 3;
             if (img4.Checked)
-                Forms.LogonUI7.ID = 4;
+                Forms.LogonUI81.ID = 4;
             if (img5.Checked)
-                Forms.LogonUI7.ID = 5;
+                Forms.LogonUI81.ID = 5;
             Close();
         }
     }

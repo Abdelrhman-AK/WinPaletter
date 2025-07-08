@@ -10,7 +10,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// LogonUI structure for Windows WXP
     /// </summary>
-    public struct LogonUIXP : ICloneable
+    public class LogonUIXP : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -130,7 +130,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones LogonUIXP structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

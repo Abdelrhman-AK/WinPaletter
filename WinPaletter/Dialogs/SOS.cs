@@ -22,7 +22,7 @@ namespace WinPaletter.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Program.Explorer_exe.Start();
+            Program.SendCommand(SysPaths.Explorer, false, true);
         }
 
         private void button2_Click(object sender, EventArgs e)

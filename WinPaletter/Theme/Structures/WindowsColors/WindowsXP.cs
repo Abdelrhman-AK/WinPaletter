@@ -9,7 +9,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows WXP appearance
     /// </summary>
-    public struct WindowsXP : ICloneable
+    public class WindowsXP : ICloneable
     {
         /// <summary> Controls if Windows WXP themes editing is enabled or not </summary> 
         public bool Enabled = true;
@@ -205,7 +205,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones WindowsXP structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

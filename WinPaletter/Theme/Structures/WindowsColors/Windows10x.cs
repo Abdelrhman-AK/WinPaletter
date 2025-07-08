@@ -11,7 +11,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows 10/11 colors and appearance
     /// </summary>
-    public struct Windows10x : ICloneable
+    public class Windows10x : ICloneable
     {
         /// <summary> Controls if Windows 10x colors editing is enabled or not </summary> 
         public bool Enabled = true;
@@ -354,10 +354,13 @@ namespace WinPaletter.Theme.Structures
                 {
                     // Broadcast the system message to notify about the setting change
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
+                    
                     User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
+                    User32.NotifySettingChanged("ImmersiveColorSet");  // for theme/accent
+                    User32.NotifySettingChanged("WindowsThemeElement"); // Win8-style themes
+                                                                        
                     wic.Undo();
                 }
-
             }
         }
 
@@ -382,7 +385,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Windows10x structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

@@ -69,6 +69,11 @@ namespace WinPaletter
             using (Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
+        private void ImportWin8Preset(object sender, EventArgs e)
+        {
+            using (Manager TMx = Theme.Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
+        }
+
         private void ImportWin7Preset(object sender, EventArgs e)
         {
             using (Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
@@ -134,6 +139,7 @@ namespace WinPaletter
                 OnImportFromScheme_11 = ImportWin11Preset,
                 OnImportFromScheme_10 = ImportWin10Preset,
                 OnImportFromScheme_81 = ImportWin81Preset,
+                OnImportFromScheme_8 = ImportWin8Preset,
                 OnImportFromScheme_7 = ImportWin7Preset,
                 OnImportFromScheme_Vista = ImportWinVistaPreset,
                 OnImportFromScheme_XP = ImportWinXPPreset,

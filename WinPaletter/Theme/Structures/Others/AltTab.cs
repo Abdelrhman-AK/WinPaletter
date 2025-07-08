@@ -6,7 +6,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows switcher (Alt+Tab) appearance
     /// </summary>
-    public struct AltTab : ICloneable
+    public class AltTab : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -91,7 +91,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones AltTab structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

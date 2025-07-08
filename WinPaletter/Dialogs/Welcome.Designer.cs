@@ -49,13 +49,6 @@
             this.banner3 = new WinPaletter.UI.WP.Banner();
             this.label45 = new System.Windows.Forms.Label();
             this.banner2 = new WinPaletter.UI.WP.Banner();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.banner13 = new WinPaletter.UI.WP.Banner();
-            this.button4 = new WinPaletter.UI.WP.Button();
-            this.button3 = new WinPaletter.UI.WP.Button();
-            this.label17 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -78,7 +71,6 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tabPage4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.bottom_buttons.SuspendLayout();
@@ -105,7 +97,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
@@ -352,110 +343,6 @@
             this.banner2.TabIndex = 25;
             this.banner2.TabStop = false;
             this.banner2.Text = "Step 1";
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage4.Controls.Add(this.label19);
-            this.tabPage4.Controls.Add(this.label18);
-            this.tabPage4.Controls.Add(this.banner13);
-            this.tabPage4.Controls.Add(this.button4);
-            this.tabPage4.Controls.Add(this.button3);
-            this.tabPage4.Controls.Add(this.label17);
-            this.tabPage4.Location = new System.Drawing.Point(144, 4);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(742, 433);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "SecureUxTheme";
-            // 
-            // label19
-            // 
-            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label19.BackColor = System.Drawing.Color.Transparent;
-            this.label19.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(6, 258);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(730, 32);
-            this.label19.TabIndex = 132;
-            this.label19.Text = "- If you do not intend to change Windows visual styles using this feature, you ca" +
-    "n ignore this page.";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label18
-            // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label18.BackColor = System.Drawing.Color.Transparent;
-            this.label18.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(6, 161);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(730, 55);
-            this.label18.TabIndex = 130;
-            this.label18.Text = "It is advisable to use the official SecureUxTheme releases since they are digital" +
-    "ly signed. Antivirus software might raise false positives for WinPaletter since " +
-    "it is not currently signed.";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // banner13
-            // 
-            this.banner13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.banner13.BackColor = System.Drawing.Color.Transparent;
-            this.banner13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner13.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner13.Image")));
-            this.banner13.Location = new System.Drawing.Point(6, 115);
-            this.banner13.Name = "banner13";
-            this.banner13.Size = new System.Drawing.Size(730, 40);
-            this.banner13.TabIndex = 36;
-            this.banner13.TabStop = false;
-            this.banner13.Text = "Alert";
-            // 
-            // button4
-            // 
-            this.button4.CustomColor = System.Drawing.Color.Empty;
-            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button4.Image = null;
-            this.button4.ImageGlyph = null;
-            this.button4.ImageGlyphEnabled = false;
-            this.button4.Location = new System.Drawing.Point(260, 219);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(245, 33);
-            this.button4.TabIndex = 35;
-            this.button4.Text = "Use WinPaletter installer (wrapper)";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button3
-            // 
-            this.button3.CustomColor = System.Drawing.Color.Empty;
-            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button3.Image = null;
-            this.button3.ImageGlyph = null;
-            this.button3.ImageGlyphEnabled = false;
-            this.button3.Location = new System.Drawing.Point(9, 219);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(245, 33);
-            this.button3.TabIndex = 34;
-            this.button3.Text = "Get an official release (recommended)";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.BackColor = System.Drawing.Color.Transparent;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(6, 14);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(730, 98);
-            this.label17.TabIndex = 33;
-            this.label17.Text = resources.GetString("label17.Text");
             // 
             // tabPage2
             // 
@@ -747,7 +634,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tabPage4.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.bottom_buttons.ResumeLayout(false);
@@ -796,12 +682,5 @@
         internal System.Windows.Forms.Label label15;
         internal System.Windows.Forms.Label label16;
         private UI.WP.CheckBox checkBox1;
-        private System.Windows.Forms.TabPage tabPage4;
-        internal System.Windows.Forms.Label label17;
-        private UI.WP.Button button3;
-        internal System.Windows.Forms.Label label18;
-        private UI.WP.Banner banner13;
-        private UI.WP.Button button4;
-        internal System.Windows.Forms.Label label19;
     }
 }

@@ -60,6 +60,8 @@ namespace WinPaletter.UI.Simulation
             ActionCenter10,
             AltTab10,
             Start8,
+            Taskbar81Aero,
+            Taskbar81Lite,
             Taskbar8Aero,
             Taskbar8Lite,
             AltTab8Aero,
@@ -462,8 +464,8 @@ namespace WinPaletter.UI.Simulation
             {
                 CursorOverWindowAccent = rect.Contains(e.Location) &&
                                         (Style == Styles.Start8 ||
-                                        Style == Styles.Taskbar8Aero ||
-                                        Style == Styles.Taskbar8Lite ||
+                                        Style == Styles.Taskbar81Aero ||
+                                        Style == Styles.Taskbar81Lite ||
                                         Style == Styles.Start7Aero ||
                                         Style == Styles.Taskbar7Aero ||
                                         Style == Styles.Start7Opaque ||
@@ -1510,8 +1512,8 @@ namespace WinPaletter.UI.Simulation
                     }
                 #endregion
 
-                case Styles.Taskbar8Aero:
-                    #region Taskbar 8 Aero
+                case Styles.Taskbar81Aero:
+                    #region Taskbar 8.1 Aero
                     {
                         Color c = Color.FromArgb(Win7ColorBal / 100 * 255, Background);
                         Color bc = Color.FromArgb(217, 217, 217);
@@ -1590,8 +1592,8 @@ namespace WinPaletter.UI.Simulation
                     }
                 #endregion
 
-                case Styles.Taskbar8Lite:
-                    #region Taskbar 8 Lite
+                case Styles.Taskbar81Lite:
+                    #region Taskbar 8.1 Lite
                     {
                         Color c = Color.FromArgb(Win7ColorBal / 100 * 255, Background);
                         Color bc = Color.FromArgb(217, 217, 217);
@@ -1637,6 +1639,166 @@ namespace WinPaletter.UI.Simulation
                         Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
+
+                        using (SolidBrush br = new(Color.FromArgb(255, bc.CB(0.5f))))
+                        {
+                            G.FillRectangle(br, AppBtnRect);
+                        }
+                        using (SolidBrush br = new(Color.FromArgb(255 * (Win7ColorBal / 100), c.CB(0.5f))))
+                        {
+                            G.FillRectangle(br, AppBtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(100, bc.CB(-0.5f))))
+                        {
+                            G.DrawRectangle(P, AppBtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(100 * (Win7ColorBal / 100), c.CB(-0.5f))))
+                        {
+                            G.DrawRectangle(P, AppBtnRect);
+                        }
+
+                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+
+                        using (SolidBrush br = new(Color.FromArgb(255, bc.Light(0.1f))))
+                        {
+                            G.FillRectangle(br, App2BtnRect);
+                        }
+                        using (SolidBrush br = new(Color.FromArgb(255 * (Win7ColorBal / 100), c.Light(0.1f))))
+                        {
+                            G.FillRectangle(br, App2BtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(100, bc.Dark(0.1f))))
+                        {
+                            G.DrawRectangle(P, App2BtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(100 * (Win7ColorBal / 100), c.Dark(0.1f))))
+                        {
+                            G.DrawRectangle(P, App2BtnRect);
+                        }
+                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        break;
+                    }
+                #endregion
+
+                case Styles.Taskbar8Aero:
+                    #region Taskbar 8 Aero
+                    {
+                        Color c = Color.FromArgb(Win7ColorBal / 100 * 255, Background);
+                        Color bc = Color.FromArgb(217, 217, 217);
+
+                        using (Pen P = new(Color.FromArgb(80, 0, 0, 0)))
+                        {
+                            G.DrawLine(P, new Point(0, 0), new Point(Width - 1, 0));
+                        }
+                        using (SolidBrush br = new(Color.FromArgb(BackColorAlpha, bc)))
+                        {
+                            G.FillRectangle(br, Rect);
+                        }
+                        using (SolidBrush br = new(Color.FromArgb((int)(BackColorAlpha * ((decimal)Win7ColorBal / 100)), c)))
+                        {
+                            G.FillRectangle(br, Rect);
+                        }
+
+                        #region Editor
+
+                        if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
+                        {
+                            Color color0 = Color.FromArgb(80, 255, 255, 255);
+                            Color color1 = Color.FromArgb(80, 0, 0, 0);
+                            using (Pen P = new(color0))
+                            using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
+                            {
+                                G.FillRectangle(hb, Rect);
+                                G.DrawRectangle(P, Rect);
+                            }
+                        }
+
+                        #endregion
+
+                        Rectangle AppBtnRect = new(20, 0, 45, Height - 1);
+                        Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
+
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
+                        Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+
+                        using (SolidBrush br = new(Color.FromArgb(100, Color.White)))
+                        {
+                            G.FillRectangle(br, AppBtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(200, c.CB(-0.5f))))
+                        {
+                            G.DrawRectangle(P, AppBtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(215, Color.White)))
+                        {
+                            G.DrawRectangle(P, AppBtnRectInner);
+                        }
+
+                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+
+                        using (SolidBrush br = new(Color.FromArgb(50, Color.White)))
+                        {
+                            G.FillRectangle(br, App2BtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(100, c.CB(-0.5f))))
+                        {
+                            G.DrawRectangle(P, App2BtnRect);
+                        }
+                        using (Pen P = new(Color.FromArgb(100, Color.White)))
+                        {
+                            G.DrawRectangle(P, App2BtnRectInner);
+                        }
+
+                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        break;
+                    }
+                #endregion
+
+                case Styles.Taskbar8Lite:
+                    #region Taskbar 8 Lite
+                    {
+                        Color c = Color.FromArgb(Win7ColorBal / 100 * 255, Background);
+                        Color bc = Color.FromArgb(217, 217, 217);
+
+                        using (Pen P = new(Color.FromArgb(89, 89, 89)))
+                        {
+                            G.DrawRectangle(P, new Rectangle(0, 0, Width - 1, Height - 1));
+                        }
+
+                        using (SolidBrush br = new(Color.FromArgb(255, bc)))
+                        {
+                            G.FillRectangle(br, Rect);
+                        }
+                        using (SolidBrush br = new(Color.FromArgb((int)(BackColorAlpha * ((decimal)Win7ColorBal / 100)), c)))
+                        {
+                            G.FillRectangle(br, Rect);
+                        }
+
+                        #region Editor
+
+                        if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
+                        {
+                            Color color0 = Color.FromArgb(80, 255, 255, 255);
+                            Color color1 = Color.FromArgb(80, 0, 0, 0);
+                            using (Pen P = new(color0))
+                            using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
+                            {
+                                G.FillRectangle(hb, Rect);
+                                G.DrawRectangle(P, Rect);
+                            }
+                        }
+
+                        #endregion
+
+                        Rectangle AppBtnRect = new(20, 0, 45, Height - 1);
+                        Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
+
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
+                        Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
 
                         using (SolidBrush br = new(Color.FromArgb(255, bc.CB(0.5f))))
                         {

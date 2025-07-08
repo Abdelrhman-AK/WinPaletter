@@ -9,7 +9,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows icons
     /// </summary>
-    public struct Icons : ICloneable
+    public class Icons : ICloneable
     {
         /// <summary>
         /// List of Control Panel CLSIDs and their icons (used as helpers)
@@ -333,7 +333,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Icons structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

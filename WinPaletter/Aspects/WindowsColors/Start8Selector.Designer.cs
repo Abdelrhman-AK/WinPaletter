@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class Start8Selector : Form
+    public partial class Start81Selector : Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -35,7 +35,7 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Start8Selector));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Start81Selector));
             this.img1 = new WinPaletter.UI.WP.RadioImage();
             this.img2 = new WinPaletter.UI.WP.RadioImage();
             this.img3 = new WinPaletter.UI.WP.RadioImage();
@@ -447,7 +447,7 @@ namespace WinPaletter
             this.bottom_buttons.Size = new System.Drawing.Size(369, 48);
             this.bottom_buttons.TabIndex = 212;
             // 
-            // Start8Selector
+            // Start81Selector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

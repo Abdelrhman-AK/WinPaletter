@@ -15,7 +15,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows metrics and fonts
     /// </summary>
-    public struct MetricsFonts : ICloneable
+    public class MetricsFonts : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -128,7 +128,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones MetricsFonts structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }
@@ -274,7 +274,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             using (libmsstyle.VisualStyle vs = new(_vs.ThemeFile))
                             {
-                                this = vs.MetricsFonts();
+                                this.CopyFrom(vs.MetricsFonts());
                                 Enabled = true;
                             }
                         }
@@ -480,7 +480,7 @@ namespace WinPaletter.Theme.Structures
         /// Retrun MetricsFonts structure into a string in format of Microsoft theme File (*.theme)
         /// </summary>
         /// <param name="win32UI">Win32UI structure to be included in the string</param>
-        public readonly string ToString(Win32UI? win32UI = null)
+        public string ToString(Win32UI? win32UI = null)
         {
             StringBuilder s = new();
             s.Clear();
@@ -492,41 +492,41 @@ namespace WinPaletter.Theme.Structures
             s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.ThemeVersion, Program.TM.Info.ThemeVersion)}");
             s.AppendLine(string.Empty);
 
-            if (win32UI is not null && win32UI.HasValue)
+            if (win32UI is not null)
             {
                 s.AppendLine($"[Control Panel\\Colors]");
-                s.AppendLine($"ActiveTitle={win32UI.Value.ActiveTitle.ToStringWin32()}");
-                s.AppendLine($"Background={win32UI.Value.Background.ToStringWin32()}");
-                s.AppendLine($"Hilight={win32UI.Value.Hilight.ToStringWin32()}");
-                s.AppendLine($"HilightText={win32UI.Value.HilightText.ToStringWin32()}");
-                s.AppendLine($"TitleText={win32UI.Value.TitleText.ToStringWin32()}");
-                s.AppendLine($"Window={win32UI.Value.Window.ToStringWin32()}");
-                s.AppendLine($"WindowText={win32UI.Value.WindowText.ToStringWin32()}");
-                s.AppendLine($"Scrollbar={win32UI.Value.Scrollbar.ToStringWin32()}");
-                s.AppendLine($"InactiveTitle={win32UI.Value.InactiveTitle.ToStringWin32()}");
-                s.AppendLine($"Menu={win32UI.Value.Menu.ToStringWin32()}");
-                s.AppendLine($"WindowFrame={win32UI.Value.WindowFrame.ToStringWin32()}");
-                s.AppendLine($"MenuText={win32UI.Value.MenuText.ToStringWin32()}");
-                s.AppendLine($"ActiveBorder={win32UI.Value.ActiveBorder.ToStringWin32()}");
-                s.AppendLine($"InactiveBorder={win32UI.Value.InactiveBorder.ToStringWin32()}");
-                s.AppendLine($"AppWorkspace={win32UI.Value.AppWorkspace.ToStringWin32()}");
-                s.AppendLine($"ButtonFace={win32UI.Value.ButtonFace.ToStringWin32()}");
-                s.AppendLine($"ButtonShadow={win32UI.Value.ButtonShadow.ToStringWin32()}");
-                s.AppendLine($"GrayText={win32UI.Value.GrayText.ToStringWin32()}");
-                s.AppendLine($"ButtonText={win32UI.Value.ButtonText.ToStringWin32()}");
-                s.AppendLine($"InactiveTitleText={win32UI.Value.InactiveTitleText.ToStringWin32()}");
-                s.AppendLine($"ButtonHilight={win32UI.Value.ButtonHilight.ToStringWin32()}");
-                s.AppendLine($"ButtonDkShadow={win32UI.Value.ButtonDkShadow.ToStringWin32()}");
-                s.AppendLine($"ButtonLight={win32UI.Value.ButtonLight.ToStringWin32()}");
-                s.AppendLine($"InfoText={win32UI.Value.InfoText.ToStringWin32()}");
-                s.AppendLine($"InfoWindow={win32UI.Value.InfoWindow.ToStringWin32()}");
-                s.AppendLine($"GradientActiveTitle={win32UI.Value.GradientActiveTitle.ToStringWin32()}");
-                s.AppendLine($"GradientInactiveTitle={win32UI.Value.GradientInactiveTitle.ToStringWin32()}");
-                s.AppendLine($"ButtonAlternateFace={win32UI.Value.ButtonAlternateFace.ToStringWin32()}");
-                s.AppendLine($"HotTrackingColor={win32UI.Value.HotTrackingColor.ToStringWin32()}");
-                s.AppendLine($"MenuHilight={win32UI.Value.MenuHilight.ToStringWin32()}");
-                s.AppendLine($"MenuBar={win32UI.Value.MenuBar.ToStringWin32()}");
-                s.AppendLine($"Desktop={win32UI.Value.Desktop.ToStringWin32()}");
+                s.AppendLine($"ActiveTitle={win32UI.ActiveTitle.ToStringWin32()}");
+                s.AppendLine($"Background={win32UI.Background.ToStringWin32()}");
+                s.AppendLine($"Hilight={win32UI.Hilight.ToStringWin32()}");
+                s.AppendLine($"HilightText={win32UI.HilightText.ToStringWin32()}");
+                s.AppendLine($"TitleText={win32UI.TitleText.ToStringWin32()}");
+                s.AppendLine($"Window={win32UI.Window.ToStringWin32()}");
+                s.AppendLine($"WindowText={win32UI.WindowText.ToStringWin32()}");
+                s.AppendLine($"Scrollbar={win32UI.Scrollbar.ToStringWin32()}");
+                s.AppendLine($"InactiveTitle={win32UI.InactiveTitle.ToStringWin32()}");
+                s.AppendLine($"Menu={win32UI.Menu.ToStringWin32()}");
+                s.AppendLine($"WindowFrame={win32UI.WindowFrame.ToStringWin32()}");
+                s.AppendLine($"MenuText={win32UI.MenuText.ToStringWin32()}");
+                s.AppendLine($"ActiveBorder={win32UI.ActiveBorder.ToStringWin32()}");
+                s.AppendLine($"InactiveBorder={win32UI.InactiveBorder.ToStringWin32()}");
+                s.AppendLine($"AppWorkspace={win32UI.AppWorkspace.ToStringWin32()}");
+                s.AppendLine($"ButtonFace={win32UI.ButtonFace.ToStringWin32()}");
+                s.AppendLine($"ButtonShadow={win32UI.ButtonShadow.ToStringWin32()}");
+                s.AppendLine($"GrayText={win32UI.GrayText.ToStringWin32()}");
+                s.AppendLine($"ButtonText={win32UI.ButtonText.ToStringWin32()}");
+                s.AppendLine($"InactiveTitleText={win32UI.InactiveTitleText.ToStringWin32()}");
+                s.AppendLine($"ButtonHilight={win32UI.ButtonHilight.ToStringWin32()}");
+                s.AppendLine($"ButtonDkShadow={win32UI.ButtonDkShadow.ToStringWin32()}");
+                s.AppendLine($"ButtonLight={win32UI.ButtonLight.ToStringWin32()}");
+                s.AppendLine($"InfoText={win32UI.InfoText.ToStringWin32()}");
+                s.AppendLine($"InfoWindow={win32UI.InfoWindow.ToStringWin32()}");
+                s.AppendLine($"GradientActiveTitle={win32UI.GradientActiveTitle.ToStringWin32()}");
+                s.AppendLine($"GradientInactiveTitle={win32UI.GradientInactiveTitle.ToStringWin32()}");
+                s.AppendLine($"ButtonAlternateFace={win32UI.ButtonAlternateFace.ToStringWin32()}");
+                s.AppendLine($"HotTrackingColor={win32UI.HotTrackingColor.ToStringWin32()}");
+                s.AppendLine($"MenuHilight={win32UI.MenuHilight.ToStringWin32()}");
+                s.AppendLine($"MenuBar={win32UI.MenuBar.ToStringWin32()}");
+                s.AppendLine($"Desktop={win32UI.Desktop.ToStringWin32()}");
                 s.AppendLine(string.Empty);
             }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,8 +10,10 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -91,30 +94,62 @@ namespace WinPaletter
         /// </summary>
         /// <param name="command"></param>
         /// <param name="Wait"></param>
-        public static void SendCommand(string command, bool Wait = true)
+        /// <param name="nonAdmin"></param>
+        public static void SendCommand(string command, bool Wait = true, bool nonAdmin = false)
         {
-            using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
+            if (!nonAdmin || OS.WXP)
             {
-                using (Process process = new()
+                using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
                 {
-                    StartInfo = new()
+                    using (Process process = new()
                     {
-                        FileName = command.Split(' ')[0],
-                        Verb = OS.WXP ? string.Empty : "runas",
-                        Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : string.Empty,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                        UseShellExecute = true
+                        StartInfo = new()
+                        {
+                            FileName = command.Split(' ')[0],
+                            Verb = OS.WXP ? string.Empty : "runas",
+                            Arguments = command.Split(' ').Count() > 0 ? string.Join(" ", command.Split(' ').Skip(1)) : string.Empty,
+                            WindowStyle = ProcessWindowStyle.Hidden,
+                            CreateNoWindow = true,
+                            UseShellExecute = true
+                        }
+                    })
+                    {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Sending command to Command Prompt as Administrator: {command}");
+                        process.Start();
+                        if (Wait) process.WaitForExit();
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command executed successfully: {command}");
                     }
-                })
-                {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Sending command to Command Prompt as Administrator: {command}");
-                    process.Start();
-                    process.WaitForExit();
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command executed successfully: {command}");
-                }
 
-                wic.Undo();
+                    wic.Undo();
+                }
+            }
+            else
+            {
+                Task.Run(() =>
+                {
+                    string taskName = "WinPaletter_CommandNonAdminDeflector";
+                string userName = Environment.UserName;
+
+                // Create future time (safe for Windows 7)
+                // When you create a one-time task with /SC ONCE, the task must have a valid future start time.
+                // If the time(/ ST) is equal to or before the current time, Windows Task Scheduler will not run it.
+                DateTime startTime = DateTime.Now.AddMinutes(1);
+                string formattedTime = startTime.ToString("HH:mm");
+
+                // Create task
+                string createCmd = $"schtasks /Create /TN \"{taskName}\" /TR \"{command}\" /SC ONCE /ST {formattedTime} {(!OS.WXP ? "/RL LIMITED" : "")} /F /RU \"{userName}\"";
+                SendCommand(createCmd);
+
+                // Run the task
+                string runCmd = $"schtasks /Run /TN \"{taskName}\"";
+                SendCommand(runCmd);
+
+                if (OS.WVista || OS.W7) Thread.Sleep(500);
+
+                // Delete task
+                string deleteCmd = $"schtasks /Delete /TN \"{taskName}\" /F";
+                SendCommand(deleteCmd);
+                });
             }
         }
 
@@ -166,7 +201,7 @@ namespace WinPaletter
                 WindowStyle = PreviewHelpers.WindowStyle.W81;
 
             else if (OS.W8)
-                WindowStyle = PreviewHelpers.WindowStyle.W81;
+                WindowStyle = PreviewHelpers.WindowStyle.W8;
 
             else if (OS.W7)
                 WindowStyle = PreviewHelpers.WindowStyle.W7;
@@ -536,14 +571,24 @@ namespace WinPaletter
 
                     if (DWMAPI.IsCompositionEnabled())
                     {
-                        if (OS.W8x)
+                        if (OS.W81)
                         {
-                            DWMAPI.DWM_COLORIZATION_PARAMS temp = new()
-                            {
-                                clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb(),
-                                nIntensity = (uint)TM.Windows81.ColorizationColorBalance
-                            };
-                            DWMAPI.DwmSetColorizationParameters(ref temp, false);
+                            DWMAPI.DwmGetColorizationParameters(out DWMAPI.DWM_COLORIZATION_PARAMS colorizationParams);
+
+                            colorizationParams.clrColor = (uint)TM.Windows81.ColorizationColor.ToArgb();
+                            colorizationParams.nIntensity = (uint)TM.Windows81.ColorizationColorBalance;
+
+                            DWMAPI.DwmSetColorizationParameters(ref colorizationParams, false);
+                        }
+
+                        else if (OS.W8)
+                        {
+                            DWMAPI.DwmGetColorizationParameters(out DWMAPI.DWM_COLORIZATION_PARAMS colorizationParams);
+
+                            colorizationParams.clrColor = (uint)TM.Windows8.ColorizationColor.ToArgb();
+                            colorizationParams.nIntensity = (uint)TM.Windows8.ColorizationColorBalance;
+
+                            DWMAPI.DwmSetColorizationParameters(ref colorizationParams, false);
                         }
 
                         else if (OS.W7)
@@ -562,6 +607,18 @@ namespace WinPaletter
                             };
                             DWMAPI.DwmSetColorizationParameters(ref temp, false);
                         }
+
+                        else if (OS.WVista)
+                        {
+                            DWMAPI.DwmGetColorizationParameters(out DWMAPI.DWM_COLORIZATION_PARAMS colorizationParams);
+
+                            colorizationParams.clrColor = (uint)TM.WindowsVista.ColorizationColor.ToArgb();
+                            colorizationParams.nIntensity = (uint)(TM.WindowsVista.ColorizationColor.A / 255f * 100f);
+
+                            colorizationParams.fOpaque = TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+
+                            DWMAPI.DwmSetColorizationParameters(ref colorizationParams, false);
+                        }
                     }
                     wic.Undo();
                 }
@@ -574,52 +631,12 @@ namespace WinPaletter
         /// <param name="treeView"></param>
         public static void RestartExplorer(TreeView treeView = null)
         {
-            try
-            {
-                if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
-                {
-                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.KillingExplorer}", "info"); }
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}` as non-administrator account.");
 
-                    Stopwatch sw = new();
-                    sw.Reset();
-                    sw.Start();
+            Program.ExplorerKiller?.Start();
+            Program.ExplorerKiller?.WaitForExit();
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}`.");
-                    Program.ExplorerKiller.Start();
-                    Program.ExplorerKiller.WaitForExit();
-                    Program.Explorer_exe.Start();
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Windows Explorer process restarted successfully.");
-
-                    sw.Stop();
-
-                    if (treeView is not null) { ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.ExplorerRestarted, sw.ElapsedMilliseconds / 1000d)}", "time"); }
-
-                    sw.Reset();
-                }
-                else
-                {
-                    if (treeView is not null)
-                    {
-                        ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.Messages.RestartExplorerIssue0}. {Program.Lang.Strings.Messages.RestartExplorerIssue1}", "warning");
-                    }
-                    else
-                    {
-                        MsgBox(Program.Lang.Strings.Messages.RestartExplorerIssue0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Messages.RestartExplorerIssue1);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                if (treeView is not null)
-                {
-                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Errors.ExplorerRestart}", "error");
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Program.Lang.Strings.ThemeManager.Errors.ExplorerRestart, ex));
-                }
-                else
-                {
-                    Forms.BugReport.ThrowError(ex);
-                }
-            }
+            SendCommand(SysPaths.Explorer, false, true);
         }
 
         /// <summary>

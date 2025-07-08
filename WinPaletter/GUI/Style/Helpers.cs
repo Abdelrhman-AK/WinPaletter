@@ -451,22 +451,15 @@ namespace WinPaletter.UI.Style
             }
 
             // Recursively apply the style to all sub-controls
-            if (ctrl is WP.TabControl tabControl)
-            {
-                foreach (TabPage tabPage in tabControl.TabPages)
-                {
-                    tabPage.BackColor = ctrl.Parent.BackColor;
-                    ApplyStyleToSubControls(tabPage, DarkMode);
-                }
-            }
-            else if (ctrl.HasChildren)
+            if (ctrl.HasChildren || ctrl.Controls?.Count > 0)
             {
                 foreach (Control c in ctrl.Controls)
                 {
+                    if (c is TabPage) c.BackColor = ctrl.Parent.BackColor;
+
                     ApplyStyleToSubControls(c, DarkMode);
                 }
             }
-
 
             // Invalidate the control to apply the style changes
             ctrl.Invalidate();

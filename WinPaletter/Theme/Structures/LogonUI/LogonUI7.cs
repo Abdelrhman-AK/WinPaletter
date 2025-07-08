@@ -9,9 +9,9 @@ using WinPaletter.NativeMethods;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// LogonUI structure for Windows 7/8.1
+    /// LogonUI structure for Windows 7
     /// </summary>
-    public struct LogonUI7 : ICloneable
+    public class LogonUI7 : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -51,15 +51,6 @@ namespace WinPaletter.Theme.Structures
         /// <summary>LogonUI background noise intensity</summary>
         public int Noise_Intensity = 0;
 
-        /// <summary>Disable lock screen for Windows 8x</summary>
-        public bool NoLockScreen = false;
-
-        /// <summary>Lock screen stock background image ID for Windows 8x</summary>
-        public int LockScreenSystemID = 0;
-
-        /// <summary>LogonUI background color ID for Windows 8 only. It can be any number from 0 to 24.</summary>
-        public int LogonUI_ID = 0;
-
         /// <summary>
         /// Enumeration for LogonUI background sources
         /// <code>
@@ -82,402 +73,233 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Creates a new Windows 7/8.1 LogonUI data structure with default values
+        /// Creates a new Windows 7 LogonUI data structure with default values
         /// </summary>
         public LogonUI7() { }
 
         /// <summary>
-        /// Loads Windows 7/8.1 LogonUI data from registry
+        /// Loads Windows 7 LogonUI data from registry
         /// </summary>
-        /// <param name="default">Default Windows 7/8.1 LogonUI data structure</param>
+        /// <param name="default">Default Windows 7 LogonUI data structure</param>
         /// <param name="edition">Windows edition</param>
-        public void Load(string edition, LogonUI7 @default)
+        public void Load(LogonUI7 @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} LogonUI screen preferences from registry.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 7 LogonUI screen preferences from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", string.Empty, @default.Enabled));
-            ImagePath = GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "ImagePath", string.Empty).ToString();
-            Color = Color.FromArgb(Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Color", Color.Black.ToArgb())));
-            Blur = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Blur", false));
-            Blur_Intensity = Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Blur_Intensity", 0));
-            Grayscale = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Grayscale", false));
-            Noise = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Noise", false));
-            Noise_Mode = (BitmapExtensions.NoiseMode)Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Noise_Mode", BitmapExtensions.NoiseMode.Acrylic));
-            Noise_Intensity = Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Noise_Intensity", 0));
-            Mode = (Sources)Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Mode", Sources.Default));
-
-            LockScreenSystemID = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", 0));
-            NoLockScreen = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", false));
-            LogonUI_ID = Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0));
+            Enabled = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", string.Empty, @default.Enabled));
+            ImagePath = GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "ImagePath", string.Empty).ToString();
+            Color = Color.FromArgb(Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Color", Color.Black.ToArgb())));
+            Blur = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur", false));
+            Blur_Intensity = Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur_Intensity", 0));
+            Grayscale = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Grayscale", false));
+            Noise = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise", false));
+            Noise_Mode = (BitmapExtensions.NoiseMode)Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Mode", BitmapExtensions.NoiseMode.Acrylic));
+            Noise_Intensity = Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Intensity", 0));
+            Mode = (Sources)Convert.ToInt32(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Mode", Sources.Default));
         }
 
         /// <summary>
-        /// Apply Windows 7/8.1 LogonUI screen
+        /// Apply Windows 7 LogonUI screen
         /// </summary>
-        /// <param name="edition">Registry subkey to store data in WinPaletter registry (HKEY_CURRENT_USER\Software\WinPaletter)</param>
         /// <param name="treeView">treeView used to show applying log</param>
-        /// <param name="applyAsWin8x">Apply as Windows 8x</param>
-        public void Apply(string edition, bool applyAsWin8x = false, TreeView treeView = null)
+        public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7/8.1 LogonUI screen data into registry.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7 LogonUI screen data into registry.");
 
-            SaveToggleState(edition, treeView);
+            SaveToggleState(treeView);
 
             EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background", "OEMBackground", Enabled ? 1 : 0);
             EditReg(treeView, @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System", "UseOEMBackground", Enabled ? 1 : 0);
 
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Mode", (int)Mode);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "ImagePath", ImagePath, RegistryValueKind.String);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Color", Color.ToArgb());
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Blur", Blur ? 1 : 0);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Blur_Intensity", Blur_Intensity);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Grayscale", Grayscale ? 1 : 0);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Noise", Noise ? 1 : 0);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Noise_Mode", (int)Noise_Mode);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Noise_Intensity", Noise_Intensity);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", "Metro_LockScreenSystemID", LockScreenSystemID);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Mode", (int)Mode);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "ImagePath", ImagePath, RegistryValueKind.String);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Color", Color.ToArgb());
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur", Blur ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur_Intensity", Blur_Intensity);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Grayscale", Grayscale ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise", Noise ? 1 : 0);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Mode", (int)Noise_Mode);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Intensity", Noise_Intensity);
 
             if (Enabled)
             {
-                if (applyAsWin8x) SaveAsWin8(treeView); // Save as Windows 8x
-                else SaveAsWin7(treeView);              // Save as Windows 7
-            }
-        }
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7 LogonUI screen extended data into registry.");
 
-        /// <summary>
-        /// Saves Windows7/8.1 toggle state into registry
-        /// </summary>
-        public void SaveToggleState(string edition, TreeView treeView = null)
-        {
-            EditReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\{edition}", string.Empty, Enabled);
-        }
+                bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
+                bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
-        /// <summary>
-        /// Save LogonUI and apply it as if current system is Windows 7
-        /// </summary>
-        /// <param name="treeView"></param>
-        private void SaveAsWin7(TreeView treeView = null)
-        {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7 LogonUI screen extended data into registry.");
+                IntPtr wow64Value = IntPtr.Zero;
 
-            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
+                // Disable WOW64 redirection to access system32 folder correctly
+                Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
 
-            IntPtr wow64Value = IntPtr.Zero;
+                string DirX = $@"{SysPaths.System32}\oobe\info\backgrounds";
 
-            // Disable WOW64 redirection to access system32 folder correctly
-            Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
+                Directory.CreateDirectory(DirX);
 
-            string DirX = $@"{SysPaths.System32}\oobe\info\backgrounds";
+                foreach (string fileX in System.IO.Directory.GetFiles(DirX))
+                {
+                    try { System.IO.File.Delete(fileX); }
+                    catch { } // Couldn't delete a logonUI background File
+                }
 
-            Directory.CreateDirectory(DirX);
+                List<Bitmap> bmpList = [];
+                bmpList.Clear();
 
-            foreach (string fileX in System.IO.Directory.GetFiles(DirX))
-            {
-                try { System.IO.File.Delete(fileX); }
-                catch { } // Couldn't delete a logonUI background File
-            }
+                if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "info");
 
-            List<Bitmap> bmpList = [];
-            bmpList.Clear();
-
-            if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "info");
-
-            switch (Mode)
-            {
-                case Theme.Structures.LogonUI7.Sources.Default:
-                    {
-                        // Windows 7 Default LogonUI Backgrounds are stored in imageres.dll from index 5031 to 5043
-                        for (int i = 5031; i <= 5043; i += +1)
+                switch (Mode)
+                {
+                    case Theme.Structures.LogonUI7.Sources.Default:
                         {
-                            bmpList.Add(PE.GetPNG(SysPaths.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Extracting default Windows 7 LogonUI background with ID `{i}` from `{SysPaths.imageres}`.");
+                            // Windows 7 Default LogonUI Backgrounds are stored in imageres.dll from index 5031 to 5043
+                            for (int i = 5031; i <= 5043; i += +1)
+                            {
+                                bmpList.Add(PE.GetPNG(SysPaths.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
+                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Extracting default Windows 7 LogonUI background with ID `{i}` from `{SysPaths.imageres}`.");
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
-
-                case Theme.Structures.LogonUI7.Sources.CustomImage:
-                    {
-                        if (System.IO.File.Exists(ImagePath))
+                    case Theme.Structures.LogonUI7.Sources.CustomImage:
                         {
-                            bmpList.Add(Bitmap_Mgr.Load(ImagePath).Resize(Screen.PrimaryScreen.Bounds.Size));
-                        }
-                        else
-                        {
-                            bmpList.Add(Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
-                        }
+                            if (System.IO.File.Exists(ImagePath))
+                            {
+                                bmpList.Add(Bitmap_Mgr.Load(ImagePath).Resize(Screen.PrimaryScreen.Bounds.Size));
+                            }
+                            else
+                            {
+                                bmpList.Add(Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
+                            }
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Custom image `{ImagePath ?? "null"}` will be used as a Windows 7 LogonUI background.");
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Custom image `{ImagePath ?? "null"}` will be used as a Windows 7 LogonUI background.");
 
-                        break;
-                    }
-
-                case Theme.Structures.LogonUI7.Sources.SolidColor:
-                    {
-                        bmpList.Add(Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Solid color to be used as LogonUI screen background is `{Color}`.");
-                        break;
-                    }
-
-                case Theme.Structures.LogonUI7.Sources.Wallpaper:
-                    {
-                        using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
-                        {
-                            bmpList.Add((Bitmap)b.Resize(Screen.PrimaryScreen.Bounds.Size).Clone());
+                            break;
                         }
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using current wallpaper as a LogonUI screen.");
+                    case Theme.Structures.LogonUI7.Sources.SolidColor:
+                        {
+                            bmpList.Add(Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Solid color to be used as LogonUI screen background is `{Color}`.");
+                            break;
+                        }
 
-                        break;
-                    }
+                    case Theme.Structures.LogonUI7.Sources.Wallpaper:
+                        {
+                            using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
+                            {
+                                bmpList.Add((Bitmap)b.Resize(Screen.PrimaryScreen.Bounds.Size).Clone());
+                            }
 
-            }
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using current wallpaper as a LogonUI screen.");
 
-            if (ReportProgress)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Lang.Strings.Aspects.LogonUI), "info");
+                            break;
+                        }
 
-            for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
-            {
+                }
+
                 if (ReportProgress)
-                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImages, Program.Lang.Strings.Aspects.LogonUI)} {bmpList[x].Width}x{bmpList[x].Height} ({x + 1}/{bmpList.Count})", "info");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Lang.Strings.Aspects.LogonUI), "info");
 
-                if (Grayscale)
+                for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
                 {
-                    if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+                    if (ReportProgress)
+                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImages, Program.Lang.Strings.Aspects.LogonUI)} {bmpList[x].Width}x{bmpList[x].Height} ({x + 1}/{bmpList.Count})", "info");
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Grayscaling LogonUI screen image number `{x}`.");
-
-                    bmpList[x] = bmpList[x].Grayscale();
-                }
-
-                if (Blur)
-                {
-                    if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
-
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring LogonUI screen image number `{x}` with radius `{Blur_Intensity}`.");
-
-                    ImageProcessor.ImageFactory imgF = new();
-
-                    using (Bitmap b = new(bmpList[x]))
+                    if (Grayscale)
                     {
-                        imgF.Load(b);
-                        imgF.GaussianBlur(Blur_Intensity);
-                        bmpList[x] = (Bitmap)imgF.Image;
+                        if (ReportProgress_Detailed)
+                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Grayscaling LogonUI screen image number `{x}`.");
+
+                        bmpList[x] = bmpList[x].Grayscale();
+                    }
+
+                    if (Blur)
+                    {
+                        if (ReportProgress_Detailed)
+                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring LogonUI screen image number `{x}` with radius `{Blur_Intensity}`.");
+
+                        ImageProcessor.ImageFactory imgF = new();
+
+                        using (Bitmap b = new(bmpList[x]))
+                        {
+                            imgF.Load(b);
+                            imgF.GaussianBlur(Blur_Intensity);
+                            bmpList[x] = (Bitmap)imgF.Image;
+                        }
+                    }
+
+                    if (Noise)
+                    {
+                        if (ReportProgress_Detailed)
+                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating noise effect for LogonUI screen image number `{x}` with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
+
+                        bmpList[x] = bmpList[x].Noise(Noise_Mode, (float)(Noise_Intensity / 100d));
                     }
                 }
 
-                if (Noise)
-                {
-                    if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
-
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating noise effect for LogonUI screen image number `{x}` with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
-
-                    bmpList[x] = bmpList[x].Noise(Noise_Mode, (float)(Noise_Intensity / 100d));
-                }
-            }
-
-            if (bmpList.Count == 1)
-            {
-                if (Program.Elevated)
-                {
-                    bmpList[0].Save($@"{DirX}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{DirX}\\backgroundDefault.jpg`.");
-                }
-                else
-                {
-                    bmpList[0].Save($@"{SysPaths.appData}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                    Reg_IO.Move_File($@"{SysPaths.appData}\backgroundDefault.jpg", $@"{DirX}\backgroundDefault.jpg");
-
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{SysPaths.appData}\\backgroundDefault.jpg` and moved to `{DirX}\\backgroundDefault.jpg`.");
-                }
-
-                if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LogonUI, $@"{DirX}\backgroundDefault.jpg"), "info");
-            }
-            else
-            {
-                for (int x = 0; x <= bmpList.Count - 1; x++)
+                if (bmpList.Count == 1)
                 {
                     if (Program.Elevated)
                     {
-                        bmpList[x].Save($"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bmpList[0].Save($@"{DirX}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{DirX}\\backgroundDefault.jpg`.");
                     }
                     else
                     {
-                        bmpList[x].Save($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
-                        Reg_IO.Move_File($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}");
+                        bmpList[0].Save($@"{SysPaths.appData}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        Reg_IO.Move_File($@"{SysPaths.appData}\backgroundDefault.jpg", $@"{DirX}\backgroundDefault.jpg");
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{SysPaths.appData}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg` and moved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{SysPaths.appData}\\backgroundDefault.jpg` and moved to `{DirX}\\backgroundDefault.jpg`.");
                     }
 
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgNUMSaved, $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", x + 1), "info");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LogonUI, $@"{DirX}\backgroundDefault.jpg"), "info");
                 }
+                else
+                {
+                    for (int x = 0; x <= bmpList.Count - 1; x++)
+                    {
+                        if (Program.Elevated)
+                        {
+                            bmpList[x].Save($"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
+                        }
+                        else
+                        {
+                            bmpList[x].Save($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                            Reg_IO.Move_File($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}");
+
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{SysPaths.appData}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg` and moved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
+                        }
+
+                        if (ReportProgress_Detailed)
+                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgNUMSaved, $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", x + 1), "info");
+                    }
+                }
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating LogonUI screen image\\s is done.");
+
+                // Restore WOW64 redirection
+                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
-
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating LogonUI screen image\\s is done.");
-
-            // Restore WOW64 redirection
-            Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
         }
 
         /// <summary>
-        /// Save LogonUI and apply it as if current system is Windows 8.1
+        /// Saves Windows7 toggle state into registry
         /// </summary>
-        /// <param name="treeView"></param>
-        private void SaveAsWin8(TreeView treeView = null)
+        public void SaveToggleState(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 8\\8.1 lock screen extended data into registry.");
-
-            bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
-            bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
-
-            string lockimg = $@"{SysPaths.appData}\LockScreen.png";
-            EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", NoLockScreen ? 1 : 0);
-            EditReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "LockScreenImage", lockimg, RegistryValueKind.String);
-
-            EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", LogonUI_ID);
-
-            Bitmap bmp;
-
-            if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "info");
-
-            switch (Mode)
-            {
-                case Sources.Default:
-                    {
-                        string syslock = string.Empty;
-
-                        if (System.IO.File.Exists($@"{SysPaths.Windows}\Web\Screen\img10{LockScreenSystemID}.png"))
-                        {
-                            syslock = $@"{SysPaths.Windows}\Web\Screen\img10{LockScreenSystemID}.png";
-                        }
-
-                        else if (System.IO.File.Exists($@"{SysPaths.Windows}\Web\Screen\img10{LockScreenSystemID}.jpg"))
-                        {
-                            syslock = $@"{SysPaths.Windows}\Web\Screen\img10{LockScreenSystemID}.jpg";
-
-                        }
-
-                        if (System.IO.File.Exists(syslock))
-                        {
-                            bmp = Bitmap_Mgr.Load(syslock);
-                        }
-                        else
-                        {
-                            bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
-                        }
-
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Image to be used as lock screen is `{syslock ?? "null"}` with ID `{LockScreenSystemID.ToString() ?? "null"}`.");
-
-                        break;
-                    }
-
-                case Theme.Structures.LogonUI7.Sources.CustomImage:
-                    {
-                        if (System.IO.File.Exists(ImagePath))
-                        {
-                            bmp = Bitmap_Mgr.Load(ImagePath);
-                        }
-                        else
-                        {
-                            bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
-                        }
-
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Custom image to be used as lock screen is `{ImagePath ?? "null"}`.");
-
-                        break;
-                    }
-
-                case Theme.Structures.LogonUI7.Sources.SolidColor:
-                    {
-                        bmp = Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
-
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Solid color to be used as lock screen background is `{Color}`.");
-
-                        break;
-                    }
-
-                case Theme.Structures.LogonUI7.Sources.Wallpaper:
-                    {
-                        using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
-                        {
-                            bmp = (Bitmap)b.Clone();
-                        }
-
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using current wallpaper as a lock screen.");
-
-                        break;
-                    }
-
-                default:
-                    {
-                        bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
-
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Black color is used as lock screen background as a default fallback option.");
-
-                        break;
-                    }
-
-            }
-
-            if (ReportProgress)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Lang.Strings.Aspects.LockScreen), "info");
-
-            if (ReportProgress)
-                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage, Program.Lang.Strings.Aspects.LogonUI)}", "info");
-
-            if (Grayscale)
-            {
-                if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
-
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Grayscaling lock screen image.");
-                bmp = bmp.Grayscale();
-            }
-
-            if (Blur)
-            {
-                if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
-
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring lock screen image with radius `{Blur_Intensity}`.");
-
-                ImageProcessor.ImageFactory ImgF = new();
-                using (Bitmap b = new(bmp))
-                {
-                    ImgF.Load(b);
-                    ImgF.GaussianBlur(Blur_Intensity);
-                    bmp = (Bitmap)ImgF.Image;
-                }
-
-            }
-
-            if (Noise)
-            {
-                if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
-
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating noise effect for lock screen image with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
-
-                bmp = bmp.Noise(Noise_Mode, Noise_Intensity / 100f);
-            }
-
-            if (System.IO.File.Exists(lockimg)) System.IO.File.Delete(lockimg);
-
-            if (ReportProgress_Detailed)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LockScreen, lockimg), "info");
-
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating lock screen image is done.");
-
-            bmp.Save(lockimg);
+            EditReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two LogonUI7 structures are equal</summary>
@@ -493,7 +315,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones LogonUI7 structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

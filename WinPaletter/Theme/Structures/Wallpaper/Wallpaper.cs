@@ -11,7 +11,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows wallpaper
     /// </summary>
-    public struct Wallpaper : ICloneable
+    public class Wallpaper : ICloneable
     {
         /// <summary>Controls if this feature is enabled or not</summary>
         public bool Enabled = false;
@@ -281,7 +281,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>Clones Wallpaper structure</summary>
-        public readonly object Clone()
+        public object Clone()
         {
             return MemberwiseClone();
         }

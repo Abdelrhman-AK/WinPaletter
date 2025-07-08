@@ -11,10 +11,11 @@ using static WinPaletter.PreviewHelpers;
 namespace WinPaletter
 {
 
-    public partial class LogonUI7
+    public partial class LogonUI81
     {
+        public int ID;
 
-        public LogonUI7()
+        public LogonUI81()
         {
             InitializeComponent();
         }
@@ -83,18 +84,18 @@ namespace WinPaletter
                 ApplyToTM(TMx);
                 ApplyToTM(Program.TM);
                 ApplyToTM(Program.TM_Original);
-                TMx.LogonUI7.Apply();
+                TMx.LogonUI81.Apply();
             }
 
             Cursor = Cursors.Default;
         }
 
-        private void LogonUI7_Load(object sender, EventArgs e)
+        private void LogonUI81_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.LogonUI,
-                Enabled = Program.TM.LogonUI7.Enabled,
+                AspectName = Program.Lang.Strings.Aspects.LockScreen,
+                Enabled = Program.TM.LogonUI81.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
                 GeneratePalette = false,
@@ -111,12 +112,14 @@ namespace WinPaletter
 
             LoadData(data);
 
+            ID = 0;
+
             LoadFromTM(Program.TM);
             ApplyPreview();
             Icon = FormsExtensions.Icon<LogonUI>();
 
-            PictureBox11.Image = Assets.LogonUIRes.Win7;
-            PictureBox4.Image = Assets.WinLogos.Win7;
+            PictureBox11.Image = Assets.LogonUIRes.Win81;
+            PictureBox4.Image = Assets.WinLogos.Win81;
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -136,46 +139,52 @@ namespace WinPaletter
 
         public void LoadFromTM(Theme.Manager TM)
         {
-            AspectEnabled = TM.LogonUI7.Enabled;
+            pictureBox1.Visible = true;
+            checkBox1.Visible = true;
+            checkBox1.Checked = TM.LogonUI81.NoLockScreen;
 
-            switch (TM.LogonUI7.Mode)
+            AspectEnabled = TM.LogonUI81.Enabled;
+
+            switch (TM.LogonUI81.Mode)
             {
-                case Theme.Structures.LogonUI7.Sources.Default:
+                case Theme.Structures.LogonUI81.Sources.Default:
                     {
                         RadioButton1.Checked = true;
                         break;
                     }
 
-                case Theme.Structures.LogonUI7.Sources.Wallpaper:
+                case Theme.Structures.LogonUI81.Sources.Wallpaper:
                     {
                         RadioButton2.Checked = true;
                         break;
                     }
 
-                case Theme.Structures.LogonUI7.Sources.CustomImage:
+                case Theme.Structures.LogonUI81.Sources.CustomImage:
                     {
                         RadioButton4.Checked = true;
                         break;
                     }
 
-                case Theme.Structures.LogonUI7.Sources.SolidColor:
+                case Theme.Structures.LogonUI81.Sources.SolidColor:
                     {
                         RadioButton3.Checked = true;
                         break;
                     }
             }
 
-            TextBox1.Text = TM.LogonUI7.ImagePath;
-            color_pick.BackColor = TM.LogonUI7.Color;
-            pnl_preview.BackColor = TM.LogonUI7.Color;
-            CheckBox8.Checked = TM.LogonUI7.Grayscale;
-            CheckBox7.Checked = TM.LogonUI7.Blur;
-            CheckBox6.Checked = TM.LogonUI7.Noise;
+            ID = TM.LogonUI81.LockScreenSystemID;
 
-            trackBarX1.Value = TM.LogonUI7.Blur_Intensity;
-            trackBarX2.Value = TM.LogonUI7.Noise_Intensity;
+            TextBox1.Text = TM.LogonUI81.ImagePath;
+            color_pick.BackColor = TM.LogonUI81.Color;
+            pnl_preview.BackColor = TM.LogonUI81.Color;
+            CheckBox8.Checked = TM.LogonUI81.Grayscale;
+            CheckBox7.Checked = TM.LogonUI81.Blur;
+            CheckBox6.Checked = TM.LogonUI81.Noise;
 
-            switch (TM.LogonUI7.Noise_Mode)
+            trackBarX1.Value = TM.LogonUI81.Blur_Intensity;
+            trackBarX2.Value = TM.LogonUI81.Noise_Intensity;
+
+            switch (TM.LogonUI81.Noise_Mode)
             {
                 case BitmapExtensions.NoiseMode.Acrylic:
                     {
@@ -193,41 +202,56 @@ namespace WinPaletter
 
         public void ApplyToTM(Theme.Manager TM)
         {
-            TM.LogonUI7.Enabled = AspectEnabled;
+            TM.LogonUI81.Enabled = AspectEnabled;
+
+            TM.LogonUI81.NoLockScreen = checkBox1.Checked;
 
             if (RadioButton1.Checked)
-                TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.Default;
+                TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.Default;
             if (RadioButton2.Checked)
-                TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.Wallpaper;
+                TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.Wallpaper;
             if (RadioButton3.Checked)
-                TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.SolidColor;
+                TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.SolidColor;
             if (RadioButton4.Checked)
-                TM.LogonUI7.Mode = Theme.Structures.LogonUI7.Sources.CustomImage;
+                TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.CustomImage;
 
-            TM.LogonUI7.ImagePath = TextBox1.Text;
-            TM.LogonUI7.Color = color_pick.BackColor;
+            TM.LogonUI81.LockScreenSystemID = ID;
 
-            TM.LogonUI7.Grayscale = CheckBox8.Checked;
-            TM.LogonUI7.Blur = CheckBox7.Checked;
-            TM.LogonUI7.Noise = CheckBox6.Checked;
+            TM.LogonUI81.ImagePath = TextBox1.Text;
+            TM.LogonUI81.Color = color_pick.BackColor;
 
-            TM.LogonUI7.Blur_Intensity = trackBarX1.Value;
-            TM.LogonUI7.Noise_Intensity = trackBarX2.Value;
+            TM.LogonUI81.Grayscale = CheckBox8.Checked;
+            TM.LogonUI81.Blur = CheckBox7.Checked;
+            TM.LogonUI81.Noise = CheckBox6.Checked;
+
+            TM.LogonUI81.Blur_Intensity = trackBarX1.Value;
+            TM.LogonUI81.Noise_Intensity = trackBarX2.Value;
 
             if (ComboBox1.SelectedIndex == 0)
-                TM.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic;
+                TM.LogonUI81.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic;
             if (ComboBox1.SelectedIndex == 1)
-                TM.LogonUI7.Noise_Mode = BitmapExtensions.NoiseMode.Aero;
+                TM.LogonUI81.Noise_Mode = BitmapExtensions.NoiseMode.Aero;
         }
 
         public Bitmap ReturnBK()
         {
             Bitmap bmpX = null;
 
-            if (RadioButton1.Checked && (OS.W7 || OS.WVista))
+            if (RadioButton1.Checked && OS.W8x)
             {
-                bmpX = PE.GetPNG(SysPaths.imageres, 5038);
+                string SysLock;
+                if (ID != 1 & ID != 2)
+                {
+                    SysLock = $@"{SysPaths.Windows}\Web\Screen\img10{ID}.jpg";
+                }
+                else
+                {
+                    SysLock = $@"{SysPaths.Windows}\Web\Screen\img10{ID}.png";
+                }
+
+                bmpX = Bitmap_Mgr.Load(SysLock);
             }
+
             else if (RadioButton2.Checked)
             {
                 using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
@@ -235,10 +259,12 @@ namespace WinPaletter
                     bmpX = (Bitmap)b.Clone();
                 }
             }
+
             else if (RadioButton3.Checked)
             {
                 bmpX = color_pick.BackColor.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
             }
+
             else if (RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
             {
                 bmpX = Bitmap_Mgr.Load(TextBox1.Text);
@@ -247,6 +273,7 @@ namespace WinPaletter
             else
             {
                 bmpX = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
+
             }
 
             if (bmpX is not null)

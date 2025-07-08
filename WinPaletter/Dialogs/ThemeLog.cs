@@ -85,7 +85,7 @@ namespace WinPaletter
 
             if (Program.ProgramsRunning(SysPaths.Explorer).Count == 0)
             {
-                Task.Run(() => { Program.Explorer_exe?.Start(); });
+                Task.Run(() => { Program.SendCommand(SysPaths.Explorer, false, true); });
             }
         }
 
@@ -233,14 +233,7 @@ namespace WinPaletter
                 //New method of restarting Explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                 {
-                    if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
-                    {
-                        Program.Explorer_exe?.Start();
-                    }
-                    else
-                    {
-                        AddNode(TreeView1, $"{Program.Lang.Strings.Messages.RestartExplorerIssue0}. {Program.Lang.Strings.Messages.RestartExplorerIssue1}", "warning");
-                    }
+                    Program.SendCommand(SysPaths.Explorer, false, true);
                 }
 
                 else if (LogEnabled) { AddNode(TreeView1, Program.Lang.Strings.ThemeManager.Tips.NoDefResExplorer, "warning"); }

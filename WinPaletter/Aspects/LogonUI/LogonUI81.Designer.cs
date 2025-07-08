@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class LogonUI7 : AspectsTemplate
+    public partial class LogonUI81 : AspectsTemplate
     {
 
         // Form overrides dispose to clean up the component list.
@@ -35,7 +35,7 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogonUI7));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogonUI81));
             this.GroupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.trackBarX2 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
@@ -52,6 +52,7 @@ namespace WinPaletter
             this.pnl_preview = new System.Windows.Forms.Panel();
             this.PictureBox11 = new System.Windows.Forms.PictureBox();
             this.GroupBox2 = new WinPaletter.UI.WP.GroupBox();
+            this.Button3 = new WinPaletter.UI.WP.Button();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.Label1 = new System.Windows.Forms.Label();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
@@ -65,6 +66,8 @@ namespace WinPaletter
             this.RadioButton4 = new WinPaletter.UI.WP.RadioButton();
             this.TextBox1 = new WinPaletter.UI.WP.TextBox();
             this.color_pick = new WinPaletter.UI.Controllers.ColorItem();
+            this.checkBox1 = new WinPaletter.UI.WP.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).BeginInit();
@@ -79,6 +82,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -295,6 +299,7 @@ namespace WinPaletter
             this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.GroupBox2.Controls.Add(this.Button3);
             this.GroupBox2.Controls.Add(this.PictureBox2);
             this.GroupBox2.Controls.Add(this.Label1);
             this.GroupBox2.Controls.Add(this.PictureBox7);
@@ -312,6 +317,24 @@ namespace WinPaletter
             this.GroupBox2.Name = "GroupBox2";
             this.GroupBox2.Size = new System.Drawing.Size(399, 195);
             this.GroupBox2.TabIndex = 17;
+            // 
+            // Button3
+            // 
+            this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button3.CustomColor = System.Drawing.Color.Empty;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button3.ForeColor = System.Drawing.Color.White;
+            this.Button3.Image = null;
+            this.Button3.ImageGlyph = null;
+            this.Button3.ImageGlyphEnabled = false;
+            this.Button3.Location = new System.Drawing.Point(293, 39);
+            this.Button3.Name = "Button3";
+            this.Button3.Size = new System.Drawing.Size(98, 25);
+            this.Button3.TabIndex = 93;
+            this.Button3.Text = "Choose";
+            this.Button3.UseVisualStyleBackColor = false;
+            this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // PictureBox2
             // 
@@ -410,7 +433,7 @@ namespace WinPaletter
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
             this.RadioButton1.Location = new System.Drawing.Point(39, 39);
             this.RadioButton1.Name = "RadioButton1";
-            this.RadioButton1.Size = new System.Drawing.Size(352, 25);
+            this.RadioButton1.Size = new System.Drawing.Size(248, 25);
             this.RadioButton1.TabIndex = 82;
             this.RadioButton1.Text = "System default";
             this.RadioButton1.CheckedChanged += new WinPaletter.UI.WP.RadioButton.CheckedChangedEventHandler(this.RadioButton1_CheckedChanged);
@@ -490,13 +513,38 @@ namespace WinPaletter
             this.color_pick.Click += new System.EventHandler(this.Color_pick_Click);
             this.color_pick.DragDrop += new System.Windows.Forms.DragEventHandler(this.Color_pick_Click);
             // 
-            // LogonUI7
+            // checkBox1
+            // 
+            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox1.Checked = false;
+            this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox1.ForeColor = System.Drawing.Color.White;
+            this.checkBox1.Location = new System.Drawing.Point(446, 369);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(505, 25);
+            this.checkBox1.TabIndex = 119;
+            this.checkBox1.Text = "Disable Windows 8.1 lock screen";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(415, 369);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 120;
+            this.pictureBox1.TabStop = false;
+            // 
+            // LogonUI81
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(964, 561);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.GroupBox3);
             this.Controls.Add(this.GroupBox8);
             this.Controls.Add(this.GroupBox2);
@@ -504,14 +552,16 @@ namespace WinPaletter
             this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "LogonUI7";
-            this.Text = "LogonUI";
+            this.Name = "LogonUI81";
+            this.Text = "Lock Screen";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
-            this.Load += new System.EventHandler(this.LogonUI7_Load);
+            this.Load += new System.EventHandler(this.LogonUI81_Load);
             this.Controls.SetChildIndex(this.GroupBox2, 0);
             this.Controls.SetChildIndex(this.GroupBox8, 0);
             this.Controls.SetChildIndex(this.GroupBox3, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
+            this.Controls.SetChildIndex(this.pictureBox1, 0);
+            this.Controls.SetChildIndex(this.checkBox1, 0);
             this.GroupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox8)).EndInit();
@@ -526,6 +576,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -557,7 +608,10 @@ namespace WinPaletter
         internal PictureBox PictureBox9;
         internal PictureBox PictureBox8;
         internal PictureBox PictureBox11;
+        internal UI.WP.Button Button3;
         private UI.Controllers.TrackBarX trackBarX1;
         private UI.Controllers.TrackBarX trackBarX2;
+        internal UI.WP.CheckBox checkBox1;
+        internal PictureBox pictureBox1;
     }
 }

@@ -83,12 +83,6 @@ namespace WinPaletter
                 button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
-            foreach (UI.WP.Button button in groupBox1.GetAllControls().OfType<UI.WP.Button>())
-            {
-                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-            }
-
             foreach (Card card in flowLayoutPanel1.Controls)
             {
                 card.MouseEnter += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
@@ -201,6 +195,12 @@ namespace WinPaletter
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
+                case WindowStyle.W8:
+                    card1.Image = Assets.Banners.Win81;
+                    winEdition.Image = Assets.WinLogos.Win81;
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
+                    break;
+
                 case WindowStyle.W7:
                     card1.Image = Assets.Banners.WinOld;
                     winEdition.Image = Assets.WinLogos.Win7;
@@ -227,7 +227,7 @@ namespace WinPaletter
             }
 
             card12.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista;
-            card3.Visible = Program.WindowStyle != WindowStyle.WVista;
+            card3.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8;
             //card14.Visible = Program.WindowStyle != WindowStyle.WXP;
         }
 
@@ -388,6 +388,10 @@ namespace WinPaletter
             {
                 form = Forms.Win81Colors;
             }
+            else if (Program.WindowStyle == WindowStyle.W8)
+            {
+                form = Forms.Win8Colors;
+            }
             else if (Program.WindowStyle == WindowStyle.W7)
             {
                 form = Forms.Win7Colors;
@@ -421,9 +425,22 @@ namespace WinPaletter
             if (Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11 || Program.WindowStyle == WindowStyle.W10)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
+
+                if (Program.WindowStyle == WindowStyle.W12)
+                    Forms.LogonUI.LogonUI10x = Program.TM.LogonUI12; // Use the LogonUI12 from the theme manager
+                else if (Program.WindowStyle == WindowStyle.W11)
+                    Forms.LogonUI.LogonUI10x = Program.TM.LogonUI11; // Use the LogonUI11 from the theme manager
+                else if (Program.WindowStyle == WindowStyle.W10)
+                    Forms.LogonUI.LogonUI10x = Program.TM.LogonUI10; // Use the LogonUI10 from the theme manager
+
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
             }
-            else if (Program.WindowStyle == WindowStyle.W81 | Program.WindowStyle == WindowStyle.W7)
+            else if (Program.WindowStyle == WindowStyle.W81 || Program.WindowStyle == WindowStyle.W8)
+            {
+                Forms.MainForm.BackgroundImage = (sender as Card).Image;
+                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI81);
+            }
+            else if (Program.WindowStyle == WindowStyle.W7)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI7);
@@ -479,6 +496,10 @@ namespace WinPaletter
             else if (Program.WindowStyle == WindowStyle.W81)
             {
                 Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W81;
+            }
+            else if (Program.WindowStyle == WindowStyle.W8)
+            {
+                Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W8;
             }
             else if (Program.WindowStyle == WindowStyle.W7)
             {

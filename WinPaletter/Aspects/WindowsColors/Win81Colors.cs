@@ -74,7 +74,7 @@ namespace WinPaletter
                 }
 
                 ApplyToTM(TMx);
-                TMx.Windows81.Apply(TMx, "8.1");
+                TMx.Windows81.Apply(TMx);
                 ApplyToTM(Program.TM);
                 ApplyToTM(Program.TM_Original);
             }
@@ -686,7 +686,7 @@ namespace WinPaletter
 
         private void start_Click(object sender, EventArgs e)
         {
-            if (Forms.Start8Selector.ShowDialog() == DialogResult.OK)
+            if (Forms.Start81Selector.ShowDialog() == DialogResult.OK)
             {
                 ApplyMetroStartToButton(StartBackground_ID, personalcls_background_pick.BackColor, start);
                 ApplyMetroStartToButton(StartBackground_ID, personalcls_background_pick.BackColor, easy_start);

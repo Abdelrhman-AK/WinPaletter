@@ -125,7 +125,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                foreach (FieldInfo field in typeof(Windows8x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                foreach (FieldInfo field in typeof(Windows81).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
                     {
