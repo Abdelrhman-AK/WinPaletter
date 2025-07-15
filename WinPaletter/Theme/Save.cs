@@ -157,14 +157,6 @@ namespace WinPaletter.Theme
                         Windows7.SaveToggleState(tv);
                         WindowsVista.SaveToggleState(tv);
                         WindowsXP.SaveToggleState(tv);
-                        VisualStyles_12.SaveToggleState("12", tv);
-                        VisualStyles_11.SaveToggleState("11", tv);
-                        VisualStyles_10.SaveToggleState("10", tv);
-                        VisualStyles_81.SaveToggleState("8.1", tv);
-                        VisualStyles_8.SaveToggleState("8", tv);
-                        VisualStyles_7.SaveToggleState("7", tv);
-                        VisualStyles_Vista.SaveToggleState("Vista", tv);
-                        VisualStyles_XP.SaveToggleState("XP", tv);
                         LogonUI12.SaveToggleState("12", tv);
                         LogonUI11.SaveToggleState("11", tv);
                         LogonUI10.SaveToggleState("10", tv);
@@ -230,14 +222,6 @@ namespace WinPaletter.Theme
                                 !Windows12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12)));
 
-                            Execute(() => VisualStyles_12.Apply("12", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W12, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
-
                             Execute(() => LogonUI12.Apply("12", tv), treeView,
                                 string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W12, Program.Lang.Strings.Aspects.LockScreen),
                                 string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
@@ -257,14 +241,6 @@ namespace WinPaletter.Theme
                                 sw_all,
                                 !Windows11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11)));
-
-                            Execute(() => VisualStyles_11.Apply("11", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W11, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
 
                             Execute(() => LogonUI11.Apply("11", tv), treeView,
                                 string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W11, Program.Lang.Strings.Aspects.LockScreen),
@@ -286,14 +262,6 @@ namespace WinPaletter.Theme
                                 !Windows10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10)));
 
-                            Execute(() => VisualStyles_10.Apply("10", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W10, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
-
                             Execute(() => LogonUI10.Apply("10", tv), treeView,
                                 string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W10, Program.Lang.Strings.Aspects.LockScreen),
                                 string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
@@ -313,14 +281,6 @@ namespace WinPaletter.Theme
                                 sw_all,
                                 !Windows81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81)));
-
-                            Execute(() => VisualStyles_81.Apply("8.1", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W81, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
 
                             Execute(() => LogonUI81.Apply(treeView), treeView,
                                 string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W81, Program.Lang.Strings.Aspects.LockScreen),
@@ -342,14 +302,6 @@ namespace WinPaletter.Theme
                                 !Windows8.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8)));
 
-                            Execute(() => VisualStyles_8.Apply("8", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W8, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_8.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
-
                             //Execute(() => LogonUI8.Apply(treeView), treeView,
                             //    string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W8, Program.Lang.Strings.Aspects.LockScreen),
                             //    string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
@@ -369,14 +321,6 @@ namespace WinPaletter.Theme
                                 sw_all,
                                 !Windows7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7)));
-
-                            Execute(() => VisualStyles_7.Apply("7", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W7, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
 
                             Execute(() => LogonUI7.Apply(treeView), treeView,
                                 string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W7, Program.Lang.Strings.Aspects.LogonUI),
@@ -401,16 +345,6 @@ namespace WinPaletter.Theme
                             sw_all,
                             !WindowsVista.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                             string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista)));
-
-
-                            Execute(() => VisualStyles_Vista.Apply("Vista", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.WVista, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_Vista.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
-
                         }
 
                         // Apply Windows WXP execlusive features (Themes, LogonUI screen and visual styles)
@@ -423,14 +357,6 @@ namespace WinPaletter.Theme
                                 sw_all,
                                 !WindowsXP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP)));
-
-                            Execute(() => VisualStyles_XP.Apply("XP", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.WXP, Program.Lang.Strings.Aspects.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.VisualStyles),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
-                                sw_all,
-                                !VisualStyles_XP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.VisualStyles),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.VisualStyles));
 
                             Execute(() => LogonUIXP.Apply(tv), treeView,
                                 string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.WXP, Program.Lang.Strings.Aspects.LogonUI),
@@ -3318,16 +3244,16 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows WXP
-                if (TM.WindowsXP.Theme == WindowsXP.Themes.Custom)
+                if (TM.WindowsXP.VisualStyles.VisualStylesType == Structures.VisualStyles.DefaultVisualStyles.Custom)
                 {
-                    x = TM.WindowsXP.ThemeFile;
+                    x = TM.WindowsXP.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(x) && System.IO.File.Exists(x) && !x.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Luna", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WXP_VS\{Path.GetFileName(x)}";
                         if (System.IO.File.Exists(x))
                         {
                             Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows XP Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
-                            TM.WindowsXP.ThemeFile = ZipEntry;
+                            TM.WindowsXP.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(x).Directory.FullName;
@@ -3343,9 +3269,9 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows 12
-                if (TM.VisualStyles_12.Enabled)
+                if (TM.Windows12.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.VisualStyles_12.ThemeFile;
+                    ref string targetProperty = ref TM.Windows12.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W12_VS\{Path.GetFileName(targetProperty)}";
@@ -3368,9 +3294,9 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows 11
-                if (TM.VisualStyles_11.Enabled)
+                if (TM.Windows11.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.VisualStyles_11.ThemeFile;
+                    ref string targetProperty = ref TM.Windows11.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W11_VS\{Path.GetFileName(targetProperty)}";
@@ -3393,9 +3319,9 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows 10
-                if (TM.VisualStyles_10.Enabled)
+                if (TM.Windows10.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.VisualStyles_10.ThemeFile;
+                    ref string targetProperty = ref TM.Windows10.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W10_VS\{Path.GetFileName(targetProperty)}";
@@ -3418,9 +3344,9 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows 8.1
-                if (TM.VisualStyles_81.Enabled)
+                if (TM.Windows81.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.VisualStyles_81.ThemeFile;
+                    ref string targetProperty = ref TM.Windows81.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W81_VS\{Path.GetFileName(targetProperty)}";
@@ -3443,9 +3369,9 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows 7
-                if (TM.VisualStyles_7.Enabled)
+                if (TM.Windows7.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.VisualStyles_7.ThemeFile;
+                    ref string targetProperty = ref TM.Windows7.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W7_VS\{Path.GetFileName(targetProperty)}";
@@ -3468,9 +3394,9 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows Vista
-                if (TM.VisualStyles_Vista.Enabled)
+                if (TM.WindowsVista.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.VisualStyles_Vista.ThemeFile;
+                    ref string targetProperty = ref TM.WindowsVista.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WVista_VS\{Path.GetFileName(targetProperty)}";
@@ -3493,9 +3419,9 @@ namespace WinPaletter.Theme
                 }
 
                 // Add Visual Styles files of Windows WXP
-                if (TM.VisualStyles_XP.Enabled)
+                if (TM.WindowsXP.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.VisualStyles_XP.ThemeFile;
+                    ref string targetProperty = ref TM.WindowsXP.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WXP_VS\{Path.GetFileName(targetProperty)}";

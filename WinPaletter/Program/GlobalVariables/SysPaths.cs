@@ -152,6 +152,22 @@ namespace WinPaletter.GlobalVariables
         /// Extracted Luna.zip
         /// </summary>
         public static string MSTheme_ZIP => $"{appData}\\VisualStyles\\Luna\\Luna.zip";
+
+        /// <summary>
+        /// Represents the file path to the Aero theme's .msstyles file.
+        /// </summary>
+        public static string AeroMSSTYLES = $"{Windows}\\Resources\\Themes\\aero\\aero.msstyles";
+
+        /// <summary>
+        /// Gets the file path to the Aero Lite theme's .msstyles file.
+        /// </summary>
+        public static string AeroLiteMSSTYLES = $"{Windows}\\Resources\\Themes\\aero\\aerolite.msstyles";
+
+        /// <summary>
+        /// Represents the file path to the Luna theme's .msstyles file.
+        /// </summary>
+        public static string LunaMSSTYLES = $"{Windows}\\Resources\\Themes\\Luna\\Luna.msstyles";
+
         #endregion
 
         #region Consoles\Terminals

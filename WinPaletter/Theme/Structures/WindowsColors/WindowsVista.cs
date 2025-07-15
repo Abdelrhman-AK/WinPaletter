@@ -21,15 +21,12 @@ namespace WinPaletter.Theme.Structures
         public byte Alpha;
 
         /// <summary>
-        /// Theme type used for Windows Vista
-        /// <code>
-        /// Aero
-        /// AeroOpaque
-        /// Basic
-        /// Classic
-        /// </code>
+        /// Represents the visual styles configuration for the application.
         /// </summary>
-        public Windows7.Themes Theme = Windows7.Themes.Aero;
+        /// <remarks>This field provides access to the visual styles settings, which can be used to
+        /// customize the appearance of user interface. It is initialized with default
+        /// values.</remarks>
+        public VisualStyles VisualStyles = new();
 
         /// <summary>
         /// Creates new WindowsVista data structure with default values
@@ -46,49 +43,13 @@ namespace WinPaletter.Theme.Structures
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, @default.Enabled));
 
-            if (OS.WVista)
-            {
-                object y;
+            object y;
 
-                y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
-                ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
-                Alpha = Color.FromArgb(Convert.ToInt32(y)).A;
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
+            ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
+            Alpha = Color.FromArgb(Convert.ToInt32(y)).A;
 
-                bool Opaque = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false));
-
-                bool Classic;
-
-                try
-                {
-                    string stringThemeName = UxTheme.GetCurrentVS().Item1;
-                    Classic = string.IsNullOrWhiteSpace(stringThemeName.ToString()) | !System.IO.File.Exists(stringThemeName.ToString());
-                }
-                catch // Couldn't get current visual styles, lets assume that it is not classic.
-                {
-                    Classic = false;
-                }
-
-                if (Classic)
-                {
-                    Theme = Windows7.Themes.Classic;
-                }
-                else if (DWMAPI.IsCompositionEnabled())
-                {
-                    Theme = !Opaque ? Windows7.Themes.Aero : Windows7.Themes.AeroOpaque;
-                }
-                else
-                {
-                    Theme = Windows7.Themes.Basic;
-                }
-            }
-
-
-            else
-            {
-                ColorizationColor = @default.ColorizationColor;
-                Alpha = @default.Alpha;
-                Theme = @default.Theme;
-            }
+            VisualStyles.Load("Vista", @default.VisualStyles);
         }
 
         /// <summary>
@@ -103,47 +64,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
-                switch (Theme)
-                {
-                    case Windows7.Themes.Aero:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
-                            break;
-                        }
-
-                    case Windows7.Themes.AeroOpaque:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1);
-                            break;
-                        }
-
-                    case Windows7.Themes.Basic:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
-                            break;
-                        }
-
-                    case Windows7.Themes.Classic:
-                        {
-                            UxTheme.EnableTheming(0);
-                            break;
-                        }
-                }
+                VisualStyles.Apply("Vista", treeView);
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb(Alpha, ColorizationColor).ToArgb(), Microsoft.Win32.RegistryValueKind.DWord);
 

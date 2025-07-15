@@ -603,8 +603,9 @@ namespace WinPaletter
 
                                 clrBlurBalance = (uint)TM.Windows7.ColorizationBlurBalance,
                                 clrGlassReflectionIntensity = (uint)TM.Windows7.ColorizationGlassReflectionIntensity,
-                                fOpaque = TM.Windows7.Theme == Theme.Structures.Windows7.Themes.AeroOpaque
+                                fOpaque = TM.Windows7.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroOpaque
                             };
+
                             DWMAPI.DwmSetColorizationParameters(ref temp, false);
                         }
 
@@ -615,7 +616,7 @@ namespace WinPaletter
                             colorizationParams.clrColor = (uint)TM.WindowsVista.ColorizationColor.ToArgb();
                             colorizationParams.nIntensity = (uint)(TM.WindowsVista.ColorizationColor.A / 255f * 100f);
 
-                            colorizationParams.fOpaque = TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.AeroOpaque;
+                            colorizationParams.fOpaque = TM.WindowsVista.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroOpaque;
 
                             DWMAPI.DwmSetColorizationParameters(ref colorizationParams, false);
                         }

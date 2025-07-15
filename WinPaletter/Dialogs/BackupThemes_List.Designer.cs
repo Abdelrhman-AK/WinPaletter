@@ -424,12 +424,10 @@
             this.windowsDesktop1.Win7Noise = 1F;
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
-            this.windowsDesktop1.Windows_10x_Theme = WinPaletter.Theme.Structures.Windows10x.Themes.Aero;
-            this.windowsDesktop1.Windows_7_8_Theme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
+            this.windowsDesktop1.VisualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W11;
-            this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
-            this.windowsDesktop1.WindowsXPThemeColorScheme = null;
-            this.windowsDesktop1.WindowsXPThemePath = null;
+            this.windowsDesktop1.VisualStylesColorScheme = null;
+            this.windowsDesktop1.VisualStylesPath = null;
             this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             // 

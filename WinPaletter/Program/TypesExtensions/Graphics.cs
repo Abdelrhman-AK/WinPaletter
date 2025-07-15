@@ -644,7 +644,7 @@ namespace WinPaletter.TypesExtensions
                 return;
 
             // Both image and text present - proceed with relation logic
-            float spacing = 4f;
+            float spacing = 6f;
 
             switch (relation)
             {

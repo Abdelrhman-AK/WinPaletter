@@ -70,12 +70,6 @@ namespace WinPaletter
         /// </summary>
         public static WinXPColors WinXPColors => (_WinXPColors == null || _WinXPColors.IsDisposed) ? (_WinXPColors = CreateInstance(_WinXPColors)) : _WinXPColors;
 
-        private static VisualStyles _VisualStyles;
-        /// <summary>
-        /// Gets the instance of the form <see cref="VisualStyles"/> to manage Windows visual styles.
-        /// </summary>
-        public static VisualStyles VisualStyles => (_VisualStyles == null || _VisualStyles.IsDisposed) ? (_VisualStyles = CreateInstance(_VisualStyles)) : _VisualStyles;
-
         private static ColorPickerDlg _ColorPickerDlg;
         /// <summary>
         /// Gets the instance of the form <see cref="ColorPickerDlg"/> to pick a color.
@@ -199,12 +193,6 @@ namespace WinPaletter
         /// </summary>
         public static Sounds_Editor Sounds_Editor => (_Sounds_Editor == null || _Sounds_Editor.IsDisposed) ? (_Sounds_Editor = CreateInstance(_Sounds_Editor)) : _Sounds_Editor;
 
-        private static Start81Selector _Start81Selector;
-        /// <summary>
-        /// Gets the instance of the form <see cref="Start81Selector"/> to select Windows 8.1 start screen style.
-        /// </summary>
-        public static Start81Selector Start81Selector => (_Start81Selector == null || _Start81Selector.IsDisposed) ? (_Start81Selector = CreateInstance(_Start81Selector)) : _Start81Selector;
-
         private static Wallpaper_Editor _Wallpaper_Editor;
         /// <summary>
         /// Gets the instance of the form <see cref="Wallpaper_Editor"/> to edit wallpaper.
@@ -258,18 +246,6 @@ namespace WinPaletter
         /// Gets the instance of the form <see cref="LogonUI81"/> to manage Windows 8.1 logon screen.
         /// </summary>
         public static LogonUI81 LogonUI81 => (_LogonUI81 == null || _LogonUI81.IsDisposed) ? (_LogonUI81 = CreateInstance(_LogonUI81)) : _LogonUI81;
-
-        private static LogonUI8_Pics _LogonUI8_Pics;
-        /// <summary>
-        /// Gets the instance of the form <see cref="LogonUI8_Pics"/> to manage Windows 8.1 lock screen pictures.
-        /// </summary>
-        public static LogonUI8_Pics LogonUI8_Pics => (_LogonUI8_Pics == null || _LogonUI8_Pics.IsDisposed) ? (_LogonUI8_Pics = CreateInstance(_LogonUI8_Pics)) : _LogonUI8_Pics;
-
-        private static LogonUI8Colors _LogonUI8Colors;
-        /// <summary>
-        /// Gets the instance of the form <see cref="LogonUI8Colors"/> to manage Windows 8.1 logon screen colors.
-        /// </summary>
-        public static LogonUI8Colors LogonUI8Colors => (_LogonUI8Colors == null || _LogonUI8Colors.IsDisposed) ? (_LogonUI8Colors = CreateInstance(_LogonUI8Colors)) : _LogonUI8Colors;
 
         private static LogonUIXP _LogonUIXP;
         /// <summary>

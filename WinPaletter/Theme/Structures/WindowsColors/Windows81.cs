@@ -33,15 +33,12 @@ namespace WinPaletter.Theme.Structures
         public Color AccentColor = Color.FromArgb(72, 29, 178);
 
         /// <summary>
-        /// WinTheme used for Windows 8.1
-        /// <code>
-        /// Aero
-        /// AeroLite
-        /// Basic
-        /// Classic
-        /// </code>
+        /// Represents the visual styles configuration for the application.
         /// </summary>
-        public Windows7.Themes Theme = Windows7.Themes.Aero;
+        /// <remarks>This field provides access to the visual styles settings, which can be used to
+        /// customize the appearance of user interface. It is initialized with default
+        /// values.</remarks>
+        public VisualStyles VisualStyles = new();
 
         /// <summary>Start screen background color (secondary)</summary>
         public Color PersonalColors_Background = Color.FromArgb(30, 0, 84);
@@ -64,52 +61,30 @@ namespace WinPaletter.Theme.Structures
 
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8.1", string.Empty, @default.Enabled));
 
-            if (OS.W81)
-            {
-                object y;
+            VisualStyles.Load("8.1", @default.VisualStyles);
 
-                string stringThemeName = UxTheme.GetCurrentVS().Item1;
+            object y;
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
+            ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
 
-                if (stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" | string.IsNullOrWhiteSpace(stringThemeName.ToString()))
-                {
-                    Theme = Windows7.Themes.AeroLite;
-                }
-                else
-                {
-                    Theme = Windows7.Themes.Aero;
-                }
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", @default.ColorizationColorBalance);
+            ColorizationColorBalance = Convert.ToInt32(y);
 
-                y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
-                ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
+            y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb());
+            StartColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y))).Reverse();
 
-                y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", @default.ColorizationColorBalance);
-                ColorizationColorBalance = Convert.ToInt32(y);
+            y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb());
+            AccentColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y))).Reverse();
 
-                y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb());
-                StartColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y))).Reverse();
+            string S;
 
-                y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb());
-                AccentColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y))).Reverse();
+            S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.ToStringHex(false, true)).ToString();
+            PersonalColors_Background = S.ToColorFromHex();
 
-                string S;
+            S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.ToStringHex(false, true)).ToString();
+            PersonalColors_Accent = S.ToColorFromHex();
 
-                S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.ToStringHex(false, true)).ToString();
-                PersonalColors_Background = S.ToColorFromHex();
-
-                S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.ToStringHex(false, true)).ToString();
-                PersonalColors_Accent = S.ToColorFromHex();
-
-                Start = Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0));
-            }
-            else
-            {
-                Theme = @default.Theme;
-                StartColor = @default.StartColor;
-                AccentColor = @default.AccentColor;
-                PersonalColors_Background = @default.PersonalColors_Background;
-                PersonalColors_Accent = @default.PersonalColors_Accent;
-                Start = @default.Start;
-            }
+            Start = Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0));
         }
 
         /// <summary>
@@ -127,27 +102,7 @@ namespace WinPaletter.Theme.Structures
             {
                 EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 
-                switch (Theme)
-                {
-                    case Windows7.Themes.Aero:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-                            break;
-                        }
-
-                    case Windows7.Themes.AeroLite:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
-
-                            DelKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
-
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
-                            break;
-                        }
-                }
+                VisualStyles.Apply("8.1", treeView);
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", ColorizationColor.ToArgb());
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", ColorizationColorBalance);

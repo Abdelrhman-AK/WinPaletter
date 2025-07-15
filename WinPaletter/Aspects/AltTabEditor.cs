@@ -190,26 +190,19 @@ namespace WinPaletter
 
                 case WindowStyle.W81:
                     {
-                        switch (Program.TM.Windows81.Theme)
+                        if (Program.TM.Windows81.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite)
                         {
-                            case Theme.Structures.Windows7.Themes.Aero:
-                                {
-                                    WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8Aero;
-                                    WinElement1.Background = Program.TM.Windows81.PersonalColors_Background;
-                                    WinElement1.Background2 = Program.TM.Windows81.PersonalColors_Background;
-                                    break;
-                                }
-
-                            case Theme.Structures.Windows7.Themes.AeroLite:
-                                {
-                                    WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8AeroLite;
-                                    WinElement1.Background = Program.TM.Win32.Window;
-                                    WinElement1.Background2 = Program.TM.Win32.Hilight;
-                                    WinElement1.LinkColor = Program.TM.Win32.ButtonText;
-                                    WinElement1.ForeColor = Program.TM.Win32.WindowText;
-                                    break;
-                                }
-
+                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8AeroLite;
+                            WinElement1.Background = Program.TM.Win32.Window;
+                            WinElement1.Background2 = Program.TM.Win32.Hilight;
+                            WinElement1.LinkColor = Program.TM.Win32.ButtonText;
+                            WinElement1.ForeColor = Program.TM.Win32.WindowText;
+                        }
+                        else
+                        {
+                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8Aero;
+                            WinElement1.Background = Program.TM.Windows81.PersonalColors_Background;
+                            WinElement1.Background2 = Program.TM.Windows81.PersonalColors_Background;
                         }
 
                         break;
@@ -217,26 +210,17 @@ namespace WinPaletter
 
                 case WindowStyle.W7:
                     {
-                        switch (Program.TM.Windows7.Theme)
+                        if (Program.TM.Windows7.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroOpaque)
                         {
-                            case Theme.Structures.Windows7.Themes.Aero:
-                                {
-                                    WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Aero;
-                                    break;
-                                }
-
-                            case Theme.Structures.Windows7.Themes.AeroOpaque:
-                                {
-                                    WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Opaque;
-                                    break;
-                                }
-
-                            case Theme.Structures.Windows7.Themes.Basic:
-                                {
-                                    WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Basic;
-                                    break;
-                                }
-
+                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Opaque;
+                        }
+                        else if (Program.TM.Windows7.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.Basic)
+                        {
+                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Basic;
+                        }
+                        else
+                        {
+                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Aero;
                         }
 
                         WinElement1.Background = Program.TM.Windows7.ColorizationColor;

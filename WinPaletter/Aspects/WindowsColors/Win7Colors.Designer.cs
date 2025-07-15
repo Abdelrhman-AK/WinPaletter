@@ -204,12 +204,10 @@
             this.windowsDesktop1.Win7Noise = 0F;
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
-            this.windowsDesktop1.Windows_10x_Theme = WinPaletter.Theme.Structures.Windows10x.Themes.Aero;
-            this.windowsDesktop1.Windows_7_8_Theme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
+            this.windowsDesktop1.VisualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W7;
-            this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
-            this.windowsDesktop1.WindowsXPThemeColorScheme = null;
-            this.windowsDesktop1.WindowsXPThemePath = null;
+            this.windowsDesktop1.VisualStylesColorScheme = null;
+            this.windowsDesktop1.VisualStylesPath = null;
             this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             this.windowsDesktop1.EditorInvoker += new WinPaletter.Templates.WindowsDesktop.EditorInvokerEventHandler(this.windowsDesktop1_EditorInvoker);
@@ -283,7 +281,6 @@
             this.theme_aero.Text = "Aero";
             this.theme_aero.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.theme_aero.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.theme_aero.CheckedChanged += new System.EventHandler(this.theme_aero_CheckedChanged);
             // 
             // Label28
             // 
@@ -313,7 +310,6 @@
             this.theme_classic.Text = "Classic";
             this.theme_classic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.theme_classic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.theme_classic.CheckedChanged += new System.EventHandler(this.theme_classic_CheckedChanged);
             // 
             // theme_basic
             // 
@@ -330,7 +326,6 @@
             this.theme_basic.Text = "Basic";
             this.theme_basic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.theme_basic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.theme_basic.CheckedChanged += new System.EventHandler(this.theme_basic_CheckedChanged);
             // 
             // theme_aeroopaque
             // 
@@ -347,7 +342,6 @@
             this.theme_aeroopaque.Text = "Aero opaque";
             this.theme_aeroopaque.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.theme_aeroopaque.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.theme_aeroopaque.CheckedChanged += new System.EventHandler(this.theme_aeroopaque_CheckedChanged);
             // 
             // GroupBox22
             // 

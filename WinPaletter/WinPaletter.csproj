@@ -148,6 +148,7 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Design">
       <Private>False</Private>
     </Reference>
@@ -178,6 +179,7 @@
     <Reference Include="System.Net.Http">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -228,12 +230,6 @@
     </Compile>
     <Compile Include="Aspects\LogonUI\LogonUI81.Designer.cs">
       <DependentUpon>LogonUI81.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Aspects\WindowsColors\VisualStyles.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Aspects\WindowsColors\VisualStyles.Designer.cs">
-      <DependentUpon>VisualStyles.cs</DependentUpon>
     </Compile>
     <Compile Include="Aspects\IconsStudio.cs">
       <SubType>Form</SubType>
@@ -945,18 +941,6 @@
     <Compile Include="Aspects\LogonUI\LogonUI7.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\LogonUI\LogonUI8Colors.Designer.cs">
-      <DependentUpon>LogonUI8Colors.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Aspects\LogonUI\LogonUI8Colors.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Aspects\LogonUI\LogonUI8_Pics.Designer.cs">
-      <DependentUpon>LogonUI8_Pics.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Aspects\LogonUI\LogonUI8_Pics.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Aspects\LogonUI\LogonUIXP.Designer.cs">
       <DependentUpon>LogonUIXP.cs</DependentUpon>
     </Compile>
@@ -1104,12 +1088,6 @@
     <Compile Include="Aspects\Win32UI\Win32UI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Start8Selector.Designer.cs">
-      <DependentUpon>Start8Selector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Aspects\WindowsColors\Start8Selector.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Aspects\WinEffecter.Designer.cs">
       <DependentUpon>WinEffecter.cs</DependentUpon>
     </Compile>
@@ -1173,6 +1151,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Win11.png" />
     <Content Include="Resources\WinPaletter.SysEventsSounds.exe" />
     <None Include="Resources\ContextBox_Help.png" />
     <Content Include="Resources\LICENSE.txt" />
@@ -1187,14 +1166,12 @@
     <EmbeddedResource Include="Aspects\LogonUI\LogonUI81.resx">
       <DependentUpon>LogonUI81.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\VisualStyles.resx">
-      <DependentUpon>VisualStyles.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Aspects\IconsStudio.resx">
       <DependentUpon>IconsStudio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WindowsColors\Win12Colors.resx">
       <DependentUpon>Win12Colors.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WindowsColors\Win8Colors.resx">
       <DependentUpon>Win8Colors.cs</DependentUpon>
@@ -1351,12 +1328,6 @@
     <EmbeddedResource Include="Aspects\LogonUI\LogonUI7.resx">
       <DependentUpon>LogonUI7.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\LogonUI\LogonUI8Colors.resx">
-      <DependentUpon>LogonUI8Colors.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\LogonUI\LogonUI8_Pics.resx">
-      <DependentUpon>LogonUI8_Pics.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Aspects\LogonUI\LogonUIXP.resx">
       <DependentUpon>LogonUIXP.cs</DependentUpon>
     </EmbeddedResource>
@@ -1470,9 +1441,6 @@
     <EmbeddedResource Include="Aspects\Win32UI\Win32UI.resx">
       <DependentUpon>Win32UI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\Start8Selector.resx">
-      <DependentUpon>Start8Selector.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WinEffecter.resx">
       <DependentUpon>WinEffecter.cs</DependentUpon>
     </EmbeddedResource>
@@ -1499,9 +1467,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WindowsColors\Win10Colors.resx">
       <DependentUpon>Win10Colors.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\WindowsColors\Win11Colors.resx">
       <DependentUpon>Win11Colors.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

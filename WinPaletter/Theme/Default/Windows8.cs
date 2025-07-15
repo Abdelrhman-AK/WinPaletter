@@ -29,7 +29,6 @@ namespace WinPaletter.Theme
             Win81.StartColor = Color.FromArgb(30, 0, 84);
             Win81.AccentColor = Color.FromArgb(72, 29, 178);
             Win81.Start = 0;
-            Win81.Theme = Structures.Windows7.Themes.Aero;
 
             ref Structures.Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;

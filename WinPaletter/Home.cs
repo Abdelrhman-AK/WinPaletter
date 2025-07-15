@@ -728,12 +728,6 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.IconsStudio);
         }
 
-        private void card14_Click(object sender, EventArgs e)
-        {
-            Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.VisualStyles);
-        }
-
         private void card15_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;

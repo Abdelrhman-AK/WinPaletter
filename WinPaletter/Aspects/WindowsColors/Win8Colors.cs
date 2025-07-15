@@ -187,22 +187,7 @@ namespace WinPaletter
             AspectEnabled = TM.Windows8.Enabled;
             ColorizationColor_pick.BackColor = TM.Windows8.ColorizationColor;
             ColorizationColorBalance_bar.Value = TM.Windows8.ColorizationColorBalance;
-
-            switch (TM.Windows8.Theme)
-            {
-                case Theme.Structures.Windows7.Themes.Aero:
-                    {
-                        theme_aero.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.Windows7.Themes.AeroLite:
-                    {
-                        theme_aerolite.Checked = true;
-                        break;
-                    }
-            }
-
+          
             switch (TM.Windows8.ColorSet_Version3)
             {
                 case 0:
@@ -503,15 +488,6 @@ namespace WinPaletter
                                           start_18.Checked ? 117 :
                                           start_19.Checked ? 118 :
                                           start_20.Checked ? 119 : 100;
-
-            if (theme_aero.Checked)
-            {
-                TM.Windows8.Theme = Theme.Structures.Windows7.Themes.Aero;
-            }
-            else if (theme_aerolite.Checked)
-            {
-                TM.Windows8.Theme = Theme.Structures.Windows7.Themes.AeroLite;
-            }
         }
 
         public void ApplyDefaultTMValues()
@@ -642,23 +618,23 @@ namespace WinPaletter
             }
         }
 
-        private void theme_aero_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (IsShown && theme_aero.Checked)
-            {
-                RefreshDWM();
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
-            }
-        }
+        //private void theme_aero_CheckedChanged_1(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_aero.Checked)
+        //    {
+        //        RefreshDWM();
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
+        //    }
+        //}
 
-        private void theme_aerolite_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown && theme_aerolite.Checked)
-            {
-                RefreshDWM();
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroLite;
-            }
-        }
+        //private void theme_aerolite_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_aerolite.Checked)
+        //    {
+        //        RefreshDWM();
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroLite;
+        //    }
+        //}
 
         private void start_color_pick_Click(object sender, EventArgs e)
         {

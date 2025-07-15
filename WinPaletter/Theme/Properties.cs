@@ -26,11 +26,6 @@ namespace WinPaletter.Theme
         public LogonUI10x LogonUI12 = new();
 
         /// <summary>
-        /// Visual styles structure instance that contains data about Windows 12, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_12 = new();
-
-        /// <summary>
         /// Structure instance that contains data about Windows 11 colors and appearance, and it can be customized.
         /// </summary>
         public Windows10x Windows11 = new();
@@ -39,11 +34,6 @@ namespace WinPaletter.Theme
         /// Structure instance that contains data about Windows 11 LogonUI appearance, and it can be customized.
         /// </summary>
         public LogonUI10x LogonUI11 = new();
-
-        /// <summary>
-        /// Visual styles structure instance that contains data about Windows 11, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_11 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 10 colors and appearance, and it can be customized.
@@ -70,19 +60,9 @@ namespace WinPaletter.Theme
         public LogonUI10x LogonUI10 = new();
 
         /// <summary>
-        /// Visual styles structure instance that contains data about Windows 10, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_10 = new();
-
-        /// <summary>
         /// Structure instance that contains data about Windows 8.1 colors and appearance, and it can be customized.
         /// </summary>
         public Windows81 Windows81 = new();
-
-        /// <summary>
-        /// Visual styles structure instance that contains data about Windows 8.1, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_81 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 8 colors and appearance, and it can be customized.
@@ -90,19 +70,9 @@ namespace WinPaletter.Theme
         public Windows8 Windows8 = new();
 
         /// <summary>
-        /// Visual styles structure instance that contains data about Windows 8, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_8 = new();
-
-        /// <summary>
         /// Structure instance that contains data about Windows 7 colors and appearance, and it can be customized.
         /// </summary>
         public Windows7 Windows7 = new();
-
-        /// <summary>
-        /// Visual styles structure instance that contains data about Windows 7, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_7 = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows Vista colors and appearance, and it can be customized.
@@ -110,19 +80,9 @@ namespace WinPaletter.Theme
         public WindowsVista WindowsVista = new();
 
         /// <summary>
-        /// Visual styles structure instance that contains data about Windows Vista, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_Vista = new();
-
-        /// <summary>
         /// Structure instance that contains data about Windows WXP colors and appearance, and it can be customized.
         /// </summary>
         public WindowsXP WindowsXP = new();
-
-        /// <summary>
-        /// Visual styles structure instance that contains data about Windows WXP, and it can be customized.
-        /// </summary>
-        public Structures.VisualStyles VisualStyles_XP = new() { ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", SizeScheme = "Normal" };
 
         /// <summary>
         /// Structure instance that contains data about classic Windows colors, and it can be customized.

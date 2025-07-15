@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Devcorp.Controls.VisualStyles;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
@@ -75,11 +77,6 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void ModeSwitched(object sender, EventArgs e)
-        {
-            tablessControl1.SelectedIndex = AdvancedMode ? 0 : 1;
-        }
-
         private void GeneratePalette_Image(object sender, EventArgs e)
         {
             Forms.PaletteGenerateFromImage.ShowDialog();
@@ -90,13 +87,13 @@ namespace WinPaletter
             Forms.PaletteGenerateFromColor.ShowDialog();
         }
 
-        private void Win11Colors_FormClosed(object sender, FormClosedEventArgs e)
+        private void Win10Colors_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.Settings.AspectsControl.WinColors_Advanced = AdvancedMode;
             Program.Settings.AspectsControl.Save();
         }
 
-        private void Win11Colors_Load(object sender, EventArgs e)
+        private void Win10Colors_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
             {
@@ -105,6 +102,7 @@ namespace WinPaletter
                 GeneratePalette = true,
                 GenerateMSTheme = false,
                 Import_preset = false,
+                CanSwitchMode = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
@@ -113,9 +111,6 @@ namespace WinPaletter
                 OnImportFromCurrentApplied = LoadFromCurrent,
                 OnGeneratePaletteFromImage = GeneratePalette_Image,
                 OnGeneratePaletteFromColor = GeneratePalette_Color,
-
-                OnModeAdvanced = ModeSwitched,
-                OnModeSimple = ModeSwitched,
             };
 
             windowsDesktop1.BackgroundImage = Program.Wallpaper;
@@ -127,17 +122,17 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
 
-            ToolStripMenuItem item = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W10));
+            ToolStripMenuItem item = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W11));
             item.Click += Item_Click;
             easy_generator.Menu.Items.Add(item);
         }
 
         private void Item_Click(object sender, EventArgs e)
         {
-            // Copycat from Windows 10 colors
+            // Copycat from Windows 11 colors
             using (Manager TMx = new(Manager.Source.Empty))
             {
-                TMx.Windows11 = (Theme.Structures.Windows10x)Program.TM.Windows10.Clone();
+                TMx.Windows11 = (Theme.Structures.Windows10x)Program.TM.Windows11.Clone();
                 LoadFromTM((Manager)TMx.Clone());
 
                 Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
@@ -147,29 +142,17 @@ namespace WinPaletter
         public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Windows11.Enabled;
-            theme_aero.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.Aero;
-            theme_aerolite.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.AeroLite;
-            theme_skip.Checked = TM.Windows11.Theme == Theme.Structures.Windows10x.Themes.Skip;
 
-            WinMode_Toggle.Checked = !TM.Windows11.WinMode_Light;
-            AppMode_Toggle.Checked = !TM.Windows11.AppMode_Light;
+            winmode_light.Checked = TM.Windows11.WinMode_Light;
+            winmode_dark.Checked = !TM.Windows11.WinMode_Light;
+            appmode_light.Checked = TM.Windows11.AppMode_Light;
+            appmode_dark.Checked = !TM.Windows11.AppMode_Light;
+
             Transparency_Toggle.Checked = TM.Windows11.Transparency;
             ShowAccentOnTitlebarAndBorders_Toggle.Checked = TM.Windows11.ApplyAccentOnTitlebars;
             Accent_None.Checked = TM.Windows11.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None;
             Accent_Taskbar.Checked = TM.Windows11.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar;
             Accent_StartTaskbar.Checked = TM.Windows11.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC;
-
-            easy_appmode_dark.Checked = !TM.Windows11.AppMode_Light;
-            easy_appmode_light.Checked = TM.Windows11.AppMode_Light;
-            easy_winmode_dark.Checked = !TM.Windows11.WinMode_Light;
-            easy_winmode_light.Checked = TM.Windows11.WinMode_Light;
-            easy_transparent.Checked = TM.Windows11.Transparency;
-            easy_opaque.Checked = !TM.Windows11.Transparency;
-            easy_colortitle.Checked = TM.Windows11.ApplyAccentOnTitlebars;
-            easy_nocolortitle.Checked = !TM.Windows11.ApplyAccentOnTitlebars;
-            easy_level_none.Checked = TM.Windows11.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.None;
-            easy_level_tb.Checked = TM.Windows11.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar;
-            easy_level_all.Checked = TM.Windows11.ApplyAccentOnTaskbar == Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC;
 
             TActive.BackColor = TM.Windows11.Titlebar_Active;
             TInactive.BackColor = TM.Windows11.Titlebar_Inactive;
@@ -183,6 +166,24 @@ namespace WinPaletter
             C5.BackColor = TM.Windows11.Color_Index3;
             C9.BackColor = TM.Windows11.Color_Index7;
 
+            toggle1.Checked = TM.Windows11.VisualStyles.Enabled;
+
+            if (TM.Windows11.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite) theme_aerolite.Checked = true;
+            else if (TM.Windows11.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.Custom) radioImage1.Checked = true;
+            else theme_aero.Checked = true;
+            groupBox4.Visible = radioImage1.Checked;
+
+            VS_textbox.Text = TM.Windows11.VisualStyles.ThemeFile;
+            VS_ColorsList.SelectedItem = TM.Windows11.VisualStyles.ColorScheme;
+
+            if (TM.Windows11.VisualStyles.SizeScheme.ToLower() == "normalsize" && VS_SizesList.Items.Contains("Normal")) TM.Windows11.VisualStyles.SizeScheme = "Normal";
+            else if (TM.Windows11.VisualStyles.SizeScheme.ToLower() == "normalsize" && VS_SizesList.Items.Contains("normal")) TM.Windows11.VisualStyles.SizeScheme = "normal";
+
+            VS_SizesList.SelectedItem = TM.Windows11.VisualStyles.SizeScheme;
+
+            VS_ReplaceColors.Checked = TM.Windows11.VisualStyles.OverrideColors;
+            VS_ReplaceMetrics.Checked = TM.Windows11.VisualStyles.OverrideSizes;
+
             windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
             UpdateLegends();
@@ -192,12 +193,8 @@ namespace WinPaletter
         {
             TM.Windows11.Enabled = AspectEnabled;
 
-            if (theme_skip.Checked) TM.Windows11.Theme = Theme.Structures.Windows10x.Themes.Skip;
-            else if (theme_aero.Checked) TM.Windows11.Theme = Theme.Structures.Windows10x.Themes.Aero;
-            else if (theme_aerolite.Checked) TM.Windows11.Theme = Theme.Structures.Windows10x.Themes.AeroLite;
-
-            TM.Windows11.WinMode_Light = !WinMode_Toggle.Checked;
-            TM.Windows11.AppMode_Light = !AppMode_Toggle.Checked;
+            TM.Windows11.WinMode_Light = winmode_light.Checked;
+            TM.Windows11.AppMode_Light = appmode_light.Checked;
             TM.Windows11.Transparency = Transparency_Toggle.Checked;
             TM.Windows11.ApplyAccentOnTitlebars = ShowAccentOnTitlebarAndBorders_Toggle.Checked;
 
@@ -216,11 +213,23 @@ namespace WinPaletter
             TM.Windows11.Color_Index0 = C2.BackColor;
             TM.Windows11.Color_Index3 = C5.BackColor;
             TM.Windows11.Color_Index7 = C9.BackColor;
+
+            TM.Windows11.VisualStyles.Enabled = toggle1.Checked;
+            if (theme_aerolite.Checked) TM.Windows11.VisualStyles.VisualStylesType = Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite;
+            else if (radioImage1.Checked) TM.Windows11.VisualStyles.VisualStylesType = Theme.Structures.VisualStyles.DefaultVisualStyles.Custom;
+            else TM.Windows11.VisualStyles.VisualStylesType = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
+
+            TM.Windows11.VisualStyles.Enabled = AspectEnabled;
+            TM.Windows11.VisualStyles.ThemeFile = VS_textbox.Text;
+            TM.Windows11.VisualStyles.ColorScheme = (VS_ColorsList.SelectedItem ?? "").ToString();
+            TM.Windows11.VisualStyles.SizeScheme = (VS_SizesList.SelectedItem ?? "").ToString().ToLower() == "normal" ? "NormalSize" : (VS_SizesList.SelectedItem ?? "").ToString();
+            TM.Windows11.VisualStyles.OverrideColors = VS_ReplaceColors.Checked;
+            TM.Windows11.VisualStyles.OverrideSizes = VS_ReplaceMetrics.Checked;
         }
 
         public void ApplyDefaultTMValues()
         {
-            using (Manager DefTM = Theme.Default.Get(WindowStyle.W11))
+            using (Manager DefTM = Theme.Default.Get(WindowStyle.W10))
             {
                 TActive.DefaultBackColor = DefTM.Windows11.Titlebar_Active;
                 TInactive.DefaultBackColor = DefTM.Windows11.Titlebar_Inactive;
@@ -233,18 +242,6 @@ namespace WinPaletter
                 C2.DefaultBackColor = DefTM.Windows11.Color_Index0;
                 C5.DefaultBackColor = DefTM.Windows11.Color_Index3;
                 C9.DefaultBackColor = DefTM.Windows11.Color_Index7;
-
-                easy_activetitle.DefaultBackColor = TActive.DefaultBackColor;
-                easy_inactivetitle.DefaultBackColor = TInactive.DefaultBackColor;
-                e1.DefaultBackColor = C1.DefaultBackColor;
-                e2.DefaultBackColor = C2.DefaultBackColor;
-                e3.DefaultBackColor = C3.DefaultBackColor;
-                e4.DefaultBackColor = C4.DefaultBackColor;
-                e5.DefaultBackColor = C5.DefaultBackColor;
-                e6.DefaultBackColor = C6.DefaultBackColor;
-                e7.DefaultBackColor = C7.DefaultBackColor;
-                e8.DefaultBackColor = C8.DefaultBackColor;
-                e9.DefaultBackColor = C9.DefaultBackColor;
             }
         }
 
@@ -253,7 +250,7 @@ namespace WinPaletter
             using (Manager TMx = new(Manager.Source.Empty))
             {
                 ApplyToTM(TMx);
-                ApplyWin10xLegends(TMx, WindowStyle.W11, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8, lbl9, pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9);
+                ApplyWin10xLegends(TMx, WindowStyle.W10, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8, lbl9, pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9);
             }
         }
 
@@ -312,53 +309,6 @@ namespace WinPaletter
             CList.Clear();
         }
 
-        private void WinMode_Toggle_CheckedChanged(object sender, EventArgs e)
-        {
-            bool _checked = false;
-
-            if (sender is UI.WP.Toggle)
-            {
-                _checked = ((UI.WP.Toggle)sender).Checked;
-            }
-            else if (sender is UI.WP.RadioImage)
-            {
-                _checked = ((UI.WP.RadioImage)sender).Checked;
-            }
-
-            if (IsShown)
-            {
-                windowsDesktop1.DarkMode_Win = _checked;
-                UpdateLegends();
-            }
-
-            easy_winmode_dark.Checked = _checked;
-            easy_winmode_light.Checked = !_checked;
-        }
-
-        private void AppMode_Toggle_CheckedChanged(object sender, EventArgs e)
-        {
-            bool _checked = false;
-
-            if (sender is UI.WP.Toggle)
-            {
-                _checked = ((UI.WP.Toggle)sender).Checked;
-            }
-            else if (sender is UI.WP.RadioImage)
-            {
-                _checked = ((UI.WP.RadioImage)sender).Checked;
-            }
-
-            if (IsShown)
-            {
-                windowsDesktop1.DarkMode_App = _checked;
-            }
-
-            easy_appmode_dark.Checked = _checked;
-            easy_appmode_light.Checked = !_checked;
-
-            alertBox1.Visible = theme_aerolite.Checked && AppMode_Toggle.Checked;
-        }
-
         private void Transparency_Toggle_CheckedChanged(object sender, EventArgs e)
         {
             bool _checked = false;
@@ -372,10 +322,11 @@ namespace WinPaletter
                 _checked = ((UI.WP.RadioImage)sender).Checked;
             }
 
-            if (IsShown) windowsDesktop1.Transparency = _checked;
-
-            easy_transparent.Checked = _checked;
-            easy_opaque.Checked = !_checked;
+            if (IsShown)
+            {
+                windowsDesktop1.Transparency = _checked;
+                UpdateLegends();
+            }
         }
 
         private void AccentOnTitlebar_CheckedChanged(object sender, EventArgs e)
@@ -395,9 +346,6 @@ namespace WinPaletter
             {
                 windowsDesktop1.TitlebarColor_Enabled = _checked;
             }
-
-            easy_colortitle.Checked = _checked;
-            easy_nocolortitle.Checked = !_checked;
         }
 
         private void Accent_None_CheckedChanged(object sender, EventArgs e)
@@ -407,8 +355,9 @@ namespace WinPaletter
                 windowsDesktop1.AccentLevel = Theme.Structures.Windows10x.AccentTaskbarLevels.None;
             }
 
-            easy_level_none.Checked = ((UI.WP.RadioImage)sender).Checked;
             Accent_None.Checked = ((UI.WP.RadioImage)sender).Checked;
+
+            UpdateLegends();
         }
 
         private void Accent_Taskbar_CheckedChanged(object sender, EventArgs e)
@@ -418,8 +367,9 @@ namespace WinPaletter
                 windowsDesktop1.AccentLevel = Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar;
             }
 
-            easy_level_tb.Checked = ((UI.WP.RadioImage)sender).Checked;
             Accent_Taskbar.Checked = ((UI.WP.RadioImage)sender).Checked;
+
+            UpdateLegends();
         }
 
         private void Accent_StartTaskbar_CheckedChanged(object sender, EventArgs e)
@@ -429,21 +379,10 @@ namespace WinPaletter
                 windowsDesktop1.AccentLevel = Theme.Structures.Windows10x.AccentTaskbarLevels.Taskbar_Start_AC;
             }
 
-            easy_level_all.Checked = ((UI.WP.RadioImage)sender).Checked;
             Accent_StartTaskbar.Checked = ((UI.WP.RadioImage)sender).Checked;
+
+            UpdateLegends();
         }
-
-
-        private void TActive_BackColorChanged(object sender, EventArgs e)
-        {
-            easy_activetitle.BackColor = TActive.BackColor;
-        }
-
-        private void TInactive_BackColorChanged(object sender, EventArgs e)
-        {
-            easy_inactivetitle.BackColor = TInactive.BackColor;
-        }
-
 
         private void ColorPicker_DragDrop(object sender, DragEventArgs e)
         {
@@ -462,7 +401,6 @@ namespace WinPaletter
                 windowsDesktop1.TitlebarColor_Inactive = TInactive.BackColor;
             }
         }
-
         private void C1_Click(object sender, EventArgs e)
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
@@ -477,10 +415,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color1) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color1) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -504,10 +442,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color2) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color2) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -531,10 +469,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color3) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color3) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -558,10 +496,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color4) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color4) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -585,10 +523,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color5) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color5) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -612,10 +550,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color6) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color6) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -639,10 +577,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color7) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color7) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -666,10 +604,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color8) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color8) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -693,10 +631,10 @@ namespace WinPaletter
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
-            {
-                { colorItem, new string[] { nameof(colorItem.BackColor) } },
-                { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color9) } }
-            };
+         {
+             { colorItem, new string[] { nameof(colorItem.BackColor) } },
+             { windowsDesktop1, new string[] { nameof(windowsDesktop1.Color9) } }
+         };
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
@@ -706,107 +644,6 @@ namespace WinPaletter
             CList.Clear();
         }
 
-
-        private void C1_BackColorChanged(object sender, EventArgs e)
-        {
-            e1.BackColor = C1.BackColor;
-        }
-
-        private void C2_BackColorChanged(object sender, EventArgs e)
-        {
-            e2.BackColor = C2.BackColor;
-        }
-
-        private void C3_BackColorChanged(object sender, EventArgs e)
-        {
-            e3.BackColor = C3.BackColor;
-        }
-
-        private void C4_BackColorChanged(object sender, EventArgs e)
-        {
-            e4.BackColor = C4.BackColor;
-        }
-
-        private void C5_BackColorChanged(object sender, EventArgs e)
-        {
-            e5.BackColor = C5.BackColor;
-        }
-
-        private void C6_BackColorChanged(object sender, EventArgs e)
-        {
-            e6.BackColor = C6.BackColor;
-        }
-
-        private void C7_BackColorChanged(object sender, EventArgs e)
-        {
-            e7.BackColor = C7.BackColor;
-        }
-
-        private void C8_BackColorChanged(object sender, EventArgs e)
-        {
-            e8.BackColor = C8.BackColor;
-        }
-
-        private void C9_BackColorChanged(object sender, EventArgs e)
-        {
-            e9.BackColor = C9.BackColor;
-        }
-
-
-        private void e1_BackColorChanged(object sender, EventArgs e)
-        {
-            C1.BackColor = e1.BackColor;
-        }
-
-        private void e2_BackColorChanged(object sender, EventArgs e)
-        {
-            C2.BackColor = e2.BackColor;
-        }
-
-        private void e3_BackColorChanged(object sender, EventArgs e)
-        {
-            C3.BackColor = e3.BackColor;
-        }
-
-        private void e4_BackColorChanged(object sender, EventArgs e)
-        {
-            C4.BackColor = e4.BackColor;
-        }
-
-        private void e5_BackColorChanged(object sender, EventArgs e)
-        {
-            C5.BackColor = e5.BackColor;
-        }
-
-        private void e6_BackColorChanged(object sender, EventArgs e)
-        {
-            C6.BackColor = e6.BackColor;
-        }
-
-        private void e7_BackColorChanged(object sender, EventArgs e)
-        {
-            C7.BackColor = e7.BackColor;
-        }
-
-        private void e8_BackColorChanged(object sender, EventArgs e)
-        {
-            C8.BackColor = e8.BackColor;
-        }
-
-        private void e9_BackColorChanged(object sender, EventArgs e)
-        {
-            C9.BackColor = e9.BackColor;
-        }
-
-        private void easy_activetitle_BackColorChanged(object sender, EventArgs e)
-        {
-            TActive.BackColor = easy_activetitle.BackColor;
-        }
-
-        private void easy_inactivetitle_BackColorChanged(object sender, EventArgs e)
-        {
-            TInactive.BackColor = easy_inactivetitle.BackColor;
-        }
 
         private void Button8_Click(object sender, EventArgs e)
         {
@@ -819,31 +656,12 @@ namespace WinPaletter
             Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 5000);
         }
 
-        private void easy_appmode_light_CheckedChanged(object sender, EventArgs e)
-        {
-            AppMode_Toggle.Checked = !((UI.WP.RadioImage)sender).Checked;
-        }
-
-        private void easy_winmode_light_CheckedChanged(object sender, EventArgs e)
-        {
-            WinMode_Toggle.Checked = !((UI.WP.RadioImage)sender).Checked;
-        }
-
-        private void easy_opaque_CheckedChanged(object sender, EventArgs e)
-        {
-            Transparency_Toggle.Checked = !((UI.WP.RadioImage)sender).Checked;
-        }
-
-        private void easy_nocolortitle_CheckedChanged(object sender, EventArgs e)
-        {
-            ShowAccentOnTitlebarAndBorders_Toggle.Checked = !((UI.WP.RadioImage)sender).Checked;
-        }
-
         private void windowsDesktop1_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
         {
             if (e.PropertyName.ToLower() == nameof(windowsDesktop1.DarkMode_App).ToLower())
             {
-                AppMode_Toggle.Checked = !AppMode_Toggle.Checked;
+                appmode_light.Checked = !appmode_light.Checked;
+                appmode_dark.Checked = !appmode_light.Checked;
             }
 
             else if (e.PropertyName.ToLower() == nameof(windowsDesktop1.TitlebarColor_Active).ToLower() || e.PropertyName.ToLower() == nameof(windowsDesktop1.TitlebarColor_Inactive).ToLower())
@@ -855,11 +673,9 @@ namespace WinPaletter
                     if (AdvancedMode)
                     {
                         CList.Add(TActive, [nameof(TActive.BackColor)]);
-                        CList.Add(easy_activetitle, [nameof(easy_activetitle.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(easy_activetitle, [nameof(easy_activetitle.BackColor)]);
                         CList.Add(TActive, [nameof(TActive.BackColor)]);
                     }
                 }
@@ -868,11 +684,9 @@ namespace WinPaletter
                     if (AdvancedMode)
                     {
                         CList.Add(TInactive, [nameof(TInactive.BackColor)]);
-                        CList.Add(easy_inactivetitle, [nameof(easy_inactivetitle.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(easy_inactivetitle, [nameof(easy_inactivetitle.BackColor)]);
                         CList.Add(TInactive, [nameof(TInactive.BackColor)]);
                     }
                 }
@@ -891,18 +705,16 @@ namespace WinPaletter
             {
                 Dictionary<Control, string[]> CList = [];
 
-                if (WinMode_Toggle.Checked)
+                if (winmode_dark.Checked)
                 {
                     CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color1)]);
 
                     if (AdvancedMode)
                     {
                         CList.Add(C1, [nameof(C1.BackColor)]);
-                        CList.Add(e1, [nameof(e1.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e1, [nameof(e1.BackColor)]);
                         CList.Add(C1, [nameof(C1.BackColor)]);
                     }
                 }
@@ -913,11 +725,9 @@ namespace WinPaletter
                     if (AdvancedMode)
                     {
                         CList.Add(C2, [nameof(C2.BackColor)]);
-                        CList.Add(e2, [nameof(e2.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e2, [nameof(e2.BackColor)]);
                         CList.Add(C2, [nameof(C2.BackColor)]);
                     }
                 }
@@ -939,11 +749,9 @@ namespace WinPaletter
                 if (AdvancedMode)
                 {
                     CList.Add(C1, [nameof(C1.BackColor)]);
-                    CList.Add(e1, [nameof(e1.BackColor)]);
                 }
                 else
                 {
-                    CList.Add(e1, [nameof(e1.BackColor)]);
                     CList.Add(C1, [nameof(C1.BackColor)]);
                 }
 
@@ -961,18 +769,16 @@ namespace WinPaletter
             {
                 Dictionary<Control, string[]> CList = [];
 
-                if (WinMode_Toggle.Checked)
+                if (winmode_dark.Checked)
                 {
                     CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color3)]);
 
                     if (AdvancedMode)
                     {
                         CList.Add(C3, [nameof(C3.BackColor)]);
-                        CList.Add(e3, [nameof(e3.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e3, [nameof(e3.BackColor)]);
                         CList.Add(C3, [nameof(C3.BackColor)]);
                     }
                 }
@@ -983,11 +789,9 @@ namespace WinPaletter
                     if (AdvancedMode)
                     {
                         CList.Add(C4, [nameof(C4.BackColor)]);
-                        CList.Add(e4, [nameof(e4.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e4, [nameof(e4.BackColor)]);
                         CList.Add(C4, [nameof(C4.BackColor)]);
                     }
                 }
@@ -1009,11 +813,9 @@ namespace WinPaletter
                 if (AdvancedMode)
                 {
                     CList.Add(C5, [nameof(C5.BackColor)]);
-                    CList.Add(e5, [nameof(e5.BackColor)]);
                 }
                 else
                 {
-                    CList.Add(e5, [nameof(e5.BackColor)]);
                     CList.Add(C5, [nameof(C5.BackColor)]);
                 }
 
@@ -1031,18 +833,16 @@ namespace WinPaletter
             {
                 Dictionary<Control, string[]> CList = [];
 
-                if (WinMode_Toggle.Checked)
+                if (winmode_dark.Checked)
                 {
                     CList.Add(windowsDesktop1, [nameof(windowsDesktop1.Color2)]);
 
                     if (AdvancedMode)
                     {
                         CList.Add(C2, [nameof(C2.BackColor)]);
-                        CList.Add(e2, [nameof(e2.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e2, [nameof(e2.BackColor)]);
                         CList.Add(C2, [nameof(C2.BackColor)]);
                     }
                 }
@@ -1053,11 +853,9 @@ namespace WinPaletter
                     if (AdvancedMode)
                     {
                         CList.Add(C1, [nameof(C1.BackColor)]);
-                        CList.Add(e1, [nameof(e1.BackColor)]);
                     }
                     else
                     {
-                        CList.Add(e1, [nameof(e1.BackColor)]);
                         CList.Add(C1, [nameof(C1.BackColor)]);
                     }
                 }
@@ -1075,7 +873,7 @@ namespace WinPaletter
 
         private void easy_generator_Click(object sender, EventArgs e)
         {
-            HSL mainHSL = easy_activetitle.BackColor.ToHSL();
+            HSL mainHSL = TActive.BackColor.ToHSL();
 
             HSL hsl1 = mainHSL + new HSL(8, 0f, -0.1294118f);
             HSL hsl2 = mainHSL + new HSL(-14, 0f, 0.3901961f);
@@ -1120,27 +918,149 @@ namespace WinPaletter
                 }
             }
         }
-
+   
         private void theme_aero_CheckedChanged(object sender, EventArgs e)
         {
-            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+            windowsDesktop1.VisualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
         }
 
         private void theme_aerolite_CheckedChanged(object sender, EventArgs e)
         {
-            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.AeroLite;
+            windowsDesktop1.VisualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite;
 
-            alertBox1.Visible = theme_aerolite.Checked && AppMode_Toggle.Checked;
+            alertBox1.Visible = theme_aerolite.Checked && winmode_dark.Checked;
         }
 
-        private void Win11Colors_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Win10xColors_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Diagnostics.Process.Start(Links.Wiki.Win10xColors);
         }
 
-        private void theme_skip_CheckedChanged(object sender, EventArgs e)
+        private void winmode_dark_CheckedChanged(object sender, EventArgs e)
         {
-            windowsDesktop1.Windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+            if (IsShown)
+            {
+                windowsDesktop1.DarkMode_Win = (sender as UI.WP.RadioImage).Checked;
+                UpdateLegends();
+            }
+        }
+
+        private void winmode_light_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsShown)
+            {
+                windowsDesktop1.DarkMode_Win = !(sender as UI.WP.RadioImage).Checked;
+                UpdateLegends();
+            }
+        }
+
+        private void appmode_light_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsShown)
+            {
+                windowsDesktop1.DarkMode_App = !(sender as UI.WP.RadioImage).Checked;
+                UpdateLegends();
+            }
+        }
+
+        private void appmode_dark_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsShown)
+            {
+                windowsDesktop1.DarkMode_App = (sender as UI.WP.RadioImage).Checked;
+                UpdateLegends();
+            }
+        }
+
+        private void TActive_BackColorChanged(object sender, EventArgs e)
+        {
+            //logonui_screen.BackColor = (sender as ColorItem).BackColor;
+        }
+
+        private void radioImage1_CheckedChanged(object sender, EventArgs e)
+        {
+            windowsDesktop1.VisualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
+
+            groupBox4.Visible = (sender as UI.WP.RadioImage).Checked;
+        }
+
+        private void VS_Browse_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new() { FileName = VS_textbox.Text, Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK) VS_textbox.Text = dlg.FileName;
+            }
+        }
+
+        private void VS_textbox_TextChanged(object sender, EventArgs e)
+        {
+            VS_ColorsList.Items.Clear();
+            VS_SizesList.Items.Clear();
+
+            string currentVS = UxTheme.GetCurrentVS().Item1;
+
+            if (System.IO.File.Exists(VS_textbox.Text))
+            {
+                setVS(VS_textbox.Text);
+            }
+        }
+
+        void setVS(string theme)
+        {
+            VS_ColorsList.Items.Clear();
+            VS_SizesList.Items.Clear();
+
+            if (System.IO.File.Exists(theme))
+            {
+                try
+                {
+                    using (libmsstyle.VisualStyle vs = new(theme))
+                    {
+                        foreach (libmsstyle.StyleClass @class in vs.Classes.Values)
+                        {
+                            if (@class.ClassName.StartsWith("colorvariant.", StringComparison.OrdinalIgnoreCase))
+                            {
+                                VS_ColorsList.Items.Add(@class.ClassName.Remove(0, "colorvariant.".Count()));
+                                if (VS_ColorsList.Items.Count > 0) VS_ColorsList.SelectedIndex = 0; else VS_ColorsList.SelectedIndex = -1;
+                            }
+                            else if (@class.ClassName.StartsWith("sizevariant.", StringComparison.OrdinalIgnoreCase) && @class.ClassName.ToLower() != "sizevariant.default")
+                            {
+                                VS_SizesList.Items.Add(@class.ClassName.Remove(0, "sizevariant.".Count()));
+                                if (VS_SizesList.Items.Count > 0) VS_SizesList.SelectedIndex = 0; else VS_SizesList.SelectedIndex = -1;
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                    {
+                        System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                        theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
+                    }
+
+                    if (System.IO.File.Exists(theme))
+                    {
+                        using (VisualStyleFile vs = new(theme))
+                        {
+                            try
+                            {
+                                foreach (VisualStyleScheme x in vs.ColorSchemes) VS_ColorsList.Items.Add(x.Name);
+                                foreach (VisualStyleSize x in vs.Sizes) VS_SizesList.Items.Add(x.DisplayName);
+                            }
+                            catch { } // Couldn't load visual styles File, so no scheme will be added
+
+                            if (VS_ColorsList.Items.Count > 0) VS_ColorsList.SelectedIndex = 0; else VS_ColorsList.SelectedIndex = -1;
+                            if (VS_SizesList.Items.Count > 0) VS_SizesList.SelectedIndex = 0; else VS_SizesList.SelectedIndex = -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            VS_textbox.Text = SysPaths.AeroMSSTYLES;
         }
     }
 }

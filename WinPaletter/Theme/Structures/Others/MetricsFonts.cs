@@ -242,25 +242,25 @@ namespace WinPaletter.Theme.Structures
                     switch (Program.WindowStyle)
                     {
                         case WindowStyle.W12:
-                            _vs = Program.TM.VisualStyles_12;
+                            _vs = Program.TM.Windows12.VisualStyles;
                             break;
                         case WindowStyle.W11:
-                            _vs = Program.TM.VisualStyles_11;
+                            _vs = Program.TM.Windows11.VisualStyles;
                             break;
                         case WindowStyle.W10:
-                            _vs = Program.TM.VisualStyles_10;
+                            _vs = Program.TM.Windows10.VisualStyles;
                             break;
                         case WindowStyle.W81:
-                            _vs = Program.TM.VisualStyles_81;
+                            _vs = Program.TM.Windows81.VisualStyles;
                             break;
                         case WindowStyle.W7:
-                            _vs = Program.TM.VisualStyles_7;
+                            _vs = Program.TM.Windows7.VisualStyles;
                             break;
                         case WindowStyle.WVista:
-                            _vs = Program.TM.VisualStyles_Vista;
+                            _vs = Program.TM.WindowsVista.VisualStyles;
                             break;
                         case WindowStyle.WXP:
-                            _vs = Program.TM.VisualStyles_XP;
+                            _vs = Program.TM.WindowsXP.VisualStyles;
                             break;
                     }
                 }

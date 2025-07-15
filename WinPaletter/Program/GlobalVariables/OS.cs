@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter.GlobalVariables
 {
@@ -87,6 +88,31 @@ namespace WinPaletter.GlobalVariables
                 else if (WXP) { return Program.Lang.Strings.Windows.WXP; }
                 else { return Program.Lang.Strings.Windows.Undefined; }
             }
+        }
+
+        /// <summary>
+        /// Retrieves the name of the operating system corresponding to the specified window style.
+        /// </summary>
+        /// <remarks>This method maps specific window styles to their corresponding operating system
+        /// names. It is useful for  identifying the OS based on UI characteristics or predefined styles.</remarks>
+        /// <param name="windowStyle">The <see cref="WindowStyle"/> value representing the style of the window.</param>
+        /// <returns>A <see cref="string"/> containing the name of the operating system associated with the specified  <paramref
+        /// name="windowStyle"/>. If the style is not recognized, returns a string indicating an undefined operating
+        /// system.</returns>
+        public static string GetName(WindowStyle windowStyle)
+        {
+            return windowStyle switch
+            {
+                PreviewHelpers.WindowStyle.W12 => Program.Lang.Strings.Windows.W12,
+                PreviewHelpers.WindowStyle.W11 => Program.Lang.Strings.Windows.W11,
+                PreviewHelpers.WindowStyle.W10 => Program.Lang.Strings.Windows.W10,
+                PreviewHelpers.WindowStyle.W81 => Program.Lang.Strings.Windows.W81,
+                PreviewHelpers.WindowStyle.W8 => Program.Lang.Strings.Windows.W8,
+                PreviewHelpers.WindowStyle.W7 => Program.Lang.Strings.Windows.W7,
+                PreviewHelpers.WindowStyle.WVista => Program.Lang.Strings.Windows.WVista,
+                PreviewHelpers.WindowStyle.WXP => Program.Lang.Strings.Windows.WXP,
+                _ => Program.Lang.Strings.Windows.Undefined,
+            };
         }
 
         /// <summary>

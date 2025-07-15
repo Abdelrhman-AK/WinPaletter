@@ -14,7 +14,6 @@
                 public string Disabled_Apply_1 { get; set; } = "To apply it, open Settings > Aspects control and make this aspect checked, or disable the main toggle of aspects control";
                 public string Info { get; set; } = "Theme info";
                 public string Icons { get; set; } = "Windows Icons";
-                public string VisualStyles { get; set; } = "Visual Styles";
                 public string WinTheme { get; set; } = "{0} theme";
                 public string ClassicColors { get; set; } = "Classic colors";
                 public string LockScreen { get; set; } = "Lock screen";

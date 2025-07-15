@@ -478,75 +478,47 @@ namespace WinPaletter.Templates
         }
         private VisualStylesRes _resVS = null;
 
-        private Theme.Structures.Windows10x.Themes Windows_10x_Theme
+        private Theme.Structures.VisualStyles.DefaultVisualStyles VisualStyles
         {
-            get => _windows_10x_Theme;
+            get => _visualStyles;
             set
             {
-                if (value != _windows_10x_Theme || ForceRefresh)
+                if (value != _visualStyles || ForceRefresh)
                 {
-                    _windows_10x_Theme = value;
+                    _visualStyles = value;
                     SetTheme();
                 }
             }
         }
-        private Theme.Structures.Windows10x.Themes _windows_10x_Theme = Theme.Structures.Windows10x.Themes.Aero;
+        private Theme.Structures.VisualStyles.DefaultVisualStyles _visualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
+   
+        private string VisualStylesPath
+        {
+            get => _visualStylesPath;
+            set
+            {
+                if (value != _visualStylesPath || ForceRefresh)
+                {
+                    _visualStylesPath = value;
+                    SetTheme();
+                }
+            }
+        }
+        private string _visualStylesPath;
 
-        private Theme.Structures.Windows7.Themes Windows_7_8_Theme
+        private string VisualStylesColor
         {
-            get => _windows_7_8_Theme;
+            get => _visualStylesColor;
             set
             {
-                if (value != _windows_7_8_Theme || ForceRefresh)
+                if (value != _visualStylesColor || ForceRefresh)
                 {
-                    _windows_7_8_Theme = value;
+                    _visualStylesColor = value;
                     SetTheme();
                 }
             }
         }
-        private Theme.Structures.Windows7.Themes _windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
-
-        private Theme.Structures.WindowsXP.Themes WindowsXPTheme
-        {
-            get => _windowsXPTheme;
-            set
-            {
-                if (value != _windowsXPTheme || ForceRefresh)
-                {
-                    _windowsXPTheme = value;
-                    SetTheme();
-                }
-            }
-        }
-        private Theme.Structures.WindowsXP.Themes _windowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaBlue;
-
-        private string WindowsXPThemePath
-        {
-            get => _windowsXPThemePath;
-            set
-            {
-                if (value != _windowsXPThemePath || ForceRefresh)
-                {
-                    _windowsXPThemePath = value;
-                    SetTheme();
-                }
-            }
-        }
-        private string _windowsXPThemePath;
-
-        private string WindowsXPThemeColorScheme
-        {
-            get => _windowsXPThemeColorScheme;
-            set
-            {
-                if (value != _windowsXPThemeColorScheme || ForceRefresh)
-                {
-                    _windowsXPThemeColorScheme = value;
-                    SetTheme();
-                }
-            }
-        }
-        private string _windowsXPThemeColorScheme;
+        private string _visualStylesColor;
 
 
         private WindowStyle _windowStyle = WindowStyle.W11;
@@ -1364,7 +1336,7 @@ namespace WinPaletter.Templates
             {
                 Preview = Preview_Enum.WXP;
 
-                if (_windowsXPTheme != Theme.Structures.WindowsXP.Themes.Classic && Program.ClassicThemeRunning)
+                if (_visualStyles != Theme.Structures.VisualStyles.DefaultVisualStyles.Classic && Program.ClassicThemeRunning)
                 {
                     WXP_Alert.Visible = true;
                     WXP_Alert.Size = new(510, 70);
@@ -1375,10 +1347,10 @@ namespace WinPaletter.Templates
                     WXP_Alert.Visible = false;
                 }
 
-                switch (_windowsXPTheme)
+                switch (_visualStyles)
                 {
-                    case Theme.Structures.WindowsXP.Themes.LunaOliveGreen:
-                        {
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.LunaOlive:
+                    {
                             msstyles = SysPaths.MSTheme_Luna_theme;
                             System.IO.File.WriteAllText(SysPaths.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
                             resVS = new(msstyles);
@@ -1386,7 +1358,7 @@ namespace WinPaletter.Templates
                             break;
                         }
 
-                    case Theme.Structures.WindowsXP.Themes.LunaSilver:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.LunaSilver:
                         {
                             msstyles = SysPaths.MSTheme_Luna_theme;
                             System.IO.File.WriteAllText(SysPaths.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
@@ -1395,18 +1367,18 @@ namespace WinPaletter.Templates
                             break;
                         }
 
-                    case Theme.Structures.WindowsXP.Themes.Custom:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.Custom:
                         {
-                            if (System.IO.File.Exists(_windowsXPThemePath))
+                            if (System.IO.File.Exists(_visualStylesPath))
                             {
-                                if (System.IO.Path.GetExtension(_windowsXPThemePath) == ".theme")
+                                if (System.IO.Path.GetExtension(_visualStylesPath) == ".theme")
                                 {
-                                    msstyles = _windowsXPThemePath;
+                                    msstyles = _visualStylesPath;
                                 }
-                                else if (System.IO.Path.GetExtension(_windowsXPThemePath) == ".msstyles")
+                                else if (System.IO.Path.GetExtension(_visualStylesPath) == ".msstyles")
                                 {
                                     msstyles = SysPaths.MSTheme_Temp;
-                                    System.IO.File.WriteAllText(SysPaths.MSTheme_Temp, $"[VisualStyles]{"\r\n"}Path={_windowsXPThemePath}{"\r\n"}ColorStyle={_windowsXPThemeColorScheme}{"\r\n"}Size=NormalSize");
+                                    System.IO.File.WriteAllText(SysPaths.MSTheme_Temp, $"[VisualStyles]{"\r\n"}Path={_visualStylesPath}{"\r\n"}ColorStyle={_visualStylesColor}{"\r\n"}Size=NormalSize");
                                 }
                             }
                             Classic = false;
@@ -1414,7 +1386,7 @@ namespace WinPaletter.Templates
                             break;
                         }
 
-                    case Theme.Structures.WindowsXP.Themes.Classic:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.Classic:
                         {
                             Classic = true;
                             break;
@@ -1430,7 +1402,7 @@ namespace WinPaletter.Templates
                         }
                 }
 
-                if (_windowsXPTheme != Theme.Structures.WindowsXP.Themes.Classic)
+                if (_visualStyles != Theme.Structures.VisualStyles.DefaultVisualStyles.Classic)
                 {
                     if (System.IO.File.Exists(msstyles))
                     {
@@ -1452,30 +1424,30 @@ namespace WinPaletter.Templates
             {
                 WinVista = _windowStyle == WindowStyle.WVista;
 
-                switch (_windows_7_8_Theme)
+                switch (_visualStyles)
                 {
-                    case Theme.Structures.Windows7.Themes.AeroOpaque:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.AeroOpaque:
                         {
                             Preview = (WindowStyle != WindowStyle.W8 && WindowStyle != WindowStyle.W81) ? Preview_Enum.W7Opaque : Preview_Enum.W8Lite;
                             Classic = false;
                             break;
                         }
 
-                    case Theme.Structures.Windows7.Themes.AeroLite:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite:
                         {
                             Preview = (WindowStyle == WindowStyle.W8 || WindowStyle == WindowStyle.W81) ? Preview_Enum.W8Lite : Preview_Enum.W7Opaque;
                             Classic = false;
                             break;
                         }
 
-                    case Theme.Structures.Windows7.Themes.Basic:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.Basic:
                         {
                             Preview = Preview_Enum.W7Basic;
                             Classic = false;
                             break;
                         }
 
-                    case Theme.Structures.Windows7.Themes.Classic:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.Classic:
                         {
                             Classic = true;
                             break;
@@ -1493,15 +1465,9 @@ namespace WinPaletter.Templates
 
             else if (_windowStyle == WindowStyle.W10 || _windowStyle == WindowStyle.W11 || _windowStyle == WindowStyle.W12)
             {
-                switch (_windows_10x_Theme)
+                switch (_visualStyles)
                 {
-                    case Theme.Structures.Windows10x.Themes.Aero:
-                        {
-                            Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10 : Preview_Enum.W11;
-                            break;
-                        }
-
-                    case Theme.Structures.Windows10x.Themes.AeroLite:
+                    case Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite:
                         {
                             Preview = _windowStyle == WindowStyle.W10 ? Preview_Enum.W10Lite : Preview_Enum.W11Lite;
                             break;
@@ -1535,7 +1501,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Active = HookedTM.Windows11.Titlebar_Active;
                 TitlebarColor_Inactive = HookedTM.Windows11.Titlebar_Inactive;
                 TitlebarColor_Enabled = HookedTM.Windows11.ApplyAccentOnTitlebars;
-                Windows_10x_Theme = HookedTM.Windows11.Theme;
+                VisualStyles = HookedTM.Windows11.VisualStyles.VisualStylesType;
             }
 
             else if (WindowStyle == WindowStyle.W10)
@@ -1545,7 +1511,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Active = HookedTM.Windows10.Titlebar_Active;
                 TitlebarColor_Inactive = HookedTM.Windows10.Titlebar_Inactive;
                 TitlebarColor_Enabled = HookedTM.Windows10.ApplyAccentOnTitlebars;
-                Windows_10x_Theme = HookedTM.Windows10.Theme;
+                VisualStyles = HookedTM.Windows10.VisualStyles.VisualStylesType;
             }
 
             else if (WindowStyle == WindowStyle.W81)
@@ -1558,7 +1524,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Inactive = HookedTM.Windows81.ColorizationColor;
                 Win7ColorBal = HookedTM.Windows81.ColorizationColorBalance;
                 TitlebarColor_Enabled = true;
-                Windows_7_8_Theme = HookedTM.Windows81.Theme;
+                VisualStyles = HookedTM.Windows81.VisualStyles.VisualStylesType;
             }
 
             else if (WindowStyle == WindowStyle.W8)
@@ -1571,7 +1537,7 @@ namespace WinPaletter.Templates
                 TitlebarColor_Inactive = HookedTM.Windows8.ColorizationColor;
                 Win7ColorBal = HookedTM.Windows8.ColorizationColorBalance;
                 TitlebarColor_Enabled = true;
-                Windows_7_8_Theme = HookedTM.Windows8.Theme;
+                VisualStyles = HookedTM.Windows8.VisualStyles.VisualStylesType;
             }
 
             else if (WindowStyle == WindowStyle.W7)
@@ -1585,7 +1551,7 @@ namespace WinPaletter.Templates
                 Win7GlowBal = HookedTM.Windows7.ColorizationAfterglowBalance;
                 Win7Noise = HookedTM.Windows7.ColorizationGlassReflectionIntensity;
                 Win7Alpha = HookedTM.Windows7.ColorizationBlurBalance;
-                Windows_7_8_Theme = HookedTM.Windows7.Theme;
+                VisualStyles = HookedTM.Windows7.VisualStyles.VisualStylesType;
             }
 
             else if (WindowStyle == WindowStyle.WVista)
@@ -1599,14 +1565,14 @@ namespace WinPaletter.Templates
                 Win7GlowBal = 0;
                 Win7Noise = 100f;
                 Win7Alpha = 100 - HookedTM.WindowsVista.Alpha / 255 * 100;
-                Windows_7_8_Theme = HookedTM.WindowsVista.Theme;
+                VisualStyles = HookedTM.WindowsVista.VisualStyles.VisualStylesType;
             }
 
             else if (WindowStyle == WindowStyle.WXP)
             {
-                WindowsXPThemePath = HookedTM.WindowsXP.ThemeFile;
-                WindowsXPThemeColorScheme = HookedTM.WindowsXP.ColorScheme;
-                WindowsXPTheme = HookedTM.WindowsXP.Theme;
+                VisualStylesPath = HookedTM.WindowsXP.VisualStyles.ThemeFile;
+                VisualStylesColor = HookedTM.WindowsXP.VisualStyles.ColorScheme;
+                VisualStyles = HookedTM.WindowsXP.VisualStyles.VisualStylesType;
             }
 
             LoadMetrics(TM);

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.CMD;
+using static WinPaletter.WinTerminal.Types;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -33,38 +34,17 @@ namespace WinPaletter.Theme.Structures
         public int ColorizationGlassReflectionIntensity = 0;
 
         /// <summary>
-        /// WinTheme used for Windows 7
-        /// <code>
-        /// Aero
-        /// AeroOpaque
-        /// Basic
-        /// Classic
-        /// </code>
+        /// Represents the visual styles configuration for the application.
         /// </summary>
-        public Themes Theme = Themes.Aero;
+        /// <remarks>This field provides access to the visual styles settings, which can be used to
+        /// customize the appearance of user interface. It is initialized with default
+        /// values.</remarks>
+        public VisualStyles VisualStyles = new();
 
         /// <summary>
         /// Creates Windows7 data structure with default values
         /// </summary>
         public Windows7() { }
-
-        /// <summary>
-        /// Enumeration of Windows stock themes.
-        /// <br><b>It can be used in Windows81 and Windows Vista structures.</b></br>
-        /// </summary>
-        public enum Themes
-        {
-            /// <summary>Default Windows theme with transparency</summary>
-            Aero,
-            /// <summary>Accessibility theme for Windows 8/8.1/10/11</summary>
-            AeroLite,
-            /// <summary>Default Windows 7 theme but opaque.</summary>
-            AeroOpaque,
-            /// <summary>Windows basic theme.</summary>
-            Basic,
-            /// <summary>Classic theme. Applicable to Windows 7 only.</summary>
-            Classic
-        }
 
         /// <summary>
         /// Loads Windows7 data from registry
@@ -76,70 +56,27 @@ namespace WinPaletter.Theme.Structures
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows7", string.Empty, @default.Enabled));
 
-            if (OS.W7 | OS.W8x)
-            {
-                object y;
+            object y;
 
-                y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
-                ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
+            ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
 
-                y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", @default.ColorizationColorBalance);
-                ColorizationColorBalance = Convert.ToInt32(y);
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", @default.ColorizationColorBalance);
+            ColorizationColorBalance = Convert.ToInt32(y);
 
-                if (OS.W7)
-                {
-                    y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", @default.ColorizationAfterglow.ToArgb());
-                    ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", @default.ColorizationAfterglow.ToArgb());
+            ColorizationAfterglow = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
 
-                    y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", @default.ColorizationAfterglowBalance);
-                    ColorizationAfterglowBalance = Convert.ToInt32(y);
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", @default.ColorizationAfterglowBalance);
+            ColorizationAfterglowBalance = Convert.ToInt32(y);
 
-                    y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", @default.ColorizationBlurBalance);
-                    ColorizationBlurBalance = Convert.ToInt32(y);
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationBlurBalance", @default.ColorizationBlurBalance);
+            ColorizationBlurBalance = Convert.ToInt32(y);
 
-                    y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", @default.ColorizationGlassReflectionIntensity);
-                    ColorizationGlassReflectionIntensity = Convert.ToInt32(y);
+            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationGlassReflectionIntensity", @default.ColorizationGlassReflectionIntensity);
+            ColorizationGlassReflectionIntensity = Convert.ToInt32(y);
 
-                    bool Opaque = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false));
-
-                    bool Classic = false;
-
-                    try
-                    {
-                        string stringThemeName = UxTheme.GetCurrentVS().Item1;
-                        Classic = string.IsNullOrWhiteSpace(stringThemeName.ToString()) | !System.IO.File.Exists(stringThemeName.ToString());
-                    }
-                    catch // Couldn't get current visual styles, lets assume that it is not classic.
-                    {
-                        Classic = false;
-                    }
-
-                    if (Classic)
-                    {
-                        Theme = Themes.Classic;
-                    }
-                    else if (DWMAPI.IsCompositionEnabled())
-                    {
-                        Theme = !Opaque ? Themes.Aero : Themes.AeroOpaque;
-                    }
-                    else
-                    {
-                        Theme = Themes.Basic;
-                    }
-
-                }
-            }
-
-            else
-            {
-                ColorizationColor = @default.ColorizationColor;
-                ColorizationColorBalance = @default.ColorizationColorBalance;
-                ColorizationAfterglow = @default.ColorizationAfterglow;
-                ColorizationAfterglowBalance = @default.ColorizationAfterglowBalance;
-                ColorizationBlurBalance = @default.ColorizationBlurBalance;
-                ColorizationGlassReflectionIntensity = @default.ColorizationGlassReflectionIntensity;
-                Theme = @default.Theme;
-            }
+            VisualStyles.Load("7", @default.VisualStyles);
         }
 
         /// <summary>
@@ -155,48 +92,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
-                switch (Theme)
-                {
-                    case Themes.Aero:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
-                            break;
-                        }
-
-                    case Themes.AeroOpaque:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 2);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 1);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 1);
-                            break;
-                        }
-
-                    case Themes.Basic:
-                        {
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", 1);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", 0);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", 0);
-                            break;
-                        }
-
-                    case Themes.Classic:
-                        {
-                            UxTheme.EnableTheming(0);
-                            break;
-                        }
-
-                }
+               VisualStyles.Apply("7", treeView);
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglow", ColorizationAfterglow.ToArgb());
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationAfterglowBalance", ColorizationAfterglowBalance);

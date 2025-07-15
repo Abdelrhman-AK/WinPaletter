@@ -16,9 +16,6 @@ namespace WinPaletter.Theme.Structures
         /// <summary> Controls if Windows 10x colors editing is enabled or not </summary> 
         public bool Enabled = true;
 
-        /// <summary>WinTheme used for Windows 10/11</summary>
-        public Themes Theme = Windows10x.Themes.Skip;
-
         /// <summary>Color index 0 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
         public Color Color_Index0 = Color.FromArgb(153, 235, 255);
 
@@ -80,6 +77,14 @@ namespace WinPaletter.Theme.Structures
         public bool TB_Blur = true;
 
         /// <summary>
+        /// Represents the visual styles configuration for the application.
+        /// </summary>
+        /// <remarks>This field provides access to the visual styles settings, which can be used to
+        /// customize the appearance of user interface. It is initialized with default
+        /// values.</remarks>
+        public VisualStyles VisualStyles = new();
+
+        /// <summary>
         /// Creates a new Windows10x data structure with default values
         /// </summary>
         public Windows10x() { }
@@ -98,24 +103,6 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// WinTheme used for Windows 10/11
-        /// <code>
-        /// Aero
-        /// AeroLite
-        /// Skip
-        /// </code>
-        /// </summary>
-        public enum Themes
-        {
-            /// <summary>Default Windows theme with transparency</summary>
-            Aero,
-            /// <summary>Accessibility theme for Windows 8/8.1/10/11</summary>
-            AeroLite,
-            /// <summary> Skip setting theme </summary>
-            Skip
-        }
-
-        /// <summary>
         /// Loads Windows10x data from registry
         /// </summary>
         /// <param name="default">Default Windows10x data structure</param>
@@ -126,24 +113,14 @@ namespace WinPaletter.Theme.Structures
 
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled));
 
-            if (OS.W12 || OS.W11 || OS.W10)
-            {
-                if (Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", false)))
-                {
-                    Theme = Themes.Skip;
-                }
-                else
-                {
-                    string stringThemeName = NativeMethods.UxTheme.GetCurrentVS().Item1;
-                    Theme = stringThemeName.ToString().Split('\\').Last().ToLower() == "aerolite.msstyles" || !System.IO.File.Exists(stringThemeName) ? Themes.AeroLite : Themes.Aero;
-                }
+            VisualStyles.Load(edition, @default.VisualStyles);
 
-                byte[] x;
-                object y;
+            byte[] x;
+            object y;
 
-                byte[] DefColorsBytes =
-                    [
-                        @default.Color_Index0.R, @default.Color_Index0.G, @default.Color_Index0.B, 255,
+            byte[] DefColorsBytes =
+                [
+                    @default.Color_Index0.R, @default.Color_Index0.G, @default.Color_Index0.B, 255,
                         @default.Color_Index1.R, @default.Color_Index1.G, @default.Color_Index1.B, 255,
                         @default.Color_Index2.R, @default.Color_Index2.G, @default.Color_Index2.B, 255,
                         @default.Color_Index3.R, @default.Color_Index3.G, @default.Color_Index3.B, 255,
@@ -151,87 +128,65 @@ namespace WinPaletter.Theme.Structures
                         @default.Color_Index5.R, @default.Color_Index5.G, @default.Color_Index5.B, 255,
                         @default.Color_Index6.R, @default.Color_Index6.G, @default.Color_Index6.B, 255,
                         @default.Color_Index7.R, @default.Color_Index7.G, @default.Color_Index7.B, 255
-                    ];
+                ];
 
-                x = (byte[])GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);
+            x = (byte[])GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);
 
-                // Use 255 as alpha value for all colors as it is not used in Windows 10/11
-                Color_Index0 = Color.FromArgb(/*x[3]*/ 255, x[0], x[1], x[2]);
-                Color_Index1 = Color.FromArgb(/*x[7]*/ 255, x[4], x[5], x[6]);
-                Color_Index2 = Color.FromArgb(/*x[11]*/ 255, x[8], x[9], x[10]);
-                Color_Index3 = Color.FromArgb(/*x[15]*/ 255, x[12], x[13], x[14]);
-                Color_Index4 = Color.FromArgb(/*x[19]*/ 255, x[16], x[17], x[18]);
-                Color_Index5 = Color.FromArgb(/*x[23]*/ 255, x[20], x[21], x[22]);
-                Color_Index6 = Color.FromArgb(/*x[27]*/ 255, x[24], x[25], x[26]);
-                Color_Index7 = Color.FromArgb(/*x[31]*/ 255, x[28], x[29], x[30]);
+            // Use 255 as alpha value for all colors as it is not used in Windows 10/11
+            Color_Index0 = Color.FromArgb(/*x[3]*/ 255, x[0], x[1], x[2]);
+            Color_Index1 = Color.FromArgb(/*x[7]*/ 255, x[4], x[5], x[6]);
+            Color_Index2 = Color.FromArgb(/*x[11]*/ 255, x[8], x[9], x[10]);
+            Color_Index3 = Color.FromArgb(/*x[15]*/ 255, x[12], x[13], x[14]);
+            Color_Index4 = Color.FromArgb(/*x[19]*/ 255, x[16], x[17], x[18]);
+            Color_Index5 = Color.FromArgb(/*x[23]*/ 255, x[20], x[21], x[22]);
+            Color_Index6 = Color.FromArgb(/*x[27]*/ 255, x[24], x[25], x[26]);
+            Color_Index7 = Color.FromArgb(/*x[31]*/ 255, x[28], x[29], x[30]);
 
-                // Some colors are saved reversed in registry
-                y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse().ToArgb());
-                StartMenu_Accent = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            // Some colors are saved reversed in registry
+            y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse().ToArgb());
+            StartMenu_Accent = Color.FromArgb(Convert.ToInt32(y)).Reverse();
 
-                y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", @default.Titlebar_Active.Reverse().ToArgb());
-                Titlebar_Active = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", @default.Titlebar_Active.Reverse().ToArgb());
+            Titlebar_Active = Color.FromArgb(Convert.ToInt32(y)).Reverse();
 
-                y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", @default.Titlebar_Active.Reverse().ToArgb());
-                Titlebar_Active = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", @default.Titlebar_Active.Reverse().ToArgb());
+            Titlebar_Active = Color.FromArgb(Convert.ToInt32(y)).Reverse();
 
-                y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", @default.Titlebar_Inactive.Reverse().ToArgb());
-                Titlebar_Inactive = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            y = GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", @default.Titlebar_Inactive.Reverse().ToArgb());
+            Titlebar_Inactive = Color.FromArgb(Convert.ToInt32(y)).Reverse();
 
-                WinMode_Light = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", @default.WinMode_Light));
-                AppMode_Light = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", @default.AppMode_Light));
-                Transparency = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", @default.Transparency));
-                IncreaseTBTransparency = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", @default.IncreaseTBTransparency));
+            WinMode_Light = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", @default.WinMode_Light));
+            AppMode_Light = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", @default.AppMode_Light));
+            Transparency = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", @default.Transparency));
+            IncreaseTBTransparency = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", @default.IncreaseTBTransparency));
 
-                switch (GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", @default.ApplyAccentOnTaskbar))
-                {
-                    case 0:
-                        {
-                            ApplyAccentOnTaskbar = AccentTaskbarLevels.None;
-                            break;
-                        }
-                    case 1:
-                        {
-                            ApplyAccentOnTaskbar = AccentTaskbarLevels.Taskbar_Start_AC;
-                            break;
-                        }
-                    case 2:
-                        {
-                            ApplyAccentOnTaskbar = AccentTaskbarLevels.Taskbar;
-                            break;
-                        }
-
-                    default:
-                        {
-                            ApplyAccentOnTaskbar = AccentTaskbarLevels.None;
-                            break;
-                        }
-                }
-
-                ApplyAccentOnTitlebars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", @default.ApplyAccentOnTitlebars));
-                TB_Blur = !(Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (!@default.TB_Blur) ? 1 : 0)) == 1);
-            }
-
-            else
+            switch (GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", @default.ApplyAccentOnTaskbar))
             {
-                Theme = @default.Theme;
-                Color_Index0 = @default.Color_Index0;
-                Color_Index1 = @default.Color_Index1;
-                Color_Index2 = @default.Color_Index2;
-                Color_Index3 = @default.Color_Index3;
-                Color_Index4 = @default.Color_Index4;
-                Color_Index5 = @default.Color_Index5;
-                Color_Index6 = @default.Color_Index6;
-                StartMenu_Accent = @default.StartMenu_Accent;
-                Titlebar_Active = @default.Titlebar_Active;
-                Titlebar_Inactive = @default.Titlebar_Inactive;
-                WinMode_Light = @default.WinMode_Light;
-                AppMode_Light = @default.AppMode_Light;
-                Transparency = @default.Transparency;
-                ApplyAccentOnTaskbar = @default.ApplyAccentOnTaskbar;
-                ApplyAccentOnTitlebars = @default.ApplyAccentOnTitlebars;
-                IncreaseTBTransparency = @default.IncreaseTBTransparency;
+                case 0:
+                    {
+                        ApplyAccentOnTaskbar = AccentTaskbarLevels.None;
+                        break;
+                    }
+                case 1:
+                    {
+                        ApplyAccentOnTaskbar = AccentTaskbarLevels.Taskbar_Start_AC;
+                        break;
+                    }
+                case 2:
+                    {
+                        ApplyAccentOnTaskbar = AccentTaskbarLevels.Taskbar;
+                        break;
+                    }
+
+                default:
+                    {
+                        ApplyAccentOnTaskbar = AccentTaskbarLevels.None;
+                        break;
+                    }
             }
+
+            ApplyAccentOnTitlebars = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", @default.ApplyAccentOnTitlebars));
+            TB_Blur = !(Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (!@default.TB_Blur) ? 1 : 0)) == 1);
         }
 
         /// <summary>
@@ -245,48 +200,11 @@ namespace WinPaletter.Theme.Structures
 
             SaveToggleState(edition, treeView);
 
-            if (Enabled)
+            bool canApply = (OS.W12 && Program.WindowStyle == PreviewHelpers.WindowStyle.W12) || (OS.W11 && Program.WindowStyle == PreviewHelpers.WindowStyle.W11) || (OS.W10 && Program.WindowStyle == PreviewHelpers.WindowStyle.W10);
+
+            if (Enabled && canApply)
             {
-                switch (Theme)
-                {
-                    case Themes.Aero:
-                        {
-                            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", false);
-
-                            UxTheme.EnableTheming(1);
-
-                            if (System.IO.Path.GetFileNameWithoutExtension(Program.FirstVisualStyles).ToLower() != "aerolite")
-                            {
-                                UxTheme.SetSystemVisualStyle(Program.FirstVisualStyles, "NormalColor", "NormalSize", 0);
-                            }
-                            else
-                            {
-                                UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles", "NormalColor", "NormalSize", 0);
-                            }
-
-                            break;
-                        }
-
-                    case Themes.AeroLite:
-                        {
-                            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", false);
-
-                            UxTheme.EnableTheming(1);
-                            UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Aero\AeroLite.msstyles", "NormalColor", "NormalSize", 0);
-
-                            DelKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
-
-                            break;
-                        }
-
-                    default:
-                        {
-                            EditReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", "Theme_Skip", true);
-                            break;
-                        }
-                }
+                VisualStyles.Apply(edition, treeView);
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 

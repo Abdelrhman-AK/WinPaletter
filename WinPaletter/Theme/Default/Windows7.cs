@@ -28,7 +28,6 @@ namespace WinPaletter.Theme
             Win7.ColorizationAfterglowBalance = 43;
             Win7.ColorizationBlurBalance = 49;
             Win7.ColorizationGlassReflectionIntensity = 0;
-            Win7.Theme = Structures.Windows7.Themes.Aero;
 
             ref Structures.Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;

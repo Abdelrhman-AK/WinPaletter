@@ -18,7 +18,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary> 
         /// Controls if VisualStyles editing is enabled or not 
         /// </summary> 
-        public bool Enabled = false;
+        public bool Enabled = true;
 
         /// <summary>
         /// Visual styles File used when 'WinTheme' selected as 'Custom'
@@ -46,6 +46,65 @@ namespace WinPaletter.Theme.Structures
         public bool OverrideSizes = false;
 
         /// <summary>
+        /// Represents the default visual styles available for user interface themes.
+        /// </summary>
+        /// <remarks>This enumeration defines a set of predefined visual styles that can be used to
+        /// configure the appearance of a user interface. Each value corresponds to a specific theme or style commonly
+        /// associated with Windows operating systems.</remarks>
+        public enum DefaultVisualStyles
+        {
+            /// <summary>
+            /// Applies a custom visual style, allowing the user to specify their own theme file.
+            /// </summary>
+            Custom,
+
+            /// <summary>
+            /// Applies the Aero visual style, which is the default for Windows Vista and later versions.
+            /// </summary>
+            Aero,
+
+            /// <summary>
+            /// Represents the AeroLite theme, typically used for accessibility in Windows 8 and later versions.
+            /// </summary>
+            AeroLite,
+
+            /// <summary>
+            /// Applies the Aero visual style, but with an opaque appearance.
+            /// </summary>
+            AeroOpaque,
+
+            /// <summary>
+            /// Applies the Basic visual style, which is a simplified theme available in Windows.
+            /// </summary>
+            Basic,
+
+            /// <summary>
+            /// Represents the LunaBlue visual styles, which is the default theme for Windows XP.
+            /// </summary>
+            LunaBlue,
+
+            /// <summary>
+            /// Represents the LunaSilver class, which is a theme for Windows XP.
+            /// entity.
+            LunaSilver,
+
+            /// <summary>
+            /// Represents the LunaOlive class, which is a theme for Windows XP.
+            /// </summary>
+            LunaOlive,
+
+            /// <summary>
+            /// Applies classic style.
+            /// </summary>
+            Classic,
+        }
+
+        /// <summary>
+        /// Specifies the type of visual styles to be applied.
+        /// </summary>
+        public DefaultVisualStyles VisualStylesType = DefaultVisualStyles.Aero;
+
+        /// <summary>
         /// Creates VisualStyles data structure with default values
         /// </summary>
         public VisualStyles() { }
@@ -59,7 +118,7 @@ namespace WinPaletter.Theme.Structures
         {
             Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} Visual Styles using UxTheme.GetCurrentVS");
 
-            Enabled = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\VisualStyles\\{edition}", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, @default.Enabled));
 
             Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
             string vsFile = ThemeTuple.Item1;
@@ -70,8 +129,55 @@ namespace WinPaletter.Theme.Structures
             ColorScheme = colorName.ToString();
             SizeScheme = sizeName.ToString();
 
-            OverrideColors = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\VisualStyles\\{edition}", "OverrideColors", @default.OverrideColors));
-            OverrideSizes = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\VisualStyles\\{edition}", "OverrideSizes", @default.OverrideSizes));
+            OverrideColors = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", @default.OverrideColors));
+            OverrideSizes = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", @default.OverrideSizes));
+
+            if (ThemeFile.ToLower() == SysPaths.LunaMSSTYLES.ToLower())
+            {
+                if (colorName.ToString().ToLower() == "normalcolor")
+                {
+                    VisualStylesType = DefaultVisualStyles.LunaBlue;
+                }
+                else if (colorName.ToString().ToLower() == "homestead")
+                {
+                    VisualStylesType = DefaultVisualStyles.LunaOlive;
+                }
+                else if (colorName.ToString().ToLower() == "metallic")
+                {
+                    VisualStylesType = DefaultVisualStyles.LunaSilver;
+                }
+                else
+                {
+                    VisualStylesType = DefaultVisualStyles.LunaBlue;
+                }
+            }
+            else if (ThemeFile.ToLower() == SysPaths.AeroLiteMSSTYLES.ToLower())
+            {
+                VisualStylesType = DefaultVisualStyles.AeroLite;
+            }
+            else if (ThemeFile.ToLower() == SysPaths.AeroMSSTYLES.ToLower())
+            {
+                if (DWMAPI.IsCompositionEnabled())
+                {
+                    VisualStylesType = !Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false)) ? DefaultVisualStyles.Aero : DefaultVisualStyles.AeroOpaque;
+                }
+                else
+                {
+                    VisualStylesType = DefaultVisualStyles.Basic;
+                }
+            }
+            else if (File.Exists(ThemeFile) && IsCorrectVSPlatform(ThemeFile).Key)
+            {
+                VisualStylesType = DefaultVisualStyles.Custom;
+            }
+            else if (string.IsNullOrEmpty(ThemeFile))
+            {
+                VisualStylesType = DefaultVisualStyles.Classic;
+            }
+            else
+            {
+                VisualStylesType = Program.WindowStyle == WindowStyle.WXP ? DefaultVisualStyles.LunaBlue : DefaultVisualStyles.Aero;
+            }
         }
 
         /// <summary>
@@ -87,24 +193,80 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
-                if (File.Exists(ThemeFile) && Path.GetExtension(ThemeFile) == ".theme" | Path.GetExtension(ThemeFile) == ".msstyles")
+                if (VisualStylesType == DefaultVisualStyles.Custom)
                 {
-                    if (Path.GetExtension(ThemeFile) == ".theme") ThemeFile = getMsstylesFile(ThemeFile);
-                    if (!isCorrectVSPlatform(ThemeFile)) ThemeFile = UxTheme.GetCurrentVS().Item1;
+                    if (File.Exists(ThemeFile) && Path.GetExtension(ThemeFile) == ".theme" | Path.GetExtension(ThemeFile) == ".msstyles")
+                    {
+                        if (Path.GetExtension(ThemeFile) == ".theme") ThemeFile = getMsstylesFile(ThemeFile);
+                        if (!IsCorrectVSPlatform(ThemeFile).Key) ThemeFile = UxTheme.GetCurrentVS().Item1;
 
-                    UxTheme.EnableTheming(1);
-                    UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, SizeScheme, 0, treeView);
+                        UxTheme.EnableTheming(1);
+                        UxTheme.SetSystemVisualStyle(ThemeFile, ColorScheme, SizeScheme, 0, treeView);
 
-                    // Don't use ThemeFile as it may be a .theme File
-                    // Visual styles File is already set by UxTheme.SetSystemVisualStyle, get it again by using GetCurrentVS method to get correct msstyles File
-                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", UxTheme.GetCurrentVS().Item1, RegistryValueKind.String);
+                        // Don't use ThemeFile as it may be a .theme File
+                        // Visual styles File is already set by UxTheme.SetSystemVisualStyle, get it again by using GetCurrentVS method to get correct msstyles File
+                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", UxTheme.GetCurrentVS().Item1, RegistryValueKind.String);
 
-                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ColorScheme, RegistryValueKind.String);
-                    EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "SizeName", SizeScheme, RegistryValueKind.String);
+                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ColorScheme, RegistryValueKind.String);
+                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "SizeName", SizeScheme, RegistryValueKind.String);
+                    }
                 }
 
-                EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\VisualStyles\\{edition}", "OverrideColors", OverrideColors);
-                EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\VisualStyles\\{edition}", "OverrideSizes", OverrideSizes);
+                else if (VisualStylesType is DefaultVisualStyles.Aero or DefaultVisualStyles.AeroOpaque or DefaultVisualStyles.Basic)
+                {
+                    UxTheme.EnableTheming(1);
+                    UxTheme.SetSystemVisualStyle(SysPaths.AeroMSSTYLES, "NormalColor", "NormalSize", 0, treeView);
+
+                    var (policy, composition, opaqueBlend) = VisualStylesType switch
+                    {
+                        DefaultVisualStyles.Aero => (2, 1, 0),
+                        DefaultVisualStyles.AeroOpaque => (2, 1, 1),
+                        DefaultVisualStyles.Basic => (1, 0, 0),
+                        _ => (0, 0, 0) // fallback, shouldn't occur
+                    };
+
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", policy);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", composition);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", opaqueBlend);
+                }
+
+                else if (VisualStylesType is DefaultVisualStyles.AeroLite)
+                {
+                    UxTheme.EnableTheming(1);
+                    UxTheme.SetSystemVisualStyle(SysPaths.AeroLiteMSSTYLES, "NormalColor", "NormalSize", 0);
+
+                    DelKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
+
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
+                }
+
+                else if (VisualStylesType is DefaultVisualStyles.Classic)
+                {
+                    UxTheme.EnableTheming(0);
+                }
+
+                else if (VisualStylesType is DefaultVisualStyles.LunaBlue)
+                {
+                    UxTheme.EnableTheming(1);
+                    UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", "NormalColor", "NormalSize", 0);
+                }
+
+                else if (VisualStylesType is DefaultVisualStyles.LunaOlive)
+                {
+                    UxTheme.EnableTheming(1);
+                    UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", "HomeStead", "NormalSize", 0);
+                }
+
+                else if (VisualStylesType is DefaultVisualStyles.LunaSilver)
+                {
+                    UxTheme.EnableTheming(1);
+                    UxTheme.SetSystemVisualStyle($@"{SysPaths.Windows}\resources\Themes\Luna\Luna.msstyles", "Metallic", "NormalSize", 0);
+                }
+
+
+                EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", OverrideColors);
+                EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", OverrideSizes);
             }
         }
 
@@ -160,44 +322,49 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Check if VisualStyles File is compatible with current Windows version
+        /// Determines whether the specified visual style file matches the expected platform for the current
+        /// application.
         /// </summary>
-        /// <param name="theme"></param>
-        /// <returns></returns>
-        private bool isCorrectVSPlatform(string theme)
+        /// <remarks>This method checks the platform compatibility of the provided visual style file
+        /// against the application's expected platform. The returned string is the OS version that the visual style was designed for.</remarks>
+        public KeyValuePair<bool, string> IsCorrectVSPlatform(string theme)
         {
             try
             {
                 using (libmsstyle.VisualStyle vs = new(theme))
                 {
-                    // Let's assume that W12 is identical to Win11 until official release!
+                    // Let's assume that W12 is identical to Win11 until official release !
                     if (vs.Platform == libmsstyle.Platform.Win11 && Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12)
                     {
-                        return false;
+                        return new(false, Program.Lang.Strings.Windows.W11);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Win10 && Program.WindowStyle != WindowStyle.W10)
                     {
-                        return false;
+                        return new(false, Program.Lang.Strings.Windows.W10);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Win81 && Program.WindowStyle != WindowStyle.W81)
                     {
-                        return false;
+                        return new(false, Program.Lang.Strings.Windows.W81);
+                    }
+                    else if (vs.Platform == libmsstyle.Platform.Win8 && Program.WindowStyle != WindowStyle.W8)
+                    {
+                        return new(false, Program.Lang.Strings.Windows.W8);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Win7 && Program.WindowStyle != WindowStyle.W7)
                     {
-                        return false;
+                        return new(false, Program.Lang.Strings.Windows.W7);
                     }
                     else if (vs.Platform == libmsstyle.Platform.Vista && Program.WindowStyle != WindowStyle.WVista)
                     {
-                        return false;
+                        return new(false, Program.Lang.Strings.Windows.WVista);
                     }
                     else
                     {
-                        return true;
+                        return new(true, string.Empty);
                     }
                 }
             }
-            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows XP theme
+            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows WXP theme
             {
                 try
                 {
@@ -211,20 +378,28 @@ namespace WinPaletter.Theme.Structures
                     {
                         using (VisualStyleFile vs = new(theme))
                         {
-                            return Program.WindowStyle == WindowStyle.WXP;
+                            if (Program.WindowStyle != WindowStyle.WXP)
+                            {
+                                return new(false, Program.Lang.Strings.Windows.WXP);
+                            }
+                            else
+                            {
+                                return new(true, string.Empty);
+                            }
                         }
                     }
                     else
                     {
-                        return false;
+                        return new(false, string.Empty);
                     }
                 }
                 catch // Couldn't load visual styles by any method.
                 {
-                    return false;
+                    return new(false, string.Empty);
                 }
             }
         }
+
 
         /// <summary>
         /// Saves VisualStyles toggle state into registry
@@ -233,7 +408,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(string edition, TreeView treeView = null)
         {
-            EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\VisualStyles\\{edition}", string.Empty, Enabled);
+            EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two VisualStyles structures are equal</summary>

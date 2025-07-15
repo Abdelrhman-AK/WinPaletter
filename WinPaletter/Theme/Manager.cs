@@ -53,14 +53,6 @@ namespace WinPaletter.Theme
                                 Windows7.Load(@default.Windows7);
                                 WindowsVista.Load(@default.WindowsVista);
                                 WindowsXP.Load(@default.WindowsXP);
-                                VisualStyles_12.Load("12", @default.VisualStyles_12);
-                                VisualStyles_11.Load("11", @default.VisualStyles_11);
-                                VisualStyles_10.Load("10", @default.VisualStyles_10);
-                                VisualStyles_81.Load("8.1", @default.VisualStyles_81);
-                                VisualStyles_8.Load("8", @default.VisualStyles_8);
-                                VisualStyles_7.Load("7", @default.VisualStyles_7);
-                                VisualStyles_Vista.Load("Vista", @default.VisualStyles_Vista);
-                                VisualStyles_XP.Load("XP", @default.VisualStyles_Vista);
                                 LogonUI12.Load("12", @default.LogonUI12);
                                 LogonUI11.Load("11", @default.LogonUI11);
                                 LogonUI10.Load("10", @default.LogonUI10);

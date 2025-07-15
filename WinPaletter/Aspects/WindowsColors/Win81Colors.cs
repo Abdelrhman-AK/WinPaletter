@@ -17,9 +17,6 @@ namespace WinPaletter
     {
         bool canChangeColor = true;
 
-        public int LogonUI_ID;
-        public int StartBackground_ID;
-
         public Win81Colors()
         {
             InitializeComponent();
@@ -82,11 +79,6 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void ModeSwitched(object sender, EventArgs e)
-        {
-            tablessControl1.SelectedIndex = AdvancedMode ? 0 : 1;
-        }
-
         private void GeneratePalette_Image(object sender, EventArgs e)
         {
             Forms.PaletteGenerateFromImage.ShowDialog();
@@ -106,6 +98,7 @@ namespace WinPaletter
                 GeneratePalette = true,
                 GenerateMSTheme = false,
                 Import_preset = false,
+                CanSwitchMode = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
@@ -114,12 +107,11 @@ namespace WinPaletter
                 OnImportFromCurrentApplied = LoadFromCurrent,
                 OnGeneratePaletteFromImage = GeneratePalette_Image,
                 OnGeneratePaletteFromColor = GeneratePalette_Color,
-
-                OnModeAdvanced = ModeSwitched,
-                OnModeSimple = ModeSwitched,
             };
 
             windowsDesktop1.BackgroundImage = Program.Wallpaper;
+
+            img20.Image = Program.Wallpaper.Resize(40, 40);
 
             LoadData(data);
 
@@ -139,27 +131,116 @@ namespace WinPaletter
             accent_pick.BackColor = TM.Windows81.AccentColor;
             personalcls_background_pick.BackColor = TM.Windows81.PersonalColors_Background;
             personalcolor_accent_pick.BackColor = TM.Windows81.PersonalColors_Accent;
-
-            switch (TM.Windows81.Theme)
+         
+            switch (TM.Windows81.Start)
             {
-                case Theme.Structures.Windows7.Themes.Aero:
+                case 1:
                     {
-                        theme_aero.Checked = true;
+                        img1.Checked = true;
+                        break;
+                    }
+                case 2:
+                    {
+                        img2.Checked = true;
+                        break;
+                    }
+                case 3:
+                    {
+                        img3.Checked = true;
+                        break;
+                    }
+                case 4:
+                    {
+                        img4.Checked = true;
+                        break;
+                    }
+                case 5:
+                    {
+                        img5.Checked = true;
+                        break;
+                    }
+                case 6:
+                    {
+                        img6.Checked = true;
+                        break;
+                    }
+                case 7:
+                    {
+                        img7.Checked = true;
+                        break;
+                    }
+                case 8:
+                    {
+                        img8.Checked = true;
+                        break;
+                    }
+                case 9:
+                    {
+                        img9.Checked = true;
+                        break;
+                    }
+                case 10:
+                    {
+                        img10.Checked = true;
+                        break;
+                    }
+                case 11:
+                    {
+                        img11.Checked = true;
+                        break;
+                    }
+                case 12:
+                    {
+                        img12.Checked = true;
+                        break;
+                    }
+                case 13:
+                    {
+                        img13.Checked = true;
+                        break;
+                    }
+                case 14:
+                    {
+                        img14.Checked = true;
+                        break;
+                    }
+                case 15:
+                    {
+                        img15.Checked = true;
+                        break;
+                    }
+                case 16:
+                    {
+                        img16.Checked = true;
+                        break;
+                    }
+                case 17:
+                    {
+                        img17.Checked = true;
+                        break;
+                    }
+                case 18:
+                    {
+                        img18.Checked = true;
+                        break;
+                    }
+                case 19:
+                    {
+                        img19.Checked = true;
+                        break;
+                    }
+                case 20:
+                    {
+                        img20.Checked = true;
                         break;
                     }
 
-                case Theme.Structures.Windows7.Themes.AeroLite:
+                default:
                     {
-                        theme_aerolite.Checked = true;
+                        img1.Checked = true;
                         break;
                     }
             }
-
-            StartBackground_ID = TM.Windows81.Start;
-
-            ApplyMetroStartToButton(StartBackground_ID, personalcls_background_pick.BackColor, start);
-            ApplyMetroStartToButton(StartBackground_ID, personalcls_background_pick.BackColor, easy_start);
-            easy_start.Image = easy_start.Image.Resize(32, 32);
 
             windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
@@ -178,16 +259,26 @@ namespace WinPaletter
             TM.Windows81.PersonalColors_Background = personalcls_background_pick.BackColor;
             TM.Windows81.PersonalColors_Accent = personalcolor_accent_pick.BackColor;
 
-            TM.Windows81.Start = StartBackground_ID;
-
-            if (theme_aero.Checked)
-            {
-                TM.Windows81.Theme = Theme.Structures.Windows7.Themes.Aero;
-            }
-            else if (theme_aerolite.Checked)
-            {
-                TM.Windows81.Theme = Theme.Structures.Windows7.Themes.AeroLite;
-            }
+            TM.Windows81.Start = img1.Checked ? 1 :
+                                img2.Checked ? 2 :
+                                img3.Checked ? 3 :
+                                img4.Checked ? 4 :
+                                img5.Checked ? 5 :
+                                img6.Checked ? 6 :
+                                img7.Checked ? 7 :
+                                img8.Checked ? 8 :
+                                img9.Checked ? 9 :
+                                img10.Checked ? 10 :
+                                img11.Checked ? 11 :
+                                img12.Checked ? 12 :
+                                img13.Checked ? 13 :
+                                img14.Checked ? 14 :
+                                img15.Checked ? 15 :
+                                img16.Checked ? 16 :
+                                img17.Checked ? 17 :
+                                img18.Checked ? 18 :
+                                img19.Checked ? 19 : 
+                                img20.Checked ? 20 : 1;
         }
 
         public void ApplyDefaultTMValues()
@@ -200,8 +291,6 @@ namespace WinPaletter
                 accent_pick.DefaultBackColor = DefTM.Windows81.AccentColor;
                 personalcls_background_pick.DefaultBackColor = DefTM.Windows81.PersonalColors_Background;
                 personalcolor_accent_pick.DefaultBackColor = DefTM.Windows81.PersonalColors_Accent;
-                easy_background.DefaultBackColor = DefTM.Windows81.PersonalColors_Background;
-                easy_foreground.DefaultBackColor = DefTM.Windows81.PersonalColors_Accent;
             }
         }
 
@@ -213,334 +302,6 @@ namespace WinPaletter
                 {
                     using (Bitmap bmp_thumbnail = new(windowsDesktop1.ToBitmap())) { bmp_thumbnail?.Save(dlg.FileName); }
                 }
-            }
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            groupBox3.Visible = checkBox2.Checked;
-        }
-
-        private void colorItem1_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem2_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem3_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem4_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem5_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem8_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem6_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem7_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem16_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem14_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem15_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem13_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem12_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem10_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem11_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorItem9_Click(object sender, EventArgs e)
-        {
-            canChangeColor = false;
-
-            HSL hSL = ((ColorItem)sender).BackColor.ToHSL();
-            colorBarX1.Value = hSL.H;
-            colorBarX2.Value = (int)(hSL.S * 100);
-            colorBarX3.Value = (int)(hSL.L * 100);
-
-            ColorizationColorBalance_bar.Value = 85;
-
-            canChangeColor = true;
-            ColorizationColor_pick.BackColor = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-            windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-            windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
-        }
-
-        private void colorBarX_ValueChanged(object sender, EventArgs e)
-        {
-            HSL hSL = new()
-            {
-                H = colorBarX1.Value,
-                S = colorBarX2.Value / 100f,
-                L = colorBarX3.Value / 100f
-            };
-
-            if (canChangeColor)
-            {
-                ColorizationColor_pick.BackColor = hSL.ToRGB();
-                windowsDesktop1.TitlebarColor_Active = hSL.ToRGB();
-                windowsDesktop1.AfterGlowColor_Active = hSL.ToRGB();
-                windowsDesktop1.TitlebarColor_Inactive = hSL.ToRGB();
-                windowsDesktop1.AfterGlowColor_Inactive = hSL.ToRGB();
             }
         }
 
@@ -666,43 +427,23 @@ namespace WinPaletter
             }
         }
 
-        private void theme_aero_CheckedChanged_1(object sender, EventArgs e)
-        {
-            if (IsShown && theme_aero.Checked)
-            {
-                RefreshDWM();
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
-            }
-        }
+        //private void theme_aero_CheckedChanged_1(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_aero.Checked)
+        //    {
+        //        RefreshDWM();
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
+        //    }
+        //}
 
-        private void theme_aerolite_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown && theme_aerolite.Checked)
-            {
-                RefreshDWM();
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroLite;
-            }
-        }
-
-        private void start_Click(object sender, EventArgs e)
-        {
-            if (Forms.Start81Selector.ShowDialog() == DialogResult.OK)
-            {
-                ApplyMetroStartToButton(StartBackground_ID, personalcls_background_pick.BackColor, start);
-                ApplyMetroStartToButton(StartBackground_ID, personalcls_background_pick.BackColor, easy_start);
-                easy_start.Image = easy_start.Image.Resize(32, 32);
-            }
-        }
-
-        private void personalcolor_accent_pick_BackColorChanged(object sender, EventArgs e)
-        {
-            easy_foreground.BackColor = personalcolor_accent_pick.BackColor;
-        }
-
-        private void personalcls_background_pick_BackColorChanged(object sender, EventArgs e)
-        {
-            easy_background.BackColor = personalcls_background_pick.BackColor;
-        }
+        //private void theme_aerolite_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_aerolite.Checked)
+        //    {
+        //        RefreshDWM();
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroLite;
+        //    }
+        //}
 
         private void personalcolor_accent_pick_Click(object sender, EventArgs e)
         {
@@ -843,6 +584,12 @@ namespace WinPaletter
         private void Win81Colors_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Diagnostics.Process.Start(Links.Wiki.Win81Colors);
+        }
+
+        private void personalcls_background_pick_BackColorChanged(object sender, EventArgs e)
+        {
+            img19.Image?.Dispose();
+            img19.Image = (sender as UI.Controllers.ColorItem).BackColor.ToBitmap(new Size(40, 40));
         }
     }
 }

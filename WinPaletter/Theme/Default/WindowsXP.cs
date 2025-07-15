@@ -22,7 +22,7 @@ namespace WinPaletter.Theme
 
             ref Structures.WindowsXP WinXP = ref TM.WindowsXP;
             WinXP.Enabled = true;
-            WinXP.Theme = Structures.WindowsXP.Themes.LunaBlue;
+            WinXP.VisualStyles.VisualStylesType = Structures.VisualStyles.DefaultVisualStyles.LunaBlue;
 
             ref Structures.LogonUIXP logonUI = ref TM.LogonUIXP;
             logonUI.Enabled = true;

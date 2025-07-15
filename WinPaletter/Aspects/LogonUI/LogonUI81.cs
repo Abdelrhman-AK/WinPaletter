@@ -13,7 +13,7 @@ namespace WinPaletter
 
     public partial class LogonUI81
     {
-        public int ID;
+        private int ID;
 
         public LogonUI81()
         {
@@ -112,8 +112,6 @@ namespace WinPaletter
 
             LoadData(data);
 
-            ID = 0;
-
             LoadFromTM(Program.TM);
             ApplyPreview();
             Icon = FormsExtensions.Icon<LogonUI>();
@@ -171,15 +169,40 @@ namespace WinPaletter
                         break;
                     }
             }
-
-            ID = TM.LogonUI81.LockScreenSystemID;
-
+          
             TextBox1.Text = TM.LogonUI81.ImagePath;
             color_pick.BackColor = TM.LogonUI81.Color;
             pnl_preview.BackColor = TM.LogonUI81.Color;
             CheckBox8.Checked = TM.LogonUI81.Grayscale;
             CheckBox7.Checked = TM.LogonUI81.Blur;
             CheckBox6.Checked = TM.LogonUI81.Noise;
+
+            ID = TM.LogonUI81.LockScreenSystemID;
+
+            switch (ID)
+            {
+                case 0:
+                    img1.Checked = true;
+                    break;
+                case 1:
+                    img2.Checked = true;
+                    break;
+                case 2:
+                    img3.Checked = true;
+                    break;
+                case 3:
+                    img4.Checked = true;
+                    break;
+                case 4:
+                    img5.Checked = true;
+                    break;
+                case 5:
+                    img6.Checked = true;
+                    break;
+                default:
+                    img1.Checked = true;
+                    break;
+            }
 
             trackBarX1.Value = TM.LogonUI81.Blur_Intensity;
             trackBarX2.Value = TM.LogonUI81.Noise_Intensity;
@@ -215,7 +238,12 @@ namespace WinPaletter
             if (RadioButton4.Checked)
                 TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.CustomImage;
 
-            TM.LogonUI81.LockScreenSystemID = ID;
+            TM.LogonUI81.LockScreenSystemID = img1.Checked ? 0 :
+                                              img2.Checked ? 1 :
+                                              img3.Checked ? 2 :
+                                              img4.Checked ? 3 :
+                                              img5.Checked ? 4 :
+                                              img6.Checked ? 5 : 0;
 
             TM.LogonUI81.ImagePath = TextBox1.Text;
             TM.LogonUI81.Color = color_pick.BackColor;
@@ -432,14 +460,6 @@ namespace WinPaletter
             CList.Clear();
         }
 
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            if (Forms.LogonUI8_Pics.ShowDialog() == DialogResult.OK)
-            {
-                ApplyPreview();
-            }
-        }
-
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.LogonUI_8x);
@@ -447,12 +467,17 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            if (IsShown & CheckBox7.Checked) pnl_preview.BackgroundImage = ReturnBK();
+            if (IsShown && CheckBox7.Checked) pnl_preview.BackgroundImage = ReturnBK();
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            if (IsShown & CheckBox6.Checked) pnl_preview.BackgroundImage = ReturnBK();
+            if (IsShown && CheckBox6.Checked) pnl_preview.BackgroundImage = ReturnBK();
+        }
+
+        private void imgX_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsShown && (sender as UI.WP.RadioImage).Checked) pnl_preview.BackgroundImage = ReturnBK();
         }
     }
 }

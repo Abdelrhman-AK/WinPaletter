@@ -139,12 +139,10 @@
             this.windowsDesktop1.Win7Noise = 100F;
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
-            this.windowsDesktop1.Windows_10x_Theme = WinPaletter.Theme.Structures.Windows10x.Themes.Aero;
-            this.windowsDesktop1.Windows_7_8_Theme = WinPaletter.Theme.Structures.Windows7.Themes.Aero;
+            this.windowsDesktop1.VisualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.WXP;
-            this.windowsDesktop1.WindowsXPTheme = WinPaletter.Theme.Structures.WindowsXP.Themes.LunaBlue;
-            this.windowsDesktop1.WindowsXPThemeColorScheme = null;
-            this.windowsDesktop1.WindowsXPThemePath = null;
+            this.windowsDesktop1.VisualStylesColorScheme = null;
+            this.windowsDesktop1.VisualStylesPath = null;
             this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             // 
@@ -437,7 +435,6 @@
             this.WXP_CustomTheme.Text = "External";
             this.WXP_CustomTheme.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.WXP_CustomTheme.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.WXP_CustomTheme.CheckedChanged += new System.EventHandler(this.WXP_CustomTheme_CheckedChanged);
             // 
             // WXP_Classic
             // 
@@ -454,7 +451,6 @@
             this.WXP_Classic.Text = "Classic";
             this.WXP_Classic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.WXP_Classic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.WXP_Classic.CheckedChanged += new System.EventHandler(this.WXP_Classic_CheckedChanged);
             // 
             // PictureBox6
             // 
@@ -482,7 +478,6 @@
             this.WXP_Luna_Blue.Text = "Luna Blue";
             this.WXP_Luna_Blue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.WXP_Luna_Blue.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.WXP_Luna_Blue.CheckedChanged += new System.EventHandler(this.WXP_Luna_Blue_CheckedChanged);
             // 
             // Label63
             // 
@@ -512,7 +507,6 @@
             this.WXP_Luna_Silver.Text = "Luna Silver";
             this.WXP_Luna_Silver.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.WXP_Luna_Silver.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.WXP_Luna_Silver.CheckedChanged += new System.EventHandler(this.WXP_Luna_Silver_CheckedChanged);
             // 
             // WXP_Luna_OliveGreen
             // 
@@ -529,7 +523,6 @@
             this.WXP_Luna_OliveGreen.Text = "Luna Green";
             this.WXP_Luna_OliveGreen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.WXP_Luna_OliveGreen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.WXP_Luna_OliveGreen.CheckedChanged += new System.EventHandler(this.WXP_Luna_OliveGreen_CheckedChanged);
             // 
             // alertBox2
             // 

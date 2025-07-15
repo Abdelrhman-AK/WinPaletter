@@ -405,14 +405,6 @@ namespace WinPaletter
             CList.Clear();
         }
 
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            if (Forms.LogonUI8_Pics.ShowDialog() == DialogResult.OK)
-            {
-                ApplyPreview();
-            }
-        }
-
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.LogonUI_8x);

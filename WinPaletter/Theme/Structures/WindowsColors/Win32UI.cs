@@ -379,14 +379,14 @@ namespace WinPaletter.Theme.Structures
                 {
                     _vs = Program.WindowStyle switch
                     {
-                        WindowStyle.W12 => Program.TM.VisualStyles_12,
-                        WindowStyle.W11 => Program.TM.VisualStyles_11,
-                        WindowStyle.W10 => Program.TM.VisualStyles_10,
-                        WindowStyle.W81 => Program.TM.VisualStyles_81,
-                        WindowStyle.W7 => Program.TM.VisualStyles_7,
-                        WindowStyle.WVista => Program.TM.VisualStyles_Vista,
-                        WindowStyle.WXP => Program.TM.VisualStyles_XP,
-                        _ => Program.TM.VisualStyles_12,
+                        WindowStyle.W12 => Program.TM.Windows12.VisualStyles,
+                        WindowStyle.W11 => Program.TM.Windows11.VisualStyles,
+                        WindowStyle.W10 => Program.TM.Windows10.VisualStyles,
+                        WindowStyle.W81 => Program.TM.Windows81.VisualStyles,
+                        WindowStyle.W7 => Program.TM.Windows7.VisualStyles,
+                        WindowStyle.WVista => Program.TM.WindowsVista.VisualStyles,
+                        WindowStyle.WXP => Program.TM.WindowsXP.VisualStyles,
+                        _ => Program.TM.Windows12.VisualStyles,
                     };
                 }
 

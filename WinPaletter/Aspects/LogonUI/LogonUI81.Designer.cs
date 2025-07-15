@@ -52,7 +52,12 @@ namespace WinPaletter
             this.pnl_preview = new System.Windows.Forms.Panel();
             this.PictureBox11 = new System.Windows.Forms.PictureBox();
             this.GroupBox2 = new WinPaletter.UI.WP.GroupBox();
-            this.Button3 = new WinPaletter.UI.WP.Button();
+            this.img6 = new WinPaletter.UI.WP.RadioImage();
+            this.img5 = new WinPaletter.UI.WP.RadioImage();
+            this.img1 = new WinPaletter.UI.WP.RadioImage();
+            this.img2 = new WinPaletter.UI.WP.RadioImage();
+            this.img3 = new WinPaletter.UI.WP.RadioImage();
+            this.img4 = new WinPaletter.UI.WP.RadioImage();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.Label1 = new System.Windows.Forms.Label();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
@@ -88,7 +93,7 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.titlebarExtender1.Size = new System.Drawing.Size(964, 52);
+            this.titlebarExtender1.Size = new System.Drawing.Size(1042, 52);
             // 
             // GroupBox3
             // 
@@ -106,9 +111,9 @@ namespace WinPaletter
             this.GroupBox3.Controls.Add(this.CheckBox8);
             this.GroupBox3.Controls.Add(this.CheckBox6);
             this.GroupBox3.Controls.Add(this.PictureBox9);
-            this.GroupBox3.Location = new System.Drawing.Point(9, 259);
+            this.GroupBox3.Location = new System.Drawing.Point(9, 324);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(399, 233);
+            this.GroupBox3.Size = new System.Drawing.Size(477, 233);
             this.GroupBox3.TabIndex = 18;
             // 
             // trackBarX2
@@ -124,7 +129,7 @@ namespace WinPaletter
             this.trackBarX2.Maximum = 100;
             this.trackBarX2.Minimum = 0;
             this.trackBarX2.Name = "trackBarX2";
-            this.trackBarX2.Size = new System.Drawing.Size(352, 25);
+            this.trackBarX2.Size = new System.Drawing.Size(430, 25);
             this.trackBarX2.TabIndex = 120;
             this.trackBarX2.Value = 0;
             this.trackBarX2.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
@@ -148,7 +153,7 @@ namespace WinPaletter
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label2.Location = new System.Drawing.Point(39, 3);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(357, 30);
+            this.Label2.Size = new System.Drawing.Size(435, 30);
             this.Label2.TabIndex = 81;
             this.Label2.Text = "Effects";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -166,7 +171,7 @@ namespace WinPaletter
             this.trackBarX1.Maximum = 40;
             this.trackBarX1.Minimum = 0;
             this.trackBarX1.Name = "trackBarX1";
-            this.trackBarX1.Size = new System.Drawing.Size(350, 25);
+            this.trackBarX1.Size = new System.Drawing.Size(428, 25);
             this.trackBarX1.TabIndex = 119;
             this.trackBarX1.Value = 0;
             this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
@@ -196,7 +201,7 @@ namespace WinPaletter
             "Aero"});
             this.ComboBox1.Location = new System.Drawing.Point(39, 165);
             this.ComboBox1.Name = "ComboBox1";
-            this.ComboBox1.Size = new System.Drawing.Size(352, 26);
+            this.ComboBox1.Size = new System.Drawing.Size(430, 26);
             this.ComboBox1.TabIndex = 85;
             this.ComboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
@@ -209,7 +214,7 @@ namespace WinPaletter
             this.CheckBox7.ForeColor = System.Drawing.Color.White;
             this.CheckBox7.Location = new System.Drawing.Point(39, 70);
             this.CheckBox7.Name = "CheckBox7";
-            this.CheckBox7.Size = new System.Drawing.Size(352, 25);
+            this.CheckBox7.Size = new System.Drawing.Size(430, 25);
             this.CheckBox7.TabIndex = 83;
             this.CheckBox7.Text = "Blurred";
             this.CheckBox7.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox7_CheckedChanged);
@@ -233,7 +238,7 @@ namespace WinPaletter
             this.CheckBox8.ForeColor = System.Drawing.Color.White;
             this.CheckBox8.Location = new System.Drawing.Point(39, 39);
             this.CheckBox8.Name = "CheckBox8";
-            this.CheckBox8.Size = new System.Drawing.Size(352, 25);
+            this.CheckBox8.Size = new System.Drawing.Size(430, 25);
             this.CheckBox8.TabIndex = 82;
             this.CheckBox8.Text = "Gray-scale";
             this.CheckBox8.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox8_CheckedChanged);
@@ -247,7 +252,7 @@ namespace WinPaletter
             this.CheckBox6.ForeColor = System.Drawing.Color.White;
             this.CheckBox6.Location = new System.Drawing.Point(39, 134);
             this.CheckBox6.Name = "CheckBox6";
-            this.CheckBox6.Size = new System.Drawing.Size(350, 25);
+            this.CheckBox6.Size = new System.Drawing.Size(428, 25);
             this.CheckBox6.TabIndex = 84;
             this.CheckBox6.Text = "Noise";
             this.CheckBox6.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox6_CheckedChanged);
@@ -267,7 +272,7 @@ namespace WinPaletter
             this.GroupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox8.Controls.Add(this.pnl_preview);
-            this.GroupBox8.Location = new System.Drawing.Point(415, 58);
+            this.GroupBox8.Location = new System.Drawing.Point(493, 58);
             this.GroupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox8.Name = "GroupBox8";
             this.GroupBox8.Padding = new System.Windows.Forms.Padding(1);
@@ -299,7 +304,12 @@ namespace WinPaletter
             this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.GroupBox2.Controls.Add(this.Button3);
+            this.GroupBox2.Controls.Add(this.img6);
+            this.GroupBox2.Controls.Add(this.img5);
+            this.GroupBox2.Controls.Add(this.img1);
+            this.GroupBox2.Controls.Add(this.img2);
+            this.GroupBox2.Controls.Add(this.img3);
+            this.GroupBox2.Controls.Add(this.img4);
             this.GroupBox2.Controls.Add(this.PictureBox2);
             this.GroupBox2.Controls.Add(this.Label1);
             this.GroupBox2.Controls.Add(this.PictureBox7);
@@ -315,26 +325,104 @@ namespace WinPaletter
             this.GroupBox2.Controls.Add(this.color_pick);
             this.GroupBox2.Location = new System.Drawing.Point(9, 58);
             this.GroupBox2.Name = "GroupBox2";
-            this.GroupBox2.Size = new System.Drawing.Size(399, 195);
+            this.GroupBox2.Size = new System.Drawing.Size(477, 260);
             this.GroupBox2.TabIndex = 17;
             // 
-            // Button3
+            // img6
             // 
-            this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button3.ForeColor = System.Drawing.Color.White;
-            this.Button3.Image = null;
-            this.Button3.ImageGlyph = null;
-            this.Button3.ImageGlyphEnabled = false;
-            this.Button3.Location = new System.Drawing.Point(293, 39);
-            this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(98, 25);
-            this.Button3.TabIndex = 93;
-            this.Button3.Text = "Choose";
-            this.Button3.UseVisualStyleBackColor = false;
-            this.Button3.Click += new System.EventHandler(this.Button3_Click);
+            this.img6.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.img6.Checked = false;
+            this.img6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img6.ForeColor = System.Drawing.Color.White;
+            this.img6.Image = ((System.Drawing.Image)(resources.GetObject("img6.Image")));
+            this.img6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img6.Location = new System.Drawing.Point(373, 70);
+            this.img6.Name = "img6";
+            this.img6.Size = new System.Drawing.Size(60, 60);
+            this.img6.TabIndex = 99;
+            this.img6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.img6.CheckedChanged += new System.EventHandler(this.imgX_CheckedChanged);
+            // 
+            // img5
+            // 
+            this.img5.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.img5.Checked = false;
+            this.img5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img5.ForeColor = System.Drawing.Color.White;
+            this.img5.Image = ((System.Drawing.Image)(resources.GetObject("img5.Image")));
+            this.img5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img5.Location = new System.Drawing.Point(307, 70);
+            this.img5.Name = "img5";
+            this.img5.Size = new System.Drawing.Size(60, 60);
+            this.img5.TabIndex = 98;
+            this.img5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.img5.CheckedChanged += new System.EventHandler(this.imgX_CheckedChanged);
+            // 
+            // img1
+            // 
+            this.img1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.img1.Checked = false;
+            this.img1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img1.ForeColor = System.Drawing.Color.White;
+            this.img1.Image = ((System.Drawing.Image)(resources.GetObject("img1.Image")));
+            this.img1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img1.Location = new System.Drawing.Point(43, 70);
+            this.img1.Name = "img1";
+            this.img1.Size = new System.Drawing.Size(60, 60);
+            this.img1.TabIndex = 94;
+            this.img1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.img1.CheckedChanged += new System.EventHandler(this.imgX_CheckedChanged);
+            // 
+            // img2
+            // 
+            this.img2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.img2.Checked = false;
+            this.img2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img2.ForeColor = System.Drawing.Color.White;
+            this.img2.Image = ((System.Drawing.Image)(resources.GetObject("img2.Image")));
+            this.img2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img2.Location = new System.Drawing.Point(109, 70);
+            this.img2.Name = "img2";
+            this.img2.Size = new System.Drawing.Size(60, 60);
+            this.img2.TabIndex = 95;
+            this.img2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.img2.CheckedChanged += new System.EventHandler(this.imgX_CheckedChanged);
+            // 
+            // img3
+            // 
+            this.img3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.img3.Checked = false;
+            this.img3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img3.ForeColor = System.Drawing.Color.White;
+            this.img3.Image = ((System.Drawing.Image)(resources.GetObject("img3.Image")));
+            this.img3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img3.Location = new System.Drawing.Point(175, 70);
+            this.img3.Name = "img3";
+            this.img3.Size = new System.Drawing.Size(60, 60);
+            this.img3.TabIndex = 96;
+            this.img3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.img3.CheckedChanged += new System.EventHandler(this.imgX_CheckedChanged);
+            // 
+            // img4
+            // 
+            this.img4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.img4.Checked = false;
+            this.img4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.img4.ForeColor = System.Drawing.Color.White;
+            this.img4.Image = ((System.Drawing.Image)(resources.GetObject("img4.Image")));
+            this.img4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img4.Location = new System.Drawing.Point(241, 70);
+            this.img4.Name = "img4";
+            this.img4.Size = new System.Drawing.Size(60, 60);
+            this.img4.TabIndex = 97;
+            this.img4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.img4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.img4.CheckedChanged += new System.EventHandler(this.imgX_CheckedChanged);
             // 
             // PictureBox2
             // 
@@ -355,7 +443,7 @@ namespace WinPaletter
             this.Label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label1.Location = new System.Drawing.Point(39, 3);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(357, 30);
+            this.Label1.Size = new System.Drawing.Size(435, 30);
             this.Label1.TabIndex = 81;
             this.Label1.Text = "Source";
             this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -364,7 +452,7 @@ namespace WinPaletter
             // 
             this.PictureBox7.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox7.Image")));
-            this.PictureBox7.Location = new System.Drawing.Point(8, 101);
+            this.PictureBox7.Location = new System.Drawing.Point(8, 166);
             this.PictureBox7.Name = "PictureBox7";
             this.PictureBox7.Size = new System.Drawing.Size(25, 25);
             this.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -391,7 +479,7 @@ namespace WinPaletter
             this.Button7.Image = null;
             this.Button7.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button7.ImageGlyphEnabled = true;
-            this.Button7.Location = new System.Drawing.Point(356, 163);
+            this.Button7.Location = new System.Drawing.Point(434, 228);
             this.Button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button7.Name = "Button7";
             this.Button7.Size = new System.Drawing.Size(35, 24);
@@ -403,7 +491,7 @@ namespace WinPaletter
             // 
             this.PictureBox6.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox6.Image")));
-            this.PictureBox6.Location = new System.Drawing.Point(8, 132);
+            this.PictureBox6.Location = new System.Drawing.Point(8, 197);
             this.PictureBox6.Name = "PictureBox6";
             this.PictureBox6.Size = new System.Drawing.Size(25, 25);
             this.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -417,9 +505,9 @@ namespace WinPaletter
             this.RadioButton2.Checked = false;
             this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton2.ForeColor = System.Drawing.Color.White;
-            this.RadioButton2.Location = new System.Drawing.Point(39, 70);
+            this.RadioButton2.Location = new System.Drawing.Point(39, 135);
             this.RadioButton2.Name = "RadioButton2";
-            this.RadioButton2.Size = new System.Drawing.Size(352, 25);
+            this.RadioButton2.Size = new System.Drawing.Size(430, 25);
             this.RadioButton2.TabIndex = 83;
             this.RadioButton2.Text = "Current wallpaper";
             this.RadioButton2.CheckedChanged += new WinPaletter.UI.WP.RadioButton.CheckedChangedEventHandler(this.RadioButton2_CheckedChanged);
@@ -433,7 +521,7 @@ namespace WinPaletter
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
             this.RadioButton1.Location = new System.Drawing.Point(39, 39);
             this.RadioButton1.Name = "RadioButton1";
-            this.RadioButton1.Size = new System.Drawing.Size(248, 25);
+            this.RadioButton1.Size = new System.Drawing.Size(430, 25);
             this.RadioButton1.TabIndex = 82;
             this.RadioButton1.Text = "System default";
             this.RadioButton1.CheckedChanged += new WinPaletter.UI.WP.RadioButton.CheckedChangedEventHandler(this.RadioButton1_CheckedChanged);
@@ -442,7 +530,7 @@ namespace WinPaletter
             // 
             this.PictureBox5.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox5.Image")));
-            this.PictureBox5.Location = new System.Drawing.Point(8, 70);
+            this.PictureBox5.Location = new System.Drawing.Point(8, 135);
             this.PictureBox5.Name = "PictureBox5";
             this.PictureBox5.Size = new System.Drawing.Size(25, 25);
             this.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -456,9 +544,9 @@ namespace WinPaletter
             this.RadioButton3.Checked = false;
             this.RadioButton3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton3.ForeColor = System.Drawing.Color.White;
-            this.RadioButton3.Location = new System.Drawing.Point(39, 101);
+            this.RadioButton3.Location = new System.Drawing.Point(39, 166);
             this.RadioButton3.Name = "RadioButton3";
-            this.RadioButton3.Size = new System.Drawing.Size(248, 25);
+            this.RadioButton3.Size = new System.Drawing.Size(326, 25);
             this.RadioButton3.TabIndex = 85;
             this.RadioButton3.Text = "Solid color";
             this.RadioButton3.CheckedChanged += new WinPaletter.UI.WP.RadioButton.CheckedChangedEventHandler(this.RadioButton3_CheckedChanged);
@@ -470,9 +558,9 @@ namespace WinPaletter
             this.RadioButton4.Checked = false;
             this.RadioButton4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton4.ForeColor = System.Drawing.Color.White;
-            this.RadioButton4.Location = new System.Drawing.Point(39, 132);
+            this.RadioButton4.Location = new System.Drawing.Point(39, 197);
             this.RadioButton4.Name = "RadioButton4";
-            this.RadioButton4.Size = new System.Drawing.Size(352, 25);
+            this.RadioButton4.Size = new System.Drawing.Size(430, 25);
             this.RadioButton4.TabIndex = 84;
             this.RadioButton4.Text = "Custom image";
             this.RadioButton4.CheckedChanged += new WinPaletter.UI.WP.RadioButton.CheckedChangedEventHandler(this.RadioButton4_CheckedChanged);
@@ -482,7 +570,7 @@ namespace WinPaletter
             this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
-            this.TextBox1.Location = new System.Drawing.Point(64, 163);
+            this.TextBox1.Location = new System.Drawing.Point(64, 228);
             this.TextBox1.MaxLength = 32767;
             this.TextBox1.Multiline = false;
             this.TextBox1.Name = "TextBox1";
@@ -491,7 +579,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(285, 24);
+            this.TextBox1.Size = new System.Drawing.Size(363, 24);
             this.TextBox1.TabIndex = 86;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -505,7 +593,7 @@ namespace WinPaletter
             this.color_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.color_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.color_pick.DontShowInfo = false;
-            this.color_pick.Location = new System.Drawing.Point(294, 101);
+            this.color_pick.Location = new System.Drawing.Point(372, 166);
             this.color_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.color_pick.Name = "color_pick";
             this.color_pick.Size = new System.Drawing.Size(97, 25);
@@ -519,7 +607,7 @@ namespace WinPaletter
             this.checkBox1.Checked = false;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox1.ForeColor = System.Drawing.Color.White;
-            this.checkBox1.Location = new System.Drawing.Point(446, 369);
+            this.checkBox1.Location = new System.Drawing.Point(524, 369);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(505, 25);
             this.checkBox1.TabIndex = 119;
@@ -529,7 +617,7 @@ namespace WinPaletter
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(415, 369);
+            this.pictureBox1.Location = new System.Drawing.Point(493, 369);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(25, 25);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -542,7 +630,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(964, 561);
+            this.ClientSize = new System.Drawing.Size(1042, 628);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.GroupBox3);
@@ -608,10 +696,15 @@ namespace WinPaletter
         internal PictureBox PictureBox9;
         internal PictureBox PictureBox8;
         internal PictureBox PictureBox11;
-        internal UI.WP.Button Button3;
         private UI.Controllers.TrackBarX trackBarX1;
         private UI.Controllers.TrackBarX trackBarX2;
         internal UI.WP.CheckBox checkBox1;
         internal PictureBox pictureBox1;
+        internal UI.WP.RadioImage img6;
+        internal UI.WP.RadioImage img5;
+        internal UI.WP.RadioImage img1;
+        internal UI.WP.RadioImage img2;
+        internal UI.WP.RadioImage img3;
+        internal UI.WP.RadioImage img4;
     }
 }

@@ -135,35 +135,6 @@ namespace WinPaletter
             ColorizationColor_pick.BackColor = TM.WindowsVista.ColorizationColor;
             ColorizationColorBalance_bar.Value = TM.WindowsVista.Alpha;
 
-            switch (TM.WindowsVista.Theme)
-            {
-                case Theme.Structures.Windows7.Themes.Aero:
-                    {
-                        theme_aero.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.Windows7.Themes.AeroOpaque:
-                    {
-                        theme_aeroopaque.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.Windows7.Themes.Basic:
-                    {
-                        theme_basic.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.Windows7.Themes.Classic:
-                    {
-                        theme_classic.Checked = true;
-                        break;
-                    }
-            }
-
-            checkBox1.Checked = TM.WindowsVista.Theme == Theme.Structures.Windows7.Themes.Aero;
-
             windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
         }
@@ -173,24 +144,6 @@ namespace WinPaletter
             TM.WindowsVista.Enabled = AspectEnabled;
             TM.WindowsVista.ColorizationColor = ColorizationColor_pick.BackColor;
             TM.WindowsVista.Alpha = (byte)ColorizationColorBalance_bar.Value;
-
-            if (theme_aero.Checked)
-            {
-                TM.WindowsVista.Theme = Theme.Structures.Windows7.Themes.Aero;
-            }
-            else if (theme_aeroopaque.Checked)
-            {
-                TM.WindowsVista.Theme = Theme.Structures.Windows7.Themes.AeroOpaque;
-            }
-            else if (theme_basic.Checked)
-            {
-                TM.WindowsVista.Theme = Theme.Structures.Windows7.Themes.Basic;
-            }
-            else if (theme_classic.Checked)
-            {
-                TM.WindowsVista.Theme = Theme.Structures.Windows7.Themes.Classic;
-            }
-
         }
 
         public void ApplyDefaultTMValues()
@@ -572,37 +525,37 @@ namespace WinPaletter
             }
         }
 
-        private void theme_classic_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown && theme_classic.Checked)
-            {
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Classic;
-            }
-        }
+        //private void theme_classic_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_classic.Checked)
+        //    {
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Classic;
+        //    }
+        //}
 
-        private void theme_basic_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown && theme_basic.Checked)
-            {
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Basic;
-            }
-        }
+        //private void theme_basic_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_basic.Checked)
+        //    {
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Basic;
+        //    }
+        //}
 
-        private void theme_aeroopaque_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown && theme_aeroopaque.Checked)
-            {
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroOpaque;
-            }
-        }
+        //private void theme_aeroopaque_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_aeroopaque.Checked)
+        //    {
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.AeroOpaque;
+        //    }
+        //}
 
-        private void theme_aero_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown && theme_aero.Checked)
-            {
-                windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
-            }
-        }
+        //private void theme_aero_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (IsShown && theme_aero.Checked)
+        //    {
+        //        windowsDesktop1.Windows_7_8_Theme = Theme.Structures.Windows7.Themes.Aero;
+        //    }
+        //}
 
         private void windowsDesktop1_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
         {

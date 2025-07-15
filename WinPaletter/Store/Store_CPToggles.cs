@@ -37,18 +37,11 @@ namespace WinPaletter
             if (OS.W12 && TM.Windows12.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12));
             if (OS.W11 && TM.Windows11.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11));
             if (OS.W10 && TM.Windows10.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10));
-            if (OS.W8x && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81));
+            if (OS.W81 && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81));
+            if (OS.W8 && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8));
             if (OS.W7 && TM.Windows7.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7));
             if (OS.WVista && TM.WindowsVista.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista));
             if (OS.WXP && TM.WindowsXP.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP));
-
-            if (OS.W12 && TM.VisualStyles_12.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
-            if (OS.W11 && TM.VisualStyles_11.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
-            if (OS.W10 && TM.VisualStyles_10.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
-            if (OS.W8x && TM.VisualStyles_81.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
-            if (OS.W7 && TM.VisualStyles_7.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
-            if (OS.WVista && TM.VisualStyles_Vista.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
-            if (OS.WXP && TM.VisualStyles_XP.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.VisualStyles);
 
             if (OS.W12 && TM.LogonUI12.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
             if (OS.W11 && TM.LogonUI11.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
@@ -110,8 +103,11 @@ namespace WinPaletter
                 if (OS.W10 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10).ToLower())
                     TM.Windows10.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.W8x && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81).ToLower())
+                if (OS.W81 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81).ToLower())
                     TM.Windows81.Enabled = CheckedListBox1.GetItemChecked(i);
+
+                if (OS.W8 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8).ToLower())
+                    TM.Windows8.Enabled = CheckedListBox1.GetItemChecked(i);
 
                 if (OS.W7 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7).ToLower())
                     TM.Windows7.Enabled = CheckedListBox1.GetItemChecked(i);
@@ -186,27 +182,6 @@ namespace WinPaletter
 
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.Icons)
                     TM.Icons.Enabled = CheckedListBox1.GetItemChecked(i);
-
-                if (OS.W12 && CheckedListBox1.Items[i].ToString().ToLower() == Program.Lang.Strings.Aspects.VisualStyles.ToLower())
-                    TM.VisualStyles_12.Enabled = CheckedListBox1.GetItemChecked(i);
-
-                if (OS.W11 && CheckedListBox1.Items[i].ToString().ToLower() == Program.Lang.Strings.Aspects.VisualStyles.ToLower())
-                    TM.VisualStyles_11.Enabled = CheckedListBox1.GetItemChecked(i);
-
-                if (OS.W10 && CheckedListBox1.Items[i].ToString().ToLower() == Program.Lang.Strings.Aspects.VisualStyles.ToLower())
-                    TM.VisualStyles_10.Enabled = CheckedListBox1.GetItemChecked(i);
-
-                if (OS.W8x && CheckedListBox1.Items[i].ToString().ToLower() == Program.Lang.Strings.Aspects.VisualStyles.ToLower())
-                    TM.VisualStyles_81.Enabled = CheckedListBox1.GetItemChecked(i);
-
-                if (OS.W7 && CheckedListBox1.Items[i].ToString().ToLower() == Program.Lang.Strings.Aspects.VisualStyles.ToLower())
-                    TM.VisualStyles_7.Enabled = CheckedListBox1.GetItemChecked(i);
-
-                if (OS.WVista && CheckedListBox1.Items[i].ToString().ToLower() == Program.Lang.Strings.Aspects.VisualStyles.ToLower())
-                    TM.VisualStyles_Vista.Enabled = CheckedListBox1.GetItemChecked(i);
-
-                if (OS.WXP && CheckedListBox1.Items[i].ToString().ToLower() == Program.Lang.Strings.Aspects.VisualStyles.ToLower())
-                    TM.VisualStyles_XP.Enabled = CheckedListBox1.GetItemChecked(i);
             }
 
             Forms.Store.selectedItem.TM = TM;

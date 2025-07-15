@@ -132,42 +132,6 @@ namespace WinPaletter
             backup_TM = (Manager)TM.Clone();
 
             AspectEnabled = TM.WindowsXP.Enabled;
-            switch (TM.WindowsXP.Theme)
-            {
-                case Theme.Structures.WindowsXP.Themes.LunaBlue:
-                    {
-                        WXP_Luna_Blue.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.WindowsXP.Themes.LunaOliveGreen:
-                    {
-                        WXP_Luna_OliveGreen.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.WindowsXP.Themes.LunaSilver:
-                    {
-                        WXP_Luna_Silver.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.WindowsXP.Themes.Custom:
-                    {
-                        WXP_CustomTheme.Checked = true;
-                        break;
-                    }
-
-                case Theme.Structures.WindowsXP.Themes.Classic:
-                    {
-                        WXP_Classic.Checked = true;
-                        break;
-                    }
-
-            }
-            WXP_VS_textbox.Text = TM.WindowsXP.ThemeFile;
-            if (WXP_VS_ColorsList.Items.Contains(TM.WindowsXP.ColorScheme))
-                WXP_VS_ColorsList.SelectedItem = TM.WindowsXP.ColorScheme;
 
             windowsDesktop1.HookedTM = TM;
             windowsDesktop1.LoadFromTM(TM);
@@ -176,32 +140,7 @@ namespace WinPaletter
         public void ApplyToTM(Manager TM)
         {
             TM.WindowsXP.Enabled = AspectEnabled;
-
-            if (WXP_Luna_Blue.Checked)
-            {
-                TM.WindowsXP.Theme = Theme.Structures.WindowsXP.Themes.LunaBlue;
-            }
-            else if (WXP_Luna_OliveGreen.Checked)
-            {
-                TM.WindowsXP.Theme = Theme.Structures.WindowsXP.Themes.LunaOliveGreen;
-            }
-            else if (WXP_Luna_Silver.Checked)
-            {
-                TM.WindowsXP.Theme = Theme.Structures.WindowsXP.Themes.LunaSilver;
-            }
-            else if (WXP_CustomTheme.Checked)
-            {
-                TM.WindowsXP.Theme = Theme.Structures.WindowsXP.Themes.Custom;
-            }
-            else if (WXP_Classic.Checked)
-            {
-                TM.WindowsXP.Theme = Theme.Structures.WindowsXP.Themes.Classic;
-            }
-
-            TM.WindowsXP.ThemeFile = WXP_VS_textbox.Text;
-            TM.WindowsXP.ColorScheme = WXP_VS_ColorsList.SelectedItem.ToString();
-
-
+            
             if (WXP_Classic.Checked || (!WXP_VS_ReplaceColors.Checked && !WXP_VS_ReplaceMetrics.Checked))
             {
                 TM.Win32 = (Theme.Structures.Win32UI)backup_TM.Win32.Clone();
@@ -328,57 +267,57 @@ namespace WinPaletter
         }
 
 
-        private void WXP_Luna_Blue_CheckedChanged(object sender, EventArgs e)
-        {
-            if (WXP_Luna_Blue.Checked)
-            {
-                windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaBlue;
-                ReplaceColors();
-                ReplaceMetrics();
-            }
-        }
+        //private void WXP_Luna_Blue_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (WXP_Luna_Blue.Checked)
+        //    {
+        //        windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaBlue;
+        //        ReplaceColors();
+        //        ReplaceMetrics();
+        //    }
+        //}
 
-        private void WXP_Luna_OliveGreen_CheckedChanged(object sender, EventArgs e)
-        {
-            if (WXP_Luna_OliveGreen.Checked)
-            {
-                windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaOliveGreen;
-                ReplaceColors();
-                ReplaceMetrics();
-            }
-        }
+        //private void WXP_Luna_OliveGreen_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (WXP_Luna_OliveGreen.Checked)
+        //    {
+        //        windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaOliveGreen;
+        //        ReplaceColors();
+        //        ReplaceMetrics();
+        //    }
+        //}
 
-        private void WXP_Luna_Silver_CheckedChanged(object sender, EventArgs e)
-        {
-            if (WXP_Luna_Silver.Checked)
-            {
-                windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaSilver;
-                ReplaceColors();
-                ReplaceMetrics();
-            }
-        }
+        //private void WXP_Luna_Silver_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (WXP_Luna_Silver.Checked)
+        //    {
+        //        windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.LunaSilver;
+        //        ReplaceColors();
+        //        ReplaceMetrics();
+        //    }
+        //}
 
-        private void WXP_CustomTheme_CheckedChanged(object sender, EventArgs e)
-        {
-            if (WXP_CustomTheme.Checked)
-            {
-                windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.Custom;
-                ReplaceColors();
-                ReplaceMetrics();
-            }
+        //private void WXP_CustomTheme_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (WXP_CustomTheme.Checked)
+        //    {
+        //        windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.Custom;
+        //        ReplaceColors();
+        //        ReplaceMetrics();
+        //    }
 
-            GroupBox48.Enabled = WXP_CustomTheme.Checked;
-        }
+        //    GroupBox48.Enabled = WXP_CustomTheme.Checked;
+        //}
 
-        private void WXP_Classic_CheckedChanged(object sender, EventArgs e)
-        {
-            if (WXP_Classic.Checked)
-            {
-                windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.Classic;
-                ReplaceColors();
-                ReplaceMetrics();
-            }
-        }
+        //private void WXP_Classic_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (WXP_Classic.Checked)
+        //    {
+        //        windowsDesktop1.WindowsXPTheme = Theme.Structures.WindowsXP.Themes.Classic;
+        //        ReplaceColors();
+        //        ReplaceMetrics();
+        //    }
+        //}
 
         private void WXP_VS_textbox_TextChanged(object sender, EventArgs e)
         {
@@ -392,7 +331,7 @@ namespace WinPaletter
                     theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
 
-                windowsDesktop1.WindowsXPThemePath = theme;
+                windowsDesktop1.VisualStylesPath = theme;
 
                 if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
                 {
@@ -426,7 +365,7 @@ namespace WinPaletter
 
         private void WXP_VS_ColorsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            windowsDesktop1.WindowsXPThemeColorScheme = WXP_VS_ColorsList.SelectedItem.ToString();
+            windowsDesktop1.VisualStylesColorScheme = WXP_VS_ColorsList.SelectedItem.ToString();
         }
 
         private void ReplaceColors()
