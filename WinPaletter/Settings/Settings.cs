@@ -1121,18 +1121,6 @@ namespace WinPaletter
                 public bool WinColors = true;
 
                 /// <summary>
-                /// If <c>false</c>, Windows Visual Styles won't be applied at all
-                /// </summary>
-                public bool VisualStyles = true;
-
-                /// <summary>
-                /// If <c>true</c>, Windows Colors aspect form will be opened in advanced mode
-                /// <br></br>
-                /// If <c>false</c>, Windows Colors aspect form will be opened in simple mode
-                /// </summary>
-                public bool WinColors_Advanced = true;
-
-                /// <summary>
                 /// If <c>false</c>, LogonUI won't be applied at all
                 /// </summary>
                 public bool LogonUI = true;
@@ -1237,8 +1225,6 @@ namespace WinPaletter
                 {
                     Enabled = Conversions.ToBoolean(GetReg(REG_AspectsControl, string.Empty, false));
                     WinColors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinColors", true));
-                    WinColors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinColors_Advanced", true));
-                    VisualStyles = Conversions.ToBoolean(GetReg(REG_AspectsControl, "VisualStyles", true));
                     LogonUI = Conversions.ToBoolean(GetReg(REG_AspectsControl, "LogonUI", true));
                     ClassicColors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors", true));
                     ClassicColors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors_Advanced", true));
@@ -1265,8 +1251,6 @@ namespace WinPaletter
                 {
                     EditReg(REG_AspectsControl, string.Empty, Enabled, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "WinColors", WinColors, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "WinColors_Advanced", WinColors_Advanced, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "VisualStyles", VisualStyles, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "LogonUI", LogonUI, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "ClassicColors", ClassicColors, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "ClassicColors_Advanced", ClassicColors_Advanced, RegistryValueKind.DWord);

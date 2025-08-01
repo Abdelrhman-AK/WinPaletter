@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
@@ -13,7 +12,7 @@ namespace WinPaletter.UI.WP
     {
         public Card()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
         }
@@ -21,10 +20,27 @@ namespace WinPaletter.UI.WP
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         readonly int shadowSize = 1;
+
+        // Rectangle caching for performance
+        private int _lastWidth = -1, _lastHeight = -1, _lastAlpha = -1;
+        private Rectangle _rect_all, _rect, _rect_margin;
+        private void UpdateRects()
+        {
+            if (_lastWidth != Width || _lastHeight != Height || _lastAlpha != alpha)
+            {
+                int marginVal = (int)(alpha / 255f * 0.6 * shadowSize);
+                _rect_all = new Rectangle(0, 0, Width - 1, Height - 1);
+                _rect = new Rectangle(_rect_all.X + shadowSize, _rect_all.Y + shadowSize, _rect_all.Width - shadowSize * 2, _rect_all.Height - shadowSize * 2);
+                _rect_margin = new Rectangle(_rect_all.X + shadowSize - marginVal, _rect_all.Y + shadowSize - marginVal, _rect_all.Width - shadowSize * 2 + marginVal * 2, _rect_all.Height - shadowSize * 2 + marginVal * 2);
+                _lastWidth = Width;
+                _lastHeight = Height;
+                _lastAlpha = alpha;
+            }
+        }
         int margin => (int)(alpha / 255f * 0.6 * shadowSize);
-        Rectangle rect_all => new(0, 0, Width - 1, Height - 1);
-        Rectangle rect => new(rect_all.X + shadowSize, rect_all.Y + shadowSize, rect_all.Width - shadowSize * 2, rect_all.Height - shadowSize * 2);
-        Rectangle rect_margin => new(rect_all.X + shadowSize - margin, rect_all.Y + shadowSize - margin, rect_all.Width - shadowSize * 2 + margin * 2, rect_all.Height - shadowSize * 2 + margin * 2);
+        Rectangle rect_all { get { UpdateRects(); return _rect_all; } }
+        Rectangle rect { get { UpdateRects(); return _rect; } }
+        Rectangle rect_margin { get { UpdateRects(); return _rect_margin; } }
 
         private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.45f));
         private readonly static TextureBrush NoiseHover = new(Properties.Resources.Noise.Fade(0.9f));
@@ -75,21 +91,19 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            //Leave it empty to make control background transparent
-            base.OnPaintBackground(pevent);
+            // Do not call base.OnPaintBackground to avoid flicker
+            // This keeps the background truly transparent
         }
 
-        protected override async void OnMouseEnter(EventArgs e)
+        // Removed async/await and Task.Run for performance
+        protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
 
             if (CanAnimate)
             {
-                await Task.Run(() =>
-                {
-                    FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                });
+                FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
@@ -97,7 +111,6 @@ namespace WinPaletter.UI.WP
                 HoverSize = (int)(Math.Min(Width, Height) * 1.5);
             }
 
-            await Task.Delay(10);
             Animate();
 
             base.OnMouseEnter(e);
@@ -117,17 +130,14 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        protected override async void OnMouseLeave(EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
 
             if (CanAnimate)
             {
-                await Task.Run(() =>
-                {
-                    FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                });
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
@@ -135,39 +145,32 @@ namespace WinPaletter.UI.WP
                 HoverSize = 0;
             }
 
-            await Task.Delay(10);
             Animate();
 
             base.OnMouseLeave(e);
         }
 
-        protected override async void OnLeave(EventArgs e)
+        protected override void OnLeave(EventArgs e)
         {
             Animate();
 
             if (CanAnimate)
             {
-                await Task.Run(() =>
-                { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); });
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
             else { alpha = 0; }
-
-            await Task.Delay(10);
 
             base.OnLeave(e);
         }
 
-        protected override async void OnMouseDown(MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             State = MouseState.Down;
 
             if (CanAnimate)
             {
-                await Task.Run(() =>
-                {
-                    FluentTransitions.Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                });
+                FluentTransitions.Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
             else
             {
@@ -175,23 +178,19 @@ namespace WinPaletter.UI.WP
                 HoverSize = (int)(Math.Min(Width, Height) * 1.5) * 5;
             }
 
-            await Task.Delay(10);
             Animate();
 
             base.OnMouseDown(e);
         }
 
-        protected override async void OnMouseUp(MouseEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             State = MouseState.Over;
 
             if (CanAnimate)
             {
-                await Task.Run(() =>
-                {
-                    FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                });
+                FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
@@ -199,12 +198,11 @@ namespace WinPaletter.UI.WP
                 HoverSize = ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0;
             }
 
-            await Task.Delay(10);
             Animate();
             base.OnMouseUp(e);
         }
 
-        protected override async void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             if (CanAnimate && State != MouseState.None)
             {
@@ -212,14 +210,13 @@ namespace WinPaletter.UI.WP
                 hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
                 hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
 
-                await Task.Delay(10);
                 Invalidate();
             }
 
             base.OnMouseMove(e);
         }
 
-        protected override async void OnLostFocus(EventArgs e)
+        protected override void OnLostFocus(EventArgs e)
         {
             State = MouseState.None;
 
@@ -227,11 +224,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                await Task.Run(() =>
-                {
-                    FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                });
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
@@ -239,19 +233,15 @@ namespace WinPaletter.UI.WP
                 HoverSize = 0;
             }
 
-            await Task.Delay(10);
             base.OnLostFocus(e);
         }
 
-        protected override async void OnClick(EventArgs e)
+        protected override void OnClick(EventArgs e)
         {
             if (CanAnimate)
             {
-                await Task.Run(() =>
-                {
-                    FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                });
+                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
@@ -259,7 +249,6 @@ namespace WinPaletter.UI.WP
                 HoverSize = 0;
             }
 
-            await Task.Delay(10);
             Animate();
 
             base.OnClick(e);
@@ -313,9 +302,11 @@ namespace WinPaletter.UI.WP
 
         protected override void Dispose(bool disposing)
         {
+            if (disposing)
+            {
+                _image?.Dispose();
+            }
             base.Dispose(disposing);
-
-            _image?.Dispose();
         }
 
         int parentLevel = 0;
@@ -328,6 +319,8 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            UpdateRects();
+
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
@@ -351,11 +344,11 @@ namespace WinPaletter.UI.WP
 
             if (Image is not null)
             {
-                Rectangle imageRect;
+                RectangleF imageRect;
 
                 if (!_compact)
                 {
-                    imageRect = new(rect.X + rect.Width - Image.Width - 5 /*- (int)(alpha * 4f / 255f) DISABLED FOR BETTER PERFORMANCE*/
+                    imageRect = new(rect.X + rect.Width - Image.Width - 5 /*- (alpha * 1.5f / 255f) // DISABLED FOR BETTER PERFORMANCE*/
                          , rect.Y + (rect.Height - Image.Height) / 2, Image.Width, Image.Height);
                 }
                 else
@@ -475,8 +468,8 @@ namespace WinPaletter.UI.WP
                 SizeF textSize = Text.Measure(titleFont, rect.Width);
                 SizeF descriptionSize = SizeF.Empty;
 
-                Rectangle textRect = Rectangle.Empty;
-                Rectangle descriptionRect = Rectangle.Empty;
+                RectangleF textRect = Rectangle.Empty;
+                RectangleF descriptionRect = Rectangle.Empty;
 
                 if (!_compact)
                 {
@@ -487,10 +480,10 @@ namespace WinPaletter.UI.WP
                         int totalHeight = (int)(textSize.Height + descriptionSize.Height);
                         int centerY = rect.Y + ((rect.Height - totalHeight) / 2);
 
-                        textRect = new Rectangle(rect.X + 5, centerY, rect.Width - 10, (int)textSize.Height);
+                        textRect = new RectangleF(rect.X + 5, centerY, rect.Width - 10, (int)textSize.Height);
 
                         // Center description below the title
-                        descriptionRect = new Rectangle(rect.X + 8, textRect.Bottom + 4, rect.Width - 12, (int)descriptionSize.Height);
+                        descriptionRect = new RectangleF(rect.X + 8, textRect.Bottom + 4, rect.Width - 12, (int)descriptionSize.Height);
                     }
                     else
                     {
@@ -535,7 +528,6 @@ namespace WinPaletter.UI.WP
             }
 
             clipPath.Dispose();
-
 
         }
 

@@ -144,18 +144,6 @@
         1xD+BJK666bDgVEQAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAZRJREFUOE/l
-        kstKAlEch4WgdZtyjIixzOPx3jO0qJYthHY9Q28h7ZMsoo2jNup466JRT+CmhURhNhLN1U6tCiLiHzOj
-        IocSnF30wbf5/eHbnONw/EkCPEzSm22W6y+b4QvSoHdbROuvW5E6+QrXSJO+jU30gsQiNfIZrhEInRMI
-        nT1D8NQycNKFQLULfsOKDrisAy7p4CvpgIvqId0yidTIdbgf6sV+DJWtkK+oARJMebplEjknq1iQ31BO
-        ApSXPgLVbttvWOm2/WXd1GdY1NpIsPQW1DbKazt0a4BrT1xjdu/fnYlWi77ZhtnvrDMHnUt6p5lPPa04
-        eJigd9uwnNRkUxI3MooFNYgEPYYEJebJUWYt3X3T8qObk4DlRkRxSeNR7/W8BUMVlvIqLOVU8PCK6eKx
-        AotZBRayMixkZHCnZWA5OUG3THBZ5wdfYjhsRH8LZ4ywdEW3THD1eQOX9LghMhS0gd7CkDktPpu4lV27
-        NzC3d9fw8Mo03RobJik2mWSnwR6JU/TNFq6kuD1z8OCk93/IN+kuN5TFG0dIAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="alertBox2.Text" xml:space="preserve">
     <value>Applying theme items to a different user may temporarily affect the current user's profile (the one that launched WinPaletter) until you log off and log back in. After re-logging, the target user's profile will be correctly themed, and the initiating user's profile will return to normal. To prevent this, it’s recommended to run WinPaletter from within the target user profile.</value>
   </data>

@@ -707,7 +707,7 @@ namespace WinPaletter.UI.Simulation
 
                 else
                 {
-                    return Active ? Program.TM.Win32.TitleText : Program.TM.Win32.InactiveTitleText;
+                    return ForeColor;
                 }
             }
         }

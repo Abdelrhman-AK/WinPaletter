@@ -184,7 +184,7 @@ namespace WinPaletter
             }
             else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W8)
             {
-                import_defaultWindows.Image = WinLogos.Add_Win81_20px;
+                import_defaultWindows.Image = WinLogos.Add_Win8_20px;
             }
             else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
             {
@@ -207,7 +207,7 @@ namespace WinPaletter
             import_scheme_11.Image = WinLogos.Add_Win11_20px;
             import_scheme_10.Image = WinLogos.Add_Win10_20px;
             import_scheme_81.Image = WinLogos.Add_Win81_20px;
-            import_scheme_8.Image = WinLogos.Add_Win81_20px;
+            import_scheme_8.Image = WinLogos.Add_Win8_20px;
             import_scheme_7.Image = WinLogos.Add_Win7_20px;
             import_scheme_Vista.Image = WinLogos.Add_WinVista_20px;
             import_scheme_XP.Image = WinLogos.Add_WinXP_20px;

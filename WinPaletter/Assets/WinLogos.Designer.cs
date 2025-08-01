@@ -143,6 +143,26 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Add_Win8 {
+            get {
+                object obj = ResourceManager.GetObject("Add_Win8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Add_Win8_20px {
+            get {
+                object obj = ResourceManager.GetObject("Add_Win8_20px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Add_Win81 {
             get {
                 object obj = ResourceManager.GetObject("Add_Win81", resourceCulture);
@@ -243,9 +263,19 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Win81 {
+        internal static System.Drawing.Bitmap Win8 {
             get {
-                object obj = ResourceManager.GetObject("Win81", resourceCulture);
+                object obj = ResourceManager.GetObject("Win8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Win8_1 {
+            get {
+                object obj = ResourceManager.GetObject("Win8_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

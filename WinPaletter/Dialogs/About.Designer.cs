@@ -496,7 +496,7 @@ namespace WinPaletter
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
             this.titlebarExtender1.Controls.Add(this.AnimatedBox1);
             this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.titlebarExtender1.Flag = Tabs.TitlebarExtender.Flags.Tabs_Extended;
+            this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender1.Name = "titlebarExtender1";
             this.titlebarExtender1.Size = new System.Drawing.Size(664, 85);
@@ -780,8 +780,7 @@ namespace WinPaletter
             this.linkLabel18.Size = new System.Drawing.Size(610, 24);
             this.linkLabel18.TabIndex = 126;
             this.linkLabel18.TabStop = true;
-            this.linkLabel18.Text = "Patching UxTheme.dll to apply unsigned Visual Styles by SecureUxTheme, developed " +
-    "by namazso";
+            this.linkLabel18.Text = "Logging WinPaletter events into JSON files by Serilog";
             this.linkLabel18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel18.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel18_LinkClicked);
             // 

@@ -18,22 +18,22 @@ namespace WinPaletter
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<CMD>();
 
-            PictureBox1.Image = OS.W10 ? Assets.WinLogos.Win10 : Assets.WinLogos.Win11;
-
-            Size targetSize = Size;
-            Point targetLocation = Forms.Home.card4.PointToScreen(Point.Empty) - new Size((Width - Forms.Home.card4.Width) / 2, (Height - Forms.Home.card4.Height) / 2);
+            //Size targetSize = Size;
+            //Point targetLocation = Forms.Home.card4.PointToScreen(Point.Empty) - new Size((Width - Forms.Home.card4.Width) / 2, (Height - Forms.Home.card4.Height) / 2);
 
             Size = Forms.Home.card4.Size;
             Location = Forms.Home.card4.PointToScreen(Point.Empty);
-            panel1.Visible = false;
 
-            FluentTransitions.Transition
-                .With(this, nameof(Width), targetSize.Width)
-                .With(this, nameof(Height), targetSize.Height)
-                .With(this, nameof(Left), targetLocation.X)
-                .With(this, nameof(Top), targetLocation.Y)
-                .HookOnCompletion(() => Program.Animator.ShowSync(panel1))
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
+            BackColor = Color.Black;
+            this.DropEffect(Padding.Empty, true, DWM.FormStyle.Acrylic);
+
+            //FluentTransitions.Transition
+                //.With(this, nameof(Width), targetSize.Width)
+                //.With(this, nameof(Height), targetSize.Height)
+                //.With(this, nameof(Left), targetLocation.X)
+                //.With(this, nameof(Top), targetLocation.Y)
+                //.HookOnCompletion(() => Program.Animator.ShowSync(panel1))
+                //.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -77,9 +77,7 @@ namespace WinPaletter
             else
             {
                 MsgBox(Program.Lang.Strings.Aspects.Terminals.CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, string.Empty, Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Aspects.Terminals.Bypass);
-
             }
-
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -199,6 +197,21 @@ namespace WinPaletter
         private void button7_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void Button1_MouseEnter(object sender, EventArgs e)
+        {
+            FluentTransitions.Transition.With(labelAlt1, nameof(labelAlt1.Text), (sender as UI.WP.Button).Tag.ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+        }
+
+        private void Button1_MouseLeave(object sender, EventArgs e)
+        {
+            FluentTransitions.Transition.With(labelAlt1, nameof(labelAlt1.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+        }
+
+        private void TerminalsDashboard_Shown(object sender, EventArgs e)
+        {
+            Program.Animator.ShowSync(panel1);
         }
     }
 }

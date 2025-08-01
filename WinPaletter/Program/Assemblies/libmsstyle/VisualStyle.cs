@@ -63,7 +63,46 @@ namespace libmsstyle
 
         private ushort m_resourceLanguage;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisualStyle"/> class using the specified path to a visual style
+        /// file.
+        /// </summary>
+        /// <remarks>If the provided path is a `.theme` file, the constructor reads the file to locate the
+        /// associated `.msstyles` file. It resolves environment variables and searches for matching files in the
+        /// directory if necessary. If the path is invalid or the file cannot be found, an exception is
+        /// thrown.</remarks>
+        /// <param name="msstyles">The path to the visual style file. This can be a direct path to an `.msstyles` file or a `.theme` file. If a
+        /// `.theme` file is provided, the constructor attempts to resolve the associated `.msstyles` file.</param>
+        /// <exception cref="FileNotFoundException">Thrown if the `.theme` file specifies a path to a visual style that cannot be found.</exception>
+        /// <exception cref="ArgumentException">Thrown if the `.theme` file does not specify a valid path to a visual style.</exception>
         public VisualStyle(string msstyles)
+        {
+            m_stylePath = GetCorrectMSStyles(msstyles);
+            m_classes = [];
+            m_stringTable = [];
+            m_resourceUpdates = [];
+            m_timingFunctions = [];
+            m_animations = [];
+            m_numProps = 0;
+            m_resourceLanguage = 0;
+
+            Load(m_stylePath);
+        }
+
+        /// <summary>
+        /// Resolves the correct path to a visual style file based on the provided input.
+        /// </summary>
+        /// <remarks>This method supports resolving paths specified in theme files, including environment
+        /// variable expansion  and searching for matching visual style files within the directory structure. It ensures
+        /// that the returned  path points to an existing file.</remarks>
+        /// <param name="msstyles">The path to a visual style file or a theme file. If the input is a theme file with a ".theme" extension, 
+        /// the method attempts to locate the associated visual style file specified within the theme file.</param>
+        /// <returns>The resolved path to the visual style file. If the input is already a valid visual style file,  the same
+        /// path is returned. If the input is a theme file, the method returns the path to the associated  visual style
+        /// file.</returns>
+        /// <exception cref="FileNotFoundException">Thrown if the theme file specifies a visual style path that cannot be found.</exception>
+        /// <exception cref="ArgumentException">Thrown if the theme file does not contain a valid path to a visual style.</exception>
+        public static string GetCorrectMSStyles(string msstyles)
         {
             if (System.IO.Path.GetExtension(msstyles).ToLower() == ".theme")
             {
@@ -111,18 +150,8 @@ namespace libmsstyle
                 }
             }
 
-            m_stylePath = msstyles;
-            m_classes = [];
-            m_stringTable = [];
-            m_resourceUpdates = [];
-            m_timingFunctions = [];
-            m_animations = [];
-            m_numProps = 0;
-            m_resourceLanguage = 0;
-
-            Load(msstyles);
+            return msstyles;
         }
-
 
         ~VisualStyle()
         {

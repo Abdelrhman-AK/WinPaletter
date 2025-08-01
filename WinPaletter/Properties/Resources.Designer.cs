@@ -101,6 +101,16 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon cmd {
+            get {
+                object obj = ResourceManager.GetObject("cmd", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap darkmode_dark {
@@ -391,26 +401,6 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon icons8_command_line {
-            get {
-                object obj = ResourceManager.GetObject("icons8_command_line", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon icons8_PowerShell {
-            get {
-                object obj = ResourceManager.GetObject("icons8_PowerShell", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] JetBrainsMono_Medium {
@@ -451,18 +441,23 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SPDX-License-Identifier: MIT AND LGPL-2.1-or-later
+        ///   Looks up a localized string similar to MIT &amp; CPOL-1.02
+        ///===============
+        ///
+        ///This project is distributed under multiple licenses:
+        ///
+        ///- The majority of the code is licensed under the MIT License.
+        ///- The AnimatorNS component is licensed separately under the Code Project Open License (CPOL-1.02).
+        ///
+        ///Please review both licenses below.
         ///
         ///MIT License
+        ///===========
         ///
-        ///Copyright (c) 2022-2025 Abdelrhman-AK
+        ///Copyright (c) 2022–2025 Abdelrhman-AK
         ///
         ///Permission is hereby granted, free of charge, to any person obtaining a copy
-        ///of this software and associated documentation files (the &quot;Software&quot;), to deal
-        ///in the Software without restriction, including without limitation the rights
-        ///to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-        ///copies of the Software, and to permit persons to whom the Software is
-        ///furnished to do so, s [rest of string was truncated]&quot;;.
+        ///of this software and associated documentation files (the “Software”),  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LICENSE {
             get {
@@ -486,6 +481,26 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap lightmode_light {
             get {
                 object obj = ResourceManager.GetObject("lightmode_light", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Login {
+            get {
+                object obj = ResourceManager.GetObject("Login", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Login_Admin {
+            get {
+                object obj = ResourceManager.GetObject("Login_Admin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -521,22 +536,12 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap off {
+        internal static System.Drawing.Icon ps {
             get {
-                object obj = ResourceManager.GetObject("off", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap on {
-            get {
-                object obj = ResourceManager.GetObject("on", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("ps", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -617,16 +622,6 @@ namespace WinPaletter.Properties {
             get {
                 object obj = ResourceManager.GetObject("WinPaletter_SysEventsSounds", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap WP_Admin {
-            get {
-                object obj = ResourceManager.GetObject("WP_Admin", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

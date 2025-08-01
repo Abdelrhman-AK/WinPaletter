@@ -38,7 +38,7 @@ namespace WinPaletter
             if (OS.W11 && TM.Windows11.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11));
             if (OS.W10 && TM.Windows10.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10));
             if (OS.W81 && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81));
-            if (OS.W8 && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8));
+            if (OS.W8 && TM.Windows8.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8));
             if (OS.W7 && TM.Windows7.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7));
             if (OS.WVista && TM.WindowsVista.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista));
             if (OS.WXP && TM.WindowsXP.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP));

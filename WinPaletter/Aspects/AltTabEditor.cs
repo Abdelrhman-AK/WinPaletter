@@ -126,7 +126,7 @@ namespace WinPaletter
 
                 case WindowStyle.W81:
                     {
-                        RadioImage1.Image = Assets.WinLogos.Win81;
+                        RadioImage1.Image = Assets.WinLogos.Win8_1;
                         break;
                     }
 

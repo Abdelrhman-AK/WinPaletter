@@ -90,6 +90,7 @@ namespace WinPaletter
                 };
 
                 radio.DoubleClick += Radio_DoubleClick;
+                radio.CheckedChanged += Radio_CheckedChanged;
 
                 radios = (radios ?? Enumerable.Empty<RadioImage>()).Concat(new[] { radio }).ToArray();
             }
@@ -102,6 +103,14 @@ namespace WinPaletter
         private void Radio_DoubleClick(object sender, EventArgs e)
         {
             Button1.PerformClick();
+        }
+
+        private void Radio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is RadioImage radio && radio.Checked)
+            {
+                Button1.Image = User.IsAdmin(radio.Tag.ToString()) ? Properties.Resources.Login_Admin : Properties.Resources.Login;
+            }
         }
 
         /// <summary>

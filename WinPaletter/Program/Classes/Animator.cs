@@ -7,12 +7,12 @@ namespace WinPaletter
     {
         readonly AnimatorNS.Animator _animator;
 
-        public Animator() 
+        public Animator()
         {
             _animator = new AnimatorNS.Animator
             {
-                Interval = 15,                    // Keep ~60 FPS for smoothness
-                TimeStep = 0.08f,                
+                Interval = 15,
+                TimeStep = 0.07f,
                 DefaultAnimation = AnimatorNS.Animation.Transparent,
                 AnimationType = AnimatorNS.AnimationType.Transparent
             };
@@ -20,7 +20,7 @@ namespace WinPaletter
 
         public void Show(Control control, bool parallel = false)
         {
-            if (control == null || control.IsDisposed) return;
+            if (control == null || control.IsDisposed || control.IsInUse()) return;
 
             if (control.InvokeRequired)
             {
@@ -40,7 +40,7 @@ namespace WinPaletter
 
         public void ShowSync(Control control, bool parallel = false)
         {
-            if (control == null || control.IsDisposed) return;
+            if (control == null || control.IsDisposed || control.IsInUse()) return;
 
             if (control.InvokeRequired)
             {
@@ -60,7 +60,7 @@ namespace WinPaletter
 
         public void Hide(Control control, bool parallel = false)
         {
-            if (control == null || control.IsDisposed) return;
+            if (control == null || control.IsDisposed || control.IsInUse()) return;
 
             if (control.InvokeRequired)
             {
@@ -78,9 +78,9 @@ namespace WinPaletter
                 control.Visible = false;
         }
 
-        public void HideSync(Control control, bool parallel = false) 
+        public void HideSync(Control control, bool parallel = false)
         {
-            if (control == null || control.IsDisposed) return;
+            if (control == null || control.IsDisposed || control.IsInUse()) return;
 
             if (control.InvokeRequired)
             {

@@ -185,7 +185,7 @@ namespace WinPaletter
                 case Edition.CMD:
                     {
                         Text = Program.Lang.Strings.Aspects.CommandPrompt;
-                        Icon = Properties.Resources.icons8_command_line;
+                        Icon = Properties.Resources.cmd;
                         Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_CMD;
                         data.AspectName = Program.Lang.Strings.Aspects.CommandPrompt;
                         data.Enabled = Program.TM.CommandPrompt.Enabled;
@@ -195,7 +195,7 @@ namespace WinPaletter
                 case Edition.PowerShellx86:
                     {
                         Text = Program.Lang.Strings.Aspects.PowerShellx86;
-                        Icon = Properties.Resources.icons8_PowerShell;
+                        Icon = Properties.Resources.ps;
                         Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_PowerShellx86;
                         data.AspectName = Program.Lang.Strings.Aspects.PowerShellx86;
                         data.Enabled = Program.TM.PowerShellx86.Enabled;
@@ -205,7 +205,7 @@ namespace WinPaletter
                 case Edition.PowerShellx64:
                     {
                         Text = Program.Lang.Strings.Aspects.PowerShellx64;
-                        Icon = Properties.Resources.icons8_PowerShell;
+                        Icon = Properties.Resources.ps;
                         Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_PowerShellx64;
                         data.AspectName = Program.Lang.Strings.Aspects.PowerShellx64;
                         data.Enabled = Program.TM.PowerShellx64.Enabled;

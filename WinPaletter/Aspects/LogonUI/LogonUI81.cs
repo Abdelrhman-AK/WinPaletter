@@ -117,7 +117,7 @@ namespace WinPaletter
             Icon = FormsExtensions.Icon<LogonUI>();
 
             PictureBox11.Image = Assets.LogonUIRes.Win81;
-            PictureBox4.Image = Assets.WinLogos.Win81;
+            PictureBox4.Image = Assets.WinLogos.Win8_1;
         }
 
         protected override void OnDragOver(DragEventArgs e)

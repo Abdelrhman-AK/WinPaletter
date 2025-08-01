@@ -87,10 +87,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Animator, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Animator.1.0.3\lib\net20\Animator.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ksemenenko.ColorThief.1.1.1.4\lib\net46\ColorThief.Desktop.v46.dll</HintPath>
       <Private>False</Private>
@@ -237,16 +233,16 @@
     <Compile Include="Aspects\IconsStudio.Designer.cs">
       <DependentUpon>IconsStudio.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win12Colors.cs">
+    <Compile Include="Aspects\WindowsTheme\Win12Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win12Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\Win12Colors.Designer.cs">
       <DependentUpon>Win12Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win8Colors.cs">
+    <Compile Include="Aspects\WindowsTheme\Win8Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win8Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\Win8Colors.Designer.cs">
       <DependentUpon>Win8Colors.cs</DependentUpon>
     </Compile>
     <Compile Include="Assets\Accessibility_Vision.Designer.cs">
@@ -254,10 +250,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Accessibility_Vision.resx</DependentUpon>
     </Compile>
-    <Compile Include="Assets\Banners.Designer.cs">
+    <Compile Include="Assets\Themes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Banners.resx</DependentUpon>
+      <DependentUpon>Themes.resx</DependentUpon>
     </Compile>
     <Compile Include="Assets\CMD_Raster.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -370,6 +366,20 @@
     <Compile Include="Languages\Localizer\Strings\General\Extensions.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Languages\Localizer\Strings.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\Animation.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\Animator.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\Controller.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapControl.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapControl.Designer.cs">
+      <DependentUpon>DoubleBitmapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapForm.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapForm.designer.cs">
+      <DependentUpon>DoubleBitmapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program\Assemblies\AnimatorNS\Flags.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\PointFConverter.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\TransfromHelper.cs" />
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
@@ -1112,50 +1122,47 @@
     <Compile Include="Aspects\Win32UI\Win32UI_Gallery.Designer.cs">
       <DependentUpon>Win32UI_Gallery.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\WinXPColors.cs">
+    <Compile Include="Aspects\WindowsTheme\WinXPColors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\WinXPColors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\WinXPColors.Designer.cs">
       <DependentUpon>WinXPColors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\WinVistaColors.cs">
+    <Compile Include="Aspects\WindowsTheme\WinVistaColors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\WinVistaColors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\WinVistaColors.Designer.cs">
       <DependentUpon>WinVistaColors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win81Colors.cs">
+    <Compile Include="Aspects\WindowsTheme\Win81Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win81Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\Win81Colors.Designer.cs">
       <DependentUpon>Win81Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win7Colors.cs">
+    <Compile Include="Aspects\WindowsTheme\Win7Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win7Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\Win7Colors.Designer.cs">
       <DependentUpon>Win7Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win10Colors.cs">
+    <Compile Include="Aspects\WindowsTheme\Win10Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win10Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\Win10Colors.Designer.cs">
       <DependentUpon>Win10Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win11Colors.cs">
+    <Compile Include="Aspects\WindowsTheme\Win11Colors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Aspects\WindowsColors\Win11Colors.Designer.cs">
+    <Compile Include="Aspects\WindowsTheme\Win11Colors.Designer.cs">
       <DependentUpon>Win11Colors.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <None Include="Resources\Win11.png" />
     <Content Include="Resources\WinPaletter.SysEventsSounds.exe" />
-    <None Include="Resources\ContextBox_Help.png" />
     <Content Include="Resources\LICENSE.txt" />
-    <None Include="Resources\Restorepoint.png" />
     <None Include="Resources\MetricsFontsDB" />
     <None Include="Resources\SecureUxTheme.zip" />
   </ItemGroup>
@@ -1169,20 +1176,20 @@
     <EmbeddedResource Include="Aspects\IconsStudio.resx">
       <DependentUpon>IconsStudio.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\Win12Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\Win12Colors.resx">
       <DependentUpon>Win12Colors.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\Win8Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\Win8Colors.resx">
       <DependentUpon>Win8Colors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\Banners.resx">
+    <EmbeddedResource Include="Assets\Themes.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Banners.Designer.cs</LastGenOutput>
+      <LastGenOutput>Themes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\CMD_Raster.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1347,6 +1354,9 @@
       <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Program\Assemblies\AnimatorNS\DoubleBitmapForm.resx">
+      <DependentUpon>DoubleBitmapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1453,23 +1463,23 @@
     <EmbeddedResource Include="Aspects\Win32UI\Win32UI_Gallery.resx">
       <DependentUpon>Win32UI_Gallery.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\WinXPColors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\WinXPColors.resx">
       <DependentUpon>WinXPColors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\WinVistaColors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\WinVistaColors.resx">
       <DependentUpon>WinVistaColors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\Win81Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\Win81Colors.resx">
       <DependentUpon>Win81Colors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\Win7Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\Win7Colors.resx">
       <DependentUpon>Win7Colors.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\Win10Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\Win10Colors.resx">
       <DependentUpon>Win10Colors.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Aspects\WindowsColors\Win11Colors.resx">
+    <EmbeddedResource Include="Aspects\WindowsTheme\Win11Colors.resx">
       <DependentUpon>Win11Colors.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

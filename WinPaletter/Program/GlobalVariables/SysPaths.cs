@@ -136,37 +136,42 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Temporary theme directory (for preview)
         /// </summary>
-        public static string MSTheme_Temp => $"{appData}\\VisualStyles\\temp.theme";
+        public static string Theme_Temp => $"{appData}\\VisualStyles\\temp.theme";
 
         /// <summary>
         /// Temporary theme directory (for preview)
         /// </summary>
-        public static string MSTheme_Luna_theme => $"{appData}\\VisualStyles\\Luna\\Luna.theme";
+        public static string Theme_Luna_WP => $"{appData}\\VisualStyles\\Luna\\Luna.theme";
+
+        /// <summary>
+        /// Temporary theme msstyles (for preview)
+        /// </summary>
+        public static string MSSTYLES_Luna_WP => $"{appData}\\VisualStyles\\Luna\\Luna.msstyles";
 
         /// <summary>
         /// Temporary theme directory (for preview)
         /// </summary>
-        public static string MSTheme_Dir => $"{appData}\\VisualStyles\\Luna";
+        public static string Theme_Dir_WP => $"{appData}\\VisualStyles\\Luna";
 
         /// <summary>
         /// Extracted Luna.zip
         /// </summary>
-        public static string MSTheme_ZIP => $"{appData}\\VisualStyles\\Luna\\Luna.zip";
+        public static string Theme_ZIP_WP => $"{appData}\\VisualStyles\\Luna\\Luna.zip";
 
         /// <summary>
         /// Represents the file path to the Aero theme's .msstyles file.
         /// </summary>
-        public static string AeroMSSTYLES = $"{Windows}\\Resources\\Themes\\aero\\aero.msstyles";
+        public static string MSSTYLES_Aero_Win = $"{Windows}\\Resources\\Themes\\aero\\aero.msstyles";
 
         /// <summary>
         /// Gets the file path to the Aero Lite theme's .msstyles file.
         /// </summary>
-        public static string AeroLiteMSSTYLES = $"{Windows}\\Resources\\Themes\\aero\\aerolite.msstyles";
+        public static string MSSTYLES_AeroLite_Win = $"{Windows}\\Resources\\Themes\\aero\\aerolite.msstyles";
 
         /// <summary>
         /// Represents the file path to the Luna theme's .msstyles file.
         /// </summary>
-        public static string LunaMSSTYLES = $"{Windows}\\Resources\\Themes\\Luna\\Luna.msstyles";
+        public static string MSSTYLES_Luna_Win = $"{Windows}\\Resources\\Themes\\Luna\\Luna.msstyles";
 
         #endregion
 

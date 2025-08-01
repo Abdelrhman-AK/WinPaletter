@@ -132,7 +132,7 @@ namespace WinPaletter.Theme.Structures
             OverrideColors = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", @default.OverrideColors));
             OverrideSizes = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", @default.OverrideSizes));
 
-            if (ThemeFile.ToLower() == SysPaths.LunaMSSTYLES.ToLower())
+            if (ThemeFile.ToLower() == SysPaths.MSSTYLES_Luna_Win.ToLower())
             {
                 if (colorName.ToString().ToLower() == "normalcolor")
                 {
@@ -151,11 +151,11 @@ namespace WinPaletter.Theme.Structures
                     VisualStylesType = DefaultVisualStyles.LunaBlue;
                 }
             }
-            else if (ThemeFile.ToLower() == SysPaths.AeroLiteMSSTYLES.ToLower())
+            else if (ThemeFile.ToLower() == SysPaths.MSSTYLES_AeroLite_Win.ToLower())
             {
                 VisualStylesType = DefaultVisualStyles.AeroLite;
             }
-            else if (ThemeFile.ToLower() == SysPaths.AeroMSSTYLES.ToLower())
+            else if (ThemeFile.ToLower() == SysPaths.MSSTYLES_Aero_Win.ToLower())
             {
                 if (DWMAPI.IsCompositionEnabled())
                 {
@@ -215,7 +215,7 @@ namespace WinPaletter.Theme.Structures
                 else if (VisualStylesType is DefaultVisualStyles.Aero or DefaultVisualStyles.AeroOpaque or DefaultVisualStyles.Basic)
                 {
                     UxTheme.EnableTheming(1);
-                    UxTheme.SetSystemVisualStyle(SysPaths.AeroMSSTYLES, "NormalColor", "NormalSize", 0, treeView);
+                    UxTheme.SetSystemVisualStyle(SysPaths.MSSTYLES_Aero_Win, "NormalColor", "NormalSize", 0, treeView);
 
                     var (policy, composition, opaqueBlend) = VisualStylesType switch
                     {
@@ -233,7 +233,7 @@ namespace WinPaletter.Theme.Structures
                 else if (VisualStylesType is DefaultVisualStyles.AeroLite)
                 {
                     UxTheme.EnableTheming(1);
-                    UxTheme.SetSystemVisualStyle(SysPaths.AeroLiteMSSTYLES, "NormalColor", "NormalSize", 0);
+                    UxTheme.SetSystemVisualStyle(SysPaths.MSSTYLES_AeroLite_Win, "NormalColor", "NormalSize", 0);
 
                     DelKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
 

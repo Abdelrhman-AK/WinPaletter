@@ -144,7 +144,7 @@ namespace WinPaletter
 
         private void linkLabel18_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Links.SecureUxThemeRepository);
+            Process.Start(Links.Serilog);
         }
     }
 }

@@ -41,9 +41,14 @@ namespace WinPaletter
                 button11.Image = Assets.WinLogos.Win10.Resize(20, 20);
             }
 
-            else if (OS.W8x)
+            else if (OS.W81)
             {
-                button11.Image = Assets.WinLogos.Win81.Resize(20, 20);
+                button11.Image = Assets.WinLogos.Win8_1.Resize(20, 20);
+            }
+
+            else if (OS.W8)
+            {
+                button11.Image = Assets.WinLogos.Win8.Resize(20, 20);
             }
 
             else if (OS.W7)

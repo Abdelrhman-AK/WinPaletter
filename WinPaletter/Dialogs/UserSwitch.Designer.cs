@@ -149,7 +149,7 @@ namespace WinPaletter
             this.Button1.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.CustomColorOnHover)));
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
-            this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
+            this.Button1.Image = global::WinPaletter.Properties.Resources.Login;
             this.Button1.ImageGlyph = null;
             this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(704, 7);

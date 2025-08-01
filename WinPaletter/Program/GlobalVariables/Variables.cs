@@ -204,5 +204,10 @@ namespace WinPaletter
         /// Timeout for web requests in milliseconds
         /// </summary>
         public static int Timeout => 15 * 1000;
+
+        /// <summary>
+        /// Represents the size of the preview area.
+        /// </summary>
+        public static Size PreviewSize = new Size(528, 297);
     }
 }

@@ -65,7 +65,7 @@ namespace WinPaletter
 
             // Set the form size and location.
             Size targetSize = Size;
-            Point targetLocation = Forms.Home.winEdition.PointToScreen(Point.Empty) - new Size(Width, 0);
+            Point targetLocation = Forms.Home.winEdition.PointToScreen(Point.Empty) - new Size(Width - Forms.Home.winEdition.Width, 0);
 
             Size = Forms.Home.winEdition.Size;
             Location = Forms.Home.winEdition.PointToScreen(Point.Empty);

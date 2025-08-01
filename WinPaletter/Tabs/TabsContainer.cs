@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
@@ -132,6 +133,15 @@ namespace WinPaletter.Tabs
                 }
             }
 
+            if (busy)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"`{form.Name}` form cannot be added into tabs as the tabs container is busy.");
+                Cursor = Cursors.Default;
+                return;
+            }
+
+            busy = true;
+
             TabPage TP = new() { BackColor = BackColor };
 
             form.TopLevel = false;
@@ -143,17 +153,11 @@ namespace WinPaletter.Tabs
             form.WindowState = FormWindowState.Normal;
 
             TP.Text = form.Text;
-            // If there is a bug, make TP.Controls.Add(form); here, not after adding and selecting tab page
+
             TP.Controls.Add(form);
 
-            // try is made to bypass ex error of that object is in use elsewhere
-            try
-            {
-                if (!DesignMode) Program.Animator.HideSync(TabControl);
-            }
-            catch { }
+            if (!DesignMode) Program.Animator.HideSync(TabControl);
 
-            // If there is a bug, make form.Hide(); here, not after adding and selecting tab page
             form.Show();
 
             forceChangeSelectedIndex = true;
@@ -171,14 +175,11 @@ namespace WinPaletter.Tabs
                 form.Controls.OfType<TitlebarExtender>().FirstOrDefault().Flag = TitlebarExtender.Flags.Tabs_Extended;
             }
 
-            // try is made to bypass ex error of that object is in use elsewhere
-            try
-            {
-                if (!DesignMode) Program.Animator.ShowSync(TabControl);
-            }
-            catch { }
+            if (!DesignMode) Program.Animator.ShowSync(TabControl);
 
             Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"`{form.Name}` form has been shown and added into tabs.");
+
+            busy = false;
 
             Cursor = Cursors.Default;
         }
@@ -787,6 +788,13 @@ namespace WinPaletter.Tabs
             ? TabDataList.ElementAt(_selectedIndex)
             : null;
 
+        private bool busy = false;
+
+        /// <summary>
+        /// Gets or sets if the tabs container is busy with adding/removing tabs
+        /// </summary>
+        public bool IsBusy => busy;
+
         #endregion
 
         #region Events/Overrides
@@ -972,7 +980,7 @@ namespace WinPaletter.Tabs
         {
             if (_tabControl != null)
             {
-                HandleTabControlMouseMove(e);
+                if (!IsBusy) HandleTabControlMouseMove(e);
             }
             else if (FindForm() != null && e.Button == MouseButtons.Left)
             {
@@ -988,7 +996,7 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (_tabControl != null)
+            if (_tabControl != null && !IsBusy)
             {
                 HandleTabControlMouseButtonClick(e);
             }
@@ -1006,7 +1014,7 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-            if (_tabControl != null)
+            if (_tabControl != null && !IsBusy)
             {
                 HandleTabControlMouseDoubleClick(e);
             }
@@ -1020,20 +1028,23 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (isMovingToLast)
+            if (!IsBusy)
             {
-                MoveToLast(moveFrom);
-            }
-            else if (isMovingToFirst)
-            {
-                MoveToFirst(moveFrom);
-            }
-            else if (moveFrom > -1 && moveTo > -1 && moveFrom != moveTo)
-            {
-                SwapTabs(moveFrom, moveTo);
-            }
+                if (isMovingToLast)
+                {
+                    MoveToLast(moveFrom);
+                }
+                else if (isMovingToFirst)
+                {
+                    MoveToFirst(moveFrom);
+                }
+                else if (moveFrom > -1 && moveTo > -1 && moveFrom != moveTo)
+                {
+                    SwapTabs(moveFrom, moveTo);
+                }
 
-            ResetModifiersToNull();
+                ResetModifiersToNull();
+            }
 
             base.OnMouseUp(e);
         }
@@ -1063,13 +1074,16 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            List<TabData> tabDatas = [.. TabDataList];
-            foreach (TabData tabData in tabDatas)
+            if (!IsBusy)
             {
-                if (IsMouseOverTab(tabData))
+                List<TabData> tabDatas = [.. TabDataList];
+                foreach (TabData tabData in tabDatas)
                 {
-                    ProcessTabMouseActions(tabData, e);
-                    break;
+                    if (IsMouseOverTab(tabData))
+                    {
+                        ProcessTabMouseActions(tabData, e);
+                        break;
+                    }
                 }
             }
 
@@ -1082,17 +1096,20 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnDragEnter(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(Form)))
+            if (!IsBusy)
             {
-                e.Effect = DragDropEffects.Move;
-            }
-            else if (e.Data.GetDataPresent(typeof(ColorItem)))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
+                if (e.Data.GetDataPresent(typeof(Form)))
+                {
+                    e.Effect = DragDropEffects.Move;
+                }
+                else if (e.Data.GetDataPresent(typeof(ColorItem)))
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.None;
+                }
             }
 
             base.OnDragEnter(e);
@@ -1104,21 +1121,24 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
+            if (!IsBusy)
             {
-                Point MousePosition = new(e.X, e.Y);
-
-                List<TabData> tabDatas = [.. TabDataList];
-                foreach (TabData tabData in tabDatas)
+                if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
                 {
-                    if (tabData.Rectangle.Contains(PointToClient(MousePosition)))
+                    Point MousePosition = new(e.X, e.Y);
+
+                    List<TabData> tabDatas = [.. TabDataList];
+                    foreach (TabData tabData in tabDatas)
                     {
-                        SelectedIndex = GetIndex(tabData);
-                        break;
+                        if (tabData.Rectangle.Contains(PointToClient(MousePosition)))
+                        {
+                            SelectedIndex = GetIndex(tabData);
+                            break;
+                        }
                     }
                 }
             }
-
+  
             base.OnDragOver(e);
         }
 

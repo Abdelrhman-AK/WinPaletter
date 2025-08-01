@@ -474,7 +474,7 @@ namespace WinPaletter
             // PictureBox11
             // 
             this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox11.Image = global::WinPaletter.Assets.Store.DesignedFor8;
+            this.PictureBox11.Image = global::WinPaletter.Assets.Store.DesignedFor81;
             this.PictureBox11.Location = new System.Drawing.Point(232, 215);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);

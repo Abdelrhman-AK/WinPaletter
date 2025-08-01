@@ -169,12 +169,11 @@ namespace WinPaletter
                         el = null;
                         break;
                     }
-
             }
 
             // Draw the visual style element.
             // There is a bug in Devcorp.Controls.VisualStyles.dll when a classic theme is running, it throws an exception.
-            if (!Program.ClassicThemeRunning)
+            if (el is not null && !Program.ClassicThemeRunning)
             {
                 try
                 {

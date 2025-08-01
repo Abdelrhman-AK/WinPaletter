@@ -435,20 +435,20 @@ namespace WinPaletter
         {
             try
             {
-                if (!System.IO.Directory.Exists(SysPaths.MSTheme_Dir))
+                if (!System.IO.Directory.Exists(SysPaths.Theme_Dir_WP))
                 {
-                    System.IO.Directory.CreateDirectory(SysPaths.MSTheme_Dir);
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.MSTheme_Dir}");
+                    System.IO.Directory.CreateDirectory(SysPaths.Theme_Dir_WP);
+                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.Theme_Dir_WP}");
                 }
 
-                WriteIfChangedOrNotExists(SysPaths.MSTheme_ZIP, Properties.Resources.luna);
+                WriteIfChangedOrNotExists(SysPaths.Theme_ZIP_WP, Properties.Resources.luna);
 
-                using (System.IO.FileStream archiveStream = new(SysPaths.MSTheme_ZIP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                using (System.IO.FileStream archiveStream = new(SysPaths.Theme_ZIP_WP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 using (ZipArchive zip = new(archiveStream, System.IO.Compression.ZipArchiveMode.Read))
                 {
                     foreach (ZipArchiveEntry entry in zip.Entries)
                     {
-                        string destinationPath = System.IO.Path.Combine(SysPaths.MSTheme_Dir, entry.FullName);
+                        string destinationPath = System.IO.Path.Combine(SysPaths.Theme_Dir_WP, entry.FullName);
 
                         if (entry.FullName.Contains("\\"))
                         {
@@ -487,7 +487,7 @@ namespace WinPaletter
                     archiveStream.Close();
                 }
 
-                System.IO.File.WriteAllText(SysPaths.MSTheme_Luna_theme, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.appData}\VisualStyles\Luna\luna.msstyles"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
             }
             catch (Exception ex)
             {

@@ -36,231 +36,138 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TerminalsDashboard));
-            this.Label49 = new System.Windows.Forms.Label();
-            this.Label2 = new System.Windows.Forms.Label();
-            this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button5 = new WinPaletter.UI.WP.Button();
             this.Button6 = new WinPaletter.UI.WP.Button();
-            this.Separator3 = new WinPaletter.UI.WP.SeparatorH();
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
-            this.Separator1 = new WinPaletter.UI.WP.SeparatorH();
-            this.SeparatorVertical1 = new WinPaletter.UI.WP.SeparatorV();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.button7 = new WinPaletter.UI.WP.Button();
             this.toolTip1 = new WinPaletter.UI.WP.ToolTip();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Label49
-            // 
-            this.Label49.BackColor = System.Drawing.Color.Transparent;
-            this.Label49.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label49.Location = new System.Drawing.Point(7, 7);
-            this.Label49.Name = "Label49";
-            this.Label49.Size = new System.Drawing.Size(149, 19);
-            this.Label49.TabIndex = 84;
-            this.Label49.Text = "Consoles:";
-            this.Label49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Label2
-            // 
-            this.Label2.BackColor = System.Drawing.Color.Transparent;
-            this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(171, 7);
-            this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(116, 19);
-            this.Label2.TabIndex = 92;
-            this.Label2.Text = "Windows Terminal:";
-            this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // PictureBox1
-            // 
-            this.PictureBox1.Location = new System.Drawing.Point(285, 7);
-            this.PictureBox1.Name = "PictureBox1";
-            this.PictureBox1.Size = new System.Drawing.Size(18, 18);
-            this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PictureBox1.TabIndex = 97;
-            this.PictureBox1.TabStop = false;
-            this.toolTip1.SetToolTip(this.PictureBox1, "It is effective for Windows 10 and Windows 11 (If you have installed Windows Term" +
-        "inal from the Store)");
-            // 
             // Button5
             // 
+            this.Button5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Button5.CustomColor = System.Drawing.Color.Empty;
             this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button5.ImageGlyph = null;
             this.Button5.ImageGlyphEnabled = false;
-            this.Button5.Location = new System.Drawing.Point(174, 68);
+            this.Button5.Location = new System.Drawing.Point(179, 41);
             this.Button5.Name = "Button5";
-            this.Button5.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button5.Size = new System.Drawing.Size(149, 27);
+            this.Button5.Size = new System.Drawing.Size(32, 79);
             this.Button5.TabIndex = 95;
-            this.Button5.Text = "Preview";
-            this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button5.Tag = "Windows Terminal Preview";
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
+            this.Button5.MouseEnter += new System.EventHandler(this.Button1_MouseEnter);
+            this.Button5.MouseLeave += new System.EventHandler(this.Button1_MouseLeave);
             // 
             // Button6
             // 
+            this.Button6.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Button6.CustomColor = System.Drawing.Color.Empty;
             this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
-            this.Button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button6.ImageGlyph = null;
             this.Button6.ImageGlyphEnabled = false;
-            this.Button6.Location = new System.Drawing.Point(174, 37);
+            this.Button6.Location = new System.Drawing.Point(141, 41);
             this.Button6.Name = "Button6";
-            this.Button6.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button6.Size = new System.Drawing.Size(149, 27);
+            this.Button6.Size = new System.Drawing.Size(32, 79);
             this.Button6.TabIndex = 94;
-            this.Button6.Text = "Stable";
-            this.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button6.Tag = "Windows Terminal Stable";
             this.Button6.UseVisualStyleBackColor = false;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
-            // 
-            // Separator3
-            // 
-            this.Separator3.AlternativeLook = false;
-            this.Separator3.BackColor = System.Drawing.Color.Transparent;
-            this.Separator3.Location = new System.Drawing.Point(174, 30);
-            this.Separator3.Name = "Separator3";
-            this.Separator3.Size = new System.Drawing.Size(149, 1);
-            this.Separator3.TabIndex = 93;
-            this.Separator3.TabStop = false;
-            this.Separator3.Text = "Separator3";
+            this.Button6.MouseEnter += new System.EventHandler(this.Button1_MouseEnter);
+            this.Button6.MouseLeave += new System.EventHandler(this.Button1_MouseLeave);
             // 
             // Button3
             // 
+            this.Button3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Button3.CustomColor = System.Drawing.Color.Empty;
             this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
-            this.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button3.ImageGlyph = null;
             this.Button3.ImageGlyphEnabled = false;
-            this.Button3.Location = new System.Drawing.Point(8, 98);
+            this.Button3.Location = new System.Drawing.Point(103, 41);
             this.Button3.Name = "Button3";
-            this.Button3.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button3.Size = new System.Drawing.Size(149, 27);
+            this.Button3.Size = new System.Drawing.Size(32, 79);
             this.Button3.TabIndex = 91;
-            this.Button3.Text = "PowerShell x64";
-            this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button3.Tag = "PowerShell x64";
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
+            this.Button3.MouseEnter += new System.EventHandler(this.Button1_MouseEnter);
+            this.Button3.MouseLeave += new System.EventHandler(this.Button1_MouseLeave);
             // 
             // Button4
             // 
+            this.Button4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Button4.CustomColor = System.Drawing.Color.Empty;
             this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
-            this.Button4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button4.ImageGlyph = null;
             this.Button4.ImageGlyphEnabled = false;
-            this.Button4.Location = new System.Drawing.Point(8, 67);
+            this.Button4.Location = new System.Drawing.Point(65, 41);
             this.Button4.Name = "Button4";
-            this.Button4.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button4.Size = new System.Drawing.Size(149, 27);
+            this.Button4.Size = new System.Drawing.Size(32, 79);
             this.Button4.TabIndex = 90;
-            this.Button4.Text = "PowerShell x86";
-            this.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button4.Tag = "PowerShell x86";
             this.Button4.UseVisualStyleBackColor = false;
             this.Button4.Click += new System.EventHandler(this.Button4_Click);
+            this.Button4.MouseEnter += new System.EventHandler(this.Button1_MouseEnter);
+            this.Button4.MouseLeave += new System.EventHandler(this.Button1_MouseLeave);
             // 
             // Button2
             // 
+            this.Button2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Button2.CustomColor = System.Drawing.Color.Empty;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = ((System.Drawing.Image)(resources.GetObject("Button2.Image")));
-            this.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button2.ImageGlyph = null;
             this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(8, 129);
+            this.Button2.Location = new System.Drawing.Point(217, 41);
             this.Button2.Name = "Button2";
-            this.Button2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button2.Size = new System.Drawing.Size(149, 27);
+            this.Button2.Size = new System.Drawing.Size(32, 79);
             this.Button2.TabIndex = 87;
-            this.Button2.Text = "External";
-            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button2.Tag = "External Terminal";
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
+            this.Button2.MouseEnter += new System.EventHandler(this.Button1_MouseEnter);
+            this.Button2.MouseLeave += new System.EventHandler(this.Button1_MouseLeave);
             // 
             // Button1
             // 
+            this.Button1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Button1.CustomColor = System.Drawing.Color.Empty;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Button1.ImageGlyph = null;
             this.Button1.ImageGlyphEnabled = false;
-            this.Button1.Location = new System.Drawing.Point(8, 36);
+            this.Button1.Location = new System.Drawing.Point(27, 41);
             this.Button1.Name = "Button1";
-            this.Button1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.Button1.Size = new System.Drawing.Size(149, 27);
+            this.Button1.Size = new System.Drawing.Size(32, 79);
             this.Button1.TabIndex = 86;
-            this.Button1.Text = "Command Prompt";
-            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button1.Tag = "Command Prompt";
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // Separator1
-            // 
-            this.Separator1.AlternativeLook = false;
-            this.Separator1.BackColor = System.Drawing.Color.Transparent;
-            this.Separator1.Location = new System.Drawing.Point(8, 30);
-            this.Separator1.Name = "Separator1";
-            this.Separator1.Size = new System.Drawing.Size(149, 1);
-            this.Separator1.TabIndex = 85;
-            this.Separator1.TabStop = false;
-            // 
-            // SeparatorVertical1
-            // 
-            this.SeparatorVertical1.AlternativeLook = false;
-            this.SeparatorVertical1.BackColor = System.Drawing.Color.Transparent;
-            this.SeparatorVertical1.Location = new System.Drawing.Point(163, 7);
-            this.SeparatorVertical1.Name = "SeparatorVertical1";
-            this.SeparatorVertical1.Size = new System.Drawing.Size(1, 149);
-            this.SeparatorVertical1.TabIndex = 102;
-            this.SeparatorVertical1.TabStop = false;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.PictureBox1);
-            this.panel1.Controls.Add(this.Label49);
-            this.panel1.Controls.Add(this.SeparatorVertical1);
-            this.panel1.Controls.Add(this.Label2);
-            this.panel1.Controls.Add(this.Separator1);
-            this.panel1.Controls.Add(this.Button5);
-            this.panel1.Controls.Add(this.Button1);
-            this.panel1.Controls.Add(this.Button6);
-            this.panel1.Controls.Add(this.Button2);
-            this.panel1.Controls.Add(this.Separator3);
-            this.panel1.Controls.Add(this.Button4);
-            this.panel1.Controls.Add(this.Button3);
-            this.panel1.Controls.Add(this.button7);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(331, 163);
-            this.panel1.TabIndex = 103;
-            this.panel1.Visible = false;
+            this.Button1.MouseEnter += new System.EventHandler(this.Button1_MouseEnter);
+            this.Button1.MouseLeave += new System.EventHandler(this.Button1_MouseLeave);
             // 
             // button7
             // 
@@ -272,7 +179,7 @@ namespace WinPaletter
             this.button7.Image = null;
             this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(306, 6);
+            this.button7.Location = new System.Drawing.Point(247, 9);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(20, 20);
             this.button7.TabIndex = 103;
@@ -290,12 +197,42 @@ namespace WinPaletter
             this.toolTip1.ToolTipText = "It is effective for Windows 10 and Windows 11 (If you have installed Windows Term" +
     "inal from the Store)";
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.Button6);
+            this.panel1.Controls.Add(this.Button1);
+            this.panel1.Controls.Add(this.button7);
+            this.panel1.Controls.Add(this.Button4);
+            this.panel1.Controls.Add(this.Button5);
+            this.panel1.Controls.Add(this.Button3);
+            this.panel1.Controls.Add(this.Button2);
+            this.panel1.Controls.Add(this.labelAlt1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(277, 130);
+            this.panel1.TabIndex = 106;
+            this.panel1.Visible = false;
+            // 
+            // labelAlt1
+            // 
+            this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt1.DrawOnGlass = true;
+            this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAlt1.Location = new System.Drawing.Point(12, 10);
+            this.labelAlt1.Name = "labelAlt1";
+            this.labelAlt1.Size = new System.Drawing.Size(229, 19);
+            this.labelAlt1.TabIndex = 105;
+            this.labelAlt1.Text = "0";
+            this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // TerminalsDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(331, 163);
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(277, 130);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
@@ -305,26 +242,20 @@ namespace WinPaletter
             this.ShowInTaskbar = false;
             this.Text = "Terminals Dashboard";
             this.Load += new System.EventHandler(this.TerminalsDashboard_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            this.Shown += new System.EventHandler(this.TerminalsDashboard_Shown);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
-
-        internal Label Label49;
-        internal UI.WP.SeparatorH Separator1;
         internal UI.WP.Button Button1;
         internal UI.WP.Button Button2;
         internal UI.WP.Button Button3;
         internal UI.WP.Button Button4;
         internal UI.WP.Button Button5;
         internal UI.WP.Button Button6;
-        internal UI.WP.SeparatorH Separator3;
-        internal Label Label2;
-        internal PictureBox PictureBox1;
-        internal UI.WP.SeparatorV SeparatorVertical1;
-        private Panel panel1;
         internal UI.WP.Button button7;
         private UI.WP.ToolTip toolTip1;
+        private Panel panel1;
+        private UI.WP.LabelAlt labelAlt1;
     }
 }

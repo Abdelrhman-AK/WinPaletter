@@ -242,11 +242,8 @@ namespace WinPaletter
             checkBox10.Checked = Sets.AspectsControl.ScreenSaver;
             checkBox12.Checked = Sets.AspectsControl.AltTab;
             checkBox14.Checked = Sets.AspectsControl.Icons;
-            checkBox15.Checked = Sets.AspectsControl.VisualStyles;
             checkBox16.Checked = Sets.AspectsControl.Accessibility;
 
-            checker_mode_advanced.Checked = Sets.AspectsControl.WinColors_Advanced;
-            checker_mode_simple.Checked = !Sets.AspectsControl.WinColors_Advanced;
             radioImage4.Checked = Sets.AspectsControl.ClassicColors_Advanced;
             radioImage3.Checked = !Sets.AspectsControl.ClassicColors_Advanced;
             radioImage6.Checked = Sets.AspectsControl.Cursors_Advanced;
@@ -577,12 +574,10 @@ namespace WinPaletter
             Sets.AspectsControl.ScreenSaver = checkBox10.Checked;
             Sets.AspectsControl.AltTab = checkBox12.Checked;
             Sets.AspectsControl.Icons = checkBox14.Checked;
-            Sets.AspectsControl.WinColors_Advanced = checker_mode_advanced.Checked;
             Sets.AspectsControl.ClassicColors_Advanced = radioImage4.Checked;
             Sets.AspectsControl.Cursors_Advanced = radioImage6.Checked;
             Sets.AspectsControl.MetricsFonts_Advanced = radioImage8.Checked;
             Sets.AspectsControl.Wallpaper_Advanced = radioImage10.Checked;
-            Sets.AspectsControl.VisualStyles = checkBox15.Checked;
             Sets.AspectsControl.Accessibility = checkBox16.Checked;
 
             Sets.Save(Mode, File);
@@ -803,8 +798,6 @@ namespace WinPaletter
                     Changed = true;
                 if (Settings.AspectsControl.Icons != checkBox14.Checked)
                     Changed = true;
-                if (Settings.AspectsControl.WinColors_Advanced != checker_mode_advanced.Checked)
-                    Changed = true;
                 if (Settings.AspectsControl.ClassicColors_Advanced != radioImage4.Checked)
                     Changed = true;
                 if (Settings.AspectsControl.Cursors_Advanced != radioImage6.Checked)
@@ -812,8 +805,6 @@ namespace WinPaletter
                 if (Settings.AspectsControl.MetricsFonts_Advanced != radioImage8.Checked)
                     Changed = true;
                 if (Settings.AspectsControl.Wallpaper_Advanced != radioImage10.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.VisualStyles != checkBox15.Checked)
                     Changed = true;
                 if (Settings.AspectsControl.Accessibility != checkBox16.Checked)
                     Changed = true;

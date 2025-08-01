@@ -61,6 +61,11 @@ namespace WinPaletter
                         Forms.Win81Colors.windowsDesktop1.BackgroundImage = wall;
                     }
 
+                    if (Application.OpenForms.OfType<Win8Colors>().Count() > 0)
+                    {
+                        Forms.Win8Colors.windowsDesktop1.BackgroundImage = wall;
+                    }
+
                     if (Application.OpenForms.OfType<Win7Colors>().Count() > 0)
                     {
                         Forms.Win7Colors.windowsDesktop1.BackgroundImage = wall;
@@ -119,7 +124,7 @@ namespace WinPaletter
             Log?.Write(Serilog.Events.LogEventLevel.Information, $"Fetching suitable wallpaper for {previewConfig}");
 
             // Create a PictureBox to mimic the Windows desktop ratio and wallpaper style
-            using (PictureBox picbox = new() { Size = Forms.Win11Colors.windowsDesktop1.Size, BackColor = TM.Win32.Background })
+            using (PictureBox picbox = new() { Size = Program.PreviewSize, BackColor = TM.Win32.Background })
             {
                 Bitmap wallpaper;
 

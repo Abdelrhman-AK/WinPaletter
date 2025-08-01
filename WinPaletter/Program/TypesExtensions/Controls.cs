@@ -359,23 +359,18 @@ namespace WinPaletter.TypesExtensions
         }
         private delegate void PerformStepMethod2Invoker(UI.WP.ProgressBar ProgressBar);
 
-        /// <summary>
-        /// Suspend drawing of a control to prevent flickering or unnecessary redraws
-        /// </summary>
-        /// <param name="parent"></param>
-        public static void SuspendDrawing(this Control parent)
+        public static bool IsInUse(this Control control)
         {
-            NativeMethods.User32.SendMessage(parent.Handle, 0x000B, IntPtr.Zero, IntPtr.Zero);
-        }
-
-        /// <summary>
-        /// Resume drawing of a control after it has been suspended
-        /// </summary>
-        /// <param name="parent"></param>
-        public static void ResumeDrawing(this Control parent)
-        {
-            NativeMethods.User32.SendMessage(parent.Handle, 0x000B, new IntPtr(1), IntPtr.Zero);
-            parent.Refresh();
+            // Checks if the control's handle is being used by another thread or operation
+            try
+            {
+                var handle = control.Handle; // Accessing Handle can throw if in use elsewhere
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                return true;
+            }
         }
     }
 }
