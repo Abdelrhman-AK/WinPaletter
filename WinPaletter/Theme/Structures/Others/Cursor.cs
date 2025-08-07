@@ -82,6 +82,13 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Opacity of line noise for cursor</summary>
         public float SecondaryColorNoiseOpacity = 0.25f;
 
+        /// <summary>
+        /// Specifies the thickness of the border.
+        /// </summary>
+        /// <remarks>The value represents the thickness of the border in device-independent units (DIUs).
+        /// A value of <see langword="1.0f"/> corresponds to a border thickness of 1 DIU.</remarks>
+        public float BorderThickness = 1.0f;
+
         /// <summary>BackColor of spinning circle (if cursor is appwait or busy)</summary>
         public Color LoadingCircleBack1 = Color.FromArgb(42, 151, 243);
 
@@ -207,6 +214,7 @@ namespace WinPaletter.Theme.Structures
             SecondaryColorNoiseOpacity = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", 25).ToString()) / 100;
             LoadingCircleBackNoiseOpacity = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoiseOpacity", 25).ToString()) / 100;
             LoadingCircleHotNoiseOpacity = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoiseOpacity", 25).ToString()) / 100;
+            BorderThickness = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", 1.0f).ToString());
 
             Shadow_Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", false));
             Shadow_Color = Color.FromArgb(Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Color.Black.ToArgb())));
@@ -242,6 +250,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.SecondaryColorGradientMode), RegistryValueKind.String);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoise", Cursor.SecondaryColorNoise ? 1 : 0);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", Cursor.SecondaryColorNoiseOpacity * 100f);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", Cursor.BorderThickness);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack1", Cursor.LoadingCircleBack1.ToArgb());
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack2", Cursor.LoadingCircleBack2.ToArgb());
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradient", Cursor.LoadingCircleBackGradient ? 1 : 0);

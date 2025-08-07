@@ -341,7 +341,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             case Paths.CursorType.Arrow:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Arrow) { Cursor = Paths.CursorType.Arrow, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Arrow) { Cursor = Paths.CursorType.Arrow, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1, 1);
                                     break;
@@ -349,7 +349,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Help:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Help) { Cursor = Paths.CursorType.Help, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Help) { Cursor = Paths.CursorType.Help, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1, 1);
                                     break;
@@ -357,7 +357,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.None:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_None) { Cursor = Paths.CursorType.None, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_None) { Cursor = Paths.CursorType.None, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
                                     break;
@@ -365,7 +365,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Move:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Move) { Cursor = Paths.CursorType.Move, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Move) { Cursor = Paths.CursorType.Move, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(11f * i), 1 + (int)Math.Round(11f * i));
                                     break;
@@ -373,7 +373,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Up:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Up) { Cursor = Paths.CursorType.Up, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Up) { Cursor = Paths.CursorType.Up, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(4f * i), 1);
                                     break;
@@ -381,7 +381,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.NS:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_NS) { Cursor = Paths.CursorType.NS, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_NS) { Cursor = Paths.CursorType.NS, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(11f * i));
                                     break;
@@ -389,7 +389,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.EW:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_EW) { Cursor = Paths.CursorType.EW, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_EW) { Cursor = Paths.CursorType.EW, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new((int)Math.Round(1f + 11f * i), (int)Math.Round(1f + 4f * i));
                                     break;
@@ -397,7 +397,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.NESW:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_NESW) { Cursor = Paths.CursorType.NESW, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_NESW) { Cursor = Paths.CursorType.NESW, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
                                     break;
@@ -405,7 +405,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.NWSE:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_NWSE) { Cursor = Paths.CursorType.NWSE, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_NWSE) { Cursor = Paths.CursorType.NWSE, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
                                     break;
@@ -413,7 +413,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Pen:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Pen) { Cursor = Paths.CursorType.Pen, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Pen) { Cursor = Paths.CursorType.Pen, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1, 1);
                                     break;
@@ -421,7 +421,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Link:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Link) { Cursor = Paths.CursorType.Link, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Link) { Cursor = Paths.CursorType.Link, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                     break;
@@ -429,7 +429,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Pin:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Pin) { Cursor = Paths.CursorType.Pin, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Pin) { Cursor = Paths.CursorType.Pin, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                     break;
@@ -437,7 +437,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Person:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Person) { Cursor = Paths.CursorType.Person, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Person) { Cursor = Paths.CursorType.Person, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                     break;
@@ -445,7 +445,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.IBeam:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_IBeam) { Cursor = Paths.CursorType.IBeam, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_IBeam) { Cursor = Paths.CursorType.IBeam, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(9f * i));
                                     break;
@@ -453,7 +453,7 @@ namespace WinPaletter.Theme.Structures
 
                             case Paths.CursorType.Cross:
                                 {
-                                    CursorOptions CurOptions = new(cursors.Cursor_Cross) { Cursor = Paths.CursorType.Cross, LineThickness = 1f, Scale = i, Angle = 0f };
+                                    CursorOptions CurOptions = new(cursors.Cursor_Cross) { Cursor = Paths.CursorType.Cross, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
                                     HotPoint = new(1 + (int)Math.Round(9f * i), 1 + (int)Math.Round(9f * i));
                                     break;
@@ -513,14 +513,14 @@ namespace WinPaletter.Theme.Structures
 
                         if (Type == Paths.CursorType.AppLoading)
                         {
-                            CursorOptions CurOptions = new(cursors.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, LineThickness = 1f, Scale = factor, Angle = angle };
+                            CursorOptions CurOptions = new(cursors.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, Scale = factor, Angle = angle };
                             bm = new(Paths.Draw(CurOptions));
                             HotPoint = new(1, 1 + (int)Math.Round(8f * factor));
                         }
 
                         else if (Type == Paths.CursorType.Busy)
                         {
-                            CursorOptions CurOptions = new(cursors.Cursor_Busy) { Cursor = Paths.CursorType.Busy, LineThickness = 1f, Scale = factor, Angle = angle };
+                            CursorOptions CurOptions = new(cursors.Cursor_Busy) { Cursor = Paths.CursorType.Busy, Scale = factor, Angle = angle };
                             bm = new(Paths.Draw(CurOptions));
                             HotPoint = new((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + (int)Math.Round(11f * factor), 1 + (int)Math.Round(11f * factor));
                         }

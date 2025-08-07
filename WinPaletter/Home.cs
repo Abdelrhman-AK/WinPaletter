@@ -170,55 +170,55 @@ namespace WinPaletter
             switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
-                    card1.Image = Assets.Themes.Theme_12;
+                    card1.Image = Assets.Themes_Banners.Theme_12;
                     winEdition.Image = Assets.WinLogos.Win12;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;
 
                 case WindowStyle.W11:
-                    card1.Image = Assets.Themes.Theme_11;
+                    card1.Image = Assets.Themes_Banners.Theme_11;
                     winEdition.Image = Assets.WinLogos.Win11;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W11);
                     break;
 
                 case WindowStyle.W10:
-                    card1.Image = Assets.Themes.Theme_10;
+                    card1.Image = Assets.Themes_Banners.Theme_10;
                     winEdition.Image = Assets.WinLogos.Win10;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W10);
                     break;
 
                 case WindowStyle.W81:
-                    card1.Image = Assets.Themes.Theme_8_1;
+                    card1.Image = Assets.Themes_Banners.Theme_8_1;
                     winEdition.Image = Assets.WinLogos.Win8_1;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W8:
-                    card1.Image = Assets.Themes.Theme_8;
+                    card1.Image = Assets.Themes_Banners.Theme_8;
                     winEdition.Image = Assets.WinLogos.Win8;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W7:
-                    card1.Image = Assets.Themes.Theme_7;
+                    card1.Image = Assets.Themes_Banners.Theme_7;
                     winEdition.Image = Assets.WinLogos.Win7;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W7);
                     break;
 
                 case WindowStyle.WVista:
-                    card1.Image = Assets.Themes.Theme_Vista;
+                    card1.Image = Assets.Themes_Banners.Theme_Vista;
                     winEdition.Image = Assets.WinLogos.WinVista;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WVista);
                     break;
 
                 case WindowStyle.WXP:
-                    card1.Image = Assets.Themes.Theme_XP;
+                    card1.Image = Assets.Themes_Banners.Theme_XP;
                     winEdition.Image = Assets.WinLogos.WinXP;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WXP);
                     break;
 
                 default:
-                    card1.Image = Assets.Themes.Theme_12;
+                    card1.Image = Assets.Themes_Banners.Theme_12;
                     winEdition.Image = Assets.WinLogos.Win12;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;

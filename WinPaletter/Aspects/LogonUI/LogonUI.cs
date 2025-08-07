@@ -242,11 +242,11 @@ namespace WinPaletter
 
             if (mostRecentFile != null && System.IO.File.Exists(mostRecentFile))
             {
-                return Bitmap_Mgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
+                return BitmapMgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
             }
             else if (System.IO.File.Exists(defaultLockScreen))
             {
-                return Bitmap_Mgr.Load(defaultLockScreen).Resize(tabs_preview_1.Size);
+                return BitmapMgr.Load(defaultLockScreen).Resize(tabs_preview_1.Size);
             }
             else
             {

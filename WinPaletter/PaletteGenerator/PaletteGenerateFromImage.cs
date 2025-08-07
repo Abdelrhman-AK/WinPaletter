@@ -151,13 +151,13 @@ namespace WinPaletter
         private void RadioButton2_CheckedChanged(object sender, EventArgs e)
         {
             // If the radio button is checked, get the colors from the image.
-            if (((UI.WP.RadioImage)sender).Checked) GetColors(Bitmap_Mgr.Load(TextBox1.Text));
+            if (((UI.WP.RadioImage)sender).Checked) GetColors(BitmapMgr.Load(TextBox1.Text));
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
             // If the radio button is checked, get the colors from the image.
-            if (RadioButton2.Checked) GetColors(Bitmap_Mgr.Load(TextBox1.Text));
+            if (RadioButton2.Checked) GetColors(BitmapMgr.Load(TextBox1.Text));
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -179,7 +179,7 @@ namespace WinPaletter
             }
             else
             {
-                GetColors(Bitmap_Mgr.Load(TextBox1.Text));
+                GetColors(BitmapMgr.Load(TextBox1.Text));
             }
         }
 
@@ -193,7 +193,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    GetColors(Bitmap_Mgr.Load(TextBox1.Text));
+                    GetColors(BitmapMgr.Load(TextBox1.Text));
                 }
             }
         }
@@ -620,7 +620,7 @@ namespace WinPaletter
             }
             else
             {
-                GetColors(Bitmap_Mgr.Load(TextBox1.Text));
+                GetColors(BitmapMgr.Load(TextBox1.Text));
             }
         }
 
@@ -634,7 +634,7 @@ namespace WinPaletter
             }
             else
             {
-                GetColors(Bitmap_Mgr.Load(TextBox1.Text));
+                GetColors(BitmapMgr.Load(TextBox1.Text));
             }
         }
     }

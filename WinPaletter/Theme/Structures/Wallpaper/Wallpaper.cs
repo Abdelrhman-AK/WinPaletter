@@ -194,7 +194,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
-                            using (Bitmap bmp = new(Bitmap_Mgr.Load(ImageFile)))
+                            using (Bitmap bmp = new(BitmapMgr.Load(ImageFile)))
                             {
                                 if (bmp.RawFormat != System.Drawing.Imaging.ImageFormat.Bmp)
                                 {

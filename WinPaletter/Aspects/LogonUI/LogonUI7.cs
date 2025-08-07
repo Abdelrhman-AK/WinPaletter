@@ -241,7 +241,7 @@ namespace WinPaletter
             }
             else if (RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
             {
-                bmpX = Bitmap_Mgr.Load(TextBox1.Text);
+                bmpX = BitmapMgr.Load(TextBox1.Text);
             }
 
             else

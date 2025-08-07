@@ -22,14 +22,14 @@ namespace WinPaletter.Assets {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Themes {
+    internal class Themes_Banners {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Themes() {
+        internal Themes_Banners() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WinPaletter.Assets {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinPaletter.Assets.Themes", typeof(Themes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinPaletter.Assets.Themes_Banners", typeof(Themes_Banners).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

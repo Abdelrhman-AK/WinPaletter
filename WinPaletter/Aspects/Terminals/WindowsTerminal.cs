@@ -516,7 +516,7 @@ namespace WinPaletter
 
             if (File.Exists(temp.Icon))
             {
-                Terminal1.TabIcon = Bitmap_Mgr.Load(temp.Icon);
+                Terminal1.TabIcon = BitmapMgr.Load(temp.Icon);
             }
 
             else
@@ -1429,7 +1429,7 @@ namespace WinPaletter
             }
             else if (File.Exists(TerBackImage.Text))
             {
-                Terminal1.BackImage = Bitmap_Mgr.Load(TerBackImage.Text).FillScale(new(Terminal1.Width - 2, Terminal1.Height - 32));
+                Terminal1.BackImage = BitmapMgr.Load(TerBackImage.Text).FillScale(new(Terminal1.Width - 2, Terminal1.Height - 32));
             }
 
             else
@@ -1705,7 +1705,7 @@ namespace WinPaletter
 
                         if (File.Exists(CCatFrom.Icon))
                         {
-                            Terminal1.TabIcon = Bitmap_Mgr.Load(CCatFrom.Icon);
+                            Terminal1.TabIcon = BitmapMgr.Load(CCatFrom.Icon);
                         }
 
                         else

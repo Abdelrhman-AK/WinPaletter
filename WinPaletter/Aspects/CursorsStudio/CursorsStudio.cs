@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -124,11 +125,6 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void ModeSwitched(object sender, EventArgs e)
-        {
-            tablessControl1.SelectedIndex = AdvancedMode ? 0 : 1;
-        }
-
         public void CursorTM_to_Cursor(CursorControl CursorControl, Theme.Structures.Cursor Cursor)
         {
             CursorControl.Prop_UseFromFile = Cursor.UseFromFile;
@@ -165,6 +161,7 @@ namespace WinPaletter
             CursorControl.Prop_Shadow_Opacity = Cursor.Shadow_Opacity;
             CursorControl.Prop_Shadow_OffsetX = Cursor.Shadow_OffsetX;
             CursorControl.Prop_Shadow_OffsetY = Cursor.Shadow_OffsetY;
+            CursorControl.Prop_BorderThickness = Cursor.BorderThickness;
         }
 
         public Theme.Structures.Cursor Cursor_to_CursorTM(CursorControl CursorControl)
@@ -204,6 +201,7 @@ namespace WinPaletter
             Cursor.Shadow_Opacity = CursorControl.Prop_Shadow_Opacity;
             Cursor.Shadow_OffsetX = CursorControl.Prop_Shadow_OffsetX;
             Cursor.Shadow_OffsetY = CursorControl.Prop_Shadow_OffsetY;
+            Cursor.BorderThickness = CursorControl.Prop_BorderThickness;
 
             return Cursor;
         }
@@ -295,6 +293,7 @@ namespace WinPaletter
                 GeneratePalette = false,
                 GenerateMSTheme = false,
                 Import_preset = true,
+                CanSwitchMode = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
@@ -308,9 +307,6 @@ namespace WinPaletter
                 OnImportFromScheme_7 = ImportWin7Preset,
                 OnImportFromScheme_Vista = ImportWinVistaPreset,
                 OnImportFromScheme_XP = ImportWinXPPreset,
-
-                OnModeAdvanced = ModeSwitched,
-                OnModeSimple = ModeSwitched,
             };
 
             LoadData(data);
@@ -360,7 +356,6 @@ namespace WinPaletter
             _SelectedControl = (CursorControl)sender;
             ApplyColorsFromCursor(_SelectedControl);
             Button1.Enabled = true;
-            if (!tabControl1.Visible) Program.Animator.ShowSync(tabControl1);
         }
 
         public void ApplyColorsFromCursor(CursorControl CursorControl)
@@ -384,7 +379,8 @@ namespace WinPaletter
             CheckBox4.Checked = CursorControl.Prop_SecondaryColorGradient;
             ComboBox2.SelectedItem = Paths.ReturnStringFromGradientMode(CursorControl.Prop_SecondaryColorGradientMode);
             CheckBox3.Checked = CursorControl.Prop_SecondaryNoise;
-            trackBarX2.Value = (int)Math.Round(CursorControl.Prop_SecondaryNoiseOpacity * 100f);
+            trackBarX2.Value = (int)Math.Round(CursorControl.Prop_SecondaryNoiseOpacity * trackBarX12.Maximum);
+            trackBarX12.Value = (int)(CursorControl.Prop_BorderThickness * 10f);
 
             CircleColor1.BackColor = CursorControl.Prop_LoadingCircleBack1;
             CircleColor2.BackColor = CursorControl.Prop_LoadingCircleBack2;
@@ -400,7 +396,7 @@ namespace WinPaletter
             CheckBox6.Checked = CursorControl.Prop_LoadingCircleHotNoise;
             trackBarX4.Value = (int)Math.Round(CursorControl.Prop_LoadingCircleHotNoiseOpacity * 100f);
 
-            CheckBox11.Checked = CursorControl.Prop_Shadow_Enabled;
+            toggle1.Checked = CursorControl.Prop_Shadow_Enabled;
             ColorItem1.BackColor = CursorControl.Prop_Shadow_Color;
             trackBarX5.Value = CursorControl.Prop_Shadow_Blur;
             trackBarX6.Value = (int)Math.Round(CursorControl.Prop_Shadow_Opacity * 100f);
@@ -421,36 +417,36 @@ namespace WinPaletter
             CursorControl.Prop_PrimaryColorGradient = CheckBox1.Checked;
             CursorControl.Prop_PrimaryColorGradientMode = Paths.ReturnGradientModeFromString(ComboBox1.SelectedItem.ToString());
             CursorControl.Prop_PrimaryNoise = CheckBox5.Checked;
-            CursorControl.Prop_PrimaryNoiseOpacity = (float)(trackBarX1.Value / 100d);
+            CursorControl.Prop_PrimaryNoiseOpacity = trackBarX1.Value;
 
             CursorControl.Prop_SecondaryColor1 = SecondaryColor1.BackColor;
             CursorControl.Prop_SecondaryColor2 = SecondaryColor2.BackColor;
             CursorControl.Prop_SecondaryColorGradient = CheckBox4.Checked;
             CursorControl.Prop_SecondaryColorGradientMode = Paths.ReturnGradientModeFromString(ComboBox2.SelectedItem.ToString());
             CursorControl.Prop_SecondaryNoise = CheckBox3.Checked;
-            CursorControl.Prop_SecondaryNoiseOpacity = (float)(trackBarX2.Value / 100d);
+            CursorControl.Prop_SecondaryNoiseOpacity = trackBarX2.Value / 100f;
+            CursorControl.Prop_BorderThickness = trackBarX12.Value / trackBarX12.Maximum;
 
             CursorControl.Prop_LoadingCircleBack1 = CircleColor1.BackColor;
             CursorControl.Prop_LoadingCircleBack2 = CircleColor2.BackColor;
             CursorControl.Prop_LoadingCircleBackGradient = CheckBox8.Checked;
             CursorControl.Prop_LoadingCircleBackGradientMode = Paths.ReturnGradientModeFromString(ComboBox4.SelectedItem.ToString());
             CursorControl.Prop_LoadingCircleBackNoise = CheckBox7.Checked;
-            CursorControl.Prop_LoadingCircleBackNoiseOpacity = (float)(trackBarX3.Value / 100d);
+            CursorControl.Prop_LoadingCircleBackNoiseOpacity = trackBarX3.Value / 100f;
 
             CursorControl.Prop_LoadingCircleHot1 = LoadingColor1.BackColor;
             CursorControl.Prop_LoadingCircleHot2 = LoadingColor2.BackColor;
             CursorControl.Prop_LoadingCircleHotGradient = CheckBox2.Checked;
             CursorControl.Prop_LoadingCircleHotGradientMode = Paths.ReturnGradientModeFromString(ComboBox3.SelectedItem.ToString());
             CursorControl.Prop_LoadingCircleHotNoise = CheckBox6.Checked;
-            CursorControl.Prop_LoadingCircleHotNoiseOpacity = (float)(trackBarX4.Value / 100d);
+            CursorControl.Prop_LoadingCircleHotNoiseOpacity = trackBarX4.Value / 100f;
 
-            CursorControl.Prop_Shadow_Enabled = CheckBox11.Checked;
+            CursorControl.Prop_Shadow_Enabled = toggle1.Checked;
             CursorControl.Prop_Shadow_Color = ColorItem1.BackColor;
             CursorControl.Prop_Shadow_Blur = trackBarX5.Value;
-            CursorControl.Prop_Shadow_Opacity = (float)(trackBarX6.Value / 100d);
+            CursorControl.Prop_Shadow_Opacity = trackBarX6.Value / 100f;
             CursorControl.Prop_Shadow_OffsetX = trackBarX7.Value;
             CursorControl.Prop_Shadow_OffsetY = trackBarX8.Value;
-
         }
 
         private void TaskbarFrontAndFoldersOnStart_picker_Click(object sender, EventArgs e)
@@ -468,7 +464,6 @@ namespace WinPaletter
                 if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
                 {
                     _SelectedControl.Prop_PrimaryColor1 = ((ColorItem)sender).BackColor;
-
                 }
                 return;
             }
@@ -648,6 +643,8 @@ namespace WinPaletter
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
+            PrimaryColor2.Visible = (sender as UI.WP.CheckBox).Checked;
+
             if (!IsShown) return;
 
             _SelectedControl.Prop_PrimaryColorGradient = CheckBox1.Checked;
@@ -657,6 +654,8 @@ namespace WinPaletter
 
         private void CheckBox4_CheckedChanged(object sender, EventArgs e)
         {
+            SecondaryColor2.Visible = (sender as UI.WP.CheckBox).Checked;
+
             if (!IsShown) return;
 
             _SelectedControl.Prop_SecondaryColorGradient = CheckBox4.Checked;
@@ -750,13 +749,6 @@ namespace WinPaletter
                 if (condition0 || condition1) { AnimateList.Add(i); }
             }
 
-            foreach (CursorControl i in panel2.Controls.OfType<CursorControl>())
-            {
-                bool condition0 = !i.Prop_UseFromFile && (i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy);
-                bool condition1 = i.Prop_UseFromFile && System.IO.File.Exists(i.Prop_File) && System.IO.Path.GetExtension(i.Prop_File).ToUpper() == ".ANI";
-                if (condition0 || condition1) { AnimateList.Add(i); }
-            }
-
             Angle = 180f;
             Cycles = 0;
             Timer1.Enabled = true;
@@ -804,7 +796,6 @@ namespace WinPaletter
 
         private void GroupBox8_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
                 _SelectedControl.Prop_LoadingCircleHot1 = ((ColorItem)sender).BackColor;
@@ -843,7 +834,6 @@ namespace WinPaletter
 
         private void GroupBox7_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
                 _SelectedControl.Prop_LoadingCircleHot2 = ((ColorItem)sender).BackColor;
@@ -882,6 +872,8 @@ namespace WinPaletter
 
         private void CheckBox8_CheckedChanged(object sender, EventArgs e)
         {
+            CircleColor2.Visible = (sender as UI.WP.CheckBox).Checked;
+
             if (!IsShown) return;
 
             _SelectedControl.Prop_LoadingCircleBackGradient = CheckBox8.Checked;
@@ -891,6 +883,8 @@ namespace WinPaletter
 
         private void CheckBox2_CheckedChanged(object sender, EventArgs e)
         {
+            LoadingColor2.Visible = (sender as UI.WP.CheckBox).Checked;
+
             if (!IsShown) return;
 
             _SelectedControl.Prop_LoadingCircleHotGradient = CheckBox2.Checked;
@@ -1014,14 +1008,6 @@ namespace WinPaletter
 
         }
 
-        private void CheckBox11_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!IsShown) return;
-
-            _SelectedControl.Prop_Shadow_Enabled = CheckBox11.Checked;
-            _SelectedControl.Invalidate();
-        }
-
         private void button20_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new() { Filter = Program.Filters.Cursors, Title = Program.Lang.Strings.Extensions.OpenCursor })
@@ -1043,177 +1029,104 @@ namespace WinPaletter
         {
             _SelectedControl.Prop_UseFromFile = !source0.Checked;
             _SelectedControl.Invalidate();
-
-            if (source0.Checked)
-            {
-                ComboBox5.Enabled = true; ComboBox6.Enabled = true;
-                tabControl1.TabPages[1].GetAllControls().ToList().ForEach(x => x.Enabled = true);
-                tabControl1.TabPages[2].GetAllControls().ToList().ForEach(x => x.Enabled = true);
-                tabControl1.TabPages[3].GetAllControls().ToList().ForEach(x => x.Enabled = false);
-            }
         }
 
         private void source1_CheckedChanged(object sender, EventArgs e)
         {
             _SelectedControl.Prop_UseFromFile = source1.Checked;
             _SelectedControl.Invalidate();
-
-            if (source1.Checked)
-            {
-                ComboBox5.Enabled = false; ComboBox6.Enabled = false;
-                tabControl1.TabPages[1].GetAllControls().ToList().ForEach(x => x.Enabled = false);
-                tabControl1.TabPages[2].GetAllControls().ToList().ForEach(x => x.Enabled = false);
-                tabControl1.TabPages[3].GetAllControls().ToList().ForEach(x => x.Enabled = true);
-            }
         }
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 100f)
+            if (_SelectedControl is not null)
             {
-                valX = 100f;
+                _SelectedControl.Prop_PrimaryNoiseOpacity = (sender as TrackBarX).Value / 100f;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_PrimaryNoiseOpacity = valX / 100f;
-            _SelectedControl.Invalidate();
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 100f)
+            if (_SelectedControl is not null)
             {
-                valX = 100f;
+                _SelectedControl.Prop_SecondaryNoiseOpacity = (sender as TrackBarX).Value / 100f;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_SecondaryNoiseOpacity = valX / 100f;
-            _SelectedControl.Invalidate();
         }
 
         private void trackBarX3_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 100f)
+            if (_SelectedControl is not null)
             {
-                valX = 100f;
+                _SelectedControl.Prop_LoadingCircleBackNoiseOpacity = (sender as TrackBarX).Value / 100f;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_LoadingCircleBackNoiseOpacity = valX / 100f;
-            _SelectedControl.Invalidate();
         }
 
         private void trackBarX4_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 100f)
+            if (_SelectedControl is not null)
             {
-                valX = 100f;
+                _SelectedControl.Prop_LoadingCircleHotNoiseOpacity = (sender as TrackBarX).Value / 100f;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_LoadingCircleHotNoiseOpacity = valX / 100f;
-            _SelectedControl.Invalidate();
         }
 
         private void trackBarX5_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 10f)
+            if (_SelectedControl is not null)
             {
-                valX = 10f;
+                _SelectedControl.Prop_Shadow_Blur = (sender as TrackBarX).Value;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_Shadow_Blur = (int)Math.Round(valX);
-            _SelectedControl.Invalidate();
         }
 
         private void trackBarX6_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 100f)
+            if (_SelectedControl is not null)
             {
-                valX = 100f;
+                _SelectedControl.Prop_Shadow_Opacity = (sender as TrackBarX).Value / 100f;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_Shadow_Opacity = valX / 100f;
-            _SelectedControl.Invalidate();
         }
 
         private void trackBarX7_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 5f)
+            if (_SelectedControl is not null)
             {
-                valX = 5f;
+                _SelectedControl.Prop_Shadow_OffsetX = (sender as TrackBarX).Value;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_Shadow_OffsetX = (int)Math.Round(valX);
-            _SelectedControl.Invalidate();
         }
 
         private void trackBarX8_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
 
-            float valX = Conversions.ToSingle(((TrackBarX)sender).Value);
-            if (valX > 5f)
+            if (_SelectedControl is not null)
             {
-                valX = 5f;
+                _SelectedControl.Prop_Shadow_OffsetY = (sender as TrackBarX).Value;
+                _SelectedControl.Invalidate();
             }
-            else if (valX < 0f)
-            {
-                valX = 0f;
-            }
-
-            _SelectedControl.Prop_Shadow_OffsetY = (int)Math.Round(valX);
-            _SelectedControl.Invalidate();
         }
 
         private void cursorControl1_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
@@ -1227,7 +1140,6 @@ namespace WinPaletter
 
         private void cursorControl2_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
@@ -1241,7 +1153,6 @@ namespace WinPaletter
 
         private void cursorControl3_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
@@ -1255,7 +1166,6 @@ namespace WinPaletter
 
         private void cursorControl4_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
@@ -1269,7 +1179,6 @@ namespace WinPaletter
 
         private void cursorControl5_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
@@ -1283,7 +1192,6 @@ namespace WinPaletter
 
         private void cursorControl6_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
@@ -1297,7 +1205,6 @@ namespace WinPaletter
 
         private void cursorControl7_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
@@ -1311,24 +1218,12 @@ namespace WinPaletter
 
         private void colorItem2_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
             if (e is DragEventArgs)
             {
                 foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
-                {
-                    Color back = ((ColorItem)sender).BackColor;
-                    Color border = back.IsDark() ? back.LightLight() : back.Dark();
-
-                    cursorControl.Prop_PrimaryColor1 = back;
-                    cursorControl.Prop_PrimaryColor2 = back;
-                    cursorControl.Prop_SecondaryColor1 = border;
-                    cursorControl.Prop_SecondaryColor2 = border;
-                }
-
-                foreach (CursorControl cursorControl in panel1.Controls.OfType<CursorControl>())
                 {
                     Color back = ((ColorItem)sender).BackColor;
                     Color border = back.IsDark() ? back.LightLight() : back.Dark();
@@ -1357,17 +1252,6 @@ namespace WinPaletter
                         cursorControl.Prop_SecondaryColor1 = border;
                         cursorControl.Prop_SecondaryColor2 = border;
                     }
-
-                    foreach (CursorControl cursorControl in panel1.Controls.OfType<CursorControl>())
-                    {
-                        Color back = ((ColorItem)sender).BackColor;
-                        Color border = back.IsDark() ? back.LightLight() : back.Dark();
-
-                        cursorControl.Prop_PrimaryColor1 = back;
-                        cursorControl.Prop_PrimaryColor2 = back;
-                        cursorControl.Prop_SecondaryColor1 = border;
-                        cursorControl.Prop_SecondaryColor2 = border;
-                    }
                 }
 
                 return;
@@ -1384,27 +1268,12 @@ namespace WinPaletter
                 CList.Add(cursorControl, [nameof(cursorControl.Prop_PrimaryColor1), nameof(cursorControl.Prop_PrimaryColor2)]);
             }
 
-            foreach (CursorControl cursorControl in panel1.Controls.OfType<CursorControl>())
-            {
-                CList.Add(cursorControl, [nameof(cursorControl.Prop_PrimaryColor1), nameof(cursorControl.Prop_PrimaryColor2)]);
-            }
-
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
             colorItem.BackColor = C;
             colorItem.Invalidate();
 
             foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
-            {
-                Color border = C.IsDark() ? C.LightLight() : C.Dark();
-
-                cursorControl.Prop_PrimaryColor1 = C;
-                cursorControl.Prop_PrimaryColor2 = C;
-                cursorControl.Prop_SecondaryColor1 = border;
-                cursorControl.Prop_SecondaryColor2 = border;
-            }
-
-            foreach (CursorControl cursorControl in panel1.Controls.OfType<CursorControl>())
             {
                 Color border = C.IsDark() ? C.LightLight() : C.Dark();
 
@@ -1419,24 +1288,12 @@ namespace WinPaletter
 
         private void easy_busy_Click(object sender, EventArgs e)
         {
-            tabControl1.Visible = false;
             if (_SelectedControl != null) _SelectedControl.Focused = false;
             _SelectedControl = null;
 
             if (e is DragEventArgs)
             {
                 foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
-                {
-                    Color back = ((ColorItem)sender).BackColor;
-                    Color border = back.IsDark() ? back.LightLight() : back.Dark();
-
-                    cursorControl.Prop_LoadingCircleBack1 = back;
-                    cursorControl.Prop_LoadingCircleBack2 = back;
-                    cursorControl.Prop_LoadingCircleHot1 = border;
-                    cursorControl.Prop_LoadingCircleHot2 = border;
-                }
-
-                foreach (CursorControl cursorControl in panel2.Controls.OfType<CursorControl>())
                 {
                     Color back = ((ColorItem)sender).BackColor;
                     Color border = back.IsDark() ? back.LightLight() : back.Dark();
@@ -1465,17 +1322,6 @@ namespace WinPaletter
                         cursorControl.Prop_LoadingCircleHot1 = border;
                         cursorControl.Prop_LoadingCircleHot2 = border;
                     }
-
-                    foreach (CursorControl cursorControl in panel2.Controls.OfType<CursorControl>())
-                    {
-                        Color back = ((ColorItem)sender).BackColor;
-                        Color border = back.IsDark() ? back.LightLight() : back.Dark();
-
-                        cursorControl.Prop_LoadingCircleBack1 = back;
-                        cursorControl.Prop_LoadingCircleBack2 = back;
-                        cursorControl.Prop_LoadingCircleHot1 = border;
-                        cursorControl.Prop_LoadingCircleHot2 = border;
-                    }
                 }
                 return;
             }
@@ -1491,27 +1337,12 @@ namespace WinPaletter
                 CList.Add(cursorControl, [nameof(cursorControl.Prop_LoadingCircleBack1), nameof(cursorControl.Prop_LoadingCircleBack2)]);
             }
 
-            foreach (CursorControl cursorControl in panel2.Controls.OfType<CursorControl>())
-            {
-                CList.Add(cursorControl, [nameof(cursorControl.Prop_LoadingCircleBack1), nameof(cursorControl.Prop_LoadingCircleBack2)]);
-            }
-
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
             colorItem.BackColor = C;
             colorItem.Invalidate();
 
             foreach (CursorControl cursorControl in cursorsConatiner.Controls.OfType<CursorControl>())
-            {
-                Color border = C.IsDark() ? C.LightLight() : C.Dark();
-
-                cursorControl.Prop_LoadingCircleBack1 = C;
-                cursorControl.Prop_LoadingCircleBack2 = C;
-                cursorControl.Prop_LoadingCircleHot1 = border;
-                cursorControl.Prop_LoadingCircleHot2 = border;
-            }
-
-            foreach (CursorControl cursorControl in panel2.Controls.OfType<CursorControl>())
             {
                 Color border = C.IsDark() ? C.LightLight() : C.Dark();
 
@@ -1527,6 +1358,70 @@ namespace WinPaletter
         private void trackBarX10_ValueChanged(object sender, EventArgs e)
         {
             setCursorsSizes();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as UI.WP.RadioButton).Checked)
+            {
+                tablessControl1.SelectedIndex = 0;
+                tablessControl1.Visible = true;
+                tablessControl2.Visible = true;
+            }
+
+            _SelectedControl.Prop_UseFromFile = !source0.Checked;
+            _SelectedControl.Invalidate();
+        }
+
+        private void radioImage2_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioImage).Checked) tablessControl2.SelectedIndex = 0;
+        }
+
+        private void radioImage3_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioImage).Checked) tablessControl2.SelectedIndex = 1;
+        }
+
+        private void radioImage4_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioImage).Checked) tablessControl2.SelectedIndex = 2;
+        }
+
+        private void radioImage6_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioImage).Checked) tablessControl2.SelectedIndex = 3;
+        }
+
+        private void radioImage1_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioImage).Checked) tablessControl2.SelectedIndex = 4;
+        }
+
+        private void source1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if ((sender as UI.WP.RadioButton).Checked)
+            {
+                tablessControl1.SelectedIndex = 1;
+                tablessControl1.Visible = true;
+                tablessControl2.Visible = false;
+            }
+        }
+
+        private void toggle1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!IsShown) return;
+
+            _SelectedControl.Prop_Shadow_Enabled = toggle1.Checked;
+            _SelectedControl.Invalidate();
+        }
+
+        private void trackBarX12_ValueChanged(object sender, EventArgs e)
+        {
+            if (!IsShown) return;
+
+            _SelectedControl.Prop_BorderThickness = (sender as TrackBarX).Value / 10f;
+            _SelectedControl.Invalidate();
         }
     }
 }

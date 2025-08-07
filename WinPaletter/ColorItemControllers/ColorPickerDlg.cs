@@ -307,7 +307,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            img = RadioButton1.Checked ? Program.Wallpaper : Bitmap_Mgr.Load(TextBox1.Text);
+            img = RadioButton1.Checked ? Program.Wallpaper : BitmapMgr.Load(TextBox1.Text);
 
             if (CheckBox2.Checked) img = img.Resize(300, 300);
 

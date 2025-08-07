@@ -277,7 +277,7 @@ namespace WinPaletter
                     SysLock = $@"{SysPaths.Windows}\Web\Screen\img10{ID}.png";
                 }
 
-                bmpX = Bitmap_Mgr.Load(SysLock);
+                bmpX = BitmapMgr.Load(SysLock);
             }
 
             else if (RadioButton2.Checked)
@@ -295,7 +295,7 @@ namespace WinPaletter
 
             else if (RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
             {
-                bmpX = Bitmap_Mgr.Load(TextBox1.Text);
+                bmpX = BitmapMgr.Load(TextBox1.Text);
             }
 
             else

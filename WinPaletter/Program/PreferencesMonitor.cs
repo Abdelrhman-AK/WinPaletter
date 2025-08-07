@@ -140,7 +140,7 @@ namespace WinPaletter
                     // If the wallpaper is not tinted, get the wallpaper according to the theme manager settings.
                     wallpaper ??= TM.Wallpaper.WallpaperType switch
                     {
-                        Theme.Structures.Wallpaper.WallpaperTypes.Picture when System.IO.File.Exists(TM.Wallpaper.ImageFile) => Bitmap_Mgr.Load(TM.Wallpaper.ImageFile),
+                        Theme.Structures.Wallpaper.WallpaperTypes.Picture when System.IO.File.Exists(TM.Wallpaper.ImageFile) => BitmapMgr.Load(TM.Wallpaper.ImageFile),
                         Theme.Structures.Wallpaper.WallpaperTypes.SolidColor => null,
                         Theme.Structures.Wallpaper.WallpaperTypes.SlideShow => FetchSlideShowWallpaper(TM),
                         _ => ThumbnailWallpaper
@@ -237,7 +237,7 @@ namespace WinPaletter
             {
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching the first image from the slideshow folder to be used as a preview: {imageFiles[0]}", imageFiles[0]);
 
-                return Bitmap_Mgr.Load(imageFiles[0]);
+                return BitmapMgr.Load(imageFiles[0]);
             }
 
             // If the first image is not found, return the Windows desktop wallpaper
@@ -292,7 +292,7 @@ namespace WinPaletter
             // If the wallpaper type is valid (image), return the wallpaper from the registry
             if (wallpaperType != 1 && !string.IsNullOrEmpty(wallpaperPath) && System.IO.File.Exists(wallpaperPath))
             {
-                using (Bitmap bmp = Bitmap_Mgr.Load(wallpaperPath))
+                using (Bitmap bmp = BitmapMgr.Load(wallpaperPath))
                 {
                     if (bmp == null)
                     {

@@ -543,6 +543,20 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
+        private float _prop_BorderThickness = 1f;
+        public float Prop_BorderThickness
+        {
+            get => _prop_BorderThickness;
+            set
+            {
+                if (value != _prop_BorderThickness)
+                {
+                    _prop_BorderThickness = value;
+                    Invalidate();
+                }
+            }
+        }
+
         private bool _focused = false;
         public bool Focused
         {
@@ -712,7 +726,7 @@ namespace WinPaletter.UI.Controllers
                 LoadingCircleBackNoiseOpacity = Prop_LoadingCircleBackNoiseOpacity,
                 LoadingCircleHotNoise = Prop_LoadingCircleHotNoise,
                 LoadingCircleHotNoiseOpacity = Prop_LoadingCircleHotNoiseOpacity,
-                LineThickness = 1f,
+                BorderThickness = Prop_BorderThickness,
                 Scale = Prop_Scale,
                 Angle = Angle,
                 Shadow_Enabled = Prop_Shadow_Enabled,

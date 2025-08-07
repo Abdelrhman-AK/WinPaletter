@@ -54,7 +54,7 @@ namespace WinPaletter
             this.radioImage6.Checked = false;
             this.radioImage6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage6.ForeColor = System.Drawing.Color.White;
-            this.radioImage6.Image = ((System.Drawing.Image)(resources.GetObject("radioImage6.Image")));
+            this.radioImage6.Image = ((System.Drawing.Image)(Assets.WinLogos.Win11));
             this.radioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage6.Location = new System.Drawing.Point(386, 39);
             this.radioImage6.Name = "radioImage6";
@@ -69,7 +69,7 @@ namespace WinPaletter
             this.radioImage5.Checked = false;
             this.radioImage5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage5.ForeColor = System.Drawing.Color.White;
-            this.radioImage5.Image = ((System.Drawing.Image)(resources.GetObject("radioImage5.Image")));
+            this.radioImage5.Image = ((System.Drawing.Image)(Assets.WinLogos.Win10));
             this.radioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage5.Location = new System.Drawing.Point(323, 39);
             this.radioImage5.Name = "radioImage5";
@@ -103,7 +103,7 @@ namespace WinPaletter
             this.radioImage4.Checked = false;
             this.radioImage4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage4.ForeColor = System.Drawing.Color.White;
-            this.radioImage4.Image = ((System.Drawing.Image)(resources.GetObject("radioImage4.Image")));
+            this.radioImage4.Image = ((System.Drawing.Image)(Assets.WinLogos.Win8_1));
             this.radioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage4.Location = new System.Drawing.Point(260, 39);
             this.radioImage4.Name = "radioImage4";
@@ -118,7 +118,7 @@ namespace WinPaletter
             this.radioImage3.Checked = false;
             this.radioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage3.ForeColor = System.Drawing.Color.White;
-            this.radioImage3.Image = ((System.Drawing.Image)(resources.GetObject("radioImage3.Image")));
+            this.radioImage3.Image = ((System.Drawing.Image)(Assets.WinLogos.Win7));
             this.radioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage3.Location = new System.Drawing.Point(134, 39);
             this.radioImage3.Name = "radioImage3";
@@ -133,7 +133,7 @@ namespace WinPaletter
             this.radioImage1.Checked = false;
             this.radioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage1.ForeColor = System.Drawing.Color.White;
-            this.radioImage1.Image = ((System.Drawing.Image)(resources.GetObject("radioImage1.Image")));
+            this.radioImage1.Image = ((System.Drawing.Image)(Assets.WinLogos.WinXP));
             this.radioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage1.Location = new System.Drawing.Point(8, 39);
             this.radioImage1.Name = "radioImage1";
@@ -148,7 +148,7 @@ namespace WinPaletter
             this.radioImage2.Checked = false;
             this.radioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage2.ForeColor = System.Drawing.Color.White;
-            this.radioImage2.Image = ((System.Drawing.Image)(resources.GetObject("radioImage2.Image")));
+            this.radioImage2.Image = ((System.Drawing.Image)(Assets.WinLogos.WinVista));
             this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage2.Location = new System.Drawing.Point(71, 39);
             this.radioImage2.Name = "radioImage2";
@@ -163,7 +163,7 @@ namespace WinPaletter
             this.radioImage7.Checked = false;
             this.radioImage7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage7.ForeColor = System.Drawing.Color.White;
-            this.radioImage7.Image = ((System.Drawing.Image)(resources.GetObject("radioImage7.Image")));
+            this.radioImage7.Image = ((System.Drawing.Image)(Assets.WinLogos.Win12));
             this.radioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage7.Location = new System.Drawing.Point(449, 39);
             this.radioImage7.Name = "radioImage7";
@@ -178,7 +178,7 @@ namespace WinPaletter
             this.radioImage8.Checked = false;
             this.radioImage8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage8.ForeColor = System.Drawing.Color.White;
-            this.radioImage8.Image = ((System.Drawing.Image)(resources.GetObject("radioImage8.Image")));
+            this.radioImage8.Image = ((System.Drawing.Image)(Assets.WinLogos.Win8));
             this.radioImage8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage8.Location = new System.Drawing.Point(197, 39);
             this.radioImage8.Name = "radioImage8";

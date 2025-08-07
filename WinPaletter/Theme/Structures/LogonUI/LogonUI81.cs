@@ -171,7 +171,7 @@ namespace WinPaletter.Theme.Structures
 
                             if (System.IO.File.Exists(syslock))
                             {
-                                bmp = Bitmap_Mgr.Load(syslock);
+                                bmp = BitmapMgr.Load(syslock);
                             }
                             else
                             {
@@ -187,7 +187,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (System.IO.File.Exists(ImagePath))
                             {
-                                bmp = Bitmap_Mgr.Load(ImagePath);
+                                bmp = BitmapMgr.Load(ImagePath);
                             }
                             else
                             {

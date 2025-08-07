@@ -368,7 +368,7 @@
             this.alertBox3.Size = new System.Drawing.Size(496, 28);
             this.alertBox3.TabIndex = 234;
             this.alertBox3.TabStop = false;
-            this.alertBox3.Text = "Preview unsupported. Use \'Apply\' with visual styles enabled to test.";
+            this.alertBox3.Text = "Preview is unsupported. Use \'Apply\' with visual styles enabled to test.";
             // 
             // groupBox26
             // 

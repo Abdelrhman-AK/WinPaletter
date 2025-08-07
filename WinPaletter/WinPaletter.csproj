@@ -250,10 +250,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Accessibility_Vision.resx</DependentUpon>
     </Compile>
-    <Compile Include="Assets\Themes.Designer.cs">
+    <Compile Include="Assets\Themes_Banners.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Themes.resx</DependentUpon>
+      <DependentUpon>Themes_Banners.resx</DependentUpon>
     </Compile>
     <Compile Include="Assets\CMD_Raster.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -715,7 +715,7 @@
     <Compile Include="Dialogs\PE_Warning.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Program\Classes\Bitmap_Mgr.cs" />
+    <Compile Include="Program\Classes\BitmapMgr.cs" />
     <Compile Include="Program\Classes\INI.cs" />
     <Compile Include="Theme\Support\PreviewHelpers.cs" />
     <Compile Include="Aspects\AltTabEditor.Designer.cs">
@@ -1187,9 +1187,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\Themes.resx">
+    <EmbeddedResource Include="Assets\Themes_Banners.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Themes.Designer.cs</LastGenOutput>
+      <LastGenOutput>Themes_Banners.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\CMD_Raster.resx">
       <Generator>ResXFileCodeGenerator</Generator>

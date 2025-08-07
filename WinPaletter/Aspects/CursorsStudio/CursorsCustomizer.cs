@@ -108,7 +108,7 @@ namespace WinPaletter
 
         }
 
-        public static Brush ReturnGradience(Rectangle Rectangle, Color Color1, Color Color2, GradientMode GradientMode, float Angle = 0f)
+        public static Brush ReturnGradience(RectangleF Rectangle, Color Color1, Color Color2, GradientMode GradientMode, float Angle = 0f)
         {
 
             if (GradientMode == GradientMode.Horizontal)
@@ -146,21 +146,23 @@ namespace WinPaletter
 
         public static Bitmap Draw(CursorOptions CursorOptions)
         {
-            Bitmap b = new((int)Math.Round(32f * CursorOptions.Scale), (int)Math.Round(32f * CursorOptions.Scale), PixelFormat.Format32bppPArgb);
+            Bitmap b = new((int)(32f * CursorOptions.Scale), (int)(32f * CursorOptions.Scale), PixelFormat.Format32bppPArgb);
             Graphics G = Graphics.FromImage(b);
 
             G.SmoothingMode = (CursorOptions.ArrowStyle == ArrowStyle.Classic || CursorOptions.CircleStyle == CircleStyle.Classic) ? SmoothingMode.HighSpeed : SmoothingMode.AntiAlias;
 
+            G.ScaleTransform(CursorOptions.Scale, CursorOptions.Scale);
+
             G.Clear(Color.Transparent);
 
             #region Rectangles Helpers
-            Rectangle _Arrow = new(0, 0, b.Width, b.Height);
-            Rectangle _Help = CursorOptions.ArrowStyle != ArrowStyle.Classic ? new(11, 6, b.Width, b.Height) : new(2, 0, b.Width, b.Height);
-            Rectangle _Busy = new(0, 0, 22, 22);
-            Rectangle _CurRect = new(0, 8, b.Width, b.Height);
-            Rectangle _LoadRect = new(6, 0, (int)Math.Round(22f * CursorOptions.Scale), (int)Math.Round(22f * CursorOptions.Scale));
-            Rectangle _Pin = new(15, 11, b.Width, b.Height);
-            Rectangle _Person = new(19, 17, b.Width, b.Height);
+            RectangleF _Arrow = new(0, 0, b.Width, b.Height);
+            RectangleF _Help = CursorOptions.ArrowStyle != ArrowStyle.Classic ? new(11, 6, b.Width, b.Height) : new(2, 0, b.Width, b.Height);
+            RectangleF _Busy = new(0 + CursorOptions.Scale, 0, 22, 22);
+            RectangleF _CurRect = new(0, 8, b.Width, b.Height);
+            RectangleF _LoadRect = new(6f / CursorOptions.Scale, 0, (int)Math.Round(22f * CursorOptions.Scale), (int)Math.Round(22f * CursorOptions.Scale));
+            RectangleF _Pin = new(15, 11, b.Width, b.Height);
+            RectangleF _Person = new(19, 17, b.Width, b.Height);
             #endregion
 
             if (!CursorOptions.UseFromFile || !System.IO.File.Exists(CursorOptions.File))
@@ -187,7 +189,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath cursorPath = Arrow(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale))
+                            using (GraphicsPath cursorPath = Arrow(_Arrow, CursorOptions.ArrowStyle, 1))
                             {
                                 G.FillPath(BB, cursorPath);
 
@@ -200,13 +202,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, cursorPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, cursorPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, cursorPath);
                                     }
@@ -258,7 +260,7 @@ namespace WinPaletter
                                 BL_H = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath cursorPath = Arrow(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale))
+                            using (GraphicsPath cursorPath = Arrow(_Arrow, CursorOptions.ArrowStyle, 1))
                             {
                                 G.FillPath(BB, cursorPath);
 
@@ -271,20 +273,20 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, cursorPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, cursorPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, cursorPath);
                                     }
                                 }
                             }
 
-                            using (GraphicsPath helpPath = Help(_Help, CursorOptions.ArrowStyle, CursorOptions.Scale))
+                            using (GraphicsPath helpPath = Help(_Help, CursorOptions.ArrowStyle, 1))
                             {
                                 G.FillPath(CursorOptions.ArrowStyle != ArrowStyle.Classic ? BB_H : BL_H, helpPath);
 
@@ -297,7 +299,7 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL_H = new(CursorOptions.ArrowStyle != ArrowStyle.Classic ? BL_H : BB_H, CursorOptions.LineThickness))
+                                using (Pen PL_H = new(CursorOptions.ArrowStyle != ArrowStyle.Classic ? BL_H : BB_H, CursorOptions.BorderThickness))
                                 {
                                     G.DrawPath(PL_H, helpPath);
                                 }
@@ -306,7 +308,7 @@ namespace WinPaletter
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, helpPath);
                                     }
@@ -341,12 +343,12 @@ namespace WinPaletter
                                 BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
                             }
 
-                            using (GraphicsPath busyPath = Busy(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, CursorOptions.Scale))
-                            using (GraphicsPath busyLoaderPath = BusyLoader(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, CursorOptions.Scale))
+                            using (GraphicsPath busyPath = Busy(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
+                            using (GraphicsPath busyLoaderPath = BusyLoader(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                             {
                                 if (CursorOptions.CircleStyle == CircleStyle.Classic)
                                 {
-                                    using (Pen PL = new(BH, CursorOptions.LineThickness))
+                                    using (Pen PL = new(BH, CursorOptions.BorderThickness))
                                     {
                                         G.FillPath(BC, busyPath);
                                         G.DrawPath(PL, busyLoaderPath);
@@ -366,7 +368,7 @@ namespace WinPaletter
                                     {
                                         using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
                                         using (TextureBrush noise = new(bx))
-                                        using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                        using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                         {
                                             G.DrawPath(noisePen, busyLoaderPath);
                                             G.DrawPath(noisePen, busyPath);
@@ -399,53 +401,14 @@ namespace WinPaletter
                                     }
                                 }
 
-                                else if (CursorOptions.CircleStyle == CircleStyle.Modern)
+                                else if (CursorOptions.CircleStyle == CircleStyle.Modern || CursorOptions.CircleStyle == CircleStyle.Fluid)
                                 {
-                                    float PenWidth = 0.17f * Math.Max(_Arrow.Width, _Arrow.Height);
+                                    float PenWidth = 0.2f * Math.Max(_Arrow.Width, _Arrow.Height) / CursorOptions.Scale;
+                                    PenWidth *= CursorOptions.CircleStyle == CircleStyle.Fluid ? 2.5f : 1f;
+
                                     float _percent = 0.3f;
 
-                                    Rectangle CircleRect = new(_Arrow.X + (int)PenWidth - 2, _Arrow.Y + (int)PenWidth - 2, _Arrow.Width - (int)PenWidth * 2 - 4, _Arrow.Height - (int)PenWidth * 2 - 4);
-
-                                    using (Pen pen = new(BH, PenWidth))
-                                    using (Pen pen2 = new(BC, PenWidth))
-                                    {
-                                        pen.StartCap = LineCap.Round;
-                                        pen.EndCap = pen.StartCap;
-
-                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
-                                        using (TextureBrush noise = new(bx))
-                                        using (Pen noisePen = new(noise, PenWidth))
-                                        {
-                                            G.DrawArc(pen2, CircleRect, -90, 360);
-
-                                            if (CursorOptions.LoadingCircleBackNoise)
-                                            {
-                                                G.DrawArc(noisePen, CircleRect, -90, 360);
-                                            }
-                                        }
-
-                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
-                                        using (TextureBrush noise = new(bx))
-                                        using (Pen noisePen = new(noise, PenWidth))
-                                        {
-                                            G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
-
-                                            if (CursorOptions.LoadingCircleHotNoise)
-                                            {
-                                                G.DrawArc(noisePen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
-                                            }
-                                        }
-                                    }
-                                }
-
-                                else if (CursorOptions.CircleStyle == CircleStyle.Fluid)
-                                {
-                                    float PenWidth = 0.3f * Math.Max(_Arrow.Width, _Arrow.Height);
-                                    float PenWidth2 = 0.17f * Math.Max(_Arrow.Width, _Arrow.Height);
-
-                                    float _percent = 0.2f;
-
-                                    Rectangle CircleRect = new(_Arrow.X + (int)PenWidth - 2, _Arrow.Y + (int)PenWidth - 2, _Arrow.Width - (int)PenWidth * 2 - 4, _Arrow.Height - (int)PenWidth * 2 - 4);
+                                    RectangleF CircleRect = new(PenWidth / 2f, PenWidth / 2f, 32 - PenWidth - 7, 32 - PenWidth - 7);
 
                                     using (Pen pen = new(BH, PenWidth))
                                     using (Pen pen2 = new(BC, PenWidth))
@@ -524,7 +487,9 @@ namespace WinPaletter
                                 BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
                             }
 
-                            using (GraphicsPath cursorPath = Arrow(_CurRect, CursorOptions.ArrowStyle, CursorOptions.Scale))
+                            RectangleF _arrowDrawnRect;
+
+                            using (GraphicsPath cursorPath = Arrow(_CurRect, CursorOptions.ArrowStyle, 1))
                             {
                                 G.FillPath(BB, cursorPath);
 
@@ -537,24 +502,26 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, cursorPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, cursorPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, cursorPath);
                                     }
                                 }
 
+                                _arrowDrawnRect = cursorPath.GetBounds();
+
                                 if (CursorOptions.CircleStyle == CircleStyle.Classic)
                                 {
-                                    using (GraphicsPath appLoadingPath = AppLoading(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, CursorOptions.Scale))
-                                    using (GraphicsPath appLoadingCirclePath = AppLoaderCircle(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, CursorOptions.Scale))
+                                    using (GraphicsPath appLoadingPath = AppLoading(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
+                                    using (GraphicsPath appLoadingCirclePath = AppLoaderCircle(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                                     {
-                                        using (Pen PLx = new(BH, CursorOptions.LineThickness))
+                                        using (Pen PLx = new(BH, CursorOptions.BorderThickness))
                                         {
                                             G.FillPath(BC, appLoadingPath);
                                             G.DrawPath(PLx, appLoadingCirclePath);
@@ -574,7 +541,7 @@ namespace WinPaletter
                                         {
                                             using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
                                             using (TextureBrush noise = new(bx))
-                                            using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                            using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                             {
                                                 G.DrawPath(noisePen, appLoadingCirclePath);
                                                 G.DrawPath(noisePen, appLoadingPath);
@@ -585,8 +552,8 @@ namespace WinPaletter
 
                                 else if (CursorOptions.CircleStyle == CircleStyle.Aero)
                                 {
-                                    using (GraphicsPath appLoadingPath = AppLoading(_LoadRect, CursorOptions.Angle, CursorOptions.CircleStyle, CursorOptions.Scale))
-                                    using (GraphicsPath appLoadingCirclePath = AppLoaderCircle(_LoadRect, CursorOptions.Angle, CursorOptions.CircleStyle, CursorOptions.Scale))
+                                    using (GraphicsPath appLoadingPath = AppLoading(_LoadRect, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
+                                    using (GraphicsPath appLoadingCirclePath = AppLoaderCircle(_LoadRect, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                                     {
                                         G.FillPath(BC, appLoadingPath);
 
@@ -612,55 +579,17 @@ namespace WinPaletter
                                     }
                                 }
 
-                                else if (CursorOptions.CircleStyle == CircleStyle.Modern)
+                                else if (CursorOptions.CircleStyle == CircleStyle.Modern || CursorOptions.CircleStyle == CircleStyle.Fluid)
                                 {
-                                    float PenWidth = 0.2f * Math.Max(_LoadRect.Width, _LoadRect.Height);
+                                    float PenWidth = 0.2f * Math.Max(_LoadRect.Width, _LoadRect.Height) / CursorOptions.Scale;
+                                    PenWidth *= CursorOptions.CircleStyle == CircleStyle.Fluid ? 2.5f : 1f;
+
                                     float _percent = 0.3f;
 
-                                    Rectangle CircleRect = new(_LoadRect.X + (int)PenWidth, _LoadRect.Y + (int)PenWidth, _LoadRect.Width - (int)PenWidth * 2 - 2, _LoadRect.Height - (int)PenWidth * 2 - 2);
+                                    float CircleWidth = 14;
+                                    CircleWidth /= CursorOptions.CircleStyle == CircleStyle.Fluid ? 2.5f : 1f;
 
-                                    using (Pen pen = new(BH, PenWidth))
-                                    using (Pen pen2 = new(BC, PenWidth))
-                                    {
-                                        pen.StartCap = LineCap.Round;
-                                        pen.EndCap = pen.StartCap;
-
-                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleBackNoiseOpacity))
-                                        using (TextureBrush noise = new(bx))
-                                        using (Pen noisePen = new(noise, PenWidth))
-                                        {
-                                            G.DrawArc(pen2, CircleRect, -90, 360);
-
-                                            if (CursorOptions.LoadingCircleBackNoise)
-                                            {
-                                                G.DrawArc(noisePen, CircleRect, -90, 360);
-                                            }
-                                        }
-
-                                        using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.LoadingCircleHotNoiseOpacity))
-                                        using (TextureBrush noise = new(bx))
-                                        using (Pen noisePen = new(noise, PenWidth))
-                                        {
-                                            G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
-
-                                            if (CursorOptions.LoadingCircleHotNoise)
-                                            {
-                                                G.DrawArc(noisePen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
-                                            }
-                                        }
-                                    }
-                                }
-
-                                else if (CursorOptions.CircleStyle == CircleStyle.Fluid)
-                                {
-                                    Rectangle _rect = new(_Arrow.Right - _LoadRect.Width, _LoadRect.Y, _LoadRect.Width, _LoadRect.Height);
-
-                                    float PenWidth = 0.32f * Math.Max(_rect.Width, _rect.Height);
-                                    float _percent = 0.2f;
-
-                                    Rectangle CircleRect = new(_LoadRect.X + (int)PenWidth, _LoadRect.Y + (int)PenWidth - 2, _LoadRect.Width - (int)PenWidth * 2 - 1, _LoadRect.Height - (int)PenWidth * 2 - 1);
-
-                                    PenWidth = 0.35f * Math.Max(_rect.Width, _rect.Height);
+                                    RectangleF CircleRect = new(_arrowDrawnRect.Right + (CursorOptions.CircleStyle == CircleStyle.Fluid ? 2f : -1f), CursorOptions.CircleStyle == CircleStyle.Fluid ? 6 : 2, CircleWidth, CircleWidth);
 
                                     using (Pen pen = new(BH, PenWidth))
                                     using (Pen pen2 = new(BC, PenWidth))
@@ -723,8 +652,8 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath nonePath = None(_Arrow, CursorOptions.Scale))
-                            using (GraphicsPath noneBackgroundPath = NoneBackground(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath nonePath = None(_Arrow, 1))
+                            using (GraphicsPath noneBackgroundPath = NoneBackground(_Arrow, 1))
                             {
                                 G.FillPath(BB, noneBackgroundPath);
 
@@ -776,7 +705,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath movePath = Move(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath movePath = Move(_Arrow, 1))
                             {
                                 G.FillPath(BB, movePath);
 
@@ -789,13 +718,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, movePath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, movePath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, movePath);
                                     }
@@ -828,7 +757,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath upPath = Up(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath upPath = Up(_Arrow, 1))
                             {
                                 G.FillPath(BB, upPath);
 
@@ -841,13 +770,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, upPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, upPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, upPath);
                                     }
@@ -880,7 +809,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath nsPath = NS(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath nsPath = NS(_Arrow, 1))
                             {
                                 G.FillPath(BB, nsPath);
 
@@ -893,13 +822,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, nsPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, nsPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, nsPath);
                                     }
@@ -932,7 +861,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath ewPath = EW(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath ewPath = EW(_Arrow, 1))
                             {
                                 G.FillPath(BB, ewPath);
 
@@ -945,13 +874,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, ewPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, ewPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, ewPath);
                                     }
@@ -984,7 +913,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath neswPath = NESW(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath neswPath = NESW(_Arrow, 1))
                             {
                                 G.FillPath(BB, neswPath);
 
@@ -997,13 +926,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, neswPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, neswPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, neswPath);
                                     }
@@ -1036,7 +965,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath nwsePath = NWSE(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath nwsePath = NWSE(_Arrow, 1))
                             {
                                 G.FillPath(BB, nwsePath);
 
@@ -1049,13 +978,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, nwsePath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, nwsePath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, nwsePath);
                                     }
@@ -1088,8 +1017,8 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath penPath = Pen(_Arrow, CursorOptions.Scale))
-                            using (GraphicsPath penBackgroundPath = PenBackground(_Arrow, CursorOptions.Scale))
+                            using (GraphicsPath penPath = Pen(_Arrow, 1))
+                            using (GraphicsPath penBackgroundPath = PenBackground(_Arrow, 1))
                             {
                                 G.FillPath(BB, penBackgroundPath);
 
@@ -1102,13 +1031,13 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, penPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, penPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, penPath);
                                     }
@@ -1141,7 +1070,7 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale))
+                            using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, 1))
                             {
                                 G.FillPath(BB, handPath);
 
@@ -1154,10 +1083,10 @@ namespace WinPaletter
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.LineThickness)) { G.DrawPath(PL, handPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, handPath); }
                                 using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                 using (TextureBrush noise = new(bx))
-                                using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                 {
                                     G.DrawPath(noisePen, handPath);
                                 }
@@ -1207,10 +1136,10 @@ namespace WinPaletter
                                 BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (Pen PL = new(BL, CursorOptions.LineThickness))
-                            using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale))
-                            using (GraphicsPath pinPath = Pin(_Pin, CursorOptions.Scale))
-                            using (GraphicsPath pinCenterPointPath = Pin_CenterPoint(_Pin, CursorOptions.Scale))
+                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
+                            using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, 1))
+                            using (GraphicsPath pinPath = Pin(_Pin, 1))
+                            using (GraphicsPath pinCenterPointPath = Pin_CenterPoint(_Pin, 1))
                             {
                                 G.FillPath(BB, handPath);
 
@@ -1229,7 +1158,7 @@ namespace WinPaletter
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, handPath);
                                     }
@@ -1263,7 +1192,7 @@ namespace WinPaletter
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, pinPath);
                                     }
@@ -1316,9 +1245,9 @@ namespace WinPaletter
                                 BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (Pen PL = new(BL, CursorOptions.LineThickness))
-                            using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, CursorOptions.Scale))
-                            using (GraphicsPath personPath = Person(_Person, CursorOptions.Scale))
+                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
+                            using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, 1))
+                            using (GraphicsPath personPath = Person(_Person, 1))
                             {
                                 G.FillPath(BB, handPath);
 
@@ -1337,7 +1266,7 @@ namespace WinPaletter
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, handPath);
                                     }
@@ -1360,7 +1289,7 @@ namespace WinPaletter
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, personPath);
                                     }
@@ -1396,8 +1325,8 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (Pen PL = new(BL, CursorOptions.LineThickness))
-                            using (GraphicsPath iBeamPath = IBeam(_Arrow, CursorOptions.Scale))
+                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
+                            using (GraphicsPath iBeamPath = IBeam(_Arrow, 1))
                             {
                                 G.FillPath(BB, iBeamPath);
 
@@ -1416,7 +1345,7 @@ namespace WinPaletter
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, iBeamPath);
                                     }
@@ -1449,8 +1378,8 @@ namespace WinPaletter
                                 BL = new SolidBrush(CursorOptions.SecondaryColor1);
                             }
 
-                            using (Pen PL = new(BL, CursorOptions.LineThickness))
-                            using (GraphicsPath crossPath = Cross(_Arrow, CursorOptions.Scale))
+                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
+                            using (GraphicsPath crossPath = Cross(_Arrow, 1))
                             {
                                 G.FillPath(BB, crossPath);
 
@@ -1469,7 +1398,7 @@ namespace WinPaletter
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.SecondaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
-                                    using (Pen noisePen = new(noise, CursorOptions.LineThickness))
+                                    using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
                                         G.DrawPath(noisePen, crossPath);
                                     }
@@ -1539,6 +1468,8 @@ namespace WinPaletter
                 G_Final.DrawImage(b, new Rectangle(0, 0, b.Width, b.Height));
             }
 
+            G.ResetTransform();
+
             b.Dispose();
             G.Dispose();
 
@@ -1560,48 +1491,48 @@ namespace WinPaletter
             Fluid
         }
 
-        public static GraphicsPath Arrow(Rectangle Rectangle, ArrowStyle Style, float Scale = 1f)
+        public static GraphicsPath Arrow(RectangleF Rectangle, ArrowStyle Style, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
-                Rectangle R = new(Rectangle.X, Rectangle.Y, 12, 18);
+                RectangleF R = new(Rectangle.X, Rectangle.Y, 12, 18);
 
                 switch (Style)
                 {
                     case ArrowStyle.Aero:
                         {
                             // #### Left Border
-                            Point LLine1 = new(R.X, R.Y);
-                            Point LLine2 = new(R.X, R.Y + R.Height - 2);
+                            PointF LLine1 = new(R.X, R.Y);
+                            PointF LLine2 = new(R.X, R.Y + R.Height - 2);
                             path.AddLine(LLine1, LLine2);
 
                             // #### Left Down Border
-                            Point DLLine1 = LLine2 + (Size)new Point(1, 0);
-                            Point DLLine2 = new(DLLine1.X + 3, DLLine1.Y - 3);
+                            PointF DLLine1 = LLine2 + (Size)new Point(1, 0);
+                            PointF DLLine2 = new(DLLine1.X + 3, DLLine1.Y - 3);
                             path.AddLine(DLLine1, DLLine2);
 
                             // #### Left Down Handle Border
-                            Point DLHLine1 = DLLine2;
-                            Point DLHLine2 = new(DLHLine1.X + 3, DLHLine1.Y + 5);
+                            PointF DLHLine1 = DLLine2;
+                            PointF DLHLine2 = new(DLHLine1.X + 3, DLHLine1.Y + 5);
                             path.AddLine(DLHLine1, DLHLine2);
 
                             // #### Down Handle Border
-                            Point DHLine1 = DLHLine2;
-                            Point DHLine2 = new(DHLine1.X + 2, DHLine1.Y - 1);
+                            PointF DHLine1 = DLHLine2;
+                            PointF DHLine2 = new(DHLine1.X + 2, DHLine1.Y - 1);
 
                             // #### Right Down Handle Border
-                            Point DRHLine1 = DHLine2;
-                            Point DRHLine2 = new(DLHLine1.X + 3, DLHLine1.Y - 1);
+                            PointF DRHLine1 = DHLine2;
+                            PointF DRHLine2 = new(DLHLine1.X + 3, DLHLine1.Y - 1);
                             path.AddLine(DRHLine1, DRHLine2);
 
                             // #### Right Down Border
-                            Point DRLine1 = DRHLine2;
-                            Point DRLine2 = new(R.X + R.Width - 1, DLHLine1.Y - 1);
+                            PointF DRLine1 = DRHLine2;
+                            PointF DRLine2 = new(R.X + R.Width - 1, DLHLine1.Y - 1);
                             path.AddLine(DRLine1, DRLine2);
 
                             // #### Right Border
-                            Point RLine1 = DRLine2 + (Size)new Point(0, -1);
-                            Point RLine2 = LLine1;
+                            PointF RLine1 = DRLine2 + (Size)new Point(0, -1);
+                            PointF RLine2 = LLine1;
                             path.AddLine(RLine1, RLine2);
                             break;
                         }
@@ -1609,38 +1540,38 @@ namespace WinPaletter
                     case ArrowStyle.Classic:
                         {
                             // #### Left Border
-                            Point LLine1 = new(R.X, R.Y);
-                            Point LLine2 = new(R.X, R.Y + R.Height - 2);
+                            PointF LLine1 = new(R.X, R.Y);
+                            PointF LLine2 = new(R.X, R.Y + R.Height - 2);
                             path.AddLine(LLine1, LLine2);
 
                             // #### Left Down Border
-                            Point DLLine1 = LLine2 + (Size)new Point(1, -1);
-                            Point DLLine2 = new(DLLine1.X + 3, DLLine1.Y - 3);
+                            PointF DLLine1 = LLine2 + (Size)new Point(1, -1);
+                            PointF DLLine2 = new(DLLine1.X + 3, DLLine1.Y - 3);
                             path.AddLine(DLLine1, DLLine2);
 
                             // #### Left Down Handle Border
-                            Point DLHLine1 = DLLine2;
-                            Point DLHLine2 = new(DLHLine1.X + 4, DLHLine1.Y + 8);
+                            PointF DLHLine1 = DLLine2;
+                            PointF DLHLine2 = new(DLHLine1.X + 4, DLHLine1.Y + 8);
                             path.AddLine(DLHLine1, DLHLine2);
 
                             // #### Down Handle Border
-                            Point DHLine1 = DLHLine2;
-                            Point DHLine2 = new(DHLine1.X + 2, DHLine1.Y - 1);
+                            PointF DHLine1 = DLHLine2;
+                            PointF DHLine2 = new(DHLine1.X + 2, DHLine1.Y - 1);
                             path.AddArc(DHLine1.X, DHLine1.Y - 1, DHLine2.X - DHLine1.X, 1, 180, -100);
 
                             // #### Right Down Handle Border
-                            Point DRHLine1 = DHLine2;
-                            Point DRHLine2 = new(DLHLine1.X + 3, DLHLine1.Y);
+                            PointF DRHLine1 = DHLine2;
+                            PointF DRHLine2 = new(DLHLine1.X + 3, DLHLine1.Y);
                             path.AddLine(DRHLine1, DRHLine2);
 
                             // #### Right Down Border
-                            Point DRLine1 = DRHLine2 + (Size)new Point(0, -1);
-                            Point DRLine2 = new(R.X + R.Width - 1, DRLine1.Y);
+                            PointF DRLine1 = DRHLine2 + (Size)new Point(0, -1);
+                            PointF DRLine2 = new(R.X + R.Width - 1, DRLine1.Y);
                             path.AddLine(DRLine1, DRLine2);
 
                             // #### Right Border
-                            Point RLine1 = DRLine2 + (Size)new Point(-1, -1);
-                            Point RLine2 = LLine1;
+                            PointF RLine1 = DRLine2 + (Size)new Point(-1, -1);
+                            PointF RLine2 = LLine1;
                             path.AddLine(RLine1, RLine2);
                             break;
                         }
@@ -1648,23 +1579,23 @@ namespace WinPaletter
                     case ArrowStyle.Modern:
                         {
                             // #### Left Border
-                            Point LLine1 = new(R.X, R.Y);
-                            Point LLine2 = new(R.X, R.Y + R.Height - 2);
+                            PointF LLine1 = new(R.X, R.Y);
+                            PointF LLine2 = new(R.X, R.Y + R.Height - 2);
                             path.AddLine(LLine1, LLine2);
 
                             // #### Left Down Border
-                            Point DLLine1 = LLine2 + (Size)new Point(1, 0);
-                            Point DLLine2 = new(DLLine1.X + 4, DLLine1.Y - 4);
+                            PointF DLLine1 = LLine2 + (Size)new Point(1, 0);
+                            PointF DLLine2 = new(DLLine1.X + 4, DLLine1.Y - 4);
                             path.AddLine(DLLine1, DLLine2);
 
                             // #### Right Down Border
-                            Point DRLine1 = DLLine2;
-                            Point DRLine2 = new(R.X + R.Width - 1, DRLine1.Y);
+                            PointF DRLine1 = DLLine2;
+                            PointF DRLine2 = new(R.X + R.Width - 1, DRLine1.Y);
                             path.AddLine(DRLine1, DRLine2);
 
                             // #### Right Border
-                            Point RLine1 = DRLine2 + (Size)new Point(0, -1);
-                            Point RLine2 = LLine1;
+                            PointF RLine1 = DRLine2 + (Size)new Point(0, -1);
+                            PointF RLine2 = LLine1;
                             path.AddLine(RLine1, RLine2);
                             break;
                         }
@@ -1681,7 +1612,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Busy(Rectangle Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
+        public static GraphicsPath Busy(RectangleF Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             using (Matrix m = new())
@@ -1694,7 +1625,7 @@ namespace WinPaletter
                     case CircleStyle.Aero:
                         {
                             path.AddEllipse(Rectangle.X, Rectangle.Y, 22, 22);
-                            Rectangle R = new(Rectangle.X + 5, Rectangle.Y + 5, 12, 12);
+                            RectangleF R = new(Rectangle.X + 5, Rectangle.Y + 5, 12, 12);
                             path.AddEllipse(R);
                             path.CloseFigure();
                             break;
@@ -1702,27 +1633,27 @@ namespace WinPaletter
 
                     case CircleStyle.Classic:
                         {
-                            path.AddLine(new Point(Rectangle.X + 12, Rectangle.Y + 0), new Point(Rectangle.X + 6, Rectangle.Y + 0));
-                            path.AddLine(new Point(Rectangle.X + 6, Rectangle.Y + 0), new Point(Rectangle.X + 6, Rectangle.Y + 2));
-                            path.AddLine(new Point(Rectangle.X + 6, Rectangle.Y + 2), new Point(Rectangle.X + 12, Rectangle.Y + 2));
+                            path.AddLine(new PointF(Rectangle.X + 12, Rectangle.Y + 0), new PointF(Rectangle.X + 6, Rectangle.Y + 0));
+                            path.AddLine(new PointF(Rectangle.X + 6, Rectangle.Y + 0), new PointF(Rectangle.X + 6, Rectangle.Y + 2));
+                            path.AddLine(new PointF(Rectangle.X + 6, Rectangle.Y + 2), new PointF(Rectangle.X + 12, Rectangle.Y + 2));
 
-                            path.AddLine(new Point(Rectangle.X + 7, Rectangle.Y + 2), new Point(Rectangle.X + 7, Rectangle.Y + 7));
-                            path.AddLine(new Point(Rectangle.X + 8, Rectangle.Y + 7), new Point(Rectangle.X + 11, Rectangle.Y + 10));
-                            path.AddLine(new Point(Rectangle.X + 8, Rectangle.Y + 8), new Point(Rectangle.X + 11, Rectangle.Y + 11));
+                            path.AddLine(new PointF(Rectangle.X + 7, Rectangle.Y + 2), new PointF(Rectangle.X + 7, Rectangle.Y + 7));
+                            path.AddLine(new PointF(Rectangle.X + 8, Rectangle.Y + 7), new PointF(Rectangle.X + 11, Rectangle.Y + 10));
+                            path.AddLine(new PointF(Rectangle.X + 8, Rectangle.Y + 8), new PointF(Rectangle.X + 11, Rectangle.Y + 11));
 
-                            path.AddLine(new Point(Rectangle.X + 11, Rectangle.Y + 11), new Point(Rectangle.X + 8, Rectangle.Y + 14));
-                            path.AddLine(new Point(Rectangle.X + 11, Rectangle.Y + 10), new Point(Rectangle.X + 8, Rectangle.Y + 13));
-                            path.AddLine(new Point(Rectangle.X + 7, Rectangle.Y + 14), new Point(Rectangle.X + 7, Rectangle.Y + 19));
+                            path.AddLine(new PointF(Rectangle.X + 11, Rectangle.Y + 11), new PointF(Rectangle.X + 8, Rectangle.Y + 14));
+                            path.AddLine(new PointF(Rectangle.X + 11, Rectangle.Y + 10), new PointF(Rectangle.X + 8, Rectangle.Y + 13));
+                            path.AddLine(new PointF(Rectangle.X + 7, Rectangle.Y + 14), new PointF(Rectangle.X + 7, Rectangle.Y + 19));
 
-                            path.AddLine(new Point(Rectangle.X + 12, Rectangle.Y + 19), new Point(Rectangle.X + 6, Rectangle.Y + 19));
-                            path.AddLine(new Point(Rectangle.X + 6, Rectangle.Y + 19), new Point(Rectangle.X + 6, Rectangle.Y + 21));
-                            path.AddLine(new Point(Rectangle.X + 6, Rectangle.Y + 21), new Point(Rectangle.X + 12, Rectangle.Y + 21));
-
-                            path.StartFigure();
-                            path.AddLine(new Point(Rectangle.X + 7, Rectangle.Y), new Point(Rectangle.X + 7, Rectangle.Y + 7));
+                            path.AddLine(new PointF(Rectangle.X + 12, Rectangle.Y + 19), new PointF(Rectangle.X + 6, Rectangle.Y + 19));
+                            path.AddLine(new PointF(Rectangle.X + 6, Rectangle.Y + 19), new PointF(Rectangle.X + 6, Rectangle.Y + 21));
+                            path.AddLine(new PointF(Rectangle.X + 6, Rectangle.Y + 21), new PointF(Rectangle.X + 12, Rectangle.Y + 21));
 
                             path.StartFigure();
-                            path.AddLine(new Point(Rectangle.X + 7, Rectangle.Y + 19), new Point(Rectangle.X + 7, Rectangle.Y + 21));
+                            path.AddLine(new PointF(Rectangle.X + 7, Rectangle.Y), new PointF(Rectangle.X + 7, Rectangle.Y + 7));
+
+                            path.StartFigure();
+                            path.AddLine(new PointF(Rectangle.X + 7, Rectangle.Y + 19), new PointF(Rectangle.X + 7, Rectangle.Y + 21));
 
                             path.AddPath(MirrorRight(path), false);
 
@@ -1748,7 +1679,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath BusyLoader(Rectangle Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
+        public static GraphicsPath BusyLoader(RectangleF Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             using (Matrix m = new())
@@ -1759,8 +1690,8 @@ namespace WinPaletter
                 Rectangle.Width = 22;
                 Rectangle.Height = 22;
 
-                Point CPoint = new((int)Math.Round(Rectangle.X + Rectangle.Width / 2d), (int)Math.Round(Rectangle.Y + Rectangle.Height / 2d));
-                Rectangle R = new(Rectangle.X + 5, Rectangle.Y + 5, 12, 12);
+                PointF CPointF = new((int)Math.Round(Rectangle.X + Rectangle.Width / 2d), (int)Math.Round(Rectangle.Y + Rectangle.Height / 2d));
+                RectangleF R = new(Rectangle.X + 5, Rectangle.Y + 5, 12, 12);
 
                 int innerR = 15;
                 int thickness = 10;
@@ -1771,8 +1702,8 @@ namespace WinPaletter
                 {
                     case CircleStyle.Aero:
                         {
-                            Rectangle outerRect = Rectangle;
-                            Rectangle innerRect = R;
+                            RectangleF outerRect = Rectangle;
+                            RectangleF innerRect = R;
                             path.AddArc(outerRect, Angle, arcLength);
                             path.AddArc(innerRect, Angle + arcLength, -arcLength);
                             path.CloseFigure();
@@ -1781,18 +1712,18 @@ namespace WinPaletter
 
                     case CircleStyle.Classic:
                         {
-                            Point PU1 = new(Rectangle.X + 12, Rectangle.Y + 5);
+                            PointF PU1 = new(Rectangle.X + 12, Rectangle.Y + 5);
 
-                            Point PU3 = new(Rectangle.X + 10, Rectangle.Y + 5);
-                            Point PU4 = PU3 + (Size)new Point(2, 2);
+                            PointF PU3 = new(Rectangle.X + 10, Rectangle.Y + 5);
+                            PointF PU4 = PU3 + (Size)new Point(2, 2);
                             path.AddLine(PU3, PU4);
                             path.CloseFigure();
 
-                            Point PL1 = new(Rectangle.X + 12, Rectangle.Y + 17);
-                            Point PL2 = PL1 - (Size)new Point(1, -1);
+                            PointF PL1 = new(Rectangle.X + 12, Rectangle.Y + 17);
+                            PointF PL2 = PL1 - (Size)new Point(1, -1);
 
-                            Point PL3 = PL1 - (Size)new Point(0, 2);
-                            Point PL4 = PL3 - (Size)new Point(3, -3);
+                            PointF PL3 = PL1 - (Size)new Point(0, 2);
+                            PointF PL4 = PL3 - (Size)new Point(3, -3);
 
                             path.AddLine(PL1, PL2);
                             path.CloseFigure();
@@ -1802,11 +1733,11 @@ namespace WinPaletter
 
                             path.AddPath(MirrorRight(path), false);
 
-                            Point C1 = PU1 + (Size)new Point(1, 1);
+                            PointF C1 = PU1 + (Size)new Point(1, 1);
                             path.AddLine(PU1, PU1 + (Size)new Point(1, 1));
                             path.CloseFigure();
 
-                            Point C2 = PU4 + (Size)new Point(0, 2);
+                            PointF C2 = PU4 + (Size)new Point(0, 2);
                             path.AddLine(C2, C2 + (Size)new Point(-1, 1));
                             path.CloseFigure();
 
@@ -1832,7 +1763,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath AppLoading(Rectangle Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
+        public static GraphicsPath AppLoading(RectangleF Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             using (Matrix m = new())
@@ -1845,7 +1776,7 @@ namespace WinPaletter
                     case CircleStyle.Aero:
                         {
                             path.AddEllipse(Rectangle);
-                            Rectangle R = new(Rectangle.X + 4, Rectangle.Y + 4, 8, 8);
+                            RectangleF R = new(Rectangle.X + 4, Rectangle.Y + 4, 8, 8);
                             path.AddEllipse(R);
                             path.CloseFigure();
                             break;
@@ -1853,56 +1784,56 @@ namespace WinPaletter
 
                     case CircleStyle.Classic:
                         {
-                            Rectangle UpperRectangle = new(Rectangle.X + 12, Rectangle.Y + 9, 9, 2);
-                            Rectangle LowerRectangle = new(Rectangle.X + 12, Rectangle.Y + 23, 9, 2);
-                            Rectangle Container = new(UpperRectangle.X, UpperRectangle.Y, UpperRectangle.Width, LowerRectangle.Bottom - UpperRectangle.Top);
+                            RectangleF UpperRectangle = new(Rectangle.X + 12, Rectangle.Y + 9, 9, 2);
+                            RectangleF LowerRectangle = new(Rectangle.X + 12, Rectangle.Y + 23, 9, 2);
+                            RectangleF Container = new(UpperRectangle.X, UpperRectangle.Y, UpperRectangle.Width, LowerRectangle.Bottom - UpperRectangle.Top);
 
-                            Point pL1 = new(UpperRectangle.X + 1, UpperRectangle.Y + UpperRectangle.Height);
-                            Point pL2 = new(pL1.X, pL1.Y + 4);
+                            PointF pL1 = new(UpperRectangle.X + 1, UpperRectangle.Y + UpperRectangle.Height);
+                            PointF pL2 = new(pL1.X, pL1.Y + 4);
                             path.AddLine(pL1, pL2);
 
-                            Point pL3 = pL2 + (Size)new Point(1, 0);
-                            Point pL4 = pL3 + (Size)new Point(1, 1);
+                            PointF pL3 = pL2 + (Size)new Point(1, 0);
+                            PointF pL4 = pL3 + (Size)new Point(1, 1);
                             path.AddLine(pL3, pL4);
 
-                            Point pL3x = pL3 + (Size)new Point(0, 1);
-                            Point pL4x = pL4 + (Size)new Point(0, 1);
+                            PointF pL3x = pL3 + (Size)new Point(0, 1);
+                            PointF pL4x = pL4 + (Size)new Point(0, 1);
                             path.AddLine(pL3x, pL4x);
 
-                            Point pL5 = pL4 + (Size)new Point(0, 2);
-                            Point pL6 = pL5 + (Size)new Point(-1, 1);
+                            PointF pL5 = pL4 + (Size)new Point(0, 2);
+                            PointF pL6 = pL5 + (Size)new Point(-1, 1);
                             path.AddLine(pL5, pL6);
 
-                            Point pL5x = pL5 + (Size)new Point(0, -1);
-                            Point pL6x = pL6 + (Size)new Point(0, -1);
+                            PointF pL5x = pL5 + (Size)new Point(0, -1);
+                            PointF pL6x = pL6 + (Size)new Point(0, -1);
                             path.AddLine(pL5x, pL6x);
 
-                            Point pL8 = pL6 - (Size)new Point(1, 0);
-                            Point pL9 = pL8 + (Size)new Point(0, 4);
+                            PointF pL8 = pL6 - (Size)new Point(1, 0);
+                            PointF pL9 = pL8 + (Size)new Point(0, 4);
                             path.AddLine(pL8, pL9);
 
-                            Point pL10 = pL9 + (Size)new Point(7, 0);
-                            Point pL11 = pL10 - (Size)new Point(0, 4);
+                            PointF pL10 = pL9 + (Size)new Point(7, 0);
+                            PointF pL11 = pL10 - (Size)new Point(0, 4);
                             path.AddLine(pL10, pL11);
 
-                            Point pL12 = pL11 + (Size)new Point(-1, 0);
-                            Point pL13 = pL12 + (Size)new Point(-1, -1);
+                            PointF pL12 = pL11 + (Size)new Point(-1, 0);
+                            PointF pL13 = pL12 + (Size)new Point(-1, -1);
                             path.AddLine(pL12, pL13);
 
-                            Point pL12x = pL12 + (Size)new Point(0, -1);
-                            Point pL13x = pL13 + (Size)new Point(0, -1);
+                            PointF pL12x = pL12 + (Size)new Point(0, -1);
+                            PointF pL13x = pL13 + (Size)new Point(0, -1);
                             path.AddLine(pL12x, pL13x);
 
-                            Point pL15 = pL13 + (Size)new Point(0, -2);
-                            Point pl16 = pL15 + (Size)new Point(1, -1);
+                            PointF pL15 = pL13 + (Size)new Point(0, -2);
+                            PointF pl16 = pL15 + (Size)new Point(1, -1);
                             path.AddLine(pL15, pl16);
 
-                            Point pL15x = pL15 + (Size)new Point(1, 0);
-                            Point pl16x = pl16 + (Size)new Point(1, 0);
+                            PointF pL15x = pL15 + (Size)new Point(1, 0);
+                            PointF pl16x = pl16 + (Size)new Point(1, 0);
                             path.AddLine(pL15x, pl16x);
 
-                            Point pL17 = pl16x + (Size)new Point(0, 0);
-                            Point pL18 = pL17 + (Size)new Point(0, -4);
+                            PointF pL17 = pl16x + (Size)new Point(0, 0);
+                            PointF pL18 = pL17 + (Size)new Point(0, -4);
                             path.AddLine(pL17, pL18);
 
                             path.AddRectangle(UpperRectangle);
@@ -1912,16 +1843,16 @@ namespace WinPaletter
                             path.CloseFigure();
 
                             path.StartFigure();
-                            path.AddLine(new(UpperRectangle.X + 1, UpperRectangle.Y), new(UpperRectangle.X + 1, UpperRectangle.Y + UpperRectangle.Height));
+                            path.AddLine(new PointF(UpperRectangle.X + 1, UpperRectangle.Y), new PointF(UpperRectangle.X + 1, UpperRectangle.Y + UpperRectangle.Height));
 
                             path.StartFigure();
-                            path.AddLine(new(UpperRectangle.X + UpperRectangle.Width - 1, UpperRectangle.Y), new(UpperRectangle.X + UpperRectangle.Width - 1, UpperRectangle.Y + UpperRectangle.Height));
+                            path.AddLine(new PointF(UpperRectangle.X + UpperRectangle.Width - 1, UpperRectangle.Y), new PointF(UpperRectangle.X + UpperRectangle.Width - 1, UpperRectangle.Y + UpperRectangle.Height));
 
                             path.StartFigure();
-                            path.AddLine(new(LowerRectangle.X + 1, LowerRectangle.Y), new(LowerRectangle.X + 1, LowerRectangle.Y + LowerRectangle.Height));
+                            path.AddLine(new PointF(LowerRectangle.X + 1, LowerRectangle.Y), new PointF(LowerRectangle.X + 1, LowerRectangle.Y + LowerRectangle.Height));
 
                             path.StartFigure();
-                            path.AddLine(new(LowerRectangle.X + LowerRectangle.Width - 1, LowerRectangle.Y), new(LowerRectangle.X + LowerRectangle.Width - 1, LowerRectangle.Y + LowerRectangle.Height));
+                            path.AddLine(new PointF(LowerRectangle.X + LowerRectangle.Width - 1, LowerRectangle.Y), new PointF(LowerRectangle.X + LowerRectangle.Width - 1, LowerRectangle.Y + LowerRectangle.Height));
 
                             if (Angle >= 270f)
                             {
@@ -1945,7 +1876,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath AppLoaderCircle(Rectangle Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
+        public static GraphicsPath AppLoaderCircle(RectangleF Rectangle, float Angle, CircleStyle Style, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             using (Matrix m = new())
@@ -1953,8 +1884,8 @@ namespace WinPaletter
                 Rectangle.Width = 16;
                 Rectangle.Height = 16;
 
-                Point CPoint = new((int)Math.Round(Rectangle.X + Rectangle.Width / 2d), (int)Math.Round(Rectangle.Y + Rectangle.Height / 2d));
-                Rectangle R = new(Rectangle.X + 4, Rectangle.Y + 4, 8, 8);
+                PointF CPointF = new(Rectangle.X + Rectangle.Width / 2f, Rectangle.Y + Rectangle.Height / 2f);
+                RectangleF R = new(Rectangle.X + 4, Rectangle.Y + 4, 8, 8);
 
                 int innerR = 15;
                 int thickness = 6;
@@ -1965,8 +1896,8 @@ namespace WinPaletter
                 {
                     case CircleStyle.Aero:
                         {
-                            Rectangle outerRect = Rectangle;
-                            Rectangle innerRect = R;
+                            RectangleF outerRect = Rectangle;
+                            RectangleF innerRect = R;
                             path.AddArc(outerRect, Angle, arcLength);
                             path.AddArc(innerRect, Angle + arcLength, -arcLength);
                             break;
@@ -1974,13 +1905,13 @@ namespace WinPaletter
 
                     case CircleStyle.Classic:
                         {
-                            Rectangle UpperRectangle = new(Rectangle.X + 12, Rectangle.Y + 9, 9, 2);
-                            Rectangle LowerRectangle = new(Rectangle.X + 12, Rectangle.Y + 23, 9, 2);
-                            Rectangle Container = new(UpperRectangle.X, UpperRectangle.Y, UpperRectangle.Width, LowerRectangle.Bottom - UpperRectangle.Top);
+                            RectangleF UpperRectangle = new(Rectangle.X + 12, Rectangle.Y + 9, 9, 2);
+                            RectangleF LowerRectangle = new(Rectangle.X + 12, Rectangle.Y + 23, 9, 2);
+                            RectangleF Container = new(UpperRectangle.X, UpperRectangle.Y, UpperRectangle.Width, LowerRectangle.Bottom - UpperRectangle.Top);
 
-                            Point PU1 = new(Rectangle.X + 17, Rectangle.Y + 14);
-                            Point PU3 = new(Rectangle.X + 15, Rectangle.Y + 16);
-                            Point PU4 = PU3 + (Size)new Point(1, 1);
+                            PointF PU1 = new(Rectangle.X + 17, Rectangle.Y + 14);
+                            PointF PU3 = new(Rectangle.X + 15, Rectangle.Y + 16);
+                            PointF PU4 = PU3 + (Size)new Point(1, 1);
 
                             path.AddLine(PU1, PU3);
                             path.CloseFigure();
@@ -1989,17 +1920,17 @@ namespace WinPaletter
                             path.CloseFigure();
 
                             path.StartFigure();
-                            Point PL1 = new(Rectangle.X + 16, Rectangle.Y + 20);
-                            Point PL2 = PL1 - (Size)new Point(2, -2);
+                            PointF PL1 = new(Rectangle.X + 16, Rectangle.Y + 20);
+                            PointF PL2 = PL1 - (Size)new Point(2, -2);
                             path.AddLine(PL1, PL2);
                             path.CloseFigure();
 
-                            Point PL3 = PL1 + (Size)new Point(1, 1);
-                            Point PL4 = PL3 - (Size)new Point(1, -1);
+                            PointF PL3 = PL1 + (Size)new Point(1, 1);
+                            PointF PL4 = PL3 - (Size)new Point(1, -1);
                             path.AddLine(PL3, PL4);
                             path.CloseFigure();
 
-                            Point C1 = PL3 + (Size)new Point(1, 1);
+                            PointF C1 = PL3 + (Size)new Point(1, 1);
                             path.AddLine(PL3, C1);
                             path.CloseFigure();
 
@@ -2027,7 +1958,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Move(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath Move(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2036,52 +1967,52 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point UL1 = new(Rectangle.X + 11, Rectangle.Y);
-                Point UL2 = new(UL1.X - 4, Rectangle.Y + 4);
+                PointF UL1 = new(Rectangle.X + 11, Rectangle.Y);
+                PointF UL2 = new(UL1.X - 4, Rectangle.Y + 4);
                 path.AddLine(UL1, UL2);
 
-                Point ULX1 = new(UL2.X, UL2.Y + 1);
-                Point ULX2 = new(ULX1.X + 3, ULX1.Y);
+                PointF ULX1 = new(UL2.X, UL2.Y + 1);
+                PointF ULX2 = new(ULX1.X + 3, ULX1.Y);
                 path.AddLine(ULX1, ULX2);
 
-                Point MUL1 = ULX2;
-                Point MUL2 = new(MUL1.X, ULX2.Y + 4);
+                PointF MUL1 = ULX2;
+                PointF MUL2 = new(MUL1.X, ULX2.Y + 4);
                 path.AddLine(MUL1, MUL2);
 
-                Point MULX1 = new(MUL2.X, MUL2.Y + 1);
-                Point MULX2 = new(MULX1.X - 5, MULX1.Y);
+                PointF MULX1 = new(MUL2.X, MUL2.Y + 1);
+                PointF MULX2 = new(MULX1.X - 5, MULX1.Y);
                 path.AddLine(MULX1, MULX2);
 
-                Point LU1 = MULX2;
-                Point LU2 = new(MULX2.X, MULX2.Y - 3);
+                PointF LU1 = MULX2;
+                PointF LU2 = new(MULX2.X, MULX2.Y - 3);
                 path.AddLine(LU1, LU2);
 
-                Point LUX1 = new(LU2.X - 1, LU2.Y);
-                Point LUX2 = new(Rectangle.X, Rectangle.Y + 11);
+                PointF LUX1 = new(LU2.X - 1, LU2.Y);
+                PointF LUX2 = new(Rectangle.X, Rectangle.Y + 11);
                 path.AddLine(LUX1, LUX2);
 
-                Point LDX1 = LUX2;
-                Point LDX2 = new(LDX1.X + 4, LDX1.Y + 4);
+                PointF LDX1 = LUX2;
+                PointF LDX2 = new(LDX1.X + 4, LDX1.Y + 4);
                 path.AddLine(LDX1, LDX2);
 
-                Point LD1 = new(LDX2.X + 1, LDX2.Y);
-                Point LD2 = new(LD1.X, LD1.Y - 2);
+                PointF LD1 = new(LDX2.X + 1, LDX2.Y);
+                PointF LD2 = new(LD1.X, LD1.Y - 2);
                 path.AddLine(LD1, LD2);
 
-                Point L1 = new(LD2.X, LD2.Y - 1);
-                Point L2 = new(L1.X + 5, L1.Y);
+                PointF L1 = new(LD2.X, LD2.Y - 1);
+                PointF L2 = new(L1.X + 5, L1.Y);
                 path.AddLine(L1, L2);
 
-                Point DL1 = L2;
-                Point DL2 = new(L2.X, LD2.Y + 3);
+                PointF DL1 = L2;
+                PointF DL2 = new(L2.X, LD2.Y + 3);
                 path.AddLine(DL1, DL2);
 
-                Point DX1 = new(DL2.X, DL2.Y + 1);
-                Point DX2 = new(DX1.X - 3, DX1.Y);
+                PointF DX1 = new(DL2.X, DL2.Y + 1);
+                PointF DX2 = new(DX1.X - 3, DX1.Y);
                 path.AddLine(DX1, DX2);
 
-                Point DLX1 = new(DX2.X, DX2.Y + 1);
-                Point DLX2 = new(DLX1.X + 4, DLX1.Y + 4);
+                PointF DLX1 = new(DX2.X, DX2.Y + 1);
+                PointF DLX2 = new(DLX1.X + 4, DLX1.Y + 4);
                 path.AddLine(DLX1, DLX2);
 
                 path.AddPath(MirrorRight(path), false);
@@ -2097,7 +2028,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Help(Rectangle Rectangle, ArrowStyle Style, float Scale = 1f)
+        public static GraphicsPath Help(RectangleF Rectangle, ArrowStyle Style, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2142,7 +2073,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath None(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath None(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2151,7 +2082,7 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Rectangle R = new(Rectangle.X + 2, Rectangle.Y + 2, Rectangle.Width - 4, Rectangle.Height - 4);
+                RectangleF R = new(Rectangle.X + 2, Rectangle.Y + 2, Rectangle.Width - 4, Rectangle.Height - 4);
 
                 path.AddArc(R, 50f, 160f);
                 path.CloseFigure();
@@ -2172,7 +2103,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath NoneBackground(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath NoneBackground(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2194,7 +2125,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Up(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath Up(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2203,20 +2134,20 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point UL1 = new(Rectangle.X + 4, Rectangle.Y);
-                Point UL2 = new(Rectangle.X, Rectangle.Y + 4);
+                PointF UL1 = new(Rectangle.X + 4, Rectangle.Y);
+                PointF UL2 = new(Rectangle.X, Rectangle.Y + 4);
                 path.AddLine(UL1, UL2);
 
-                Point ULX1 = new(UL2.X, UL2.Y + 1);
-                Point ULX2 = new(ULX1.X + 3, ULX1.Y);
+                PointF ULX1 = new(UL2.X, UL2.Y + 1);
+                PointF ULX2 = new(ULX1.X + 3, ULX1.Y);
                 path.AddLine(ULX1, ULX2);
 
-                Point MUL1 = ULX2;
-                Point MUL2 = new(MUL1.X, MUL1.Y + 12);
+                PointF MUL1 = ULX2;
+                PointF MUL2 = new(MUL1.X, MUL1.Y + 12);
                 path.AddLine(MUL1, MUL2);
 
-                Point D1 = new(MUL2.X, MUL2.Y + 1);
-                Point D2 = new(D1.X + 1, D1.Y);
+                PointF D1 = new(MUL2.X, MUL2.Y + 1);
+                PointF D2 = new(D1.X + 1, D1.Y);
                 path.AddLine(D1, D2);
 
                 path.AddPath(MirrorRight(path), false);
@@ -2232,7 +2163,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath NS(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath NS(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2241,24 +2172,24 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point UL1 = new(Rectangle.X + 4, Rectangle.Y);
-                Point UL2 = new(Rectangle.X, Rectangle.Y + 4);
+                PointF UL1 = new(Rectangle.X + 4, Rectangle.Y);
+                PointF UL2 = new(Rectangle.X, Rectangle.Y + 4);
                 path.AddLine(UL1, UL2);
 
-                Point ULX1 = new(UL2.X, UL2.Y + 1);
-                Point ULX2 = new(ULX1.X + 3, ULX1.Y);
+                PointF ULX1 = new(UL2.X, UL2.Y + 1);
+                PointF ULX2 = new(ULX1.X + 3, ULX1.Y);
                 path.AddLine(ULX1, ULX2);
 
-                Point MUL1 = ULX2;
-                Point MUL2 = new(MUL1.X, MUL1.Y + 12);
+                PointF MUL1 = ULX2;
+                PointF MUL2 = new(MUL1.X, MUL1.Y + 12);
                 path.AddLine(MUL1, MUL2);
 
-                Point DL1 = MUL2;
-                Point DL2 = new(MUL2.X - 3, MUL2.Y);
+                PointF DL1 = MUL2;
+                PointF DL2 = new(MUL2.X - 3, MUL2.Y);
                 path.AddLine(DL1, DL2);
 
-                Point DX1 = new(DL2.X, DL2.Y + 1);
-                Point DX2 = new(DX1.X + 4, DX1.Y + 4);
+                PointF DX1 = new(DL2.X, DL2.Y + 1);
+                PointF DX2 = new(DX1.X + 4, DX1.Y + 4);
                 path.AddLine(DX1, DX2);
 
                 path.AddPath(MirrorRight(path), false);
@@ -2274,7 +2205,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath NESW(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath NESW(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2283,44 +2214,44 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point UR1 = new(Rectangle.X + Rectangle.Width - 1, Rectangle.Y);
-                Point UR2 = new(UR1.X - 6, UR1.Y);
+                PointF UR1 = new(Rectangle.X + Rectangle.Width - 1, Rectangle.Y);
+                PointF UR2 = new(UR1.X - 6, UR1.Y);
                 path.AddLine(UR1, UR2);
 
-                Point RX1 = new(UR2.X, UR2.Y + 1);
-                Point RX2 = new(RX1.X + 1, RX1.Y + 1);
+                PointF RX1 = new(UR2.X, UR2.Y + 1);
+                PointF RX2 = new(RX1.X + 1, RX1.Y + 1);
                 path.AddLine(RX1, RX2);
 
-                Point LX1 = new(RX2.X + 1, RX2.Y + 1);
-                Point LX2 = new(LX1.X - 9, LX1.Y + 9);
+                PointF LX1 = new(RX2.X + 1, RX2.Y + 1);
+                PointF LX2 = new(LX1.X - 9, LX1.Y + 9);
                 path.AddLine(LX1, LX2);
 
-                Point DX1 = new(LX2.X - 1, LX2.Y - 1);
-                Point DX2 = new(DX1.X - 1, DX1.Y - 1);
+                PointF DX1 = new(LX2.X - 1, LX2.Y - 1);
+                PointF DX2 = new(DX1.X - 1, DX1.Y - 1);
                 path.AddLine(DX1, DX2);
 
-                Point L1 = new(DX2.X - 1, DX2.Y);
-                Point L2 = new(L1.X, L1.Y + 6);
+                PointF L1 = new(DX2.X - 1, DX2.Y);
+                PointF L2 = new(L1.X, L1.Y + 6);
                 path.AddLine(L1, L2);
 
-                Point D1 = new(L2.X + 1, L2.Y);
-                Point D2 = new(D1.X + 5, D1.Y);
+                PointF D1 = new(L2.X + 1, L2.Y);
+                PointF D2 = new(D1.X + 5, D1.Y);
                 path.AddLine(D1, D2);
 
-                Point DL1 = new(D2.X, D2.Y - 1);
-                Point DL2 = new(DL1.X - 1, DL1.Y - 1);
+                PointF DL1 = new(D2.X, D2.Y - 1);
+                PointF DL2 = new(DL1.X - 1, DL1.Y - 1);
                 path.AddLine(DL1, DL2);
 
-                Point LX3 = new(DL2.X - 1, DL2.Y - 1);
-                Point LX4 = new(LX3.X + 9, LX3.Y - 9);
+                PointF LX3 = new(DL2.X - 1, DL2.Y - 1);
+                PointF LX4 = new(LX3.X + 9, LX3.Y - 9);
                 path.AddLine(LX3, LX4);
 
-                Point DR1 = new(LX4.X + 1, LX4.Y + 1);
-                Point DR2 = new(DR1.X + 1, DR1.Y + 1);
+                PointF DR1 = new(LX4.X + 1, LX4.Y + 1);
+                PointF DR2 = new(DR1.X + 1, DR1.Y + 1);
                 path.AddLine(DR1, DR2);
 
-                Point R1 = new(DR2.X + 1, DR2.Y);
-                Point R2 = new(R1.X, R1.Y - 6);
+                PointF R1 = new(DR2.X + 1, DR2.Y);
+                PointF R2 = new(R1.X, R1.Y - 6);
                 path.AddLine(R1, R2);
 
                 using (Matrix m = new())
@@ -2334,7 +2265,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath NWSE(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath NWSE(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = NESW(Rectangle))
             {
@@ -2362,7 +2293,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath EW(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath EW(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2371,44 +2302,44 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point L1 = new(Rectangle.X, Rectangle.Y + 4);
-                Point L2 = new(L1.X + 4, L1.Y - 4);
+                PointF L1 = new(Rectangle.X, Rectangle.Y + 4);
+                PointF L2 = new(L1.X + 4, L1.Y - 4);
                 path.AddLine(L1, L2);
 
-                Point LX1 = new(L2.X + 1, L2.Y);
-                Point LX2 = new(LX1.X, LX1.Y + 2);
+                PointF LX1 = new(L2.X + 1, L2.Y);
+                PointF LX2 = new(LX1.X, LX1.Y + 2);
                 path.AddLine(LX1, LX2);
 
-                Point U1 = new(LX2.X, LX2.Y + 1);
-                Point U2 = new(U1.X + 12, U1.Y);
+                PointF U1 = new(LX2.X, LX2.Y + 1);
+                PointF U2 = new(U1.X + 12, U1.Y);
                 path.AddLine(U1, U2);
 
-                Point RX1 = new(U2.X, U2.Y - 1);
-                Point RX2 = new(RX1.X, RX1.Y - 2);
+                PointF RX1 = new(U2.X, U2.Y - 1);
+                PointF RX2 = new(RX1.X, RX1.Y - 2);
                 path.AddLine(RX1, RX2);
 
-                Point R1 = new(RX2.X + 1, RX2.Y);
-                Point R2 = new(R1.X + 4, R1.Y + 4);
+                PointF R1 = new(RX2.X + 1, RX2.Y);
+                PointF R2 = new(R1.X + 4, R1.Y + 4);
                 path.AddLine(R1, R2);
 
-                Point R3 = new(R2.X, R2.Y);
-                Point R4 = new(R3.X - 4, R3.Y + 4);
+                PointF R3 = new(R2.X, R2.Y);
+                PointF R4 = new(R3.X - 4, R3.Y + 4);
                 path.AddLine(R3, R4);
 
-                Point RX3 = new(R4.X - 1, R4.Y);
-                Point RX4 = new(RX3.X, RX3.Y - 2);
+                PointF RX3 = new(R4.X - 1, R4.Y);
+                PointF RX4 = new(RX3.X, RX3.Y - 2);
                 path.AddLine(RX3, RX4);
 
-                Point D1 = new(RX4.X, RX4.Y - 1);
-                Point D2 = new(D1.X - 12, D1.Y);
+                PointF D1 = new(RX4.X, RX4.Y - 1);
+                PointF D2 = new(D1.X - 12, D1.Y);
                 path.AddLine(D1, D2);
 
-                Point LX3 = new(D2.X, D2.Y + 1);
-                Point LX4 = new(LX3.X, LX3.Y + 2);
+                PointF LX3 = new(D2.X, D2.Y + 1);
+                PointF LX4 = new(LX3.X, LX3.Y + 2);
                 path.AddLine(LX3, LX4);
 
-                Point L3 = new(LX4.X - 1, LX4.Y);
-                Point L4 = new(L3.X - 4, L3.Y - 4);
+                PointF L3 = new(LX4.X - 1, LX4.Y);
+                PointF L4 = new(L3.X - 4, L3.Y - 4);
                 path.AddLine(L3, L4);
 
                 using (Matrix m = new())
@@ -2422,7 +2353,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Pen(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath Pen(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2431,29 +2362,29 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point T1 = new(Rectangle.X, Rectangle.Y);
-                Point T2 = T1 + (Size)new Point(6, 2);
+                PointF T1 = new(Rectangle.X, Rectangle.Y);
+                PointF T2 = T1 + (Size)new Point(6, 2);
                 path.AddLine(T1, T2);
 
-                Point R1 = new(T2.X, T2.Y);
-                Point R2 = new(R1.X + 15, R1.Y + 15);
+                PointF R1 = new(T2.X, T2.Y);
+                PointF R2 = new(R1.X + 15, R1.Y + 15);
                 path.AddLine(R1, R2);
 
-                Point B1 = new(R2.X, R2.Y + 1);
-                Point B2 = new(B1.X - 3, B1.Y + 3);
+                PointF B1 = new(R2.X, R2.Y + 1);
+                PointF B2 = new(B1.X - 3, B1.Y + 3);
                 path.AddLine(B1, B2);
 
-                Point L1 = new(B2.X - 1, B2.Y);
-                Point L2 = new(L1.X - 15, L1.Y - 15);
+                PointF L1 = new(B2.X - 1, B2.Y);
+                PointF L2 = new(L1.X - 15, L1.Y - 15);
                 path.AddLine(L1, L2);
 
-                Point LX1 = new(L2.X, L2.Y);
+                PointF LX1 = new(L2.X, L2.Y);
                 path.AddLine(LX1, T1);
 
                 path.CloseFigure();
 
-                Point S1 = new(Rectangle.X + 14, Rectangle.Y + 18);
-                Point S2 = new(S1.X + 4, S1.Y - 4);
+                PointF S1 = new(Rectangle.X + 14, Rectangle.Y + 18);
+                PointF S2 = new(S1.X + 4, S1.Y - 4);
                 path.AddLine(S2, S1);
 
                 using (Matrix m = new())
@@ -2467,7 +2398,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath PenBackground(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath PenBackground(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2476,23 +2407,23 @@ namespace WinPaletter
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point T1 = new(Rectangle.X, Rectangle.Y);
-                Point T2 = T1 + (Size)new Point(6, 2);
+                PointF T1 = new(Rectangle.X, Rectangle.Y);
+                PointF T2 = T1 + (Size)new Point(6, 2);
                 path.AddLine(T1, T2);
 
-                Point R1 = new(T2.X, T2.Y);
-                Point R2 = new(R1.X + 15, R1.Y + 15);
+                PointF R1 = new(T2.X, T2.Y);
+                PointF R2 = new(R1.X + 15, R1.Y + 15);
                 path.AddLine(R1, R2);
 
-                Point B1 = new(R2.X, R2.Y + 1);
-                Point B2 = new(B1.X - 3, B1.Y + 3);
+                PointF B1 = new(R2.X, R2.Y + 1);
+                PointF B2 = new(B1.X - 3, B1.Y + 3);
                 path.AddLine(B1, B2);
 
-                Point L1 = new(B2.X - 1, B2.Y);
-                Point L2 = new(L1.X - 15, L1.Y - 15);
+                PointF L1 = new(B2.X - 1, B2.Y);
+                PointF L2 = new(L1.X - 15, L1.Y - 15);
                 path.AddLine(L1, L2);
 
-                Point LX1 = new(L2.X, L2.Y);
+                PointF LX1 = new(L2.X, L2.Y);
                 path.AddLine(LX1, T1);
 
                 path.CloseFigure();
@@ -2508,7 +2439,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Hand(Rectangle Rectangle, ArrowStyle Style, float Scale = 1f)
+        public static GraphicsPath Hand(RectangleF Rectangle, ArrowStyle Style, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2521,44 +2452,44 @@ namespace WinPaletter
                 {
                     case ArrowStyle.Classic:
                         {
-                            Point Index_LB1 = new(Rectangle.X + 5, Rectangle.Y + 14);
-                            Point Index_LB2 = new(Index_LB1.X, Index_LB1.Y - 11);
+                            PointF Index_LB1 = new(Rectangle.X + 5, Rectangle.Y + 14);
+                            PointF Index_LB2 = new(Index_LB1.X, Index_LB1.Y - 11);
                             path.AddLine(Index_LB1, Index_LB2);
 
-                            Point Index_RB1 = new(Index_LB1.X + 3, Index_LB1.Y - 4);
-                            Point Index_RB2 = new(Index_RB1.X, Index_RB1.Y - 8);
+                            PointF Index_RB1 = new(Index_LB1.X + 3, Index_LB1.Y - 4);
+                            PointF Index_RB2 = new(Index_RB1.X, Index_RB1.Y - 8);
                             path.AddArc(Index_LB2.X, Index_LB2.Y - 2, 3, 2, 180f, 180f);
 
                             path.AddLine(Index_RB1, Index_RB2);
                             path.AddArc(Index_RB2.X, Index_LB2.Y + 3, 3, 2, 180f, 180f);
 
-                            Point Middle_RB1 = new(Index_RB1.X + 3, Index_RB1.Y);
-                            Point Middle_RB2 = new(Middle_RB1.X, Middle_RB1.Y - 3);
+                            PointF Middle_RB1 = new(Index_RB1.X + 3, Index_RB1.Y);
+                            PointF Middle_RB2 = new(Middle_RB1.X, Middle_RB1.Y - 3);
                             path.AddLine(Middle_RB1, Middle_RB2);
                             path.AddArc(Middle_RB2.X, Index_LB2.Y + 4, 3, 2, 180f, 180f);
 
-                            Point Ring_RB1 = new(Middle_RB1.X + 3, Middle_RB1.Y + 1);
-                            Point Ring_RB2 = new(Ring_RB1.X, Ring_RB1.Y - 2);
+                            PointF Ring_RB1 = new(Middle_RB1.X + 3, Middle_RB1.Y + 1);
+                            PointF Ring_RB2 = new(Ring_RB1.X, Ring_RB1.Y - 2);
                             path.AddLine(Ring_RB1, Ring_RB2);
                             path.AddArc(Ring_RB2.X, Index_LB2.Y + 6, 3, 2, 180f, 180f);
 
-                            Point FreeBorder1 = new(Ring_RB1.X + 3, Ring_RB1.Y - 1);
-                            Point FreeBorder2 = new(FreeBorder1.X, FreeBorder1.Y + 6);
+                            PointF FreeBorder1 = new(Ring_RB1.X + 3, Ring_RB1.Y - 1);
+                            PointF FreeBorder2 = new(FreeBorder1.X, FreeBorder1.Y + 6);
                             path.AddLine(FreeBorder1, FreeBorder2);
 
-                            Point LW1 = FreeBorder2 + (Size)new Point(0, 1);
-                            Point RW1 = new(LW1.X - 14, LW1.Y);
-                            Rectangle Btm = new(RW1.X + 3, RW1.Y - 8, 9, 13);
-                            path.AddLine(FreeBorder2, new Point(Btm.X + Btm.Width, Btm.Y + Btm.Height));
-                            path.AddLine(new Point(Btm.X + Btm.Width, Btm.Y + Btm.Height), new Point(Btm.X, Btm.Y + Btm.Height));
+                            PointF LW1 = FreeBorder2 + (Size)new Point(0, 1);
+                            PointF RW1 = new(LW1.X - 14, LW1.Y);
+                            RectangleF Btm = new(RW1.X + 3, RW1.Y - 8, 9, 13);
+                            path.AddLine(FreeBorder2, new PointF(Btm.X + Btm.Width, Btm.Y + Btm.Height));
+                            path.AddLine(new PointF(Btm.X + Btm.Width, Btm.Y + Btm.Height), new PointF(Btm.X, Btm.Y + Btm.Height));
 
-                            Point L1 = RW1 - (Size)new Point(0, 1);
-                            Point L2 = new(L1.X - 1, L1.Y - 3);
-                            Rectangle Thumb = new(L2.X - 1, L2.Y - 3, 2, 3);
+                            PointF L1 = RW1 - (Size)new Point(0, 1);
+                            PointF L2 = new(L1.X - 1, L1.Y - 3);
+                            RectangleF Thumb = new(L2.X - 1, L2.Y - 3, 2, 3);
                             path.AddArc(Thumb, 90f, 180f);
 
-                            Point LastBorder1 = new(Thumb.X + Thumb.Width, Thumb.Y);
-                            Point LastBorder2 = new(LastBorder1.X + 2, LastBorder1.Y + 1);
+                            PointF LastBorder1 = new(Thumb.X + Thumb.Width, Thumb.Y);
+                            PointF LastBorder2 = new(LastBorder1.X + 2, LastBorder1.Y + 1);
                             path.AddLine(LastBorder1, LastBorder2);
 
                             path.CloseFigure();
@@ -2567,12 +2498,12 @@ namespace WinPaletter
 
                     default:
                         {
-                            Point Index_LB1 = new(Rectangle.X + 5, Rectangle.Y + 14);
-                            Point Index_LB2 = new(Index_LB1.X, Index_LB1.Y - 12);
+                            PointF Index_LB1 = new(Rectangle.X + 5, Rectangle.Y + 14);
+                            PointF Index_LB2 = new(Index_LB1.X, Index_LB1.Y - 12);
                             path.AddLine(Index_LB1, Index_LB2);
 
-                            Point Index_RB1 = new(Index_LB1.X + 3, Index_LB1.Y - 4);
-                            Point Index_RB2 = new(Index_RB1.X, Index_RB1.Y - 8);
+                            PointF Index_RB1 = new(Index_LB1.X + 3, Index_LB1.Y - 4);
+                            PointF Index_RB2 = new(Index_RB1.X, Index_RB1.Y - 8);
 
                             path.AddArc(Index_LB2.X, Index_LB2.Y - 2, 3, 2, 180f, 180f);
 
@@ -2580,34 +2511,34 @@ namespace WinPaletter
 
                             path.AddArc(Index_RB2.X, Index_LB2.Y + 3, 3, 2, 180f, 180f);
 
-                            Point Middle_RB1 = new(Index_RB1.X + 3, Index_RB1.Y);
-                            Point Middle_RB2 = new(Middle_RB1.X, Middle_RB1.Y - 3);
+                            PointF Middle_RB1 = new(Index_RB1.X + 3, Index_RB1.Y);
+                            PointF Middle_RB2 = new(Middle_RB1.X, Middle_RB1.Y - 3);
                             path.AddLine(Middle_RB1, Middle_RB2);
 
                             path.AddArc(Middle_RB2.X, Index_LB2.Y + 4, 3, 2, 180f, 180f);
 
-                            Point Ring_RB1 = new(Middle_RB1.X + 3, Middle_RB1.Y);
-                            Point Ring_RB2 = new(Ring_RB1.X, Ring_RB1.Y - 2);
+                            PointF Ring_RB1 = new(Middle_RB1.X + 3, Middle_RB1.Y);
+                            PointF Ring_RB2 = new(Ring_RB1.X, Ring_RB1.Y - 2);
                             path.AddLine(Ring_RB1, Ring_RB2);
 
                             path.AddArc(Ring_RB2.X, Index_LB2.Y + 5, 3, 2, 180f, 180f);
 
-                            Point FreeBorder1 = new(Ring_RB1.X + 3, Ring_RB1.Y - 1);
-                            Point FreeBorder2 = new(FreeBorder1.X, FreeBorder1.Y + 8);
+                            PointF FreeBorder1 = new(Ring_RB1.X + 3, Ring_RB1.Y - 1);
+                            PointF FreeBorder2 = new(FreeBorder1.X, FreeBorder1.Y + 8);
                             path.AddLine(FreeBorder1, FreeBorder2);
 
-                            Point LW1 = FreeBorder2 + (Size)new Point(0, 1);
-                            Point RW1 = new(LW1.X - 14, LW1.Y);
-                            Rectangle Btm = new(RW1.X, RW1.Y - 8, 14, 13);
+                            PointF LW1 = FreeBorder2 + (Size)new Point(0, 1);
+                            PointF RW1 = new(LW1.X - 14, LW1.Y);
+                            RectangleF Btm = new(RW1.X, RW1.Y - 8, 14, 13);
                             path.AddArc(Btm, 0f, 180f);
 
-                            Point L1 = RW1 - (Size)new Point(0, 1);
-                            Point L2 = new(L1.X - 2, L1.Y - 2);
-                            Rectangle Thumb = new(L2.X - 1, L2.Y - 3, 2, 3);
+                            PointF L1 = RW1 - (Size)new Point(0, 1);
+                            PointF L2 = new(L1.X - 2, L1.Y - 2);
+                            RectangleF Thumb = new(L2.X - 1, L2.Y - 3, 2, 3);
                             path.AddArc(Thumb, 90f, 180f);
 
-                            Point LastBorder1 = new(Thumb.X + Thumb.Width, Thumb.Y);
-                            Point LastBorder2 = new(LastBorder1.X + 2, LastBorder1.Y + 1);
+                            PointF LastBorder1 = new(Thumb.X + Thumb.Width, Thumb.Y);
+                            PointF LastBorder2 = new(LastBorder1.X + 2, LastBorder1.Y + 1);
                             path.AddLine(LastBorder1, LastBorder2);
 
                             path.CloseFigure();
@@ -2626,7 +2557,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Pin(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath Pin(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2635,12 +2566,12 @@ namespace WinPaletter
                 Rectangle.X = 15;
                 Rectangle.Y = 11;
 
-                Rectangle U = new(Rectangle.X, Rectangle.Y, 12, 10);
+                RectangleF U = new(Rectangle.X, Rectangle.Y, 12, 10);
                 path.AddArc(U, 180f, 180f);
 
-                Point C = new(Rectangle.X + 6, Rectangle.Y + 18);
-                Point p1 = new(Rectangle.X + 0, Rectangle.Y + 6);
-                Point p2 = new(Rectangle.X + 12, Rectangle.Y + 6);
+                PointF C = new(Rectangle.X + 6, Rectangle.Y + 18);
+                PointF p1 = new(Rectangle.X + 0, Rectangle.Y + 6);
+                PointF p2 = new(Rectangle.X + 12, Rectangle.Y + 6);
                 path.AddLine(p2, C);
                 path.AddLine(C, p1);
                 path.CloseFigure();
@@ -2656,7 +2587,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Person(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath Person(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2665,13 +2596,13 @@ namespace WinPaletter
                 Rectangle.X = 19;
                 Rectangle.Y = 17;
 
-                Rectangle Face = new(Rectangle.X, Rectangle.Y, 5, 6);
+                RectangleF Face = new(Rectangle.X, Rectangle.Y, 5, 6);
                 path.AddEllipse(Face);
 
-                Rectangle TrunkUpper = new(Face.X - 2, Face.Y + Face.Height, 9, 9);
+                RectangleF TrunkUpper = new(Face.X - 2, Face.Y + Face.Height, 9, 9);
                 path.AddArc(TrunkUpper, 180f, 180f);
 
-                Rectangle TrunkLower = new(TrunkUpper.X, TrunkUpper.Y + 3, 9, 3);
+                RectangleF TrunkLower = new(TrunkUpper.X, TrunkUpper.Y + 3, 9, 3);
                 path.AddArc(TrunkLower, 0f, 180f);
 
                 using (Matrix m = new())
@@ -2685,66 +2616,66 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath IBeam(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath IBeam(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
                 Rectangle.X = 0;
                 Rectangle.Y = 0;
 
-                Point L1 = new(Rectangle.X, Rectangle.Y);
-                Point L2 = new(L1.X, L1.Y + 2);
+                PointF L1 = new(Rectangle.X, Rectangle.Y);
+                PointF L2 = new(L1.X, L1.Y + 2);
                 path.AddLine(L1, L2);
 
-                Point BU1 = new(L2.X + 3, L2.Y);
+                PointF BU1 = new(L2.X + 3, L2.Y);
                 path.AddLine(L2, BU1);
 
-                Point LX = new(BU1.X, BU1.Y + 13);
+                PointF LX = new(BU1.X, BU1.Y + 13);
                 path.AddLine(BU1, LX);
 
-                Point BU2 = new(LX.X - 3, LX.Y);
+                PointF BU2 = new(LX.X - 3, LX.Y);
                 path.AddLine(LX, BU2);
 
-                Point L3 = new(BU2.X, BU2.Y + 2);
+                PointF L3 = new(BU2.X, BU2.Y + 2);
                 path.AddLine(BU2, L3);
 
-                Point BL = new(L3.X + 3, L3.Y);
+                PointF BL = new(L3.X + 3, L3.Y);
                 path.AddLine(L3, BL);
 
-                Point XB = new(BL.X + 1, BL.Y - 1);
+                PointF XB = new(BL.X + 1, BL.Y - 1);
                 path.AddLine(BL, XB);
 
-                Point Br = new(XB.X + 1, XB.Y + 1);
+                PointF Br = new(XB.X + 1, XB.Y + 1);
                 path.AddLine(XB, Br);
 
-                Point RB = new(Br.X + 3, Br.Y);
+                PointF RB = new(Br.X + 3, Br.Y);
                 path.AddLine(Br, RB);
 
-                Point R1 = new(RB.X, RB.Y - 2);
+                PointF R1 = new(RB.X, RB.Y - 2);
                 path.AddLine(RB, R1);
 
-                Point BU3 = new(R1.X - 3, R1.Y);
+                PointF BU3 = new(R1.X - 3, R1.Y);
                 path.AddLine(R1, BU3);
 
-                Point RX = new(BU3.X, BU3.Y - 13);
+                PointF RX = new(BU3.X, BU3.Y - 13);
                 path.AddLine(BU3, RX);
 
-                Point TU = new(RX.X + 3, RX.Y);
+                PointF TU = new(RX.X + 3, RX.Y);
                 path.AddLine(RX, TU);
 
-                Point RR = new(TU.X, TU.Y - 2);
+                PointF RR = new(TU.X, TU.Y - 2);
                 path.AddLine(TU, RR);
 
-                Point T = new(RR.X - 3, RR.Y);
+                PointF T = new(RR.X - 3, RR.Y);
                 path.AddLine(RR, T);
 
-                Point Tx = new(T.X - 1, T.Y + 1);
+                PointF Tx = new(T.X - 1, T.Y + 1);
                 path.AddLine(T, Tx);
 
-                Point TXL = new(Tx.X - 1, Tx.Y - 1);
+                PointF TXL = new(Tx.X - 1, Tx.Y - 1);
                 path.AddLine(Tx, TXL);
 
-                Point TL = new(TXL.X - 3, TXL.Y);
+                PointF TL = new(TXL.X - 3, TXL.Y);
                 path.AddLine(TXL, TL);
 
                 using (Matrix m = new())
@@ -2758,33 +2689,33 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Cross(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath Cross(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
                 Rectangle.Width = 19;
                 Rectangle.Height = 19;
 
-                Point L1 = new(9, 0);
-                Point L2 = new(L1.X - 1, L1.Y);
+                PointF L1 = new(9, 0);
+                PointF L2 = new(L1.X - 1, L1.Y);
                 path.AddLine(L1, L2);
 
-                Point L3 = new(L2.X, L2.Y + 8);
+                PointF L3 = new(L2.X, L2.Y + 8);
                 path.AddLine(L2, L3);
 
-                Point L4 = new(L3.X - 8, L3.Y);
+                PointF L4 = new(L3.X - 8, L3.Y);
                 path.AddLine(L3, L4);
 
-                Point L5 = new(L4.X, L4.Y + 2);
+                PointF L5 = new(L4.X, L4.Y + 2);
                 path.AddLine(L4, L5);
 
-                Point L6 = new(L5.X + 8, L5.Y);
+                PointF L6 = new(L5.X + 8, L5.Y);
                 path.AddLine(L5, L6);
 
-                Point L7 = new(L6.X, L6.Y + 8);
+                PointF L7 = new(L6.X, L6.Y + 8);
                 path.AddLine(L6, L7);
 
-                Point L8 = new(L7.X + 1, L7.Y);
+                PointF L8 = new(L7.X + 1, L7.Y);
                 path.AddLine(L7, L8);
 
                 path.AddPath(MirrorRight(path), false);
@@ -2799,7 +2730,7 @@ namespace WinPaletter
             }
         }
 
-        public static GraphicsPath Pin_CenterPoint(Rectangle Rectangle, float Scale = 1f)
+        public static GraphicsPath Pin_CenterPoint(RectangleF Rectangle, float Scale = 1f)
         {
             using (GraphicsPath path = new())
             {
@@ -2808,8 +2739,8 @@ namespace WinPaletter
                 Rectangle.X = 15;
                 Rectangle.Y = 11;
 
-                Rectangle o = new(Rectangle.X, Rectangle.Y, 12, 12);
-                Rectangle o1 = new(Rectangle.X, Rectangle.Y, 6, 6);
+                RectangleF o = new(Rectangle.X, Rectangle.Y, 12, 12);
+                RectangleF o1 = new(Rectangle.X, Rectangle.Y, 6, 6);
                 o1.X = (int)Math.Round(Rectangle.X + (o.Width - o1.Width) / 2d);
                 o1.Y = (int)Math.Round(Rectangle.Y + (o.Height - o1.Height) / 2d);
                 path.AddEllipse(o1);
@@ -2878,6 +2809,7 @@ namespace WinPaletter
                 Shadow_Opacity = Cursor.Shadow_Opacity;
                 Shadow_OffsetX = Cursor.Shadow_OffsetX;
                 Shadow_OffsetY = Cursor.Shadow_OffsetY;
+                BorderThickness = Cursor.BorderThickness;
             }
         }
 
@@ -2910,7 +2842,6 @@ namespace WinPaletter
         public float LoadingCircleBackNoiseOpacity;
         public bool LoadingCircleHotNoise;
         public float LoadingCircleHotNoiseOpacity;
-        public float LineThickness = 1f;
         public float Scale = 1f;
         public float Angle = 180f;
         public bool Shadow_Enabled = false;
@@ -2919,5 +2850,6 @@ namespace WinPaletter
         public float Shadow_Opacity = 0.3f;
         public int Shadow_OffsetX = 2;
         public int Shadow_OffsetY = 2;
+        public float BorderThickness = 1f;
     }
 }

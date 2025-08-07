@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using SaveFileDialog = System.Windows.Forms.SaveFileDialog;
 
@@ -17,14 +18,21 @@ namespace WinPaletter
 {
     public partial class Wallpaper_Editor
     {
-
+        /// <summary>
+        /// Represents the wallpaper tone configuration for the theme.
+        /// </summary>
+        /// <remarks>This field holds an instance of <see cref="Theme.Structures.WallpaperTone"/>  that
+        /// defines the tone settings for the wallpaper in the current theme.</remarks>
         public Theme.Structures.WallpaperTone WT = new();
         private Bitmap img, img_filled, img_tile;
-        private Bitmap img_untouched_forTint, img_tinted, img_tinted_filled, img_tinted_tile;
+        private Bitmap img_untouched, img_tinted, img_tinted_filled, img_tinted_tile;
+        private string img_path = string.Empty;
 
         private int index = 0;
         private readonly List<string> ImgLs1 = [];
         private readonly List<string> ImgLs2 = [];
+
+        private string wallpaper_path;
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
@@ -38,7 +46,7 @@ namespace WinPaletter
             img?.Dispose();
             img_filled?.Dispose();
             img_tile?.Dispose();
-            img_untouched_forTint?.Dispose();
+            img_untouched?.Dispose();
             img_tinted?.Dispose();
             img_tinted_filled?.Dispose();
             img_tinted_tile?.Dispose();
@@ -118,11 +126,6 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void ModeSwitched(object sender, EventArgs e)
-        {
-            tablessControl1.SelectedIndex = AdvancedMode ? 0 : 1;
-        }
-
         private void Wallpaper_Editor_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.Settings.AspectsControl.Wallpaper_Advanced = AdvancedMode;
@@ -140,15 +143,13 @@ namespace WinPaletter
                 GeneratePalette = false,
                 GenerateMSTheme = false,
                 Import_preset = false,
+                CanSwitchMode = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromWPTH = LoadFromWPTH,
                 OnImportFromCurrentApplied = LoadFromCurrent,
-
-                OnModeAdvanced = ModeSwitched,
-                OnModeSimple = ModeSwitched,
             };
 
             LoadData(data);
@@ -180,6 +181,11 @@ namespace WinPaletter
                 case WindowStyle.W81:
                     {
                         AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W81);
+                        break;
+                    }
+                case WindowStyle.W8:
+                    {
+                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W8);
                         break;
                     }
                 case WindowStyle.W7:
@@ -443,7 +449,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = TextBox1.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -473,14 +479,14 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new())
+                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new() { SelectedPath = TextBox2.Text })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
                 }
             }
             else
             {
-                using (FolderBrowserDialog dlg = new())
+                using (FolderBrowserDialog dlg = new() { SelectedPath = TextBox2.Text })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
                 }
@@ -558,25 +564,16 @@ namespace WinPaletter
             }
         }
 
-        private void Source_pic_CheckedChanged(object sender, EventArgs e)
-        {
-            if (((UI.WP.RadioImage)sender).Checked)
-            {
-                Set_PicSource();
-                ApplyHSLPreview();
-                ApplyPreviewStyle();
-            }
-
-            Panel1.Visible = false;
-        }
-
         private void Source_slideshow_CheckedChanged(object sender, EventArgs e)
         {
             if (((UI.WP.RadioImage)sender).Checked)
             {
+                tablessControl1.SelectedIndex = 3;
+
                 Set_SlideshowSource();
                 ApplyPreviewStyle();
             }
+
             Panel1.Visible = true;
         }
 
@@ -652,7 +649,11 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            Set_PicSource();
+            img_path = TextBox1.Text;
+            img = BitmapMgr.Load(img_path);
+            img_filled = img?.FillScale(pnl_preview.Size);
+            img_tile = img?.Tile(pnl_preview.Size);
+
             ApplyPreviewStyle();
         }
 
@@ -667,7 +668,7 @@ namespace WinPaletter
 
         private void TextBox3_TextChanged(object sender, EventArgs e)
         {
-            Set_PicSource();
+            img_untouched = BitmapMgr.Load(TextBox3.Text);
             ApplyHSLPreview();
         }
 
@@ -715,38 +716,7 @@ namespace WinPaletter
             ApplyPreviewStyle();
         }
 
-        public void Set_PicSource()
-        {
-            Cursor = Cursors.AppStarting;
-
-            if (source_pic.Checked)
-            {
-                if (File.Exists(TextBox1.Text))
-                {
-                    img = Bitmap_Mgr.Load(TextBox1.Text);
-                    img_filled = img.FillScale(pnl_preview.Size);
-                    img_tile = img.Tile(pnl_preview.Size);
-                }
-                else
-                {
-                    img = null;
-                    img_filled = null;
-                    img_tile = null;
-                }
-            }
-
-            else if (source_wallpapertone.Checked)
-            {
-                if (File.Exists(TextBox3.Text))
-                {
-                    img_untouched_forTint = Bitmap_Mgr.Load(TextBox3.Text);
-                    ApplyHSLPreview();
-                }
-
-            }
-
-            Cursor = Cursors.Default;
-        }
+  
 
         private void Color_pick_DragDrop(object sender, DragEventArgs e)
         {
@@ -784,56 +754,34 @@ namespace WinPaletter
 
         public void Set_SlideshowSource()
         {
-
             Cursor = Cursors.AppStarting;
 
             if (source_slideshow.Checked)
             {
-
                 if (RadioButton1.Checked)
                 {
+                    ImgLs1.Clear();
+                    if (System.IO.Directory.Exists(TextBox2.Text)) ImgLs1.AddRange(Directory.EnumerateFiles(TextBox2.Text, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")));
 
-                    if (Directory.Exists(TextBox2.Text))
-                    {
-                        ImgLs1.Clear();
-                        ImgLs1.AddRange(Directory.EnumerateFiles(TextBox2.Text, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")));
+                    if (index > ImgLs1.Count - 1) index = 0;
+                    img_path = ImgLs1.Count > 0 ? ImgLs1[index] : string.Empty;
+                    img = BitmapMgr.Load(img_path);
+                    img_filled = img?.FillScale(pnl_preview.Size);
+                    img_tile = img?.Tile(pnl_preview.Size);
 
-
-                        if (index > ImgLs1.Count - 1)
-                            index = 0;
-
-                        img = Bitmap_Mgr.Load(ImgLs1[index]);
-                        img_filled = img.FillScale(pnl_preview.Size);
-                        img_tile = img.Tile(pnl_preview.Size);
-
-                        Label3.Text = $"{index + 1}/{ImgLs1.Count}";
-                    }
-                    else
-                    {
-                        img = null;
-                        img_filled = null;
-                        img_tile = null;
-                        Label3.Text = "0/0";
-
-                    }
+                    Label3.Text = $"{index + 1}/{ImgLs1.Count}";
                 }
-
                 else
                 {
                     ImgLs2.Clear();
+                    foreach (string item in ListBox1.Items) { if (File.Exists(item)) ImgLs2.Add(item); }
 
-                    foreach (string item in ListBox1.Items)
-                    {
-                        if (File.Exists(item))
-                            ImgLs2.Add(item);
-                    }
+                    if (index > ImgLs2.Count - 1) index = 0;
 
-                    if (index > ImgLs2.Count - 1)
-                        index = 0;
-
-                    img = Bitmap_Mgr.Load(ImgLs2[index]);
-                    img_filled = img.FillScale(pnl_preview.Size);
-                    img_tile = img.Tile(pnl_preview.Size);
+                    img_path = ImgLs2.Count > 0 ? ImgLs2[index] : string.Empty;
+                    img = BitmapMgr.Load(img_path);
+                    img_filled = img?.FillScale(pnl_preview.Size);
+                    img_tile = img?.Tile(pnl_preview.Size);
 
                     Label3.Text = $"{index + 1}/{ImgLs2.Count}";
                 }
@@ -852,11 +800,11 @@ namespace WinPaletter
         {
             Task.Run(() =>
             {
-                if (source_wallpapertone.Enabled && img_untouched_forTint is not null)
+                if (source_wallpapertone.Enabled && img_untouched is not null)
                 {
                     using (ImageProcessor.ImageFactory ImgF = new())
                     {
-                        ImgF.Load(img_untouched_forTint);
+                        ImgF.Load(img_untouched);
                         ImgF.Hue(HBar.Value, true);
                         ImgF.Saturation(SBar.Value * 2 - 100);
                         ImgF.Brightness(LBar.Value * 2 - 100);
@@ -894,25 +842,49 @@ namespace WinPaletter
             ApplyHSLPreview();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void source_pic_CheckedChanged(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            if (((UI.WP.RadioImage)sender).Checked)
             {
-                if (dlg.ShowDialog() == DialogResult.OK)
+                tablessControl1.SelectedIndex = 0;
+                if (img_path.ToUpper() != TextBox1.Text.ToUpper())
                 {
-                    textBox4.Text = dlg.FileName;
+                    img_path = TextBox1.Text;
+                    img = BitmapMgr.Load(img_path);
+                    img_filled = img?.FillScale(pnl_preview.Size);
+                    img_tile = img?.Tile(pnl_preview.Size);
                 }
+
+                ApplyPreviewStyle();
             }
+
+            Panel1.Visible = false;
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
+        private void source_color_CheckedChanged(object sender, EventArgs e)
         {
-            if (!AdvancedMode)
+            if (((UI.WP.RadioImage)sender).Checked)
             {
-                source_pic.Checked = true;
-                style_fill.Checked = true;
-                TextBox1.Text = textBox4.Text;
+                tablessControl1.SelectedIndex = 1;
+
+                ApplyPreviewStyle();
             }
+
+            Panel1.Visible = false;
+        }
+
+        private void source_wallpapertone_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((UI.WP.RadioImage)sender).Checked)
+            {
+                tablessControl1.SelectedIndex = 2;
+
+                ApplyHSLPreview();
+
+                ApplyPreviewStyle();
+            }
+
+            Panel1.Visible = false;
         }
 
         private void colorBarX1_ValueChanged(object sender, EventArgs e)
@@ -974,7 +946,7 @@ namespace WinPaletter
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = TextBox3.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

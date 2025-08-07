@@ -166,7 +166,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (System.IO.File.Exists(ImagePath))
                             {
-                                bmpList.Add(Bitmap_Mgr.Load(ImagePath).Resize(Screen.PrimaryScreen.Bounds.Size));
+                                bmpList.Add(BitmapMgr.Load(ImagePath).Resize(Screen.PrimaryScreen.Bounds.Size));
                             }
                             else
                             {
