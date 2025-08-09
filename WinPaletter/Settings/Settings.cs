@@ -1160,13 +1160,6 @@ namespace WinPaletter
                 public bool Cursors = true;
 
                 /// <summary>
-                /// If <c>true</c>, Cursors aspect form will be opened in advanced mode
-                /// <br></br>
-                /// If <c>false</c>, Cursors aspect form will be opened in simple mode
-                /// </summary>
-                public bool Cursors_Advanced = true;
-
-                /// <summary>
                 /// If <c>false</c>, Consoles_Cls won't be applied at all
                 /// </summary>
                 public bool Consoles = true;
@@ -1180,13 +1173,6 @@ namespace WinPaletter
                 /// If <c>false</c>, Wallpaper won't be applied at all
                 /// </summary>
                 public bool Wallpaper = true;
-
-                /// <summary>
-                /// If <c>true</c>, Wallpaper aspect form will be opened in advanced mode
-                /// <br></br>
-                /// If <c>false</c>, Wallpaper aspect form will be opened in simple mode
-                /// </summary>
-                public bool Wallpaper_Advanced = true;
 
                 /// <summary>
                 /// If <c>false</c>, Windows Effects won't be applied at all
@@ -1232,11 +1218,9 @@ namespace WinPaletter
                     MetricsFonts = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts", true));
                     MetricsFonts_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts_Advanced", true));
                     Cursors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Cursors", true));
-                    Cursors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Cursors_Advanced", true));
                     Consoles = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Consoles", true));
                     WinTerminals = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinTerminals", true));
                     Wallpaper = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Wallpaper", true));
-                    Wallpaper_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Wallpaper_Advanced", true));
                     Effects = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Effects", true));
                     Sounds = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Sounds", true));
                     ScreenSaver = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ScreenSaver", true));
@@ -1258,11 +1242,9 @@ namespace WinPaletter
                     EditReg(REG_AspectsControl, "MetricsFonts", MetricsFonts, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "MetricsFonts_Advanced", MetricsFonts_Advanced, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "Cursors", Cursors, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Cursors_Advanced", Cursors_Advanced, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "Consoles", Consoles, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "WinTerminals", WinTerminals, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "Wallpaper", Wallpaper, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Wallpaper_Advanced", Wallpaper_Advanced, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "Effects", Effects, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "Sounds", Sounds, RegistryValueKind.DWord);
                     EditReg(REG_AspectsControl, "ScreenSaver", ScreenSaver, RegistryValueKind.DWord);

@@ -573,6 +573,20 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
+        private int _prop_LoadingCircleHot_AnimationSpeed = 10;
+        public int Prop_LoadingCircleHot_AnimationSpeed
+        {
+            get => _prop_LoadingCircleHot_AnimationSpeed;
+            set
+            {
+                if (value != _prop_LoadingCircleHot_AnimationSpeed)
+                {
+                    _prop_LoadingCircleHot_AnimationSpeed = value;
+                    Invalidate();
+                }
+            }
+        }
+
         #endregion
 
         #region Events/Overrides
@@ -726,6 +740,7 @@ namespace WinPaletter.UI.Controllers
                 LoadingCircleBackNoiseOpacity = Prop_LoadingCircleBackNoiseOpacity,
                 LoadingCircleHotNoise = Prop_LoadingCircleHotNoise,
                 LoadingCircleHotNoiseOpacity = Prop_LoadingCircleHotNoiseOpacity,
+                LoadingCircleHot_AnimationSpeed = Prop_LoadingCircleHot_AnimationSpeed,
                 BorderThickness = Prop_BorderThickness,
                 Scale = Prop_Scale,
                 Angle = Angle,

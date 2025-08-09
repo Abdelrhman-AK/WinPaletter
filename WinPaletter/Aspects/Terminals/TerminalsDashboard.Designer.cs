@@ -224,7 +224,6 @@ namespace WinPaletter
             this.labelAlt1.Name = "labelAlt1";
             this.labelAlt1.Size = new System.Drawing.Size(229, 19);
             this.labelAlt1.TabIndex = 105;
-            this.labelAlt1.Text = "0";
             this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TerminalsDashboard

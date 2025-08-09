@@ -484,15 +484,15 @@ namespace WinPaletter.Theme.Structures
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Rendering animated cursor `{CurName}`.");
 
                 Point HotPoint = new(1, 1);
-                int increment = 10;
-                int steps = 360 / increment + 2; // +1 for first angle, +1 for last  angle
+                int increment = Math.Max(5, Math.Min(25, Type == Paths.CursorType.AppLoading ? Cursor_AppLoading.LoadingCircleHot_AnimationSpeed : Cursor_Busy.LoadingCircleHot_AnimationSpeed)) ;
+                int steps = 360 / Math.Abs(increment) + 2; // +1 for first angle, +1 for last  angle
                 int loopIndex = 0;
                 int[] angles = new int[steps];
                 int[] scales = [32, 64, 128];
 
                 //Create array of angles
-                for (int ang = 180; ang <= 360; ang += +increment) { angles[loopIndex] = ang; loopIndex++; }
-                for (int ang = 0; ang <= 180; ang += +increment) { angles[loopIndex] = ang; loopIndex++; }
+                for (int ang = 180; ang <= 360; ang += increment) { angles[loopIndex] = ang; loopIndex++; }
+                for (int ang = 0; ang <= 180; ang += increment) { angles[loopIndex] = ang; loopIndex++; }
 
                 string[] ProcessedFiles = [string.Empty];
 

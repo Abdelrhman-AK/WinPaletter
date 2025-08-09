@@ -110,8 +110,12 @@ namespace WinPaletter
 
         public static Brush ReturnGradience(RectangleF Rectangle, Color Color1, Color Color2, GradientMode GradientMode, float Angle = 0f)
         {
+            if (Rectangle.Width <= 0 || Rectangle.Height <= 0)
+            {
+                return new SolidBrush(Color1);
+            }
 
-            if (GradientMode == GradientMode.Horizontal)
+            else if(GradientMode == GradientMode.Horizontal)
             {
                 return new LinearGradientBrush(Rectangle, Color1, Color2, LinearGradientMode.Horizontal);
             }
@@ -149,7 +153,8 @@ namespace WinPaletter
             Bitmap b = new((int)(32f * CursorOptions.Scale), (int)(32f * CursorOptions.Scale), PixelFormat.Format32bppPArgb);
             Graphics G = Graphics.FromImage(b);
 
-            G.SmoothingMode = (CursorOptions.ArrowStyle == ArrowStyle.Classic || CursorOptions.CircleStyle == CircleStyle.Classic) ? SmoothingMode.HighSpeed : SmoothingMode.AntiAlias;
+            SmoothingMode smoothingMode = CursorOptions.ArrowStyle == ArrowStyle.Classic ? SmoothingMode.None : SmoothingMode.AntiAlias;
+            G.SmoothingMode = smoothingMode;
 
             G.ScaleTransform(CursorOptions.Scale, CursorOptions.Scale);
 
@@ -158,9 +163,8 @@ namespace WinPaletter
             #region Rectangles Helpers
             RectangleF _Arrow = new(0, 0, b.Width, b.Height);
             RectangleF _Help = CursorOptions.ArrowStyle != ArrowStyle.Classic ? new(11, 6, b.Width, b.Height) : new(2, 0, b.Width, b.Height);
-            RectangleF _Busy = new(0 + CursorOptions.Scale, 0, 22, 22);
+            RectangleF _Busy = new(CursorOptions.Scale, 0, 22, 22);
             RectangleF _CurRect = new(0, 8, b.Width, b.Height);
-            RectangleF _LoadRect = new(6f / CursorOptions.Scale, 0, (int)Math.Round(22f * CursorOptions.Scale), (int)Math.Round(22f * CursorOptions.Scale));
             RectangleF _Pin = new(15, 11, b.Width, b.Height);
             RectangleF _Person = new(19, 17, b.Width, b.Height);
             #endregion
@@ -171,26 +175,26 @@ namespace WinPaletter
                 {
                     case CursorType.Arrow:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath cursorPath = Arrow(_Arrow, CursorOptions.ArrowStyle, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(cursorPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(cursorPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, cursorPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -213,55 +217,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, cursorPath);
                                     }
                                 }
+
+                                BB?.Dispose();
+                                BL?.Dispose();
                             }
-
-                            BB.Dispose();
-                            BL.Dispose();
-
 
                             break;
                         }
 
                     case CursorType.Help:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
-                            Brush BB_H, BL_H;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB_H = ReturnGradience(_Help, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB_H = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL_H = ReturnGradience(_Help, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL_H = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath cursorPath = Arrow(_Arrow, CursorOptions.ArrowStyle, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(cursorPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(cursorPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, cursorPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -284,10 +269,31 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, cursorPath);
                                     }
                                 }
+
+                                BB?.Dispose();
+                                BL?.Dispose();
                             }
 
                             using (GraphicsPath helpPath = Help(_Help, CursorOptions.ArrowStyle, 1))
                             {
+                                Brush BB_H, BL_H;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB_H = ReturnGradience(helpPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB_H = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL_H = ReturnGradience(helpPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL_H = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(CursorOptions.ArrowStyle != ArrowStyle.Classic ? BB_H : BL_H, helpPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -313,41 +319,43 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, helpPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
-                            BB_H.Dispose();
-                            BL_H.Dispose();
+                                BB_H.Dispose();
+                                BL_H.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.Busy:
                         {
-                            Brush BC, BH;
-                            if (CursorOptions.LoadingCircleBackGradient)
-                            {
-                                BC = ReturnGradience(_Arrow, CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions.Angle);
-                            }
-                            else
-                            {
-                                BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
-                            }
-                            if (CursorOptions.LoadingCircleHotGradient)
-                            {
-                                BH = ReturnGradience(_Arrow, CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions.Angle);
-                            }
-                            else
-                            {
-                                BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
-                            }
-
+                            G.SmoothingMode = SmoothingMode.None;
+                         
                             using (GraphicsPath busyPath = Busy(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                             using (GraphicsPath busyLoaderPath = BusyLoader(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                             {
+                                Brush BC, BH;
+                                if (CursorOptions.LoadingCircleBackGradient)
+                                {
+                                    BC = ReturnGradience(busyPath.GetBounds(), CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions.Angle);
+                                }
+                                else
+                                {
+                                    BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
+                                }
+                                if (CursorOptions.LoadingCircleHotGradient)
+                                {
+                                    BH = ReturnGradience(busyPath.GetBounds(), CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions.Angle);
+                                }
+                                else
+                                {
+                                    BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
+                                }
+
                                 if (CursorOptions.CircleStyle == CircleStyle.Classic)
                                 {
+                                    G.SmoothingMode = SmoothingMode.None;
+
                                     using (Pen PL = new(BH, CursorOptions.BorderThickness))
                                     {
                                         G.FillPath(BC, busyPath);
@@ -374,10 +382,14 @@ namespace WinPaletter
                                             G.DrawPath(noisePen, busyPath);
                                         }
                                     }
+
+                                    G.SmoothingMode = smoothingMode;
                                 }
 
                                 else if (CursorOptions.CircleStyle == CircleStyle.Aero)
                                 {
+                                    G.SmoothingMode = SmoothingMode.AntiAlias;
+
                                     G.FillPath(BC, busyPath);
 
                                     if (CursorOptions.LoadingCircleBackNoise)
@@ -399,11 +411,15 @@ namespace WinPaletter
                                             G.FillPath(noise, busyLoaderPath);
                                         }
                                     }
+
+                                    G.SmoothingMode = smoothingMode;
                                 }
 
                                 else if (CursorOptions.CircleStyle == CircleStyle.Modern || CursorOptions.CircleStyle == CircleStyle.Fluid)
                                 {
-                                    float PenWidth = 0.2f * Math.Max(_Arrow.Width, _Arrow.Height) / CursorOptions.Scale;
+                                    G.SmoothingMode = SmoothingMode.AntiAlias;
+
+                                    float PenWidth = 0.16f * Math.Max(_Arrow.Width, _Arrow.Height) / CursorOptions.Scale;
                                     PenWidth *= CursorOptions.CircleStyle == CircleStyle.Fluid ? 2.5f : 1f;
 
                                     float _percent = 0.3f;
@@ -440,69 +456,58 @@ namespace WinPaletter
                                             }
                                         }
                                     }
+
+                                    G.SmoothingMode = smoothingMode;
                                 }
+
+                                BC.Dispose();
+                                BH.Dispose();
                             }
 
-                            BC.Dispose();
-                            BH.Dispose();
+                            G.SmoothingMode = smoothingMode;
 
                             break;
                         }
 
                     case CursorType.AppLoading:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
+                            using (GraphicsPath arrowPath = Arrow(_CurRect, CursorOptions.ArrowStyle, 1))
                             {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode, CursorOptions.Angle);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode, CursorOptions.Angle);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
+                                RectangleF _arrowDrawnRect;
+                                _arrowDrawnRect = arrowPath.GetBounds();
 
-                            Brush BC, BH;
-                            if (CursorOptions.LoadingCircleBackGradient)
-                            {
-                                BC = ReturnGradience(_LoadRect, CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions.Angle);
-                            }
-                            else
-                            {
-                                BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
-                            }
-                            if (CursorOptions.LoadingCircleHotGradient)
-                            {
-                                BH = ReturnGradience(_LoadRect, CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions.Angle);
-                            }
-                            else
-                            {
-                                BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
-                            }
+                                RectangleF _LoadRect = new(_arrowDrawnRect.Right / 2 + 1f, 0, 14, 14);
 
-                            RectangleF _arrowDrawnRect;
-
-                            using (GraphicsPath cursorPath = Arrow(_CurRect, CursorOptions.ArrowStyle, 1))
-                            {
-                                G.FillPath(BB, cursorPath);
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(arrowPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode, CursorOptions.Angle);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(arrowPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode, CursorOptions.Angle);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+                             
+                                G.FillPath(BB, arrowPath);
 
                                 if (CursorOptions.PrimaryNoise)
                                 {
                                     using (Bitmap bx = Properties.Resources.Noise_Opaque.Fade(CursorOptions.PrimaryNoiseOpacity))
                                     using (TextureBrush noise = new(bx))
                                     {
-                                        G.FillPath(noise, cursorPath);
+                                        G.FillPath(noise, arrowPath);
                                     }
                                 }
 
-                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, cursorPath); }
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) { G.DrawPath(PL, arrowPath); }
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
@@ -510,17 +515,38 @@ namespace WinPaletter
                                     using (TextureBrush noise = new(bx))
                                     using (Pen noisePen = new(noise, CursorOptions.BorderThickness))
                                     {
-                                        G.DrawPath(noisePen, cursorPath);
+                                        G.DrawPath(noisePen, arrowPath);
                                     }
                                 }
 
-                                _arrowDrawnRect = cursorPath.GetBounds();
+                                BB?.Dispose();
+                                BL?.Dispose();
 
                                 if (CursorOptions.CircleStyle == CircleStyle.Classic)
                                 {
+                                    G.SmoothingMode = SmoothingMode.None;
+
                                     using (GraphicsPath appLoadingPath = AppLoading(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                                     using (GraphicsPath appLoadingCirclePath = AppLoaderCircle(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                                     {
+                                        Brush BC, BH;
+                                        if (CursorOptions.LoadingCircleBackGradient)
+                                        {
+                                            BC = ReturnGradience(appLoadingPath.GetBounds(), CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions.Angle);
+                                        }
+                                        else
+                                        {
+                                            BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
+                                        }
+                                        if (CursorOptions.LoadingCircleHotGradient)
+                                        {
+                                            BH = ReturnGradience(appLoadingPath.GetBounds(), CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions.Angle);
+                                        }
+                                        else
+                                        {
+                                            BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
+                                        }
+
                                         using (Pen PLx = new(BH, CursorOptions.BorderThickness))
                                         {
                                             G.FillPath(BC, appLoadingPath);
@@ -547,14 +573,39 @@ namespace WinPaletter
                                                 G.DrawPath(noisePen, appLoadingPath);
                                             }
                                         }
+
+                                        BC?.Dispose();
+                                        BH?.Dispose();
                                     }
+
+                                    G.SmoothingMode = smoothingMode;
                                 }
 
                                 else if (CursorOptions.CircleStyle == CircleStyle.Aero)
                                 {
+                                    G.SmoothingMode = SmoothingMode.AntiAlias;
+
                                     using (GraphicsPath appLoadingPath = AppLoading(_LoadRect, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                                     using (GraphicsPath appLoadingCirclePath = AppLoaderCircle(_LoadRect, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                                     {
+                                        Brush BC, BH;
+                                        if (CursorOptions.LoadingCircleBackGradient)
+                                        {
+                                            BC = ReturnGradience(appLoadingPath.GetBounds(), CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions.Angle);
+                                        }
+                                        else
+                                        {
+                                            BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
+                                        }
+                                        if (CursorOptions.LoadingCircleHotGradient)
+                                        {
+                                            BH = ReturnGradience(appLoadingPath.GetBounds(), CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions.Angle);
+                                        }
+                                        else
+                                        {
+                                            BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
+                                        }
+
                                         G.FillPath(BC, appLoadingPath);
 
                                         if (CursorOptions.LoadingCircleBackNoise)
@@ -576,12 +627,19 @@ namespace WinPaletter
                                                 G.FillPath(noise, appLoadingCirclePath);
                                             }
                                         }
+
+                                        BC?.Dispose();
+                                        BH?.Dispose();
                                     }
+
+                                    G.SmoothingMode = smoothingMode;
                                 }
 
                                 else if (CursorOptions.CircleStyle == CircleStyle.Modern || CursorOptions.CircleStyle == CircleStyle.Fluid)
                                 {
-                                    float PenWidth = 0.2f * Math.Max(_LoadRect.Width, _LoadRect.Height) / CursorOptions.Scale;
+                                    G.SmoothingMode = SmoothingMode.AntiAlias;
+
+                                    float PenWidth = 0.3f * Math.Max(_LoadRect.Width, _LoadRect.Height);
                                     PenWidth *= CursorOptions.CircleStyle == CircleStyle.Fluid ? 2.5f : 1f;
 
                                     float _percent = 0.3f;
@@ -590,6 +648,24 @@ namespace WinPaletter
                                     CircleWidth /= CursorOptions.CircleStyle == CircleStyle.Fluid ? 2.5f : 1f;
 
                                     RectangleF CircleRect = new(_arrowDrawnRect.Right + (CursorOptions.CircleStyle == CircleStyle.Fluid ? 2f : -1f), CursorOptions.CircleStyle == CircleStyle.Fluid ? 6 : 2, CircleWidth, CircleWidth);
+
+                                    Brush BC, BH;
+                                    if (CursorOptions.LoadingCircleBackGradient)
+                                    {
+                                        BC = ReturnGradience(CircleRect, CursorOptions.LoadingCircleBack1, CursorOptions.LoadingCircleBack2, CursorOptions.LoadingCircleBackGradientMode, CursorOptions.Angle);
+                                    }
+                                    else
+                                    {
+                                        BC = new SolidBrush(CursorOptions.LoadingCircleBack1);
+                                    }
+                                    if (CursorOptions.LoadingCircleHotGradient)
+                                    {
+                                        BH = ReturnGradience(CircleRect, CursorOptions.LoadingCircleHot1, CursorOptions.LoadingCircleHot2, CursorOptions.LoadingCircleHotGradientMode, CursorOptions.Angle);
+                                    }
+                                    else
+                                    {
+                                        BH = new SolidBrush(CursorOptions.LoadingCircleHot1);
+                                    }
 
                                     using (Pen pen = new(BH, PenWidth))
                                     using (Pen pen2 = new(BC, PenWidth))
@@ -620,41 +696,41 @@ namespace WinPaletter
                                                 G.DrawArc(noisePen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
                                             }
                                         }
+
+                                        BC?.Dispose();
+                                        BH?.Dispose();
                                     }
+
+                                    G.SmoothingMode = smoothingMode;
                                 }
                             }
-
-                            BB.Dispose();
-                            BL.Dispose();
-                            BC.Dispose();
-                            BH.Dispose();
 
                             break;
                         }
 
                     case CursorType.None:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath nonePath = None(_Arrow, 1))
                             using (GraphicsPath noneBackgroundPath = NoneBackground(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(nonePath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(nonePath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, noneBackgroundPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -676,37 +752,36 @@ namespace WinPaletter
                                         G.FillPath(noise, nonePath);
                                     }
                                 }
+
+                                BB?.Dispose();
+                                BL?.Dispose();
                             }
-
-                            BB.Dispose();
-                            BL.Dispose();
-
 
                             break;
                         }
 
                     case CursorType.Move:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath movePath = Move(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(movePath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(movePath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, movePath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -729,36 +804,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, movePath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.Up:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath upPath = Up(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(upPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(upPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, upPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -781,36 +856,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, upPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.NS:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath nsPath = NS(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(nsPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(nsPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, nsPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -833,36 +908,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, nsPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.EW:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath ewPath = EW(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(ewPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(ewPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, ewPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -885,36 +960,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, ewPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.NESW:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath neswPath = NESW(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(neswPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(neswPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, neswPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -937,36 +1012,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, neswPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.NWSE:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath nwsePath = NWSE(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(nwsePath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(nwsePath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, nwsePath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -989,37 +1064,37 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, nwsePath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.Pen:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath penPath = Pen(_Arrow, 1))
                             using (GraphicsPath penBackgroundPath = PenBackground(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(penPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(penPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, penBackgroundPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -1042,36 +1117,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, penPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.Link:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
                             using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(handPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(handPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, handPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -1090,57 +1165,56 @@ namespace WinPaletter
                                 {
                                     G.DrawPath(noisePen, handPath);
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.Pin:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
-                            Brush BB_P, BL_P;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB_P = ReturnGradience(_Pin, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL_P = ReturnGradience(_Pin, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
-                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
                             using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, 1))
                             using (GraphicsPath pinPath = Pin(_Pin, 1))
                             using (GraphicsPath pinCenterPointPath = Pin_CenterPoint(_Pin, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(handPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(handPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
+                                Brush BB_P, BL_P;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB_P = ReturnGradience(pinPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL_P = ReturnGradience(pinPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, handPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -1152,7 +1226,7 @@ namespace WinPaletter
                                     }
                                 }
 
-                                G.DrawPath(PL, handPath);
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) G.DrawPath(PL, handPath);
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
@@ -1197,58 +1271,57 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, pinPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
-                            BB_P.Dispose();
-                            BL_P.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                                BB_P.Dispose();
+                                BL_P.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.Person:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
-                            Brush BB_P, BL_P;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB_P = ReturnGradience(_Person, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL_P = ReturnGradience(_Person, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
-                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
                             using (GraphicsPath handPath = Hand(_Arrow, CursorOptions.ArrowStyle, 1))
                             using (GraphicsPath personPath = Person(_Person, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(handPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(handPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
+                                Brush BB_P, BL_P;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB_P = ReturnGradience(personPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB_P = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL_P = ReturnGradience(personPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL_P = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, handPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -1260,7 +1333,7 @@ namespace WinPaletter
                                     }
                                 }
 
-                                G.DrawPath(PL, handPath);
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) G.DrawPath(PL, handPath);
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
@@ -1294,40 +1367,38 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, personPath);
                                     }
                                 }
+
+                                BB?.Dispose();
+                                BL?.Dispose();
+                                BB_P.Dispose();
+                                BL_P.Dispose();
                             }
-
-                            BB.Dispose();
-                            BL.Dispose();
-                            BB_P.Dispose();
-                            BL_P.Dispose();
-
 
                             break;
                         }
 
                     case CursorType.IBeam:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
-                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
                             using (GraphicsPath iBeamPath = IBeam(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(iBeamPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(iBeamPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, iBeamPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -1339,7 +1410,7 @@ namespace WinPaletter
                                     }
                                 }
 
-                                G.DrawPath(PL, iBeamPath);
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) G.DrawPath(PL, iBeamPath);
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
@@ -1350,37 +1421,36 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, iBeamPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
 
                     case CursorType.Cross:
                         {
-                            Brush BB, BL;
-                            if (CursorOptions.PrimaryColorGradient)
-                            {
-                                BB = ReturnGradience(_Arrow, CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BB = new SolidBrush(CursorOptions.PrimaryColor1);
-                            }
-                            if (CursorOptions.SecondaryColorGradient)
-                            {
-                                BL = ReturnGradience(_Arrow, CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
-                            }
-                            else
-                            {
-                                BL = new SolidBrush(CursorOptions.SecondaryColor1);
-                            }
-
-                            using (Pen PL = new(BL, CursorOptions.BorderThickness))
                             using (GraphicsPath crossPath = Cross(_Arrow, 1))
                             {
+                                Brush BB, BL;
+                                if (CursorOptions.PrimaryColorGradient)
+                                {
+                                    BB = ReturnGradience(crossPath.GetBounds(), CursorOptions.PrimaryColor1, CursorOptions.PrimaryColor2, CursorOptions.PrimaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BB = new SolidBrush(CursorOptions.PrimaryColor1);
+                                }
+                                if (CursorOptions.SecondaryColorGradient)
+                                {
+                                    BL = ReturnGradience(crossPath.GetBounds(), CursorOptions.SecondaryColor1, CursorOptions.SecondaryColor2, CursorOptions.SecondaryColorGradientMode);
+                                }
+                                else
+                                {
+                                    BL = new SolidBrush(CursorOptions.SecondaryColor1);
+                                }
+
                                 G.FillPath(BB, crossPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -1392,7 +1462,7 @@ namespace WinPaletter
                                     }
                                 }
 
-                                G.DrawPath(PL, crossPath);
+                                using (Pen PL = new(BL, CursorOptions.BorderThickness)) G.DrawPath(PL, crossPath);
 
                                 if (CursorOptions.SecondaryNoise)
                                 {
@@ -1403,10 +1473,10 @@ namespace WinPaletter
                                         G.DrawPath(noisePen, crossPath);
                                     }
                                 }
-                            }
 
-                            BB.Dispose();
-                            BL.Dispose();
+                                BB?.Dispose();
+                                BL?.Dispose();
+                            }
 
                             break;
                         }
@@ -1617,15 +1687,15 @@ namespace WinPaletter
             using (GraphicsPath path = new())
             using (Matrix m = new())
             {
-                Rectangle.Width = 22;
-                Rectangle.Height = 22;
-
                 switch (Style)
                 {
                     case CircleStyle.Aero:
                         {
-                            path.AddEllipse(Rectangle.X, Rectangle.Y, 22, 22);
-                            RectangleF R = new(Rectangle.X + 5, Rectangle.Y + 5, 12, 12);
+                            Rectangle.Width = 19;
+                            Rectangle.Height = 19;
+
+                            path.AddEllipse(Rectangle);
+                            RectangleF R = new(Rectangle.X + 4, Rectangle.Y + 4, 11, 11);
                             path.AddEllipse(R);
                             path.CloseFigure();
                             break;
@@ -1633,6 +1703,9 @@ namespace WinPaletter
 
                     case CircleStyle.Classic:
                         {
+                            Rectangle.Width = 22;
+                            Rectangle.Height = 22;
+
                             path.AddLine(new PointF(Rectangle.X + 12, Rectangle.Y + 0), new PointF(Rectangle.X + 6, Rectangle.Y + 0));
                             path.AddLine(new PointF(Rectangle.X + 6, Rectangle.Y + 0), new PointF(Rectangle.X + 6, Rectangle.Y + 2));
                             path.AddLine(new PointF(Rectangle.X + 6, Rectangle.Y + 2), new PointF(Rectangle.X + 12, Rectangle.Y + 2));
@@ -1687,11 +1760,11 @@ namespace WinPaletter
                 Rectangle.X += 0;
                 Rectangle.Y += 0;
 
-                Rectangle.Width = 22;
-                Rectangle.Height = 22;
+                Rectangle.Width = 19;
+                Rectangle.Height = 19;
 
-                PointF CPointF = new((int)Math.Round(Rectangle.X + Rectangle.Width / 2d), (int)Math.Round(Rectangle.Y + Rectangle.Height / 2d));
-                RectangleF R = new(Rectangle.X + 5, Rectangle.Y + 5, 12, 12);
+                PointF CPointF = new(Rectangle.X + Rectangle.Width / 2f, Rectangle.Y + Rectangle.Height / 2f);
+                RectangleF R = new(Rectangle.X + 4, Rectangle.Y + 4, 11, 11);
 
                 int innerR = 15;
                 int thickness = 10;
@@ -1702,6 +1775,9 @@ namespace WinPaletter
                 {
                     case CircleStyle.Aero:
                         {
+                            Rectangle.Width = 19;
+                            Rectangle.Height = 19;
+
                             RectangleF outerRect = Rectangle;
                             RectangleF innerRect = R;
                             path.AddArc(outerRect, Angle, arcLength);
@@ -1712,6 +1788,9 @@ namespace WinPaletter
 
                     case CircleStyle.Classic:
                         {
+                            Rectangle.Width = 22;
+                            Rectangle.Height = 22;
+
                             PointF PU1 = new(Rectangle.X + 12, Rectangle.Y + 5);
 
                             PointF PU3 = new(Rectangle.X + 10, Rectangle.Y + 5);
@@ -1768,15 +1847,15 @@ namespace WinPaletter
             using (GraphicsPath path = new())
             using (Matrix m = new())
             {
-                Rectangle.Width = 16;
-                Rectangle.Height = 16;
+                Rectangle.Width = 15;
+                Rectangle.Height = 15;
 
                 switch (Style)
                 {
                     case CircleStyle.Aero:
                         {
                             path.AddEllipse(Rectangle);
-                            RectangleF R = new(Rectangle.X + 4, Rectangle.Y + 4, 8, 8);
+                            RectangleF R = new(Rectangle.X + 3, Rectangle.Y + 3, 9, 9);
                             path.AddEllipse(R);
                             path.CloseFigure();
                             break;
@@ -1881,14 +1960,14 @@ namespace WinPaletter
             using (GraphicsPath path = new())
             using (Matrix m = new())
             {
-                Rectangle.Width = 16;
-                Rectangle.Height = 16;
+                Rectangle.Width = 15;
+                Rectangle.Height = 15;
 
                 PointF CPointF = new(Rectangle.X + Rectangle.Width / 2f, Rectangle.Y + Rectangle.Height / 2f);
-                RectangleF R = new(Rectangle.X + 4, Rectangle.Y + 4, 8, 8);
+                RectangleF R = new(Rectangle.X + 3, Rectangle.Y + 3, 9, 9);
 
                 int innerR = 15;
-                int thickness = 6;
+                int thickness = 4;
                 int arcLength = 70;
                 int outerR = innerR + thickness;
 
@@ -2803,6 +2882,7 @@ namespace WinPaletter
                 LoadingCircleBackNoiseOpacity = Cursor.LoadingCircleBackNoiseOpacity;
                 LoadingCircleHotNoise = Cursor.LoadingCircleHotNoise;
                 LoadingCircleHotNoiseOpacity = Cursor.LoadingCircleHotNoiseOpacity;
+                LoadingCircleHot_AnimationSpeed = Cursor.LoadingCircleHot_AnimationSpeed;
                 Shadow_Enabled = Cursor.Shadow_Enabled;
                 Shadow_Color = Cursor.Shadow_Color;
                 Shadow_Blur = Cursor.Shadow_Blur;
@@ -2842,6 +2922,7 @@ namespace WinPaletter
         public float LoadingCircleBackNoiseOpacity;
         public bool LoadingCircleHotNoise;
         public float LoadingCircleHotNoiseOpacity;
+        public int LoadingCircleHot_AnimationSpeed;
         public float Scale = 1f;
         public float Angle = 180f;
         public bool Shadow_Enabled = false;

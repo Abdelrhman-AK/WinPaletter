@@ -33,7 +33,7 @@ namespace WinPaletter
         private bool _Shown = false;
         private readonly List<CursorControl> AnimateList = [];
         private float Angle = 180f;
-        private readonly float Increment = 5f;
+        private float Increment = 5f;
         private int Cycles = 0;
         private readonly DownloadManager DM = new();
 
@@ -1177,6 +1177,8 @@ namespace WinPaletter
 
             foreach (CursorControl i in AnimateList)
             {
+                Increment = i.Prop_LoadingCircleHot_AnimationSpeed / 2f;
+
                 i.Angle = Angle;
                 i.Refresh();
 
@@ -1184,7 +1186,7 @@ namespace WinPaletter
                     Angle = 0f;
                 Angle += Increment;
 
-                if (Angle == 180f & Cycles >= 2)
+                if (Angle == 180f & Cycles >= numericUpDown1.Value - 1)
                 {
                     i.Angle = 180f;
                     Cursor_Timer.Enabled = false;

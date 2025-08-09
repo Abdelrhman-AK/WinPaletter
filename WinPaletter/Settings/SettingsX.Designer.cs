@@ -239,21 +239,11 @@ namespace WinPaletter
             this.PictureBox66 = new System.Windows.Forms.PictureBox();
             this.Separator6 = new WinPaletter.UI.WP.SeparatorH();
             this.tabPage17 = new System.Windows.Forms.TabPage();
-            this.groupBox59 = new WinPaletter.UI.WP.GroupBox();
-            this.radioImage9 = new WinPaletter.UI.WP.RadioImage();
-            this.radioImage10 = new WinPaletter.UI.WP.RadioImage();
-            this.label28 = new System.Windows.Forms.Label();
-            this.pictureBox38 = new System.Windows.Forms.PictureBox();
             this.groupBox58 = new WinPaletter.UI.WP.GroupBox();
             this.radioImage7 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage8 = new WinPaletter.UI.WP.RadioImage();
             this.label26 = new System.Windows.Forms.Label();
             this.pictureBox28 = new System.Windows.Forms.PictureBox();
-            this.groupBox57 = new WinPaletter.UI.WP.GroupBox();
-            this.radioImage5 = new WinPaletter.UI.WP.RadioImage();
-            this.radioImage6 = new WinPaletter.UI.WP.RadioImage();
-            this.label21 = new System.Windows.Forms.Label();
-            this.pictureBox17 = new System.Windows.Forms.PictureBox();
             this.groupBox56 = new WinPaletter.UI.WP.GroupBox();
             this.radioImage3 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage4 = new WinPaletter.UI.WP.RadioImage();
@@ -581,12 +571,8 @@ namespace WinPaletter
             this.groupBox27.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox66)).BeginInit();
             this.tabPage17.SuspendLayout();
-            this.groupBox59.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).BeginInit();
             this.groupBox58.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox28)).BeginInit();
-            this.groupBox57.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
             this.groupBox56.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
             this.groupBox67.SuspendLayout();
@@ -1631,7 +1617,7 @@ namespace WinPaletter
             // PictureBox36
             // 
             this.PictureBox36.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.PictureBox36.Image = global::WinPaletter.Assets.WinLogos.Win11;
+            this.PictureBox36.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox36.Image")));
             this.PictureBox36.Location = new System.Drawing.Point(11, 12);
             this.PictureBox36.Name = "PictureBox36";
             this.PictureBox36.Size = new System.Drawing.Size(24, 24);
@@ -3293,9 +3279,7 @@ namespace WinPaletter
             // tabPage17
             // 
             this.tabPage17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage17.Controls.Add(this.groupBox59);
             this.tabPage17.Controls.Add(this.groupBox58);
-            this.tabPage17.Controls.Add(this.groupBox57);
             this.tabPage17.Controls.Add(this.groupBox56);
             this.tabPage17.Controls.Add(this.groupBox67);
             this.tabPage17.Controls.Add(this.banner15);
@@ -3304,78 +3288,6 @@ namespace WinPaletter
             this.tabPage17.Size = new System.Drawing.Size(823, 591);
             this.tabPage17.TabIndex = 16;
             this.tabPage17.Text = "Aspects control";
-            // 
-            // groupBox59
-            // 
-            this.groupBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox59.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox59.Controls.Add(this.radioImage9);
-            this.groupBox59.Controls.Add(this.radioImage10);
-            this.groupBox59.Controls.Add(this.label28);
-            this.groupBox59.Controls.Add(this.pictureBox38);
-            this.groupBox59.Location = new System.Drawing.Point(3, 453);
-            this.groupBox59.Name = "groupBox59";
-            this.groupBox59.Size = new System.Drawing.Size(817, 40);
-            this.groupBox59.TabIndex = 227;
-            // 
-            // radioImage9
-            // 
-            this.radioImage9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioImage9.Checked = false;
-            this.radioImage9.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioImage9.ForeColor = System.Drawing.Color.White;
-            this.radioImage9.Image = null;
-            this.radioImage9.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage9.Location = new System.Drawing.Point(667, 6);
-            this.radioImage9.Name = "radioImage9";
-            this.radioImage9.Size = new System.Drawing.Size(145, 28);
-            this.radioImage9.TabIndex = 119;
-            this.radioImage9.Text = "Simple";
-            this.radioImage9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // radioImage10
-            // 
-            this.radioImage10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioImage10.Checked = false;
-            this.radioImage10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioImage10.ForeColor = System.Drawing.Color.White;
-            this.radioImage10.Image = null;
-            this.radioImage10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage10.Location = new System.Drawing.Point(516, 6);
-            this.radioImage10.Name = "radioImage10";
-            this.radioImage10.Size = new System.Drawing.Size(145, 28);
-            this.radioImage10.TabIndex = 118;
-            this.radioImage10.Text = "Advanced";
-            this.radioImage10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // label28
-            // 
-            this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(37, 7);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(473, 26);
-            this.label28.TabIndex = 18;
-            this.label28.Text = "Wallpaper aspect editing mode";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox38
-            // 
-            this.pictureBox38.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox38.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox38.Image")));
-            this.pictureBox38.Location = new System.Drawing.Point(7, 8);
-            this.pictureBox38.Name = "pictureBox38";
-            this.pictureBox38.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox38.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox38.TabIndex = 20;
-            this.pictureBox38.TabStop = false;
             // 
             // groupBox58
             // 
@@ -3386,7 +3298,7 @@ namespace WinPaletter
             this.groupBox58.Controls.Add(this.radioImage8);
             this.groupBox58.Controls.Add(this.label26);
             this.groupBox58.Controls.Add(this.pictureBox28);
-            this.groupBox58.Location = new System.Drawing.Point(3, 409);
+            this.groupBox58.Location = new System.Drawing.Point(3, 365);
             this.groupBox58.Name = "groupBox58";
             this.groupBox58.Size = new System.Drawing.Size(817, 40);
             this.groupBox58.TabIndex = 226;
@@ -3448,78 +3360,6 @@ namespace WinPaletter
             this.pictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox28.TabIndex = 20;
             this.pictureBox28.TabStop = false;
-            // 
-            // groupBox57
-            // 
-            this.groupBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox57.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox57.Controls.Add(this.radioImage5);
-            this.groupBox57.Controls.Add(this.radioImage6);
-            this.groupBox57.Controls.Add(this.label21);
-            this.groupBox57.Controls.Add(this.pictureBox17);
-            this.groupBox57.Location = new System.Drawing.Point(3, 365);
-            this.groupBox57.Name = "groupBox57";
-            this.groupBox57.Size = new System.Drawing.Size(817, 40);
-            this.groupBox57.TabIndex = 225;
-            // 
-            // radioImage5
-            // 
-            this.radioImage5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioImage5.Checked = false;
-            this.radioImage5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioImage5.ForeColor = System.Drawing.Color.White;
-            this.radioImage5.Image = null;
-            this.radioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage5.Location = new System.Drawing.Point(667, 6);
-            this.radioImage5.Name = "radioImage5";
-            this.radioImage5.Size = new System.Drawing.Size(145, 28);
-            this.radioImage5.TabIndex = 119;
-            this.radioImage5.Text = "Simple";
-            this.radioImage5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // radioImage6
-            // 
-            this.radioImage6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioImage6.Checked = false;
-            this.radioImage6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioImage6.ForeColor = System.Drawing.Color.White;
-            this.radioImage6.Image = null;
-            this.radioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage6.Location = new System.Drawing.Point(516, 6);
-            this.radioImage6.Name = "radioImage6";
-            this.radioImage6.Size = new System.Drawing.Size(145, 28);
-            this.radioImage6.TabIndex = 118;
-            this.radioImage6.Text = "Advanced";
-            this.radioImage6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // label21
-            // 
-            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label21.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(37, 7);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(473, 26);
-            this.label21.TabIndex = 18;
-            this.label21.Text = "Cursors aspect editing mode";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox17
-            // 
-            this.pictureBox17.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox17.Image")));
-            this.pictureBox17.Location = new System.Drawing.Point(7, 8);
-            this.pictureBox17.Name = "pictureBox17";
-            this.pictureBox17.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox17.TabIndex = 20;
-            this.pictureBox17.TabStop = false;
             // 
             // groupBox56
             // 
@@ -6865,12 +6705,8 @@ namespace WinPaletter
             this.groupBox27.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox66)).EndInit();
             this.tabPage17.ResumeLayout(false);
-            this.groupBox59.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).EndInit();
             this.groupBox58.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox28)).EndInit();
-            this.groupBox57.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
             this.groupBox56.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
             this.groupBox67.ResumeLayout(false);
@@ -7377,21 +7213,11 @@ namespace WinPaletter
         internal UI.WP.CheckBox checkBox4;
         internal UI.WP.CheckBox checkBox3;
         internal UI.WP.CheckBox checkBox13;
-        private UI.WP.GroupBox groupBox59;
-        private UI.WP.RadioImage radioImage9;
-        private UI.WP.RadioImage radioImage10;
-        internal Label label28;
-        internal PictureBox pictureBox38;
         private UI.WP.GroupBox groupBox58;
         private UI.WP.RadioImage radioImage7;
         private UI.WP.RadioImage radioImage8;
         internal Label label26;
         internal PictureBox pictureBox28;
-        private UI.WP.GroupBox groupBox57;
-        private UI.WP.RadioImage radioImage5;
-        private UI.WP.RadioImage radioImage6;
-        internal Label label21;
-        internal PictureBox pictureBox17;
         private UI.WP.GroupBox groupBox56;
         private UI.WP.RadioImage radioImage3;
         private UI.WP.RadioImage radioImage4;

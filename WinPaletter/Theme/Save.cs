@@ -984,7 +984,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                // Add wallpaper image used for Wallpaper Tone feature for Windows 12, 11, 10, 8.1, 7, Vista, and WXP
+                // Add wallpaper image used for Wallpaper Tone feature for Windows 12, 11, 10, 8.1, 8, 7, Vista, and XP
                 if (TM.WallpaperTone_W12.Enabled)
                 {
                     x = TM.WallpaperTone_W12.Image;
@@ -1054,6 +1054,24 @@ namespace WinPaletter.Theme
                         filesList.Add(ZipEntry, x);
 
                         Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 8.1 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                    }
+                }
+
+                if (TM.WallpaperTone_W8.Enabled)
+                {
+                    x = TM.WallpaperTone_W8.Image;
+                    if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $"{cache}wt_w8{Path.GetExtension(x)}";
+                        if (System.IO.File.Exists(x))
+                        {
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 8 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            TM.WallpaperTone_W8.Image = ZipEntry;
+                        }
+
+                        filesList.Add(ZipEntry, x);
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 8 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -3363,6 +3381,31 @@ namespace WinPaletter.Theme
                             {
                                 archive.CreateEntryFromFile(file, $"W81_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
                                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 8.1 Visual Style file `{file}` to the theme resources pack as `W81_VS{file.Replace(DirName, string.Empty)}`.");
+                            }
+                        }
+                    }
+                }
+
+                // Add Visual Styles files of Windows 8
+                if (TM.Windows8.VisualStyles.Enabled)
+                {
+                    ref string targetProperty = ref TM.Windows8.VisualStyles.ThemeFile;
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ZipEntry = $@"{cache}W8_VS\{Path.GetFileName(targetProperty)}";
+                        if (System.IO.File.Exists(targetProperty))
+                        {
+                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 8 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            targetProperty = ZipEntry;
+                        }
+
+                        string DirName = new FileInfo(targetProperty).Directory.FullName;
+                        foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
+                        {
+                            if (System.IO.File.Exists(file))
+                            {
+                                archive.CreateEntryFromFile(file, $"W8_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
+                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 8 Visual Style file `{file}` to the theme resources pack as `W8_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }

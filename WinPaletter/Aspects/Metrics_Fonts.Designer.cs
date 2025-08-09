@@ -200,6 +200,7 @@ namespace WinPaletter
             this.label13 = new System.Windows.Forms.Label();
             this.comboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.checkBox2 = new WinPaletter.UI.WP.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.checker_img)).BeginInit();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -2340,6 +2341,7 @@ namespace WinPaletter
             this.windowMetrics1.CaptionWidth = 24;
             this.windowMetrics1.Classic = false;
             this.windowMetrics1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.windowMetrics1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.windowMetrics1.Location = new System.Drawing.Point(0, 0);
             this.windowMetrics1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.windowMetrics1.MenuFont = new System.Drawing.Font("Segoe UI", 9F);
@@ -2533,12 +2535,13 @@ namespace WinPaletter
             this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox12.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox12.Controls.Add(this.checkBox2);
             this.groupBox12.Controls.Add(this.pictureBox33);
             this.groupBox12.Controls.Add(this.label13);
             this.groupBox12.Controls.Add(this.comboBox1);
             this.groupBox12.Location = new System.Drawing.Point(12, 62);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(1076, 37);
+            this.groupBox12.Size = new System.Drawing.Size(1076, 38);
             this.groupBox12.TabIndex = 224;
             // 
             // pictureBox33
@@ -2574,7 +2577,7 @@ namespace WinPaletter
             this.comboBox1.ItemHeight = 24;
             this.comboBox1.Location = new System.Drawing.Point(119, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(953, 30);
+            this.comboBox1.Size = new System.Drawing.Size(638, 30);
             this.comboBox1.TabIndex = 73;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -2594,6 +2597,18 @@ namespace WinPaletter
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = resources.GetString("alertBox1.Text");
             this.alertBox1.Visible = false;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.checkBox2.Checked = false;
+            this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox2.ForeColor = System.Drawing.Color.White;
+            this.checkBox2.Location = new System.Drawing.Point(763, 7);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(309, 23);
+            this.checkBox2.TabIndex = 92;
+            this.checkBox2.Text = "Allow changing `Single bit per pixel font` preference";
             // 
             // Metrics_Fonts
             // 
@@ -2859,5 +2874,6 @@ namespace WinPaletter
         internal UI.WP.ComboBox comboBox1;
         internal PictureBox pictureBox33;
         internal UI.WP.AlertBox alertBox1;
+        private UI.WP.CheckBox checkBox2;
     }
 }

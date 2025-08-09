@@ -393,7 +393,7 @@ namespace WinPaletter.UI.Controllers
 
                 Rectangle ThemeName_Rect = Rectangle.FromLTRB(rect_inner.X + 10, startingY, rect_inner.Right - 10, startingY + titleHeight);
                 Rectangle Author_Rect = new(ThemeName_Rect.X + 16 + 4, ThemeName_Rect.Bottom + 5, ThemeName_Rect.Width - 20, itemsHeight);
-                Rectangle OS_Rect = new(ThemeName_Rect.X + 2, Author_Rect.Bottom + 8, 16, itemsHeight);
+                Rectangle OS_Rect = new(ThemeName_Rect.X + 2, Author_Rect.Bottom + 8, 24, itemsHeight);
                 Rectangle File_Rect = new(ThemeName_Rect.X + 16 + 6, DesignedFor_Badges.Count > 0 ? OS_Rect.Bottom + 9 : Author_Rect.Bottom + 9, ThemeName_Rect.Width - 20, itemsHeight);
                 Rectangle lowerRect = new(rect_inner.X + 7, rect_inner.Bottom - 20, rect_inner.Width - 14, itemsHeight);
                 Rectangle BadgeRect = new(ThemeName_Rect.Left + 2, Author_Rect.Y, 16, 16);
@@ -450,7 +450,7 @@ namespace WinPaletter.UI.Controllers
                     }
 
                     for (int i = 0; i <= DesignedFor_Badges.Count - 1; i++)
-                        G.DrawImage(DesignedFor_Badges[i], new Rectangle(OS_Rect.Left + 20 * i, OS_Rect.Y, 16, 16));
+                        G.DrawImage(DesignedFor_Badges[i], new Rectangle(OS_Rect.Left + 26 * i, OS_Rect.Y, 24, 24));
 
                     G.FillEllipse(circle2_lgb, Circle2);
                     G.DrawEllipse(circle2_P, Circle2);

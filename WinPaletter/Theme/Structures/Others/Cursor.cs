@@ -53,16 +53,16 @@ namespace WinPaletter.Theme.Structures
         public float PrimaryColorNoiseOpacity = 0.25f;
 
         /// <summary>Line color for cursor</summary>
-        public Color SecondaryColor1 = Color.Black;
+        public Color SecondaryColor1 = Color.FromArgb(24, 24, 36);
 
         /// <summary>
         /// Second line color for cursor
         /// <br>- Used as gradience, when <c>SecondaryColorGradient=true;</c></br>
         /// </summary>
-        public Color SecondaryColor2 = Color.Black;
+        public Color SecondaryColor2 = Color.FromArgb(66, 67, 77);
 
         /// <summary>Enable line color gradience for cursor</summary>
-        public bool SecondaryColorGradient = false;
+        public bool SecondaryColorGradient = true;
 
         /// <summary>
         /// Line color gradience effect for cursor
@@ -74,7 +74,7 @@ namespace WinPaletter.Theme.Structures
         /// Circle (Animated with loading when cursor is appwait or busy)
         /// </code>
         /// </summary>
-        public Paths.GradientMode SecondaryColorGradientMode = Paths.GradientMode.Vertical;
+        public Paths.GradientMode SecondaryColorGradientMode = Paths.GradientMode.Horizontal;
 
         /// <summary>Enable line noise for cursor</summary>
         public bool SecondaryColorNoise = false;
@@ -149,6 +149,13 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Opacity noise in rotating part of circle (if cursor is appwait or busy</summary>
         public float LoadingCircleHotNoiseOpacity = 0.25f;
 
+        /// <summary>
+        /// Represents the animation speed of the loading circle.
+        /// </summary>
+        /// <remarks>The value determines how quickly the loading circle animates.  A higher value results
+        /// in faster animation, while a lower value slows it down.</remarks>
+        public int LoadingCircleHot_AnimationSpeed = 10;
+
         /// <summary>Enable custom cursor shadow (rendered by WinPaletter not Windows)</summary>
         public bool Shadow_Enabled = false;
 
@@ -209,12 +216,13 @@ namespace WinPaletter.Theme.Structures
             SecondaryColorGradientMode = Paths.ReturnGradientModeFromString(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradientMode", "vertical").ToString());
             LoadingCircleBackGradientMode = Paths.ReturnGradientModeFromString(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradientMode", "circle").ToString());
             LoadingCircleHotGradientMode = Paths.ReturnGradientModeFromString(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradientMode", "circle").ToString());
+            LoadingCircleHot_AnimationSpeed = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot_AnimationSpeed", 10));
 
             PrimaryColorNoiseOpacity = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoiseOpacity", 25).ToString()) / 100;
             SecondaryColorNoiseOpacity = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", 25).ToString()) / 100;
             LoadingCircleBackNoiseOpacity = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoiseOpacity", 25).ToString()) / 100;
             LoadingCircleHotNoiseOpacity = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoiseOpacity", 25).ToString()) / 100;
-            BorderThickness = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", 1.0f).ToString());
+            BorderThickness = float.Parse(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", 1000f).ToString()) / 1000f;
 
             Shadow_Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", false));
             Shadow_Color = Color.FromArgb(Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Color.Black.ToArgb())));
@@ -250,7 +258,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradientMode", Paths.ReturnStringFromGradientMode(Cursor.SecondaryColorGradientMode), RegistryValueKind.String);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoise", Cursor.SecondaryColorNoise ? 1 : 0);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", Cursor.SecondaryColorNoiseOpacity * 100f);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", Cursor.BorderThickness);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", Cursor.BorderThickness * 1000f);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack1", Cursor.LoadingCircleBack1.ToArgb());
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack2", Cursor.LoadingCircleBack2.ToArgb());
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradient", Cursor.LoadingCircleBackGradient ? 1 : 0);
@@ -263,6 +271,7 @@ namespace WinPaletter.Theme.Structures
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradientMode", Paths.ReturnStringFromGradientMode(Cursor.LoadingCircleHotGradientMode), RegistryValueKind.String);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoise", Cursor.LoadingCircleHotNoise ? 1 : 0);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoiseOpacity", Cursor.LoadingCircleHotNoiseOpacity * 100f);
+            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot_AnimationSpeed", Cursor.LoadingCircleHot_AnimationSpeed);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", Cursor.Shadow_Enabled);
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Cursor.Shadow_Color.ToArgb());
             EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Blur", Cursor.Shadow_Blur);

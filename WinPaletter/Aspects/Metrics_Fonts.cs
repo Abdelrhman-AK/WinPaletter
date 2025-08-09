@@ -537,7 +537,7 @@ namespace WinPaletter
                     TMx.MetricsFonts.IconFont = icm.lfFont.ToFont();
                 }
 
-                TMx.MetricsFonts.Fonts_SingleBitPP = comboBox1.SelectedIndex >= 4;
+                if (checkBox2.Checked) TMx.MetricsFonts.Fonts_SingleBitPP = comboBox1.SelectedIndex >= 4;
 
                 LoadFromTM(TMx);
             }

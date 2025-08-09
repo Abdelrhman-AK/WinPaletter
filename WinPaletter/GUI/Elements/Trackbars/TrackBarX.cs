@@ -12,6 +12,10 @@ namespace WinPaletter.UI.Controllers
         {
             InitializeComponent();
             value_btn.Text = Value.ToString();
+
+            value_btn.Text = Value.ToString();
+            value_btn.Font = Fonts.ConsoleMedium;
+            textBox1.Font = Fonts.ConsoleMedium;
         }
 
         public event EventHandler ValueChanged;

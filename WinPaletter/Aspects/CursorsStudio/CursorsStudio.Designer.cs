@@ -89,8 +89,6 @@ namespace WinPaletter
             this.PictureBox19 = new System.Windows.Forms.PictureBox();
             this.button20 = new WinPaletter.UI.WP.Button();
             this.textBox1 = new WinPaletter.UI.WP.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.pictureBox25 = new System.Windows.Forms.PictureBox();
             this.trackBarX9 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox13 = new System.Windows.Forms.PictureBox();
             this.Label6 = new System.Windows.Forms.Label();
@@ -101,8 +99,7 @@ namespace WinPaletter
             this.CheckBox9 = new WinPaletter.UI.WP.CheckBox();
             this.Label11 = new System.Windows.Forms.Label();
             this.GroupBox1 = new WinPaletter.UI.WP.GroupBox();
-            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
-            this.trackBarX10 = new WinPaletter.UI.Controllers.TrackBarX();
+            this.numericUpDown1 = new WinPaletter.UI.WP.NumericUpDown();
             this.Button5 = new WinPaletter.UI.WP.Button();
             this.Label1 = new System.Windows.Forms.Label();
             this.cursorsConatiner = new System.Windows.Forms.FlowLayoutPanel();
@@ -123,19 +120,25 @@ namespace WinPaletter
             this.Person = new WinPaletter.UI.Controllers.CursorControl();
             this.IBeam = new WinPaletter.UI.Controllers.CursorControl();
             this.Cross = new WinPaletter.UI.Controllers.CursorControl();
-            this.PictureBox12 = new System.Windows.Forms.PictureBox();
-            this.Label5 = new System.Windows.Forms.Label();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
+            this.trackBarX10 = new WinPaletter.UI.Controllers.TrackBarX();
+            this.PictureBox12 = new System.Windows.Forms.PictureBox();
+            this.Label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
-            this.checkBox12 = new WinPaletter.UI.WP.CheckBox();
+            this.global = new WinPaletter.UI.WP.CheckBox();
             this.source1 = new WinPaletter.UI.WP.RadioButton();
             this.source0 = new WinPaletter.UI.WP.RadioButton();
             this.pictureBox27 = new System.Windows.Forms.PictureBox();
             this.label19 = new System.Windows.Forms.Label();
+            this.separatorH5 = new WinPaletter.UI.WP.SeparatorH();
+            this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.radioImage1 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage6 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage4 = new WinPaletter.UI.WP.RadioImage();
@@ -150,10 +153,12 @@ namespace WinPaletter
             this.tablessControl2 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
+            this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.pictureBox30 = new System.Windows.Forms.PictureBox();
             this.label27 = new System.Windows.Forms.Label();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.groupBox8 = new WinPaletter.UI.WP.GroupBox();
+            this.separatorH2 = new WinPaletter.UI.WP.SeparatorH();
             this.trackBarX12 = new WinPaletter.UI.Controllers.TrackBarX();
             this.pictureBox32 = new System.Windows.Forms.PictureBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -165,6 +170,7 @@ namespace WinPaletter
             this.label7 = new System.Windows.Forms.Label();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.groupBox9 = new WinPaletter.UI.WP.GroupBox();
+            this.separatorH3 = new WinPaletter.UI.WP.SeparatorH();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox33 = new System.Windows.Forms.PictureBox();
@@ -173,6 +179,10 @@ namespace WinPaletter
             this.pictureBox35 = new System.Windows.Forms.PictureBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox10 = new WinPaletter.UI.WP.GroupBox();
+            this.separatorH4 = new WinPaletter.UI.WP.SeparatorH();
+            this.trackBarX11 = new WinPaletter.UI.Controllers.TrackBarX();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.pictureBox36 = new System.Windows.Forms.PictureBox();
             this.label23 = new System.Windows.Forms.Label();
             this.pictureBox37 = new System.Windows.Forms.PictureBox();
@@ -184,9 +194,6 @@ namespace WinPaletter
             this.toggle1 = new WinPaletter.UI.WP.Toggle();
             this.pictureBox40 = new System.Windows.Forms.PictureBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.trackBarX11 = new WinPaletter.UI.Controllers.TrackBarX();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
@@ -197,7 +204,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).BeginInit();
@@ -209,6 +215,7 @@ namespace WinPaletter
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox27)).BeginInit();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.tablessControl1.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -233,6 +240,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox36)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox37)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).BeginInit();
@@ -240,7 +248,6 @@ namespace WinPaletter
             this.tabPage10.SuspendLayout();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox40)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -256,7 +263,7 @@ namespace WinPaletter
             // Label8
             // 
             this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label8.Location = new System.Drawing.Point(43, 43);
+            this.Label8.Location = new System.Drawing.Point(43, 141);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(320, 24);
             this.Label8.TabIndex = 76;
@@ -266,7 +273,7 @@ namespace WinPaletter
             // PictureBox14
             // 
             this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
-            this.PictureBox14.Location = new System.Drawing.Point(13, 43);
+            this.PictureBox14.Location = new System.Drawing.Point(13, 141);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);
             this.PictureBox14.TabIndex = 75;
@@ -287,7 +294,7 @@ namespace WinPaletter
             "Modern",
             "Classic",
             "Fluid"});
-            this.ComboBox6.Location = new System.Drawing.Point(369, 42);
+            this.ComboBox6.Location = new System.Drawing.Point(369, 140);
             this.ComboBox6.Name = "ComboBox6";
             this.ComboBox6.Size = new System.Drawing.Size(372, 26);
             this.ComboBox6.TabIndex = 68;
@@ -296,7 +303,7 @@ namespace WinPaletter
             // Label10
             // 
             this.Label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label10.Location = new System.Drawing.Point(43, 43);
+            this.Label10.Location = new System.Drawing.Point(43, 141);
             this.Label10.Name = "Label10";
             this.Label10.Size = new System.Drawing.Size(322, 24);
             this.Label10.TabIndex = 74;
@@ -317,7 +324,7 @@ namespace WinPaletter
             "Aero",
             "Modern",
             "Classic"});
-            this.ComboBox5.Location = new System.Drawing.Point(369, 42);
+            this.ComboBox5.Location = new System.Drawing.Point(369, 140);
             this.ComboBox5.Name = "ComboBox5";
             this.ComboBox5.Size = new System.Drawing.Size(372, 26);
             this.ComboBox5.TabIndex = 65;
@@ -326,7 +333,7 @@ namespace WinPaletter
             // PictureBox15
             // 
             this.PictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox15.Image")));
-            this.PictureBox15.Location = new System.Drawing.Point(13, 43);
+            this.PictureBox15.Location = new System.Drawing.Point(13, 141);
             this.PictureBox15.Name = "PictureBox15";
             this.PictureBox15.Size = new System.Drawing.Size(24, 24);
             this.PictureBox15.TabIndex = 73;
@@ -340,12 +347,12 @@ namespace WinPaletter
             this.trackBarX4.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX4.DefaultValue = 0;
             this.trackBarX4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX4.Location = new System.Drawing.Point(369, 132);
+            this.trackBarX4.Location = new System.Drawing.Point(369, 103);
             this.trackBarX4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackBarX4.Maximum = 100;
             this.trackBarX4.Minimum = 0;
             this.trackBarX4.Name = "trackBarX4";
-            this.trackBarX4.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX4.Size = new System.Drawing.Size(372, 24);
             this.trackBarX4.TabIndex = 142;
             this.trackBarX4.Value = 0;
             this.trackBarX4.ValueChanged += new System.EventHandler(this.trackBarX4_ValueChanged);
@@ -358,12 +365,12 @@ namespace WinPaletter
             this.trackBarX3.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX3.DefaultValue = 0;
             this.trackBarX3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX3.Location = new System.Drawing.Point(369, 132);
+            this.trackBarX3.Location = new System.Drawing.Point(369, 103);
             this.trackBarX3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackBarX3.Maximum = 100;
             this.trackBarX3.Minimum = 0;
             this.trackBarX3.Name = "trackBarX3";
-            this.trackBarX3.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX3.Size = new System.Drawing.Size(372, 24);
             this.trackBarX3.TabIndex = 141;
             this.trackBarX3.Value = 0;
             this.trackBarX3.ValueChanged += new System.EventHandler(this.trackBarX3_ValueChanged);
@@ -376,12 +383,12 @@ namespace WinPaletter
             this.trackBarX2.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX2.DefaultValue = 0;
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX2.Location = new System.Drawing.Point(369, 132);
+            this.trackBarX2.Location = new System.Drawing.Point(369, 103);
             this.trackBarX2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackBarX2.Maximum = 100;
             this.trackBarX2.Minimum = 0;
             this.trackBarX2.Name = "trackBarX2";
-            this.trackBarX2.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX2.Size = new System.Drawing.Size(372, 24);
             this.trackBarX2.TabIndex = 140;
             this.trackBarX2.Value = 0;
             this.trackBarX2.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
@@ -394,12 +401,12 @@ namespace WinPaletter
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 0;
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX1.Location = new System.Drawing.Point(369, 132);
+            this.trackBarX1.Location = new System.Drawing.Point(369, 103);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackBarX1.Maximum = 100;
             this.trackBarX1.Minimum = 0;
             this.trackBarX1.Name = "trackBarX1";
-            this.trackBarX1.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX1.Size = new System.Drawing.Size(372, 24);
             this.trackBarX1.TabIndex = 139;
             this.trackBarX1.Value = 0;
             this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
@@ -409,7 +416,7 @@ namespace WinPaletter
             this.CheckBox6.Checked = false;
             this.CheckBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox6.ForeColor = System.Drawing.Color.White;
-            this.CheckBox6.Location = new System.Drawing.Point(43, 133);
+            this.CheckBox6.Location = new System.Drawing.Point(43, 103);
             this.CheckBox6.Name = "CheckBox6";
             this.CheckBox6.Size = new System.Drawing.Size(321, 24);
             this.CheckBox6.TabIndex = 59;
@@ -421,7 +428,7 @@ namespace WinPaletter
             this.CheckBox7.Checked = false;
             this.CheckBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox7.ForeColor = System.Drawing.Color.White;
-            this.CheckBox7.Location = new System.Drawing.Point(43, 133);
+            this.CheckBox7.Location = new System.Drawing.Point(43, 103);
             this.CheckBox7.Name = "CheckBox7";
             this.CheckBox7.Size = new System.Drawing.Size(320, 24);
             this.CheckBox7.TabIndex = 49;
@@ -444,7 +451,7 @@ namespace WinPaletter
             "Forward Diagonal",
             "Backward Diagonal",
             "Circle"});
-            this.ComboBox3.Location = new System.Drawing.Point(369, 102);
+            this.ComboBox3.Location = new System.Drawing.Point(369, 72);
             this.ComboBox3.Name = "ComboBox3";
             this.ComboBox3.Size = new System.Drawing.Size(372, 26);
             this.ComboBox3.TabIndex = 35;
@@ -457,7 +464,7 @@ namespace WinPaletter
             this.LoadingColor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.LoadingColor1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.LoadingColor1.DontShowInfo = false;
-            this.LoadingColor1.Location = new System.Drawing.Point(631, 73);
+            this.LoadingColor1.Location = new System.Drawing.Point(631, 43);
             this.LoadingColor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LoadingColor1.Name = "LoadingColor1";
             this.LoadingColor1.Size = new System.Drawing.Size(110, 24);
@@ -481,7 +488,7 @@ namespace WinPaletter
             "Forward Diagonal",
             "Backward Diagonal",
             "Circle"});
-            this.ComboBox4.Location = new System.Drawing.Point(369, 102);
+            this.ComboBox4.Location = new System.Drawing.Point(369, 72);
             this.ComboBox4.Name = "ComboBox4";
             this.ComboBox4.Size = new System.Drawing.Size(372, 26);
             this.ComboBox4.TabIndex = 17;
@@ -492,7 +499,7 @@ namespace WinPaletter
             this.CheckBox2.Checked = false;
             this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox2.ForeColor = System.Drawing.Color.White;
-            this.CheckBox2.Location = new System.Drawing.Point(43, 103);
+            this.CheckBox2.Location = new System.Drawing.Point(43, 73);
             this.CheckBox2.Name = "CheckBox2";
             this.CheckBox2.Size = new System.Drawing.Size(321, 24);
             this.CheckBox2.TabIndex = 52;
@@ -506,7 +513,7 @@ namespace WinPaletter
             this.CircleColor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.CircleColor1.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.CircleColor1.DontShowInfo = false;
-            this.CircleColor1.Location = new System.Drawing.Point(631, 73);
+            this.CircleColor1.Location = new System.Drawing.Point(631, 43);
             this.CircleColor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CircleColor1.Name = "CircleColor1";
             this.CircleColor1.Size = new System.Drawing.Size(110, 24);
@@ -519,7 +526,7 @@ namespace WinPaletter
             this.CheckBox8.Checked = false;
             this.CheckBox8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox8.ForeColor = System.Drawing.Color.White;
-            this.CheckBox8.Location = new System.Drawing.Point(43, 103);
+            this.CheckBox8.Location = new System.Drawing.Point(43, 73);
             this.CheckBox8.Name = "CheckBox8";
             this.CheckBox8.Size = new System.Drawing.Size(320, 24);
             this.CheckBox8.TabIndex = 15;
@@ -533,7 +540,7 @@ namespace WinPaletter
             this.LoadingColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.LoadingColor2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.LoadingColor2.DontShowInfo = false;
-            this.LoadingColor2.Location = new System.Drawing.Point(513, 73);
+            this.LoadingColor2.Location = new System.Drawing.Point(513, 43);
             this.LoadingColor2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LoadingColor2.Name = "LoadingColor2";
             this.LoadingColor2.Size = new System.Drawing.Size(110, 24);
@@ -549,7 +556,7 @@ namespace WinPaletter
             this.CircleColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.CircleColor2.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(151)))), ((int)(((byte)(243)))));
             this.CircleColor2.DontShowInfo = false;
-            this.CircleColor2.Location = new System.Drawing.Point(513, 73);
+            this.CircleColor2.Location = new System.Drawing.Point(513, 43);
             this.CircleColor2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CircleColor2.Name = "CircleColor2";
             this.CircleColor2.Size = new System.Drawing.Size(110, 24);
@@ -563,7 +570,7 @@ namespace WinPaletter
             this.CheckBox3.Checked = false;
             this.CheckBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox3.ForeColor = System.Drawing.Color.White;
-            this.CheckBox3.Location = new System.Drawing.Point(43, 133);
+            this.CheckBox3.Location = new System.Drawing.Point(43, 103);
             this.CheckBox3.Name = "CheckBox3";
             this.CheckBox3.Size = new System.Drawing.Size(319, 24);
             this.CheckBox3.TabIndex = 59;
@@ -575,7 +582,7 @@ namespace WinPaletter
             this.CheckBox4.Checked = false;
             this.CheckBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox4.ForeColor = System.Drawing.Color.White;
-            this.CheckBox4.Location = new System.Drawing.Point(43, 103);
+            this.CheckBox4.Location = new System.Drawing.Point(43, 73);
             this.CheckBox4.Name = "CheckBox4";
             this.CheckBox4.Size = new System.Drawing.Size(319, 24);
             this.CheckBox4.TabIndex = 52;
@@ -598,7 +605,7 @@ namespace WinPaletter
             "Forward Diagonal",
             "Backward Diagonal",
             "Circle"});
-            this.ComboBox2.Location = new System.Drawing.Point(369, 102);
+            this.ComboBox2.Location = new System.Drawing.Point(369, 72);
             this.ComboBox2.Name = "ComboBox2";
             this.ComboBox2.Size = new System.Drawing.Size(372, 26);
             this.ComboBox2.TabIndex = 35;
@@ -611,7 +618,7 @@ namespace WinPaletter
             this.SecondaryColor1.BackColor = System.Drawing.Color.Black;
             this.SecondaryColor1.DefaultBackColor = System.Drawing.Color.Black;
             this.SecondaryColor1.DontShowInfo = false;
-            this.SecondaryColor1.Location = new System.Drawing.Point(631, 73);
+            this.SecondaryColor1.Location = new System.Drawing.Point(631, 43);
             this.SecondaryColor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SecondaryColor1.Name = "SecondaryColor1";
             this.SecondaryColor1.Size = new System.Drawing.Size(110, 24);
@@ -626,7 +633,7 @@ namespace WinPaletter
             this.SecondaryColor2.BackColor = System.Drawing.Color.Black;
             this.SecondaryColor2.DefaultBackColor = System.Drawing.Color.Black;
             this.SecondaryColor2.DontShowInfo = false;
-            this.SecondaryColor2.Location = new System.Drawing.Point(513, 73);
+            this.SecondaryColor2.Location = new System.Drawing.Point(513, 43);
             this.SecondaryColor2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SecondaryColor2.Name = "SecondaryColor2";
             this.SecondaryColor2.Size = new System.Drawing.Size(110, 24);
@@ -642,7 +649,7 @@ namespace WinPaletter
             this.PrimaryColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.PrimaryColor2.DefaultBackColor = System.Drawing.Color.White;
             this.PrimaryColor2.DontShowInfo = false;
-            this.PrimaryColor2.Location = new System.Drawing.Point(513, 73);
+            this.PrimaryColor2.Location = new System.Drawing.Point(513, 43);
             this.PrimaryColor2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PrimaryColor2.Name = "PrimaryColor2";
             this.PrimaryColor2.Size = new System.Drawing.Size(110, 24);
@@ -658,7 +665,7 @@ namespace WinPaletter
             this.PrimaryColor1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.PrimaryColor1.DefaultBackColor = System.Drawing.Color.White;
             this.PrimaryColor1.DontShowInfo = false;
-            this.PrimaryColor1.Location = new System.Drawing.Point(631, 73);
+            this.PrimaryColor1.Location = new System.Drawing.Point(631, 43);
             this.PrimaryColor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PrimaryColor1.Name = "PrimaryColor1";
             this.PrimaryColor1.Size = new System.Drawing.Size(110, 24);
@@ -682,7 +689,7 @@ namespace WinPaletter
             "Forward Diagonal",
             "Backward Diagonal",
             "Circle"});
-            this.ComboBox1.Location = new System.Drawing.Point(369, 102);
+            this.ComboBox1.Location = new System.Drawing.Point(369, 72);
             this.ComboBox1.Name = "ComboBox1";
             this.ComboBox1.Size = new System.Drawing.Size(372, 26);
             this.ComboBox1.TabIndex = 17;
@@ -693,7 +700,7 @@ namespace WinPaletter
             this.CheckBox1.Checked = false;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(43, 103);
+            this.CheckBox1.Location = new System.Drawing.Point(43, 73);
             this.CheckBox1.Name = "CheckBox1";
             this.CheckBox1.Size = new System.Drawing.Size(322, 24);
             this.CheckBox1.TabIndex = 15;
@@ -705,7 +712,7 @@ namespace WinPaletter
             this.CheckBox5.Checked = false;
             this.CheckBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox5.ForeColor = System.Drawing.Color.White;
-            this.CheckBox5.Location = new System.Drawing.Point(43, 133);
+            this.CheckBox5.Location = new System.Drawing.Point(43, 103);
             this.CheckBox5.Name = "CheckBox5";
             this.CheckBox5.Size = new System.Drawing.Size(322, 24);
             this.CheckBox5.TabIndex = 49;
@@ -715,7 +722,7 @@ namespace WinPaletter
             // PictureBox2
             // 
             this.PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox2.Image")));
-            this.PictureBox2.Location = new System.Drawing.Point(13, 73);
+            this.PictureBox2.Location = new System.Drawing.Point(13, 43);
             this.PictureBox2.Name = "PictureBox2";
             this.PictureBox2.Size = new System.Drawing.Size(24, 24);
             this.PictureBox2.TabIndex = 9;
@@ -726,7 +733,7 @@ namespace WinPaletter
             this.Label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label3.Location = new System.Drawing.Point(43, 73);
+            this.Label3.Location = new System.Drawing.Point(43, 43);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(322, 24);
             this.Label3.TabIndex = 12;
@@ -736,7 +743,7 @@ namespace WinPaletter
             // PictureBox4
             // 
             this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(13, 103);
+            this.PictureBox4.Location = new System.Drawing.Point(13, 73);
             this.PictureBox4.Name = "PictureBox4";
             this.PictureBox4.Size = new System.Drawing.Size(24, 24);
             this.PictureBox4.TabIndex = 53;
@@ -745,7 +752,7 @@ namespace WinPaletter
             // PictureBox5
             // 
             this.PictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox5.Image")));
-            this.PictureBox5.Location = new System.Drawing.Point(13, 133);
+            this.PictureBox5.Location = new System.Drawing.Point(13, 103);
             this.PictureBox5.Name = "PictureBox5";
             this.PictureBox5.Size = new System.Drawing.Size(24, 24);
             this.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -765,7 +772,7 @@ namespace WinPaletter
             this.trackBarX8.Maximum = 10;
             this.trackBarX8.Minimum = 0;
             this.trackBarX8.Name = "trackBarX8";
-            this.trackBarX8.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX8.Size = new System.Drawing.Size(372, 24);
             this.trackBarX8.TabIndex = 156;
             this.trackBarX8.Value = 0;
             this.trackBarX8.ValueChanged += new System.EventHandler(this.trackBarX8_ValueChanged);
@@ -783,7 +790,7 @@ namespace WinPaletter
             this.trackBarX7.Maximum = 10;
             this.trackBarX7.Minimum = 0;
             this.trackBarX7.Name = "trackBarX7";
-            this.trackBarX7.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX7.Size = new System.Drawing.Size(372, 24);
             this.trackBarX7.TabIndex = 155;
             this.trackBarX7.Value = 0;
             this.trackBarX7.ValueChanged += new System.EventHandler(this.trackBarX7_ValueChanged);
@@ -801,7 +808,7 @@ namespace WinPaletter
             this.trackBarX6.Maximum = 100;
             this.trackBarX6.Minimum = 0;
             this.trackBarX6.Name = "trackBarX6";
-            this.trackBarX6.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX6.Size = new System.Drawing.Size(372, 24);
             this.trackBarX6.TabIndex = 154;
             this.trackBarX6.Value = 0;
             this.trackBarX6.ValueChanged += new System.EventHandler(this.trackBarX6_ValueChanged);
@@ -819,7 +826,7 @@ namespace WinPaletter
             this.trackBarX5.Maximum = 20;
             this.trackBarX5.Minimum = 0;
             this.trackBarX5.Name = "trackBarX5";
-            this.trackBarX5.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX5.Size = new System.Drawing.Size(372, 24);
             this.trackBarX5.TabIndex = 153;
             this.trackBarX5.Value = 0;
             this.trackBarX5.ValueChanged += new System.EventHandler(this.trackBarX5_ValueChanged);
@@ -947,7 +954,7 @@ namespace WinPaletter
             this.button20.Image = null;
             this.button20.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button20.ImageGlyphEnabled = true;
-            this.button20.Location = new System.Drawing.Point(709, 45);
+            this.button20.Location = new System.Drawing.Point(707, 12);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(34, 24);
             this.button20.TabIndex = 139;
@@ -959,7 +966,7 @@ namespace WinPaletter
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(103, 45);
+            this.textBox1.Location = new System.Drawing.Point(146, 12);
             this.textBox1.MaxLength = 32767;
             this.textBox1.Multiline = false;
             this.textBox1.Name = "textBox1";
@@ -968,31 +975,12 @@ namespace WinPaletter
             this.textBox1.SelectedText = "";
             this.textBox1.SelectionLength = 0;
             this.textBox1.SelectionStart = 0;
-            this.textBox1.Size = new System.Drawing.Size(600, 24);
+            this.textBox1.Size = new System.Drawing.Size(555, 24);
             this.textBox1.TabIndex = 79;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox1.UseSystemPasswordChar = false;
             this.textBox1.WordWrap = true;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // label9
-            // 
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(43, 45);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 24);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "File:";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox25
-            // 
-            this.pictureBox25.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox25.Image")));
-            this.pictureBox25.Location = new System.Drawing.Point(13, 45);
-            this.pictureBox25.Name = "pictureBox25";
-            this.pictureBox25.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox25.TabIndex = 13;
-            this.pictureBox25.TabStop = false;
             // 
             // trackBarX9
             // 
@@ -1002,12 +990,12 @@ namespace WinPaletter
             this.trackBarX9.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX9.DefaultValue = 0;
             this.trackBarX9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX9.Location = new System.Drawing.Point(119, 105);
+            this.trackBarX9.Location = new System.Drawing.Point(136, 105);
             this.trackBarX9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackBarX9.Maximum = 16;
             this.trackBarX9.Minimum = 0;
             this.trackBarX9.Name = "trackBarX9";
-            this.trackBarX9.Size = new System.Drawing.Size(633, 24);
+            this.trackBarX9.Size = new System.Drawing.Size(609, 24);
             this.trackBarX9.TabIndex = 157;
             this.trackBarX9.Value = 0;
             // 
@@ -1037,12 +1025,14 @@ namespace WinPaletter
             // 
             // CheckBox10
             // 
+            this.CheckBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox10.Checked = false;
             this.CheckBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox10.ForeColor = System.Drawing.Color.White;
             this.CheckBox10.Location = new System.Drawing.Point(43, 75);
             this.CheckBox10.Name = "CheckBox10";
-            this.CheckBox10.Size = new System.Drawing.Size(703, 24);
+            this.CheckBox10.Size = new System.Drawing.Size(702, 24);
             this.CheckBox10.TabIndex = 131;
             this.CheckBox10.Text = "Cursor tracking (sonar)";
             // 
@@ -1077,21 +1067,25 @@ namespace WinPaletter
             // 
             // CheckBox9
             // 
+            this.CheckBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox9.Checked = false;
             this.CheckBox9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox9.ForeColor = System.Drawing.Color.White;
             this.CheckBox9.Location = new System.Drawing.Point(43, 45);
             this.CheckBox9.Name = "CheckBox9";
-            this.CheckBox9.Size = new System.Drawing.Size(703, 24);
+            this.CheckBox9.Size = new System.Drawing.Size(702, 24);
             this.CheckBox9.TabIndex = 83;
-            this.CheckBox9.Text = "Make cursors have a shadow (native Windows shadow)";
+            this.CheckBox9.Text = "Make cursors use the native Windows shadow (this will disable WinPaletter’s custo" +
+    "m shadow)";
+            this.CheckBox9.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.CheckBox9_CheckedChanged);
             // 
             // Label11
             // 
             this.Label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label11.Location = new System.Drawing.Point(43, 105);
             this.Label11.Name = "Label11";
-            this.Label11.Size = new System.Drawing.Size(69, 24);
+            this.Label11.Size = new System.Drawing.Size(86, 24);
             this.Label11.TabIndex = 86;
             this.Label11.Text = "Trails:";
             this.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1101,73 +1095,47 @@ namespace WinPaletter
             this.GroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.GroupBox1.Controls.Add(this.alertBox2);
-            this.GroupBox1.Controls.Add(this.trackBarX10);
+            this.GroupBox1.Controls.Add(this.numericUpDown1);
             this.GroupBox1.Controls.Add(this.Button5);
             this.GroupBox1.Controls.Add(this.Label1);
             this.GroupBox1.Controls.Add(this.cursorsConatiner);
-            this.GroupBox1.Controls.Add(this.PictureBox12);
-            this.GroupBox1.Controls.Add(this.Label5);
             this.GroupBox1.Controls.Add(this.Button6);
             this.GroupBox1.Controls.Add(this.Button2);
             this.GroupBox1.Controls.Add(this.Button1);
-            this.GroupBox1.Location = new System.Drawing.Point(768, 62);
+            this.GroupBox1.Location = new System.Drawing.Point(769, 62);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.GroupBox1.Size = new System.Drawing.Size(310, 593);
+            this.GroupBox1.Size = new System.Drawing.Size(309, 614);
             this.GroupBox1.TabIndex = 7;
             // 
-            // alertBox2
+            // numericUpDown1
             // 
-            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox2.CenterText = false;
-            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(8, 486);
-            this.alertBox2.Name = "alertBox2";
-            this.alertBox2.Size = new System.Drawing.Size(296, 66);
-            this.alertBox2.TabIndex = 69;
-            this.alertBox2.TabStop = false;
-            this.alertBox2.Text = "The cursor size can be changed in Windows 10 and later versions, but not in earli" +
-    "er ones.\r\nIf cursors are blurry, use sizes 32, 48, 64, or 96.";
-            // 
-            // trackBarX10
-            // 
-            this.trackBarX10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBarX10.AnimateChanges = true;
-            this.trackBarX10.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarX10.DefaultValue = 32;
-            this.trackBarX10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX10.Location = new System.Drawing.Point(133, 456);
-            this.trackBarX10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX10.Maximum = 255;
-            this.trackBarX10.Minimum = 16;
-            this.trackBarX10.Name = "trackBarX10";
-            this.trackBarX10.Size = new System.Drawing.Size(170, 24);
-            this.trackBarX10.TabIndex = 68;
-            this.trackBarX10.Value = 32;
-            this.trackBarX10.ValueChanged += new System.EventHandler(this.trackBarX10_ValueChanged);
+            this.numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.numericUpDown1.BackColor = System.Drawing.Color.Transparent;
+            this.numericUpDown1.Location = new System.Drawing.Point(257, 580);
+            this.numericUpDown1.Maximum = 20;
+            this.numericUpDown1.Minimum = 3;
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(46, 27);
+            this.numericUpDown1.TabIndex = 68;
+            this.numericUpDown1.UpDownStep = 1;
+            this.numericUpDown1.Value = 3;
             // 
             // Button5
             // 
-            this.Button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button5.CustomColor = System.Drawing.Color.Empty;
+            this.Button5.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Button5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
-            this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
-            this.Button5.ImageGlyph = null;
-            this.Button5.ImageGlyphEnabled = false;
-            this.Button5.Location = new System.Drawing.Point(150, 558);
+            this.Button5.Image = null;
+            this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageGlyph")));
+            this.Button5.ImageGlyphEnabled = true;
+            this.Button5.Location = new System.Drawing.Point(150, 579);
             this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(152, 28);
+            this.Button5.Size = new System.Drawing.Size(101, 28);
             this.Button5.TabIndex = 66;
-            this.Button5.Text = "Animate (3 Cycles)";
+            this.Button5.Text = "Animate";
             this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
@@ -1180,7 +1148,7 @@ namespace WinPaletter
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(291, 30);
             this.Label1.TabIndex = 8;
-            this.Label1.Text = "Advanced mode: Select a cursor to edit properties";
+            this.Label1.Text = "Select a cursor to edit its properties";
             this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cursorsConatiner
@@ -1209,7 +1177,7 @@ namespace WinPaletter
             this.cursorsConatiner.Location = new System.Drawing.Point(3, 41);
             this.cursorsConatiner.Name = "cursorsConatiner";
             this.cursorsConatiner.Padding = new System.Windows.Forms.Padding(4, 4, 0, 4);
-            this.cursorsConatiner.Size = new System.Drawing.Size(301, 409);
+            this.cursorsConatiner.Size = new System.Drawing.Size(300, 532);
             this.cursorsConatiner.TabIndex = 6;
             // 
             // Arrow
@@ -1227,6 +1195,7 @@ namespace WinPaletter
             this.Arrow.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Arrow.Prop_LoadingCircleBackNoise = false;
             this.Arrow.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Arrow.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Arrow.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Arrow.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Arrow.Prop_LoadingCircleHotGradient = false;
@@ -1271,6 +1240,7 @@ namespace WinPaletter
             this.Help.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Help.Prop_LoadingCircleBackNoise = false;
             this.Help.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Help.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Help.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Help.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Help.Prop_LoadingCircleHotGradient = false;
@@ -1315,6 +1285,7 @@ namespace WinPaletter
             this.AppLoading.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle;
             this.AppLoading.Prop_LoadingCircleBackNoise = false;
             this.AppLoading.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.AppLoading.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.AppLoading.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.AppLoading.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.AppLoading.Prop_LoadingCircleHotGradient = false;
@@ -1359,6 +1330,7 @@ namespace WinPaletter
             this.Busy.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle;
             this.Busy.Prop_LoadingCircleBackNoise = false;
             this.Busy.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Busy.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Busy.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Busy.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Busy.Prop_LoadingCircleHotGradient = false;
@@ -1403,6 +1375,7 @@ namespace WinPaletter
             this.Move_Cur.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Move_Cur.Prop_LoadingCircleBackNoise = false;
             this.Move_Cur.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Move_Cur.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Move_Cur.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Move_Cur.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Move_Cur.Prop_LoadingCircleHotGradient = false;
@@ -1447,6 +1420,7 @@ namespace WinPaletter
             this.Up.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Up.Prop_LoadingCircleBackNoise = false;
             this.Up.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Up.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Up.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Up.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Up.Prop_LoadingCircleHotGradient = false;
@@ -1491,6 +1465,7 @@ namespace WinPaletter
             this.NS.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.NS.Prop_LoadingCircleBackNoise = false;
             this.NS.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.NS.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.NS.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NS.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NS.Prop_LoadingCircleHotGradient = false;
@@ -1535,6 +1510,7 @@ namespace WinPaletter
             this.EW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.EW.Prop_LoadingCircleBackNoise = false;
             this.EW.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.EW.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.EW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.EW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.EW.Prop_LoadingCircleHotGradient = false;
@@ -1579,6 +1555,7 @@ namespace WinPaletter
             this.NESW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.NESW.Prop_LoadingCircleBackNoise = false;
             this.NESW.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.NESW.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.NESW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NESW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NESW.Prop_LoadingCircleHotGradient = false;
@@ -1623,6 +1600,7 @@ namespace WinPaletter
             this.NWSE.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.NWSE.Prop_LoadingCircleBackNoise = false;
             this.NWSE.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.NWSE.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.NWSE.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NWSE.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NWSE.Prop_LoadingCircleHotGradient = false;
@@ -1667,6 +1645,7 @@ namespace WinPaletter
             this.Pen.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Pen.Prop_LoadingCircleBackNoise = false;
             this.Pen.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Pen.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Pen.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pen.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pen.Prop_LoadingCircleHotGradient = false;
@@ -1711,6 +1690,7 @@ namespace WinPaletter
             this.None.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.None.Prop_LoadingCircleBackNoise = false;
             this.None.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.None.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.None.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.None.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.None.Prop_LoadingCircleHotGradient = false;
@@ -1755,6 +1735,7 @@ namespace WinPaletter
             this.Link.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Link.Prop_LoadingCircleBackNoise = false;
             this.Link.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Link.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Link.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Link.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Link.Prop_LoadingCircleHotGradient = false;
@@ -1799,6 +1780,7 @@ namespace WinPaletter
             this.Pin.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Pin.Prop_LoadingCircleBackNoise = false;
             this.Pin.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Pin.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Pin.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pin.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pin.Prop_LoadingCircleHotGradient = false;
@@ -1843,6 +1825,7 @@ namespace WinPaletter
             this.Person.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Person.Prop_LoadingCircleBackNoise = false;
             this.Person.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Person.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Person.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Person.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Person.Prop_LoadingCircleHotGradient = false;
@@ -1887,6 +1870,7 @@ namespace WinPaletter
             this.IBeam.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.IBeam.Prop_LoadingCircleBackNoise = false;
             this.IBeam.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.IBeam.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.IBeam.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.IBeam.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.IBeam.Prop_LoadingCircleHotGradient = false;
@@ -1931,6 +1915,7 @@ namespace WinPaletter
             this.Cross.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Cross.Prop_LoadingCircleBackNoise = false;
             this.Cross.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Cross.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Cross.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Cross.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Cross.Prop_LoadingCircleHotGradient = false;
@@ -1960,41 +1945,18 @@ namespace WinPaletter
             this.Cross.Size = new System.Drawing.Size(64, 64);
             this.Cross.TabIndex = 20;
             // 
-            // PictureBox12
-            // 
-            this.PictureBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.PictureBox12.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
-            this.PictureBox12.Location = new System.Drawing.Point(10, 456);
-            this.PictureBox12.Name = "PictureBox12";
-            this.PictureBox12.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox12.TabIndex = 57;
-            this.PictureBox12.TabStop = false;
-            // 
-            // Label5
-            // 
-            this.Label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Label5.BackColor = System.Drawing.Color.Transparent;
-            this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label5.Location = new System.Drawing.Point(40, 456);
-            this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(86, 24);
-            this.Label5.TabIndex = 56;
-            this.Label5.Text = "Cursor size";
-            this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Button6
             // 
-            this.Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button6.CustomColor = System.Drawing.Color.Empty;
+            this.Button6.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button6.Enabled = false;
             this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
-            this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
-            this.Button6.ImageGlyph = null;
-            this.Button6.ImageGlyphEnabled = false;
-            this.Button6.Location = new System.Drawing.Point(74, 558);
+            this.Button6.Image = null;
+            this.Button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste;
+            this.Button6.ImageGlyphEnabled = true;
+            this.Button6.Location = new System.Drawing.Point(74, 579);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(70, 28);
             this.Button6.TabIndex = 67;
@@ -2005,16 +1967,16 @@ namespace WinPaletter
             // 
             // Button2
             // 
-            this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Button2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button2.Enabled = false;
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
-            this.Button2.Image = ((System.Drawing.Image)(resources.GetObject("Button2.Image")));
-            this.Button2.ImageGlyph = null;
-            this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(41, 558);
+            this.Button2.Image = null;
+            this.Button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste;
+            this.Button2.ImageGlyphEnabled = true;
+            this.Button2.Location = new System.Drawing.Point(41, 579);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(27, 28);
             this.Button2.TabIndex = 11;
@@ -2023,39 +1985,100 @@ namespace WinPaletter
             // 
             // Button1
             // 
-            this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Button1.CustomColor = System.Drawing.Color.Empty;
+            this.Button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button1.Enabled = false;
             this.Button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
-            this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageGlyph = null;
-            this.Button1.ImageGlyphEnabled = false;
-            this.Button1.Location = new System.Drawing.Point(8, 558);
+            this.Button1.Image = null;
+            this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
+            this.Button1.ImageGlyphEnabled = true;
+            this.Button1.Location = new System.Drawing.Point(8, 579);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(27, 28);
             this.Button1.TabIndex = 10;
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(13, 167);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(735, 48);
+            this.alertBox2.TabIndex = 69;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "- The cursor size can be changed in Windows 10 and later versions, but not in ear" +
+    "lier ones.\r\n- If cursors are blurry, use sizes 32, 48, 64, or 96.";
+            // 
+            // trackBarX10
+            // 
+            this.trackBarX10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX10.AnimateChanges = true;
+            this.trackBarX10.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarX10.DefaultValue = 32;
+            this.trackBarX10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackBarX10.Location = new System.Drawing.Point(136, 135);
+            this.trackBarX10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trackBarX10.Maximum = 255;
+            this.trackBarX10.Minimum = 16;
+            this.trackBarX10.Name = "trackBarX10";
+            this.trackBarX10.Size = new System.Drawing.Size(609, 24);
+            this.trackBarX10.TabIndex = 68;
+            this.trackBarX10.Value = 32;
+            this.trackBarX10.ValueChanged += new System.EventHandler(this.trackBarX10_ValueChanged);
+            // 
+            // PictureBox12
+            // 
+            this.PictureBox12.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
+            this.PictureBox12.Location = new System.Drawing.Point(13, 135);
+            this.PictureBox12.Name = "PictureBox12";
+            this.PictureBox12.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox12.TabIndex = 57;
+            this.PictureBox12.TabStop = false;
+            // 
+            // Label5
+            // 
+            this.Label5.BackColor = System.Drawing.Color.Transparent;
+            this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label5.Location = new System.Drawing.Point(43, 135);
+            this.Label5.Name = "Label5";
+            this.Label5.Size = new System.Drawing.Size(86, 24);
+            this.Label5.TabIndex = 56;
+            this.Label5.Text = "Cursor size:";
+            this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.alertBox2);
             this.groupBox2.Controls.Add(this.trackBarX9);
+            this.groupBox2.Controls.Add(this.trackBarX10);
             this.groupBox2.Controls.Add(this.PictureBox13);
             this.groupBox2.Controls.Add(this.Label11);
             this.groupBox2.Controls.Add(this.Label6);
             this.groupBox2.Controls.Add(this.CheckBox9);
+            this.groupBox2.Controls.Add(this.PictureBox12);
+            this.groupBox2.Controls.Add(this.Label5);
             this.groupBox2.Controls.Add(this.CheckBox10);
             this.groupBox2.Controls.Add(this.PictureBox22);
             this.groupBox2.Controls.Add(this.PictureBox9);
             this.groupBox2.Controls.Add(this.PictureBox21);
             this.groupBox2.Location = new System.Drawing.Point(7, 62);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(756, 135);
+            this.groupBox2.Size = new System.Drawing.Size(756, 225);
             this.groupBox2.TabIndex = 139;
             this.groupBox2.Text = "groupBox2";
             // 
@@ -2064,27 +2087,33 @@ namespace WinPaletter
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Controls.Add(this.checkBox12);
+            this.groupBox3.Controls.Add(this.global);
             this.groupBox3.Controls.Add(this.source1);
             this.groupBox3.Controls.Add(this.source0);
             this.groupBox3.Controls.Add(this.pictureBox27);
             this.groupBox3.Controls.Add(this.label19);
-            this.groupBox3.Location = new System.Drawing.Point(7, 203);
+            this.groupBox3.Controls.Add(this.separatorH5);
+            this.groupBox3.Controls.Add(this.separatorV2);
+            this.groupBox3.Location = new System.Drawing.Point(7, 293);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(756, 142);
+            this.groupBox3.Size = new System.Drawing.Size(756, 132);
             this.groupBox3.TabIndex = 140;
             this.groupBox3.Text = "groupBox3";
+            this.groupBox3.Visible = false;
             // 
-            // checkBox12
+            // global
             // 
-            this.checkBox12.Checked = false;
-            this.checkBox12.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.checkBox12.ForeColor = System.Drawing.Color.White;
-            this.checkBox12.Location = new System.Drawing.Point(73, 77);
-            this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Size = new System.Drawing.Size(668, 24);
-            this.checkBox12.TabIndex = 139;
-            this.checkBox12.Text = "Apply changes globally to all cursors, not only the selected cursor";
+            this.global.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.global.Checked = false;
+            this.global.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.global.ForeColor = System.Drawing.Color.White;
+            this.global.Location = new System.Drawing.Point(73, 74);
+            this.global.Name = "global";
+            this.global.Size = new System.Drawing.Size(675, 24);
+            this.global.TabIndex = 139;
+            this.global.Text = "Apply changes globally to all cursors, not just the selected cursor";
+            this.global.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.global_CheckedChanged);
             // 
             // source1
             // 
@@ -2093,11 +2122,11 @@ namespace WinPaletter
             this.source1.Checked = false;
             this.source1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.source1.ForeColor = System.Drawing.Color.White;
-            this.source1.Location = new System.Drawing.Point(47, 107);
+            this.source1.Location = new System.Drawing.Point(47, 101);
             this.source1.Name = "source1";
-            this.source1.Size = new System.Drawing.Size(694, 24);
+            this.source1.Size = new System.Drawing.Size(701, 24);
             this.source1.TabIndex = 138;
-            this.source1.Text = "Select a cursor (*.cur, *.ani) file";
+            this.source1.Text = "Select a cursor file (.cur or .ani)";
             this.source1.CheckedChanged += new WinPaletter.UI.WP.RadioButton.CheckedChangedEventHandler(this.source1_CheckedChanged_1);
             // 
             // source0
@@ -2109,10 +2138,10 @@ namespace WinPaletter
             this.source0.ForeColor = System.Drawing.Color.White;
             this.source0.Location = new System.Drawing.Point(47, 47);
             this.source0.Name = "source0";
-            this.source0.Size = new System.Drawing.Size(694, 24);
+            this.source0.Size = new System.Drawing.Size(701, 24);
             this.source0.TabIndex = 137;
             this.source0.Text = "Make it renderable by WinPaletter, allowing full customization of cursor elements" +
-    " such as colors, borders, and styles";
+    " — including colors, borders, and styles";
             this.source0.CheckedChanged += new WinPaletter.UI.WP.RadioButton.CheckedChangedEventHandler(this.radioButton1_CheckedChanged);
             // 
             // pictureBox27
@@ -2136,12 +2165,36 @@ namespace WinPaletter
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(709, 30);
             this.label19.TabIndex = 133;
-            this.label19.Text = "How to render a cursor";
+            this.label19.Text = "Rendering a Cursor";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // separatorH5
+            // 
+            this.separatorH5.AlternativeLook = false;
+            this.separatorH5.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH5.Location = new System.Drawing.Point(58, 86);
+            this.separatorH5.Name = "separatorH5";
+            this.separatorH5.Size = new System.Drawing.Size(21, 1);
+            this.separatorH5.TabIndex = 141;
+            this.separatorH5.TabStop = false;
+            this.separatorH5.Text = "separatorH5";
+            // 
+            // separatorV2
+            // 
+            this.separatorV2.AlternativeLook = false;
+            this.separatorV2.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV2.Location = new System.Drawing.Point(58, 63);
+            this.separatorV2.Name = "separatorV2";
+            this.separatorV2.Size = new System.Drawing.Size(1, 24);
+            this.separatorV2.TabIndex = 140;
+            this.separatorV2.TabStop = false;
+            this.separatorV2.Text = "separatorV2";
             // 
             // groupBox4
             // 
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox4.Controls.Add(this.pictureBox7);
+            this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.radioImage1);
             this.groupBox4.Controls.Add(this.radioImage6);
             this.groupBox4.Controls.Add(this.radioImage4);
@@ -2150,21 +2203,45 @@ namespace WinPaletter
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(748, 80);
+            this.groupBox4.Size = new System.Drawing.Size(748, 48);
             this.groupBox4.TabIndex = 141;
             this.groupBox4.Text = "groupBox4";
             // 
+            // pictureBox7
+            // 
+            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+            this.pictureBox7.Location = new System.Drawing.Point(7, 9);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox7.TabIndex = 136;
+            this.pictureBox7.TabStop = false;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.label9.Location = new System.Drawing.Point(43, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(142, 30);
+            this.label9.TabIndex = 135;
+            this.label9.Text = "Properties";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // radioImage1
             // 
-            this.radioImage1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.radioImage1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.radioImage1.Checked = false;
             this.radioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage1.ForeColor = System.Drawing.Color.White;
             this.radioImage1.Image = null;
             this.radioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage1.Location = new System.Drawing.Point(555, 10);
+            this.radioImage1.Location = new System.Drawing.Point(647, 4);
             this.radioImage1.Name = "radioImage1";
-            this.radioImage1.Size = new System.Drawing.Size(94, 63);
+            this.radioImage1.Size = new System.Drawing.Size(94, 40);
             this.radioImage1.TabIndex = 86;
             this.radioImage1.Text = "Shadow";
             this.radioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2173,15 +2250,15 @@ namespace WinPaletter
             // 
             // radioImage6
             // 
-            this.radioImage6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.radioImage6.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.radioImage6.Checked = false;
             this.radioImage6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage6.ForeColor = System.Drawing.Color.White;
             this.radioImage6.Image = null;
             this.radioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage6.Location = new System.Drawing.Point(427, 10);
+            this.radioImage6.Location = new System.Drawing.Point(519, 4);
             this.radioImage6.Name = "radioImage6";
-            this.radioImage6.Size = new System.Drawing.Size(122, 63);
+            this.radioImage6.Size = new System.Drawing.Size(122, 40);
             this.radioImage6.TabIndex = 85;
             this.radioImage6.Text = "Busy rotating part";
             this.radioImage6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2190,15 +2267,15 @@ namespace WinPaletter
             // 
             // radioImage4
             // 
-            this.radioImage4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.radioImage4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.radioImage4.Checked = false;
             this.radioImage4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage4.ForeColor = System.Drawing.Color.White;
             this.radioImage4.Image = null;
             this.radioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage4.Location = new System.Drawing.Point(299, 10);
+            this.radioImage4.Location = new System.Drawing.Point(391, 4);
             this.radioImage4.Name = "radioImage4";
-            this.radioImage4.Size = new System.Drawing.Size(122, 63);
+            this.radioImage4.Size = new System.Drawing.Size(122, 40);
             this.radioImage4.TabIndex = 83;
             this.radioImage4.Text = "Busy background";
             this.radioImage4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2207,15 +2284,15 @@ namespace WinPaletter
             // 
             // radioImage3
             // 
-            this.radioImage3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.radioImage3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.radioImage3.Checked = false;
             this.radioImage3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage3.ForeColor = System.Drawing.Color.White;
             this.radioImage3.Image = null;
             this.radioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage3.Location = new System.Drawing.Point(199, 10);
+            this.radioImage3.Location = new System.Drawing.Point(291, 4);
             this.radioImage3.Name = "radioImage3";
-            this.radioImage3.Size = new System.Drawing.Size(94, 63);
+            this.radioImage3.Size = new System.Drawing.Size(94, 40);
             this.radioImage3.TabIndex = 82;
             this.radioImage3.Text = "Border";
             this.radioImage3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2224,15 +2301,15 @@ namespace WinPaletter
             // 
             // radioImage2
             // 
-            this.radioImage2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.radioImage2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.radioImage2.Checked = true;
             this.radioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage2.ForeColor = System.Drawing.Color.White;
             this.radioImage2.Image = null;
             this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage2.Location = new System.Drawing.Point(99, 10);
+            this.radioImage2.Location = new System.Drawing.Point(191, 4);
             this.radioImage2.Name = "radioImage2";
-            this.radioImage2.Size = new System.Drawing.Size(94, 63);
+            this.radioImage2.Size = new System.Drawing.Size(94, 40);
             this.radioImage2.TabIndex = 81;
             this.radioImage2.Text = "Background";
             this.radioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2245,10 +2322,10 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tablessControl1.Controls.Add(this.tabPage6);
             this.tablessControl1.Controls.Add(this.tabPage7);
-            this.tablessControl1.Location = new System.Drawing.Point(7, 351);
+            this.tablessControl1.Location = new System.Drawing.Point(7, 431);
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(756, 80);
+            this.tablessControl1.Size = new System.Drawing.Size(756, 48);
             this.tablessControl1.TabIndex = 223;
             this.tablessControl1.Visible = false;
             // 
@@ -2258,7 +2335,7 @@ namespace WinPaletter
             this.tabPage6.Controls.Add(this.groupBox4);
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(748, 52);
+            this.tabPage6.Size = new System.Drawing.Size(748, 20);
             this.tabPage6.TabIndex = 0;
             this.tabPage6.Text = "0";
             // 
@@ -2268,7 +2345,7 @@ namespace WinPaletter
             this.tabPage7.Controls.Add(this.groupBox5);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(748, 52);
+            this.tabPage7.Size = new System.Drawing.Size(748, 20);
             this.tabPage7.TabIndex = 1;
             this.tabPage7.Text = "1";
             // 
@@ -2279,12 +2356,10 @@ namespace WinPaletter
             this.groupBox5.Controls.Add(this.pictureBox28);
             this.groupBox5.Controls.Add(this.textBox1);
             this.groupBox5.Controls.Add(this.label12);
-            this.groupBox5.Controls.Add(this.pictureBox25);
-            this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(748, 80);
+            this.groupBox5.Size = new System.Drawing.Size(748, 48);
             this.groupBox5.TabIndex = 141;
             this.groupBox5.Text = "groupBox5";
             // 
@@ -2307,9 +2382,9 @@ namespace WinPaletter
             this.label12.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.label12.Location = new System.Drawing.Point(43, 9);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(701, 30);
+            this.label12.Size = new System.Drawing.Size(97, 30);
             this.label12.TabIndex = 133;
-            this.label12.Text = "Cursor from file";
+            this.label12.Text = "File:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tablessControl2
@@ -2321,10 +2396,10 @@ namespace WinPaletter
             this.tablessControl2.Controls.Add(this.tabPage9);
             this.tablessControl2.Controls.Add(this.tabPage1);
             this.tablessControl2.Controls.Add(this.tabPage10);
-            this.tablessControl2.Location = new System.Drawing.Point(7, 437);
+            this.tablessControl2.Location = new System.Drawing.Point(7, 485);
             this.tablessControl2.Name = "tablessControl2";
             this.tablessControl2.SelectedIndex = 0;
-            this.tablessControl2.Size = new System.Drawing.Size(756, 224);
+            this.tablessControl2.Size = new System.Drawing.Size(756, 191);
             this.tablessControl2.TabIndex = 224;
             this.tablessControl2.Visible = false;
             // 
@@ -2334,13 +2409,14 @@ namespace WinPaletter
             this.tabPage5.Controls.Add(this.groupBox7);
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(748, 196);
+            this.tabPage5.Size = new System.Drawing.Size(748, 163);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "0";
             // 
             // groupBox7
             // 
             this.groupBox7.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox7.Controls.Add(this.separatorH1);
             this.groupBox7.Controls.Add(this.pictureBox30);
             this.groupBox7.Controls.Add(this.PictureBox15);
             this.groupBox7.Controls.Add(this.Label10);
@@ -2359,9 +2435,22 @@ namespace WinPaletter
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox7.Location = new System.Drawing.Point(0, 0);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(748, 165);
+            this.groupBox7.Size = new System.Drawing.Size(748, 175);
             this.groupBox7.TabIndex = 222;
             this.groupBox7.Text = "groupBox7";
+            // 
+            // separatorH1
+            // 
+            this.separatorH1.AlternativeLook = false;
+            this.separatorH1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorH1.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH1.Location = new System.Drawing.Point(13, 133);
+            this.separatorH1.Name = "separatorH1";
+            this.separatorH1.Size = new System.Drawing.Size(726, 1);
+            this.separatorH1.TabIndex = 164;
+            this.separatorH1.TabStop = false;
+            this.separatorH1.Text = "separatorH1";
             // 
             // pictureBox30
             // 
@@ -2393,13 +2482,14 @@ namespace WinPaletter
             this.tabPage8.Controls.Add(this.groupBox8);
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(748, 196);
+            this.tabPage8.Size = new System.Drawing.Size(748, 163);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "1";
             // 
             // groupBox8
             // 
             this.groupBox8.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox8.Controls.Add(this.separatorH2);
             this.groupBox8.Controls.Add(this.trackBarX12);
             this.groupBox8.Controls.Add(this.pictureBox32);
             this.groupBox8.Controls.Add(this.label20);
@@ -2418,9 +2508,22 @@ namespace WinPaletter
             this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox8.Location = new System.Drawing.Point(0, 0);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(748, 165);
+            this.groupBox8.Size = new System.Drawing.Size(748, 175);
             this.groupBox8.TabIndex = 223;
             this.groupBox8.Text = "groupBox8";
+            // 
+            // separatorH2
+            // 
+            this.separatorH2.AlternativeLook = false;
+            this.separatorH2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorH2.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH2.Location = new System.Drawing.Point(13, 133);
+            this.separatorH2.Name = "separatorH2";
+            this.separatorH2.Size = new System.Drawing.Size(726, 1);
+            this.separatorH2.TabIndex = 167;
+            this.separatorH2.TabStop = false;
+            this.separatorH2.Text = "separatorH2";
             // 
             // trackBarX12
             // 
@@ -2428,14 +2531,14 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarX12.AnimateChanges = true;
             this.trackBarX12.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarX12.DefaultValue = 10;
+            this.trackBarX12.DefaultValue = 1;
             this.trackBarX12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX12.Location = new System.Drawing.Point(369, 42);
+            this.trackBarX12.Location = new System.Drawing.Point(369, 141);
             this.trackBarX12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackBarX12.Maximum = 30;
             this.trackBarX12.Minimum = 0;
             this.trackBarX12.Name = "trackBarX12";
-            this.trackBarX12.Size = new System.Drawing.Size(372, 26);
+            this.trackBarX12.Size = new System.Drawing.Size(372, 24);
             this.trackBarX12.TabIndex = 166;
             this.trackBarX12.Value = 10;
             this.trackBarX12.ValueChanged += new System.EventHandler(this.trackBarX12_ValueChanged);
@@ -2443,7 +2546,7 @@ namespace WinPaletter
             // pictureBox32
             // 
             this.pictureBox32.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox32.Image")));
-            this.pictureBox32.Location = new System.Drawing.Point(13, 43);
+            this.pictureBox32.Location = new System.Drawing.Point(13, 141);
             this.pictureBox32.Name = "pictureBox32";
             this.pictureBox32.Size = new System.Drawing.Size(24, 24);
             this.pictureBox32.TabIndex = 164;
@@ -2454,7 +2557,7 @@ namespace WinPaletter
             this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label20.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(43, 43);
+            this.label20.Location = new System.Drawing.Point(43, 141);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(319, 24);
             this.label20.TabIndex = 165;
@@ -2475,7 +2578,7 @@ namespace WinPaletter
             // pictureBox11
             // 
             this.pictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox11.Image")));
-            this.pictureBox11.Location = new System.Drawing.Point(13, 73);
+            this.pictureBox11.Location = new System.Drawing.Point(13, 43);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(24, 24);
             this.pictureBox11.TabIndex = 9;
@@ -2486,7 +2589,7 @@ namespace WinPaletter
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(43, 73);
+            this.label18.Location = new System.Drawing.Point(43, 43);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(319, 24);
             this.label18.TabIndex = 12;
@@ -2496,7 +2599,7 @@ namespace WinPaletter
             // pictureBox29
             // 
             this.pictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox29.Image")));
-            this.pictureBox29.Location = new System.Drawing.Point(13, 103);
+            this.pictureBox29.Location = new System.Drawing.Point(13, 73);
             this.pictureBox29.Name = "pictureBox29";
             this.pictureBox29.Size = new System.Drawing.Size(24, 24);
             this.pictureBox29.TabIndex = 53;
@@ -2505,7 +2608,7 @@ namespace WinPaletter
             // pictureBox31
             // 
             this.pictureBox31.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox31.Image")));
-            this.pictureBox31.Location = new System.Drawing.Point(13, 133);
+            this.pictureBox31.Location = new System.Drawing.Point(13, 103);
             this.pictureBox31.Name = "pictureBox31";
             this.pictureBox31.Size = new System.Drawing.Size(24, 24);
             this.pictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -2531,22 +2634,23 @@ namespace WinPaletter
             this.tabPage9.Controls.Add(this.groupBox9);
             this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(748, 196);
+            this.tabPage9.Size = new System.Drawing.Size(748, 163);
             this.tabPage9.TabIndex = 3;
             this.tabPage9.Text = "2";
             // 
             // groupBox9
             // 
             this.groupBox9.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox9.Controls.Add(this.pictureBox6);
-            this.groupBox9.Controls.Add(this.trackBarX3);
+            this.groupBox9.Controls.Add(this.separatorH3);
+            this.groupBox9.Controls.Add(this.PictureBox14);
             this.groupBox9.Controls.Add(this.Label8);
+            this.groupBox9.Controls.Add(this.pictureBox6);
+            this.groupBox9.Controls.Add(this.ComboBox6);
+            this.groupBox9.Controls.Add(this.trackBarX3);
             this.groupBox9.Controls.Add(this.label2);
             this.groupBox9.Controls.Add(this.pictureBox33);
-            this.groupBox9.Controls.Add(this.ComboBox6);
             this.groupBox9.Controls.Add(this.label17);
             this.groupBox9.Controls.Add(this.CheckBox7);
-            this.groupBox9.Controls.Add(this.PictureBox14);
             this.groupBox9.Controls.Add(this.pictureBox34);
             this.groupBox9.Controls.Add(this.pictureBox35);
             this.groupBox9.Controls.Add(this.CircleColor2);
@@ -2556,9 +2660,22 @@ namespace WinPaletter
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox9.Location = new System.Drawing.Point(0, 0);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(748, 165);
+            this.groupBox9.Size = new System.Drawing.Size(748, 175);
             this.groupBox9.TabIndex = 223;
             this.groupBox9.Text = "groupBox9";
+            // 
+            // separatorH3
+            // 
+            this.separatorH3.AlternativeLook = false;
+            this.separatorH3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorH3.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH3.Location = new System.Drawing.Point(13, 133);
+            this.separatorH3.Name = "separatorH3";
+            this.separatorH3.Size = new System.Drawing.Size(726, 1);
+            this.separatorH3.TabIndex = 165;
+            this.separatorH3.TabStop = false;
+            this.separatorH3.Text = "separatorH3";
             // 
             // pictureBox6
             // 
@@ -2587,7 +2704,7 @@ namespace WinPaletter
             // pictureBox33
             // 
             this.pictureBox33.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox33.Image")));
-            this.pictureBox33.Location = new System.Drawing.Point(13, 73);
+            this.pictureBox33.Location = new System.Drawing.Point(13, 43);
             this.pictureBox33.Name = "pictureBox33";
             this.pictureBox33.Size = new System.Drawing.Size(24, 24);
             this.pictureBox33.TabIndex = 9;
@@ -2598,7 +2715,7 @@ namespace WinPaletter
             this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(43, 73);
+            this.label17.Location = new System.Drawing.Point(43, 43);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(320, 24);
             this.label17.TabIndex = 12;
@@ -2608,7 +2725,7 @@ namespace WinPaletter
             // pictureBox34
             // 
             this.pictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox34.Image")));
-            this.pictureBox34.Location = new System.Drawing.Point(13, 103);
+            this.pictureBox34.Location = new System.Drawing.Point(13, 73);
             this.pictureBox34.Name = "pictureBox34";
             this.pictureBox34.Size = new System.Drawing.Size(24, 24);
             this.pictureBox34.TabIndex = 53;
@@ -2617,7 +2734,7 @@ namespace WinPaletter
             // pictureBox35
             // 
             this.pictureBox35.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox35.Image")));
-            this.pictureBox35.Location = new System.Drawing.Point(13, 133);
+            this.pictureBox35.Location = new System.Drawing.Point(13, 103);
             this.pictureBox35.Name = "pictureBox35";
             this.pictureBox35.Size = new System.Drawing.Size(24, 24);
             this.pictureBox35.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -2630,13 +2747,14 @@ namespace WinPaletter
             this.tabPage1.Controls.Add(this.groupBox10);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(748, 196);
+            this.tabPage1.Size = new System.Drawing.Size(748, 163);
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Text = "3";
             // 
             // groupBox10
             // 
             this.groupBox10.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox10.Controls.Add(this.separatorH4);
             this.groupBox10.Controls.Add(this.trackBarX11);
             this.groupBox10.Controls.Add(this.pictureBox3);
             this.groupBox10.Controls.Add(this.label13);
@@ -2655,9 +2773,60 @@ namespace WinPaletter
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox10.Location = new System.Drawing.Point(0, 0);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(748, 165);
+            this.groupBox10.Size = new System.Drawing.Size(748, 175);
             this.groupBox10.TabIndex = 224;
-            this.groupBox10.Text = "groupBox10";
+            // 
+            // separatorH4
+            // 
+            this.separatorH4.AlternativeLook = false;
+            this.separatorH4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorH4.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH4.Location = new System.Drawing.Point(13, 133);
+            this.separatorH4.Name = "separatorH4";
+            this.separatorH4.Size = new System.Drawing.Size(726, 1);
+            this.separatorH4.TabIndex = 170;
+            this.separatorH4.TabStop = false;
+            this.separatorH4.Text = "separatorH4";
+            // 
+            // trackBarX11
+            // 
+            this.trackBarX11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBarX11.AnimateChanges = true;
+            this.trackBarX11.BackColor = System.Drawing.Color.Transparent;
+            this.trackBarX11.DefaultValue = 10;
+            this.trackBarX11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trackBarX11.Location = new System.Drawing.Point(368, 141);
+            this.trackBarX11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trackBarX11.Maximum = 25;
+            this.trackBarX11.Minimum = 5;
+            this.trackBarX11.Name = "trackBarX11";
+            this.trackBarX11.Size = new System.Drawing.Size(372, 24);
+            this.trackBarX11.TabIndex = 169;
+            this.trackBarX11.Value = 10;
+            this.trackBarX11.ValueChanged += new System.EventHandler(this.trackBarX11_ValueChanged);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(13, 141);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox3.TabIndex = 167;
+            this.pictureBox3.TabStop = false;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(43, 141);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(319, 24);
+            this.label13.TabIndex = 168;
+            this.label13.Text = "Animation speed";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox36
             // 
@@ -2686,7 +2855,7 @@ namespace WinPaletter
             // pictureBox37
             // 
             this.pictureBox37.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox37.Image")));
-            this.pictureBox37.Location = new System.Drawing.Point(13, 73);
+            this.pictureBox37.Location = new System.Drawing.Point(13, 43);
             this.pictureBox37.Name = "pictureBox37";
             this.pictureBox37.Size = new System.Drawing.Size(24, 24);
             this.pictureBox37.TabIndex = 9;
@@ -2697,7 +2866,7 @@ namespace WinPaletter
             this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(43, 73);
+            this.label28.Location = new System.Drawing.Point(43, 43);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(321, 24);
             this.label28.TabIndex = 12;
@@ -2707,7 +2876,7 @@ namespace WinPaletter
             // pictureBox38
             // 
             this.pictureBox38.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox38.Image")));
-            this.pictureBox38.Location = new System.Drawing.Point(13, 103);
+            this.pictureBox38.Location = new System.Drawing.Point(13, 73);
             this.pictureBox38.Name = "pictureBox38";
             this.pictureBox38.Size = new System.Drawing.Size(24, 24);
             this.pictureBox38.TabIndex = 53;
@@ -2716,7 +2885,7 @@ namespace WinPaletter
             // pictureBox39
             // 
             this.pictureBox39.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox39.Image")));
-            this.pictureBox39.Location = new System.Drawing.Point(13, 133);
+            this.pictureBox39.Location = new System.Drawing.Point(13, 103);
             this.pictureBox39.Name = "pictureBox39";
             this.pictureBox39.Size = new System.Drawing.Size(24, 24);
             this.pictureBox39.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -2729,7 +2898,7 @@ namespace WinPaletter
             this.tabPage10.Controls.Add(this.groupBox11);
             this.tabPage10.Location = new System.Drawing.Point(4, 24);
             this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(748, 196);
+            this.tabPage10.Size = new System.Drawing.Size(748, 163);
             this.tabPage10.TabIndex = 5;
             this.tabPage10.Text = "4";
             // 
@@ -2792,46 +2961,8 @@ namespace WinPaletter
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(648, 30);
             this.label29.TabIndex = 162;
-            this.label29.Text = "Rotating part of busy cursor";
+            this.label29.Text = "Shadow";
             this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // trackBarX11
-            // 
-            this.trackBarX11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBarX11.AnimateChanges = true;
-            this.trackBarX11.BackColor = System.Drawing.Color.Transparent;
-            this.trackBarX11.DefaultValue = 10;
-            this.trackBarX11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackBarX11.Location = new System.Drawing.Point(368, 42);
-            this.trackBarX11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX11.Maximum = 30;
-            this.trackBarX11.Minimum = 0;
-            this.trackBarX11.Name = "trackBarX11";
-            this.trackBarX11.Size = new System.Drawing.Size(372, 26);
-            this.trackBarX11.TabIndex = 169;
-            this.trackBarX11.Value = 10;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(13, 43);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox3.TabIndex = 167;
-            this.pictureBox3.TabStop = false;
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(43, 43);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(319, 24);
-            this.label13.TabIndex = 168;
-            this.label13.Text = "Animation speed";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // CursorsStudio
             // 
@@ -2839,12 +2970,12 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1090, 714);
-            this.Controls.Add(this.tablessControl2);
+            this.ClientSize = new System.Drawing.Size(1090, 741);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.GroupBox1);
+            this.Controls.Add(this.tablessControl2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
@@ -2853,14 +2984,13 @@ namespace WinPaletter
             this.Name = "CursorsStudio";
             this.Text = "Cursors Studio";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.CursorsStudio_HelpButtonClicked);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CursorsStudio_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Controls.SetChildIndex(this.tablessControl2, 0);
             this.Controls.SetChildIndex(this.GroupBox1, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.groupBox3, 0);
             this.Controls.SetChildIndex(this.tablessControl1, 0);
-            this.Controls.SetChildIndex(this.tablessControl2, 0);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
@@ -2871,7 +3001,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox20)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).EndInit();
@@ -2883,6 +3012,7 @@ namespace WinPaletter
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox27)).EndInit();
             this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.tablessControl1.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
@@ -2907,6 +3037,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox36)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox37)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).EndInit();
@@ -2914,7 +3045,6 @@ namespace WinPaletter
             this.tabPage10.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox40)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2994,8 +3124,6 @@ namespace WinPaletter
         internal PictureBox PictureBox20;
         internal Label label4;
         internal PictureBox pictureBox23;
-        internal Label label9;
-        internal PictureBox pictureBox25;
         internal UI.WP.Button button20;
         private UI.WP.TextBox textBox1;
         private UI.Controllers.TrackBarX trackBarX1;
@@ -3014,7 +3142,7 @@ namespace WinPaletter
         private UI.WP.RadioButton source0;
         internal PictureBox pictureBox27;
         internal Label label19;
-        internal UI.WP.CheckBox checkBox12;
+        internal UI.WP.CheckBox global;
         private UI.WP.RadioButton source1;
         private UI.WP.GroupBox groupBox4;
         internal UI.WP.RadioImage radioImage4;
@@ -3068,5 +3196,14 @@ namespace WinPaletter
         private UI.Controllers.TrackBarX trackBarX11;
         internal PictureBox pictureBox3;
         internal Label label13;
+        internal PictureBox pictureBox7;
+        internal Label label9;
+        private UI.WP.SeparatorH separatorH1;
+        private UI.WP.SeparatorH separatorH2;
+        private UI.WP.SeparatorH separatorH3;
+        private UI.WP.SeparatorH separatorH4;
+        private UI.WP.SeparatorH separatorH5;
+        private UI.WP.SeparatorV separatorV2;
+        private UI.WP.NumericUpDown numericUpDown1;
     }
 }

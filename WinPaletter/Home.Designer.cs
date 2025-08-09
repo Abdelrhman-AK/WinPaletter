@@ -131,7 +131,7 @@
             this.card1.Size = new System.Drawing.Size(277, 130);
             this.card1.TabIndex = 121;
             this.card1.Tag = "Control Windows\' look using accent colors and visual styles for borders, buttons," +
-    " and UI elements.";
+    " and UI elements.\r\n";
             this.card1.Text = "Windows Theme";
             this.card1.Click += new System.EventHandler(this.card1_Click);
             // 

@@ -238,7 +238,6 @@ namespace WinPaletter
             LabelR1.Font = Program.TM.MetricsFonts.CaptionFont;
 
             GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 || ExplorerPatcher.CanBeUsed;
-            AlertBox1.Visible = Program.WindowStyle == WindowStyle.W7;
 
             if (ExplorerPatcher.CanBeUsed)
             {

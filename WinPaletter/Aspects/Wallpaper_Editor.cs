@@ -126,12 +126,6 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void Wallpaper_Editor_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Program.Settings.AspectsControl.Wallpaper_Advanced = AdvancedMode;
-            Program.Settings.AspectsControl.Save();
-        }
-
         private void Wallpaper_Editor_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
@@ -153,8 +147,6 @@ namespace WinPaletter
             };
 
             LoadData(data);
-
-            AdvancedMode = Program.Settings.AspectsControl.Wallpaper_Advanced;
 
             LoadFromTM(Program.TM);
             index = 0;

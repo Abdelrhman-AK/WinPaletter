@@ -444,7 +444,7 @@ namespace WinPaletter.UI.Simulation
             // Styles support transparency (Mica/AeroGlass)
             if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W7Aero)
             {
-                Bitmap Wallpaper = Parent.BackgroundImage is null ? Program.Wallpaper : Parent.BackgroundImage as Bitmap;
+                Bitmap Wallpaper = ((Parent?.BackgroundImage) ?? Program.Wallpaper) as Bitmap;
 
                 if (Wallpaper is not null)
                 {
@@ -456,10 +456,10 @@ namespace WinPaletter.UI.Simulation
                 {
                     if (Active && !AccentColor_Enabled && AdaptedBack is not null)
                     {
-                        Bitmap b = AdaptedBack.Blur(15);
-
                         if (DarkMode)
                         {
+                            Bitmap b = AdaptedBack.Blur(15);
+
                             if (b is not null)
                             {
                                 using (ImageFactory ImgF = new())
@@ -472,7 +472,7 @@ namespace WinPaletter.UI.Simulation
                             }
                         }
 
-                        else { AdaptedBackBlurred = b; }
+                        else { AdaptedBackBlurred = AdaptedBack.Blur(15); }
                     }
                 }
 

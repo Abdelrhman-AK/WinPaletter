@@ -118,17 +118,32 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
 
-            ToolStripMenuItem item = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W11));
-            item.Click += Item_Click;
-            easy_generator.Menu.Items.Add(item);
+            ToolStripMenuItem item0 = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W10));
+            ToolStripMenuItem item1 = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W11));
+            item0.Click += Item0_Click;
+            item1.Click += Item1_Click;
+            easy_generator.Menu.Items.Add(item0);
+            easy_generator.Menu.Items.Add(item1);
         }
 
-        private void Item_Click(object sender, EventArgs e)
+        private void Item0_Click(object sender, EventArgs e)
+        {
+            // Copycat from Windows 10 colors
+            using (Manager TMx = new(Manager.Source.Empty))
+            {
+                TMx.Windows12 = (Theme.Structures.Windows10x)Program.TM.Windows10.Clone();
+                LoadFromTM((Manager)TMx.Clone());
+
+                Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+            }
+        }
+
+        private void Item1_Click(object sender, EventArgs e)
         {
             // Copycat from Windows 11 colors
             using (Manager TMx = new(Manager.Source.Empty))
             {
-                TMx.Windows12 = (Theme.Structures.Windows10x)Program.TM.Windows12.Clone();
+                TMx.Windows12 = (Theme.Structures.Windows10x)Program.TM.Windows11.Clone();
                 LoadFromTM((Manager)TMx.Clone());
 
                 Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));

@@ -107,6 +107,7 @@ namespace WinPaletter
             this.search_filter_btn = new WinPaletter.UI.WP.Button();
             this.back_btn = new WinPaletter.UI.WP.Button();
             this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
+            this.numericUpDown1 = new WinPaletter.UI.WP.NumericUpDown();
             this.Status_pnl.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -689,16 +690,16 @@ namespace WinPaletter
             this.windowsDesktop1.UseWin11ORB_WithWin10 = false;
             this.windowsDesktop1.UseWin11RoundedCorners_WithWin10_Level1 = false;
             this.windowsDesktop1.UseWin11RoundedCorners_WithWin10_Level2 = false;
+            this.windowsDesktop1.VisualStyles = WinPaletter.Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
+            this.windowsDesktop1.VisualStylesColorScheme = null;
+            this.windowsDesktop1.VisualStylesPath = null;
             this.windowsDesktop1.Win7Alpha = 100;
             this.windowsDesktop1.Win7ColorBal = 100;
             this.windowsDesktop1.Win7GlowBal = 100;
             this.windowsDesktop1.Win7Noise = 1F;
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
-            this.windowsDesktop1.VisualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W11;
-            this.windowsDesktop1.VisualStylesColorScheme = null;
-            this.windowsDesktop1.VisualStylesPath = null;
             this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             // 
@@ -842,6 +843,7 @@ namespace WinPaletter
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.numericUpDown1);
             this.Panel1.Controls.Add(this.Cursors_Container);
             this.Panel1.Controls.Add(this.cur_anim_btn);
             this.Panel1.Location = new System.Drawing.Point(2677, 3);
@@ -882,6 +884,7 @@ namespace WinPaletter
             this.Arrow.Location = new System.Drawing.Point(7, 7);
             this.Arrow.Name = "Arrow";
             this.Arrow.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Arrow.Prop_BorderThickness = 1F;
             this.Arrow.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Arrow.Prop_Cursor = WinPaletter.Paths.CursorType.Arrow;
             this.Arrow.Prop_File = "";
@@ -891,6 +894,7 @@ namespace WinPaletter
             this.Arrow.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Arrow.Prop_LoadingCircleBackNoise = false;
             this.Arrow.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Arrow.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Arrow.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Arrow.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Arrow.Prop_LoadingCircleHotGradient = false;
@@ -925,6 +929,7 @@ namespace WinPaletter
             this.Help.Location = new System.Drawing.Point(77, 7);
             this.Help.Name = "Help";
             this.Help.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Help.Prop_BorderThickness = 1F;
             this.Help.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Help.Prop_Cursor = WinPaletter.Paths.CursorType.Help;
             this.Help.Prop_File = "";
@@ -934,6 +939,7 @@ namespace WinPaletter
             this.Help.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Help.Prop_LoadingCircleBackNoise = false;
             this.Help.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Help.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Help.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Help.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Help.Prop_LoadingCircleHotGradient = false;
@@ -968,6 +974,7 @@ namespace WinPaletter
             this.AppLoading.Location = new System.Drawing.Point(147, 7);
             this.AppLoading.Name = "AppLoading";
             this.AppLoading.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.AppLoading.Prop_BorderThickness = 1F;
             this.AppLoading.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.AppLoading.Prop_Cursor = WinPaletter.Paths.CursorType.AppLoading;
             this.AppLoading.Prop_File = "";
@@ -977,6 +984,7 @@ namespace WinPaletter
             this.AppLoading.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle;
             this.AppLoading.Prop_LoadingCircleBackNoise = false;
             this.AppLoading.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.AppLoading.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.AppLoading.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.AppLoading.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.AppLoading.Prop_LoadingCircleHotGradient = false;
@@ -1011,6 +1019,7 @@ namespace WinPaletter
             this.Busy.Location = new System.Drawing.Point(217, 7);
             this.Busy.Name = "Busy";
             this.Busy.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Busy.Prop_BorderThickness = 1F;
             this.Busy.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Busy.Prop_Cursor = WinPaletter.Paths.CursorType.Busy;
             this.Busy.Prop_File = "";
@@ -1020,6 +1029,7 @@ namespace WinPaletter
             this.Busy.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Circle;
             this.Busy.Prop_LoadingCircleBackNoise = false;
             this.Busy.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Busy.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Busy.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Busy.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Busy.Prop_LoadingCircleHotGradient = false;
@@ -1054,6 +1064,7 @@ namespace WinPaletter
             this.Move_Cur.Location = new System.Drawing.Point(287, 7);
             this.Move_Cur.Name = "Move_Cur";
             this.Move_Cur.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Move_Cur.Prop_BorderThickness = 1F;
             this.Move_Cur.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Move_Cur.Prop_Cursor = WinPaletter.Paths.CursorType.Move;
             this.Move_Cur.Prop_File = "";
@@ -1063,6 +1074,7 @@ namespace WinPaletter
             this.Move_Cur.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Move_Cur.Prop_LoadingCircleBackNoise = false;
             this.Move_Cur.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Move_Cur.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Move_Cur.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Move_Cur.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Move_Cur.Prop_LoadingCircleHotGradient = false;
@@ -1097,6 +1109,7 @@ namespace WinPaletter
             this.Up.Location = new System.Drawing.Point(357, 7);
             this.Up.Name = "Up";
             this.Up.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Up.Prop_BorderThickness = 1F;
             this.Up.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Up.Prop_Cursor = WinPaletter.Paths.CursorType.Up;
             this.Up.Prop_File = "";
@@ -1106,6 +1119,7 @@ namespace WinPaletter
             this.Up.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Up.Prop_LoadingCircleBackNoise = false;
             this.Up.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Up.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Up.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Up.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Up.Prop_LoadingCircleHotGradient = false;
@@ -1140,6 +1154,7 @@ namespace WinPaletter
             this.NS.Location = new System.Drawing.Point(427, 7);
             this.NS.Name = "NS";
             this.NS.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.NS.Prop_BorderThickness = 1F;
             this.NS.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.NS.Prop_Cursor = WinPaletter.Paths.CursorType.NS;
             this.NS.Prop_File = "";
@@ -1149,6 +1164,7 @@ namespace WinPaletter
             this.NS.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.NS.Prop_LoadingCircleBackNoise = false;
             this.NS.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.NS.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.NS.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NS.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NS.Prop_LoadingCircleHotGradient = false;
@@ -1183,6 +1199,7 @@ namespace WinPaletter
             this.EW.Location = new System.Drawing.Point(7, 77);
             this.EW.Name = "EW";
             this.EW.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.EW.Prop_BorderThickness = 1F;
             this.EW.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.EW.Prop_Cursor = WinPaletter.Paths.CursorType.EW;
             this.EW.Prop_File = "";
@@ -1192,6 +1209,7 @@ namespace WinPaletter
             this.EW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.EW.Prop_LoadingCircleBackNoise = false;
             this.EW.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.EW.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.EW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.EW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.EW.Prop_LoadingCircleHotGradient = false;
@@ -1226,6 +1244,7 @@ namespace WinPaletter
             this.NESW.Location = new System.Drawing.Point(77, 77);
             this.NESW.Name = "NESW";
             this.NESW.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.NESW.Prop_BorderThickness = 1F;
             this.NESW.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.NESW.Prop_Cursor = WinPaletter.Paths.CursorType.NESW;
             this.NESW.Prop_File = "";
@@ -1235,6 +1254,7 @@ namespace WinPaletter
             this.NESW.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.NESW.Prop_LoadingCircleBackNoise = false;
             this.NESW.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.NESW.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.NESW.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NESW.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NESW.Prop_LoadingCircleHotGradient = false;
@@ -1269,6 +1289,7 @@ namespace WinPaletter
             this.NWSE.Location = new System.Drawing.Point(147, 77);
             this.NWSE.Name = "NWSE";
             this.NWSE.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.NWSE.Prop_BorderThickness = 1F;
             this.NWSE.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.NWSE.Prop_Cursor = WinPaletter.Paths.CursorType.NWSE;
             this.NWSE.Prop_File = "";
@@ -1278,6 +1299,7 @@ namespace WinPaletter
             this.NWSE.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.NWSE.Prop_LoadingCircleBackNoise = false;
             this.NWSE.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.NWSE.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.NWSE.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NWSE.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.NWSE.Prop_LoadingCircleHotGradient = false;
@@ -1312,6 +1334,7 @@ namespace WinPaletter
             this.Pen.Location = new System.Drawing.Point(217, 77);
             this.Pen.Name = "Pen";
             this.Pen.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Pen.Prop_BorderThickness = 1F;
             this.Pen.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Pen.Prop_Cursor = WinPaletter.Paths.CursorType.Pen;
             this.Pen.Prop_File = "";
@@ -1321,6 +1344,7 @@ namespace WinPaletter
             this.Pen.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Pen.Prop_LoadingCircleBackNoise = false;
             this.Pen.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Pen.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Pen.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pen.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pen.Prop_LoadingCircleHotGradient = false;
@@ -1355,6 +1379,7 @@ namespace WinPaletter
             this.None.Location = new System.Drawing.Point(287, 77);
             this.None.Name = "None";
             this.None.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.None.Prop_BorderThickness = 1F;
             this.None.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.None.Prop_Cursor = WinPaletter.Paths.CursorType.None;
             this.None.Prop_File = "";
@@ -1364,6 +1389,7 @@ namespace WinPaletter
             this.None.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.None.Prop_LoadingCircleBackNoise = false;
             this.None.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.None.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.None.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.None.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.None.Prop_LoadingCircleHotGradient = false;
@@ -1398,6 +1424,7 @@ namespace WinPaletter
             this.Link.Location = new System.Drawing.Point(357, 77);
             this.Link.Name = "Link";
             this.Link.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Link.Prop_BorderThickness = 1F;
             this.Link.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Link.Prop_Cursor = WinPaletter.Paths.CursorType.Link;
             this.Link.Prop_File = "";
@@ -1407,6 +1434,7 @@ namespace WinPaletter
             this.Link.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Link.Prop_LoadingCircleBackNoise = false;
             this.Link.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Link.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Link.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Link.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Link.Prop_LoadingCircleHotGradient = false;
@@ -1441,6 +1469,7 @@ namespace WinPaletter
             this.Pin.Location = new System.Drawing.Point(427, 77);
             this.Pin.Name = "Pin";
             this.Pin.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Pin.Prop_BorderThickness = 1F;
             this.Pin.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Pin.Prop_Cursor = WinPaletter.Paths.CursorType.Pin;
             this.Pin.Prop_File = "";
@@ -1450,6 +1479,7 @@ namespace WinPaletter
             this.Pin.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Pin.Prop_LoadingCircleBackNoise = false;
             this.Pin.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Pin.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Pin.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pin.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Pin.Prop_LoadingCircleHotGradient = false;
@@ -1484,6 +1514,7 @@ namespace WinPaletter
             this.Person.Location = new System.Drawing.Point(7, 147);
             this.Person.Name = "Person";
             this.Person.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Person.Prop_BorderThickness = 1F;
             this.Person.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Person.Prop_Cursor = WinPaletter.Paths.CursorType.Person;
             this.Person.Prop_File = "";
@@ -1493,6 +1524,7 @@ namespace WinPaletter
             this.Person.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Person.Prop_LoadingCircleBackNoise = false;
             this.Person.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Person.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Person.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Person.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Person.Prop_LoadingCircleHotGradient = false;
@@ -1527,6 +1559,7 @@ namespace WinPaletter
             this.IBeam.Location = new System.Drawing.Point(77, 147);
             this.IBeam.Name = "IBeam";
             this.IBeam.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.IBeam.Prop_BorderThickness = 1F;
             this.IBeam.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.IBeam.Prop_Cursor = WinPaletter.Paths.CursorType.IBeam;
             this.IBeam.Prop_File = "";
@@ -1536,6 +1569,7 @@ namespace WinPaletter
             this.IBeam.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.IBeam.Prop_LoadingCircleBackNoise = false;
             this.IBeam.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.IBeam.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.IBeam.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.IBeam.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.IBeam.Prop_LoadingCircleHotGradient = false;
@@ -1570,6 +1604,7 @@ namespace WinPaletter
             this.Cross.Location = new System.Drawing.Point(147, 147);
             this.Cross.Name = "Cross";
             this.Cross.Prop_ArrowStyle = WinPaletter.Paths.ArrowStyle.Aero;
+            this.Cross.Prop_BorderThickness = 1F;
             this.Cross.Prop_CircleStyle = WinPaletter.Paths.CircleStyle.Aero;
             this.Cross.Prop_Cursor = WinPaletter.Paths.CursorType.Cross;
             this.Cross.Prop_File = "";
@@ -1579,6 +1614,7 @@ namespace WinPaletter
             this.Cross.Prop_LoadingCircleBackGradientMode = WinPaletter.Paths.GradientMode.Horizontal;
             this.Cross.Prop_LoadingCircleBackNoise = false;
             this.Cross.Prop_LoadingCircleBackNoiseOpacity = 0.25F;
+            this.Cross.Prop_LoadingCircleHot_AnimationSpeed = 10;
             this.Cross.Prop_LoadingCircleHot1 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Cross.Prop_LoadingCircleHot2 = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
             this.Cross.Prop_LoadingCircleHotGradient = false;
@@ -1610,18 +1646,18 @@ namespace WinPaletter
             // 
             // cur_anim_btn
             // 
-            this.cur_anim_btn.CustomColor = System.Drawing.Color.Empty;
+            this.cur_anim_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.cur_anim_btn.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.cur_anim_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cur_anim_btn.ForeColor = System.Drawing.Color.White;
-            this.cur_anim_btn.Image = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.Image")));
-            this.cur_anim_btn.ImageGlyph = null;
-            this.cur_anim_btn.ImageGlyphEnabled = false;
-            this.cur_anim_btn.Location = new System.Drawing.Point(360, 265);
+            this.cur_anim_btn.Image = null;
+            this.cur_anim_btn.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("cur_anim_btn.ImageGlyph")));
+            this.cur_anim_btn.ImageGlyphEnabled = true;
+            this.cur_anim_btn.Location = new System.Drawing.Point(369, 265);
             this.cur_anim_btn.Name = "cur_anim_btn";
-            this.cur_anim_btn.Size = new System.Drawing.Size(160, 24);
+            this.cur_anim_btn.Size = new System.Drawing.Size(101, 24);
             this.cur_anim_btn.TabIndex = 72;
-            this.cur_anim_btn.Text = "Animate (3 Cycles)";
+            this.cur_anim_btn.Text = "Animate";
             this.cur_anim_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.cur_anim_btn.UseVisualStyleBackColor = false;
             this.cur_anim_btn.Click += new System.EventHandler(this.Cur_anim_btn_Click);
@@ -1790,6 +1826,19 @@ namespace WinPaletter
             this.Titlebar_lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
             this.Titlebar_lbl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseMove);
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.numericUpDown1.BackColor = System.Drawing.Color.Transparent;
+            this.numericUpDown1.Location = new System.Drawing.Point(476, 265);
+            this.numericUpDown1.Maximum = 20;
+            this.numericUpDown1.Minimum = 3;
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(46, 24);
+            this.numericUpDown1.TabIndex = 73;
+            this.numericUpDown1.UpDownStep = 1;
+            this.numericUpDown1.Value = 3;
+            // 
             // Store
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1905,5 +1954,6 @@ namespace WinPaletter
         internal Label aspects_lbl;
         internal Label label2;
         internal PictureBox pictureBox1;
+        private UI.WP.NumericUpDown numericUpDown1;
     }
 }

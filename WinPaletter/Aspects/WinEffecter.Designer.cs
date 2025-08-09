@@ -673,7 +673,7 @@ namespace WinPaletter
             this.AlertBox5.Image = null;
             this.AlertBox5.Location = new System.Drawing.Point(36, 36);
             this.AlertBox5.Name = "AlertBox5";
-            this.AlertBox5.Size = new System.Drawing.Size(105, 22);
+            this.AlertBox5.Size = new System.Drawing.Size(116, 22);
             this.AlertBox5.TabIndex = 240;
             this.AlertBox5.TabStop = false;
             this.AlertBox5.Text = "Uses more power";
