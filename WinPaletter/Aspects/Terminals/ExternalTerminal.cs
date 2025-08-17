@@ -176,6 +176,7 @@ namespace WinPaletter
             _Shown = false;
             FillTerminals(ComboBox1);
             RasterList.BringToFront();
+            CMD_Preview.BackgroundImage = Program.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
 
             Icon = Properties.Resources.cmd;
 
@@ -582,7 +583,7 @@ namespace WinPaletter
                 CMD_EnhancedTerminal.Checked = Conversions.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ForceV2", @default.CommandPrompt.W10_1909_ForceV2));
                 CMD_LineSelection.Checked = Conversions.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "LineSelection", @default.CommandPrompt.W10_1909_LineSelection));
                 CMD_TerminalScrolling.Checked = Conversions.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "TerminalScrolling", @default.CommandPrompt.W10_1909_TerminalScrolling));
-                CMD_OpacityBar.Value = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", 100));
+                CMD_OpacityBar.Value = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", 255));
 
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -727,8 +728,6 @@ namespace WinPaletter
                     EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", FontName.Font.Name, RegistryValueKind.String);
                 }
 
-
-
                 EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", CMD_FontWeightBox.SelectedIndex * 100);
 
                 MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -843,7 +842,7 @@ namespace WinPaletter
             logFont.lfWidth = 0;
             logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
             F_cmd = Font.FromLogFont(logFont);
-            CMD1.Font = F_cmd;
+            CMD_Preview.Font = F_cmd;
 
             ApplyPreview();
         }
@@ -886,52 +885,52 @@ namespace WinPaletter
             };
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable00".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable00)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable00)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable01".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable01)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable01)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable02".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable02)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable02)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable03".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable03)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable03)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable04".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable04)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable04)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable05".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable05)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable05)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable06".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable06)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable06)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable07".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable07)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable07)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable08".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable08)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable08)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable09".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable09)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable09)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable10".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable10)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable10)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable11".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable11)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable11)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable12".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable12)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable12)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable13".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable13)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable13)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable14".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable14)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable14)]);
 
             if (((ColorItem)sender).Name.ToString().ToLower().Contains("ColorTable15".ToLower()))
-                CList.Add(CMD1, [nameof(CMD1.CMD_ColorTable15)]);
+                CList.Add(CMD_Preview, [nameof(CMD_Preview.CMD_ColorTable15)]);
 
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
@@ -1034,105 +1033,105 @@ namespace WinPaletter
 
         public void ApplyPreview()
         {
-            CMD1.CMD_ColorTable00 = ColorTable00.BackColor;
-            CMD1.CMD_ColorTable01 = ColorTable01.BackColor;
-            CMD1.CMD_ColorTable02 = ColorTable02.BackColor;
-            CMD1.CMD_ColorTable03 = ColorTable03.BackColor;
-            CMD1.CMD_ColorTable04 = ColorTable04.BackColor;
-            CMD1.CMD_ColorTable05 = ColorTable05.BackColor;
-            CMD1.CMD_ColorTable06 = ColorTable06.BackColor;
-            CMD1.CMD_ColorTable07 = ColorTable07.BackColor;
-            CMD1.CMD_ColorTable08 = ColorTable08.BackColor;
-            CMD1.CMD_ColorTable09 = ColorTable09.BackColor;
-            CMD1.CMD_ColorTable10 = ColorTable10.BackColor;
-            CMD1.CMD_ColorTable11 = ColorTable11.BackColor;
-            CMD1.CMD_ColorTable12 = ColorTable12.BackColor;
-            CMD1.CMD_ColorTable13 = ColorTable13.BackColor;
-            CMD1.CMD_ColorTable14 = ColorTable14.BackColor;
-            CMD1.CMD_ColorTable15 = ColorTable15.BackColor;
-            CMD1.CMD_PopupForeground = CMD_PopupForegroundBar.Value;
-            CMD1.CMD_PopupBackground = CMD_PopupBackgroundBar.Value;
-            CMD1.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value;
-            CMD1.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value;
+            CMD_Preview.CMD_ColorTable00 = ColorTable00.BackColor;
+            CMD_Preview.CMD_ColorTable01 = ColorTable01.BackColor;
+            CMD_Preview.CMD_ColorTable02 = ColorTable02.BackColor;
+            CMD_Preview.CMD_ColorTable03 = ColorTable03.BackColor;
+            CMD_Preview.CMD_ColorTable04 = ColorTable04.BackColor;
+            CMD_Preview.CMD_ColorTable05 = ColorTable05.BackColor;
+            CMD_Preview.CMD_ColorTable06 = ColorTable06.BackColor;
+            CMD_Preview.CMD_ColorTable07 = ColorTable07.BackColor;
+            CMD_Preview.CMD_ColorTable08 = ColorTable08.BackColor;
+            CMD_Preview.CMD_ColorTable09 = ColorTable09.BackColor;
+            CMD_Preview.CMD_ColorTable10 = ColorTable10.BackColor;
+            CMD_Preview.CMD_ColorTable11 = ColorTable11.BackColor;
+            CMD_Preview.CMD_ColorTable12 = ColorTable12.BackColor;
+            CMD_Preview.CMD_ColorTable13 = ColorTable13.BackColor;
+            CMD_Preview.CMD_ColorTable14 = ColorTable14.BackColor;
+            CMD_Preview.CMD_ColorTable15 = ColorTable15.BackColor;
+            CMD_Preview.CMD_PopupForeground = CMD_PopupForegroundBar.Value;
+            CMD_Preview.CMD_PopupBackground = CMD_PopupBackgroundBar.Value;
+            CMD_Preview.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value;
+            CMD_Preview.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value;
 
-            CMD1.Raster = CMD_RasterToggle.Checked;
+            CMD_Preview.Raster = CMD_RasterToggle.Checked;
             switch (RasterList.SelectedItem)
             {
                 case "4x6":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6;
                         break;
                     }
 
                 case "6x8":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
                         break;
                     }
 
                 case "6x9":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
                         break;
                     }
 
                 case "8x8":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
                         break;
                     }
 
                 case "8x9":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
                         break;
                     }
 
                 case "16x8":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8;
                         break;
                     }
 
                 case "5x12":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12;
                         break;
                     }
 
                 case "7x12":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12;
                         break;
                     }
 
                 case "8x12":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
                         break;
                     }
 
                 case "16x12":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12;
                         break;
                     }
 
                 case "12x16":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16;
                         break;
                     }
 
                 case "10x18":
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18;
                         break;
                     }
 
                 default:
                     {
-                        CMD1.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
+                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
                         break;
                     }
 
@@ -1140,9 +1139,9 @@ namespace WinPaletter
 
             FontName.Text = F_cmd.Name;
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
-            CMD1.Font = F_cmd;
-
-            CMD1.Refresh();
+            CMD_Preview.Font = F_cmd;
+            CMD_Preview.Alpha = CMD_OpacityBar.Value;
+            CMD_Preview.Refresh();
         }
 
         public void UpdateFromTrack(int i)
@@ -1726,10 +1725,11 @@ namespace WinPaletter
 
                     GDI32.LogFont logFont = new();
                     dlg.Font.ToLogFont(logFont);
+                    logFont.lfHeight = (int)-dlg.Font.Size; // Negative value for pixel height
                     logFont.lfWidth = 0; // Set to 0 for default width
                     logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
                     F_cmd = Font.FromLogFont(logFont);
-                    CMD1.Font = F_cmd;
+                    CMD_Preview.Font = F_cmd;
 
                     FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
                 }
@@ -1823,7 +1823,7 @@ namespace WinPaletter
             logFont.lfHeight = -CMD_FontPxHeight.Value;
             logFont.lfWidth = 0; // Set to 0 for default width
             F_cmd = Font.FromLogFont(logFont);
-            CMD1.Font = F_cmd;
+            CMD_Preview.Font = F_cmd;
             ApplyPreview();
         }
 
@@ -1855,6 +1855,21 @@ namespace WinPaletter
             colorItem.Invalidate();
 
             CList.Clear();
+        }
+
+        private void CMD_OpacityBar_ValueChanged(object sender, EventArgs e)
+        {
+            CMD_Preview.Alpha = (sender as UI.Controllers.TrackBarX).Value;
+        }
+
+        private void ColorTable00_Click(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void CMD_CursorColor_Click(object sender, DragEventArgs e)
+        {
+
         }
     }
 }

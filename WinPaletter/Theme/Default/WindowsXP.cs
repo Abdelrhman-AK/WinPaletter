@@ -85,7 +85,7 @@ namespace WinPaletter.Theme
             CMD.ScreenColorsForeground = 7;
             CMD.ScreenColorsBackground = 0;
             CMD.FaceName = "Consolas";
-            //CMD.FontSize = 18 * 65536;
+            CMD.PixelWidth = 18;
             CMD.FontRaster = true;
             CMD.W10_1909_ForceV2 = false;
 
@@ -112,7 +112,7 @@ namespace WinPaletter.Theme
             PS86.ScreenColorsForeground = 6;
             PS86.ScreenColorsBackground = 5;
             PS86.FaceName = "Consolas";
-            //PS86.FontSize = 14 * 65536;
+            PS86.PixelWidth = 14;
             PS86.FontRaster = true;
             PS86.W10_1909_ForceV2 = false;
 
@@ -139,7 +139,7 @@ namespace WinPaletter.Theme
             PS64.ScreenColorsForeground = 6;
             PS64.ScreenColorsBackground = 5;
             PS64.FaceName = "Consolas";
-            //PS64.FontSize = 14 * 65536;
+            PS64.PixelWidth = 14;
             PS64.FontRaster = true;
             PS64.W10_1909_ForceV2 = false;
 

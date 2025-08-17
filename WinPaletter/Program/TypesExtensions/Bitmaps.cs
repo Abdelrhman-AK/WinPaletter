@@ -161,7 +161,7 @@ namespace WinPaletter.TypesExtensions
 
                         if (Color.FromArgb(255, PixelColor) == Color.FromArgb(255, oldColor))
                         {
-                            outputImage.SetPixel(x, y, Color.FromArgb(PixelColor.A, NewColor));
+                            outputImage.SetPixel(x, y, NewColor);
                         }
                         else
                         {

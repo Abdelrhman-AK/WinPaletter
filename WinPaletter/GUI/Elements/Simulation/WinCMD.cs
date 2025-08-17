@@ -13,8 +13,10 @@ namespace WinPaletter.UI.Simulation
     {
         public WinCMD()
         {
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
             Text = string.Empty;
             DoubleBuffered = true;
+            BackColor = Color.Transparent;
         }
 
         #region Variables
@@ -64,6 +66,22 @@ namespace WinPaletter.UI.Simulation
         public bool Raster { get; set; } = true;
         public Raster_Sizes RasterSize { get; set; } = Raster_Sizes._8x12;
         public bool CustomTerminal { get; set; } = false;
+
+        private int alpha = 255;
+        public int Alpha
+        {
+            get => alpha;
+            set
+            {
+                if (alpha != value)
+                {
+                    if (value > 255) alpha = 255;
+                    else if (value < 0) alpha = 0;
+                    else alpha = value;
+                    Invalidate();
+                }
+            }
+        }
 
         #endregion
 
@@ -444,8 +462,10 @@ namespace WinPaletter.UI.Simulation
                     }
             }
 
-            BackColor = BK;
-            G.Clear(BK);
+            using (SolidBrush br = new(Color.FromArgb(alpha, BK)))
+            {
+                G.FillRectangle(br, new Rectangle(0,0, Width, Height));
+            }
 
             if (!CustomTerminal)
             {
@@ -479,23 +499,23 @@ namespace WinPaletter.UI.Simulation
 
             if (!Raster)
             {
-                using (SolidBrush br = new(FC))
+                using (SolidBrush br = new(Color.FromArgb(alpha, FC)))
                 {
                     G.DrawString(S, F, br, RectCMD.Location);
                 }
 
-                using (SolidBrush br = new(PCB))
+                using (SolidBrush br = new(Color.FromArgb(alpha, PCB)))
                 {
                     G.FillRectangle(br, RectMiddle);
                 }
-                using (Pen P = new(PCF))
+                using (Pen P = new(Color.FromArgb(alpha, PCF)))
                 {
                     G.DrawRectangle(P, RectMiddleBorder.X, RectMiddleBorder.Y, RectMiddleBorder.Width, RectMiddleBorder.Height);
                 }
 
                 using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                 {
-                    using (SolidBrush br = new(PCF))
+                    using (SolidBrush br = new(Color.FromArgb(alpha, PCF)))
                     {
                         G.DrawString(Program.Lang.Strings.Aspects.Consoles.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, sf);
                     }
@@ -665,21 +685,21 @@ namespace WinPaletter.UI.Simulation
 
                 }
 
-                using (Bitmap b = i0.ReplaceColor(Color.FromArgb(204, 204, 204), FC)) { G.DrawImage(b, new Point(0, 1)); }
+                using (Bitmap b = i0.ReplaceColor(Color.FromArgb(204, 204, 204), Color.FromArgb(alpha, FC))) { G.DrawImage(b, new Point(0, 1)); }
 
                 RectMiddle = new(Rect.X + (Rect.Width - pW) / 2f, Rect.Y + (Rect.Height - 36) / 2f, pW, pH);
                 RectMiddleBorder = new(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2);
 
-                using (SolidBrush br = new(PCB))
+                using (SolidBrush br = new(Color.FromArgb(alpha, PCB)))
                 {
                     G.FillRectangle(br, RectMiddle);
                 }
-                using (Pen P = new(PCF))
+                using (Pen P = new(Color.FromArgb(alpha, PCF)))
                 {
                     G.DrawRectangle(P, RectMiddleBorder.X, RectMiddleBorder.Y, RectMiddleBorder.Width, RectMiddleBorder.Height);
                 }
 
-                using (Bitmap b = i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF))
+                using (Bitmap b = i1.ReplaceColor(Color.FromArgb(204, 204, 204), Color.FromArgb(alpha, PCF)))
                 {
                     G.DrawImage(b, new Point((int)Math.Round(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2d), (int)Math.Round(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2d)));
                 }

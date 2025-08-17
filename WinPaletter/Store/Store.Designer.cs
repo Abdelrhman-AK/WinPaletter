@@ -748,7 +748,7 @@ namespace WinPaletter
             this.retroDesktopColors1.WindowFrame = System.Drawing.Color.Empty;
             this.retroDesktopColors1.WindowText = System.Drawing.Color.Empty;
             // 
-            // CMD1
+            // CMD_Preview
             // 
             this.CMD1.CMD_ColorTable00 = System.Drawing.Color.Empty;
             this.CMD1.CMD_ColorTable01 = System.Drawing.Color.Empty;

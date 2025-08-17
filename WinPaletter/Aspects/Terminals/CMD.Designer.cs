@@ -114,7 +114,7 @@ namespace WinPaletter
             this.ColorTable11 = new WinPaletter.UI.Controllers.ColorItem();
             this.GroupBox8 = new WinPaletter.UI.WP.GroupBox();
             this.Button4 = new WinPaletter.UI.WP.Button();
-            this.CMD1 = new WinPaletter.UI.Simulation.WinCMD();
+            this.CMD_Preview = new WinPaletter.UI.Simulation.WinCMD();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
@@ -1239,7 +1239,7 @@ namespace WinPaletter
             this.GroupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox8.Controls.Add(this.Button4);
-            this.GroupBox8.Controls.Add(this.CMD1);
+            this.GroupBox8.Controls.Add(this.CMD_Preview);
             this.GroupBox8.Location = new System.Drawing.Point(611, 62);
             this.GroupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox8.Name = "GroupBox8";
@@ -1265,41 +1265,42 @@ namespace WinPaletter
             this.Button4.UseVisualStyleBackColor = false;
             this.Button4.Click += new System.EventHandler(this.Button4_Click);
             // 
-            // CMD1
+            // CMD_Preview
             // 
-            this.CMD1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.CMD_Preview.Alpha = 255;
+            this.CMD_Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CMD1.BackColor = System.Drawing.Color.Black;
-            this.CMD1.CMD_ColorTable00 = System.Drawing.Color.Black;
-            this.CMD1.CMD_ColorTable01 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable02 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable03 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable04 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable05 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable06 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable07 = System.Drawing.Color.White;
-            this.CMD1.CMD_ColorTable08 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable09 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable10 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable11 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable12 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable13 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable14 = System.Drawing.Color.Empty;
-            this.CMD1.CMD_ColorTable15 = System.Drawing.Color.White;
-            this.CMD1.CMD_PopupBackground = 5;
-            this.CMD1.CMD_PopupForeground = 15;
-            this.CMD1.CMD_ScreenColorsBackground = 0;
-            this.CMD1.CMD_ScreenColorsForeground = 7;
-            this.CMD1.CustomTerminal = false;
-            this.CMD1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD1.Location = new System.Drawing.Point(3, 4);
-            this.CMD1.Name = "CMD1";
-            this.CMD1.PowerShell = false;
-            this.CMD1.Raster = false;
-            this.CMD1.RasterSize = WinPaletter.UI.Simulation.WinCMD.Raster_Sizes._8x12;
-            this.CMD1.Size = new System.Drawing.Size(465, 271);
-            this.CMD1.TabIndex = 90;
+            this.CMD_Preview.BackColor = System.Drawing.Color.Transparent;
+            this.CMD_Preview.CMD_ColorTable00 = System.Drawing.Color.Black;
+            this.CMD_Preview.CMD_ColorTable01 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable02 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable03 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable04 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable05 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable06 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable07 = System.Drawing.Color.White;
+            this.CMD_Preview.CMD_ColorTable08 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable09 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable10 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable11 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable12 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable13 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable14 = System.Drawing.Color.Empty;
+            this.CMD_Preview.CMD_ColorTable15 = System.Drawing.Color.White;
+            this.CMD_Preview.CMD_PopupBackground = 5;
+            this.CMD_Preview.CMD_PopupForeground = 15;
+            this.CMD_Preview.CMD_ScreenColorsBackground = 0;
+            this.CMD_Preview.CMD_ScreenColorsForeground = 7;
+            this.CMD_Preview.CustomTerminal = false;
+            this.CMD_Preview.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CMD_Preview.Location = new System.Drawing.Point(3, 4);
+            this.CMD_Preview.Name = "CMD_Preview";
+            this.CMD_Preview.PowerShell = false;
+            this.CMD_Preview.Raster = false;
+            this.CMD_Preview.RasterSize = WinPaletter.UI.Simulation.WinCMD.Raster_Sizes._8x12;
+            this.CMD_Preview.Size = new System.Drawing.Size(465, 271);
+            this.CMD_Preview.TabIndex = 90;
             // 
             // TabControl1
             // 
@@ -1761,7 +1762,7 @@ namespace WinPaletter
             // 
             this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice;
             this.alertBox1.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox1.CenterText = false;
+            this.alertBox1.CenterText = true;
             this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1772,7 +1773,7 @@ namespace WinPaletter
             this.alertBox1.TabIndex = 208;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = "Cursor color and style settings are applicable for Windows 10 version 1909 and la" +
-    "ter.";
+    "ter";
             // 
             // groupBox7
             // 
@@ -1851,11 +1852,12 @@ namespace WinPaletter
             this.CMD_OpacityBar.Location = new System.Drawing.Point(162, 12);
             this.CMD_OpacityBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CMD_OpacityBar.Maximum = 255;
-            this.CMD_OpacityBar.Minimum = 0;
+            this.CMD_OpacityBar.Minimum = 20;
             this.CMD_OpacityBar.Name = "CMD_OpacityBar";
             this.CMD_OpacityBar.Size = new System.Drawing.Size(312, 24);
             this.CMD_OpacityBar.TabIndex = 134;
             this.CMD_OpacityBar.Value = 20;
+            this.CMD_OpacityBar.ValueChanged += new System.EventHandler(this.CMD_OpacityBar_ValueChanged);
             // 
             // groupBox11
             // 
@@ -1966,7 +1968,7 @@ namespace WinPaletter
             // 
             this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice;
             this.alertBox2.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox2.CenterText = false;
+            this.alertBox2.CenterText = true;
             this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -1976,7 +1978,7 @@ namespace WinPaletter
             this.alertBox2.Size = new System.Drawing.Size(485, 32);
             this.alertBox2.TabIndex = 211;
             this.alertBox2.TabStop = false;
-            this.alertBox2.Text = "Tweaks are available for Windows 10 version 1909 and later.";
+            this.alertBox2.Text = "Tweaks are available for Windows 10 version 1909 and later";
             // 
             // CMD
             // 
@@ -2077,7 +2079,6 @@ namespace WinPaletter
         internal Label Label20;
         internal Label CMD_PopupForegroundLbl;
         internal Label CMD_PopupBackgroundLbl;
-        internal UI.Simulation.WinCMD CMD1;
         internal UI.WP.GroupBox GroupBox8;
         internal Label CMD_AccentForegroundLbl;
         internal Label CMD_AccentBackgroundLbl;
@@ -2164,5 +2165,6 @@ namespace WinPaletter
         internal UI.WP.Toggle CMD_EnhancedTerminal;
         private UI.WP.AlertBox alertBox1;
         private UI.WP.AlertBox alertBox2;
+        public UI.Simulation.WinCMD CMD_Preview;
     }
 }

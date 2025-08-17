@@ -32,7 +32,7 @@ namespace WinPaletter.Theme
             CMD.ScreenColorsForeground = 7;
             CMD.ScreenColorsBackground = 0;
             CMD.FaceName = "Consolas";
-            //CMD.FontSize = 18 * 65536;
+            CMD.PixelWidth = 18;
             CMD.FontRaster = false;
             CMD.W10_1909_ForceV2 = true;
 
@@ -45,9 +45,9 @@ namespace WinPaletter.Theme
             PS86.ScreenColorsForeground = 6;
             PS86.ScreenColorsBackground = 5;
             PS86.FaceName = "Consolas";
-            //PS86.FontSize = 17 * 65536;
+            PS86.PixelWidth = 17;
             PS86.FontRaster = false;
-            PS86.W10_1909_ForceV2 = true;
+            CMD.W10_1909_ForceV2 = true;
 
             ref Structures.Console PS64 = ref TM.PowerShellx64;
             PS64.Enabled = true;
@@ -58,9 +58,9 @@ namespace WinPaletter.Theme
             PS64.ScreenColorsForeground = 6;
             PS64.ScreenColorsBackground = 5;
             PS64.FaceName = "Consolas";
-            //PS64.FontSize = 17 * 65536;
+            PS64.PixelWidth = 17;
             PS64.FontRaster = false;
-            PS64.W10_1909_ForceV2 = true;
+            CMD.W10_1909_ForceV2 = true;
 
             ref Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
             MetricsFonts.Enabled = true;

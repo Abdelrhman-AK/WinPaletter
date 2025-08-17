@@ -97,6 +97,16 @@ namespace WinPaletter
                     {
                         Forms.IconsStudio.pnl_preview.BackgroundImage = wall;
                     }
+
+                    if (Application.OpenForms.OfType<CMD>().Count() > 0)
+                    {
+                        Forms.CMD.CMD_Preview.BackgroundImage = wall;
+                    }
+
+                    if (Application.OpenForms.OfType<ExternalTerminal>().Count() > 0)
+                    {
+                        Forms.ExternalTerminal.CMD_Preview.BackgroundImage = wall;
+                    }
                 });
             });
 
