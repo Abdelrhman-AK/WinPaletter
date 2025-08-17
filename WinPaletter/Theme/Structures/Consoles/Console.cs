@@ -83,8 +83,11 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Use raster (pixelated/retro) font</summary>
         public bool FontRaster = false;
 
-        /// <summary>Console font size or raster console screen size if <see cref="FontRaster"/> is true </summary>
-        public int FontSize = 18 * 65536;
+        /// <summary>Console font height</summary>
+        public int PixelHeight = 18;
+
+        /// <summary>Console font width</summary>
+        public int PixelWidth = 0;
 
         /// <summary>Console font weight</summary>
         public int FontWeight = 400;
@@ -205,16 +208,27 @@ namespace WinPaletter.Theme.Structures
             }
 
             temp = GetReg(RegAddress, "FontFamily", !@default.FontRaster ? 54 : 1);
-            FontRaster = (int)temp == 1 | (int)temp == 0 | (int)temp == 48;
-            if (FaceName.ToLower() == "terminal")
-                FontRaster = true;
+            int fontFamily = (int)temp; // registry value
+            const int TMPF_TRUETYPE = 0x04;
 
-            temp = GetReg(RegAddress, "FontSize", @default.FontSize);
+            FontRaster = (fontFamily & TMPF_TRUETYPE) == 0;
+
+            // Optional: always treat "Terminal" as raster bitmap
+            if (FaceName.Equals("Terminal", StringComparison.OrdinalIgnoreCase)) FontRaster = true;
+
+            temp = GetReg(RegAddress, "FontSize", (@default.PixelHeight << 16) | (0 & 0xFFFF));
+
             if ((int)temp == 0 & !FontRaster)
-                FontSize = @default.FontSize;
+            {
+                PixelHeight = @default.PixelHeight;
+                PixelWidth = @default.PixelWidth;
+            }
             else
-                FontSize = Convert.ToInt32(temp);
-
+            {
+                PixelHeight = ((int)temp >> 16) & 0xFFFF;
+                PixelWidth = (int)temp & 0xFFFF;
+            }
+                
             FontWeight = Convert.ToInt32(GetReg(RegAddress, "FontWeight", 400));
 
             if (OS.W10_1909)
@@ -236,69 +250,75 @@ namespace WinPaletter.Theme.Structures
         /// <param name="RegKey">Registry key name under HKEY_CURRENT_USER\Console or HKEY_USERS\...\Console</param>
         /// <param name="Console">Console structure to be saved into registry</param>
         /// <param name="treeView">TreeView used as a theme log</param>
-        public static void Save_Console_To_Registry(string scopeReg, string RegKey, Console Console, TreeView treeView = null)
+        /// <param name="Signature_Of_Enable">Name of console (for example: Terminal_CMD_Enabled). Used for getting Enabled property</param>
+        public static void Save_Console_To_Registry(string scopeReg, string RegKey, string Signature_Of_Enable, Console Console, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving console settings into registry.");
+            EditReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, Console.Enabled);
 
-            string RegAddress = $@"{scopeReg}\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
-
-            try
+            if (Console.Enabled)
             {
-                if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving console settings into registry.");
+
+                string RegAddress = $@"{scopeReg}\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
+
+                try
                 {
-                    if (!string.IsNullOrEmpty(RegKey)) Registry.CurrentUser.CreateSubKey($@"Console\{RegKey}", true).Close();
+                    if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
+                    {
+                        if (!string.IsNullOrEmpty(RegKey)) Registry.CurrentUser.CreateSubKey($@"Console\{RegKey}", true).Close();
+                    }
                 }
+                catch { } // Ignore creating a registry key
+
+                EditReg(treeView, RegAddress, "EnableColorSelection", 1);
+
+                // Windows stores color values in reverse order, so we need to reverse them
+                EditReg(treeView, RegAddress, "ColorTable00", Color.FromArgb(0, Console.ColorTable00.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable01", Color.FromArgb(0, Console.ColorTable01.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable02", Color.FromArgb(0, Console.ColorTable02.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable03", Color.FromArgb(0, Console.ColorTable03.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable04", Color.FromArgb(0, Console.ColorTable04.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable05", Color.FromArgb(0, Console.ColorTable05.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable06", Color.FromArgb(0, Console.ColorTable06.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable07", Color.FromArgb(0, Console.ColorTable07.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable08", Color.FromArgb(0, Console.ColorTable08.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable09", Color.FromArgb(0, Console.ColorTable09.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable10", Color.FromArgb(0, Console.ColorTable10.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable11", Color.FromArgb(0, Console.ColorTable11.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable12", Color.FromArgb(0, Console.ColorTable12.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable13", Color.FromArgb(0, Console.ColorTable13.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable14", Color.FromArgb(0, Console.ColorTable14.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "ColorTable15", Color.FromArgb(0, Console.ColorTable15.Reverse()).ToArgb());
+                EditReg(treeView, RegAddress, "PopupColors", Convert.ToInt32($"{Console.PopupBackground:X}{Console.PopupForeground:X}", 16));
+                EditReg(treeView, RegAddress, "ScreenColors", Convert.ToInt32($"{Console.ScreenColorsBackground:X}{Console.ScreenColorsForeground:X}", 16));
+                EditReg(treeView, RegAddress, "CursorSize", Console.CursorSize);
+
+                if (Console.FontRaster)
+                {
+                    EditReg(treeView, RegAddress, "FaceName", "Terminal", RegistryValueKind.String);
+                    EditReg(treeView, RegAddress, "FontFamily", 48);
+                }
+                else
+                {
+                    EditReg(treeView, RegAddress, "FaceName", Console.FaceName, RegistryValueKind.String);
+                    EditReg(treeView, RegAddress, "FontFamily", 54);
+                }
+
+                EditReg(treeView, RegAddress, "FontSize", (Console.PixelHeight << 16) | (Console.PixelWidth & 0xFFFF));
+                EditReg(treeView, RegAddress, "FontWeight", Console.FontWeight);
+
+                if (OS.W10_1909)
+                {
+                    EditReg(treeView, RegAddress, "CursorColor", Color.FromArgb(0, Console.W10_1909_CursorColor.Reverse()).ToArgb());
+                    EditReg(treeView, RegAddress, "CursorType", Console.W10_1909_CursorType);
+                    EditReg(treeView, RegAddress, "WindowAlpha", Console.W10_1909_WindowAlpha);
+                    EditReg(treeView, RegAddress, "ForceV2", Console.W10_1909_ForceV2 ? 1 : 0);
+                    EditReg(treeView, RegAddress, "LineSelection", Console.W10_1909_LineSelection ? 1 : 0);
+                    EditReg(treeView, RegAddress, "TerminalScrolling", Console.W10_1909_TerminalScrolling ? 1 : 0);
+                }
+
+                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", Console.FaceName, RegistryValueKind.String);
             }
-            catch { } // Ignore creating a registry key
-
-            EditReg(treeView, RegAddress, "EnableColorSelection", 1);
-
-            // Windows stores color values in reverse order, so we need to reverse them
-            EditReg(treeView, RegAddress, "ColorTable00", Color.FromArgb(0, Console.ColorTable00.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable01", Color.FromArgb(0, Console.ColorTable01.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable02", Color.FromArgb(0, Console.ColorTable02.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable03", Color.FromArgb(0, Console.ColorTable03.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable04", Color.FromArgb(0, Console.ColorTable04.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable05", Color.FromArgb(0, Console.ColorTable05.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable06", Color.FromArgb(0, Console.ColorTable06.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable07", Color.FromArgb(0, Console.ColorTable07.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable08", Color.FromArgb(0, Console.ColorTable08.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable09", Color.FromArgb(0, Console.ColorTable09.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable10", Color.FromArgb(0, Console.ColorTable10.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable11", Color.FromArgb(0, Console.ColorTable11.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable12", Color.FromArgb(0, Console.ColorTable12.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable13", Color.FromArgb(0, Console.ColorTable13.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable14", Color.FromArgb(0, Console.ColorTable14.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "ColorTable15", Color.FromArgb(0, Console.ColorTable15.Reverse()).ToArgb());
-            EditReg(treeView, RegAddress, "PopupColors", Convert.ToInt32($"{Console.PopupBackground:X}{Console.PopupForeground:X}", 16));
-            EditReg(treeView, RegAddress, "ScreenColors", Convert.ToInt32($"{Console.ScreenColorsBackground:X}{Console.ScreenColorsForeground:X}", 16));
-            EditReg(treeView, RegAddress, "CursorSize", Console.CursorSize);
-
-            if (Console.FontRaster)
-            {
-                EditReg(treeView, RegAddress, "FaceName", "Terminal", RegistryValueKind.String);
-                EditReg(treeView, RegAddress, "FontFamily", 48);
-            }
-            else
-            {
-                EditReg(treeView, RegAddress, "FaceName", Console.FaceName, RegistryValueKind.String);
-                EditReg(treeView, RegAddress, "FontFamily", Console.FontRaster ? 1 : 54);
-            }
-
-            EditReg(treeView, RegAddress, "FontSize", Console.FontSize);
-            EditReg(treeView, RegAddress, "FontWeight", Console.FontWeight);
-
-            if (OS.W10_1909)
-            {
-                EditReg(treeView, RegAddress, "CursorColor", Color.FromArgb(0, Console.W10_1909_CursorColor.Reverse()).ToArgb());
-                EditReg(treeView, RegAddress, "CursorType", Console.W10_1909_CursorType);
-                EditReg(treeView, RegAddress, "WindowAlpha", Console.W10_1909_WindowAlpha);
-                EditReg(treeView, RegAddress, "ForceV2", Console.W10_1909_ForceV2 ? 1 : 0);
-                EditReg(treeView, RegAddress, "LineSelection", Console.W10_1909_LineSelection ? 1 : 0);
-                EditReg(treeView, RegAddress, "TerminalScrolling", Console.W10_1909_TerminalScrolling ? 1 : 0);
-            }
-
-            EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", Console.FaceName, RegistryValueKind.String);
         }
 
         /// <summary>

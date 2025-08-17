@@ -8,9 +8,16 @@
             {
                 public partial class Consoles_Cls
                 {
-                    public string Open_Testing_CMD { get; set; } = "Open Command Prompt for testing.";
-                    public string Open_Testing_PowerShellx86 { get; set; } = "Open PowerShell x86 for testing.";
-                    public string Open_Testing_PowerShellx64 { get; set; } = "Open PowerShell x64 for testing.";
+                    public string Foregrounds { get; set; } = "Enter foreground color (hex 0-F or decimal 0-15)";
+                    public string Backgrounds { get; set; } = "Enter background color (hex 0-F or decimal 0-15)";
+                    public string CurrentForeground { get; set; } = "Current foreground";
+                    public string CurrentBackground { get; set; } = "Current background";
+                    public string ColorName { get; set; } = "Color name";
+                    public string Foregrounds_PS { get; set; } = "Enter new foreground color (or Enter to exit)";
+                    public string Backgrounds_PS { get; set; } = "Enter new background color (or Enter to exit)";
+                    public string InvalidColors { get; set; } = "Invalid color(s). Please try again.";
+                    public string OptTitleRefresh { get; set; } = "Optional: refreshes window title";
+                    public string Popup_Note { get; set; } = "NOTE: Popup colors can't be shown live here. You must apply the colors first by WinPaletter before testing them. Press F2 to test them.";
                     public string CMDSimulator_Alert0 { get; set; } = "This is just a preview of your custom terminal.";
                     public string CMDSimulator_Alert1 { get; set; } = "*Note: Raster Font will look different from the preview.";
                     public string CMDSimulator_ThisIsAPopUp { get; set; } = "This is a pop-up.";

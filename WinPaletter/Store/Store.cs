@@ -72,7 +72,7 @@ namespace WinPaletter
         /// <param name="Console"></param>
         /// <param name="PS"></param>
         public void ApplyCMDPreview(UI.Simulation.WinCMD CMD, Theme.Structures.Console Console, bool PS)
-        {
+        { 
             CMD.CMD_ColorTable00 = Console.ColorTable00;
             CMD.CMD_ColorTable01 = Console.ColorTable01;
             CMD.CMD_ColorTable02 = Console.ColorTable02;
@@ -96,82 +96,34 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                Font temp = Font.FromLogFont(new GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight });
-                CMD.Font = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
+                GDI32.LogFont logFont = new()
+                {
+                    lfFaceName = Console.FaceName,
+                    lfHeight = -Console.PixelHeight,
+                    lfWidth = Console.PixelWidth,
+                    lfWeight = Console.FontWeight
+                };
+
+                CMD.Font = Font.FromLogFont(logFont);
             }
 
             CMD.PowerShell = PS;
             CMD.Raster = Console.FontRaster;
-            switch (Console.FontSize)
-            {
-                case 393220:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6;
-                        break;
-                    }
 
-                case 524294:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
-                        break;
-                    }
-
-
-                case 524296:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
-                        break;
-                    }
-
-                case 524304:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8;
-                        break;
-                    }
-
-                case 786437:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12;
-                        break;
-                    }
-
-                case 786439:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12;
-                        break;
-                    }
-
-                case 0:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
-                        break;
-                    }
-
-                case 786448:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12;
-                        break;
-                    }
-
-                case 1048588:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16;
-                        break;
-                    }
-
-                case 1179658:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18;
-                        break;
-                    }
-
-                default:
-                    {
-                        CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
-                        break;
-                    }
-
-            }
+            string key = $"{Console.PixelWidth}x{Console.PixelHeight}";
+            if (key == "4x6") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6;
+            else if (key == "6x8") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+            else if (key == "6x9") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+            else if (key == "8x8") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+            else if (key == "8x9") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+            else if (key == "16x8") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8;
+            else if (key == "5x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12;
+            else if (key == "7x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12;
+            else if (key == "8x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
+            else if (key == "16x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12;
+            else if (key == "12x16") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16;
+            else if (key == "10x18") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18;
+            else CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12; // default
 
             CMD.Refresh();
         }

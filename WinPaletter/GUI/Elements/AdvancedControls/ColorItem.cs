@@ -118,7 +118,6 @@ namespace WinPaletter.UI.Controllers
         {
             if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
             {
-
                 BeforeDropColor = BackColor;
                 BeforeDropMousePosition = PointToClient(MousePosition);
                 Timer2_factor = 0;

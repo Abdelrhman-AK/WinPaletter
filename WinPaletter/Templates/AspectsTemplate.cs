@@ -483,7 +483,7 @@ namespace WinPaletter
         /// <summary>
         /// Flag that controls if form can be dragged over by a ColorItem
         /// </summary>
-        public bool CanDragOver = false;
+        public bool CanDragOver = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether the item can be opened in the Control Panel.

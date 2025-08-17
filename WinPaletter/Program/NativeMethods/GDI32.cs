@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.NativeMethods
 {
@@ -288,57 +289,6 @@ namespace WinPaletter.NativeMethods
             /// </summary>
             FF_DECORATIVE = 5 << 4
         }
-
-        /// <summary>
-        /// Create a compatible device context (DC) for the specified device context (DC).
-        /// </summary>
-        /// <param name="hdc"></param>
-        /// <returns></returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
-        public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
-
-        /// <summary>
-        /// Creates a bitmap compatible with the specified device context (DC).
-        /// </summary>
-        /// <param name="hdc"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <returns></returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
-        public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
-
-        /// <summary>
-        /// Selects an object into the specified device context (DC). The object can be a bitmap, pen, brush, font, region, or palette.
-        /// </summary>
-        /// <param name="hdc"></param>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
-        public static extern bool SelectObject(IntPtr hdc, IntPtr obj);
-
-        /// <summary>
-        /// Releases the specified device context (DC) and any associated resources.
-        /// </summary>
-        /// <param name="hObject"></param>
-        /// <returns></returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
-        public static extern bool DeleteObject(IntPtr hObject);
-
-        /// <summary>
-        /// Copies a bitmap from one device context (DC) to another.
-        /// </summary>
-        /// <param name="hdcDest"></param>
-        /// <param name="nXDest"></param>
-        /// <param name="nYDest"></param>
-        /// <param name="nWidth"></param>
-        /// <param name="nHeight"></param>
-        /// <param name="hdcSource"></param>
-        /// <param name="nXSrc"></param>
-        /// <param name="nYSrc"></param>
-        /// <param name="dwRop"></param>
-        /// <returns></returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
-        public static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSource, int nXSrc, int nYSrc, uint dwRop);
 
         /// <summary>
         /// Adds a font resource to the system. The font resource is specified by the contents of a block of data.

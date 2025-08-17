@@ -65,6 +65,7 @@
                 public string RestorePoint_FirstTime_DialogTitle { get; set; } = "First time System Restore Point";
                 public string RestorePoint_FirstTime_Desc { get; set; } = "And that is to ensure you can revert changes if needed.";
                 public string Help { get; set; } = "Help (from online GitHub Wiki)";
+                public string ThanksTo { get; set; } = "Thanks to";
             }
         }
     }

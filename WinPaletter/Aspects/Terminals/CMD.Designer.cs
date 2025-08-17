@@ -38,7 +38,6 @@ namespace WinPaletter
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CMD));
             this.ImageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.PictureBox15 = new System.Windows.Forms.PictureBox();
             this.CMD_AccentBackgroundLbl = new System.Windows.Forms.Label();
             this.CMD_PopupForegroundLbl = new System.Windows.Forms.Label();
             this.Label50 = new System.Windows.Forms.Label();
@@ -51,16 +50,11 @@ namespace WinPaletter
             this.Label17 = new System.Windows.Forms.Label();
             this.Label49 = new System.Windows.Forms.Label();
             this.CMD_PopupForegroundBar = new WinPaletter.UI.WP.TrackBar();
-            this.Label6 = new System.Windows.Forms.Label();
             this.PictureBox10 = new System.Windows.Forms.PictureBox();
             this.PictureBox13 = new System.Windows.Forms.PictureBox();
-            this.CMD_LineSelection = new WinPaletter.UI.WP.CheckBox();
-            this.CMD_EnhancedTerminal = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox12 = new System.Windows.Forms.PictureBox();
-            this.CMD_TerminalScrolling = new WinPaletter.UI.WP.CheckBox();
             this.PictureBox11 = new System.Windows.Forms.PictureBox();
             this.Label57 = new System.Windows.Forms.Label();
-            this.Label5 = new System.Windows.Forms.Label();
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
             this.CMD_CursorStyle = new WinPaletter.UI.WP.ComboBox();
             this.Label60 = new System.Windows.Forms.Label();
@@ -86,9 +80,7 @@ namespace WinPaletter
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
             this.Label59 = new System.Windows.Forms.Label();
             this.RasterList = new WinPaletter.UI.WP.ComboBox();
-            this.PictureBox14 = new System.Windows.Forms.PictureBox();
             this.Label31 = new System.Windows.Forms.Label();
-            this.Label19 = new System.Windows.Forms.Label();
             this.ColorTable00 = new WinPaletter.UI.Controllers.ColorItem();
             this.Label7 = new System.Windows.Forms.Label();
             this.Label32 = new System.Windows.Forms.Label();
@@ -125,19 +117,51 @@ namespace WinPaletter
             this.CMD1 = new WinPaletter.UI.Simulation.WinCMD();
             this.TabControl1 = new WinPaletter.UI.WP.TabControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
-            this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
+            this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.TabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
+            this.groupBox6 = new WinPaletter.UI.WP.GroupBox();
+            this.CMD_FontPxHeight = new WinPaletter.UI.Controllers.TrackBarX();
+            this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
+            this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.toggle1 = new WinPaletter.UI.WP.Toggle();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.separatorH2 = new WinPaletter.UI.WP.SeparatorH();
-            this.CMD_FontSizeBar = new WinPaletter.UI.Controllers.TrackBarX();
+            this.pictureBox15 = new System.Windows.Forms.PictureBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.groupBox15 = new WinPaletter.UI.WP.GroupBox();
             this.TabPage3 = new System.Windows.Forms.TabPage();
+            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
             this.CMD_CursorSizeBar = new WinPaletter.UI.Controllers.TrackBarX();
-            this.Label3 = new System.Windows.Forms.Label();
             this.TabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox12 = new WinPaletter.UI.WP.GroupBox();
             this.CMD_OpacityBar = new WinPaletter.UI.Controllers.TrackBarX();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).BeginInit();
+            this.groupBox11 = new WinPaletter.UI.WP.GroupBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.CMD_TerminalScrolling = new WinPaletter.UI.WP.Toggle();
+            this.groupBox10 = new WinPaletter.UI.WP.GroupBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.CMD_LineSelection = new WinPaletter.UI.WP.Toggle();
+            this.groupBox9 = new WinPaletter.UI.WP.GroupBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.CMD_EnhancedTerminal = new WinPaletter.UI.WP.Toggle();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).BeginInit();
@@ -151,20 +175,34 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).BeginInit();
             this.GroupBox8.SuspendLayout();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.TabPage2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
+            this.groupBox15.SuspendLayout();
             this.TabPage3.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.TabPage4.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.titlebarExtender1.Size = new System.Drawing.Size(922, 52);
+            this.titlebarExtender1.Size = new System.Drawing.Size(1096, 52);
             // 
             // ImageList1
             // 
@@ -174,197 +212,211 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(1, "1.png");
             this.ImageList1.Images.SetKeyName(2, "3.png");
             // 
-            // PictureBox15
-            // 
-            this.PictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox15.Image")));
-            this.PictureBox15.Location = new System.Drawing.Point(6, 294);
-            this.PictureBox15.Name = "PictureBox15";
-            this.PictureBox15.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox15.TabIndex = 202;
-            this.PictureBox15.TabStop = false;
-            // 
             // CMD_AccentBackgroundLbl
             // 
+            this.CMD_AccentBackgroundLbl.AllowDrop = true;
             this.CMD_AccentBackgroundLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_AccentBackgroundLbl.BackColor = System.Drawing.Color.Gray;
             this.CMD_AccentBackgroundLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD_AccentBackgroundLbl.Location = new System.Drawing.Point(256, 369);
+            this.CMD_AccentBackgroundLbl.Location = new System.Drawing.Point(426, 84);
             this.CMD_AccentBackgroundLbl.Name = "CMD_AccentBackgroundLbl";
             this.CMD_AccentBackgroundLbl.Size = new System.Drawing.Size(50, 22);
             this.CMD_AccentBackgroundLbl.TabIndex = 88;
             this.CMD_AccentBackgroundLbl.Text = "0";
             this.CMD_AccentBackgroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CMD_AccentBackgroundLbl.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_AccentBackgroundLbl.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // CMD_PopupForegroundLbl
             // 
+            this.CMD_PopupForegroundLbl.AllowDrop = true;
             this.CMD_PopupForegroundLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_PopupForegroundLbl.BackColor = System.Drawing.Color.Gray;
             this.CMD_PopupForegroundLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD_PopupForegroundLbl.Location = new System.Drawing.Point(257, 416);
+            this.CMD_PopupForegroundLbl.Location = new System.Drawing.Point(427, 131);
             this.CMD_PopupForegroundLbl.Name = "CMD_PopupForegroundLbl";
             this.CMD_PopupForegroundLbl.Size = new System.Drawing.Size(50, 22);
             this.CMD_PopupForegroundLbl.TabIndex = 87;
             this.CMD_PopupForegroundLbl.Text = "0";
             this.CMD_PopupForegroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CMD_PopupForegroundLbl.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_PopupForegroundLbl.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // Label50
             // 
+            this.Label50.AllowDrop = true;
             this.Label50.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label50.BackColor = System.Drawing.Color.Transparent;
             this.Label50.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label50.Location = new System.Drawing.Point(5, 369);
+            this.Label50.Location = new System.Drawing.Point(9, 84);
             this.Label50.Name = "Label50";
-            this.Label50.Size = new System.Drawing.Size(248, 22);
+            this.Label50.Size = new System.Drawing.Size(411, 22);
             this.Label50.TabIndex = 85;
             this.Label50.Text = "Background:";
             this.Label50.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label50.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.Label50.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // CMD_AccentForegroundLbl
             // 
+            this.CMD_AccentForegroundLbl.AllowDrop = true;
             this.CMD_AccentForegroundLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_AccentForegroundLbl.BackColor = System.Drawing.Color.Gray;
             this.CMD_AccentForegroundLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD_AccentForegroundLbl.Location = new System.Drawing.Point(256, 322);
+            this.CMD_AccentForegroundLbl.Location = new System.Drawing.Point(426, 37);
             this.CMD_AccentForegroundLbl.Name = "CMD_AccentForegroundLbl";
             this.CMD_AccentForegroundLbl.Size = new System.Drawing.Size(50, 22);
             this.CMD_AccentForegroundLbl.TabIndex = 87;
             this.CMD_AccentForegroundLbl.Text = "0";
             this.CMD_AccentForegroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CMD_AccentForegroundLbl.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_AccentForegroundLbl.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // CMD_PopupBackgroundLbl
             // 
+            this.CMD_PopupBackgroundLbl.AllowDrop = true;
             this.CMD_PopupBackgroundLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_PopupBackgroundLbl.BackColor = System.Drawing.Color.Gray;
             this.CMD_PopupBackgroundLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD_PopupBackgroundLbl.Location = new System.Drawing.Point(257, 463);
+            this.CMD_PopupBackgroundLbl.Location = new System.Drawing.Point(427, 178);
             this.CMD_PopupBackgroundLbl.Name = "CMD_PopupBackgroundLbl";
             this.CMD_PopupBackgroundLbl.Size = new System.Drawing.Size(50, 22);
             this.CMD_PopupBackgroundLbl.TabIndex = 88;
             this.CMD_PopupBackgroundLbl.Text = "0";
             this.CMD_PopupBackgroundLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CMD_PopupBackgroundLbl.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_PopupBackgroundLbl.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // CMD_AccentBackgroundBar
             // 
+            this.CMD_AccentBackgroundBar.AllowDrop = true;
             this.CMD_AccentBackgroundBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_AccentBackgroundBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_AccentBackgroundBar.LargeChange = 10;
-            this.CMD_AccentBackgroundBar.Location = new System.Drawing.Point(10, 394);
+            this.CMD_AccentBackgroundBar.Location = new System.Drawing.Point(11, 109);
             this.CMD_AccentBackgroundBar.Maximum = 15;
             this.CMD_AccentBackgroundBar.Minimum = 0;
             this.CMD_AccentBackgroundBar.Name = "CMD_AccentBackgroundBar";
-            this.CMD_AccentBackgroundBar.Size = new System.Drawing.Size(300, 19);
+            this.CMD_AccentBackgroundBar.Size = new System.Drawing.Size(465, 19);
             this.CMD_AccentBackgroundBar.SmallChange = 1;
             this.CMD_AccentBackgroundBar.TabIndex = 86;
             this.CMD_AccentBackgroundBar.Value = 0;
             this.CMD_AccentBackgroundBar.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.CMD_AccentBackgroundBar_Scroll);
+            this.CMD_AccentBackgroundBar.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_AccentBackgroundBar.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // CMD_PopupBackgroundBar
             // 
+            this.CMD_PopupBackgroundBar.AllowDrop = true;
             this.CMD_PopupBackgroundBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_PopupBackgroundBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_PopupBackgroundBar.LargeChange = 10;
-            this.CMD_PopupBackgroundBar.Location = new System.Drawing.Point(10, 488);
+            this.CMD_PopupBackgroundBar.Location = new System.Drawing.Point(11, 203);
             this.CMD_PopupBackgroundBar.Maximum = 15;
             this.CMD_PopupBackgroundBar.Minimum = 0;
             this.CMD_PopupBackgroundBar.Name = "CMD_PopupBackgroundBar";
-            this.CMD_PopupBackgroundBar.Size = new System.Drawing.Size(300, 19);
+            this.CMD_PopupBackgroundBar.Size = new System.Drawing.Size(465, 19);
             this.CMD_PopupBackgroundBar.SmallChange = 1;
             this.CMD_PopupBackgroundBar.TabIndex = 86;
             this.CMD_PopupBackgroundBar.Value = 0;
             this.CMD_PopupBackgroundBar.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.CMD_PopupBackgroundBar_Scroll);
+            this.CMD_PopupBackgroundBar.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_PopupBackgroundBar.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // CMD_AccentForegroundBar
             // 
+            this.CMD_AccentForegroundBar.AllowDrop = true;
             this.CMD_AccentForegroundBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_AccentForegroundBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_AccentForegroundBar.LargeChange = 10;
-            this.CMD_AccentForegroundBar.Location = new System.Drawing.Point(10, 347);
+            this.CMD_AccentForegroundBar.Location = new System.Drawing.Point(11, 62);
             this.CMD_AccentForegroundBar.Maximum = 15;
             this.CMD_AccentForegroundBar.Minimum = 0;
             this.CMD_AccentForegroundBar.Name = "CMD_AccentForegroundBar";
-            this.CMD_AccentForegroundBar.Size = new System.Drawing.Size(300, 19);
+            this.CMD_AccentForegroundBar.Size = new System.Drawing.Size(465, 19);
             this.CMD_AccentForegroundBar.SmallChange = 1;
             this.CMD_AccentForegroundBar.TabIndex = 84;
             this.CMD_AccentForegroundBar.Value = 0;
             this.CMD_AccentForegroundBar.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.CMD_AccentForegroundBar_Scroll);
+            this.CMD_AccentForegroundBar.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_AccentForegroundBar.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // Label18
             // 
+            this.Label18.AllowDrop = true;
             this.Label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label18.BackColor = System.Drawing.Color.Transparent;
             this.Label18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label18.Location = new System.Drawing.Point(5, 463);
+            this.Label18.Location = new System.Drawing.Point(9, 178);
             this.Label18.Name = "Label18";
-            this.Label18.Size = new System.Drawing.Size(248, 22);
+            this.Label18.Size = new System.Drawing.Size(411, 22);
             this.Label18.TabIndex = 85;
             this.Label18.Text = "Pop-up background:";
             this.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label18.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.Label18.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // Label17
             // 
+            this.Label17.AllowDrop = true;
             this.Label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label17.BackColor = System.Drawing.Color.Transparent;
             this.Label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label17.Location = new System.Drawing.Point(5, 416);
+            this.Label17.Location = new System.Drawing.Point(9, 131);
             this.Label17.Name = "Label17";
-            this.Label17.Size = new System.Drawing.Size(248, 22);
+            this.Label17.Size = new System.Drawing.Size(411, 22);
             this.Label17.TabIndex = 83;
             this.Label17.Text = "Pop-up foreground:";
             this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label17.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.Label17.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // Label49
             // 
+            this.Label49.AllowDrop = true;
             this.Label49.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label49.BackColor = System.Drawing.Color.Transparent;
             this.Label49.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label49.Location = new System.Drawing.Point(5, 322);
+            this.Label49.Location = new System.Drawing.Point(9, 37);
             this.Label49.Name = "Label49";
-            this.Label49.Size = new System.Drawing.Size(248, 22);
+            this.Label49.Size = new System.Drawing.Size(411, 22);
             this.Label49.TabIndex = 83;
             this.Label49.Text = "Foreground:";
             this.Label49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Label49.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.Label49.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // CMD_PopupForegroundBar
             // 
+            this.CMD_PopupForegroundBar.AllowDrop = true;
             this.CMD_PopupForegroundBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_PopupForegroundBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_PopupForegroundBar.LargeChange = 10;
-            this.CMD_PopupForegroundBar.Location = new System.Drawing.Point(10, 441);
+            this.CMD_PopupForegroundBar.Location = new System.Drawing.Point(11, 156);
             this.CMD_PopupForegroundBar.Maximum = 15;
             this.CMD_PopupForegroundBar.Minimum = 0;
             this.CMD_PopupForegroundBar.Name = "CMD_PopupForegroundBar";
-            this.CMD_PopupForegroundBar.Size = new System.Drawing.Size(300, 19);
+            this.CMD_PopupForegroundBar.Size = new System.Drawing.Size(465, 19);
             this.CMD_PopupForegroundBar.SmallChange = 1;
             this.CMD_PopupForegroundBar.TabIndex = 84;
             this.CMD_PopupForegroundBar.Value = 0;
             this.CMD_PopupForegroundBar.Scroll += new WinPaletter.UI.WP.TrackBar.ScrollEventHandler(this.CommandPrompt_PopupForegroundBar_Scroll);
-            // 
-            // Label6
-            // 
-            this.Label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label6.BackColor = System.Drawing.Color.Transparent;
-            this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label6.Location = new System.Drawing.Point(36, 294);
-            this.Label6.Name = "Label6";
-            this.Label6.Size = new System.Drawing.Size(275, 24);
-            this.Label6.TabIndex = 84;
-            this.Label6.Text = "Accents:";
-            this.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CMD_PopupForegroundBar.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_AccentForegroundBar_DragDrop);
+            this.CMD_PopupForegroundBar.DragOver += new System.Windows.Forms.DragEventHandler(this.Label49_DragOver);
             // 
             // PictureBox10
             // 
+            this.PictureBox10.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox10.Image")));
-            this.PictureBox10.Location = new System.Drawing.Point(6, 6);
+            this.PictureBox10.Location = new System.Drawing.Point(9, 12);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
             this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -373,67 +425,31 @@ namespace WinPaletter
             // 
             // PictureBox13
             // 
+            this.PictureBox13.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox13.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox13.Image")));
-            this.PictureBox13.Location = new System.Drawing.Point(6, 96);
+            this.PictureBox13.Location = new System.Drawing.Point(9, 12);
             this.PictureBox13.Name = "PictureBox13";
             this.PictureBox13.Size = new System.Drawing.Size(24, 24);
             this.PictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox13.TabIndex = 126;
             this.PictureBox13.TabStop = false;
             // 
-            // CMD_LineSelection
-            // 
-            this.CMD_LineSelection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CMD_LineSelection.Checked = false;
-            this.CMD_LineSelection.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CMD_LineSelection.ForeColor = System.Drawing.Color.White;
-            this.CMD_LineSelection.Location = new System.Drawing.Point(36, 36);
-            this.CMD_LineSelection.Name = "CMD_LineSelection";
-            this.CMD_LineSelection.Size = new System.Drawing.Size(275, 24);
-            this.CMD_LineSelection.TabIndex = 122;
-            this.CMD_LineSelection.Text = "Line selection";
-            // 
-            // CMD_EnhancedTerminal
-            // 
-            this.CMD_EnhancedTerminal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CMD_EnhancedTerminal.Checked = false;
-            this.CMD_EnhancedTerminal.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CMD_EnhancedTerminal.ForeColor = System.Drawing.Color.White;
-            this.CMD_EnhancedTerminal.Location = new System.Drawing.Point(36, 6);
-            this.CMD_EnhancedTerminal.Name = "CMD_EnhancedTerminal";
-            this.CMD_EnhancedTerminal.Size = new System.Drawing.Size(275, 24);
-            this.CMD_EnhancedTerminal.TabIndex = 118;
-            this.CMD_EnhancedTerminal.Text = "Enhanced terminal";
-            // 
             // PictureBox12
             // 
+            this.PictureBox12.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
-            this.PictureBox12.Location = new System.Drawing.Point(6, 66);
+            this.PictureBox12.Location = new System.Drawing.Point(9, 12);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
             this.PictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox12.TabIndex = 125;
             this.PictureBox12.TabStop = false;
             // 
-            // CMD_TerminalScrolling
-            // 
-            this.CMD_TerminalScrolling.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CMD_TerminalScrolling.Checked = false;
-            this.CMD_TerminalScrolling.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CMD_TerminalScrolling.ForeColor = System.Drawing.Color.White;
-            this.CMD_TerminalScrolling.Location = new System.Drawing.Point(36, 66);
-            this.CMD_TerminalScrolling.Name = "CMD_TerminalScrolling";
-            this.CMD_TerminalScrolling.Size = new System.Drawing.Size(275, 24);
-            this.CMD_TerminalScrolling.TabIndex = 123;
-            this.CMD_TerminalScrolling.Text = "Terminal scrolling";
-            // 
             // PictureBox11
             // 
+            this.PictureBox11.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox11.Image")));
-            this.PictureBox11.Location = new System.Drawing.Point(6, 36);
+            this.PictureBox11.Location = new System.Drawing.Point(9, 12);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
             this.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -442,35 +458,20 @@ namespace WinPaletter
             // 
             // Label57
             // 
-            this.Label57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label57.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Label57.BackColor = System.Drawing.Color.Transparent;
             this.Label57.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label57.Location = new System.Drawing.Point(36, 96);
+            this.Label57.Location = new System.Drawing.Point(39, 12);
             this.Label57.Name = "Label57";
-            this.Label57.Size = new System.Drawing.Size(275, 24);
+            this.Label57.Size = new System.Drawing.Size(116, 24);
             this.Label57.TabIndex = 119;
             this.Label57.Text = "Window opacity:";
             this.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // Label5
-            // 
-            this.Label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label5.BackColor = System.Drawing.Color.Transparent;
-            this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label5.ForeColor = System.Drawing.Color.DarkOrange;
-            this.Label5.Location = new System.Drawing.Point(3, 455);
-            this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(311, 58);
-            this.Label5.TabIndex = 111;
-            this.Label5.Text = "Tweaks are available for Windows 10 version 1909 and later.";
-            this.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // PictureBox7
             // 
             this.PictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox7.Image")));
-            this.PictureBox7.Location = new System.Drawing.Point(6, 6);
+            this.PictureBox7.Location = new System.Drawing.Point(9, 12);
             this.PictureBox7.Name = "PictureBox7";
             this.PictureBox7.Size = new System.Drawing.Size(24, 24);
             this.PictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -494,34 +495,30 @@ namespace WinPaletter
             "Empty Box",
             "Vertical Bar",
             "Solid Box"});
-            this.CMD_CursorStyle.Location = new System.Drawing.Point(39, 90);
+            this.CMD_CursorStyle.Location = new System.Drawing.Point(209, 41);
             this.CMD_CursorStyle.Name = "CMD_CursorStyle";
-            this.CMD_CursorStyle.Size = new System.Drawing.Size(272, 26);
+            this.CMD_CursorStyle.Size = new System.Drawing.Size(268, 26);
             this.CMD_CursorStyle.TabIndex = 110;
             this.CMD_CursorStyle.SelectedIndexChanged += new System.EventHandler(this.CMD_CursorStyle_SelectedIndexChanged_1);
             // 
             // Label60
             // 
-            this.Label60.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label60.BackColor = System.Drawing.Color.Transparent;
             this.Label60.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label60.Location = new System.Drawing.Point(36, 124);
+            this.Label60.Location = new System.Drawing.Point(39, 72);
             this.Label60.Name = "Label60";
-            this.Label60.Size = new System.Drawing.Size(271, 24);
+            this.Label60.Size = new System.Drawing.Size(163, 24);
             this.Label60.TabIndex = 111;
             this.Label60.Text = "Size:";
             this.Label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label1
             // 
-            this.Label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label1.BackColor = System.Drawing.Color.Transparent;
             this.Label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(36, 6);
+            this.Label1.Location = new System.Drawing.Point(39, 12);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(271, 24);
+            this.Label1.Size = new System.Drawing.Size(162, 24);
             this.Label1.TabIndex = 108;
             this.Label1.Text = "Color:";
             this.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -529,7 +526,7 @@ namespace WinPaletter
             // PictureBox9
             // 
             this.PictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox9.Image")));
-            this.PictureBox9.Location = new System.Drawing.Point(6, 124);
+            this.PictureBox9.Location = new System.Drawing.Point(9, 72);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
             this.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -538,22 +535,21 @@ namespace WinPaletter
             // 
             // Label2
             // 
-            this.Label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label2.BackColor = System.Drawing.Color.Transparent;
             this.Label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(36, 63);
+            this.Label2.Location = new System.Drawing.Point(39, 42);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(271, 24);
+            this.Label2.Size = new System.Drawing.Size(162, 24);
             this.Label2.TabIndex = 109;
             this.Label2.Text = "Style:";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // CMD_PreviewCUR
             // 
+            this.CMD_PreviewCUR.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_PreviewCUR.BackColor = System.Drawing.Color.Black;
             this.CMD_PreviewCUR.Controls.Add(this.CMD_PreviewCUR2);
-            this.CMD_PreviewCUR.Location = new System.Drawing.Point(146, 33);
+            this.CMD_PreviewCUR.Location = new System.Drawing.Point(317, 12);
             this.CMD_PreviewCUR.Name = "CMD_PreviewCUR";
             this.CMD_PreviewCUR.Size = new System.Drawing.Size(49, 24);
             this.CMD_PreviewCUR.TabIndex = 103;
@@ -581,10 +577,11 @@ namespace WinPaletter
             // CMD_CursorColor
             // 
             this.CMD_CursorColor.AllowDrop = true;
+            this.CMD_CursorColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_CursorColor.BackColor = System.Drawing.Color.White;
             this.CMD_CursorColor.DefaultBackColor = System.Drawing.Color.White;
             this.CMD_CursorColor.DontShowInfo = false;
-            this.CMD_CursorColor.Location = new System.Drawing.Point(39, 33);
+            this.CMD_CursorColor.Location = new System.Drawing.Point(373, 12);
             this.CMD_CursorColor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CMD_CursorColor.Name = "CMD_CursorColor";
             this.CMD_CursorColor.Size = new System.Drawing.Size(100, 24);
@@ -595,7 +592,7 @@ namespace WinPaletter
             // PictureBox8
             // 
             this.PictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox8.Image")));
-            this.PictureBox8.Location = new System.Drawing.Point(6, 63);
+            this.PictureBox8.Location = new System.Drawing.Point(9, 42);
             this.PictureBox8.Name = "PictureBox8";
             this.PictureBox8.Size = new System.Drawing.Size(24, 24);
             this.PictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -608,9 +605,9 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FontName.BackColor = System.Drawing.Color.Transparent;
             this.FontName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FontName.Location = new System.Drawing.Point(36, 30);
+            this.FontName.Location = new System.Drawing.Point(138, 3);
             this.FontName.Name = "FontName";
-            this.FontName.Size = new System.Drawing.Size(247, 24);
+            this.FontName.Size = new System.Drawing.Size(284, 42);
             this.FontName.TabIndex = 133;
             this.FontName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.FontName.FontChanged += new System.EventHandler(this.CMD_FontsBox_SelectedIndexChanged);
@@ -623,21 +620,21 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
-            this.Button5.ImageGlyphEnabled = true;
             this.Button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Menu;
-            this.Button5.Location = new System.Drawing.Point(289, 30);
+            this.Button5.ImageGlyphEnabled = true;
+            this.Button5.Location = new System.Drawing.Point(428, 10);
             this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(21, 24);
+            this.Button5.Size = new System.Drawing.Size(28, 28);
             this.Button5.TabIndex = 132;
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
             // CMD_RasterToggle
             // 
-            this.CMD_RasterToggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CMD_RasterToggle.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.CMD_RasterToggle.Checked = false;
             this.CMD_RasterToggle.DarkLight_Toggler = false;
-            this.CMD_RasterToggle.Location = new System.Drawing.Point(268, 188);
+            this.CMD_RasterToggle.Location = new System.Drawing.Point(434, 14);
             this.CMD_RasterToggle.Name = "CMD_RasterToggle";
             this.CMD_RasterToggle.Size = new System.Drawing.Size(40, 20);
             this.CMD_RasterToggle.TabIndex = 95;
@@ -646,7 +643,7 @@ namespace WinPaletter
             // PictureBox1
             // 
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(6, 6);
+            this.PictureBox1.Location = new System.Drawing.Point(9, 12);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(24, 24);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -655,21 +652,19 @@ namespace WinPaletter
             // 
             // Label58
             // 
-            this.Label58.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label58.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Label58.BackColor = System.Drawing.Color.Transparent;
             this.Label58.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label58.Location = new System.Drawing.Point(36, 186);
+            this.Label58.Location = new System.Drawing.Point(39, 12);
             this.Label58.Name = "Label58";
-            this.Label58.Size = new System.Drawing.Size(226, 24);
+            this.Label58.Size = new System.Drawing.Size(93, 24);
             this.Label58.TabIndex = 94;
             this.Label58.Text = "Use raster font";
             this.Label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // CMD_FontWeightBox
             // 
-            this.CMD_FontWeightBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CMD_FontWeightBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.CMD_FontWeightBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.CMD_FontWeightBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CMD_FontWeightBox.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -687,29 +682,29 @@ namespace WinPaletter
             "Bold",
             "Extra Bold",
             "Heavy"});
-            this.CMD_FontWeightBox.Location = new System.Drawing.Point(39, 90);
+            this.CMD_FontWeightBox.Location = new System.Drawing.Point(138, 11);
             this.CMD_FontWeightBox.Name = "CMD_FontWeightBox";
-            this.CMD_FontWeightBox.Size = new System.Drawing.Size(244, 26);
+            this.CMD_FontWeightBox.Size = new System.Drawing.Size(284, 26);
             this.CMD_FontWeightBox.TabIndex = 99;
             this.CMD_FontWeightBox.SelectedIndexChanged += new System.EventHandler(this.CMD_FontWeightBox_SelectedIndexChanged);
             // 
             // Label61
             // 
-            this.Label61.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label61.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Label61.BackColor = System.Drawing.Color.Transparent;
             this.Label61.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label61.Location = new System.Drawing.Point(36, 63);
+            this.Label61.Location = new System.Drawing.Point(39, 12);
             this.Label61.Name = "Label61";
-            this.Label61.Size = new System.Drawing.Size(275, 24);
+            this.Label61.Size = new System.Drawing.Size(93, 24);
             this.Label61.TabIndex = 97;
             this.Label61.Text = "Weight:";
             this.Label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox6
             // 
+            this.PictureBox6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox6.Image")));
-            this.PictureBox6.Location = new System.Drawing.Point(6, 186);
+            this.PictureBox6.Location = new System.Drawing.Point(9, 12);
             this.PictureBox6.Name = "PictureBox6";
             this.PictureBox6.Size = new System.Drawing.Size(24, 24);
             this.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -718,8 +713,9 @@ namespace WinPaletter
             // 
             // PictureBox3
             // 
+            this.PictureBox3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox3.Image")));
-            this.PictureBox3.Location = new System.Drawing.Point(6, 63);
+            this.PictureBox3.Location = new System.Drawing.Point(9, 12);
             this.PictureBox3.Name = "PictureBox3";
             this.PictureBox3.Size = new System.Drawing.Size(24, 24);
             this.PictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -728,38 +724,38 @@ namespace WinPaletter
             // 
             // Label35
             // 
-            this.Label35.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label35.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Label35.BackColor = System.Drawing.Color.Transparent;
             this.Label35.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label35.Location = new System.Drawing.Point(36, 124);
+            this.Label35.Location = new System.Drawing.Point(39, 12);
             this.Label35.Name = "Label35";
-            this.Label35.Size = new System.Drawing.Size(275, 24);
+            this.Label35.Size = new System.Drawing.Size(93, 24);
             this.Label35.TabIndex = 103;
-            this.Label35.Text = "Size:";
+            this.Label35.Text = "Font height:";
             this.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Button25
             // 
-            this.Button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button25.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.Button25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
             this.Button25.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button25.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button25.ForeColor = System.Drawing.Color.White;
             this.Button25.Image = null;
-            this.Button25.ImageGlyphEnabled = true;
             this.Button25.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
-            this.Button25.Location = new System.Drawing.Point(289, 90);
+            this.Button25.ImageGlyphEnabled = true;
+            this.Button25.Location = new System.Drawing.Point(428, 10);
             this.Button25.Name = "Button25";
-            this.Button25.Size = new System.Drawing.Size(21, 26);
+            this.Button25.Size = new System.Drawing.Size(28, 28);
             this.Button25.TabIndex = 105;
             this.Button25.UseVisualStyleBackColor = false;
             this.Button25.Click += new System.EventHandler(this.Button25_Click);
             // 
             // PictureBox4
             // 
+            this.PictureBox4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(6, 124);
+            this.PictureBox4.Location = new System.Drawing.Point(9, 12);
             this.PictureBox4.Name = "PictureBox4";
             this.PictureBox4.Size = new System.Drawing.Size(24, 24);
             this.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -768,21 +764,18 @@ namespace WinPaletter
             // 
             // Label59
             // 
-            this.Label59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label59.BackColor = System.Drawing.Color.Transparent;
             this.Label59.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label59.Location = new System.Drawing.Point(36, 6);
+            this.Label59.Location = new System.Drawing.Point(39, 12);
             this.Label59.Name = "Label59";
-            this.Label59.Size = new System.Drawing.Size(275, 24);
+            this.Label59.Size = new System.Drawing.Size(93, 24);
             this.Label59.TabIndex = 84;
             this.Label59.Text = "Font:";
             this.Label59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // RasterList
             // 
-            this.RasterList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RasterList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.RasterList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.RasterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.RasterList.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -802,54 +795,33 @@ namespace WinPaletter
             "16x12",
             "12x16",
             "10x18"});
-            this.RasterList.Location = new System.Drawing.Point(39, 151);
+            this.RasterList.Location = new System.Drawing.Point(138, 11);
             this.RasterList.Name = "RasterList";
-            this.RasterList.Size = new System.Drawing.Size(272, 26);
+            this.RasterList.Size = new System.Drawing.Size(290, 26);
             this.RasterList.TabIndex = 104;
             this.RasterList.Visible = false;
             this.RasterList.SelectedIndexChanged += new System.EventHandler(this.RasterList_SelectedIndexChanged);
             // 
-            // PictureBox14
-            // 
-            this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
-            this.PictureBox14.Location = new System.Drawing.Point(6, 6);
-            this.PictureBox14.Name = "PictureBox14";
-            this.PictureBox14.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox14.TabIndex = 201;
-            this.PictureBox14.TabStop = false;
-            // 
             // Label31
             // 
+            this.Label31.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label31.BackColor = System.Drawing.Color.Transparent;
             this.Label31.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label31.Location = new System.Drawing.Point(149, 253);
+            this.Label31.Location = new System.Drawing.Point(268, 278);
             this.Label31.Name = "Label31";
             this.Label31.Size = new System.Drawing.Size(38, 25);
             this.Label31.TabIndex = 99;
             this.Label31.Text = "15 (F)";
             this.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // Label19
-            // 
-            this.Label19.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label19.BackColor = System.Drawing.Color.Transparent;
-            this.Label19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label19.Location = new System.Drawing.Point(36, 6);
-            this.Label19.Name = "Label19";
-            this.Label19.Size = new System.Drawing.Size(265, 24);
-            this.Label19.TabIndex = 84;
-            this.Label19.Text = "Tables:";
-            this.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // ColorTable00
             // 
             this.ColorTable00.AllowDrop = true;
+            this.ColorTable00.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable00.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.ColorTable00.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(12)))), ((int)(((byte)(12)))));
             this.ColorTable00.DontShowInfo = false;
-            this.ColorTable00.Location = new System.Drawing.Point(28, 36);
+            this.ColorTable00.Location = new System.Drawing.Point(147, 61);
             this.ColorTable00.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable00.Name = "ColorTable00";
             this.ColorTable00.Size = new System.Drawing.Size(110, 25);
@@ -859,9 +831,10 @@ namespace WinPaletter
             // 
             // Label7
             // 
+            this.Label7.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label7.BackColor = System.Drawing.Color.Transparent;
             this.Label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label7.Location = new System.Drawing.Point(7, 36);
+            this.Label7.Location = new System.Drawing.Point(126, 61);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(14, 25);
             this.Label7.TabIndex = 4;
@@ -870,9 +843,10 @@ namespace WinPaletter
             // 
             // Label32
             // 
+            this.Label32.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label32.BackColor = System.Drawing.Color.Transparent;
             this.Label32.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label32.Location = new System.Drawing.Point(149, 222);
+            this.Label32.Location = new System.Drawing.Point(268, 247);
             this.Label32.Name = "Label32";
             this.Label32.Size = new System.Drawing.Size(38, 25);
             this.Label32.TabIndex = 98;
@@ -882,10 +856,11 @@ namespace WinPaletter
             // ColorTable01
             // 
             this.ColorTable01.AllowDrop = true;
+            this.ColorTable01.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable01.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
             this.ColorTable01.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(218)))));
             this.ColorTable01.DontShowInfo = false;
-            this.ColorTable01.Location = new System.Drawing.Point(28, 67);
+            this.ColorTable01.Location = new System.Drawing.Point(147, 92);
             this.ColorTable01.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable01.Name = "ColorTable01";
             this.ColorTable01.Size = new System.Drawing.Size(110, 25);
@@ -895,9 +870,10 @@ namespace WinPaletter
             // 
             // Label20
             // 
+            this.Label20.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label20.BackColor = System.Drawing.Color.Transparent;
             this.Label20.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label20.Location = new System.Drawing.Point(7, 67);
+            this.Label20.Location = new System.Drawing.Point(126, 92);
             this.Label20.Name = "Label20";
             this.Label20.Size = new System.Drawing.Size(14, 25);
             this.Label20.TabIndex = 85;
@@ -907,10 +883,11 @@ namespace WinPaletter
             // ColorTable02
             // 
             this.ColorTable02.AllowDrop = true;
+            this.ColorTable02.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable02.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
             this.ColorTable02.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(161)))), ((int)(((byte)(14)))));
             this.ColorTable02.DontShowInfo = false;
-            this.ColorTable02.Location = new System.Drawing.Point(28, 98);
+            this.ColorTable02.Location = new System.Drawing.Point(147, 123);
             this.ColorTable02.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable02.Name = "ColorTable02";
             this.ColorTable02.Size = new System.Drawing.Size(110, 25);
@@ -921,10 +898,11 @@ namespace WinPaletter
             // ColorTable03
             // 
             this.ColorTable03.AllowDrop = true;
+            this.ColorTable03.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable03.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
             this.ColorTable03.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(150)))), ((int)(((byte)(221)))));
             this.ColorTable03.DontShowInfo = false;
-            this.ColorTable03.Location = new System.Drawing.Point(28, 129);
+            this.ColorTable03.Location = new System.Drawing.Point(147, 154);
             this.ColorTable03.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable03.Name = "ColorTable03";
             this.ColorTable03.Size = new System.Drawing.Size(110, 25);
@@ -934,9 +912,10 @@ namespace WinPaletter
             // 
             // Label33
             // 
+            this.Label33.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label33.BackColor = System.Drawing.Color.Transparent;
             this.Label33.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label33.Location = new System.Drawing.Point(149, 192);
+            this.Label33.Location = new System.Drawing.Point(268, 217);
             this.Label33.Name = "Label33";
             this.Label33.Size = new System.Drawing.Size(38, 25);
             this.Label33.TabIndex = 97;
@@ -945,9 +924,10 @@ namespace WinPaletter
             // 
             // Label21
             // 
+            this.Label21.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label21.BackColor = System.Drawing.Color.Transparent;
             this.Label21.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label21.Location = new System.Drawing.Point(7, 98);
+            this.Label21.Location = new System.Drawing.Point(126, 123);
             this.Label21.Name = "Label21";
             this.Label21.Size = new System.Drawing.Size(14, 25);
             this.Label21.TabIndex = 86;
@@ -956,9 +936,10 @@ namespace WinPaletter
             // 
             // Label22
             // 
+            this.Label22.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label22.BackColor = System.Drawing.Color.Transparent;
             this.Label22.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label22.Location = new System.Drawing.Point(7, 129);
+            this.Label22.Location = new System.Drawing.Point(126, 154);
             this.Label22.Name = "Label22";
             this.Label22.Size = new System.Drawing.Size(14, 25);
             this.Label22.TabIndex = 87;
@@ -968,10 +949,11 @@ namespace WinPaletter
             // ColorTable04
             // 
             this.ColorTable04.AllowDrop = true;
+            this.ColorTable04.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable04.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
             this.ColorTable04.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(15)))), ((int)(((byte)(31)))));
             this.ColorTable04.DontShowInfo = false;
-            this.ColorTable04.Location = new System.Drawing.Point(28, 160);
+            this.ColorTable04.Location = new System.Drawing.Point(147, 185);
             this.ColorTable04.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable04.Name = "ColorTable04";
             this.ColorTable04.Size = new System.Drawing.Size(110, 25);
@@ -981,9 +963,10 @@ namespace WinPaletter
             // 
             // Label26
             // 
+            this.Label26.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label26.BackColor = System.Drawing.Color.Transparent;
             this.Label26.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label26.Location = new System.Drawing.Point(7, 160);
+            this.Label26.Location = new System.Drawing.Point(126, 185);
             this.Label26.Name = "Label26";
             this.Label26.Size = new System.Drawing.Size(14, 25);
             this.Label26.TabIndex = 88;
@@ -992,9 +975,10 @@ namespace WinPaletter
             // 
             // Label34
             // 
+            this.Label34.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label34.BackColor = System.Drawing.Color.Transparent;
             this.Label34.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label34.Location = new System.Drawing.Point(149, 160);
+            this.Label34.Location = new System.Drawing.Point(268, 185);
             this.Label34.Name = "Label34";
             this.Label34.Size = new System.Drawing.Size(38, 25);
             this.Label34.TabIndex = 96;
@@ -1004,10 +988,11 @@ namespace WinPaletter
             // ColorTable05
             // 
             this.ColorTable05.AllowDrop = true;
+            this.ColorTable05.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable05.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
             this.ColorTable05.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(23)))), ((int)(((byte)(152)))));
             this.ColorTable05.DontShowInfo = false;
-            this.ColorTable05.Location = new System.Drawing.Point(28, 191);
+            this.ColorTable05.Location = new System.Drawing.Point(147, 216);
             this.ColorTable05.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable05.Name = "ColorTable05";
             this.ColorTable05.Size = new System.Drawing.Size(110, 25);
@@ -1017,9 +1002,10 @@ namespace WinPaletter
             // 
             // Label25
             // 
+            this.Label25.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label25.BackColor = System.Drawing.Color.Transparent;
             this.Label25.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label25.Location = new System.Drawing.Point(7, 192);
+            this.Label25.Location = new System.Drawing.Point(126, 217);
             this.Label25.Name = "Label25";
             this.Label25.Size = new System.Drawing.Size(14, 25);
             this.Label25.TabIndex = 89;
@@ -1029,10 +1015,11 @@ namespace WinPaletter
             // ColorTable06
             // 
             this.ColorTable06.AllowDrop = true;
+            this.ColorTable06.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable06.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
             this.ColorTable06.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(156)))), ((int)(((byte)(0)))));
             this.ColorTable06.DontShowInfo = false;
-            this.ColorTable06.Location = new System.Drawing.Point(28, 222);
+            this.ColorTable06.Location = new System.Drawing.Point(147, 247);
             this.ColorTable06.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable06.Name = "ColorTable06";
             this.ColorTable06.Size = new System.Drawing.Size(110, 25);
@@ -1042,9 +1029,10 @@ namespace WinPaletter
             // 
             // Label24
             // 
+            this.Label24.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label24.BackColor = System.Drawing.Color.Transparent;
             this.Label24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label24.Location = new System.Drawing.Point(7, 222);
+            this.Label24.Location = new System.Drawing.Point(126, 247);
             this.Label24.Name = "Label24";
             this.Label24.Size = new System.Drawing.Size(14, 25);
             this.Label24.TabIndex = 90;
@@ -1053,9 +1041,10 @@ namespace WinPaletter
             // 
             // Label27
             // 
+            this.Label27.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label27.BackColor = System.Drawing.Color.Transparent;
             this.Label27.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label27.Location = new System.Drawing.Point(149, 129);
+            this.Label27.Location = new System.Drawing.Point(268, 154);
             this.Label27.Name = "Label27";
             this.Label27.Size = new System.Drawing.Size(38, 25);
             this.Label27.TabIndex = 95;
@@ -1065,10 +1054,11 @@ namespace WinPaletter
             // ColorTable15
             // 
             this.ColorTable15.AllowDrop = true;
+            this.ColorTable15.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.ColorTable15.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.ColorTable15.DontShowInfo = false;
-            this.ColorTable15.Location = new System.Drawing.Point(194, 253);
+            this.ColorTable15.Location = new System.Drawing.Point(313, 278);
             this.ColorTable15.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable15.Name = "ColorTable15";
             this.ColorTable15.Size = new System.Drawing.Size(110, 25);
@@ -1079,10 +1069,11 @@ namespace WinPaletter
             // ColorTable07
             // 
             this.ColorTable07.AllowDrop = true;
+            this.ColorTable07.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable07.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.ColorTable07.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.ColorTable07.DontShowInfo = false;
-            this.ColorTable07.Location = new System.Drawing.Point(28, 253);
+            this.ColorTable07.Location = new System.Drawing.Point(147, 278);
             this.ColorTable07.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable07.Name = "ColorTable07";
             this.ColorTable07.Size = new System.Drawing.Size(110, 25);
@@ -1092,9 +1083,10 @@ namespace WinPaletter
             // 
             // Label23
             // 
+            this.Label23.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label23.BackColor = System.Drawing.Color.Transparent;
             this.Label23.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label23.Location = new System.Drawing.Point(7, 253);
+            this.Label23.Location = new System.Drawing.Point(126, 278);
             this.Label23.Name = "Label23";
             this.Label23.Size = new System.Drawing.Size(14, 25);
             this.Label23.TabIndex = 91;
@@ -1104,10 +1096,11 @@ namespace WinPaletter
             // ColorTable08
             // 
             this.ColorTable08.AllowDrop = true;
+            this.ColorTable08.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable08.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.ColorTable08.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.ColorTable08.DontShowInfo = false;
-            this.ColorTable08.Location = new System.Drawing.Point(194, 36);
+            this.ColorTable08.Location = new System.Drawing.Point(313, 61);
             this.ColorTable08.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable08.Name = "ColorTable08";
             this.ColorTable08.Size = new System.Drawing.Size(110, 25);
@@ -1118,10 +1111,11 @@ namespace WinPaletter
             // ColorTable14
             // 
             this.ColorTable14.AllowDrop = true;
+            this.ColorTable14.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
             this.ColorTable14.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(241)))), ((int)(((byte)(165)))));
             this.ColorTable14.DontShowInfo = false;
-            this.ColorTable14.Location = new System.Drawing.Point(194, 222);
+            this.ColorTable14.Location = new System.Drawing.Point(313, 247);
             this.ColorTable14.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable14.Name = "ColorTable14";
             this.ColorTable14.Size = new System.Drawing.Size(110, 25);
@@ -1131,9 +1125,10 @@ namespace WinPaletter
             // 
             // Label28
             // 
+            this.Label28.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label28.BackColor = System.Drawing.Color.Transparent;
             this.Label28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label28.Location = new System.Drawing.Point(149, 98);
+            this.Label28.Location = new System.Drawing.Point(268, 123);
             this.Label28.Name = "Label28";
             this.Label28.Size = new System.Drawing.Size(38, 25);
             this.Label28.TabIndex = 94;
@@ -1142,9 +1137,10 @@ namespace WinPaletter
             // 
             // Label30
             // 
+            this.Label30.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label30.BackColor = System.Drawing.Color.Transparent;
             this.Label30.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label30.Location = new System.Drawing.Point(149, 36);
+            this.Label30.Location = new System.Drawing.Point(268, 61);
             this.Label30.Name = "Label30";
             this.Label30.Size = new System.Drawing.Size(38, 25);
             this.Label30.TabIndex = 92;
@@ -1154,10 +1150,11 @@ namespace WinPaletter
             // ColorTable09
             // 
             this.ColorTable09.AllowDrop = true;
+            this.ColorTable09.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable09.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
             this.ColorTable09.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(120)))), ((int)(((byte)(255)))));
             this.ColorTable09.DontShowInfo = false;
-            this.ColorTable09.Location = new System.Drawing.Point(194, 67);
+            this.ColorTable09.Location = new System.Drawing.Point(313, 92);
             this.ColorTable09.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable09.Name = "ColorTable09";
             this.ColorTable09.Size = new System.Drawing.Size(110, 25);
@@ -1168,10 +1165,11 @@ namespace WinPaletter
             // ColorTable13
             // 
             this.ColorTable13.AllowDrop = true;
+            this.ColorTable13.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
             this.ColorTable13.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(0)))), ((int)(((byte)(158)))));
             this.ColorTable13.DontShowInfo = false;
-            this.ColorTable13.Location = new System.Drawing.Point(194, 191);
+            this.ColorTable13.Location = new System.Drawing.Point(313, 216);
             this.ColorTable13.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable13.Name = "ColorTable13";
             this.ColorTable13.Size = new System.Drawing.Size(110, 25);
@@ -1181,9 +1179,10 @@ namespace WinPaletter
             // 
             // Label29
             // 
+            this.Label29.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label29.BackColor = System.Drawing.Color.Transparent;
             this.Label29.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label29.Location = new System.Drawing.Point(149, 67);
+            this.Label29.Location = new System.Drawing.Point(268, 92);
             this.Label29.Name = "Label29";
             this.Label29.Size = new System.Drawing.Size(38, 25);
             this.Label29.TabIndex = 93;
@@ -1193,10 +1192,11 @@ namespace WinPaletter
             // ColorTable12
             // 
             this.ColorTable12.AllowDrop = true;
+            this.ColorTable12.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
             this.ColorTable12.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(72)))), ((int)(((byte)(86)))));
             this.ColorTable12.DontShowInfo = false;
-            this.ColorTable12.Location = new System.Drawing.Point(194, 160);
+            this.ColorTable12.Location = new System.Drawing.Point(313, 185);
             this.ColorTable12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable12.Name = "ColorTable12";
             this.ColorTable12.Size = new System.Drawing.Size(110, 25);
@@ -1207,10 +1207,11 @@ namespace WinPaletter
             // ColorTable10
             // 
             this.ColorTable10.AllowDrop = true;
+            this.ColorTable10.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
             this.ColorTable10.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(198)))), ((int)(((byte)(12)))));
             this.ColorTable10.DontShowInfo = false;
-            this.ColorTable10.Location = new System.Drawing.Point(194, 98);
+            this.ColorTable10.Location = new System.Drawing.Point(313, 123);
             this.ColorTable10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable10.Name = "ColorTable10";
             this.ColorTable10.Size = new System.Drawing.Size(110, 25);
@@ -1221,10 +1222,11 @@ namespace WinPaletter
             // ColorTable11
             // 
             this.ColorTable11.AllowDrop = true;
+            this.ColorTable11.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ColorTable11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
             this.ColorTable11.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(214)))), ((int)(((byte)(214)))));
             this.ColorTable11.DontShowInfo = false;
-            this.ColorTable11.Location = new System.Drawing.Point(194, 129);
+            this.ColorTable11.Location = new System.Drawing.Point(313, 154);
             this.ColorTable11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable11.Name = "ColorTable11";
             this.ColorTable11.Size = new System.Drawing.Size(110, 25);
@@ -1238,7 +1240,7 @@ namespace WinPaletter
             this.GroupBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox8.Controls.Add(this.Button4);
             this.GroupBox8.Controls.Add(this.CMD1);
-            this.GroupBox8.Location = new System.Drawing.Point(437, 62);
+            this.GroupBox8.Location = new System.Drawing.Point(611, 62);
             this.GroupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox8.Name = "GroupBox8";
             this.GroupBox8.Padding = new System.Windows.Forms.Padding(1);
@@ -1253,13 +1255,13 @@ namespace WinPaletter
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button4.ForeColor = System.Drawing.Color.White;
             this.Button4.Image = null;
-            this.Button4.ImageGlyphEnabled = false;
             this.Button4.ImageGlyph = null;
-            this.Button4.Location = new System.Drawing.Point(237, 280);
+            this.Button4.ImageGlyphEnabled = false;
+            this.Button4.Location = new System.Drawing.Point(322, 280);
             this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(230, 30);
+            this.Button4.Size = new System.Drawing.Size(145, 30);
             this.Button4.TabIndex = 94;
-            this.Button4.Text = "Open Command Prompt for testing";
+            this.Button4.Text = "Live colors testing";
             this.Button4.UseVisualStyleBackColor = false;
             this.Button4.Click += new System.EventHandler(this.Button4_Click);
             // 
@@ -1317,117 +1319,365 @@ namespace WinPaletter
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(425, 524);
+            this.TabControl1.Size = new System.Drawing.Size(599, 581);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 200;
             // 
             // TabPage1
             // 
             this.TabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage1.Controls.Add(this.separatorH1);
-            this.TabPage1.Controls.Add(this.PictureBox15);
-            this.TabPage1.Controls.Add(this.PictureBox14);
-            this.TabPage1.Controls.Add(this.CMD_AccentBackgroundLbl);
-            this.TabPage1.Controls.Add(this.Label24);
-            this.TabPage1.Controls.Add(this.CMD_PopupForegroundLbl);
-            this.TabPage1.Controls.Add(this.Label27);
-            this.TabPage1.Controls.Add(this.ColorTable06);
-            this.TabPage1.Controls.Add(this.Label50);
-            this.TabPage1.Controls.Add(this.Label31);
-            this.TabPage1.Controls.Add(this.CMD_AccentForegroundLbl);
-            this.TabPage1.Controls.Add(this.ColorTable15);
-            this.TabPage1.Controls.Add(this.Label25);
-            this.TabPage1.Controls.Add(this.CMD_PopupBackgroundLbl);
-            this.TabPage1.Controls.Add(this.ColorTable07);
-            this.TabPage1.Controls.Add(this.CMD_AccentBackgroundBar);
-            this.TabPage1.Controls.Add(this.ColorTable05);
-            this.TabPage1.Controls.Add(this.Label19);
-            this.TabPage1.Controls.Add(this.CMD_PopupBackgroundBar);
-            this.TabPage1.Controls.Add(this.Label23);
-            this.TabPage1.Controls.Add(this.CMD_AccentForegroundBar);
-            this.TabPage1.Controls.Add(this.Label34);
-            this.TabPage1.Controls.Add(this.ColorTable08);
-            this.TabPage1.Controls.Add(this.Label18);
-            this.TabPage1.Controls.Add(this.Label26);
-            this.TabPage1.Controls.Add(this.Label17);
-            this.TabPage1.Controls.Add(this.ColorTable00);
-            this.TabPage1.Controls.Add(this.Label49);
-            this.TabPage1.Controls.Add(this.ColorTable14);
-            this.TabPage1.Controls.Add(this.CMD_PopupForegroundBar);
-            this.TabPage1.Controls.Add(this.ColorTable04);
-            this.TabPage1.Controls.Add(this.Label6);
-            this.TabPage1.Controls.Add(this.Label28);
-            this.TabPage1.Controls.Add(this.Label22);
-            this.TabPage1.Controls.Add(this.Label7);
-            this.TabPage1.Controls.Add(this.Label30);
-            this.TabPage1.Controls.Add(this.Label21);
-            this.TabPage1.Controls.Add(this.ColorTable09);
-            this.TabPage1.Controls.Add(this.Label33);
-            this.TabPage1.Controls.Add(this.Label32);
-            this.TabPage1.Controls.Add(this.ColorTable13);
-            this.TabPage1.Controls.Add(this.ColorTable03);
-            this.TabPage1.Controls.Add(this.ColorTable11);
-            this.TabPage1.Controls.Add(this.Label29);
-            this.TabPage1.Controls.Add(this.ColorTable02);
-            this.TabPage1.Controls.Add(this.ColorTable01);
-            this.TabPage1.Controls.Add(this.ColorTable12);
-            this.TabPage1.Controls.Add(this.Label20);
-            this.TabPage1.Controls.Add(this.ColorTable10);
+            this.TabPage1.Controls.Add(this.groupBox2);
+            this.TabPage1.Controls.Add(this.groupBox1);
             this.TabPage1.Location = new System.Drawing.Point(104, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(317, 516);
+            this.TabPage1.Size = new System.Drawing.Size(491, 573);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Colors";
             // 
-            // separatorH1
+            // groupBox2
             // 
-            this.separatorH1.AlternativeLook = false;
-            this.separatorH1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorH1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH1.Location = new System.Drawing.Point(6, 287);
-            this.separatorH1.Name = "separatorH1";
-            this.separatorH1.Size = new System.Drawing.Size(305, 1);
-            this.separatorH1.TabIndex = 201;
-            this.separatorH1.TabStop = false;
-            this.separatorH1.Text = "separatorH1";
+            this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox2.Controls.Add(this.pictureBox14);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.Label49);
+            this.groupBox2.Controls.Add(this.CMD_AccentBackgroundLbl);
+            this.groupBox2.Controls.Add(this.CMD_AccentBackgroundBar);
+            this.groupBox2.Controls.Add(this.CMD_PopupBackgroundLbl);
+            this.groupBox2.Controls.Add(this.CMD_PopupBackgroundBar);
+            this.groupBox2.Controls.Add(this.CMD_PopupForegroundLbl);
+            this.groupBox2.Controls.Add(this.CMD_AccentForegroundBar);
+            this.groupBox2.Controls.Add(this.Label18);
+            this.groupBox2.Controls.Add(this.CMD_PopupForegroundBar);
+            this.groupBox2.Controls.Add(this.CMD_AccentForegroundLbl);
+            this.groupBox2.Controls.Add(this.Label50);
+            this.groupBox2.Controls.Add(this.Label17);
+            this.groupBox2.Location = new System.Drawing.Point(4, 321);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(483, 230);
+            this.groupBox2.TabIndex = 203;
+            // 
+            // pictureBox14
+            // 
+            this.pictureBox14.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox14.Image")));
+            this.pictureBox14.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox14.TabIndex = 1;
+            this.pictureBox14.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(39, 3);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(437, 30);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Accents (you can drag and drop from the table above):";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox1.Controls.Add(this.label36);
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.Label24);
+            this.groupBox1.Controls.Add(this.pictureBox5);
+            this.groupBox1.Controls.Add(this.Label27);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.ColorTable06);
+            this.groupBox1.Controls.Add(this.ColorTable00);
+            this.groupBox1.Controls.Add(this.Label31);
+            this.groupBox1.Controls.Add(this.ColorTable10);
+            this.groupBox1.Controls.Add(this.ColorTable15);
+            this.groupBox1.Controls.Add(this.Label20);
+            this.groupBox1.Controls.Add(this.Label25);
+            this.groupBox1.Controls.Add(this.ColorTable12);
+            this.groupBox1.Controls.Add(this.ColorTable07);
+            this.groupBox1.Controls.Add(this.ColorTable01);
+            this.groupBox1.Controls.Add(this.ColorTable05);
+            this.groupBox1.Controls.Add(this.ColorTable02);
+            this.groupBox1.Controls.Add(this.Label23);
+            this.groupBox1.Controls.Add(this.Label29);
+            this.groupBox1.Controls.Add(this.Label34);
+            this.groupBox1.Controls.Add(this.ColorTable11);
+            this.groupBox1.Controls.Add(this.ColorTable08);
+            this.groupBox1.Controls.Add(this.ColorTable03);
+            this.groupBox1.Controls.Add(this.Label26);
+            this.groupBox1.Controls.Add(this.ColorTable13);
+            this.groupBox1.Controls.Add(this.Label32);
+            this.groupBox1.Controls.Add(this.ColorTable14);
+            this.groupBox1.Controls.Add(this.Label33);
+            this.groupBox1.Controls.Add(this.ColorTable04);
+            this.groupBox1.Controls.Add(this.ColorTable09);
+            this.groupBox1.Controls.Add(this.Label28);
+            this.groupBox1.Controls.Add(this.Label21);
+            this.groupBox1.Controls.Add(this.Label22);
+            this.groupBox1.Controls.Add(this.Label30);
+            this.groupBox1.Controls.Add(this.Label7);
+            this.groupBox1.Location = new System.Drawing.Point(4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(483, 311);
+            this.groupBox1.TabIndex = 202;
+            // 
+            // label36
+            // 
+            this.label36.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label36.BackColor = System.Drawing.Color.Transparent;
+            this.label36.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(310, 30);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(110, 25);
+            this.label36.TabIndex = 213;
+            this.label36.Text = "Light";
+            this.label36.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label19
+            // 
+            this.label19.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label19.BackColor = System.Drawing.Color.Transparent;
+            this.label19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(147, 30);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(110, 25);
+            this.label19.TabIndex = 212;
+            this.label19.Text = "Dark";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(60, 278);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(60, 25);
+            this.label13.TabIndex = 211;
+            this.label13.Text = "Gray:";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(60, 247);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(60, 25);
+            this.label14.TabIndex = 210;
+            this.label14.Text = "Yellow:";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label15
+            // 
+            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(60, 216);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(60, 25);
+            this.label15.TabIndex = 209;
+            this.label15.Text = "Magenta:";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label16
+            // 
+            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(60, 185);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(60, 25);
+            this.label16.TabIndex = 208;
+            this.label16.Text = "Red:";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(60, 154);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(60, 25);
+            this.label10.TabIndex = 207;
+            this.label10.Text = "Cyan:";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(60, 123);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(60, 25);
+            this.label12.TabIndex = 206;
+            this.label12.Text = "Green:";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(60, 92);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(60, 25);
+            this.label9.TabIndex = 205;
+            this.label9.Text = "Blue:";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(60, 61);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(60, 25);
+            this.label6.TabIndex = 204;
+            this.label6.Text = "Black:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox5.TabIndex = 1;
+            this.pictureBox5.TabStop = false;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(39, 3);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(437, 30);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Colors table:";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TabPage2
             // 
             this.TabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage2.Controls.Add(this.toggle1);
-            this.TabPage2.Controls.Add(this.pictureBox2);
-            this.TabPage2.Controls.Add(this.label4);
-            this.TabPage2.Controls.Add(this.separatorH2);
-            this.TabPage2.Controls.Add(this.FontName);
-            this.TabPage2.Controls.Add(this.Button5);
-            this.TabPage2.Controls.Add(this.PictureBox1);
-            this.TabPage2.Controls.Add(this.CMD_RasterToggle);
-            this.TabPage2.Controls.Add(this.Label59);
-            this.TabPage2.Controls.Add(this.Label58);
-            this.TabPage2.Controls.Add(this.PictureBox4);
-            this.TabPage2.Controls.Add(this.Button25);
-            this.TabPage2.Controls.Add(this.CMD_FontWeightBox);
-            this.TabPage2.Controls.Add(this.Label35);
-            this.TabPage2.Controls.Add(this.Label61);
-            this.TabPage2.Controls.Add(this.PictureBox3);
-            this.TabPage2.Controls.Add(this.PictureBox6);
-            this.TabPage2.Controls.Add(this.RasterList);
-            this.TabPage2.Controls.Add(this.CMD_FontSizeBar);
+            this.TabPage2.Controls.Add(this.groupBox3);
+            this.TabPage2.Controls.Add(this.groupBox15);
             this.TabPage2.Location = new System.Drawing.Point(104, 4);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(317, 516);
+            this.TabPage2.Size = new System.Drawing.Size(491, 573);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Fonts";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox3.Controls.Add(this.groupBox6);
+            this.groupBox3.Controls.Add(this.groupBox5);
+            this.groupBox3.Controls.Add(this.groupBox4);
+            this.groupBox3.Controls.Add(this.pictureBox15);
+            this.groupBox3.Controls.Add(this.label37);
+            this.groupBox3.Location = new System.Drawing.Point(4, 58);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(483, 265);
+            this.groupBox3.TabIndex = 207;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox6.Controls.Add(this.PictureBox4);
+            this.groupBox6.Controls.Add(this.Label35);
+            this.groupBox6.Controls.Add(this.CMD_FontPxHeight);
+            this.groupBox6.Location = new System.Drawing.Point(9, 154);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(465, 48);
+            this.groupBox6.TabIndex = 209;
+            // 
+            // CMD_FontPxHeight
+            // 
+            this.CMD_FontPxHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.CMD_FontPxHeight.AnimateChanges = true;
+            this.CMD_FontPxHeight.BackColor = System.Drawing.Color.Transparent;
+            this.CMD_FontPxHeight.DefaultValue = 18;
+            this.CMD_FontPxHeight.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CMD_FontPxHeight.Location = new System.Drawing.Point(138, 12);
+            this.CMD_FontPxHeight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.CMD_FontPxHeight.Maximum = 48;
+            this.CMD_FontPxHeight.Minimum = 5;
+            this.CMD_FontPxHeight.Name = "CMD_FontPxHeight";
+            this.CMD_FontPxHeight.Size = new System.Drawing.Size(318, 24);
+            this.CMD_FontPxHeight.TabIndex = 134;
+            this.CMD_FontPxHeight.Value = 5;
+            this.CMD_FontPxHeight.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox5.Controls.Add(this.PictureBox3);
+            this.groupBox5.Controls.Add(this.Label61);
+            this.groupBox5.Controls.Add(this.CMD_FontWeightBox);
+            this.groupBox5.Controls.Add(this.Button25);
+            this.groupBox5.Location = new System.Drawing.Point(9, 208);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(465, 48);
+            this.groupBox5.TabIndex = 208;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox4.Controls.Add(this.toggle1);
+            this.groupBox4.Controls.Add(this.PictureBox1);
+            this.groupBox4.Controls.Add(this.Label59);
+            this.groupBox4.Controls.Add(this.pictureBox2);
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.Button5);
+            this.groupBox4.Controls.Add(this.FontName);
+            this.groupBox4.Location = new System.Drawing.Point(9, 45);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(465, 103);
+            this.groupBox4.TabIndex = 207;
             // 
             // toggle1
             // 
             this.toggle1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toggle1.Checked = false;
             this.toggle1.DarkLight_Toggler = false;
-            this.toggle1.Location = new System.Drawing.Point(268, 246);
+            this.toggle1.Location = new System.Drawing.Point(416, 64);
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 205;
@@ -1436,7 +1686,7 @@ namespace WinPaletter
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(6, 244);
+            this.pictureBox2.Location = new System.Drawing.Point(9, 62);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(24, 24);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1449,65 +1699,100 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(36, 222);
+            this.label4.Location = new System.Drawing.Point(39, 51);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(226, 68);
+            this.label4.Size = new System.Drawing.Size(371, 46);
             this.label4.TabIndex = 203;
             this.label4.Text = "Allow non monospace fonts (non-monospace fonts cause rendering issues in enhanced" +
     " terminals and are not utilized in legacy terminals.)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // separatorH2
+            // pictureBox15
             // 
-            this.separatorH2.AlternativeLook = false;
-            this.separatorH2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pictureBox15.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox15.Image")));
+            this.pictureBox15.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox15.Name = "pictureBox15";
+            this.pictureBox15.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox15.TabIndex = 1;
+            this.pictureBox15.TabStop = false;
+            // 
+            // label37
+            // 
+            this.label37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorH2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH2.Location = new System.Drawing.Point(6, 218);
-            this.separatorH2.Name = "separatorH2";
-            this.separatorH2.Size = new System.Drawing.Size(305, 1);
-            this.separatorH2.TabIndex = 202;
-            this.separatorH2.TabStop = false;
-            this.separatorH2.Text = "separatorH2";
+            this.label37.BackColor = System.Drawing.Color.Transparent;
+            this.label37.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.Location = new System.Drawing.Point(42, 6);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(438, 30);
+            this.label37.TabIndex = 0;
+            this.label37.Text = "Properties";
+            this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // CMD_FontSizeBar
+            // groupBox15
             // 
-            this.CMD_FontSizeBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CMD_FontSizeBar.AnimateChanges = true;
-            this.CMD_FontSizeBar.BackColor = System.Drawing.Color.Transparent;
-            this.CMD_FontSizeBar.DefaultValue = 18;
-            this.CMD_FontSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD_FontSizeBar.Location = new System.Drawing.Point(39, 151);
-            this.CMD_FontSizeBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CMD_FontSizeBar.Maximum = 48;
-            this.CMD_FontSizeBar.Minimum = 5;
-            this.CMD_FontSizeBar.Name = "CMD_FontSizeBar";
-            this.CMD_FontSizeBar.Size = new System.Drawing.Size(271, 24);
-            this.CMD_FontSizeBar.TabIndex = 134;
-            this.CMD_FontSizeBar.Value = 5;
-            this.CMD_FontSizeBar.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
+            this.groupBox15.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox15.Controls.Add(this.PictureBox6);
+            this.groupBox15.Controls.Add(this.Label58);
+            this.groupBox15.Controls.Add(this.RasterList);
+            this.groupBox15.Controls.Add(this.CMD_RasterToggle);
+            this.groupBox15.Location = new System.Drawing.Point(4, 4);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(483, 48);
+            this.groupBox15.TabIndex = 206;
             // 
             // TabPage3
             // 
             this.TabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage3.Controls.Add(this.CMD_CursorSizeBar);
-            this.TabPage3.Controls.Add(this.Label3);
-            this.TabPage3.Controls.Add(this.PictureBox7);
-            this.TabPage3.Controls.Add(this.CMD_CursorStyle);
-            this.TabPage3.Controls.Add(this.Label60);
-            this.TabPage3.Controls.Add(this.PictureBox8);
-            this.TabPage3.Controls.Add(this.CMD_CursorColor);
-            this.TabPage3.Controls.Add(this.Label1);
-            this.TabPage3.Controls.Add(this.CMD_PreviewCUR);
-            this.TabPage3.Controls.Add(this.PictureBox9);
-            this.TabPage3.Controls.Add(this.Label2);
+            this.TabPage3.Controls.Add(this.alertBox1);
+            this.TabPage3.Controls.Add(this.groupBox7);
             this.TabPage3.Location = new System.Drawing.Point(104, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(317, 516);
+            this.TabPage3.Size = new System.Drawing.Size(491, 573);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Cursor";
+            // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice;
+            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox1.CenterText = false;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = null;
+            this.alertBox1.Location = new System.Drawing.Point(3, 538);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(485, 32);
+            this.alertBox1.TabIndex = 208;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = "Cursor color and style settings are applicable for Windows 10 version 1909 and la" +
+    "ter.";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox7.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox7.Controls.Add(this.CMD_CursorSizeBar);
+            this.groupBox7.Controls.Add(this.PictureBox9);
+            this.groupBox7.Controls.Add(this.Label60);
+            this.groupBox7.Controls.Add(this.PictureBox7);
+            this.groupBox7.Controls.Add(this.Label1);
+            this.groupBox7.Controls.Add(this.CMD_CursorColor);
+            this.groupBox7.Controls.Add(this.CMD_CursorStyle);
+            this.groupBox7.Controls.Add(this.CMD_PreviewCUR);
+            this.groupBox7.Controls.Add(this.PictureBox8);
+            this.groupBox7.Controls.Add(this.Label2);
+            this.groupBox7.Location = new System.Drawing.Point(4, 4);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(483, 107);
+            this.groupBox7.TabIndex = 207;
             // 
             // CMD_CursorSizeBar
             // 
@@ -1517,50 +1802,43 @@ namespace WinPaletter
             this.CMD_CursorSizeBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_CursorSizeBar.DefaultValue = 20;
             this.CMD_CursorSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD_CursorSizeBar.Location = new System.Drawing.Point(39, 151);
+            this.CMD_CursorSizeBar.Location = new System.Drawing.Point(209, 72);
             this.CMD_CursorSizeBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CMD_CursorSizeBar.Maximum = 100;
             this.CMD_CursorSizeBar.Minimum = 20;
             this.CMD_CursorSizeBar.Name = "CMD_CursorSizeBar";
-            this.CMD_CursorSizeBar.Size = new System.Drawing.Size(271, 24);
+            this.CMD_CursorSizeBar.Size = new System.Drawing.Size(268, 24);
             this.CMD_CursorSizeBar.TabIndex = 133;
             this.CMD_CursorSizeBar.Value = 20;
             this.CMD_CursorSizeBar.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged_1);
             // 
-            // Label3
-            // 
-            this.Label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label3.BackColor = System.Drawing.Color.Transparent;
-            this.Label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label3.ForeColor = System.Drawing.Color.DarkOrange;
-            this.Label3.Location = new System.Drawing.Point(3, 455);
-            this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(311, 58);
-            this.Label3.TabIndex = 112;
-            this.Label3.Text = "Cursor color and style settings are applicable for Windows 10 version 1909 and la" +
-    "ter.";
-            this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // TabPage4
             // 
             this.TabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage4.Controls.Add(this.CMD_OpacityBar);
-            this.TabPage4.Controls.Add(this.Label5);
-            this.TabPage4.Controls.Add(this.PictureBox10);
-            this.TabPage4.Controls.Add(this.PictureBox13);
-            this.TabPage4.Controls.Add(this.CMD_LineSelection);
-            this.TabPage4.Controls.Add(this.Label57);
-            this.TabPage4.Controls.Add(this.CMD_EnhancedTerminal);
-            this.TabPage4.Controls.Add(this.PictureBox11);
-            this.TabPage4.Controls.Add(this.PictureBox12);
-            this.TabPage4.Controls.Add(this.CMD_TerminalScrolling);
+            this.TabPage4.Controls.Add(this.groupBox12);
+            this.TabPage4.Controls.Add(this.groupBox11);
+            this.TabPage4.Controls.Add(this.groupBox10);
+            this.TabPage4.Controls.Add(this.groupBox9);
+            this.TabPage4.Controls.Add(this.alertBox2);
             this.TabPage4.Location = new System.Drawing.Point(104, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(317, 516);
+            this.TabPage4.Size = new System.Drawing.Size(491, 573);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Tweaks";
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox12.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox12.Controls.Add(this.Label57);
+            this.groupBox12.Controls.Add(this.PictureBox13);
+            this.groupBox12.Controls.Add(this.CMD_OpacityBar);
+            this.groupBox12.Location = new System.Drawing.Point(4, 160);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(483, 48);
+            this.groupBox12.TabIndex = 210;
             // 
             // CMD_OpacityBar
             // 
@@ -1570,14 +1848,135 @@ namespace WinPaletter
             this.CMD_OpacityBar.BackColor = System.Drawing.Color.Transparent;
             this.CMD_OpacityBar.DefaultValue = 255;
             this.CMD_OpacityBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CMD_OpacityBar.Location = new System.Drawing.Point(39, 123);
+            this.CMD_OpacityBar.Location = new System.Drawing.Point(162, 12);
             this.CMD_OpacityBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.CMD_OpacityBar.Maximum = 255;
             this.CMD_OpacityBar.Minimum = 0;
             this.CMD_OpacityBar.Name = "CMD_OpacityBar";
-            this.CMD_OpacityBar.Size = new System.Drawing.Size(271, 24);
+            this.CMD_OpacityBar.Size = new System.Drawing.Size(312, 24);
             this.CMD_OpacityBar.TabIndex = 134;
             this.CMD_OpacityBar.Value = 20;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox11.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox11.Controls.Add(this.label40);
+            this.groupBox11.Controls.Add(this.CMD_TerminalScrolling);
+            this.groupBox11.Controls.Add(this.PictureBox12);
+            this.groupBox11.Location = new System.Drawing.Point(4, 108);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(483, 48);
+            this.groupBox11.TabIndex = 209;
+            // 
+            // label40
+            // 
+            this.label40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label40.BackColor = System.Drawing.Color.Transparent;
+            this.label40.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.Location = new System.Drawing.Point(39, 12);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(389, 24);
+            this.label40.TabIndex = 94;
+            this.label40.Text = "Terminal scrolling";
+            this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // CMD_TerminalScrolling
+            // 
+            this.CMD_TerminalScrolling.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CMD_TerminalScrolling.Checked = false;
+            this.CMD_TerminalScrolling.DarkLight_Toggler = false;
+            this.CMD_TerminalScrolling.Location = new System.Drawing.Point(434, 14);
+            this.CMD_TerminalScrolling.Name = "CMD_TerminalScrolling";
+            this.CMD_TerminalScrolling.Size = new System.Drawing.Size(40, 20);
+            this.CMD_TerminalScrolling.TabIndex = 95;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox10.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox10.Controls.Add(this.label39);
+            this.groupBox10.Controls.Add(this.CMD_LineSelection);
+            this.groupBox10.Controls.Add(this.PictureBox11);
+            this.groupBox10.Location = new System.Drawing.Point(4, 56);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(483, 48);
+            this.groupBox10.TabIndex = 208;
+            // 
+            // label39
+            // 
+            this.label39.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label39.BackColor = System.Drawing.Color.Transparent;
+            this.label39.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.Location = new System.Drawing.Point(39, 12);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(389, 24);
+            this.label39.TabIndex = 94;
+            this.label39.Text = "Line selection";
+            this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // CMD_LineSelection
+            // 
+            this.CMD_LineSelection.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CMD_LineSelection.Checked = false;
+            this.CMD_LineSelection.DarkLight_Toggler = false;
+            this.CMD_LineSelection.Location = new System.Drawing.Point(434, 14);
+            this.CMD_LineSelection.Name = "CMD_LineSelection";
+            this.CMD_LineSelection.Size = new System.Drawing.Size(40, 20);
+            this.CMD_LineSelection.TabIndex = 95;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox9.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox9.Controls.Add(this.label38);
+            this.groupBox9.Controls.Add(this.CMD_EnhancedTerminal);
+            this.groupBox9.Controls.Add(this.PictureBox10);
+            this.groupBox9.Location = new System.Drawing.Point(4, 4);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(483, 48);
+            this.groupBox9.TabIndex = 207;
+            // 
+            // label38
+            // 
+            this.label38.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label38.BackColor = System.Drawing.Color.Transparent;
+            this.label38.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.Location = new System.Drawing.Point(39, 12);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(389, 24);
+            this.label38.TabIndex = 94;
+            this.label38.Text = "Enhanced terminal";
+            this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // CMD_EnhancedTerminal
+            // 
+            this.CMD_EnhancedTerminal.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CMD_EnhancedTerminal.Checked = false;
+            this.CMD_EnhancedTerminal.DarkLight_Toggler = false;
+            this.CMD_EnhancedTerminal.Location = new System.Drawing.Point(434, 14);
+            this.CMD_EnhancedTerminal.Name = "CMD_EnhancedTerminal";
+            this.CMD_EnhancedTerminal.Size = new System.Drawing.Size(40, 20);
+            this.CMD_EnhancedTerminal.TabIndex = 95;
+            // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice;
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(3, 538);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(485, 32);
+            this.alertBox2.TabIndex = 211;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "Tweaks are available for Windows 10 version 1909 and later.";
             // 
             // CMD
             // 
@@ -1585,12 +1984,11 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(922, 636);
+            this.ClientSize = new System.Drawing.Size(1096, 693);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.GroupBox8);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
@@ -1602,7 +2000,6 @@ namespace WinPaletter
             this.Controls.SetChildIndex(this.GroupBox8, 0);
             this.Controls.SetChildIndex(this.TabControl1, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox12)).EndInit();
@@ -1616,14 +2013,28 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox14)).EndInit();
             this.GroupBox8.ResumeLayout(false);
             this.TabControl1.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.TabPage2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
+            this.groupBox15.ResumeLayout(false);
             this.TabPage3.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.TabPage4.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1664,14 +2075,12 @@ namespace WinPaletter
         internal Label Label22;
         internal Label Label21;
         internal Label Label20;
-        internal Label Label19;
         internal Label CMD_PopupForegroundLbl;
         internal Label CMD_PopupBackgroundLbl;
         internal UI.Simulation.WinCMD CMD1;
         internal UI.WP.GroupBox GroupBox8;
         internal Label CMD_AccentForegroundLbl;
         internal Label CMD_AccentBackgroundLbl;
-        internal Label Label6;
         internal UI.WP.TrackBar CMD_AccentBackgroundBar;
         internal Label Label49;
         internal Label Label50;
@@ -1689,11 +2098,7 @@ namespace WinPaletter
         internal Label Label1;
         internal UI.Controllers.ColorItem CMD_CursorColor;
         internal UI.WP.ComboBox CMD_CursorStyle;
-        internal Label Label5;
-        internal UI.WP.CheckBox CMD_TerminalScrolling;
-        internal UI.WP.CheckBox CMD_LineSelection;
         internal Label Label57;
-        internal UI.WP.CheckBox CMD_EnhancedTerminal;
         internal Label Label60;
         internal Label Label35;
         internal ImageList ImageList1;
@@ -1707,7 +2112,6 @@ namespace WinPaletter
         internal PictureBox PictureBox3;
         internal PictureBox PictureBox1;
         internal TabPage TabPage3;
-        internal PictureBox PictureBox15;
         internal PictureBox PictureBox10;
         internal PictureBox PictureBox13;
         internal PictureBox PictureBox12;
@@ -1715,18 +2119,50 @@ namespace WinPaletter
         internal PictureBox PictureBox7;
         internal PictureBox PictureBox9;
         internal PictureBox PictureBox8;
-        internal PictureBox PictureBox14;
-        internal Label Label3;
         internal TabPage TabPage4;
         internal Label FontName;
         internal UI.WP.Button Button5;
-        private UI.WP.SeparatorH separatorH1;
-        private UI.Controllers.TrackBarX CMD_FontSizeBar;
+        private UI.Controllers.TrackBarX CMD_FontPxHeight;
         private UI.Controllers.TrackBarX CMD_CursorSizeBar;
         private UI.Controllers.TrackBarX CMD_OpacityBar;
-        private UI.WP.SeparatorH separatorH2;
         internal UI.WP.Toggle toggle1;
         internal PictureBox pictureBox2;
         internal Label label4;
+        internal UI.WP.GroupBox groupBox2;
+        internal PictureBox pictureBox14;
+        internal Label label11;
+        internal UI.WP.GroupBox groupBox1;
+        internal PictureBox pictureBox5;
+        internal Label label8;
+        internal Label label9;
+        internal Label label6;
+        internal Label label13;
+        internal Label label14;
+        internal Label label15;
+        internal Label label16;
+        internal Label label10;
+        internal Label label12;
+        internal Label label36;
+        internal Label label19;
+        private UI.WP.GroupBox groupBox15;
+        internal UI.WP.GroupBox groupBox3;
+        private UI.WP.GroupBox groupBox4;
+        internal PictureBox pictureBox15;
+        internal Label label37;
+        private UI.WP.GroupBox groupBox6;
+        private UI.WP.GroupBox groupBox5;
+        private UI.WP.GroupBox groupBox7;
+        private UI.WP.GroupBox groupBox12;
+        private UI.WP.GroupBox groupBox11;
+        internal Label label40;
+        internal UI.WP.Toggle CMD_TerminalScrolling;
+        private UI.WP.GroupBox groupBox10;
+        internal Label label39;
+        internal UI.WP.Toggle CMD_LineSelection;
+        private UI.WP.GroupBox groupBox9;
+        internal Label label38;
+        internal UI.WP.Toggle CMD_EnhancedTerminal;
+        private UI.WP.AlertBox alertBox1;
+        private UI.WP.AlertBox alertBox2;
     }
 }

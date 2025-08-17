@@ -12,7 +12,7 @@ namespace WinPaletter
 {
     public partial class CMD
     {
-        private Font F_cmd = new("Consolas", 18f, FontStyle.Regular);
+        private Font F_cmd = new("Consolas", 16f, FontStyle.Regular);
         public Edition _Edition = Edition.CMD;
 
         public enum Edition
@@ -186,7 +186,6 @@ namespace WinPaletter
                     {
                         Text = Program.Lang.Strings.Aspects.CommandPrompt;
                         Icon = Properties.Resources.cmd;
-                        Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_CMD;
                         data.AspectName = Program.Lang.Strings.Aspects.CommandPrompt;
                         data.Enabled = Program.TM.CommandPrompt.Enabled;
                         break;
@@ -196,7 +195,6 @@ namespace WinPaletter
                     {
                         Text = Program.Lang.Strings.Aspects.PowerShellx86;
                         Icon = Properties.Resources.ps;
-                        Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_PowerShellx86;
                         data.AspectName = Program.Lang.Strings.Aspects.PowerShellx86;
                         data.Enabled = Program.TM.PowerShellx86.Enabled;
                         break;
@@ -206,7 +204,6 @@ namespace WinPaletter
                     {
                         Text = Program.Lang.Strings.Aspects.PowerShellx64;
                         Icon = Properties.Resources.ps;
-                        Button4.Text = Program.Lang.Strings.Aspects.Consoles.Open_Testing_PowerShellx64;
                         data.AspectName = Program.Lang.Strings.Aspects.PowerShellx64;
                         data.Enabled = Program.TM.PowerShellx64.Enabled;
                         break;
@@ -227,21 +224,6 @@ namespace WinPaletter
             CMD_AccentBackgroundLbl.Font = Fonts.Console;
         }
 
-        protected override void OnDragOver(DragEventArgs e)
-        {
-            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
-            {
-                Focus();
-                BringToFront();
-            }
-            else
-            {
-                return;
-            }
-
-            base.OnDragOver(e);
-        }
-
         #region    Methods to modify colors or shapes
         public void ApplyCursorShape()
         {
@@ -258,7 +240,7 @@ namespace WinPaletter
                 CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             }
 
-            if (CMD_CursorStyle.SelectedIndex == 1)
+            else if (CMD_CursorStyle.SelectedIndex == 1)
             {
                 CMD_PreviewCursorInner.BackColor = Color.Transparent;
 
@@ -269,7 +251,7 @@ namespace WinPaletter
                 CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             }
 
-            if (CMD_CursorStyle.SelectedIndex == 2)
+            else if (CMD_CursorStyle.SelectedIndex == 2)
             {
                 CMD_PreviewCursorInner.BackColor = Color.Transparent;
 
@@ -279,7 +261,7 @@ namespace WinPaletter
                 CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             }
 
-            if (CMD_CursorStyle.SelectedIndex == 3)
+            else if (CMD_CursorStyle.SelectedIndex == 3)
             {
                 CMD_PreviewCursorInner.BackColor = CMD_PreviewCUR.BackColor;
 
@@ -290,7 +272,7 @@ namespace WinPaletter
                 CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             }
 
-            if (CMD_CursorStyle.SelectedIndex == 4)
+            else if (CMD_CursorStyle.SelectedIndex == 4)
             {
                 CMD_PreviewCursorInner.BackColor = Color.Transparent;
 
@@ -301,7 +283,7 @@ namespace WinPaletter
                 CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             }
 
-            if (CMD_CursorStyle.SelectedIndex == 5)
+            else if (CMD_CursorStyle.SelectedIndex == 5)
             {
                 CMD_PreviewCursorInner.Dock = DockStyle.None;
                 CMD_PreviewCUR2.Padding = new(0, 0, 0, 0);
@@ -322,6 +304,7 @@ namespace WinPaletter
             CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             ApplyCursorShape();
         }
+
         public void ApplyPreview()
         {
             CMD1.CMD_ColorTable00 = ColorTable00.BackColor;
@@ -344,7 +327,8 @@ namespace WinPaletter
             CMD1.CMD_PopupBackground = CMD_PopupBackgroundBar.Value;
             CMD1.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value;
             CMD1.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value;
-            CMD1.Font = new(F_cmd.Name, F_cmd.Size, F_cmd.Style);
+            CMD1.Font = F_cmd;
+
             CMD1.PowerShell = _Edition == Edition.PowerShellx64 | _Edition == Edition.PowerShellx86;
             CMD1.Raster = CMD_RasterToggle.Checked;
             switch (RasterList.SelectedItem)
@@ -435,7 +419,7 @@ namespace WinPaletter
             CMD1.Refresh();
         }
 
-        public void UpdateFromTrack(int i)
+        private void UpdateFromTrack(int i)
         {
             if (i == 1)
             {
@@ -818,6 +802,7 @@ namespace WinPaletter
 
             }
         }
+
         #endregion
 
         #region    TM Handling
@@ -948,38 +933,33 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                using (Font temp = Font.FromLogFont(new GDI32.LogFont() { lfFaceName = Console.FaceName, lfWeight = Console.FontWeight }))
+                GDI32.LogFont logFont = new()
                 {
-                    F_cmd = new(temp.FontFamily, (int)Math.Round(Console.FontSize / 65536d), temp.Style);
-                }
+                    lfFaceName = Console.FaceName,
+                    lfHeight = -Console.PixelHeight,
+                    lfWidth = Console.PixelWidth,
+                    lfWeight = Console.FontWeight
+                };
+
+                F_cmd = Font.FromLogFont(logFont);
+
+                CMD_FontPxHeight.Value = Math.Abs(logFont.lfHeight);
             }
 
             FontName.Text = F_cmd.Name;
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
-            CMD_FontSizeBar.Value = (int)Math.Round(F_cmd.Size);
 
-            if (Console.FontSize == 393220)
-                RasterList.SelectedItem = "4x6";
-            if (Console.FontSize == 524294)
-                RasterList.SelectedItem = "6x8";
-            if (Console.FontSize == 524296)
-                RasterList.SelectedItem = "8x8";
-            if (Console.FontSize == 524304)
-                RasterList.SelectedItem = "16x8";
-            if (Console.FontSize == 786437)
-                RasterList.SelectedItem = "5x12";
-            if (Console.FontSize == 786439)
-                RasterList.SelectedItem = "7x12";
-            if (Console.FontSize == 0)
-                RasterList.SelectedItem = "8x12";
-            if (Console.FontSize == 786448)
-                RasterList.SelectedItem = "16x12";
-            if (Console.FontSize == 1048588)
-                RasterList.SelectedItem = "12x16";
-            if (Console.FontSize == 1179658)
-                RasterList.SelectedItem = "10x18";
-            if (RasterList.SelectedItem == null)
-                RasterList.SelectedItem = "8x12";
+            if (Console.PixelWidth == 4 && Console.PixelHeight == 6) RasterList.SelectedItem = "4x6";
+            else if (Console.PixelWidth == 6 && Console.PixelHeight == 8) RasterList.SelectedItem = "6x8";
+            else if (Console.PixelWidth == 8 && Console.PixelHeight == 8) RasterList.SelectedItem = "8x8";
+            else if (Console.PixelWidth == 16 && Console.PixelHeight == 8) RasterList.SelectedItem = "16x8";
+            else if (Console.PixelWidth == 5 && Console.PixelHeight == 12) RasterList.SelectedItem = "5x12";
+            else if (Console.PixelWidth == 7 && Console.PixelHeight == 12) RasterList.SelectedItem = "7x12";
+            else if (Console.PixelWidth == 8 && Console.PixelHeight == 12) RasterList.SelectedItem = "8x12";
+            else if (Console.PixelWidth == 16 && Console.PixelHeight == 12) RasterList.SelectedItem = "16x12";
+            else if (Console.PixelWidth == 12 && Console.PixelHeight == 16) RasterList.SelectedItem = "12x16";
+            else if (Console.PixelWidth == 10 && Console.PixelHeight == 18) RasterList.SelectedItem = "10x18";
+            else RasterList.SelectedItem = "8x12"; // default fallback
 
             Console.CursorSize = CMD_CursorSizeBar.Value;
             if (CMD_CursorSizeBar.Value > 100)
@@ -994,10 +974,9 @@ namespace WinPaletter
             CMD_OpacityBar.Value = Console.W10_1909_WindowAlpha;
             CMD_LineSelection.Checked = Console.W10_1909_LineSelection;
             CMD_TerminalScrolling.Checked = Console.W10_1909_TerminalScrolling;
+
             ApplyCursorShape();
-
             UpdateCurPreview();
-
         }
 
         public void ApplyToTM(Theme.Manager TM, Edition Edition)
@@ -1032,90 +1011,27 @@ namespace WinPaletter
 
             if (!CMD_RasterToggle.Checked)
             {
-                Console.FontSize = CMD_FontSizeBar.Value * 65536;
+                Console.PixelHeight = CMD_FontPxHeight.Value;
             }
+
             else
             {
                 switch (RasterList.SelectedItem)
                 {
-                    case "4x6":
-                        {
-                            Console.FontSize = 393220;
-                            break;
-                        }
-
-                    case "6x8":
-                        {
-                            Console.FontSize = 524294;
-                            break;
-                        }
-
-                    case "6x9":
-                        {
-                            Console.FontSize = 524294;
-                            break;
-                        }
-
-                    case "8x8":
-                        {
-                            Console.FontSize = 524296;
-                            break;
-                        }
-
-                    case "8x9":
-                        {
-                            Console.FontSize = 524296;
-                            break;
-                        }
-
-                    case "16x8":
-                        {
-                            Console.FontSize = 524304;
-                            break;
-                        }
-
-                    case "5x12":
-                        {
-                            Console.FontSize = 786437;
-                            break;
-                        }
-
-                    case "7x12":
-                        {
-                            Console.FontSize = 786439;
-                            break;
-                        }
-
-                    case "8x12":
-                        {
-                            Console.FontSize = 0;
-                            break;
-                        }
-
-                    case "16x12":
-                        {
-                            Console.FontSize = 786448;
-                            break;
-                        }
-
-                    case "12x16":
-                        {
-                            Console.FontSize = 1048588;
-                            break;
-                        }
-
-                    case "10x18":
-                        {
-                            Console.FontSize = 1179658;
-                            break;
-                        }
-
-                    default:
-                        {
-                            Console.FontSize = 0;
-                            break;
-                        }
-
+                    case "4x6": Console.PixelWidth = 4; Console.PixelHeight = 6; break;
+                    case "5x8": Console.PixelWidth = 5; Console.PixelHeight = 8; break;
+                    case "6x8": Console.PixelWidth = 6; Console.PixelHeight = 8; break;
+                    case "6x9": Console.PixelWidth = 6; Console.PixelHeight = 9; break;
+                    case "8x8": Console.PixelWidth = 8; Console.PixelHeight = 8; break;
+                    case "8x9": Console.PixelWidth = 8; Console.PixelHeight = 9; break;
+                    case "16x8": Console.PixelWidth = 16; Console.PixelHeight = 8; break;
+                    case "5x12": Console.PixelWidth = 5; Console.PixelHeight = 12; break;
+                    case "7x12": Console.PixelWidth = 7; Console.PixelHeight = 12; break;
+                    case "8x12": Console.PixelWidth = 8; Console.PixelHeight = 12; break;
+                    case "16x12": Console.PixelWidth = 16; Console.PixelHeight = 12; break;
+                    case "12x16": Console.PixelWidth = 12; Console.PixelHeight = 16; break;
+                    case "10x18": Console.PixelWidth = 10; Console.PixelHeight = 18; break;
+                    default: Console.PixelWidth = 0; Console.PixelHeight = 0; break;
                 }
             }
 
@@ -1158,30 +1074,26 @@ namespace WinPaletter
                         TM.PowerShellx64 = Console;
                         break;
                     }
-
             }
-
         }
         #endregion
 
         private void CommandPrompt_PopupForegroundBar_Scroll(object sender)
         {
-            {
-                UI.WP.TrackBar temp = CMD_PopupForegroundBar;
-                CMD_PopupForegroundLbl.Text = temp.Value.ToString();
-                if (temp.Value == 10)
-                    CMD_PopupForegroundLbl.Text += " (A)";
-                if (temp.Value == 11)
-                    CMD_PopupForegroundLbl.Text += " (B)";
-                if (temp.Value == 12)
-                    CMD_PopupForegroundLbl.Text += " (C)";
-                if (temp.Value == 13)
-                    CMD_PopupForegroundLbl.Text += " (D)";
-                if (temp.Value == 14)
-                    CMD_PopupForegroundLbl.Text += " (E)";
-                if (temp.Value == 15)
-                    CMD_PopupForegroundLbl.Text += " (F)";
-            }
+            UI.WP.TrackBar temp = CMD_PopupForegroundBar;
+            CMD_PopupForegroundLbl.Text = temp.Value.ToString();
+            if (temp.Value == 10)
+                CMD_PopupForegroundLbl.Text += " (A)";
+            else if (temp.Value == 11)
+                CMD_PopupForegroundLbl.Text += " (B)";
+            else if (temp.Value == 12)
+                CMD_PopupForegroundLbl.Text += " (C)";
+            else if (temp.Value == 13)
+                CMD_PopupForegroundLbl.Text += " (D)";
+            else if (temp.Value == 14)
+                CMD_PopupForegroundLbl.Text += " (E)";
+            else if (temp.Value == 15)
+                CMD_PopupForegroundLbl.Text += " (F)";
 
             UpdateFromTrack(1);
             ApplyPreview();
@@ -1189,22 +1101,21 @@ namespace WinPaletter
 
         private void CMD_PopupBackgroundBar_Scroll(object sender)
         {
-            {
-                UI.WP.TrackBar temp = CMD_PopupBackgroundBar;
-                CMD_PopupBackgroundLbl.Text = temp.Value.ToString();
-                if (temp.Value == 10)
-                    CMD_PopupBackgroundLbl.Text += " (A)";
-                if (temp.Value == 11)
-                    CMD_PopupBackgroundLbl.Text += " (B)";
-                if (temp.Value == 12)
-                    CMD_PopupBackgroundLbl.Text += " (C)";
-                if (temp.Value == 13)
-                    CMD_PopupBackgroundLbl.Text += " (D)";
-                if (temp.Value == 14)
-                    CMD_PopupBackgroundLbl.Text += " (E)";
-                if (temp.Value == 15)
-                    CMD_PopupBackgroundLbl.Text += " (F)";
-            }
+            UI.WP.TrackBar temp = CMD_PopupBackgroundBar;
+            CMD_PopupBackgroundLbl.Text = temp.Value.ToString();
+
+            if (temp.Value == 10)
+                CMD_PopupBackgroundLbl.Text += " (A)";
+            else if (temp.Value == 11)
+                CMD_PopupBackgroundLbl.Text += " (B)";
+            else if (temp.Value == 12)
+                CMD_PopupBackgroundLbl.Text += " (C)";
+            else if (temp.Value == 13)
+                CMD_PopupBackgroundLbl.Text += " (D)";
+            else if (temp.Value == 14)
+                CMD_PopupBackgroundLbl.Text += " (E)";
+            else if (temp.Value == 15)
+                CMD_PopupBackgroundLbl.Text += " (F)";
 
             UpdateFromTrack(2);
             ApplyPreview();
@@ -1212,22 +1123,21 @@ namespace WinPaletter
 
         private void CMD_AccentForegroundBar_Scroll(object sender)
         {
-            {
-                UI.WP.TrackBar temp = CMD_AccentForegroundBar;
-                CMD_AccentForegroundLbl.Text = temp.Value.ToString();
-                if (temp.Value == 10)
-                    CMD_AccentForegroundLbl.Text += " (A)";
-                if (temp.Value == 11)
-                    CMD_AccentForegroundLbl.Text += " (B)";
-                if (temp.Value == 12)
-                    CMD_AccentForegroundLbl.Text += " (C)";
-                if (temp.Value == 13)
-                    CMD_AccentForegroundLbl.Text += " (D)";
-                if (temp.Value == 14)
-                    CMD_AccentForegroundLbl.Text += " (E)";
-                if (temp.Value == 15)
-                    CMD_AccentForegroundLbl.Text += " (F)";
-            }
+            UI.WP.TrackBar temp = CMD_AccentForegroundBar;
+            CMD_AccentForegroundLbl.Text = temp.Value.ToString();
+
+            if (temp.Value == 10)
+                CMD_AccentForegroundLbl.Text += " (A)";
+            else if (temp.Value == 11)
+                CMD_AccentForegroundLbl.Text += " (B)";
+            else if (temp.Value == 12)
+                CMD_AccentForegroundLbl.Text += " (C)";
+            else if (temp.Value == 13)
+                CMD_AccentForegroundLbl.Text += " (D)";
+            else if (temp.Value == 14)
+                CMD_AccentForegroundLbl.Text += " (E)";
+            else if (temp.Value == 15)
+                CMD_AccentForegroundLbl.Text += " (F)";
 
             UpdateFromTrack(3);
             UpdateFromTrack(4);
@@ -1236,22 +1146,21 @@ namespace WinPaletter
 
         private void CMD_AccentBackgroundBar_Scroll(object sender)
         {
-            {
-                UI.WP.TrackBar temp = CMD_AccentBackgroundBar;
-                CMD_AccentBackgroundLbl.Text = temp.Value.ToString();
-                if (temp.Value == 10)
-                    CMD_AccentBackgroundLbl.Text += " (A)";
-                if (temp.Value == 11)
-                    CMD_AccentBackgroundLbl.Text += " (B)";
-                if (temp.Value == 12)
-                    CMD_AccentBackgroundLbl.Text += " (C)";
-                if (temp.Value == 13)
-                    CMD_AccentBackgroundLbl.Text += " (D)";
-                if (temp.Value == 14)
-                    CMD_AccentBackgroundLbl.Text += " (E)";
-                if (temp.Value == 15)
-                    CMD_AccentBackgroundLbl.Text += " (F)";
-            }
+            UI.WP.TrackBar temp = CMD_AccentBackgroundBar;
+            CMD_AccentBackgroundLbl.Text = temp.Value.ToString();
+
+            if (temp.Value == 10)
+                CMD_AccentBackgroundLbl.Text += " (A)";
+            else if (temp.Value == 11)
+                CMD_AccentBackgroundLbl.Text += " (B)";
+            else if (temp.Value == 12)
+                CMD_AccentBackgroundLbl.Text += " (C)";
+            else if (temp.Value == 13)
+                CMD_AccentBackgroundLbl.Text += " (D)";
+            else if (temp.Value == 14)
+                CMD_AccentBackgroundLbl.Text += " (E)";
+            else if (temp.Value == 15)
+                CMD_AccentBackgroundLbl.Text += " (F)";
 
             UpdateFromTrack(3);
             UpdateFromTrack(4);
@@ -1262,54 +1171,188 @@ namespace WinPaletter
         {
             IntPtr intPtr = IntPtr.Zero;
             Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+            string tempcmd = SysPaths.appData + "\\testcolors.cmd";
 
-            switch (_Edition)
+            if (_Edition == Edition.CMD)
             {
-                case Edition.CMD:
-                    {
-                        Process prc = new()
-                        {
-                            StartInfo = new()
-                            {
-                                FileName = SysPaths.CMD,
-                                Verb = "runas",
-                                WorkingDirectory = SysPaths.UserProfile
-                            }
-                        };
-                        prc.Start();
-                        break;
-                    }
+                int initBg = CMD_AccentBackgroundBar.Value;
+                int initFg = CMD_AccentForegroundBar.Value;
 
-                case Edition.PowerShellx86:
-                    {
-                        Process prc = new()
-                        {
-                            StartInfo = new()
-                            {
-                                FileName = SysPaths.PS86_app,
-                                Verb = "runas",
-                                WorkingDirectory = SysPaths.UserProfile
-                            }
-                        };
-                        prc.Start();
-                        break;
-                    }
+                string _testCommand = $@"@echo off
+                    title {this.Text}
 
-                case Edition.PowerShellx64:
-                    {
-                        Process prc = new()
-                        {
-                            StartInfo = new()
-                            {
-                                FileName = SysPaths.PS64_app,
-                                Verb = "runas",
-                                WorkingDirectory = SysPaths.UserProfile
-                            }
-                        };
-                        prc.Start();
-                        break;
-                    }
+                    REM --- Set initial background and foreground colors ---
+                    set initBg={initBg}
+                    set initFg={initFg}
 
+                    REM Convert decimal 10-15 to hex A-F for initial background
+                    if ""%initBg%""==""10"" set initBg=A
+                    if ""%initBg%""==""11"" set initBg=B
+                    if ""%initBg%""==""12"" set initBg=C
+                    if ""%initBg%""==""13"" set initBg=D
+                    if ""%initBg%""==""14"" set initBg=E
+                    if ""%initBg%""==""15"" set initBg=F
+
+                    REM Convert decimal 10-15 to hex A-F for initial foreground
+                    if ""%initFg%""==""10"" set initFg=A
+                    if ""%initFg%""==""11"" set initFg=B
+                    if ""%initFg%""==""12"" set initFg=C
+                    if ""%initFg%""==""13"" set initFg=D
+                    if ""%initFg%""==""14"" set initFg=E
+                    if ""%initFg%""==""15"" set initFg=F
+
+                    set initBg=%initBg:~-1%
+                    set initFg=%initFg:~-1%
+                    color %initBg%%initFg%
+                    cls
+                    REM --- End initial color setup ---
+
+                    :colorloop
+                    cls
+
+                    REM Prompt for background and foreground
+                    set /p bg=""{Program.Lang.Strings.Aspects.Consoles.Backgrounds}: ""
+                    set /p fg=""{Program.Lang.Strings.Aspects.Consoles.Foregrounds}: ""
+
+                    REM Convert decimal 10-15 to hex A-F for background
+                    if ""%bg%""==""10"" set bg=A
+                    if ""%bg%""==""11"" set bg=B
+                    if ""%bg%""==""12"" set bg=C
+                    if ""%bg%""==""13"" set bg=D
+                    if ""%bg%""==""14"" set bg=E
+                    if ""%bg%""==""15"" set bg=F
+
+                    REM Convert decimal 10-15 to hex A-F for foreground
+                    if ""%fg%""==""10"" set fg=A
+                    if ""%fg%""==""11"" set fg=B
+                    if ""%fg%""==""12"" set fg=C
+                    if ""%fg%""==""13"" set fg=D
+                    if ""%fg%""==""14"" set fg=E
+                    if ""%fg%""==""15"" set fg=F
+
+                    REM Use only last character in case input is like 0A, 0B, etc.
+                    set bg=%bg:~-1%
+                    set fg=%fg:~-1%
+
+                    REM Set main console color
+                    color %bg%%fg%
+                    cls
+
+                    REM Display chosen colors
+                    echo Main Background: %bg%
+                    echo Main Foreground: %fg%
+                    echo.
+                    echo {Program.Lang.Strings.Aspects.Consoles.Popup_Note}
+                    echo.
+                    pause
+                    goto colorloop";
+
+                ProcessStartInfo info = new()
+                {
+                    FileName = SysPaths.CMD,
+                    Verb = "runas",
+                    WorkingDirectory = SysPaths.UserProfile,
+                    Arguments = $"/k \"{tempcmd}\""
+                };
+
+                System.IO.File.WriteAllText(tempcmd, _testCommand);
+
+                using Process process = Process.Start(info);
+            }
+            else
+            {
+                int initBg = CMD_AccentBackgroundBar.Value;
+                int initFg = CMD_AccentForegroundBar.Value;
+
+                string[] colorNames = {
+    "Black", "DarkBlue", "DarkGreen", "DarkCyan",
+    "DarkRed", "DarkMagenta", "DarkYellow", "Gray",
+    "DarkGray", "Blue", "Green", "Cyan",
+    "Red", "Magenta", "Yellow", "White"
+};
+
+                string initBgName = colorNames[initBg];
+                string initFgName = colorNames[initFg];
+
+                string curBackground = Program.Lang.Strings.Aspects.Consoles.CurrentBackground;
+                string curForeground = Program.Lang.Strings.Aspects.Consoles.CurrentForeground;
+                string tableHeader = Program.Lang.Strings.Aspects.Consoles.ColorName;
+                string promptBackground = Program.Lang.Strings.Aspects.Consoles.Backgrounds_PS;
+                string promptForeground = Program.Lang.Strings.Aspects.Consoles.Foregrounds_PS;
+                string errorMessage = Program.Lang.Strings.Aspects.Consoles.InvalidColors;
+                string optionalRefresh = Program.Lang.Strings.Aspects.Consoles.OptTitleRefresh;
+                string thanksto = $"{Program.Lang.Strings.General.ThanksTo} neilpa/cmd-colors-solarized";
+                string popupNote = Program.Lang.Strings.Aspects.Consoles.Popup_Note;
+
+                string psScript = $@"
+$Host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::{initBgName}
+$Host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::{initFgName}
+Clear-Host
+
+function Show-PreferencesAndTable {{
+    # Standard ConsoleColor order for reference
+    $colorNames = @(
+        'Black', 'Blue', 'Green', 'Cyan',
+        'Red', 'Magenta', 'Yellow', 'Gray',
+        'DarkGray', 'DarkBlue', 'DarkGreen', 'DarkCyan',
+        'DarkRed', 'DarkMagenta', 'DarkYellow', 'White'
+    )
+
+    $Colors = [Enum]::GetValues([System.ConsoleColor])
+    $fgID = [int]($Colors | Where-Object {{ $_ -eq $Host.UI.RawUI.ForegroundColor }})
+    $bgID = [int]($Colors | Where-Object {{ $_ -eq $Host.UI.RawUI.BackgroundColor }})
+
+    Write-Host ('{thanksto}')
+    Write-Host ('https://github.com/neilpa/cmd-colors-solarized/blob/master/Out-Colors.ps1')
+    Write-Host ''
+    Write-Host ('{curBackground}: {{0}} (ID {{1}})' -f $Host.UI.RawUI.BackgroundColor, $bgID)
+    Write-Host ('{curForeground}: {{0}} (ID {{1}})' -f $Host.UI.RawUI.ForegroundColor, $fgID)
+    Write-Host ''
+    Write-Host ('{{0,-13}} | {{1,-4}} | {{2,-10}} | {{3,-4}} | {{4,-10}}' -f '{tableHeader}', 'ID', '', 'ID', '')
+    Write-Host ('-' * 60)
+    for ($i=0; $i -lt 8; $i++) {{
+        $name0 = $colorNames[$i]
+        $id0 = $i
+        $id8 = $i+8
+        $name8 = $colorNames[$id8]
+        Write-Host -NoNewline ('{{0,-13}} | {{1,-4}} | ' -f $name0, $id0)
+        Write-Host -NoNewline ('          ') -BackgroundColor $Colors[$id0]
+        Write-Host -NoNewline (' | {{0,-4}} | ' -f $id8)
+        Write-Host ('          ') -BackgroundColor $Colors[$id8]
+    }}
+    Write-Host ''
+}}
+
+while ($true) {{
+    Show-PreferencesAndTable
+    $bg = Read-Host '{promptBackground}'
+    if ([string]::IsNullOrWhiteSpace($bg)) {{ break }}
+    $fg = Read-Host '{promptForeground}'
+    if ([string]::IsNullOrWhiteSpace($fg)) {{ break }}
+    try {{
+        $Host.UI.RawUI.ForegroundColor = $fg
+        $Host.UI.RawUI.BackgroundColor = $bg
+        $rawui = $Host.UI.RawUI
+        $rawui.WindowTitle = '' # {optionalRefresh}
+        $rawui.ForegroundColor = $fg
+        $rawui.BackgroundColor = $bg
+        Clear-Host
+    }} catch {{
+        Write-Host '{errorMessage}' -ForegroundColor Red
+        Start-Sleep -Seconds 1
+    }}
+}}
+";
+
+                // Prepare the start info
+                var psi = new ProcessStartInfo
+                {
+                    FileName = _Edition == Edition.PowerShellx86 ? SysPaths.PS86_app : SysPaths.PS64_app,
+                    WorkingDirectory = SysPaths.UserProfile,
+                    Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{psScript.Replace("\"", "`\"")}\"",
+                };
+
+                using (var process = Process.Start(psi)) { }
             }
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -1320,9 +1363,11 @@ namespace WinPaletter
             Button5.Enabled = !CMD_RasterToggle.Checked;
             CMD_FontWeightBox.Enabled = !CMD_RasterToggle.Checked;
 
+            groupBox3.Enabled = !CMD_RasterToggle.Checked;
+            RasterList.Visible = CMD_RasterToggle.Checked;
+
             if (IsShown)
             {
-                RasterList.Visible = CMD_RasterToggle.Checked;
                 ApplyPreview();
             }
         }
@@ -1331,14 +1376,13 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            GDI32.LogFont fx = new();
-            F_cmd = new(F_cmd.Name, F_cmd.Size, F_cmd.Style);
-            F_cmd.ToLogFont(fx);
-            fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
-            using (Font temp = Font.FromLogFont(fx))
-            {
-                F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
-            }
+            GDI32.LogFont logFont = new();
+            F_cmd.ToLogFont(logFont);
+            logFont.lfHeight = -CMD_FontPxHeight.Value;
+            logFont.lfWidth = 0;
+            logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+            F_cmd = Font.FromLogFont(logFont);
+
             ApplyPreview();
         }
 
@@ -1349,7 +1393,6 @@ namespace WinPaletter
                 F_cmd = new(FontName.Font.Name, F_cmd.Size, F_cmd.Style);
                 ApplyPreview();
             }
-
         }
 
         private void RasterList_SelectedIndexChanged(object sender, EventArgs e)
@@ -1364,7 +1407,6 @@ namespace WinPaletter
 
         private void CMD_CursorColor_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
                 CMD_PreviewCUR2.BackColor = CMD_CursorColor.BackColor;
@@ -1501,17 +1543,17 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    F_cmd = dlg.Font;
-                    FontName.Text = FontName.Font.Name;
-                    CMD_FontSizeBar.Value = (int)Math.Round(dlg.Font.Size);
-                    GDI32.LogFont fx = new();
-                    F_cmd.ToLogFont(fx);
-                    fx.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
-                    using (Font temp = Font.FromLogFont(fx))
-                    {
-                        F_cmd = new(temp.Name, F_cmd.Size, temp.Style);
-                    }
-                    FontName.Font = new(dlg.Font.Name, 9f, F_cmd.Style);
+                    FontName.Text = dlg.Font.Name;
+
+                    CMD_FontPxHeight.Value = (int)Math.Round(dlg.Font.Size);
+
+                    GDI32.LogFont logFont = new();
+                    dlg.Font.ToLogFont(logFont);
+                    logFont.lfWidth = 0; // Set to 0 for default width
+                    logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+                    F_cmd = Font.FromLogFont(logFont);
+
+                    FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
                 }
             }
         }
@@ -1520,7 +1562,11 @@ namespace WinPaletter
         {
             if (IsShown)
             {
-                F_cmd = new(F_cmd.Name, CMD_FontSizeBar.Value, F_cmd.Style);
+                GDI32.LogFont logFont = new();
+                F_cmd.ToLogFont(logFont);
+                logFont.lfHeight = -CMD_FontPxHeight.Value;
+                logFont.lfWidth = 0; // Set to 0 for default width
+                F_cmd = Font.FromLogFont(logFont);
                 ApplyPreview();
             }
         }
@@ -1538,5 +1584,29 @@ namespace WinPaletter
                 Program.Settings.WindowsTerminals.Save();
             }
         }
+
+        private void CMD_AccentForegroundBar_DragDrop(object sender, DragEventArgs e)
+        {
+            ColorItem colorItem = e.Data.GetData(typeof(ColorItem).FullName) as ColorItem;
+
+            if (sender == Label49 || sender == CMD_AccentForegroundLbl || sender == CMD_AccentForegroundBar)
+                CMD_AccentForegroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+
+            else if (sender == Label50 || sender == CMD_AccentBackgroundLbl || sender == CMD_AccentBackgroundBar)
+                CMD_AccentBackgroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+
+            else if (sender == Label17 || sender == CMD_PopupForegroundLbl || sender == CMD_PopupForegroundBar)
+                CMD_PopupForegroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+
+            else if (sender == Label18 || sender == CMD_PopupBackgroundLbl || sender == CMD_PopupBackgroundBar)
+                CMD_PopupBackgroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+        }
+
+        private void Label49_DragOver(object sender, DragEventArgs e)
+        {
+            ColorItem colorItem = e.Data.GetData(typeof(ColorItem).FullName) as ColorItem;
+            e.Effect = colorItem is not null ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
     }
 }

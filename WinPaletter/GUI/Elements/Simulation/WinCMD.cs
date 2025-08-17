@@ -82,30 +82,22 @@ namespace WinPaletter.UI.Simulation
             Rectangle Rect = new(0, 0, Width - 1, Height - 1);
             Rectangle RectCMD = new(Rect.X + 1, Rect.Y + 5, Rect.Width - 2, Rect.Height - 10);
 
-            int pW0, pH0, pX0, pY0;
-            pW0 = (int)Math.Round(240f * (Font.Size / 18f));
-            pH0 = (int)Math.Round(54f * (Font.Size / 18f));
-            pX0 = (int)Math.Round(5f * (Font.Size / 18f));
-            pY0 = (int)Math.Round(10f * (Font.Size / 18f));
+            float pW0, pH0, pX0, pY0;
+            pW0 = 240f * (Font.Size / 18f);
+            pH0 = 54f * (Font.Size / 18f);
+            pX0 = 5f * (Font.Size / 18f);
+            pY0 = 10f * (Font.Size / 18f);
 
-            Rectangle RectMiddle = new((int)Math.Round(Rect.X + (Rect.Width - pW0) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - pH0) / 2d), pW0, pH0);
-            Rectangle RectMiddleBorder = new(RectMiddle.X + pX0, RectMiddle.Y + pY0, RectMiddle.Width - pX0 * 2, RectMiddle.Height - pY0 * 2);
+            RectangleF RectMiddle = new(Rect.X + (Rect.Width - pW0) / 2f, Rect.Y + (Rect.Height - pH0) / 2f, pW0, pH0);
+            RectangleF RectMiddleBorder = new(RectMiddle.X + pX0, RectMiddle.Y + pY0, RectMiddle.Width - pX0 * 2, RectMiddle.Height - pY0 * 2);
 
             Color FC = default, BK = default, PCF = default, PCB = default;
             string S;
 
             Font F = Font;
-
             if (!Raster)
             {
-                if (!PowerShell)
-                {
-                    F = new(Font.Name, (double)Font.SizeInPoints * 0.57d <= 0d ? 1f : (float)((double)Font.Size * 0.57d), Font.Style);
-                }
-                else
-                {
-                    F = new(Font.Name, (double)Font.SizeInPoints * 0.57d <= 0d ? 1f : (float)((double)Font.Size * 0.57d), Font.Style);
-                }
+                F = new(Font.Name, Font.Size - 1.7f, Font.Style, GraphicsUnit.Pixel);
             }
 
             switch (CMD_ScreenColorsForeground)
@@ -498,7 +490,7 @@ namespace WinPaletter.UI.Simulation
                 }
                 using (Pen P = new(PCF))
                 {
-                    G.DrawRectangle(P, RectMiddleBorder);
+                    G.DrawRectangle(P, RectMiddleBorder.X, RectMiddleBorder.Y, RectMiddleBorder.Width, RectMiddleBorder.Height);
                 }
 
                 using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
@@ -675,7 +667,7 @@ namespace WinPaletter.UI.Simulation
 
                 using (Bitmap b = i0.ReplaceColor(Color.FromArgb(204, 204, 204), FC)) { G.DrawImage(b, new Point(0, 1)); }
 
-                RectMiddle = new((int)Math.Round(Rect.X + (Rect.Width - pW) / 2d), (int)Math.Round(Rect.Y + (Rect.Height - 36) / 2d), pW, pH);
+                RectMiddle = new(Rect.X + (Rect.Width - pW) / 2f, Rect.Y + (Rect.Height - 36) / 2f, pW, pH);
                 RectMiddleBorder = new(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2);
 
                 using (SolidBrush br = new(PCB))
@@ -684,7 +676,7 @@ namespace WinPaletter.UI.Simulation
                 }
                 using (Pen P = new(PCF))
                 {
-                    G.DrawRectangle(P, RectMiddleBorder);
+                    G.DrawRectangle(P, RectMiddleBorder.X, RectMiddleBorder.Y, RectMiddleBorder.Width, RectMiddleBorder.Height);
                 }
 
                 using (Bitmap b = i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF))
@@ -694,8 +686,6 @@ namespace WinPaletter.UI.Simulation
             }
 
             base.OnPaint(e);
-
-
         }
     }
 }
