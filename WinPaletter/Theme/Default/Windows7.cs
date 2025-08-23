@@ -95,8 +95,8 @@ namespace WinPaletter.Theme
             WinEffects.SysListView32 = false;
             WinEffects.EnableAeroPeek = true;
 
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
 
             ref Structures.Icons Icons = ref TM.Icons;
             Icons.Enabled = true;

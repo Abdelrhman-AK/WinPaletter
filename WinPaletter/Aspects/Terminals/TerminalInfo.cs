@@ -8,7 +8,7 @@ namespace WinPaletter
 {
     public partial class TerminalInfo
     {
-        public WinTerminal.Types.Profile Profile = new();
+        public WinPaletter.Theme.Structures.WinTerminal.Types.Profile Profile = new();
 
         public TerminalInfo()
         {
@@ -81,7 +81,7 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                WinTerminal.Types.Profile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
+                WinPaletter.Theme.Structures.WinTerminal.Types.Profile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
                     Forms.WindowsTerminal._Terminal.Profiles.Defaults :
                     Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
 
@@ -95,7 +95,7 @@ namespace WinPaletter
             {
                 Color cx = Forms.SubMenu.ShowMenu((ColorItem)sender, true);
 
-                WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
+                WinPaletter.Theme.Structures.WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
                     Forms.WindowsTerminal._Terminal.Profiles.Defaults :
                     Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
 

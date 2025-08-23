@@ -368,27 +368,27 @@ namespace WinPaletter
 
                     if (File.Exists(TerDir))
                     {
-                        Program.TM.Terminal = new(TerDir, WinTerminal.Mode.JSONFile);
+                        Program.TM.Terminal = new(TerDir, WinPaletter.Theme.Structures.WinTerminal.Mode.JSONFile);
                     }
                     else
                     {
-                        Program.TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+                        Program.TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
                     }
 
                     if (File.Exists(TerPreDir))
                     {
-                        Program.TM.TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                        Program.TM.TerminalPreview = new(TerPreDir, WinPaletter.Theme.Structures.WinTerminal.Mode.JSONFile, WinPaletter.Theme.Structures.WinTerminal.Version.Preview);
                     }
                     else
                     {
-                        Program.TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                        Program.TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty, WinPaletter.Theme.Structures.WinTerminal.Version.Preview);
                     }
                 }
 
                 else
                 {
-                    Program.TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-                    Program.TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
+                    Program.TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
+                    Program.TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty, WinPaletter.Theme.Structures.WinTerminal.Version.Preview);
                 }
             }
 

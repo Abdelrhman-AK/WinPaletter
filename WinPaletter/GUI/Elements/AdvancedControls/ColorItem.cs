@@ -217,78 +217,81 @@ namespace WinPaletter.UI.Controllers
 
         protected override async void OnDragEnter(DragEventArgs e)
         {
-            if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
+            if (!DesignMode)
             {
-                DragDropMouseHovering = true;
-
-                e.Effect = DragDropEffects.Copy;
-
-                SwapNotCopy = false;
-                AfterDropEffect = AfterDropEffects.None;
-
-                if ((e.KeyState & 32) == 32)
+                if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
                 {
-                    // Alt is pressed
-                    AfterDropEffect = AfterDropEffects.Invert;
+                    DragDropMouseHovering = true;
+
+                    e.Effect = DragDropEffects.Copy;
+
+                    SwapNotCopy = false;
+                    AfterDropEffect = AfterDropEffects.None;
+
+                    if ((e.KeyState & 32) == 32)
+                    {
+                        // Alt is pressed
+                        AfterDropEffect = AfterDropEffects.Invert;
+                    }
+
+                    if ((e.KeyState & 16) == 16)
+                    {
+                        // Middle mouse button is pressed
+
+                    }
+
+                    if ((e.KeyState & 8) == 8)
+                    {
+                        // Ctrl is pressed
+                        AfterDropEffect = AfterDropEffects.Darker;
+
+                    }
+
+                    if ((e.KeyState & 4) == 4)
+                    {
+                        // Shift is pressed
+                        AfterDropEffect = AfterDropEffects.Lighter;
+
+                    }
+
+                    if ((e.KeyState & 32 + 8) == 32 + 8)
+                    {
+                        // Ctrl+Alt are pressed
+                        AfterDropEffect = AfterDropEffects.Mix;
+
+                    }
+
+                    if ((e.KeyState & 2) == 2)
+                    {
+                        // Right mouse button is pressed
+                        SwapNotCopy = true;
+                    }
+
+                    if ((e.KeyState & 1) == 1)
+                    {
+                        // Left mouse button is pressed
+
+                    }
+
+                    if (!((ColorItem)e.Data.GetData(GetType().FullName)).DragDefaultColor)
+                    {
+                        DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).BackColor;
+                    }
+                    else
+                    {
+                        DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).DefaultBackColor;
+                    }
                 }
 
-                if ((e.KeyState & 16) == 16)
-                {
-                    // Middle mouse button is pressed
-
-                }
-
-                if ((e.KeyState & 8) == 8)
-                {
-                    // Ctrl is pressed
-                    AfterDropEffect = AfterDropEffects.Darker;
-
-                }
-
-                if ((e.KeyState & 4) == 4)
-                {
-                    // Shift is pressed
-                    AfterDropEffect = AfterDropEffects.Lighter;
-
-                }
-
-                if ((e.KeyState & 32 + 8) == 32 + 8)
-                {
-                    // Ctrl+Alt are pressed
-                    AfterDropEffect = AfterDropEffects.Mix;
-
-                }
-
-                if ((e.KeyState & 2) == 2)
-                {
-                    // Right mouse button is pressed
-                    SwapNotCopy = true;
-                }
-
-                if ((e.KeyState & 1) == 1)
-                {
-                    // Left mouse button is pressed
-
-                }
-
-                if (!((ColorItem)e.Data.GetData(GetType().FullName)).DragDefaultColor)
-                {
-                    DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).BackColor;
-                }
                 else
                 {
-                    DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).DefaultBackColor;
+                    DragDropMouseHovering = false;
+
+                    await Task.Delay(10);
+                    Invalidate();
+
+                    e.Effect = DragDropEffects.None;
                 }
-            }
-
-            else
-            {
-                DragDropMouseHovering = false;
-
-                await Task.Delay(10);
-                Invalidate();
-
-                e.Effect = DragDropEffects.None;
             }
 
             base.OnDragEnter(e);

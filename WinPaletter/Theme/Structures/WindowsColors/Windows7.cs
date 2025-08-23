@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
-using static WinPaletter.CMD;
-using static WinPaletter.WinTerminal.Types;
 
 namespace WinPaletter.Theme.Structures
 {

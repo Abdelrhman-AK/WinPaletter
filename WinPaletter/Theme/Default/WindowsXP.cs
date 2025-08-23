@@ -222,8 +222,8 @@ namespace WinPaletter.Theme
             Icons.RecycleBinFull = $"{SysPaths.System32}\\shell32.dll,32";
             Icons.ControlPanel = $"{SysPaths.System32}\\shell32.dll,21";
 
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
 
             ref Structures.ScreenSaver ScreenSaver = ref TM.ScreenSaver;
             ScreenSaver.Enabled = true;

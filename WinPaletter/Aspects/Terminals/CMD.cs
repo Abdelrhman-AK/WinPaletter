@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
@@ -14,6 +15,9 @@ namespace WinPaletter
     {
         private Font F_cmd = new("Consolas", 16f, FontStyle.Regular);
         public Edition _Edition = Edition.CMD;
+
+        private Theme.Structures.WinTerminal terminal => Program.TM.Terminal;
+        private Theme.Structures.WinTerminal terminalPreview => Program.TM.TerminalPreview;
 
         public enum Edition
         {
@@ -215,6 +219,20 @@ namespace WinPaletter
                         data.Enabled = Program.TM.PowerShellx64.Enabled;
                         break;
                     }
+            }
+
+            comboBox1.Items.Clear();
+
+            if (terminal is not null)
+            {
+                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminal.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Lang.Strings.Aspects.TerminalStable} > {scheme.Name}");
+                comboBox1.SelectedIndex = -1;
+            }
+
+            if (terminalPreview is not null)
+            {
+                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminalPreview.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Lang.Strings.Aspects.TerminalPreview} > {scheme.Name}");
+                comboBox1.SelectedIndex = -1;
             }
 
             LoadData(data);
@@ -1622,6 +1640,54 @@ while ($true) {{
             if (IsShown)
             {
                 CMD_Preview.Alpha = (sender as UI.Controllers.TrackBarX).Value;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex >= 0)
+            {
+                Theme.Structures.WinTerminal.Types.Scheme scheme = null;
+
+                string selected = comboBox1.SelectedItem.ToString();
+                if (selected.StartsWith($"{Program.Lang.Strings.Aspects.TerminalStable} > "))
+                {
+                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalStable} > ", "");
+                    scheme = Program.TM.Terminal.Schemes.FirstOrDefault(x => x.Name == selected);
+                }
+                else if (selected.StartsWith($"{Program.Lang.Strings.Aspects.TerminalPreview} > "))
+                {
+                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalPreview} > ", "");
+                    scheme = Program.TM.TerminalPreview.Schemes.FirstOrDefault(x => x.Name == selected);
+                }
+
+                if (scheme is not null)
+                {
+                    ColorTable00.BackColor = scheme.Black;
+                    ColorTable01.BackColor = scheme.Blue;
+                    ColorTable02.BackColor = scheme.Green;
+                    ColorTable03.BackColor = scheme.Cyan;
+                    ColorTable04.BackColor = scheme.Red;
+                    ColorTable05.BackColor = scheme.Purple;
+                    ColorTable06.BackColor = scheme.Yellow;
+                    ColorTable07.BackColor = scheme.White;
+                    ColorTable08.BackColor = scheme.BrightBlack;
+                    ColorTable09.BackColor = scheme.BrightBlue;
+                    ColorTable10.BackColor = scheme.BrightGreen;
+                    ColorTable11.BackColor = scheme.BrightCyan;
+                    ColorTable12.BackColor = scheme.BrightRed;
+                    ColorTable13.BackColor = scheme.BrightPurple;
+                    ColorTable14.BackColor = scheme.BrightYellow;
+                    ColorTable15.BackColor = scheme.BrightWhite;
+                    CMD_CursorColor.BackColor = scheme.CursorColor;
+                }
+
+                UpdateCurPreview();
+                UpdateFromTrack(1);
+                UpdateFromTrack(2);
+                UpdateFromTrack(3);
+                UpdateFromTrack(4);
+                ApplyPreview();
             }
         }
     }

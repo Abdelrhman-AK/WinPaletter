@@ -32,7 +32,6 @@ namespace WinPaletter.Theme
             CMD.ScreenColorsForeground = 7;
             CMD.ScreenColorsBackground = 0;
             CMD.FaceName = "Consolas";
-            CMD.PixelWidth = 18;
             CMD.FontRaster = false;
             CMD.W10_1909_ForceV2 = true;
 
@@ -91,8 +90,8 @@ namespace WinPaletter.Theme
             ref Structures.Icons Icons = ref TM.Icons;
             Icons.Enabled = true;
 
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
 
             TM.Cursors.Enabled = true;
             TM.Cursors.Shadow = true;

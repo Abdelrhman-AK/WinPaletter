@@ -20,6 +20,7 @@
     <TargetFrameworkProfile />
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
     <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -34,14 +35,14 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>bin\Debug\WinPaletter.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
@@ -111,6 +112,24 @@
       <HintPath>packages\ImageProcessor.2.9.1\lib\net452\ImageProcessor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.0-preview.7.25380.108\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.10.0.0-preview.7.25380.108\lib\net462\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.10.0.0-preview.7.25380.108\lib\net462\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.10.0.0-preview.7.25380.108\lib\net462\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyModel.10.0.0-preview.7.25380.108\lib\net462\Microsoft.Extensions.DependencyModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.10.0.0-preview.7.25380.108\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic">
       <Private>False</Private>
     </Reference>
@@ -118,8 +137,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ookii.Dialogs.WinForms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
       <HintPath>packages\Ookii.Dialogs.WinForms.4.0.0\lib\net462\Ookii.Dialogs.WinForms.dll</HintPath>
@@ -144,12 +162,15 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Collections.Immutable, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.10.0.0-preview.7.25380.108\lib\net462\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Design">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <Private>False</Private>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.10.0.0-preview.7.25380.108\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.DirectoryServices.AccountManagement">
       <Private>False</Private>
@@ -157,14 +178,36 @@
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Formats.Nrbf, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Formats.Nrbf.10.0.0-preview.7.25380.108\lib\net462\System.Formats.Nrbf.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Compression.FileSystem">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.IO.Pipelines, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.10.0.0-preview.7.25380.108\lib\net462\System.IO.Pipelines.dll</HintPath>
+    </Reference>
     <Reference Include="System.Management">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.10.0.0-preview.7.25380.108\lib\net462\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Extensions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Resources.Extensions.10.0.0-preview.7.25380.108\lib\net462\System.Resources.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Text.Encodings.Web, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.10.0.0-preview.7.25380.108\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.10.0.0-preview.7.25380.108\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.10.0.0-preview.7.25380.108\lib\net462\System.Threading.Channels.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <Private>False</Private>
@@ -367,13 +410,19 @@
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Languages\Localizer\Strings.cs" />
     <Compile Include="Program\Assemblies\AnimatorNS\Animation.cs" />
-    <Compile Include="Program\Assemblies\AnimatorNS\Animator.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\Animator.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program\Assemblies\AnimatorNS\Controller.cs" />
-    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapControl.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapControl.Designer.cs">
       <DependentUpon>DoubleBitmapControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapForm.cs" />
+    <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program\Assemblies\AnimatorNS\DoubleBitmapForm.designer.cs">
       <DependentUpon>DoubleBitmapForm.cs</DependentUpon>
     </Compile>

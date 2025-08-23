@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter
 {

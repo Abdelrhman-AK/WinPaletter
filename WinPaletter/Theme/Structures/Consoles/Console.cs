@@ -84,7 +84,7 @@ namespace WinPaletter.Theme.Structures
         public bool FontRaster = false;
 
         /// <summary>Console font height</summary>
-        public int PixelHeight = 18;
+        public int PixelHeight = 16;
 
         /// <summary>Console font width</summary>
         public int PixelWidth = 0;
@@ -127,120 +127,85 @@ namespace WinPaletter.Theme.Structures
 
             Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)) == 1;
 
-            object temp;
             string RegAddress = $@"HKEY_CURRENT_USER\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
 
-            // Windows stores color values in reverse order, so we need to reverse them
-            temp = GetReg(RegAddress, "ColorTable00", @default.ColorTable00.Reverse().ToArgb());
-            ColorTable00 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
+            // Load color table (Windows stores colors in reverse byte order)
+            ColorTable00 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable00", @default.ColorTable00.Reverse().ToArgb()))).Reverse());
+            ColorTable01 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable01", @default.ColorTable01.Reverse().ToArgb()))).Reverse());
+            ColorTable02 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable02", @default.ColorTable02.Reverse().ToArgb()))).Reverse());
+            ColorTable03 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable03", @default.ColorTable03.Reverse().ToArgb()))).Reverse());
+            ColorTable04 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable04", @default.ColorTable04.Reverse().ToArgb()))).Reverse());
+            ColorTable05 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable05", @default.ColorTable05.Reverse().ToArgb()))).Reverse());
+            ColorTable06 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable06", @default.ColorTable06.Reverse().ToArgb()))).Reverse());
+            ColorTable07 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable07", @default.ColorTable07.Reverse().ToArgb()))).Reverse());
+            ColorTable08 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable08", @default.ColorTable08.Reverse().ToArgb()))).Reverse());
+            ColorTable09 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable09", @default.ColorTable09.Reverse().ToArgb()))).Reverse());
+            ColorTable10 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable10", @default.ColorTable10.Reverse().ToArgb()))).Reverse());
+            ColorTable11 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable11", @default.ColorTable11.Reverse().ToArgb()))).Reverse());
+            ColorTable12 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable12", @default.ColorTable12.Reverse().ToArgb()))).Reverse());
+            ColorTable13 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable13", @default.ColorTable13.Reverse().ToArgb()))).Reverse());
+            ColorTable14 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable14", @default.ColorTable14.Reverse().ToArgb()))).Reverse());
+            ColorTable15 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable15", @default.ColorTable15.Reverse().ToArgb()))).Reverse());
 
-            temp = GetReg(RegAddress, "ColorTable01", @default.ColorTable01.Reverse().ToArgb());
-            ColorTable01 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
+            // Popup colors (stored as single hex value "background + foreground")
+            string popupHex = ((int)GetReg(RegAddress, "PopupColors",Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16))).ToString("X").PadLeft(2, '0');
+            PopupBackground = Convert.ToInt32(popupHex[0].ToString(), 16);
+            PopupForeground = Convert.ToInt32(popupHex[1].ToString(), 16);
 
-            temp = GetReg(RegAddress, "ColorTable02", @default.ColorTable02.Reverse().ToArgb());
-            ColorTable02 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
+            // Screen colors (same storage format as popup)
+            string screenHex = ((int)GetReg(RegAddress, "ScreenColors",Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16))).ToString("X").PadLeft(2, '0');
+            ScreenColorsBackground = Convert.ToInt32(screenHex[0].ToString(), 16);
+            ScreenColorsForeground = Convert.ToInt32(screenHex[1].ToString(), 16);
 
-            temp = GetReg(RegAddress, "ColorTable03", @default.ColorTable03.Reverse().ToArgb());
-            ColorTable03 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable04", @default.ColorTable04.Reverse().ToArgb());
-            ColorTable04 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable05", @default.ColorTable05.Reverse().ToArgb());
-            ColorTable05 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable06", @default.ColorTable06.Reverse().ToArgb());
-            ColorTable06 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable07", @default.ColorTable07.Reverse().ToArgb());
-            ColorTable07 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable08", @default.ColorTable08.Reverse().ToArgb());
-            ColorTable08 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable09", @default.ColorTable09.Reverse().ToArgb());
-            ColorTable09 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable10", @default.ColorTable10.Reverse().ToArgb());
-            ColorTable10 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable11", @default.ColorTable11.Reverse().ToArgb());
-            ColorTable11 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable12", @default.ColorTable12.Reverse().ToArgb());
-            ColorTable12 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable13", @default.ColorTable13.Reverse().ToArgb());
-            ColorTable13 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable14", @default.ColorTable14.Reverse().ToArgb());
-            ColorTable14 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            temp = GetReg(RegAddress, "ColorTable15", @default.ColorTable15.Reverse().ToArgb());
-            ColorTable15 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-
-            // Windows stores popup forecolor and backcolor in the same value, so we need to split them
-            temp = GetReg(RegAddress, "PopupColors", Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16));
-            string d = ((int)temp).ToString("X");
-            if (d.Count() == 1)
-                d = $"{0}{d}";
-            PopupBackground = Convert.ToInt32(d[0].ToString(), 16);
-            PopupForeground = Convert.ToInt32(d[1].ToString(), 16);
-
-            // Windows stores screen forecolor and backcolor in the same value, so we need to split them
-            temp = GetReg(RegAddress, "ScreenColors", Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16));
-            d = ((int)temp).ToString("X");
-            if (d.Count() == 1)
-                d = $"{0}{d}";
-            ScreenColorsBackground = Convert.ToInt32(d[0].ToString(), 16);
-            ScreenColorsForeground = Convert.ToInt32(d[1].ToString(), 16);
-
+            // Cursor size
             CursorSize = Convert.ToInt32(GetReg(RegAddress, "CursorSize", 25));
 
-            temp = GetReg(RegAddress, "FaceName", @default.FaceName);
-            if (Fonts.Exists(temp.ToString()))
-            {
-                FaceName = temp.ToString();
-            }
-            else
-            {
-                FaceName = @default.FaceName;
-            }
+            // Font name (must exist in Fonts list, or fallback to default)
+            string faceName = GetReg(RegAddress, "FaceName", @default.FaceName).ToString();
+            if (Fonts.Exists(faceName) || faceName.Equals("__DefaultTTFont__", StringComparison.OrdinalIgnoreCase)) FaceName = faceName;
+            else FaceName = @default.FaceName;
 
-            temp = GetReg(RegAddress, "FontFamily", !@default.FontRaster ? 54 : 1);
-            int fontFamily = (int)temp; // registry value
+            // Font family (check raster vs TrueType)
+            int fontFamily = (int)GetReg(RegAddress, "FontFamily", !@default.FontRaster ? 54 : 1);
             const int TMPF_TRUETYPE = 0x04;
-
             FontRaster = (fontFamily & TMPF_TRUETYPE) == 0;
 
-            // Optional: always treat "Terminal" as raster bitmap
-            if (FaceName.Equals("Terminal", StringComparison.OrdinalIgnoreCase)) FontRaster = true;
+            // Special handling for "__DefaultTTFont__" and "Terminal"
+            if (FaceName.Equals("__DefaultTTFont__", StringComparison.OrdinalIgnoreCase))
+            {
+                FaceName = "Consolas";  // "__DefaultTTFont__" should map to a real TTF font
+                FontRaster = false;
+            }
+            else if (FaceName.Equals("Terminal", StringComparison.OrdinalIgnoreCase))
+            {
+                FontRaster = true;
+            }
 
-            temp = GetReg(RegAddress, "FontSize", (@default.PixelHeight << 16) | (0 & 0xFFFF));
-
-            if ((int)temp == 0 & !FontRaster)
+            // Font size (High word = height, Low word = width)
+            int fontSize = (int)GetReg(RegAddress, "FontSize", (@default.PixelHeight << 16));
+            if (fontSize == 0 && !FontRaster)
             {
                 PixelHeight = @default.PixelHeight;
                 PixelWidth = @default.PixelWidth;
             }
             else
             {
-                PixelHeight = ((int)temp >> 16) & 0xFFFF;
-                PixelWidth = (int)temp & 0xFFFF;
+                PixelHeight = (fontSize >> 16) & 0xFFFF;
+                PixelWidth = fontSize & 0xFFFF;
             }
-                
+
+            // Font weight
             FontWeight = Convert.ToInt32(GetReg(RegAddress, "FontWeight", 400));
 
-            if (OS.W10_1909)
-            {
-                temp = GetReg(RegAddress, "CursorColor", Color.White.Reverse().ToArgb());
-                W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(temp)).Reverse());
-                W10_1909_CursorType = Convert.ToInt32(GetReg(RegAddress, "CursorType", 1));
-                W10_1909_ForceV2 = Convert.ToBoolean(GetReg(RegAddress, "ForceV2", true));
-                W10_1909_LineSelection = Convert.ToBoolean(GetReg(RegAddress, "LineSelection", false));
-                W10_1909_TerminalScrolling = Convert.ToBoolean(GetReg(RegAddress, "TerminalScrolling", false));
-                W10_1909_WindowAlpha = Convert.ToInt32(GetReg(RegAddress, "WindowAlpha", 255));
-            }
+            // Cursor color
+            W10_1909_CursorColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "CursorColor", Color.White.Reverse().ToArgb()))).Reverse());
+
+            // Misc Windows 10+ settings
+            W10_1909_CursorType = Convert.ToInt32(GetReg(RegAddress, "CursorType", 1));
+            W10_1909_ForceV2 = Convert.ToBoolean(GetReg(RegAddress, "ForceV2", true));
+            W10_1909_LineSelection = Convert.ToBoolean(GetReg(RegAddress, "LineSelection", false));
+            W10_1909_TerminalScrolling = Convert.ToBoolean(GetReg(RegAddress, "TerminalScrolling", false));
+            W10_1909_WindowAlpha = Convert.ToInt32(GetReg(RegAddress, "WindowAlpha", 255));
         }
 
         /// <summary>

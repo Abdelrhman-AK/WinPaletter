@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Media;
 using System.Windows.Forms;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter
 {

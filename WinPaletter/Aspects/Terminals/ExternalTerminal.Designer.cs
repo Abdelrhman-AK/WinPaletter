@@ -173,6 +173,14 @@ namespace WinPaletter
             this.Button7 = new WinPaletter.UI.WP.Button();
             this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.Button6 = new WinPaletter.UI.WP.Button();
+            this.PictureBox29 = new System.Windows.Forms.PictureBox();
+            this.PictureBox30 = new System.Windows.Forms.PictureBox();
+            this.PictureBox31 = new System.Windows.Forms.PictureBox();
+            this.PictureBox34 = new System.Windows.Forms.PictureBox();
+            this.PictureBox26 = new System.Windows.Forms.PictureBox();
+            this.PictureBox28 = new System.Windows.Forms.PictureBox();
+            this.PictureBox23 = new System.Windows.Forms.PictureBox();
+            this.PictureBox22 = new System.Windows.Forms.PictureBox();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -212,6 +220,14 @@ namespace WinPaletter
             this.bottom_buttons.SuspendLayout();
             this.GroupBox73.SuspendLayout();
             this.GroupBox51.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox23)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControl1
@@ -503,6 +519,14 @@ namespace WinPaletter
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox1.Controls.Add(this.PictureBox29);
+            this.groupBox1.Controls.Add(this.PictureBox30);
+            this.groupBox1.Controls.Add(this.PictureBox31);
+            this.groupBox1.Controls.Add(this.PictureBox34);
+            this.groupBox1.Controls.Add(this.PictureBox26);
+            this.groupBox1.Controls.Add(this.PictureBox28);
+            this.groupBox1.Controls.Add(this.PictureBox23);
+            this.groupBox1.Controls.Add(this.PictureBox22);
             this.groupBox1.Controls.Add(this.label36);
             this.groupBox1.Controls.Add(this.label19);
             this.groupBox1.Controls.Add(this.label13);
@@ -2190,6 +2214,102 @@ namespace WinPaletter
             this.Button6.UseVisualStyleBackColor = false;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
             // 
+            // PictureBox29
+            // 
+            this.PictureBox29.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox29.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox29.Image")));
+            this.PictureBox29.Location = new System.Drawing.Point(31, 278);
+            this.PictureBox29.Name = "PictureBox29";
+            this.PictureBox29.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox29.TabIndex = 249;
+            this.PictureBox29.TabStop = false;
+            // 
+            // PictureBox30
+            // 
+            this.PictureBox30.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox30.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox30.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox30.Image")));
+            this.PictureBox30.Location = new System.Drawing.Point(31, 247);
+            this.PictureBox30.Name = "PictureBox30";
+            this.PictureBox30.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox30.TabIndex = 248;
+            this.PictureBox30.TabStop = false;
+            // 
+            // PictureBox31
+            // 
+            this.PictureBox31.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox31.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox31.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox31.Image")));
+            this.PictureBox31.Location = new System.Drawing.Point(31, 216);
+            this.PictureBox31.Name = "PictureBox31";
+            this.PictureBox31.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox31.TabIndex = 247;
+            this.PictureBox31.TabStop = false;
+            // 
+            // PictureBox34
+            // 
+            this.PictureBox34.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox34.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox34.Image")));
+            this.PictureBox34.Location = new System.Drawing.Point(31, 185);
+            this.PictureBox34.Name = "PictureBox34";
+            this.PictureBox34.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox34.TabIndex = 246;
+            this.PictureBox34.TabStop = false;
+            // 
+            // PictureBox26
+            // 
+            this.PictureBox26.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox26.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox26.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox26.Image")));
+            this.PictureBox26.Location = new System.Drawing.Point(31, 154);
+            this.PictureBox26.Name = "PictureBox26";
+            this.PictureBox26.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox26.TabIndex = 245;
+            this.PictureBox26.TabStop = false;
+            // 
+            // PictureBox28
+            // 
+            this.PictureBox28.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox28.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox28.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox28.Image")));
+            this.PictureBox28.Location = new System.Drawing.Point(31, 123);
+            this.PictureBox28.Name = "PictureBox28";
+            this.PictureBox28.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox28.TabIndex = 244;
+            this.PictureBox28.TabStop = false;
+            // 
+            // PictureBox23
+            // 
+            this.PictureBox23.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox23.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox23.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox23.Image")));
+            this.PictureBox23.Location = new System.Drawing.Point(31, 92);
+            this.PictureBox23.Name = "PictureBox23";
+            this.PictureBox23.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox23.TabIndex = 243;
+            this.PictureBox23.TabStop = false;
+            // 
+            // PictureBox22
+            // 
+            this.PictureBox22.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
+            this.PictureBox22.Location = new System.Drawing.Point(31, 61);
+            this.PictureBox22.Name = "PictureBox22";
+            this.PictureBox22.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox22.TabIndex = 242;
+            this.PictureBox22.TabStop = false;
+            // 
             // ExternalTerminal
             // 
             this.AllowDrop = true;
@@ -2254,6 +2374,14 @@ namespace WinPaletter
             this.bottom_buttons.ResumeLayout(false);
             this.GroupBox73.ResumeLayout(false);
             this.GroupBox51.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox23)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2394,5 +2522,13 @@ namespace WinPaletter
         internal PictureBox PictureBox10;
         private UI.WP.AlertBox alertBox3;
         public UI.Simulation.WinCMD CMD_Preview;
+        internal PictureBox PictureBox29;
+        internal PictureBox PictureBox30;
+        internal PictureBox PictureBox31;
+        internal PictureBox PictureBox34;
+        internal PictureBox PictureBox26;
+        internal PictureBox PictureBox28;
+        internal PictureBox PictureBox23;
+        internal PictureBox PictureBox22;
     }
 }

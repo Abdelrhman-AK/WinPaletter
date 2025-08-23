@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using static WinPaletter.WinTerminal.Types;
+using static WinPaletter.Theme.Structures.WinTerminal.Types;
 
-namespace WinPaletter
+namespace WinPaletter.Theme.Structures
 {
     /// <summary>
     /// Class that has data of Windows Terminal settings
@@ -1198,6 +1198,226 @@ namespace WinPaletter
             return JToken.DeepEquals(value1, value2);
         }
 
+        List<Scheme> DefaultSchemes = new()
+        {
+    new Scheme
+    {
+        Name = "Campbell",
+        Background = Color.FromArgb(12, 12, 12),
+        Black = Color.FromArgb(12, 12, 12),
+        Blue = Color.FromArgb(0, 55, 218),
+        BrightBlack = Color.FromArgb(118, 118, 118),
+        BrightBlue = Color.FromArgb(59, 120, 255),
+        BrightCyan = Color.FromArgb(97, 214, 214),
+        BrightGreen = Color.FromArgb(22, 198, 12),
+        BrightPurple = Color.FromArgb(180, 0, 158),
+        BrightRed = Color.FromArgb(231, 72, 86),
+        BrightWhite = Color.FromArgb(242, 242, 242),
+        BrightYellow = Color.FromArgb(249, 241, 165),
+        CursorColor = Color.FromArgb(255, 255, 255),
+        Cyan = Color.FromArgb(58, 150, 221),
+        Foreground = Color.FromArgb(204, 204, 204),
+        Green = Color.FromArgb(19, 161, 14),
+        Purple = Color.FromArgb(136, 23, 152),
+        Red = Color.FromArgb(197, 15, 31),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(204, 204, 204),
+        Yellow = Color.FromArgb(196, 156, 0)
+    },
+    new Scheme
+    {
+        Name = "Campbell Powershell",
+        Background = Color.FromArgb(1, 36, 86),
+        Black = Color.FromArgb(12, 12, 12),
+        Blue = Color.FromArgb(0, 55, 218),
+        BrightBlack = Color.FromArgb(118, 118, 118),
+        BrightBlue = Color.FromArgb(59, 120, 255),
+        BrightCyan = Color.FromArgb(97, 214, 214),
+        BrightGreen = Color.FromArgb(22, 198, 12),
+        BrightPurple = Color.FromArgb(180, 0, 158),
+        BrightRed = Color.FromArgb(231, 72, 86),
+        BrightWhite = Color.FromArgb(242, 242, 242),
+        BrightYellow = Color.FromArgb(249, 241, 165),
+        CursorColor = Color.FromArgb(255, 255, 255),
+        Cyan = Color.FromArgb(58, 150, 221),
+        Foreground = Color.FromArgb(204, 204, 204),
+        Green = Color.FromArgb(19, 161, 14),
+        Purple = Color.FromArgb(136, 23, 152),
+        Red = Color.FromArgb(197, 15, 31),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(204, 204, 204),
+        Yellow = Color.FromArgb(196, 156, 0)
+    },
+    new Scheme
+    {
+        Name = "One Half Dark",
+        Background = Color.FromArgb(40, 44, 52),
+        Black = Color.FromArgb(40, 44, 52),
+        Blue = Color.FromArgb(97, 175, 239),
+        BrightBlack = Color.FromArgb(90, 99, 116),
+        BrightBlue = Color.FromArgb(97, 175, 239),
+        BrightCyan = Color.FromArgb(86, 182, 194),
+        BrightGreen = Color.FromArgb(152, 195, 121),
+        BrightPurple = Color.FromArgb(198, 120, 221),
+        BrightRed = Color.FromArgb(224, 108, 117),
+        BrightWhite = Color.FromArgb(220, 223, 228),
+        BrightYellow = Color.FromArgb(229, 192, 123),
+        CursorColor = Color.FromArgb(255, 255, 255),
+        Cyan = Color.FromArgb(86, 182, 194),
+        Foreground = Color.FromArgb(220, 223, 228),
+        Green = Color.FromArgb(152, 195, 121),
+        Purple = Color.FromArgb(198, 120, 221),
+        Red = Color.FromArgb(224, 108, 117),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(220, 223, 228),
+        Yellow = Color.FromArgb(229, 192, 123)
+    },
+    new Scheme
+    {
+        Name = "One Half Light",
+        Background = Color.FromArgb(250, 250, 250),
+        Black = Color.FromArgb(56, 58, 66),
+        Blue = Color.FromArgb(1, 132, 188),
+        BrightBlack = Color.FromArgb(79, 82, 93),
+        BrightBlue = Color.FromArgb(97, 175, 239),
+        BrightCyan = Color.FromArgb(86, 181, 193),
+        BrightGreen = Color.FromArgb(152, 195, 121),
+        BrightPurple = Color.FromArgb(197, 119, 221),
+        BrightRed = Color.FromArgb(223, 108, 117),
+        BrightWhite = Color.FromArgb(255, 255, 255),
+        BrightYellow = Color.FromArgb(228, 192, 122),
+        CursorColor = Color.FromArgb(79, 82, 93),
+        Cyan = Color.FromArgb(9, 151, 179),
+        Foreground = Color.FromArgb(56, 58, 66),
+        Green = Color.FromArgb(80, 161, 79),
+        Purple = Color.FromArgb(166, 38, 164),
+        Red = Color.FromArgb(228, 86, 73),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(250, 250, 250),
+        Yellow = Color.FromArgb(193, 131, 1)
+    },
+    new Scheme
+    {
+        Name = "Solarized Dark",
+        Background = Color.FromArgb(0, 43, 54),
+        Black = Color.FromArgb(0, 43, 54),
+        Blue = Color.FromArgb(38, 139, 210),
+        BrightBlack = Color.FromArgb(7, 54, 66),
+        BrightBlue = Color.FromArgb(131, 148, 150),
+        BrightCyan = Color.FromArgb(147, 161, 161),
+        BrightGreen = Color.FromArgb(88, 110, 117),
+        BrightPurple = Color.FromArgb(108, 113, 196),
+        BrightRed = Color.FromArgb(203, 75, 22),
+        BrightWhite = Color.FromArgb(253, 246, 227),
+        BrightYellow = Color.FromArgb(101, 123, 131),
+        CursorColor = Color.FromArgb(255, 255, 255),
+        Cyan = Color.FromArgb(42, 161, 152),
+        Foreground = Color.FromArgb(131, 148, 150),
+        Green = Color.FromArgb(133, 153, 0),
+        Purple = Color.FromArgb(211, 54, 130),
+        Red = Color.FromArgb(220, 50, 47),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(238, 232, 213),
+        Yellow = Color.FromArgb(181, 137, 0)
+    },
+    new Scheme
+    {
+        Name = "Solarized Light",
+        Background = Color.FromArgb(253, 246, 227),
+        Black = Color.FromArgb(0, 43, 54),
+        Blue = Color.FromArgb(38, 139, 210),
+        BrightBlack = Color.FromArgb(7, 54, 66),
+        BrightBlue = Color.FromArgb(131, 148, 150),
+        BrightCyan = Color.FromArgb(147, 161, 161),
+        BrightGreen = Color.FromArgb(88, 110, 117),
+        BrightPurple = Color.FromArgb(108, 113, 196),
+        BrightRed = Color.FromArgb(203, 75, 22),
+        BrightWhite = Color.FromArgb(253, 246, 227),
+        BrightYellow = Color.FromArgb(101, 123, 131),
+        CursorColor = Color.FromArgb(0, 43, 54),
+        Cyan = Color.FromArgb(42, 161, 152),
+        Foreground = Color.FromArgb(101, 123, 131),
+        Green = Color.FromArgb(133, 153, 0),
+        Purple = Color.FromArgb(211, 54, 130),
+        Red = Color.FromArgb(220, 50, 47),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(238, 232, 213),
+        Yellow = Color.FromArgb(181, 137, 0)
+    },
+    new Scheme
+    {
+        Name = "Tango Dark",
+        Background = Color.FromArgb(0, 0, 0),
+        Black = Color.FromArgb(0, 0, 0),
+        Blue = Color.FromArgb(52, 101, 164),
+        BrightBlack = Color.FromArgb(85, 87, 83),
+        BrightBlue = Color.FromArgb(114, 159, 207),
+        BrightCyan = Color.FromArgb(52, 226, 226),
+        BrightGreen = Color.FromArgb(138, 226, 52),
+        BrightPurple = Color.FromArgb(173, 127, 168),
+        BrightRed = Color.FromArgb(239, 41, 41),
+        BrightWhite = Color.FromArgb(238, 238, 236),
+        BrightYellow = Color.FromArgb(252, 233, 79),
+        CursorColor = Color.FromArgb(255, 255, 255),
+        Cyan = Color.FromArgb(6, 152, 154),
+        Foreground = Color.FromArgb(211, 215, 207),
+        Green = Color.FromArgb(78, 154, 6),
+        Purple = Color.FromArgb(117, 80, 123),
+        Red = Color.FromArgb(204, 0, 0),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(211, 215, 207),
+        Yellow = Color.FromArgb(196, 160, 0)
+    },
+    new Scheme
+    {
+        Name = "Tango Light",
+        Background = Color.FromArgb(255, 255, 255),
+        Black = Color.FromArgb(0, 0, 0),
+        Blue = Color.FromArgb(52, 101, 164),
+        BrightBlack = Color.FromArgb(85, 87, 83),
+        BrightBlue = Color.FromArgb(114, 159, 207),
+        BrightCyan = Color.FromArgb(52, 226, 226),
+        BrightGreen = Color.FromArgb(138, 226, 52),
+        BrightPurple = Color.FromArgb(173, 127, 168),
+        BrightRed = Color.FromArgb(239, 41, 41),
+        BrightWhite = Color.FromArgb(238, 238, 236),
+        BrightYellow = Color.FromArgb(252, 233, 79),
+        CursorColor = Color.FromArgb(0, 0, 0),
+        Cyan = Color.FromArgb(6, 152, 154),
+        Foreground = Color.FromArgb(85, 87, 83),
+        Green = Color.FromArgb(78, 154, 6),
+        Purple = Color.FromArgb(117, 80, 123),
+        Red = Color.FromArgb(204, 0, 0),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(211, 215, 207),
+        Yellow = Color.FromArgb(196, 160, 0)
+    },
+    new Scheme
+    {
+        Name = "Vintage",
+        Background = Color.FromArgb(0, 0, 0),
+        Black = Color.FromArgb(0, 0, 0),
+        Blue = Color.FromArgb(0, 0, 128),
+        BrightBlack = Color.FromArgb(128, 128, 128),
+        BrightBlue = Color.FromArgb(0, 0, 255),
+        BrightCyan = Color.FromArgb(0, 255, 255),
+        BrightGreen = Color.FromArgb(0, 255, 0),
+        BrightPurple = Color.FromArgb(255, 0, 255),
+        BrightRed = Color.FromArgb(255, 0, 0),
+        BrightWhite = Color.FromArgb(255, 255, 255),
+        BrightYellow = Color.FromArgb(255, 255, 0),
+        CursorColor = Color.FromArgb(255, 255, 255),
+        Cyan = Color.FromArgb(0, 128, 128),
+        Foreground = Color.FromArgb(192, 192, 192),
+        Green = Color.FromArgb(0, 128, 0),
+        Purple = Color.FromArgb(128, 0, 128),
+        Red = Color.FromArgb(128, 0, 0),
+        SelectionBackground = Color.FromArgb(255, 255, 255),
+        White = Color.FromArgb(192, 192, 192),
+        Yellow = Color.FromArgb(128, 128, 0)
+    }
+};
+
         #endregion
 
         /// <summary>
@@ -1233,7 +1453,7 @@ namespace WinPaletter
                         Theme = result.Theme;
                         DefaultProfile = result.DefaultProfile;
                         Profiles = result.Profiles;
-                        Schemes = result.Schemes;
+                        Schemes = result.Schemes.Count ==  0 ? DefaultSchemes : result.Schemes;
                         Themes = result.Themes;
                         UseAcrylicInTabRow = result.UseAcrylicInTabRow;
 

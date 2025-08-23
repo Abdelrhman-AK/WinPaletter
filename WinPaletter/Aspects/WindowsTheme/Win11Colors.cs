@@ -10,7 +10,6 @@ using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.TypesExtensions.ColorsExtensions;
-using static WinPaletter.WinTerminal.Types;
 
 namespace WinPaletter
 {
