@@ -29,7 +29,7 @@ namespace WinPaletter.Theme.Structures
         {
             ///
             Default,
-            /// <summary>Like what is used in Windows WXP and Vista</summary>
+            /// <summary>Like what is used in Windows XP and Vista</summary>
             ClassicNT,
             /// <summary>Placeholder: does nothing</summary>
             Placeholder,

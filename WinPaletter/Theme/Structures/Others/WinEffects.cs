@@ -120,7 +120,7 @@ namespace WinPaletter.Theme.Structures
         public bool Win11ClassicContextMenu = false;
 
         /// <summary>
-        /// Make Windows Explorer shows items in SysListView32 style (that looks like Windows WXP and Vista) in higher editions of Windows
+        /// Make Windows Explorer shows items in SysListView32 style (that looks like Windows XP and Vista) in higher editions of Windows
         /// <br></br><b>- Targets Windows 7 and later</b>
         /// </summary>
         public bool SysListView32 = false;

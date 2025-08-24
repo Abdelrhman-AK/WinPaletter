@@ -60,13 +60,13 @@ namespace WinPaletter.Theme.Structures
         public int DesktopIconSize = 48;
 
         /// <summary>
-        /// Size of shell icons (used in Windows WXP)
+        /// Size of shell icons (used in Windows XP)
         /// <br>Default: <b>32</b></br>
         /// </summary>
         public int ShellIconSize = 32;
 
         /// <summary>
-        /// Size of small icons (used in Windows WXP)
+        /// Size of small icons (used in Windows XP)
         /// <br>Default: <b>16</b></br>
         /// </summary>
         public int ShellSmallIconSize = 16;
@@ -182,7 +182,7 @@ namespace WinPaletter.Theme.Structures
             SmCaptionHeight = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", @default.SmCaptionHeight * -15)) / -15;
             SmCaptionWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", @default.SmCaptionWidth * -15)) / -15;
 
-            // Get Shell Icon Size and Shell Small Icon Size only on Windows WXP
+            // Get Shell Icon Size and Shell Small Icon Size only on Windows XP
             if (OS.WXP)
             {
                 try { ShellIconSize = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", @default.ShellIconSize)); }
@@ -374,7 +374,7 @@ namespace WinPaletter.Theme.Structures
                     SystemParametersInfo(treeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_WRITEANDNOTIFY);
                 });
 
-                // Apply Shell Icon Size and Shell Small Icon Size only on Windows WXP
+                // Apply Shell Icon Size and Shell Small Icon Size only on Windows XP
                 if (OS.WXP)
                 {
                     EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);

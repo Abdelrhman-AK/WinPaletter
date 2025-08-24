@@ -1,5 +1,4 @@
-﻿using ImageProcessor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -287,11 +286,10 @@ namespace WinPaletter.UI.Controllers
 
             if (!Program.Style.DarkMode)
             {
-                using (ImageFactory imgF = new())
+                using (Bitmap bmpContrast = bmp?.Contrast(0.4f))
+                using (Bitmap bmpInvert = bmpContrast?.Invert())
                 {
-                    imgF.Load(bmp);
-                    imgF.Contrast(40);
-                    bmp = (imgF.Image as Bitmap).Invert().Fade(0.7f);
+                    bmp = bmpInvert.Fade(0.7f);
                 }
             }
 

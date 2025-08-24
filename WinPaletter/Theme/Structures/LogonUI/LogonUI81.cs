@@ -253,14 +253,7 @@ namespace WinPaletter.Theme.Structures
 
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring lock screen image with radius `{Blur_Intensity}`.");
 
-                    ImageProcessor.ImageFactory ImgF = new();
-                    using (Bitmap b = new(bmp))
-                    {
-                        ImgF.Load(b);
-                        ImgF.GaussianBlur(Blur_Intensity);
-                        bmp = (Bitmap)ImgF.Image;
-                    }
-
+                    bmp = bmp.Blur(Blur_Intensity);
                 }
 
                 if (Noise)

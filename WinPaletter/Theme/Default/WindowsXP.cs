@@ -5,7 +5,7 @@ namespace WinPaletter.Theme
     public static partial class Default
     {
         /// <summary>
-        /// Default Windows WXP theme as a <see cref="Manager"/> object
+        /// Default Windows XP theme as a <see cref="Manager"/> object
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
         public static Manager WindowsXP()

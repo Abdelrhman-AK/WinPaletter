@@ -95,7 +95,7 @@ namespace WinPaletter.Templates
         private Theme.Manager _hookedTM = Program.TM;
 
         /// <summary>
-        /// Visual style resources used for Windows WXP preview
+        /// Visual style resources used for Windows XP preview
         /// </summary>
         public VisualStylesRes resVS
         {

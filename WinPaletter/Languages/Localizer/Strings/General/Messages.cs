@@ -62,6 +62,9 @@
                 public string LogToClipboard { get; set; } = "Log content has been copied to the clipboard. You can paste it into a text editor or report it to WinPaletter' GitHub issues.";
                 public string LogSaved { get; set; } = "Log file has been saved as '{0}'";
                 public string LogCopied { get; set; } = "Log file has been copied to '{0}'";
+                public string TerminalDeleteScheme { get; set; } = "Are you sure you want to delete scheme `{0}`?";
+                public string TerminalDeleteTheme { get; set; } = "Are you sure you want to delete theme `{0}`?";
+
             }
         }
     }

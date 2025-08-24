@@ -108,7 +108,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="darkMode">True to apply dark mode, false to remove dark mode.</param>
         public static void DarkTitlebar(IntPtr hWnd, bool darkMode)
         {
-            // Check if the operating system is Windows WXP, Vista, 7, 8, or 8.1
+            // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x)
                 return;
 

@@ -43,12 +43,12 @@ namespace WinPaletter
             }
             else if (!OS.WXP && !OS.W8 && !OS.W81)
             {
-                // If the OS is not Windows WXP, 8 or 8.1 or even DWM composition is disabled, use Acrylic effect.
+                // If the OS is not Windows XP, 8 or 8.1 or even DWM composition is disabled, use Acrylic effect.
                 this.DropEffect(Padding.Empty, false, DWM.FormStyle.Acrylic);
             }
             else
             {
-                // If the OS is Windows WXP, 8 or 8.1, use transparent gray effect.
+                // If the OS is Windows XP, 8 or 8.1, use transparent gray effect.
                 this.DrawTransparentGray();
             }
         }

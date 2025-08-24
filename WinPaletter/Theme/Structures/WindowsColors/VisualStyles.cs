@@ -364,7 +364,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
             }
-            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows WXP theme
+            catch // Couldn't load visual styles File by libmsstyles, so we will assume that it is a Windows XP theme
             {
                 try
                 {

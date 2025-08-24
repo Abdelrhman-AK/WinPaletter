@@ -5,7 +5,7 @@ using System.Drawing;
 namespace WinPaletter
 {
     /// <summary>
-    /// This class is used to draw Windows WXP visual styles on <see cref="Graphics"/> .
+    /// This class is used to draw Windows XP visual styles on <see cref="Graphics"/> .
     /// </summary>
     /// <param name="themeFile"></param>
     public class VisualStylesRes(string themeFile) : IDisposable
@@ -21,38 +21,38 @@ namespace WinPaletter
         public enum Element
         {
             /// <summary>
-            /// Windows WXP titlebar.
+            /// Windows XP titlebar.
             /// </summary>
             Titlebar,
 
             /// <summary>
-            /// Windows WXP right edge.
+            /// Windows XP right edge.
             /// </summary>
             RightEdge,
 
             /// <summary>
-            /// Windows WXP left edge.
+            /// Windows XP left edge.
             /// </summary>
             LeftEdge,
 
             /// <summary>
-            /// Windows WXP bottom edge.
+            /// Windows XP bottom edge.
             /// </summary>
             BottomEdge,
 
             /// <summary>
-            /// Windows WXP taskbar.
+            /// Windows XP taskbar.
             /// </summary>
             Taskbar,
 
             /// <summary>
-            /// Windows WXP close button.
+            /// Windows XP close button.
             /// </summary>
             CloseButton
         }
 
         /// <summary>
-        /// Draws a Windows WXP visual style element on the specified <see cref="Graphics"/> object.
+        /// Draws a Windows XP visual style element on the specified <see cref="Graphics"/> object.
         /// </summary>
         /// <param name="G"></param>
         /// <param name="Rectangle"></param>

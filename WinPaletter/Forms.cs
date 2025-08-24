@@ -66,7 +66,7 @@ namespace WinPaletter
 
         private static WinXPColors _WinXPColors;
         /// <summary>
-        /// Gets the instance of the form <see cref="WinXPColors"/> to manage Windows WXP theme.
+        /// Gets the instance of the form <see cref="WinXPColors"/> to manage Windows XP theme.
         /// </summary>
         public static WinXPColors WinXPColors => (_WinXPColors == null || _WinXPColors.IsDisposed) ? (_WinXPColors = CreateInstance(_WinXPColors)) : _WinXPColors;
 
@@ -249,7 +249,7 @@ namespace WinPaletter
 
         private static LogonUIXP _LogonUIXP;
         /// <summary>
-        /// Gets the instance of the form <see cref="LogonUIXP"/> to manage Windows WXP logon screen.
+        /// Gets the instance of the form <see cref="LogonUIXP"/> to manage Windows XP logon screen.
         /// </summary>
         public static LogonUIXP LogonUIXP => (_LogonUIXP == null || _LogonUIXP.IsDisposed) ? (_LogonUIXP = CreateInstance(_LogonUIXP)) : _LogonUIXP;
 

@@ -1,5 +1,4 @@
-﻿using ImageProcessor.Imaging.Quantizers.WuQuantizer;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;

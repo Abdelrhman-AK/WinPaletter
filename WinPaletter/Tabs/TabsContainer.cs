@@ -156,7 +156,7 @@ namespace WinPaletter.Tabs
 
             TP.Controls.Add(form);
 
-            if (!DesignMode) Program.Animator.HideSync(TabControl);
+            if (!DesignMode && !TabControl.IsInUse()) Program.Animator.HideSync(TabControl);
 
             form.Show();
 
@@ -175,7 +175,7 @@ namespace WinPaletter.Tabs
                 form.Controls.OfType<TitlebarExtender>().FirstOrDefault().Flag = TitlebarExtender.Flags.Tabs_Extended;
             }
 
-            if (!DesignMode) Program.Animator.ShowSync(TabControl);
+            if (!DesignMode && !TabControl.IsInUse()) Program.Animator.ShowSync(TabControl);
 
             Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"`{form.Name}` form has been shown and added into tabs.");
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using static WinPaletter.NativeMethods.User32;
@@ -117,14 +118,10 @@ namespace WinPaletter.Theme.Structures
 
             Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Rendering a custom image with HSL values: H={H}, S={S}, L={L}.");
 
-            // Process the image
-            using (ImageProcessor.ImageFactory ImgF = new())
+            using (Bitmap wall_source = BitmapMgr.Load(Image))
+            using (Bitmap wall = wall_source.AdjustHSL(H, S / 100f, L / 100f))
             {
-                ImgF.Load(Image);
-                ImgF.Hue(H, true);
-                ImgF.Saturation(S - 100);
-                ImgF.Brightness(L - 100);
-                ImgF.Image.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
+                wall?.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
             }
 
             // Apply the processed image

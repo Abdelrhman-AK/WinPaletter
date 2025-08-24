@@ -21,8 +21,8 @@ namespace WinPaletter.UI.Style
         {
             try
             {
-                // Windows WXP does not support the modern input box dialog.
-                if (!OS.WXP)
+                //Windows XP does not support the modern input box dialog.
+            if (!OS.WXP)
                 {
                     // Create a new instance of the modern input box dialog.
                     using (InputDialog ib = new()
@@ -30,7 +30,7 @@ namespace WinPaletter.UI.Style
                         MainInstruction = Instruction,
                         Input = Value,
                         Content = Notice,
-                        WindowTitle = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName
+                        WindowTitle = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName,
                     })
                     {
                         // Hide the dialog and return the response.
@@ -54,7 +54,7 @@ namespace WinPaletter.UI.Style
                 }
                 else
                 {
-                    // If the operating system is Windows WXP, use the classic input box dialog.
+                    // If the operating system is Windows XP, use the classic input box dialog.
                     return InputBox_Classic(Instruction, Value, Notice, Title);
                 }
             }
@@ -67,7 +67,7 @@ namespace WinPaletter.UI.Style
 
 
         /// <summary>
-        /// Shows a classic input box dialog that is built into the .NET Framework. This method is used as a fallback when the modern input box dialog is not available as in Windows WXP.
+        /// Shows a classic input box dialog that is built into the .NET Framework. This method is used as a fallback when the modern input box dialog is not available as in Windows XP.
         /// </summary>
         /// <param name="Instruction"></param>
         /// <param name="Value"></param>

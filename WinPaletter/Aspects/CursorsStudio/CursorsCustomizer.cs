@@ -115,7 +115,7 @@ namespace WinPaletter
                 return new SolidBrush(Color1);
             }
 
-            else if(GradientMode == GradientMode.Horizontal)
+            else if (GradientMode == GradientMode.Horizontal)
             {
                 return new LinearGradientBrush(Rectangle, Color1, Color2, LinearGradientMode.Horizontal);
             }
@@ -330,7 +330,7 @@ namespace WinPaletter
                     case CursorType.Busy:
                         {
                             G.SmoothingMode = SmoothingMode.None;
-                         
+
                             using (GraphicsPath busyPath = Busy(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                             using (GraphicsPath busyLoaderPath = BusyLoader(_Busy, CursorOptions.Angle, CursorOptions.CircleStyle, 1))
                             {
@@ -495,7 +495,7 @@ namespace WinPaletter
                                 {
                                     BL = new SolidBrush(CursorOptions.SecondaryColor1);
                                 }
-                             
+
                                 G.FillPath(BB, arrowPath);
 
                                 if (CursorOptions.PrimaryNoise)
@@ -1526,12 +1526,10 @@ namespace WinPaletter
                             shadowedBMP.SetPixel(x, y, Color.FromArgb(b.GetPixel(x, y).A, CursorOptions.Shadow_Color));
                     }
 
-                    using (ImageProcessor.ImageFactory ImgF = new())
+                    using (Bitmap bmpBlurred = shadowedBMP?.Blur(CursorOptions.Shadow_Blur))
+                    using (Bitmap bmpFaded = bmpBlurred?.Fade(CursorOptions.Shadow_Opacity))
                     {
-                        ImgF.Load(shadowedBMP);
-                        ImgF.GaussianBlur(CursorOptions.Shadow_Blur);
-                        ImgF.Alpha((int)(CursorOptions.Shadow_Opacity * 100f));
-                        G_Final.DrawImage(ImgF.Image, new Rectangle(0 + CursorOptions.Shadow_OffsetX, 0 + CursorOptions.Shadow_OffsetY, b.Width, b.Height));
+                        G_Final.DrawImage(bmpFaded, new Rectangle(0 + CursorOptions.Shadow_OffsetX, 0 + CursorOptions.Shadow_OffsetY, b.Width, b.Height));
                     }
                 }
 

@@ -1,5 +1,4 @@
-﻿using ImageProcessor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -400,11 +399,9 @@ namespace WinPaletter.UI.Simulation
                 {
                     if (DarkMode)
                     {
-                        using (ImageFactory ImgF = new())
+                        using (Bitmap bmpBlurred = back?.Blur(BlurPower))
                         {
-                            ImgF.Load(back.Blur(BlurPower));
-                            ImgF.Saturation(60);
-                            back_blurred = ImgF.Image?.Clone() as Bitmap;
+                            back_blurred = bmpBlurred.AdjustHSL(null, 0.6f);
                         }
                     }
                     else

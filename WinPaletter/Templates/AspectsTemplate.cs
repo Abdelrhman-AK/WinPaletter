@@ -762,7 +762,7 @@ namespace WinPaletter
         public EventHandler OnImportFromScheme_Vista { get; set; }
 
         /// <summary>
-        /// EventHandler associated with clicking on 'Import from scheme > Windows WXP' button
+        /// EventHandler associated with clicking on 'Import from scheme > Windows XP' button
         /// </summary>
         public EventHandler OnImportFromScheme_XP { get; set; }
 

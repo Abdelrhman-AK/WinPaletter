@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.card1 = new WinPaletter.UI.WP.Card();
             this.card2 = new WinPaletter.UI.WP.Card();
             this.card3 = new WinPaletter.UI.WP.Card();
@@ -46,7 +47,6 @@
             this.card13 = new WinPaletter.UI.WP.Card();
             this.card15 = new WinPaletter.UI.WP.Card();
             this.card10 = new WinPaletter.UI.WP.Card();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
@@ -120,6 +120,16 @@
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(3, 5, 3, 3);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1176, 556);
             this.flowLayoutPanel1.TabIndex = 153;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 51);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1176, 70);
+            this.panel1.TabIndex = 162;
+            this.panel1.BackColorChanged += new System.EventHandler(this.panel1_BackColorChanged);
             // 
             // card1
             // 
@@ -310,16 +320,6 @@
             this.card10.Tag = "Modify the look of WinPaletter to make it suits your theme";
             this.card10.Text = "WinPaletter Themes";
             this.card10.Click += new System.EventHandler(this.card10_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 51);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1176, 70);
-            this.panel1.TabIndex = 162;
-            this.panel1.BackColorChanged += new System.EventHandler(this.panel1_BackColorChanged);
             // 
             // groupBox1
             // 

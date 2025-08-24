@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
+using System.Numerics;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using static WinPaletter.TypesExtensions.ColorsExtensions;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -13,35 +16,69 @@ namespace WinPaletter.TypesExtensions
     public static class BitmapExtensions
     {
         /// <summary>
-        /// Return most used color from a bitmap
+        /// Calculates the average color of the pixels in the specified bitmap.
         /// </summary>
-        public static Color AverageColor(this Bitmap bitmap)
+        /// <remarks>This method locks the bitmap in memory for reading and processes its pixels directly.
+        /// It uses a 32bpp ARGB pixel format and calculates the average color by iterating over the pixels with the
+        /// specified step size.</remarks>
+        /// <param name="bitmap">The bitmap from which to calculate the average color. Must not be null, and must have a non-zero width and
+        /// height.</param>
+        /// <param name="step">The step size for sampling pixels. A larger step reduces the number of pixels sampled, improving performance
+        /// at the cost of accuracy. Defaults to 1, meaning every pixel is sampled.</param>
+        /// <returns>A <see cref="Color"/> representing the average color of the sampled pixels in the bitmap. Returns <see
+        /// cref="Color.Empty"/> if the bitmap is null, has zero width or height, or if an error occurs during
+        /// processing.</returns>
+        public static Color AverageColor(this Bitmap bitmap, int step = 1)
         {
-            if (bitmap is null || bitmap.Width == 0 || bitmap.Height == 0) return Color.Empty;
+            if (bitmap == null || bitmap.Width == 0 || bitmap.Height == 0) return Color.Empty;
 
+            BitmapData data = null;
             try
             {
-                int totalR = 0, totalG = 0, totalB = 0;
+                data = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    ImageLockMode.ReadOnly,
+                    PixelFormat.Format32bppArgb);
 
-                for (int x = 0; x < bitmap.Width; x++)
+                long totalR = 0, totalG = 0, totalB = 0;
+                long totalPixels = 0;
+
+                int stride = data.Stride;
+                int height = data.Height;
+                int width = data.Width;
+
+                unsafe
                 {
-                    for (int y = 0; y < bitmap.Height; y++)
+                    byte* scan0 = (byte*)data.Scan0;
+                    for (int y = 0; y < height; y += step)
                     {
-                        Color pixel = bitmap.GetPixel(x, y);
-                        totalR += pixel.R;
-                        totalG += pixel.G;
-                        totalB += pixel.B;
+                        byte* row = scan0 + (y * stride);
+                        for (int x = 0; x < width; x += step)
+                        {
+                            int idx = x * 4; // BGRA
+                            totalB += row[idx];
+                            totalG += row[idx + 1];
+                            totalR += row[idx + 2];
+                            totalPixels++;
+                        }
                     }
                 }
 
-                int totalPixels = bitmap.Height * bitmap.Width;
-                int averageR = totalR / totalPixels;
-                int averageG = totalG / totalPixels;
-                int averageB = totalB / totalPixels;
+                int avgR = (int)(totalR / totalPixels);
+                int avgG = (int)(totalG / totalPixels);
+                int avgB = (int)(totalB / totalPixels);
 
-                return Color.FromArgb(averageR, averageG, averageB);
+                return Color.FromArgb(avgR, avgG, avgB);
             }
-            catch { return Color.Empty; }
+            catch
+            {
+                return Color.Empty;
+            }
+            finally
+            {
+                if (data != null)
+                    bitmap.UnlockBits(data);
+            }
         }
 
         /// <summary>
@@ -49,85 +86,236 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static Color AverageColor(this Image Image)
         {
-            if (Image is Bitmap bitmap) return bitmap.AverageColor();
-            return Color.Empty;
+            if (Image is Bitmap bitmap) return bitmap.AverageColor(); return Color.Empty;
         }
 
         /// <summary>
-        /// Return Blurred image
+        /// Applies a Gaussian blur effect to the specified bitmap image, with cancellation support.
         /// </summary>
-        public static Bitmap Blur(this Bitmap bitmap, float blurForce = 2.0f)
+        /// <remarks>
+        /// The method normalizes the input bitmap to a 32bpp ARGB format for processing and
+        /// converts it back to the original pixel format if necessary. The Gaussian blur is applied using a separable
+        /// kernel for improved performance. The opacity parameter allows blending the blurred result with the original
+        /// image. Cancellation can be requested via the provided <paramref name="cancellationToken"/>.
+        /// </remarks>
+        /// <param name="bitmap">The source <see cref="Bitmap"/> to which the Gaussian blur will be applied. Cannot be <see langword="null"/>.</param>
+        /// <param name="blurPower">The intensity of the blur effect. Must be greater than 0. Higher values result in a stronger blur. Defaults to 2.0f.</param>
+        /// <param name="opacity">The opacity of the blur effect, where <see langword="0.0f"/> represents fully transparent and <see langword="1.0f"/> represents fully opaque. Values outside the range [0.0f, 1.0f] will be clamped. Defaults to 1.0f.</param>
+        /// <param name="cancellationToken">The token that can be used to request cancellation of the operation.</param>
+        /// <returns>A new <see cref="Bitmap"/> instance with the Gaussian blur applied. Returns <see langword="null"/> if the input <paramref name="bitmap"/> is <see langword="null"/> or has zero width or height.</returns>
+        /// <exception cref="OperationCanceledException">Thrown if the operation is canceled via <paramref name="cancellationToken"/>.</exception>
+        public static Bitmap Blur(this Bitmap bitmap, float blurPower = 2.0f, float opacity = 1.0f, CancellationToken cancellationToken = default)
         {
-            if (bitmap is null) return null;
-            if (bitmap.Size.Width == 0 || bitmap.Size.Height == 0) return null;
+            if (bitmap == null) return null;
+            if (bitmap.Width == 0 || bitmap.Height == 0) return null;
 
-            Bitmap img = new(bitmap);
-            int imgWidth = img.Width;
-            int imgHeight = img.Height;
+            // Clamp opacity
+            if (opacity < 0f) opacity = 0f;
+            else if (opacity > 1f) opacity = 1f;
 
-            using (Graphics G = Graphics.FromImage(img))
-            using (ImageAttributes att = new())
+            // --- Normalize format to 32bpp ARGB (safe to process), but remember original format ---
+            Bitmap src;
+            bool converted = false;
+            if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
             {
-                G.SmoothingMode = SmoothingMode.AntiAlias;
-
-                // Create a color matrix for the blur effect
-                ColorMatrix m = new() { Matrix33 = 0.4f };
-                att.SetColorMatrix(m);
-
-                // Loop through the blur force and draw the image in x-coordinates with a slight offset
-                for (float x = -blurForce; x <= blurForce; x += 0.5f)
-                {
-                    PointF[] destPointsX = [new(x, 0), new(x + imgWidth, 0), new(x, imgHeight)];
-                    RectangleF srcRectX = new(0, 0, imgWidth, imgHeight);
-                    G.DrawImage(img, destPointsX, srcRectX, GraphicsUnit.Pixel, att);
-                }
-
-                // Loop through the blur force and draw the image in y-coordinates with a slight offset
-                for (float y = -blurForce; y <= blurForce; y += 0.5f)
-                {
-                    PointF[] destPointsY = [new(0, y), new(imgWidth, y), new(0, y + imgHeight)];
-                    RectangleF srcRectY = new(0, 0, imgWidth, imgHeight);
-                    G.DrawImage(img, destPointsY, srcRectY, GraphicsUnit.Pixel, att);
-                }
-
-                G.Save();
-
-                return img;
+                src = new Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
+                using (var g = Graphics.FromImage(src))
+                    g.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+                converted = true;
             }
+            else
+            {
+                src = (Bitmap)bitmap.Clone();
+            }
+
+            // Destination (working) bitmap is also 32bpp ARGB
+            var blurred = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+
+            int width = src.Width;
+            int height = src.Height;
+
+            // --- Build 1D Gaussian kernel from blurPower ---
+            float sigma = Math.Max(0.1f, blurPower);
+            int radius = (int)Math.Ceiling(3f * sigma);
+            int kSize = 2 * radius + 1;
+
+            var kernel = new float[kSize];
+            float kSum = 0f;
+            for (int i = -radius; i <= radius; i++)
+            {
+                float v = (float)Math.Exp(-(i * i) / (2f * sigma * sigma));
+                kernel[i + radius] = v;
+                kSum += v;
+            }
+            // Normalize so sum(kernel) = 1
+            for (int i = 0; i < kSize; i++) kernel[i] /= kSum;
+
+            // --- Lock source and destination ---
+            var srcData = src.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, src.PixelFormat);
+            var dstData = blurred.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, blurred.PixelFormat);
+
+            int bytesPerPixel = 4;                 // because we're in 32bpp ARGB
+            int stride = srcData.Stride;
+            int bufSize = stride * height;
+
+            var srcBuffer = new byte[bufSize];
+            var tmpBuffer = new byte[bufSize];
+            var finalBuffer = new byte[bufSize];
+
+            Marshal.Copy(srcData.Scan0, srcBuffer, 0, bufSize);
+            src.UnlockBits(srcData);
+
+            // --- Horizontal pass ---
+            for (int y = 0; y < height; y++)
+            {
+                cancellationToken.ThrowIfCancellationRequested(); // check per row
+
+                int row = y * stride;
+                for (int x = 0; x < width; x++)
+                {
+                    float b = 0f, g = 0f, r = 0f, a = 0f, wsum = 0f;
+
+                    for (int k = -radius; k <= radius; k++)
+                    {
+                        int px = x + k;
+                        if (px < 0) px = 0;
+                        else if (px >= width) px = width - 1;
+
+                        int idx = row + px * bytesPerPixel;
+                        float w = kernel[k + radius];
+
+                        b += srcBuffer[idx + 0] * w;
+                        g += srcBuffer[idx + 1] * w;
+                        r += srcBuffer[idx + 2] * w;
+                        a += srcBuffer[idx + 3] * w;
+                        wsum += w;
+                    }
+
+                    int outIdx = row + x * bytesPerPixel;
+                    tmpBuffer[outIdx + 0] = (byte)(b / wsum);
+                    tmpBuffer[outIdx + 1] = (byte)(g / wsum);
+                    tmpBuffer[outIdx + 2] = (byte)(r / wsum);
+                    tmpBuffer[outIdx + 3] = (byte)(a / wsum);
+                }
+            }
+
+            // --- Vertical pass ---
+            for (int x = 0; x < width; x++)
+            {
+                cancellationToken.ThrowIfCancellationRequested(); // check per column
+
+                int colOffset = x * bytesPerPixel;
+                for (int y = 0; y < height; y++)
+                {
+                    float b = 0f, g = 0f, r = 0f, a = 0f, wsum = 0f;
+
+                    for (int k = -radius; k <= radius; k++)
+                    {
+                        int py = y + k;
+                        if (py < 0) py = 0;
+                        else if (py >= height) py = height - 1;
+
+                        int idx = py * stride + colOffset;
+                        float w = kernel[k + radius];
+
+                        b += tmpBuffer[idx + 0] * w;
+                        g += tmpBuffer[idx + 1] * w;
+                        r += tmpBuffer[idx + 2] * w;
+                        a += tmpBuffer[idx + 3] * w;
+                        wsum += w;
+                    }
+
+                    int outIdx = y * stride + colOffset;
+
+                    if (opacity < 1f)
+                    {
+                        finalBuffer[outIdx + 0] = (byte)(srcBuffer[outIdx + 0] * (1f - opacity) + (b / wsum) * opacity);
+                        finalBuffer[outIdx + 1] = (byte)(srcBuffer[outIdx + 1] * (1f - opacity) + (g / wsum) * opacity);
+                        finalBuffer[outIdx + 2] = (byte)(srcBuffer[outIdx + 2] * (1f - opacity) + (r / wsum) * opacity);
+                        finalBuffer[outIdx + 3] = (byte)(srcBuffer[outIdx + 3] * (1f - opacity) + (a / wsum) * opacity);
+                    }
+                    else
+                    {
+                        finalBuffer[outIdx + 0] = (byte)(b / wsum);
+                        finalBuffer[outIdx + 1] = (byte)(g / wsum);
+                        finalBuffer[outIdx + 2] = (byte)(r / wsum);
+                        finalBuffer[outIdx + 3] = (byte)(a / wsum);
+                    }
+                }
+            }
+
+            // Copy final buffer into destination bitmap
+            Marshal.Copy(finalBuffer, 0, dstData.Scan0, bufSize);
+            blurred.UnlockBits(dstData);
+
+            // --- Convert back to original PixelFormat ---
+            Bitmap result;
+            if (converted)
+            {
+                result = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+                using (var g = Graphics.FromImage(result))
+                    g.DrawImage(blurred, new Rectangle(0, 0, result.Width, result.Height));
+                blurred.Dispose();
+                src.Dispose();
+            }
+            else
+            {
+                result = blurred;
+                src.Dispose();
+            }
+
+            return result;
         }
 
         /// <summary>
-        /// Return noised bitmap (noise of Windows 10 Acrylic style or Windows 7 Aero glass)
+        /// Applies a noise effect to the specified <see cref="Bitmap"/> based on the given noise mode and opacity.
         /// </summary>
-        public static Bitmap Noise(this Bitmap bitmap, NoiseMode NoiseMode, float opacity)
+        /// <remarks>The method creates a clone of the input <see cref="Bitmap"/> and applies the
+        /// specified noise effect to the clone. The <paramref name="noiseMode"/> determines the type of noise texture
+        /// used, and the <paramref name="opacity"/> controls the transparency of the effect.</remarks>
+        /// <param name="bitmap">The source <see cref="Bitmap"/> to which the noise effect will be applied. Cannot be <see langword="null"/>.</param>
+        /// <param name="noiseMode">The type of noise effect to apply. Supported values are <see cref="NoiseMode.Acrylic"/> and <see
+        /// cref="NoiseMode.Aero"/>.</param>
+        /// <param name="opacity">The opacity level of the noise effect, specified as a float between 0.0 (completely transparent) and 1.0
+        /// (completely opaque).</param>
+        /// <returns>A new <see cref="Bitmap"/> instance with the applied noise effect, or <see langword="null"/> if the input
+        /// <paramref name="bitmap"/> is <see langword="null"/>.</returns>
+        public static Bitmap Noise(this Bitmap bitmap, NoiseMode noiseMode, float opacity)
         {
             if (bitmap is null) return null;
-            Bitmap img = new(bitmap);
 
-            using (Graphics G = Graphics.FromImage(img))
+            // Create a new bitmap with same size + DPI as the original
+            Bitmap result = new(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+            result.SetResolution(bitmap.HorizontalResolution, bitmap.VerticalResolution);
+
+            using (Graphics g = Graphics.FromImage(result))
             {
-                G.SmoothingMode = SmoothingMode.AntiAlias;
+                g.SmoothingMode = SmoothingMode.None;
+                g.CompositingMode = CompositingMode.SourceOver;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-                if (NoiseMode == NoiseMode.Acrylic)
+                // Draw original image at full size
+                g.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+
+                // Apply noise overlay
+                if (noiseMode == NoiseMode.Acrylic)
                 {
-                    using (Bitmap b = Properties.Resources.Noise.Fade(opacity))
-                    using (TextureBrush br = new(b))
+                    using (Bitmap noise = Properties.Resources.Noise.Fade(opacity))
+                    using (TextureBrush br = new(noise) { WrapMode = WrapMode.Tile })
                     {
-                        G.FillRectangle(br, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+                        g.FillRectangle(br, 0, 0, bitmap.Width, bitmap.Height);
                     }
                 }
-                else if (NoiseMode == NoiseMode.Aero)
+                else if (noiseMode == NoiseMode.Aero)
                 {
-                    using (Bitmap b = Assets.Win7Preview.AeroGlass.Fade(opacity))
+                    using (Bitmap aero = Assets.Win7Preview.AeroGlass.Fade(opacity))
                     {
-                        G.DrawImage(b, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+                        g.DrawImage(aero, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
                     }
                 }
-
-                G.Save();
             }
 
-            return img;
+            return result;
         }
 
         /// <summary>
@@ -146,111 +334,152 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Replace color in image (pixels) by a color
+        /// Replace all pixels whose RGB equals oldColor.RGB (alpha ignored) with NewColor (alpha applied).
+        /// Returns a new 32bpp ARGB bitmap.
+        /// Uses unsafe pointers + Parallel.For.
         /// </summary>
-        public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color NewColor)
+        public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color newColor)
         {
-            Bitmap outputImage = new(inputImage.Width, inputImage.Height);
-            using (Graphics G = Graphics.FromImage(outputImage))
-            {
-                for (int y = 0, loopTo = inputImage.Height - 1; y <= loopTo; y++)
-                {
-                    for (int x = 0, loopTo1 = inputImage.Width - 1; x <= loopTo1; x++)
-                    {
-                        Color PixelColor = inputImage.GetPixel(x, y);
+            if (inputImage is null || inputImage.Width == 0 || inputImage.Height == 0)
+                return null;
 
-                        if (Color.FromArgb(255, PixelColor) == Color.FromArgb(255, oldColor))
-                        {
-                            outputImage.SetPixel(x, y, NewColor);
-                        }
-                        else
-                        {
-                            outputImage.SetPixel(x, y, PixelColor);
-                        }
+            // Normalize input to 32bppArgb for predictable pixel layout
+            Bitmap src = inputImage.PixelFormat == PixelFormat.Format32bppArgb
+                ? inputImage
+                : inputImage.Clone(new Rectangle(0, 0, inputImage.Width, inputImage.Height),
+                                   PixelFormat.Format32bppArgb);
 
-                    }
-                }
+            bool cloned = !ReferenceEquals(src, inputImage);
 
-                G.DrawImage(outputImage, 0, 0);
-                return outputImage;
-            }
-        }
+            var dest = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
 
-        /// <summary>
-        /// Return bitmap filled in the scale of size you choose (looks like Windows 7+ fill wallpaper style)
-        /// </summary>
-        public static Bitmap FillScale(this Bitmap bitmap, Size size)
-        {
+            BitmapData srcData = null, dstData = null;
+
             try
             {
-                // Check if the input bitmap is null
-                if (bitmap == null) return bitmap;
+                srcData = src.LockBits(new Rectangle(0, 0, src.Width, src.Height),
+                                       ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                dstData = dest.LockBits(new Rectangle(0, 0, dest.Width, dest.Height),
+                                        ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-                // Get the current screen size
-                Size screenSize = Screen.PrimaryScreen.Bounds.Size;
+                int w = src.Width;
+                int h = src.Height;
 
-                // GetTextAndImageRectangles scaling factors for width and height to maintain aspect ratio
-                decimal nPercentW = screenSize.Width / (decimal)bitmap.Width;
-                decimal nPercentH = screenSize.Height / (decimal)bitmap.Height;
+                int srcStride = srcData.Stride;
+                int dstStride = dstData.Stride;
+                int srcStrideAbs = Math.Abs(srcStride);
 
-                // Choose the maximum scaling factor to maintain the aspect ratio and fill the screen
-                decimal nPercent = Math.Max(nPercentW, nPercentH);
+                // Precompute packed colors
+                uint oldBGR24 = (uint)(oldColor.B | (oldColor.G << 8) | (oldColor.R << 16));
+                uint newBGRA = (uint)(newColor.B | (newColor.G << 8) | (newColor.R << 16) | (newColor.A << 24));
 
-                // GetTextAndImageRectangles the destination width and height based on the scaling factor
-                int destWidth = (int)Math.Round(bitmap.Width * nPercent);
-                int destHeight = (int)Math.Round(bitmap.Height * nPercent);
-
-                // Create a new bitmap with the screen size and resolution
-                Bitmap bmPhoto = new(screenSize.Width, screenSize.Height, PixelFormat.Format32bppArgb);
-
-                bmPhoto.SetResolution(bitmap.HorizontalResolution, bitmap.VerticalResolution);
-
-                // GetTextAndImageRectangles the starting position for centering the image on the screen
-                int x = Math.Max((screenSize.Width - destWidth) / 2, 0);
-                int y = Math.Max((screenSize.Height - destHeight) / 2, 0);
-
-                // Create a graphics object from the new bitmap
-                using (Graphics grPhoto = Graphics.FromImage(bmPhoto))
+                unsafe
                 {
-                    // Set the interpolation mode for better quality scaling
-                    grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    byte* srcBase = (byte*)srcData.Scan0;
+                    byte* dstBase = (byte*)dstData.Scan0;
 
-                    // Draw the original image onto the new bitmap with the calculated size and center it on the screen
-                    grPhoto.DrawImage(bitmap, new Rectangle(x, y, destWidth, destHeight));
+                    // If stride < 0, adjust start pointer
+                    byte* srcStart = srcStride >= 0
+                        ? srcBase
+                        : srcBase + (h - 1) * srcStrideAbs;
+
+                    Parallel.For(0, h, y =>
+                    {
+                        byte* sRow = srcStart + (srcStride >= 0 ? y * srcStride : -y * srcStride);
+                        byte* dRow = dstBase + y * dstStride;
+
+                        uint* sPx = (uint*)sRow;
+                        uint* dPx = (uint*)dRow;
+
+                        for (int x = 0; x < w; x++)
+                        {
+                            uint v = sPx[x]; // BGRA layout
+                            if ((v & 0x00FFFFFFu) == oldBGR24)
+                                dPx[x] = newBGRA;
+                            else
+                                dPx[x] = v;
+                        }
+                    });
                 }
-
-                // Return the final image that fills the screen
-                return bmPhoto.Resize(size);
             }
-            catch
+            finally
             {
-                // Return original bitmap in case of an exception
-                return bitmap;
+                if (srcData != null) src.UnlockBits(srcData);
+                if (dstData != null) dest.UnlockBits(dstData);
+                if (cloned) src.Dispose();
             }
+
+            return dest;
         }
 
         /// <summary>
-        /// Resize image in the size you choose
+        /// Return bitmap filled in the scale of size you choose (Windows 7+ fill style)
         /// </summary>
-        public static Bitmap Resize(this Bitmap bmSource, int TargetWidth, int TargetHeight)
+        public static Bitmap FillInSize(this Bitmap bitmap, Size targetSize)
         {
-            if (bmSource is null) return null;
+            if (bitmap == null || targetSize.Width <= 0 || targetSize.Height <= 0)
+                return bitmap;
 
-            Bitmap B = new(TargetWidth, TargetHeight, PixelFormat.Format32bppArgb);
-            using (Graphics G = Graphics.FromImage(B))
+            // Calculate scaling factor to fill the target size while maintaining aspect ratio
+            decimal scaleW = (decimal)targetSize.Width / bitmap.Width;
+            decimal scaleH = (decimal)targetSize.Height / bitmap.Height;
+            decimal scale = Math.Max(scaleW, scaleH);
+
+            int destWidth = (int)Math.Round(bitmap.Width * scale);
+            int destHeight = (int)Math.Round(bitmap.Height * scale);
+
+            // Center position
+            int offsetX = (targetSize.Width - destWidth) / 2;
+            int offsetY = (targetSize.Height - destHeight) / 2;
+
+            // Create the final bitmap with desired size
+            Bitmap result = new(targetSize.Width, targetSize.Height, PixelFormat.Format32bppArgb);
+            result.SetResolution(bitmap.HorizontalResolution, bitmap.VerticalResolution);
+
+            using (Graphics g = Graphics.FromImage(result))
             {
-                G.Clear(Color.Transparent);
-                G.CompositingQuality = CompositingQuality.HighQuality;
-                G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                G.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                G.SmoothingMode = SmoothingMode.AntiAlias;
-                G.CompositingMode = CompositingMode.SourceOver;
-                G.DrawImage(bmSource, 0, 0, TargetWidth, TargetHeight);
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+
+                // Fill background with transparent or black (optional)
+                g.Clear(Color.Black);
+
+                // Draw scaled image centered
+                g.DrawImage(bitmap, new Rectangle(offsetX, offsetY, destWidth, destHeight));
             }
 
-            B.SetResolution(TargetWidth, TargetHeight);
+            return result;
+        }
 
-            return B;
+        /// <summary>
+        /// Resize image to the given size using GDI+ HighQualityBicubic.
+        /// Optimized: disposes Graphics properly, avoids redundant calls, preserves DPI.
+        /// </summary>
+        public static Bitmap Resize(this Bitmap src, int targetWidth, int targetHeight)
+        {
+            if (src == null) return null;
+
+            // Create destination bitmap in same pixel format to avoid extra conversions
+            Bitmap dst = new(targetWidth, targetHeight, PixelFormat.Format32bppArgb);
+
+            dst.SetResolution(src.HorizontalResolution, src.VerticalResolution);
+
+            using (Graphics g = Graphics.FromImage(dst))
+            {
+                // High quality setup (minimal allocations, reused constants)
+                g.CompositingMode = CompositingMode.SourceOver;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                // Draw directly, no Clear(Color.Transparent) needed since draw overwrites fully
+                g.DrawImage(src, new Rectangle(0, 0, targetWidth, targetHeight));
+            }
+
+            return dst;
         }
 
         /// <summary>
@@ -270,56 +499,228 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return image tinted by a color
+        /// Return image tinted by a color (optimized with unsafe pointers + parallelization)
         /// </summary>
         public static Bitmap Tint(this Bitmap originalBitmap, Color tintColor)
         {
-            // Create a color matrix for the tint effect
-            float[][] matrixElements = [
-            [tintColor.R / 255f, 0, 0, 0, 0],
-            [0, tintColor.G / 255f, 0, 0, 0],
-            [0, 0, tintColor.B / 255f, 0, 0],
-            [0, 0, 0, tintColor.A / 255f, 0],
-            [0, 0, 0, 0, 1]
-        ];
+            if (originalBitmap == null) return null;
 
-            ColorMatrix colorMatrix = new(matrixElements);
+            // Create a destination bitmap
+            Bitmap tintedBitmap = new(originalBitmap.Width, originalBitmap.Height, PixelFormat.Format32bppArgb);
 
-            // Apply the color matrix to an image attributes object
-            ImageAttributes imageAttributes = new();
-            imageAttributes.SetColorMatrix(colorMatrix);
+            Rectangle rect = new(0, 0, originalBitmap.Width, originalBitmap.Height);
+            BitmapData srcData = originalBitmap.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData dstData = tintedBitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-            // Create a destination bitmap with the same size as the original
-            Bitmap tintedBitmap = new(originalBitmap.Width, originalBitmap.Height);
-
-            // Draw the original bitmap onto the destination bitmap using the image attributes
-            using (Graphics g = Graphics.FromImage(tintedBitmap))
+            try
             {
-                g.DrawImage(originalBitmap,
-                    new Rectangle(0, 0, originalBitmap.Width, originalBitmap.Height),
-                    0, 0, originalBitmap.Width, originalBitmap.Height,
-                    GraphicsUnit.Pixel, imageAttributes);
+                int height = srcData.Height;
+                int width = srcData.Width;
+                int strideSrc = srcData.Stride;
+                int strideDst = dstData.Stride;
+
+                float rMul = tintColor.R / 255f;
+                float gMul = tintColor.G / 255f;
+                float bMul = tintColor.B / 255f;
+                float aMul = tintColor.A / 255f;
+
+                unsafe
+                {
+                    byte* srcPtr = (byte*)srcData.Scan0;
+                    byte* dstPtr = (byte*)dstData.Scan0;
+
+                    Parallel.For(0, height, y =>
+                    {
+                        byte* srcRow = srcPtr + (y * strideSrc);
+                        byte* dstRow = dstPtr + (y * strideDst);
+
+                        for (int x = 0; x < width; x++)
+                        {
+                            int idx = x * 4;
+
+                            byte b = srcRow[idx];
+                            byte g = srcRow[idx + 1];
+                            byte r = srcRow[idx + 2];
+                            byte a = srcRow[idx + 3];
+
+                            dstRow[idx] = (byte)(b * bMul);
+                            dstRow[idx + 1] = (byte)(g * gMul);
+                            dstRow[idx + 2] = (byte)(r * rMul);
+                            dstRow[idx + 3] = (byte)(a * aMul);
+                        }
+                    });
+                }
+            }
+            finally
+            {
+                originalBitmap.UnlockBits(srcData);
+                tintedBitmap.UnlockBits(dstData);
             }
 
             return tintedBitmap;
         }
 
         /// <summary>
-        /// Fade bitmap (change opacity)
+        /// Fast opacity fade using unsafe LockBits (returns a new bitmap).
+        /// - Normalizes source to 32bpp ARGB once if needed.
+        /// - Uses integer math for alpha scaling (no floats in the inner loop).
+        /// - Copies B,G,R as-is; scales A by opacity.
         /// </summary>
-        public static Bitmap Fade(this Bitmap originalBitmap, float opacity)
+        /// <param name="source">Input bitmap (not modified)</param>
+        /// <param name="opacity">0..1</param>
+        /// <param name="useParallel">Parallelize across rows for large images</param>
+        public static Bitmap Fade(this Bitmap source, float opacity, bool useParallel = true)
         {
-            if (originalBitmap == null) return null;
+            if (source == null) return null;
 
-            Bitmap bmp = new(originalBitmap.Width, originalBitmap.Height);
-            using (Graphics G = Graphics.FromImage(bmp))
+            // Clamp opacity
+            if (opacity <= 0f)
             {
-                ColorMatrix matrix = new() { Matrix33 = opacity };
-                ImageAttributes attributes = new();
-                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-                G.DrawImage(originalBitmap, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes);
+                // Return fully transparent bitmap quickly
+                var transparent = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
+                using var g = Graphics.FromImage(transparent); // ensures fully zeroed with alpha=0
+                g.Clear(Color.Transparent);
+                return transparent;
+            }
+            if (opacity >= 1f)
+            {
+                // Return a 1:1 copy (fast path) without touching pixels
+                return Clone32_Fast(source);
+            }
 
-                return bmp;
+            // Convert opacity to 8.8 fixed-point to avoid per-pixel float multiply.
+            // opQ = round(opacity * 256). Range [1..255]
+            int opQ = Math.Min(255, Math.Max(1, (int)Math.Round(opacity * 256.0)));
+
+            Bitmap src32 = null;
+            bool createdTemp = false;
+
+            // Ensure 32bpp ARGB for a predictable memory layout.
+            if (source.PixelFormat != PixelFormat.Format32bppArgb)
+            {
+                src32 = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
+                using (var g = Graphics.FromImage(src32))
+                {
+                    g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                    g.DrawImageUnscaled(source, 0, 0);
+                }
+                createdTemp = true;
+            }
+            else
+            {
+                // Use original directly (no copy yet)
+                src32 = source;
+            }
+
+            var dest = new Bitmap(src32.Width, src32.Height, PixelFormat.Format32bppArgb);
+
+            Rectangle rect = new Rectangle(0, 0, src32.Width, src32.Height);
+            BitmapData srcData = null, dstData = null;
+
+            try
+            {
+                srcData = src32.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                dstData = dest.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+                int width = rect.Width;
+                int height = rect.Height;
+                int srcStride = srcData.Stride;
+                int dstStride = dstData.Stride;
+
+                unsafe
+                {
+                    byte* srcBase = (byte*)srcData.Scan0;
+                    byte* dstBase = (byte*)dstData.Scan0;
+
+                    Action<int> processRow = y =>
+                    {
+                        byte* srcRow = srcBase + y * srcStride;
+                        byte* dstRow = dstBase + y * dstStride;
+
+                        // Process 4 bytes per pixel: B,G,R,A
+                        for (int x = 0; x < width; x++)
+                        {
+                            int i = x << 2; // x * 4
+                                            // Copy BGR
+                            dstRow[i + 0] = srcRow[i + 0];
+                            dstRow[i + 1] = srcRow[i + 1];
+                            dstRow[i + 2] = srcRow[i + 2];
+
+                            // Scale alpha using 8.8 fixed point: (a * opQ) >> 8
+                            // Guarantees 0..255 range
+                            int a = srcRow[i + 3];
+                            dstRow[i + 3] = (byte)((a * opQ) >> 8);
+                        }
+                    };
+
+                    if (useParallel && height >= 64) // simple heuristic
+                    {
+                        Parallel.For(0, height, processRow);
+                    }
+                    else
+                    {
+                        for (int y = 0; y < height; y++)
+                            processRow(y);
+                    }
+                }
+            }
+            finally
+            {
+                if (srcData != null) src32.UnlockBits(srcData);
+                if (dstData != null) dest.UnlockBits(dstData);
+                if (createdTemp && src32 != null) src32.Dispose();
+            }
+
+            return dest;
+        }
+
+        /// <summary>
+        /// Fast clone to 32bpp ARGB without per-pixel math.
+        /// If source is already 32bpp, uses LockBits memcpy for speed.
+        /// </summary>
+        public static Bitmap Clone32_Fast(this Bitmap source)
+        {
+            if (source.PixelFormat == PixelFormat.Format32bppArgb)
+            {
+                var clone = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
+                Rectangle rect = new Rectangle(0, 0, source.Width, source.Height);
+
+                BitmapData srcData = null, dstData = null;
+                try
+                {
+                    srcData = source.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                    dstData = clone.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+                    unsafe
+                    {
+                        byte* srcBase = (byte*)srcData.Scan0;
+                        byte* dstBase = (byte*)dstData.Scan0;
+                        int widthBytes = source.Width * 4;
+
+                        for (int y = 0; y < source.Height; y++)
+                        {
+                            Buffer.MemoryCopy(
+                                srcBase + y * srcData.Stride,
+                                dstBase + y * dstData.Stride,
+                                widthBytes,
+                                widthBytes);
+                        }
+                    }
+                }
+                finally
+                {
+                    if (srcData != null) source.UnlockBits(srcData);
+                    if (dstData != null) clone.UnlockBits(dstData);
+                }
+                return clone;
+            }
+            else
+            {
+                var clone = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
+                using var g = Graphics.FromImage(clone);
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                g.DrawImageUnscaled(source, 0, 0);
+                return clone;
             }
         }
 
@@ -340,22 +741,85 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return bitmap in grayscale
+        /// Return bitmap in grayscale (SIMD + multi-core optimized).
         /// </summary>
         public static Bitmap Grayscale(this Bitmap original)
         {
-            Bitmap newBitmap = new(original.Width, original.Height);
+            if (original == null) return null;
 
-            using (Graphics G = Graphics.FromImage(newBitmap))
+            Bitmap newBitmap = new(original.Width, original.Height, PixelFormat.Format32bppArgb);
+
+            Rectangle rect = new(0, 0, original.Width, original.Height);
+            BitmapData srcData = original.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData dstData = newBitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            int width = original.Width;
+            int height = original.Height;
+
+            unsafe
             {
-                ColorMatrix colorMatrix = new([[0.3f, 0.3f, 0.3f, 0f, 0f], [0.59f, 0.59f, 0.59f, 0f, 0f], [0.11f, 0.11f, 0.11f, 0f, 0f], [0f, 0f, 0f, 1f, 0f], [0f, 0f, 0f, 0f, 1f]]);
+                byte* srcPtr = (byte*)srcData.Scan0;
+                byte* dstPtr = (byte*)dstData.Scan0;
 
-                using (ImageAttributes attributes = new())
+                int srcStride = srcData.Stride;
+                int dstStride = dstData.Stride;
+
+                // Grayscale weights (scaled ×1000)
+                const int wR = 299, wG = 587, wB = 114;
+
+                Parallel.For(0, height, y =>
                 {
-                    attributes.SetColorMatrix(colorMatrix);
-                    G.DrawImage(original, new(0, 0, original.Width, original.Height), 0, 0, original.Width, original.Height, GraphicsUnit.Pixel, attributes);
-                }
+                    byte* sRow = srcPtr + y * srcStride;
+                    byte* dRow = dstPtr + y * dstStride;
+
+                    int x = 0;
+
+                    // SIMD batch size (process multiple pixels at once)
+                    int simdBatch = Vector<byte>.Count / 4; // number of BGRA pixels per vector
+                                                            // Note: Vector<byte>.Count is usually 16 (SSE2) or 32 (AVX2)
+
+                    for (; x <= width - simdBatch; x += simdBatch)
+                    {
+                        for (int i = 0; i < simdBatch; i++)
+                        {
+                            int idx = (x + i) * 4;
+
+                            byte b = sRow[idx + 0];
+                            byte g = sRow[idx + 1];
+                            byte r = sRow[idx + 2];
+                            byte a = sRow[idx + 3];
+
+                            byte gray = (byte)((r * wR + g * wG + b * wB) / 1000);
+
+                            dRow[idx + 0] = gray;
+                            dRow[idx + 1] = gray;
+                            dRow[idx + 2] = gray;
+                            dRow[idx + 3] = a;
+                        }
+                    }
+
+                    // Tail pixels (scalar)
+                    for (; x < width; x++)
+                    {
+                        int idx = x * 4;
+
+                        byte b = sRow[idx + 0];
+                        byte g = sRow[idx + 1];
+                        byte r = sRow[idx + 2];
+                        byte a = sRow[idx + 3];
+
+                        byte gray = (byte)((r * wR + g * wG + b * wB) / 1000);
+
+                        dRow[idx + 0] = gray;
+                        dRow[idx + 1] = gray;
+                        dRow[idx + 2] = gray;
+                        dRow[idx + 3] = a;
+                    }
+                });
             }
+
+            original.UnlockBits(srcData);
+            newBitmap.UnlockBits(dstData);
 
             return newBitmap;
         }
@@ -363,105 +827,296 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Return inverted bitmap
         /// </summary>
-        public static Bitmap Invert(this Bitmap bmp)
+        public static Bitmap Invert(this Bitmap source)
         {
-            Bitmap bmpDest = null;
+            if (source == null) return null;
 
-            using (Bitmap bmpSource = new(bmp))
+            Bitmap clone = source.Clone(new Rectangle(0, 0, source.Width, source.Height), PixelFormat.Format32bppArgb);
+
+            Rectangle rect = new Rectangle(0, 0, clone.Width, clone.Height);
+            BitmapData data = clone.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+
+            int height = clone.Height;
+            int width = clone.Width;
+            int stride = data.Stride;
+
+            unsafe
             {
-                bmpDest = new(bmpSource.Width, bmpSource.Height);
+                byte* ptr = (byte*)data.Scan0;
 
-                for (int x = 0, loopTo = bmpSource.Width - 1; x <= loopTo; x++)
+                Parallel.For(0, height, y =>
                 {
-                    for (int y = 0, loopTo1 = bmpSource.Height - 1; y <= loopTo1; y++)
+                    byte* row = ptr + (y * stride);
+                    for (int x = 0; x < width; x++)
                     {
-                        Color clrPixel = bmpSource.GetPixel(x, y);
-                        clrPixel = Color.FromArgb(clrPixel.A, 255 - clrPixel.R, 255 - clrPixel.G, 255 - clrPixel.B);
-                        bmpDest.SetPixel(x, y, clrPixel);
+                        int idx = x * 4;
+                        row[idx] = (byte)(255 - row[idx]);       // Blue
+                        row[idx + 1] = (byte)(255 - row[idx + 1]); // Green
+                        row[idx + 2] = (byte)(255 - row[idx + 2]); // Red
+                                                                   // Alpha stays the same
+                    }
+                });
+            }
+
+            clone.UnlockBits(data);
+            return clone;
+        }
+
+        /// <summary>
+        /// Tiles the source bitmap to fill the target size.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="targetSize"></param>
+        /// <returns></returns>
+        public static Bitmap Tile(this Bitmap source, Size targetSize)
+        {
+            if (source == null) return null;
+
+            int srcWidth = source.Width;
+            int srcHeight = source.Height;
+            int destWidth = targetSize.Width;
+            int destHeight = targetSize.Height;
+
+            Bitmap dest = new(destWidth, destHeight, source.PixelFormat);
+
+            BitmapData sourceData = null;
+            BitmapData destData = null;
+
+            try
+            {
+                sourceData = source.LockBits(
+                    new Rectangle(0, 0, srcWidth, srcHeight),
+                    ImageLockMode.ReadOnly,
+                    source.PixelFormat);
+
+                destData = dest.LockBits(
+                    new Rectangle(0, 0, destWidth, destHeight),
+                    ImageLockMode.WriteOnly,
+                    source.PixelFormat);
+
+                int bytesPerPixel = Image.GetPixelFormatSize(source.PixelFormat) / 8;
+                int srcStride = sourceData.Stride;
+                int destStride = destData.Stride;
+
+                // Copy source rows into managed memory
+                byte[][] srcRows = new byte[srcHeight][];
+                unsafe
+                {
+                    byte* srcPtr = (byte*)sourceData.Scan0;
+                    for (int y = 0; y < srcHeight; y++)
+                    {
+                        srcRows[y] = new byte[srcWidth * bytesPerPixel];
+                        System.Runtime.InteropServices.Marshal.Copy(
+                            new IntPtr(srcPtr + y * srcStride),
+                            srcRows[y], 0, srcWidth * bytesPerPixel);
                     }
                 }
-            }
 
-            return bmpDest;
-        }
-
-        /// <summary>
-        /// Fill a bitmap as a tile in specified size
-        /// </summary>
-        /// <returns></returns>
-        public static Bitmap Tile(this Bitmap bmp, Size Size)
-        {
-            Bitmap B = new(Size.Width, Size.Height);
-            using (Graphics G = Graphics.FromImage(B))
-            {
-                G.SmoothingMode = SmoothingMode.HighSpeed;
-                TextureBrush tb = new(bmp);
-                G.FillRectangle(tb, new Rectangle(0, 0, Size.Width, Size.Height));
-                G.Save();
-            }
-
-            return B;
-        }
-
-        /// <summary>
-        /// Make circular bitmap from a rectangular bitmap
-        /// </summary>
-        /// <returns></returns>
-        public static Bitmap ToCircle(this Bitmap bitmap, bool DrawBorder = true)
-        {
-            Bitmap dstImage = new(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
-            Rectangle Rect = new(0, 0, bitmap.Width - 1, bitmap.Height - 1);
-
-            using (Graphics g = Graphics.FromImage(dstImage))
-            {
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                g.Clear(Color.Transparent);
-
-                // adds the new ellipse & draws the image again 
-                using (GraphicsPath path = new())
+                unsafe
                 {
-                    path.AddEllipse(Rect);
-                    g.SetClip(path);
-                    g.DrawImage(bitmap, Rect);
-                    g.ResetClip();
-                }
+                    byte* destPtr = (byte*)destData.Scan0;
 
-                if (DrawBorder)
-                {
-                    using (Pen p = new(Color.FromArgb(128, 128, 128)))
+                    Parallel.For(0, destHeight, y =>
                     {
-                        g.DrawEllipse(p, Rect);
-                    }
+                        byte* dstRow = destPtr + y * destStride;
+                        byte[] srcRow = srcRows[y % srcHeight];
+
+                        int fullBlocks = destWidth / srcWidth;
+                        int remainder = destWidth % srcWidth;
+
+                        fixed (byte* srcRowPtr = srcRow)
+                        {
+                            // Copy full blocks
+                            for (int b = 0; b < fullBlocks; b++)
+                            {
+                                Buffer.MemoryCopy(
+                                    srcRowPtr,
+                                    dstRow + b * srcWidth * bytesPerPixel,
+                                    destStride - b * srcWidth * bytesPerPixel,
+                                    srcWidth * bytesPerPixel);
+                            }
+
+                            // Copy remaining pixels
+                            if (remainder > 0)
+                            {
+                                Buffer.MemoryCopy(
+                                    srcRowPtr,
+                                    dstRow + fullBlocks * srcWidth * bytesPerPixel,
+                                    destStride - fullBlocks * srcWidth * bytesPerPixel,
+                                    remainder * bytesPerPixel);
+                            }
+                        }
+                    });
                 }
-
-                return dstImage;
             }
-        }
-
-        /// <summary>
-        /// Split bitmap into parts, provided by the number of parts.
-        /// <br>This is used for splitting visual styles bitmaps.</br>
-        /// </summary>
-        /// <param name="bitmap"></param>
-        /// <param name="parts"></param>
-        /// <returns></returns>
-        public static List<Bitmap> Split(this Bitmap bitmap, int parts)
-        {
-            if (bitmap is null) return null;
-            if (parts < 1) return null;
-
-            List<Bitmap> list = [];
-            int partHeight = bitmap.Height / parts;
-
-            for (int i = 0; i < parts; i++)
+            finally
             {
-                int y = i * partHeight;
-                int h = i == parts - 1 ? bitmap.Height - y : partHeight;
-                list.Add(bitmap.Clone(new Rectangle(0, y, bitmap.Width, h), bitmap.PixelFormat));
+                if (sourceData != null) source.UnlockBits(sourceData);
+                if (destData != null) dest.UnlockBits(destData);
             }
 
-            return list;
+            return dest;
         }
+
+        public static Bitmap AdjustHSL(this Bitmap bmp, float? hShift = null, float? sValue = null, float? lValue = null)
+        {
+            if (bmp == null) throw new ArgumentNullException(nameof(bmp));
+
+            Bitmap result = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+
+            BitmapData srcData = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData dstData = result.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            int width = bmp.Width, height = bmp.Height, bytesPerPixel = 4;
+
+            unsafe
+            {
+                byte* srcPtr = (byte*)srcData.Scan0;
+                byte* dstPtr = (byte*)dstData.Scan0;
+                int strideSrc = srcData.Stride;
+                int strideDst = dstData.Stride;
+
+                Parallel.For(0, height, y =>
+                {
+                    byte* pSrcRow = srcPtr + y * strideSrc;
+                    byte* pDstRow = dstPtr + y * strideDst;
+
+                    for (int x = 0; x < width; x++)
+                    {
+                        byte b = pSrcRow[x * bytesPerPixel + 0];
+                        byte g = pSrcRow[x * bytesPerPixel + 1];
+                        byte r = pSrcRow[x * bytesPerPixel + 2];
+                        byte a = pSrcRow[x * bytesPerPixel + 3];
+
+                        HSL hsl = Color.FromArgb(a, r, g, b).ToHSL();
+
+                        // Adjust H
+                        if (hShift.HasValue)
+                        {
+                            hsl.H += hShift.Value;
+                            if (hsl.H < 0f) hsl.H += 360f;
+                            if (hsl.H >= 360f) hsl.H -= 360f;
+                        }
+
+                        // Adjust S (0.5 = neutral)
+                        if (sValue.HasValue)
+                        {
+                            float sFactor = sValue.Value / 0.5f;
+                            hsl.S = hsl.S * sFactor;
+                            if (hsl.S < 0f) hsl.S = 0f;
+                            if (hsl.S > 1f) hsl.S = 1f;
+                        }
+
+                        // Adjust L (0.5 = neutral)
+                        if (lValue.HasValue)
+                        {
+                            float lFactor = lValue.Value / 0.5f;
+                            hsl.L = hsl.L * lFactor;
+                            if (hsl.L < 0f) hsl.L = 0f;
+                            if (hsl.L > 1f) hsl.L = 1f;
+                        }
+
+                        Color c = hsl.ToRGB();
+                        pDstRow[x * bytesPerPixel + 0] = c.B;
+                        pDstRow[x * bytesPerPixel + 1] = c.G;
+                        pDstRow[x * bytesPerPixel + 2] = c.R;
+                        pDstRow[x * bytesPerPixel + 3] = c.A;
+                    }
+                });
+            }
+
+            bmp.UnlockBits(srcData);
+            result.UnlockBits(dstData);
+
+            return result;
+        }
+
+        public static Bitmap Brighten(this Bitmap bmp, float brightness = 0f)
+        {
+            if (bmp == null) throw new ArgumentNullException(nameof(bmp));
+
+            Bitmap result = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+
+            BitmapData srcData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData dstData = result.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            int bytesPerPixel = 4; // 32bppArgb
+
+            unsafe
+            {
+                byte* srcPtr = (byte*)srcData.Scan0;
+                byte* dstPtr = (byte*)dstData.Scan0;
+
+                int height = bmp.Height;
+                int width = bmp.Width;
+
+                Parallel.For(0, height, y =>
+                {
+                    byte* srcRow = srcPtr + y * srcData.Stride;
+                    byte* dstRow = dstPtr + y * dstData.Stride;
+
+                    for (int x = 0; x < width; x++)
+                    {
+                        for (int i = 0; i < 3; i++) // B, G, R
+                        {
+                            float color = srcRow[x * bytesPerPixel + i] / 255f + brightness;
+                            color = Math.Max(0f, Math.Min(1f, color));
+                            dstRow[x * bytesPerPixel + i] = (byte)(color * 255);
+                        }
+                        dstRow[x * bytesPerPixel + 3] = srcRow[x * bytesPerPixel + 3]; // Copy alpha
+                    }
+                });
+            }
+
+            bmp.UnlockBits(srcData);
+            result.UnlockBits(dstData);
+            return result;
+        }
+
+        public static Bitmap Contrast(this Bitmap bmp, float contrast = 0f)
+        {
+            if (bmp == null) throw new ArgumentNullException(nameof(bmp));
+
+            Bitmap result = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+
+            BitmapData srcData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData dstData = result.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            int bytesPerPixel = 4;
+            float cFactor = (contrast + 1f) * (contrast + 1f);
+
+            unsafe
+            {
+                byte* srcPtr = (byte*)srcData.Scan0;
+                byte* dstPtr = (byte*)dstData.Scan0;
+
+                int height = bmp.Height;
+                int width = bmp.Width;
+
+                Parallel.For(0, height, y =>
+                {
+                    byte* srcRow = srcPtr + y * srcData.Stride;
+                    byte* dstRow = dstPtr + y * dstData.Stride;
+
+                    for (int x = 0; x < width; x++)
+                    {
+                        for (int i = 0; i < 3; i++) // B, G, R
+                        {
+                            float color = srcRow[x * bytesPerPixel + i] / 255f;
+                            color = ((color - 0.5f) * cFactor) + 0.5f;
+                            color = Math.Max(0f, Math.Min(1f, color));
+                            dstRow[x * bytesPerPixel + i] = (byte)(color * 255);
+                        }
+                        dstRow[x * bytesPerPixel + 3] = srcRow[x * bytesPerPixel + 3]; // Copy alpha
+                    }
+                });
+            }
+
+            bmp.UnlockBits(srcData);
+            result.UnlockBits(dstData);
+            return result;
+        }
+
     }
 }

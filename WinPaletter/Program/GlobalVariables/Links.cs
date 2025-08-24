@@ -108,7 +108,7 @@ namespace WinPaletter.GlobalVariables
             public readonly static string WinVistaColors = $"{WikiURL}/Edit-Windows-colors-and-theme#windows-vista";
 
             /// <summary>
-            /// Link to the WinPaletter Windows WXP themes editing wiki.
+            /// Link to the WinPaletter Windows XP themes editing wiki.
             /// </summary>
             public readonly static string WinXPThemes = $"{WikiURL}/Edit-Windows-colors-and-theme#windows-xp";
 
@@ -168,7 +168,7 @@ namespace WinPaletter.GlobalVariables
             public readonly static string LogonUI_8x = $"{WikiURL}/Edit-LogonUI-screen#windows-81-and-windows-7";
 
             /// <summary>
-            /// Link to WinPaletter LognoUI modification for Windows WXP wiki.
+            /// Link to WinPaletter LognoUI modification for Windows XP wiki.
             /// </summary>
             public readonly static string LogonUI_XP = $"{WikiURL}/Edit-LogonUI-screen#windows-xp";
 

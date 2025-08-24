@@ -1,5 +1,4 @@
-﻿using ImageProcessor;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -462,12 +461,9 @@ namespace WinPaletter.UI.Simulation
 
                             if (b is not null)
                             {
-                                using (ImageFactory ImgF = new())
+                                using (Bitmap bmpContrast = b?.Contrast(-0.2f))
                                 {
-                                    ImgF.Load(b);
-                                    ImgF.Saturation(-30);
-                                    ImgF.Brightness(-20);
-                                    AdaptedBackBlurred = ImgF.Image.Clone() as Bitmap;
+                                    AdaptedBackBlurred = bmpContrast.AdjustHSL(null, 0.2f);
                                 }
                             }
                         }

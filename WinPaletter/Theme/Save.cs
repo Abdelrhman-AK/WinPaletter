@@ -347,7 +347,7 @@ namespace WinPaletter.Theme
                             string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista)));
                         }
 
-                        // Apply Windows WXP execlusive features (Themes, LogonUI screen and visual styles)
+                        // Apply Windows XP execlusive features (Themes, LogonUI screen and visual styles)
                         if (OS.WXP)
                         {
                             Execute(() => WindowsXP.Apply(tv), treeView,
@@ -3261,7 +3261,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                // Add Visual Styles files of Windows WXP
+                // Add Visual Styles files of Windows XP
                 if (TM.WindowsXP.VisualStyles.VisualStylesType == Structures.VisualStyles.DefaultVisualStyles.Custom)
                 {
                     x = TM.WindowsXP.VisualStyles.ThemeFile;
@@ -3461,7 +3461,7 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                // Add Visual Styles files of Windows WXP
+                // Add Visual Styles files of Windows XP
                 if (TM.WindowsXP.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.WindowsXP.VisualStyles.ThemeFile;

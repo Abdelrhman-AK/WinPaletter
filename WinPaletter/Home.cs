@@ -246,7 +246,7 @@ namespace WinPaletter
         /// </summary>
         public async void AutoUpdatesCheck()
         {
-            // Do not check for updates on Windows WXP and Vista as the update server does not support these versions (Unsupported TLS version).
+            // Do not check for updates on Windows XP and Vista as the update server does not support these versions (Unsupported TLS version).
             if (OS.WXP || OS.WVista) return;
 
             // Reset the update channel variables.

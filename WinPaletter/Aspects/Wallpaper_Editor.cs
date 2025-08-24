@@ -611,39 +611,42 @@ namespace WinPaletter
                 temp = img_tinted;
             }
 
-            pnl_preview.Image = temp;
-
-            if (style_fill.Checked)
+            Invoke(() =>
             {
-                pnl_preview.SizeMode = PictureBoxSizeMode.CenterImage;
-            }
+                pnl_preview.Image = temp;
 
-            else if (style_fit.Checked)
-            {
-                pnl_preview.SizeMode = PictureBoxSizeMode.Zoom;
-            }
+                if (style_fill.Checked)
+                {
+                    pnl_preview.SizeMode = PictureBoxSizeMode.CenterImage;
+                }
 
-            else if (style_stretch.Checked)
-            {
-                pnl_preview.SizeMode = PictureBoxSizeMode.StretchImage;
-            }
+                else if (style_fit.Checked)
+                {
+                    pnl_preview.SizeMode = PictureBoxSizeMode.Zoom;
+                }
 
-            else if (style_center.Checked)
-            {
-                pnl_preview.SizeMode = PictureBoxSizeMode.CenterImage;
-            }
+                else if (style_stretch.Checked)
+                {
+                    pnl_preview.SizeMode = PictureBoxSizeMode.StretchImage;
+                }
 
-            else if (style_tile.Checked)
-            {
-                pnl_preview.SizeMode = PictureBoxSizeMode.Normal;
-            }
+                else if (style_center.Checked)
+                {
+                    pnl_preview.SizeMode = PictureBoxSizeMode.CenterImage;
+                }
+
+                else if (style_tile.Checked)
+                {
+                    pnl_preview.SizeMode = PictureBoxSizeMode.Normal;
+                }
+            });
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
             img_path = TextBox1.Text;
-            img = BitmapMgr.Load(img_path);
-            img_filled = img?.FillScale(pnl_preview.Size);
+            using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+            img_filled = img?.FillInSize(pnl_preview.Size);
             img_tile = img?.Tile(pnl_preview.Size);
 
             ApplyPreviewStyle();
@@ -660,7 +663,8 @@ namespace WinPaletter
 
         private void TextBox3_TextChanged(object sender, EventArgs e)
         {
-            img_untouched = BitmapMgr.Load(TextBox3.Text);
+            using (Bitmap b = BitmapMgr.Load(TextBox3.Text)) img_untouched = b.Resize(pnl_preview.Width, pnl_preview.Height);
+
             ApplyHSLPreview();
         }
 
@@ -757,8 +761,8 @@ namespace WinPaletter
 
                     if (index > ImgLs1.Count - 1) index = 0;
                     img_path = ImgLs1.Count > 0 ? ImgLs1[index] : string.Empty;
-                    img = BitmapMgr.Load(img_path);
-                    img_filled = img?.FillScale(pnl_preview.Size);
+                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+                    img_filled = img?.FillInSize(pnl_preview.Size);
                     img_tile = img?.Tile(pnl_preview.Size);
 
                     Label3.Text = $"{index + 1}/{ImgLs1.Count}";
@@ -771,8 +775,8 @@ namespace WinPaletter
                     if (index > ImgLs2.Count - 1) index = 0;
 
                     img_path = ImgLs2.Count > 0 ? ImgLs2[index] : string.Empty;
-                    img = BitmapMgr.Load(img_path);
-                    img_filled = img?.FillScale(pnl_preview.Size);
+                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+                    img_filled = img?.FillInSize(pnl_preview.Size);
                     img_tile = img?.Tile(pnl_preview.Size);
 
                     Label3.Text = $"{index + 1}/{ImgLs2.Count}";
@@ -794,19 +798,11 @@ namespace WinPaletter
             {
                 if (source_wallpapertone.Enabled && img_untouched is not null)
                 {
-                    using (ImageProcessor.ImageFactory ImgF = new())
-                    {
-                        ImgF.Load(img_untouched);
-                        ImgF.Hue(HBar.Value, true);
-                        ImgF.Saturation(SBar.Value * 2 - 100);
-                        ImgF.Brightness(LBar.Value * 2 - 100);
+                    img_tinted = img_untouched.AdjustHSL(HBar.Value, SBar.Value / 100f, LBar.Value / 100f);
+                    img_tinted_filled = img_tinted.FillInSize(pnl_preview.Size);
+                    img_tinted_tile = img_tinted.Tile(pnl_preview.Size);
 
-                        img_tinted = ImgF.Image.Clone() as Bitmap;
-                        img_tinted_filled = img_tinted.FillScale(pnl_preview.Size);
-                        img_tinted_tile = img_tinted.Tile(pnl_preview.Size);
-                    }
-
-                    Invoke(ApplyPreviewStyle);
+                    ApplyPreviewStyle();
                 }
             });
         }
@@ -817,13 +813,9 @@ namespace WinPaletter
             {
                 if (File.Exists(TextBox3.Text) && dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (ImageProcessor.ImageFactory ImgF = new())
+                    using (Bitmap bmp = BitmapMgr.Load(TextBox3.Text))
                     {
-                        ImgF.Load(TextBox3.Text);
-                        ImgF.Hue(HBar.Value, true);
-                        ImgF.Saturation(SBar.Value * 2 - 100);
-                        ImgF.Brightness(LBar.Value * 2 - 100);
-                        ImgF.Image.Save(dlg.FileName);
+                        bmp.AdjustHSL(HBar.Value, SBar.Value / 100f, LBar.Value / 100f).Save(dlg.FileName);
                     }
                 }
             }
@@ -842,8 +834,8 @@ namespace WinPaletter
                 if (img_path.ToUpper() != TextBox1.Text.ToUpper())
                 {
                     img_path = TextBox1.Text;
-                    img = BitmapMgr.Load(img_path);
-                    img_filled = img?.FillScale(pnl_preview.Size);
+                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+                    img_filled = img?.FillInSize(pnl_preview.Size);
                     img_tile = img?.Tile(pnl_preview.Size);
                 }
 

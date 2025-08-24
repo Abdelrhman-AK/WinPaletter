@@ -242,16 +242,16 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Fax sent WAV sound File path</summary>
         public string Snd_Explorer_FaxSent = string.Empty;
 
-        /// <summary>NetMeeting application (Windows WXP): person joins WAV sound File path</summary>
+        /// <summary>NetMeeting application (Windows XP): person joins WAV sound File path</summary>
         public string Snd_NetMeeting_PersonJoins = string.Empty;
 
-        /// <summary>NetMeeting application (Windows WXP): person leaved WAV sound File path</summary>
+        /// <summary>NetMeeting application (Windows XP): person leaved WAV sound File path</summary>
         public string Snd_NetMeeting_PersonLeaves = string.Empty;
 
-        /// <summary>NetMeeting application (Windows WXP): receive call WAV sound File path</summary>
+        /// <summary>NetMeeting application (Windows XP): receive call WAV sound File path</summary>
         public string Snd_NetMeeting_ReceiveCall = string.Empty;
 
-        /// <summary>NetMeeting application (Windows WXP): receive request to join WAV sound File path</summary>
+        /// <summary>NetMeeting application (Windows XP): receive request to join WAV sound File path</summary>
         public string Snd_NetMeeting_ReceiveRequestToJoin = string.Empty;
 
         /// <summary>Speech recognition (Windows Vista and later): disambiguation numbers WAV sound File path</summary>
@@ -554,28 +554,33 @@ namespace WinPaletter.Theme.Structures
                     EditReg(treeView, string.Format(Scope, "MenuPopup"), string.Empty, Snd_Win_MenuPopup, RegistryValueKind.String);
                     EditReg(treeView, string.Format(Scope, "MessageNudge"), string.Empty, Snd_Win_MessageNudge, RegistryValueKind.String);
                     EditReg(treeView, string.Format(Scope, "Minimize"), string.Empty, Snd_Win_Minimize, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Default"), string.Empty, Snd_Win_Notification_Default, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.IM"), string.Empty, Snd_Win_Notification_IM, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm"), string.Empty, Snd_Win_Notification_Looping_Alarm, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm2"), string.Empty, Snd_Win_Notification_Looping_Alarm2, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm3"), string.Empty, Snd_Win_Notification_Looping_Alarm3, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm4"), string.Empty, Snd_Win_Notification_Looping_Alarm4, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm5"), string.Empty, Snd_Win_Notification_Looping_Alarm5, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm6"), string.Empty, Snd_Win_Notification_Looping_Alarm6, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm7"), string.Empty, Snd_Win_Notification_Looping_Alarm7, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm8"), string.Empty, Snd_Win_Notification_Looping_Alarm8, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm9"), string.Empty, Snd_Win_Notification_Looping_Alarm9, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm10"), string.Empty, Snd_Win_Notification_Looping_Alarm10, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call"), string.Empty, Snd_Win_Notification_Looping_Call, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call2"), string.Empty, Snd_Win_Notification_Looping_Call2, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call3"), string.Empty, Snd_Win_Notification_Looping_Call3, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call4"), string.Empty, Snd_Win_Notification_Looping_Call4, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call5"), string.Empty, Snd_Win_Notification_Looping_Call5, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call6"), string.Empty, Snd_Win_Notification_Looping_Call6, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call7"), string.Empty, Snd_Win_Notification_Looping_Call7, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call8"), string.Empty, Snd_Win_Notification_Looping_Call8, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call9"), string.Empty, Snd_Win_Notification_Looping_Call9, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Notification.Looping.Call10"), string.Empty, Snd_Win_Notification_Looping_Call10, RegistryValueKind.String);
+                   
+                    if (!OS.WXP && !OS.WVista && !OS.W7)
+                    {
+                        EditReg(treeView, string.Format(Scope, "Notification.Default"), string.Empty, Snd_Win_Notification_Default, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.IM"), string.Empty, Snd_Win_Notification_IM, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm"), string.Empty, Snd_Win_Notification_Looping_Alarm, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm2"), string.Empty, Snd_Win_Notification_Looping_Alarm2, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm3"), string.Empty, Snd_Win_Notification_Looping_Alarm3, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm4"), string.Empty, Snd_Win_Notification_Looping_Alarm4, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm5"), string.Empty, Snd_Win_Notification_Looping_Alarm5, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm6"), string.Empty, Snd_Win_Notification_Looping_Alarm6, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm7"), string.Empty, Snd_Win_Notification_Looping_Alarm7, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm8"), string.Empty, Snd_Win_Notification_Looping_Alarm8, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm9"), string.Empty, Snd_Win_Notification_Looping_Alarm9, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Alarm10"), string.Empty, Snd_Win_Notification_Looping_Alarm10, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call"), string.Empty, Snd_Win_Notification_Looping_Call, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call2"), string.Empty, Snd_Win_Notification_Looping_Call2, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call3"), string.Empty, Snd_Win_Notification_Looping_Call3, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call4"), string.Empty, Snd_Win_Notification_Looping_Call4, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call5"), string.Empty, Snd_Win_Notification_Looping_Call5, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call6"), string.Empty, Snd_Win_Notification_Looping_Call6, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call7"), string.Empty, Snd_Win_Notification_Looping_Call7, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call8"), string.Empty, Snd_Win_Notification_Looping_Call8, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call9"), string.Empty, Snd_Win_Notification_Looping_Call9, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Notification.Looping.Call10"), string.Empty, Snd_Win_Notification_Looping_Call10, RegistryValueKind.String);
+                    }
+
                     EditReg(treeView, string.Format(Scope, "Notification.Mail"), string.Empty, Snd_Win_Notification_Mail, RegistryValueKind.String);
                     EditReg(treeView, string.Format(Scope, "Notification.Proximity"), string.Empty, Snd_Win_Notification_Proximity, RegistryValueKind.String);
                     EditReg(treeView, string.Format(Scope, "Notification.Reminder"), string.Empty, Snd_Win_Notification_Reminder, RegistryValueKind.String);
@@ -615,22 +620,28 @@ namespace WinPaletter.Theme.Structures
                     EditReg(treeView, string.Format(Scope, "FaxSent"), string.Empty, Snd_Explorer_FaxSent, RegistryValueKind.String);
                 }
 
-                foreach (string Scope in Scope_NetMeeting)
+                if (OS.WXP)
                 {
-                    EditReg(treeView, string.Format(Scope, "Person Joins"), string.Empty, Snd_NetMeeting_PersonJoins, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Person Leaves"), string.Empty, Snd_NetMeeting_PersonLeaves, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Receive Call"), string.Empty, Snd_NetMeeting_ReceiveCall, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "Receive Request to Join"), string.Empty, Snd_NetMeeting_ReceiveRequestToJoin, RegistryValueKind.String);
+                    foreach (string Scope in Scope_NetMeeting)
+                    {
+                        EditReg(treeView, string.Format(Scope, "Person Joins"), string.Empty, Snd_NetMeeting_PersonJoins, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Person Leaves"), string.Empty, Snd_NetMeeting_PersonLeaves, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Receive Call"), string.Empty, Snd_NetMeeting_ReceiveCall, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "Receive Request to Join"), string.Empty, Snd_NetMeeting_ReceiveRequestToJoin, RegistryValueKind.String);
+                    }
                 }
 
-                foreach (string Scope in Scope_SpeechRec)
+                if (!OS.WXP)
                 {
-                    EditReg(treeView, string.Format(Scope, "DisNumbersSound"), string.Empty, Snd_SpeechRec_DisNumbersSound, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "HubOffSound"), string.Empty, Snd_SpeechRec_HubOffSound, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "HubOnSound"), string.Empty, Snd_SpeechRec_HubOnSound, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "HubSleepSound"), string.Empty, Snd_SpeechRec_HubSleepSound, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "MisrecoSound"), string.Empty, Snd_SpeechRec_MisrecoSound, RegistryValueKind.String);
-                    EditReg(treeView, string.Format(Scope, "PanelSound"), string.Empty, Snd_SpeechRec_PanelSound, RegistryValueKind.String);
+                    foreach (string Scope in Scope_SpeechRec)
+                    {
+                        EditReg(treeView, string.Format(Scope, "DisNumbersSound"), string.Empty, Snd_SpeechRec_DisNumbersSound, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "HubOffSound"), string.Empty, Snd_SpeechRec_HubOffSound, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "HubOnSound"), string.Empty, Snd_SpeechRec_HubOnSound, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "HubSleepSound"), string.Empty, Snd_SpeechRec_HubSleepSound, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "MisrecoSound"), string.Empty, Snd_SpeechRec_MisrecoSound, RegistryValueKind.String);
+                        EditReg(treeView, string.Format(Scope, "PanelSound"), string.Empty, Snd_SpeechRec_PanelSound, RegistryValueKind.String);
+                    }
                 }
 
                 // Create INI files for Windows sounds used by service

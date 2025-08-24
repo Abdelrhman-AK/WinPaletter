@@ -320,7 +320,7 @@ namespace WinPaletter
                 }
                 catch
                 {
-                    // Old msstyles (Windows WXP)
+                    // Old msstyles (Windows XP)
                     try
                     {
                         if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
@@ -352,7 +352,7 @@ namespace WinPaletter
                 }
                 catch
                 {
-                    // Old msstyles (Windows WXP)
+                    // Old msstyles (Windows XP)
                     try
                     {
                         if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")

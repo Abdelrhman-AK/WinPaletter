@@ -86,7 +86,7 @@ namespace WinPaletter.Theme.Structures
         public bool DesignedFor_WinVista = true;
 
         /// <summary>
-        /// This theme is designed especially for Windows WXP
+        /// This theme is designed especially for Windows XP
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_WinXP = true;

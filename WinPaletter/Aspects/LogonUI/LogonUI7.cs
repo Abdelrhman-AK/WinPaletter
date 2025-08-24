@@ -1,12 +1,10 @@
-﻿using ImageProcessor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
-using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -272,15 +270,7 @@ namespace WinPaletter
 
             if (CheckBox8.Checked) _bmp = _bmp.Grayscale();
 
-            if (CheckBox7.Checked)
-            {
-                using (ImageFactory imgF = new())
-                {
-                    imgF.Load((Bitmap)_bmp.Clone());
-                    imgF.GaussianBlur(trackBarX1.Value);
-                    _bmp = imgF.Image.Clone() as Bitmap;
-                }
-            }
+            if (CheckBox7.Checked) _bmp = _bmp.Blur(trackBarX1.Value);
 
             if (CheckBox6.Checked)
             {

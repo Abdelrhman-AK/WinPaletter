@@ -1,10 +1,6 @@
-﻿using Cyotek.Windows.Forms;
-using ImageProcessor;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Net.NetworkInformation;
 using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
@@ -132,34 +128,24 @@ namespace WinPaletter.TypesExtensions
             if (backgroundBlurred != null)
             {
                 Bitmap glowImage;
+                using (Bitmap bmpGrayscale = backgroundBlurred?.Grayscale())
+                using (Bitmap bmpBright = bmpGrayscale.Brighten(0.2f))
+                {
+                    glowImage = bmpBright.Tint(color1.Blend(color2, (double)colorBalance));
+                }
+
                 Bitmap colorImage;
+                using (Bitmap bmpBrightColor = backgroundBlurred?.Brighten(0.4f))
+                using (Bitmap bmtTint = bmpBrightColor?.Tint(color1))
+                {
+                    colorImage = bmtTint.Fade(0.5f);
+                }
+
                 Bitmap whiteImage;
-
-                using (ImageFactory imgF = new())
+                using (Bitmap bmpBrightWhite = backgroundBlurred?.Brighten(0.55f))
+                using (Bitmap bmtTint = bmpBrightWhite?.Tint(Color.White))
                 {
-                    imgF.Load(backgroundBlurred);
-                    imgF.Filter(ImageProcessor.Imaging.Filters.Photo.MatrixFilters.GreyScale);
-                    imgF.Brightness(20);
-                    imgF.Tint(color1.Blend(color2, (double)colorBalance));
-                    glowImage = imgF.Image.Clone() as Bitmap;
-                }
-
-                using (ImageFactory imgF = new())
-                {
-                    imgF.Load(backgroundBlurred);
-                    imgF.Brightness(40);
-                    imgF.Tint(color1);
-                    imgF.Alpha(50);
-                    colorImage = imgF.Image.Clone() as Bitmap;
-                }
-
-                using (ImageFactory imgF = new())
-                {
-                    imgF.Load(backgroundBlurred);
-                    imgF.Brightness(55);
-                    imgF.Tint(Color.White);
-                    imgF.Alpha(40);
-                    whiteImage = imgF.Image.Clone() as Bitmap;
+                    whiteImage = bmtTint.Fade(0.4f);
                 }
 
                 if (roundedCorners)

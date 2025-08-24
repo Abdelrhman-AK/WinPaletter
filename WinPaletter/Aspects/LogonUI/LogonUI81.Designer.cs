@@ -465,7 +465,7 @@ namespace WinPaletter
             this.PictureBox4.Location = new System.Drawing.Point(8, 39);
             this.PictureBox4.Name = "PictureBox4";
             this.PictureBox4.Size = new System.Drawing.Size(25, 25);
-            this.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PictureBox4.TabIndex = 89;
             this.PictureBox4.TabStop = false;
             // 

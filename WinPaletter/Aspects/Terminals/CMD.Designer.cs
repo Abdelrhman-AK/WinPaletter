@@ -121,11 +121,11 @@ namespace WinPaletter
             this.pictureBox14 = new System.Windows.Forms.PictureBox();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.PictureBox29 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.PictureBox30 = new System.Windows.Forms.PictureBox();
             this.PictureBox31 = new System.Windows.Forms.PictureBox();
+            this.comboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.PictureBox34 = new System.Windows.Forms.PictureBox();
             this.PictureBox26 = new System.Windows.Forms.PictureBox();
             this.PictureBox28 = new System.Windows.Forms.PictureBox();
@@ -1468,35 +1468,6 @@ namespace WinPaletter
             this.groupBox1.Size = new System.Drawing.Size(489, 313);
             this.groupBox1.TabIndex = 202;
             // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(135, 36);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(350, 16);
-            this.label3.TabIndex = 84;
-            this.label3.Text = "These schemes are fetched from your Windows Terminal configuration";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.comboBox1.ForeColor = System.Drawing.Color.White;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.ItemHeight = 24;
-            this.comboBox1.Location = new System.Drawing.Point(136, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(351, 30);
-            this.comboBox1.TabIndex = 73;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
             // PictureBox29
             // 
             this.PictureBox29.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -1508,6 +1479,19 @@ namespace WinPaletter
             this.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox29.TabIndex = 241;
             this.PictureBox29.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(135, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(350, 16);
+            this.label3.TabIndex = 84;
+            this.label3.Text = "These schemes are fetched from your Windows Terminal configuration";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox30
             // 
@@ -1532,6 +1516,22 @@ namespace WinPaletter
             this.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox31.TabIndex = 239;
             this.PictureBox31.TabStop = false;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.comboBox1.ForeColor = System.Drawing.Color.White;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.ItemHeight = 24;
+            this.comboBox1.Location = new System.Drawing.Point(136, 3);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(351, 30);
+            this.comboBox1.TabIndex = 73;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // PictureBox34
             // 
@@ -1745,7 +1745,7 @@ namespace WinPaletter
             this.TabPage2.Location = new System.Drawing.Point(104, 4);
             this.TabPage2.Name = "TabPage2";
             this.TabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage2.Size = new System.Drawing.Size(497, 596);
+            this.TabPage2.Size = new System.Drawing.Size(497, 558);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Fonts";
             // 
@@ -1907,7 +1907,7 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(104, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(497, 596);
+            this.TabPage3.Size = new System.Drawing.Size(497, 558);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Cursor";
             // 
@@ -1920,7 +1920,7 @@ namespace WinPaletter
             this.alertBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox1.Image = null;
-            this.alertBox1.Location = new System.Drawing.Point(3, 561);
+            this.alertBox1.Location = new System.Drawing.Point(3, 523);
             this.alertBox1.Name = "alertBox1";
             this.alertBox1.Size = new System.Drawing.Size(491, 32);
             this.alertBox1.TabIndex = 208;
@@ -1977,7 +1977,7 @@ namespace WinPaletter
             this.TabPage4.Location = new System.Drawing.Point(104, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(497, 596);
+            this.TabPage4.Size = new System.Drawing.Size(497, 558);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Tweaks";
             // 
@@ -2126,7 +2126,7 @@ namespace WinPaletter
             this.alertBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(3, 561);
+            this.alertBox2.Location = new System.Drawing.Point(3, 523);
             this.alertBox2.Name = "alertBox2";
             this.alertBox2.Size = new System.Drawing.Size(491, 32);
             this.alertBox2.TabIndex = 211;

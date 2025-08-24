@@ -281,7 +281,7 @@ namespace WinPaletter
             // Apply the wallpaper style
             return wallpaperStyle switch
             {
-                Theme.Structures.Wallpaper.WallpaperStyles.Fill => wallpaper.FillScale(targetSize),
+                Theme.Structures.Wallpaper.WallpaperStyles.Fill => wallpaper.FillInSize(targetSize),
                 Theme.Structures.Wallpaper.WallpaperStyles.Fit => wallpaper,
                 Theme.Structures.Wallpaper.WallpaperStyles.Stretched => wallpaper,
                 Theme.Structures.Wallpaper.WallpaperStyles.Centered => wallpaper,

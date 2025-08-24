@@ -80,7 +80,7 @@ namespace WinPaletter.Theme
         public WindowsVista WindowsVista = new();
 
         /// <summary>
-        /// Structure instance that contains data about Windows WXP colors and appearance, and it can be customized.
+        /// Structure instance that contains data about Windows XP colors and appearance, and it can be customized.
         /// </summary>
         public WindowsXP WindowsXP = new();
 
@@ -105,7 +105,7 @@ namespace WinPaletter.Theme
         public Structures.LogonUI7 LogonUI7 = new();
 
         /// <summary>
-        /// Structure instance that contains data about Windows WXP LogonUI appearance, and it can be customized.
+        /// Structure instance that contains data about Windows XP LogonUI appearance, and it can be customized.
         /// </summary>
         public Structures.LogonUIXP LogonUIXP = new();
 
@@ -165,7 +165,7 @@ namespace WinPaletter.Theme
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
-        /// <br></br>This property targets Windows WXP (to avoid overlapping).
+        /// <br></br>This property targets Windows XP (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
         public WallpaperTone WallpaperTone_WXP = new() { Image = $"{SysPaths.Windows}\\Web\\Wallpaper\\Bliss.bmp" };

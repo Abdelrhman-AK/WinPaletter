@@ -778,7 +778,7 @@ namespace WinPaletter.NativeMethods
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a SERIALKEYS structure that receives the information.
             /// <br></br> • Set the <b><c>cbSize</c></b> member of this structure and the <b><c>uiParam</c></b> parameter to <b><c>sizeof(SERIALKEYS)</c></b>.
             /// <br></br>
-            /// <br></br> • <i> (!) Windows Server 2003, Windows WXP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
+            /// <br></br> • <i> (!) Windows Server 2003, Windows XP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
             /// </summary>
             SPI_GETSERIALKEYS = 0x003E,
 
@@ -788,7 +788,7 @@ namespace WinPaletter.NativeMethods
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a SERIALKEYS structure that contains the new parameters.
             /// <br></br> • Set the <b><c>cbSize</c></b> member of this structure and the <b><c>uiParam</c></b> parameter to <b><c>sizeof(SERIALKEYS)</c></b>.
             /// <br></br>
-            /// <br></br> • <i> (!) Windows Server 2003, Windows WXP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
+            /// <br></br> • <i> (!) Windows Server 2003, Windows XP/2000/NT: Not supported. The user controls this feature through the control panel.</i>
             /// </summary>
             SPI_SETSERIALKEYS = 0x003F,
 

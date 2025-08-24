@@ -520,7 +520,7 @@ namespace WinPaletter
             }
             else
             {
-                // Use registry method as WMI is not available in Windows WXP
+                // Use registry method as WMI is not available in Windows XP
                 foreach (string SID in GetSubKeys("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList")) { FoundSIDs.Add(SID); }
             }
 

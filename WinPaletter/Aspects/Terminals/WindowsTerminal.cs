@@ -1440,7 +1440,7 @@ namespace WinPaletter
             }
             else if (File.Exists(TerBackImage.Text))
             {
-                Terminal1.BackImage = BitmapMgr.Load(TerBackImage.Text).FillScale(new(Terminal1.Width - 2, Terminal1.Height - 32));
+                Terminal1.BackImage = BitmapMgr.Load(TerBackImage.Text).FillInSize(new(Terminal1.Width - 2, Terminal1.Height - 32));
             }
 
             else
@@ -1938,7 +1938,7 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (TerThemes.SelectedIndex > 3 && MsgBox($"Are you sure you want to delete theme `{TerThemes.SelectedItem}`?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (TerThemes.SelectedIndex > 3 && MsgBox(string.Format(Program.Lang.Strings.Messages.TerminalDeleteTheme, TerThemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int i = TerThemes.SelectedIndex;
                 TerThemes.Items.RemoveAt(i);
@@ -1949,7 +1949,7 @@ namespace WinPaletter
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if (TerSchemes.SelectedIndex > 0 && MsgBox($"Are you sure you want to delete scheme `{TerSchemes.SelectedItem}`?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (TerSchemes.SelectedIndex > 0 && MsgBox(string.Format(Program.Lang.Strings.Messages.TerminalDeleteScheme, TerSchemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int i = TerSchemes.SelectedIndex;
                 TerSchemes.Items.RemoveAt(i);

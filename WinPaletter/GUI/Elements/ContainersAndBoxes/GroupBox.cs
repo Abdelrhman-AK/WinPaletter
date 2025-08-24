@@ -1,5 +1,4 @@
-﻿using ImageProcessor;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -149,11 +148,10 @@ namespace WinPaletter.UI.WP
 
             if (!Program.Style.DarkMode)
             {
-                using (ImageFactory imgF = new())
+                using (Bitmap bmpContrast = bmp?.Contrast(0.5f))
+                using (Bitmap bmpInvert = bmpContrast?.Invert())
                 {
-                    imgF.Load(bmp);
-                    imgF.Contrast(50);
-                    bmp = (imgF.Image as Bitmap).Invert().Fade(0.8f);
+                    bmp = bmpInvert?.Fade(0.8f);
                 }
             }
 

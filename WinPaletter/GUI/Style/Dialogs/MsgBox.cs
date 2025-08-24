@@ -114,7 +114,7 @@ namespace WinPaletter.UI.Style
         {
             try
             {
-                // Windows WXP does not support the modern task dialog.
+                // Windows XP does not support the modern task dialog.
                 if (!OS.WXP)
                 {
                     // Create a new instance of the modern task dialog.
@@ -254,7 +254,7 @@ namespace WinPaletter.UI.Style
 
                 else
                 {
-                    // If the operating system is Windows WXP, use the classic message box dialog.
+                    // If the operating system is Windows XP, use the classic message box dialog.
                     return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Buttons, Icon);
                 }
             }
@@ -266,7 +266,7 @@ namespace WinPaletter.UI.Style
         }
 
         /// <summary>
-        /// Windows WXP Styled MsgBox
+        /// Windows XP Styled MsgBox
         /// </summary>
         /// <param name="Message"></param>
         /// <param name="SubMessage"></param>

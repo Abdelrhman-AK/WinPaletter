@@ -43,134 +43,100 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Return HSL From RGB Color
+        /// Convert Color (ARGB) to HSL
         /// </summary>
-        public static HSL ToHSL(this Color Color)
+        public static HSL ToHSL(this Color color)
         {
-            HSL _hsl = new();
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
 
-            float r = Color.R / 255.0f;
-            float g = Color.G / 255.0f;
-            float b = Color.B / 255.0f;
-
-            float min = Math.Min(Math.Min(r, g), b);
-            float max = Math.Max(Math.Max(r, g), b);
+            float max = Math.Max(r, Math.Max(g, b));
+            float min = Math.Min(r, Math.Min(g, b));
             float delta = max - min;
 
-            _hsl.L = (max + min) / 2f;
+            HSL hsl = new()
+            {
+                L = (max + min) / 2f
+            };
 
             if (delta == 0f)
             {
-                _hsl.H = 0;
-                _hsl.S = 0.0f;
+                hsl.H = 0f;
+                hsl.S = 0f;
             }
             else
             {
-                _hsl.S = (double)_hsl.L <= 0.5d ? delta / (max + min) : delta / (2f - max - min);
+                // Saturation
+                hsl.S = hsl.L <= 0.5f ? delta / (max + min) : delta / (2f - max - min);
 
+                // Hue
                 float hue;
-
                 if (r == max)
-                {
-                    hue = (g - b) / 6f / delta;
-                }
+                    hue = (g - b) / delta;
                 else if (g == max)
-                {
-                    hue = 1.0f / 3f + (b - r) / 6f / delta;
-                }
+                    hue = 2f + (b - r) / delta;
                 else
-                {
-                    hue = 2.0f / 3f + (r - g) / 6f / delta;
-                }
+                    hue = 4f + (r - g) / delta;
 
-                if (hue < 0f)
-                {
-                    hue += 1f;
-                }
-                if (hue > 1f)
-                {
-                    hue -= 1f;
-                }
+                hue *= 60f; // convert to degrees
+                if (hue < 0f) hue += 360f;
 
-                _hsl.H = (int)Math.Round(Math.Truncate((double)(hue * 360f)));
+                hsl.H = hue;
             }
 
-            return _hsl;
+            return hsl;
         }
 
         /// <summary>
-        /// Saturate a color by a given percentage
-        /// </summary>
-        /// <param name="color"></param>
-        /// <param name="saturation"></param>
-        /// <returns></returns>
-        public static Color Saturate(this Color color, float saturation)
-        {
-            HSL hsl = color.ToHSL();
-            hsl.S = Math.Min(Math.Max(hsl.S * saturation, 0), 100); // Adjust saturation
-            return hsl.ToRGB();
-        }
-
-        /// <summary>
-        /// Return RGB Color From HSL
+        /// Convert HSL to Color (RGB)
         /// </summary>
         public static Color ToRGB(this HSL hsl)
         {
-            byte r;
-            byte g;
-            byte b;
+            float r, g, b;
 
             if (hsl.S == 0f)
             {
-                r = (byte)Math.Round(Math.Truncate((double)(hsl.L * 255f)));
-                g = (byte)Math.Round(Math.Truncate((double)(hsl.L * 255f)));
-                b = (byte)Math.Round(Math.Truncate((double)(hsl.L * 255f)));
+                // Achromatic (gray)
+                r = g = b = hsl.L;
             }
             else
             {
-                float v1;
-                float v2;
-                float hue = hsl.H / 360f;
+                float q = hsl.L < 0.5f ? hsl.L * (1f + hsl.S) : hsl.L + hsl.S - hsl.L * hsl.S;
+                float p = 2f * hsl.L - q;
 
-                v2 = (double)hsl.L < 0.5d ? hsl.L * (1f + hsl.S) : hsl.L + hsl.S - hsl.L * hsl.S;
-                v1 = 2f * hsl.L - v2;
+                float hk = hsl.H / 360f;
+                float[] t = new float[3];
+                t[0] = hk + 1f / 3f; // r
+                t[1] = hk;           // g
+                t[2] = hk - 1f / 3f; // b
 
-                r = (byte)Math.Round(Math.Truncate((double)(255f * HueToRGB(v1, v2, hue + 1.0f / 3f))));
-                g = (byte)Math.Round(Math.Truncate((double)(255f * HueToRGB(v1, v2, hue))));
-                b = (byte)Math.Round(Math.Truncate((double)(255f * HueToRGB(v1, v2, hue - 1.0f / 3f))));
+                for (int i = 0; i < 3; i++)
+                {
+                    if (t[i] < 0f) t[i] += 1f;
+                    if (t[i] > 1f) t[i] -= 1f;
+
+                    if (t[i] < 1f / 6f)
+                        t[i] = p + (q - p) * 6f * t[i];
+                    else if (t[i] < 1f / 2f)
+                        t[i] = q;
+                    else if (t[i] < 2f / 3f)
+                        t[i] = p + (q - p) * (2f / 3f - t[i]) * 6f;
+                    else
+                        t[i] = p;
+                }
+
+                r = t[0];
+                g = t[1];
+                b = t[2];
             }
 
-            return Color.FromArgb(r, g, b);
-        }
+            // Inline clamp to 0–255
+            byte R = (byte)((r < 0f ? 0f : (r > 1f ? 1f : r)) * 255f);
+            byte G = (byte)((g < 0f ? 0f : (g > 1f ? 1f : g)) * 255f);
+            byte B = (byte)((b < 0f ? 0f : (b > 1f ? 1f : b)) * 255f);
 
-        private static float HueToRGB(float v1, float v2, float vH)
-        {
-            if (vH < 0f)
-            {
-                vH += 1f;
-            }
-
-            if (vH > 1f)
-            {
-                vH -= 1f;
-            }
-
-            if (6f * vH < 1f)
-            {
-                return v1 + (v2 - v1) * 6f * vH;
-            }
-
-            if (2f * vH < 1f)
-            {
-                return v2;
-            }
-
-            if (3f * vH < 2f)
-            {
-                return v1 + (v2 - v1) * (2.0f / 3f - vH) * 6f;
-            }
-
-            return v1;
+            return Color.FromArgb(R, G, B);
         }
 
         /// <summary>
@@ -407,7 +373,7 @@ namespace WinPaletter.TypesExtensions
             /// <summary>
             /// Hue
             /// </summary>
-            public int H { get; set; } = h;
+            public float H { get; set; } = h;
 
             /// <summary>
             /// Saturation
@@ -430,26 +396,59 @@ namespace WinPaletter.TypesExtensions
             }
 
             /// <summary>
-            /// Add two HSL colors
+            /// Adds the corresponding components of two <see cref="HSL"/> color values.
             /// </summary>
-            /// <param name="hsl1"></param>
-            /// <param name="hsl2"></param>
-            /// <returns></returns>
+            /// <remarks>This operator performs component-wise addition of the hue, saturation, and
+            /// lightness values. - The hue is adjusted to remain within the range [0, 360) by wrapping around if it
+            /// exceeds the bounds. - The saturation and lightness values are clamped to the range [0, 1] to ensure
+            /// valid HSL values.</remarks>
+            /// <param name="hsl1">The first <see cref="HSL"/> color value.</param>
+            /// <param name="hsl2">The second <see cref="HSL"/> color value.</param>
+            /// <returns>A new <see cref="HSL"/> instance representing the sum of the two input colors.  The resulting hue is
+            /// wrapped within the range [0, 360), and the saturation and lightness  are clamped to the range [0, 1].</returns>
             public static HSL operator +(HSL hsl1, HSL hsl2)
             {
-                return new HSL(Math.Min(Math.Max(hsl1.H + hsl2.H, 0), 360), Math.Min(Math.Max(hsl1.S + hsl2.S, 0), 100), Math.Min(Math.Max(hsl1.L + hsl2.L, 0), 100));
+                float h = hsl1.H + hsl2.H;
+                if (h > 360f) h -= 360f;
+                if (h < 0f) h += 360f;
+
+                float s = hsl1.S + hsl2.S;
+                s = s < 0f ? 0f : (s > 1f ? 1f : s);
+
+                float l = hsl1.L + hsl2.L;
+                l = l < 0f ? 0f : (l > 1f ? 1f : l);
+
+                return new () { H = h, S = s, L = l };
             }
 
             /// <summary>
-            /// Subtract two HSL colors
+            /// Subtracts the components of one <see cref="HSL"/> color from another and returns the resulting <see
+            /// cref="HSL"/> color.
             /// </summary>
-            /// <param name="hsl1"></param>
-            /// <param name="hsl2"></param>
-            /// <returns></returns>
+            /// <remarks>This operator performs component-wise subtraction of the hue, saturation, and
+            /// lightness values of the two <see cref="HSL"/> colors. - The hue is adjusted to wrap around within the
+            /// range [0, 360]. - The saturation and lightness values are clamped to ensure they remain within the valid
+            /// range of [0, 1].</remarks>
+            /// <param name="hsl1">The first <see cref="HSL"/> color to subtract from.</param>
+            /// <param name="hsl2">The second <see cref="HSL"/> color to subtract.</param>
+            /// <returns>A new <see cref="HSL"/> color representing the result of subtracting the components of <paramref
+            /// name="hsl2"/> from <paramref name="hsl1"/>. The resulting hue is adjusted to remain within the range [0,
+            /// 360], and the saturation and lightness are clamped to the range [0, 1].</returns>
             public static HSL operator -(HSL hsl1, HSL hsl2)
             {
-                return new HSL(Math.Min(Math.Max(hsl1.H - hsl2.H, 0), 360), Math.Min(Math.Max(hsl1.S - hsl2.S, 0), 100), Math.Min(Math.Max(hsl1.L - hsl2.L, 0), 100));
+                float h = hsl1.H - hsl2.H;
+                if (h > 360f) h -= 360f;
+                if (h < 0f) h += 360f;
+
+                float s = hsl1.S - hsl2.S;
+                s = s < 0f ? 0f : (s > 1f ? 1f : s);
+
+                float l = hsl1.L - hsl2.L;
+                l = l < 0f ? 0f : (l > 1f ? 1f : l);
+
+                return new () { H = h, S = s, L = l };
             }
+
         }
     }
 }

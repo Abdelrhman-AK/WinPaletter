@@ -4,11 +4,11 @@ using System.Windows.Forms;
 namespace WinPaletter.Theme.Structures
 {
     /// <summary>
-    /// Structure responsible for managing Windows WXP appearance
+    /// Structure responsible for managing Windows XP appearance
     /// </summary>
     public class WindowsXP : ICloneable
     {
-        /// <summary> Controls if Windows WXP themes editing is enabled or not </summary> 
+        /// <summary> Controls if Windows XP themes editing is enabled or not </summary> 
         public bool Enabled = true;
 
         /// <summary>

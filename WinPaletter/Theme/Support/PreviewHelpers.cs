@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using WinPaletter.UI.Simulation;
 
@@ -29,7 +30,7 @@ namespace WinPaletter
             W7,
             /// <summary>Windows Vista</summary>
             WVista,
-            /// <summary>Windows WXP</summary>
+            /// <summary>Windows XP</summary>
             WXP
         }
 
@@ -489,14 +490,9 @@ namespace WinPaletter
                 }
             }
 
-            using (ImageProcessor.ImageFactory ImgF = new())
+            using (Bitmap wall = BitmapMgr.Load(WT.Image))
             {
-                ImgF.Load(WT.Image);
-                ImgF.Hue(WT.H, true);
-                ImgF.Saturation(WT.S - 100);
-                ImgF.Brightness(WT.L - 100);
-
-                return (Bitmap)ImgF.Image.Clone();
+                return wall?.AdjustHSL(WT.H, WT.S / 100f, WT.L / 100f);
             }
         }
 

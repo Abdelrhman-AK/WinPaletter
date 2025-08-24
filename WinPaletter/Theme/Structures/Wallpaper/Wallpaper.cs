@@ -222,7 +222,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType);
 
-                // Windows WXP and Vista don't support slideshow
+                // Windows XP and Vista don't support slideshow
                 if (!OS.WXP && !OS.WVista)
                 {
                     if (!SkipSettingWallpaper)

@@ -10,7 +10,7 @@ namespace WinPaletter.GlobalVariables
     public static class OS
     {
         /// <summary>
-        /// A boolean that determines if OS is Windows WXP
+        /// A boolean that determines if OS is Windows XP
         /// </summary>
         public static bool WXP { get; } = Environment.OSVersion.Version.Major == 5;
 

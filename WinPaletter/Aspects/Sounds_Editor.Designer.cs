@@ -1008,9 +1008,9 @@ namespace WinPaletter
             this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox1.Image = ((System.Drawing.Image)(resources.GetObject("alertBox1.Image")));
-            this.alertBox1.Location = new System.Drawing.Point(12, 507);
+            this.alertBox1.Location = new System.Drawing.Point(12, 512);
             this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(707, 100);
+            this.alertBox1.Size = new System.Drawing.Size(717, 95);
             this.alertBox1.TabIndex = 214;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = resources.GetString("alertBox1.Text");
@@ -1040,7 +1040,7 @@ namespace WinPaletter
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(857, 443);
+            this.TabControl1.Size = new System.Drawing.Size(857, 448);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 203;
             // 
@@ -1060,7 +1060,7 @@ namespace WinPaletter
             this.TabPage1.Controls.Add(this.panel5);
             this.TabPage1.Location = new System.Drawing.Point(144, 4);
             this.TabPage1.Name = "TabPage1";
-            this.TabPage1.Size = new System.Drawing.Size(709, 435);
+            this.TabPage1.Size = new System.Drawing.Size(709, 440);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Main events";
             // 
@@ -2264,7 +2264,7 @@ namespace WinPaletter
             this.TabPage2.Controls.Add(this.panel12);
             this.TabPage2.Location = new System.Drawing.Point(144, 4);
             this.TabPage2.Name = "TabPage2";
-            this.TabPage2.Size = new System.Drawing.Size(709, 435);
+            this.TabPage2.Size = new System.Drawing.Size(709, 440);
             this.TabPage2.TabIndex = 1;
             this.TabPage2.Text = "Dialogs";
             // 
@@ -3199,7 +3199,7 @@ namespace WinPaletter
             this.TabPage3.Controls.Add(this.panel19);
             this.TabPage3.Location = new System.Drawing.Point(144, 4);
             this.TabPage3.Name = "TabPage3";
-            this.TabPage3.Size = new System.Drawing.Size(709, 435);
+            this.TabPage3.Size = new System.Drawing.Size(709, 440);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "Window & menus";
             // 
@@ -4279,7 +4279,7 @@ namespace WinPaletter
             this.TabPage7.Controls.Add(this.panel29);
             this.TabPage7.Location = new System.Drawing.Point(144, 4);
             this.TabPage7.Name = "TabPage7";
-            this.TabPage7.Size = new System.Drawing.Size(709, 435);
+            this.TabPage7.Size = new System.Drawing.Size(709, 440);
             this.TabPage7.TabIndex = 6;
             this.TabPage7.Text = "Devices";
             // 
@@ -5895,7 +5895,7 @@ namespace WinPaletter
             this.TabPage11.Controls.Add(this.panel36);
             this.TabPage11.Location = new System.Drawing.Point(144, 4);
             this.TabPage11.Name = "TabPage11";
-            this.TabPage11.Size = new System.Drawing.Size(709, 435);
+            this.TabPage11.Size = new System.Drawing.Size(709, 440);
             this.TabPage11.TabIndex = 10;
             this.TabPage11.Text = "Fax";
             // 
@@ -6568,7 +6568,7 @@ namespace WinPaletter
             this.TabPage8.Controls.Add(this.panel43);
             this.TabPage8.Location = new System.Drawing.Point(144, 4);
             this.TabPage8.Name = "TabPage8";
-            this.TabPage8.Size = new System.Drawing.Size(709, 435);
+            this.TabPage8.Size = new System.Drawing.Size(709, 440);
             this.TabPage8.TabIndex = 7;
             this.TabPage8.Text = "Explorer events";
             // 
@@ -7765,7 +7765,7 @@ namespace WinPaletter
             this.TabPage4.Controls.Add(this.panel50);
             this.TabPage4.Location = new System.Drawing.Point(144, 4);
             this.TabPage4.Name = "TabPage4";
-            this.TabPage4.Size = new System.Drawing.Size(709, 435);
+            this.TabPage4.Size = new System.Drawing.Size(709, 440);
             this.TabPage4.TabIndex = 3;
             this.TabPage4.Text = "Notifications";
             // 
@@ -8963,7 +8963,7 @@ namespace WinPaletter
             this.TabPage5.Controls.Add(this.panel62);
             this.TabPage5.Location = new System.Drawing.Point(144, 4);
             this.TabPage5.Name = "TabPage5";
-            this.TabPage5.Size = new System.Drawing.Size(709, 435);
+            this.TabPage5.Size = new System.Drawing.Size(709, 440);
             this.TabPage5.TabIndex = 4;
             this.TabPage5.Text = "Alarms";
             // 
@@ -10292,7 +10292,7 @@ namespace WinPaletter
             this.TabPage6.Controls.Add(this.panel72);
             this.TabPage6.Location = new System.Drawing.Point(144, 4);
             this.TabPage6.Name = "TabPage6";
-            this.TabPage6.Size = new System.Drawing.Size(709, 435);
+            this.TabPage6.Size = new System.Drawing.Size(709, 440);
             this.TabPage6.TabIndex = 5;
             this.TabPage6.Text = "Ringtones";
             // 
@@ -11617,7 +11617,7 @@ namespace WinPaletter
             this.TabPage10.Controls.Add(this.panel79);
             this.TabPage10.Location = new System.Drawing.Point(144, 4);
             this.TabPage10.Name = "TabPage10";
-            this.TabPage10.Size = new System.Drawing.Size(709, 435);
+            this.TabPage10.Size = new System.Drawing.Size(709, 440);
             this.TabPage10.TabIndex = 9;
             this.TabPage10.Text = "Speech recognition";
             // 
@@ -12417,7 +12417,7 @@ namespace WinPaletter
             this.TabPage12.Controls.Add(this.panel84);
             this.TabPage12.Location = new System.Drawing.Point(144, 4);
             this.TabPage12.Name = "TabPage12";
-            this.TabPage12.Size = new System.Drawing.Size(709, 435);
+            this.TabPage12.Size = new System.Drawing.Size(709, 440);
             this.TabPage12.TabIndex = 11;
             this.TabPage12.Text = "NetMeeting";
             // 
@@ -12969,7 +12969,7 @@ namespace WinPaletter
             this.TabPage9.Controls.Add(this.panelX);
             this.TabPage9.Location = new System.Drawing.Point(144, 4);
             this.TabPage9.Name = "TabPage9";
-            this.TabPage9.Size = new System.Drawing.Size(709, 435);
+            this.TabPage9.Size = new System.Drawing.Size(709, 440);
             this.TabPage9.TabIndex = 8;
             this.TabPage9.Text = "Others";
             // 
@@ -13113,9 +13113,9 @@ namespace WinPaletter
             this.button347.Image = null;
             this.button347.ImageGlyph = null;
             this.button347.ImageGlyphEnabled = false;
-            this.button347.Location = new System.Drawing.Point(725, 507);
+            this.button347.Location = new System.Drawing.Point(735, 512);
             this.button347.Name = "button347";
-            this.button347.Size = new System.Drawing.Size(137, 100);
+            this.button347.Size = new System.Drawing.Size(127, 95);
             this.button347.TabIndex = 215;
             this.button347.Text = "Install this service";
             this.button347.UseVisualStyleBackColor = true;

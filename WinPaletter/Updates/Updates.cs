@@ -283,7 +283,7 @@ namespace WinPaletter
                 }
             }
 
-            // Hide a warning if the user is using Windows WXP or Windows Vista as they don't support TLS 1.2.
+            // Hide a warning if the user is using Windows XP or Windows Vista as they don't support TLS 1.2.
             if (OS.WXP || OS.WVista)
             {
                 AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;

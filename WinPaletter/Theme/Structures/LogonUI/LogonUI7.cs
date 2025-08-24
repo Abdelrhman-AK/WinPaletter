@@ -224,13 +224,9 @@ namespace WinPaletter.Theme.Structures
 
                         Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring LogonUI screen image number `{x}` with radius `{Blur_Intensity}`.");
 
-                        ImageProcessor.ImageFactory imgF = new();
-
                         using (Bitmap b = new(bmpList[x]))
                         {
-                            imgF.Load(b);
-                            imgF.GaussianBlur(Blur_Intensity);
-                            bmpList[x] = (Bitmap)imgF.Image;
+                            bmpList[x] = b.Blur(Blur_Intensity);
                         }
                     }
 
