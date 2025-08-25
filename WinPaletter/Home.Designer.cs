@@ -518,7 +518,7 @@
             this.flowLayoutPanel2.Controls.Add(this.tip_label);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(4, 5);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(1065, 40);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(1069, 40);
             this.flowLayoutPanel2.TabIndex = 154;
             // 
             // pin_button

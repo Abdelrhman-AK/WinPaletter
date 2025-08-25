@@ -6,7 +6,7 @@
         {
             public partial class AppTips_Cls
             {
-                public string OS_PreviewingAs { get; set; } = "You're reviewing and editing the theme as if you are using {0}";
+                public string OS_PreviewingAs { get; set; } = "Review the theme as if you are using {0}";
                 public string TitlebarColorNotice { get; set; } = "Windows volume slider, UAC dialogs and LogonUI background follow active titlebar color";
                 public string PaletteExtraction { get; set; } = "Extracting the palette from the image depends on your device's performance, maximum palette colors number, image quality, and its resolution...";
                 public string WallpaperTone_Notice { get; set; } = "You are currently editing preferences for {0}. To change preferences for another OS, switch the OS in the main form.";

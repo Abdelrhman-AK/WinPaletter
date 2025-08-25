@@ -84,7 +84,7 @@ namespace WinPaletter
             // Add animations to toolbar buttons and cards.
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseEnter += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), ((s as UI.WP.Button).Tag ?? string.Empty).ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 button.MouseLeave += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
@@ -744,10 +744,10 @@ namespace WinPaletter
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Logs);
         }
 
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        ////new UI.Style.SchemeEditor().Hide();
-        //}
+        private void winEdition_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
 
         private void pin_button_Click(object sender, EventArgs e)
         {
