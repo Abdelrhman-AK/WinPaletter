@@ -1,10 +1,12 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
@@ -18,7 +20,7 @@ namespace WinPaletter
         private CursorControl _CopiedControl;
         private readonly List<CursorControl> AnimateList = [];
 
-        private void CursorsStudio_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        private void CursorsStudio_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.Cursors);
         }
@@ -35,7 +37,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -45,14 +47,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -65,37 +67,37 @@ namespace WinPaletter
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
         private void Apply(object sender, EventArgs e)
@@ -108,7 +110,7 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -219,7 +221,7 @@ namespace WinPaletter
             }
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Cursors.Enabled;
             CheckBox9.Checked = TM.Cursors.Shadow;
@@ -254,7 +256,7 @@ namespace WinPaletter
             if (_SelectedControl is not null) Clicked(_SelectedControl, null);
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.Cursors.Enabled = AspectEnabled;
             TM.Cursors.Shadow = CheckBox9.Checked;
@@ -355,7 +357,7 @@ namespace WinPaletter
             Button1.Enabled = true;
             groupBox3.Visible = true;
         }
-        
+
         private void CheckComptability()
         {
             bool animatingAppStarting = _SelectedControl is not null && _SelectedControl.Prop_Cursor == Paths.CursorType.AppLoading;
@@ -403,7 +405,7 @@ namespace WinPaletter
             ComboBox2.SelectedItem = Paths.ReturnStringFromGradientMode(CursorControl.Prop_SecondaryColorGradientMode);
             CheckBox3.Checked = CursorControl.Prop_SecondaryNoise;
             trackBarX2.Value = (int)Math.Round(CursorControl.Prop_SecondaryNoiseOpacity * 100f);
-            trackBarX12.Value = (int)((float)CursorControl.Prop_BorderThickness * (float)trackBarX12.Maximum / 3f);
+            trackBarX12.Value = (int)(CursorControl.Prop_BorderThickness * (float)trackBarX12.Maximum / 3f);
             trackBarX11.Value = CursorControl.Prop_LoadingCircleHot_AnimationSpeed;
 
             CircleColor1.BackColor = CursorControl.Prop_LoadingCircleBack1;
@@ -944,7 +946,7 @@ namespace WinPaletter
             foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
             {
                 bool condition0 = !i.Prop_UseFromFile && (i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy);
-                bool condition1 = i.Prop_UseFromFile && System.IO.File.Exists(i.Prop_File) && System.IO.Path.GetExtension(i.Prop_File).ToUpper() == ".ANI";
+                bool condition1 = i.Prop_UseFromFile && File.Exists(i.Prop_File) && Path.GetExtension(i.Prop_File).ToUpper() == ".ANI";
                 if (condition0 || condition1) { AnimateList.Add(i); }
             }
 
@@ -1414,18 +1416,6 @@ namespace WinPaletter
             _SelectedControl.Invalidate();
         }
 
-        private void source0_CheckedChanged(object sender, EventArgs e)
-        {
-            _SelectedControl.Prop_UseFromFile = !source0.Checked;
-            _SelectedControl.Invalidate();
-        }
-
-        private void source1_CheckedChanged(object sender, EventArgs e)
-        {
-            _SelectedControl.Prop_UseFromFile = source1.Checked;
-            _SelectedControl.Invalidate();
-        }
-
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
@@ -1700,7 +1690,7 @@ namespace WinPaletter
         {
             if (!IsShown) return;
 
-            if ((sender as UI.WP.Toggle).Checked) CheckBox9.Checked = false;
+            if ((sender as Toggle).Checked) CheckBox9.Checked = false;
 
             if (global.Checked)
             {
@@ -1763,7 +1753,7 @@ namespace WinPaletter
                         AnimateList.Clear();
 
                         bool condition0 = !i.Prop_UseFromFile && (i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy);
-                        bool condition1 = i.Prop_UseFromFile && System.IO.File.Exists(i.Prop_File) && System.IO.Path.GetExtension(i.Prop_File).ToUpper() == ".ANI";
+                        bool condition1 = i.Prop_UseFromFile && File.Exists(i.Prop_File) && Path.GetExtension(i.Prop_File).ToUpper() == ".ANI";
                         if (condition0 || condition1) { AnimateList.Add(i); }
                     }
                 }
@@ -1777,7 +1767,7 @@ namespace WinPaletter
                     AnimateList.Clear();
 
                     bool condition0 = !_SelectedControl.Prop_UseFromFile && (_SelectedControl.Prop_Cursor == Paths.CursorType.AppLoading | _SelectedControl.Prop_Cursor == Paths.CursorType.Busy);
-                    bool condition1 = _SelectedControl.Prop_UseFromFile && System.IO.File.Exists(_SelectedControl.Prop_File) && System.IO.Path.GetExtension(_SelectedControl.Prop_File).ToUpper() == ".ANI";
+                    bool condition1 = _SelectedControl.Prop_UseFromFile && File.Exists(_SelectedControl.Prop_File) && Path.GetExtension(_SelectedControl.Prop_File).ToUpper() == ".ANI";
                     if (condition0 || condition1) { AnimateList.Add(_SelectedControl); }
                 }
             }

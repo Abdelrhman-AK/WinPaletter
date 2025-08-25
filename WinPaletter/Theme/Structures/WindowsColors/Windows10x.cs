@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -109,7 +110,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">String edition mark</param>
         public void Load(string edition, Windows10x @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} colors and appearance preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {edition} colors and appearance preferences from registry.");
 
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled));
 
@@ -196,7 +197,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(string edition, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows {edition} colors and appearance preferences into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows {edition} colors and appearance preferences into registry.");
 
             SaveToggleState(edition, treeView);
 
@@ -277,12 +278,12 @@ namespace WinPaletter.Theme.Structures
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Broadcast the system message to notify about the setting change
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
-                    
+                    Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
+
                     User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
                     User32.NotifySettingChanged("ImmersiveColorSet");  // for theme/accent
                     User32.NotifySettingChanged("WindowsThemeElement"); // Win8-style themes
-                                                                        
+
                     wic.Undo();
                 }
             }

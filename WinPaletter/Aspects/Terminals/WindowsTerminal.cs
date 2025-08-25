@@ -8,6 +8,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
 using WinPaletter.Theme.Structures;
 using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
@@ -16,10 +18,10 @@ namespace WinPaletter
 {
     public partial class WindowsTerminal
     {
-        public WinPaletter.Theme.Structures.WinTerminal.Version _Mode;
-        public WinPaletter.Theme.Structures.WinTerminal _Terminal;
-        public WinPaletter.Theme.Structures.WinTerminal _TerminalDefault;
-        public WinPaletter.Theme.Structures.WinTerminal.Version SaveState;
+        public WinTerminal.Version _Mode;
+        public WinTerminal _Terminal;
+        public WinTerminal _TerminalDefault;
+        public WinTerminal.Version SaveState;
         public string CCat;
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
@@ -39,9 +41,9 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
-                        _Terminal = _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+                        _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
                         Load_FromTerminal();
                     }
                 }
@@ -50,16 +52,16 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
-            _Terminal = _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+            Manager TMx = new(Manager.Source.Registry);
+            _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
             Load_FromTerminal();
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
-            _Terminal = _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+            Manager TMx = Default.Get(Program.WindowStyle);
+            _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
             Load_FromTerminal();
             TMx.Dispose();
         }
@@ -68,14 +70,14 @@ namespace WinPaletter
         {
             switch (_Mode)
             {
-                case WinPaletter.Theme.Structures.WinTerminal.Version.Stable:
+                case WinTerminal.Version.Stable:
                     {
                         Program.TM.Terminal.Enabled = AspectEnabled;
                         Program.TM.Terminal = _Terminal;
                         break;
                     }
 
-                case WinPaletter.Theme.Structures.WinTerminal.Version.Preview:
+                case WinTerminal.Version.Preview:
                     {
                         Program.TM.TerminalPreview.Enabled = AspectEnabled;
                         Program.TM.TerminalPreview = _Terminal;
@@ -96,13 +98,13 @@ namespace WinPaletter
                 {
                     try
                     {
-                        if (_Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable)
+                        if (_Mode == WinTerminal.Version.Stable)
                         {
-                            _Terminal = new(dlg.FileName, WinPaletter.Theme.Structures.WinTerminal.Mode.JSONFile);
+                            _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile);
                         }
-                        else if (_Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Preview)
+                        else if (_Mode == WinTerminal.Version.Preview)
                         {
-                            _Terminal = new(dlg.FileName, WinPaletter.Theme.Structures.WinTerminal.Mode.JSONFile, Theme.Structures.WinTerminal.Version.Preview);
+                            _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                         }
                     }
                     catch (Exception ex)
@@ -132,7 +134,7 @@ namespace WinPaletter
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    Program.TM.Save(Theme.Manager.Source.File, filename);
+                    Program.TM.Save(Manager.Source.File, filename);
                 }
 
                 if (OS.W12 || OS.W11 || OS.W10)
@@ -168,11 +170,11 @@ namespace WinPaletter
                         }
                     }
 
-                    if (File.Exists(TerDir) && _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable)
+                    if (File.Exists(TerDir) && _Mode == WinTerminal.Version.Stable)
                     {
                         _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
                     }
-                    else if (File.Exists(TerPreDir) && _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Preview)
+                    else if (File.Exists(TerPreDir) && _Mode == WinTerminal.Version.Preview)
                     {
                         _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                     }
@@ -192,8 +194,8 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable ? Program.Lang.Strings.Aspects.TerminalStable : Program.Lang.Strings.Aspects.TerminalPreview,
-                Enabled = _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable ? Program.TM.Terminal.Enabled : Program.TM.TerminalPreview.Enabled,
+                AspectName = _Mode == WinTerminal.Version.Stable ? Program.Lang.Strings.Aspects.TerminalStable : Program.Lang.Strings.Aspects.TerminalPreview,
+                Enabled = _Mode == WinTerminal.Version.Stable ? Program.TM.Terminal.Enabled : Program.TM.TerminalPreview.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
                 GeneratePalette = false,
@@ -216,7 +218,7 @@ namespace WinPaletter
 
             switch (_Mode)
             {
-                case WinPaletter.Theme.Structures.WinTerminal.Version.Stable:
+                case WinTerminal.Version.Stable:
                     {
                         _Terminal = Program.TM.Terminal;
                         _TerminalDefault = Program.TM.Terminal;
@@ -225,7 +227,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case WinPaletter.Theme.Structures.WinTerminal.Version.Preview:
+                case WinTerminal.Version.Preview:
                     {
                         _Terminal = Program.TM.TerminalPreview;
                         _TerminalDefault = Program.TM.TerminalPreview;
@@ -265,8 +267,8 @@ namespace WinPaletter
 
             TerProfiles.SelectedIndex = 0;
 
-            Terminal1.PreviewVersion = _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Preview;
-            Terminal2.PreviewVersion = _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Preview;
+            Terminal1.PreviewVersion = _Mode == WinTerminal.Version.Preview;
+            Terminal2.PreviewVersion = _Mode == WinTerminal.Version.Preview;
 
             if (_Terminal.Theme != null)
             {
@@ -479,7 +481,7 @@ namespace WinPaletter
             TerCursorHeightBar.Value = profile.CursorHeight;
 
             TerFontName.Text = profile.Font.Face;
-            NativeMethods.GDI32.LogFont fx = new();
+            GDI32.LogFont fx = new();
 
             using (Font f_cmd = new(profile.Font.Face, profile.Font.Size))
             {
@@ -526,15 +528,15 @@ namespace WinPaletter
             else
             {
                 IntPtr intPtr = IntPtr.Zero;
-                NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string path = string.Empty;
                 if (profile.Commandline is not null)
                     path = profile.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
-                NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                 if (File.Exists(path))
                 {
-                    Terminal1.TabIcon = ((Icon)NativeMethods.DLLFunc.ExtractSmallIcon(path)).ToBitmap();
+                    Terminal1.TabIcon = ((Icon)DLLFunc.ExtractSmallIcon(path)).ToBitmap();
                 }
                 else
                 {
@@ -1184,7 +1186,7 @@ namespace WinPaletter
             }
 
             WinTerminal.Types.Profile temp_p = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            NativeMethods.GDI32.LogFont fx = new();
+            GDI32.LogFont fx = new();
             Font f_cmd = new(temp_p.Font.Face, temp_p.Font.Size);
             f_cmd.ToLogFont(fx);
             fx.lfWeight = (int)temp_p.Font.Weight * 100;
@@ -1203,7 +1205,7 @@ namespace WinPaletter
 
         private void TerFontWeight_SelectedIndexChanged(object sender, EventArgs e)
         {
-            NativeMethods.GDI32.LogFont fx = new();
+            GDI32.LogFont fx = new();
             Font f_cmd = new(Terminal1.Font.Name, Terminal1.Font.Size, Terminal1.Font.Style);
             f_cmd.ToLogFont(fx);
             fx.lfWeight = TerFontWeight.SelectedIndex * 100;
@@ -1365,12 +1367,6 @@ namespace WinPaletter
             temp.UseAcrylic = TerAcrylic.Checked;
         }
 
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Settings.WindowsTerminals.ListAllFonts = toggle1.Checked;
-            Program.Settings.WindowsTerminals.Save();
-        }
-
         private void Button13_Click(object sender, EventArgs e)
         {
             _Terminal.Profiles.List.Add(new() { Name = $"{Program.Lang.Strings.General.NewProfile} #{TerProfiles.Items.Count}", ColorScheme = _Terminal.Profiles.Defaults.ColorScheme });
@@ -1411,14 +1407,14 @@ namespace WinPaletter
 
             switch (_Mode)
             {
-                case WinPaletter.Theme.Structures.WinTerminal.Version.Stable:
+                case WinTerminal.Version.Stable:
                     {
                         if (File.Exists(TerDir))
                             Interaction.Shell(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App");
                         break;
                     }
 
-                case WinPaletter.Theme.Structures.WinTerminal.Version.Preview:
+                case WinTerminal.Version.Preview:
                     {
                         if (File.Exists(TerPreDir))
                             Interaction.Shell(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App");
@@ -1483,13 +1479,13 @@ namespace WinPaletter
             {
                 switch (_Mode)
                 {
-                    case WinPaletter.Theme.Structures.WinTerminal.Version.Stable:
+                    case WinTerminal.Version.Stable:
                         {
                             Program.TM.Terminal = _TerminalDefault;
                             break;
                         }
 
-                    case WinPaletter.Theme.Structures.WinTerminal.Version.Preview:
+                    case WinTerminal.Version.Preview:
                         {
                             Program.TM.TerminalPreview = _TerminalDefault;
                             break;
@@ -1512,12 +1508,12 @@ namespace WinPaletter
                 TerPreDir = SysPaths.TerminalPreviewJSON;
 
 
-                if (File.Exists(TerDir) & _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable)
+                if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
                 {
                     Process.Start(TerDir);
                 }
 
-                if (File.Exists(TerPreDir) & _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Preview)
+                if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
                 {
                     Process.Start(TerPreDir);
                 }
@@ -1540,12 +1536,12 @@ namespace WinPaletter
                         TerDir = SysPaths.TerminalJSON;
                         TerPreDir = SysPaths.TerminalPreviewJSON;
 
-                        if (File.Exists(TerDir) & _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Stable)
+                        if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
                         {
                             File.Copy(TerDir, dlg.FileName);
                         }
 
-                        if (File.Exists(TerPreDir) & _Mode == WinPaletter.Theme.Structures.WinTerminal.Version.Preview)
+                        if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
                         {
                             File.Copy(TerPreDir, dlg.FileName);
                         }
@@ -1681,7 +1677,7 @@ namespace WinPaletter
                         TerCursorHeightBar.Value = CCatFrom.CursorHeight;
 
                         TerFontName.Text = CCatFrom.Font.Face;
-                        NativeMethods.GDI32.LogFont fx = new();
+                        GDI32.LogFont fx = new();
                         Font f_cmd = new(CCatFrom.Font.Face, CCatFrom.Font.Size);
                         f_cmd.ToLogFont(fx);
                         fx.lfWeight = (int)CCatFrom.Font.Weight * 100;
@@ -1722,15 +1718,15 @@ namespace WinPaletter
                         else
                         {
                             IntPtr intPtr = IntPtr.Zero;
-                            NativeMethods.Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                            Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                             string path = string.Empty;
                             if (CCatFrom.Commandline is not null)
                                 path = CCatFrom.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
-                            NativeMethods.Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                            Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
 
                             if (File.Exists(path))
                             {
-                                Terminal1.TabIcon = ((Icon)NativeMethods.DLLFunc.ExtractSmallIcon(path)).ToBitmap();
+                                Terminal1.TabIcon = ((Icon)DLLFunc.ExtractSmallIcon(path)).ToBitmap();
                             }
                             else
                             {
@@ -1869,7 +1865,7 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     TerFontName.Text = dlg.Font.Name;
-                    NativeMethods.GDI32.LogFont fx = new();
+                    GDI32.LogFont fx = new();
                     dlg.Font.ToLogFont(fx);
                     fx.lfWeight = TerFontWeight.SelectedIndex * 100;
                     {

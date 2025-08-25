@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.Dialogs;
+using WinPaletter.Tabs;
 
 namespace WinPaletter
 {
@@ -15,7 +16,7 @@ namespace WinPaletter
         /// <summary>
         /// List of forms to exclude from the list of forms to create (Useful only for languages creation.)
         /// </summary>
-        public static IEnumerable<Type> IExclude = [typeof(SchemeEditor), typeof(GlassWindow), typeof(AspectsTemplate), typeof(Tabs.TabsForm), typeof(BorderlessForm), typeof(Store_Hover)];
+        public static IEnumerable<Type> IExclude = [typeof(SchemeEditor), typeof(GlassWindow), typeof(AspectsTemplate), typeof(TabsForm), typeof(BorderlessForm), typeof(Store_Hover)];
 
         /// <summary>
         /// List of forms in current project and not in the exclude list.

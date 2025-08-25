@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme
 {
@@ -20,7 +21,7 @@ namespace WinPaletter.Theme
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
 
-            ref Structures.Windows7 Win7 = ref TM.Windows7;
+            ref Windows7 Win7 = ref TM.Windows7;
             Win7.Enabled = true;
             Win7.ColorizationColor = Color.FromArgb(116, 184, 252);
             Win7.ColorizationAfterglow = Color.FromArgb(116, 184, 252);
@@ -29,7 +30,7 @@ namespace WinPaletter.Theme
             Win7.ColorizationBlurBalance = 49;
             Win7.ColorizationGlassReflectionIntensity = 0;
 
-            ref Structures.Console CMD = ref TM.CommandPrompt;
+            ref Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable05 = Color.FromArgb(136, 23, 152);
             CMD.ColorTable06 = Color.FromArgb(193, 156, 0);
@@ -42,7 +43,7 @@ namespace WinPaletter.Theme
             CMD.FontRaster = true;
             CMD.W10_1909_ForceV2 = false;
 
-            ref Structures.Console PS86 = ref TM.PowerShellx86;
+            ref Console PS86 = ref TM.PowerShellx86;
             PS86.Enabled = true;
             PS86.ColorTable05 = Color.FromArgb(1, 36, 86);
             PS86.ColorTable06 = Color.FromArgb(238, 237, 240);
@@ -55,7 +56,7 @@ namespace WinPaletter.Theme
             PS86.FontRaster = true;
             PS86.W10_1909_ForceV2 = false;
 
-            ref Structures.Console PS64 = ref TM.PowerShellx64;
+            ref Console PS64 = ref TM.PowerShellx64;
             PS64.Enabled = true;
             PS64.ColorTable05 = Color.FromArgb(1, 36, 86);
             PS64.ColorTable06 = Color.FromArgb(238, 237, 240);
@@ -95,8 +96,8 @@ namespace WinPaletter.Theme
             WinEffects.SysListView32 = false;
             WinEffects.EnableAeroPeek = true;
 
-            TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             ref Structures.Icons Icons = ref TM.Icons;
             Icons.Enabled = true;

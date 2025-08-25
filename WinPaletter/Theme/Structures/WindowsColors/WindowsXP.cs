@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
 using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures
@@ -30,7 +31,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WindowsXP data structure</param>
         public void Load(WindowsXP @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows XP appearance preferences from registry and UxTheme.GetCurrentVS()");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP appearance preferences from registry and UxTheme.GetCurrentVS()");
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, @default.Enabled));
 
@@ -43,13 +44,13 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows XP appearance preferences into registry and by using UxTheme.EnableTheming and UxTheme.SetSystemVisualStyle");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP appearance preferences into registry and by using UxTheme.EnableTheming and UxTheme.SetSystemVisualStyle");
 
             SaveToggleState(treeView);
 
             if (Enabled)
             {
-                VisualStyles.Apply("XP", treeView); 
+                VisualStyles.Apply("XP", treeView);
             }
         }
 

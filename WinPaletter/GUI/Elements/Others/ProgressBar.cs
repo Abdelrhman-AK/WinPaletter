@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Interfaces;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
 {
@@ -26,9 +28,9 @@ namespace WinPaletter.UI.WP
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        readonly Interfaces.ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (Interfaces.ITaskbarList3)new Interfaces.CTaskbarList() : null;
+        readonly ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (ITaskbarList3)new CTaskbarList() : null;
         private IntPtr FormHwnd = IntPtr.Zero;
-        private readonly static TextureBrush Noise = new(Properties.Resources.Noise);
+        private readonly static TextureBrush Noise = new(Resources.Noise);
         #endregion
 
         #region Events/Overrides
@@ -153,7 +155,7 @@ namespace WinPaletter.UI.WP
 
                     if (CanAnimate && Style != ProgressBarStyle.Marquee)
                     {
-                        FluentTransitions.Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
                     else { Value_Animation = _value; }
 
@@ -204,7 +206,7 @@ namespace WinPaletter.UI.WP
                             }
                     }
 
-                    if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
+                    if (CanAnimate) { Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
                     else { StateColor = color; }
 
                     UpdateTaskbar();
@@ -547,7 +549,6 @@ namespace WinPaletter.UI.WP
 
                             using (LinearGradientBrush brush2 = new(rect, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.BackwardDiagonal))
                             using (Pen pen_background = new(brush2, PenWidth))
-                            using (Pen pen_border = new(scheme.Colors.Line_Hover(parentLevel)))
                             {
                                 G.DrawArc(pen_background, CircleRect, -90, 360);
                                 G.DrawArc(pen, CircleRect, _startAngle, (int)Math.Round((double)(_percent * 360)));

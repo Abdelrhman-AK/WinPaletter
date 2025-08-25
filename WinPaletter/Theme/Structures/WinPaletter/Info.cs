@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -101,7 +102,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public void Load()
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Loading WinPaletter theme information from registry.");
+            Program.Log?.Write(LogEventLevel.Information, "Loading WinPaletter theme information from registry.");
 
             ThemeName = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Lang.Strings.General.MyTheme).ToString();
             ThemeVersion = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0").ToString();
@@ -134,7 +135,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Saving WinPaletter theme information into registry.");
+            Program.Log?.Write(LogEventLevel.Information, "Saving WinPaletter theme information into registry.");
 
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", ThemeName, RegistryValueKind.String);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", ThemeVersion, RegistryValueKind.String);

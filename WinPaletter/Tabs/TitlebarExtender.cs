@@ -367,7 +367,7 @@ namespace WinPaletter.Tabs
 
                 form?.ResetEffect();
 
-                if (Flag ==  Flags.System)
+                if (Flag == Flags.System)
                 {
                     TitlebarTypes type = TitlebarType;
 

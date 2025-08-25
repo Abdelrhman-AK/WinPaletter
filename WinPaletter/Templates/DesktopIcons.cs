@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Properties;
+using WinPaletter.Theme;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 
@@ -158,8 +160,8 @@ namespace WinPaletter.Templates
                 FakeIcon2.EnableEditingSpacingV = true;
 
                 FakeIcon1.Icon = FormsExtensions.Icon<MainForm>();                    // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
-                FakeIcon2.Icon = Properties.Resources.fileextension;                  // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
-                FakeIcon3.Icon = Properties.Resources.ThemesResIcon;                  // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
+                FakeIcon2.Icon = Resources.fileextension;                  // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
+                FakeIcon3.Icon = Resources.ThemesResIcon;                  // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
                 foreach (WinIcon icon in Controls.OfType<WinIcon>()) { icon.EnableEditingMetrics = true; }
 
@@ -171,7 +173,7 @@ namespace WinPaletter.Templates
         /// Load metrics from the theme manager
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadMetrics(Theme.Manager TM)
+        public void LoadMetrics(Manager TM)
         {
             Font = TM.MetricsFonts.IconFont;
 

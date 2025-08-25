@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimatorNS;
+using System;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -13,8 +14,8 @@ namespace WinPaletter
             {
                 Interval = 15,
                 TimeStep = 0.07f,
-                DefaultAnimation = AnimatorNS.Animation.Transparent,
-                AnimationType = AnimatorNS.AnimationType.Transparent
+                DefaultAnimation = Animation.Transparent,
+                AnimationType = AnimationType.Transparent
             };
         }
 

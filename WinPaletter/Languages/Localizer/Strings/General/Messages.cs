@@ -17,12 +17,12 @@
                 public string MonitorIssue { get; set; } = "Error occurred during loading registry monitor (Used in real-time-detection of wallpaper\\dark mode change from registry). Resetting your wallpaper may fix the issue.";
                 public string MonitorIssue2 { get; set; } = "Anyway, loading will continue without it.";
                 public string LogoffQuestion { get; set; } = "Are you sure you want to log off?";
+                public string SignOutQuestion { get; set; } = "Are you sure you want to sign out?";
                 public string RestartQuestion { get; set; } = "Are you sure you want to restart your Windows?";
                 public string RestartRecoveryQuestion { get; set; } = "Are you sure you want to restart your Windows into recovery mode?";
                 public string RestartSafeModeQuestion { get; set; } = "Are you sure you want to restart your Windows into safe mode?";
                 public string ShutdownQuestion { get; set; } = "Are you sure you want to shut down your Windows?";
                 public string LogoffAlert1 { get; set; } = "This will close all open files and applications.";
-                public string LogoffAlert2 { get; set; } = "Logoff equals 'Sign out' in Windows 8.1, 10 & 11.";
                 public string LogoffNotFound { get; set; } = "Couldn't find the logoff.exe in '{0}' directory. You should log off your Windows profile manually.";
                 public string ShutdownNotFound { get; set; } = "Couldn't find shutdown.exe in '{0}' directory. You should restart or shut down your Windows manually.";
                 public string BcdeditNotFound { get; set; } = "Couldn't find bcdedit.exe in '{0}' directory. You should restart your Windows into recovery environment manually.";

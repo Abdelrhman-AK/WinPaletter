@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using WinPaletter.Properties;
 
 namespace WinPaletter
 {
@@ -17,12 +19,6 @@ namespace WinPaletter
         {
             return GetAssemblyFromZIP(e.Name);
         }
-
-        static bool IsLoggerAssemblyLoaded =>
-            AppDomain.CurrentDomain.GetAssemblies()
-            .Any(a =>
-                string.Equals(a.GetName().Name, "Serilog.Sinks.File", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(a.GetName().Name, "Serilog", StringComparison.OrdinalIgnoreCase));
 
         /// <summary>
         /// Get the assembly from the ZIP archive from the embedded resources
@@ -42,15 +38,15 @@ namespace WinPaletter
 
             byte[] b = null;
 
-            using (System.IO.MemoryStream ms = new(Properties.Resources.Assemblies))
+            using (MemoryStream ms = new(Resources.Assemblies))
             using (ZipArchive zip = new(ms))
             {
                 if (zip.Entries.Any(entry => entry.Name.EndsWith($"{Name}.dll", StringComparison.OrdinalIgnoreCase)))
                 {
-                    using (System.IO.MemoryStream _as = new())
+                    using (MemoryStream _as = new())
                     {
                         zip.GetEntry($"{Name}.dll").Open().CopyTo(_as);
-                        _as.Seek(0L, System.IO.SeekOrigin.Begin);
+                        _as.Seek(0L, SeekOrigin.Begin);
                         b = _as.ToArray();
                     }
                 }

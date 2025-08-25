@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
+using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
@@ -32,7 +34,7 @@ namespace WinPaletter
         private readonly List<string> ImgLs1 = [];
         private readonly List<string> ImgLs2 = [];
 
-        private string wallpaper_path;
+        float previewWidthFactor, previewHeightFactor;
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
@@ -63,7 +65,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -73,14 +75,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -103,12 +105,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -145,6 +147,9 @@ namespace WinPaletter
                 OnImportFromWPTH = LoadFromWPTH,
                 OnImportFromCurrentApplied = LoadFromCurrent,
             };
+
+            previewWidthFactor = pnl_preview.Width / 1920f;
+            previewHeightFactor = pnl_preview.Height / 1080f;
 
             LoadData(data);
 
@@ -219,7 +224,7 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Wallpaper.Enabled;
             RadioButton1.Checked = TM.Wallpaper.SlideShow_Folder_or_ImagesList;
@@ -310,7 +315,7 @@ namespace WinPaletter
             color_pick.BackColor = TM.Win32.Background;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             Cursor = Cursors.AppStarting;
 
@@ -414,6 +419,11 @@ namespace WinPaletter
                         Program.TM.WallpaperTone_W81 = WT;
                         break;
                     }
+                case WindowStyle.W8:
+                    {
+                        Program.TM.WallpaperTone_W8 = WT;
+                        break;
+                    }
                 case WindowStyle.W7:
                     {
                         Program.TM.WallpaperTone_W7 = WT;
@@ -471,7 +481,7 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new() { SelectedPath = TextBox2.Text })
+                using (VistaFolderBrowserDialog dlg = new() { SelectedPath = TextBox2.Text })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
                 }
@@ -558,7 +568,7 @@ namespace WinPaletter
 
         private void Source_slideshow_CheckedChanged(object sender, EventArgs e)
         {
-            if (((UI.WP.RadioImage)sender).Checked)
+            if (((RadioImage)sender).Checked)
             {
                 tablessControl1.SelectedIndex = 3;
 
@@ -645,7 +655,7 @@ namespace WinPaletter
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
             img_path = TextBox1.Text;
-            using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+            using (Bitmap b = BitmapMgr.Load(img_path)) img = b?.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor));
             img_filled = img?.FillInSize(pnl_preview.Size);
             img_tile = img?.Tile(pnl_preview.Size);
 
@@ -663,7 +673,7 @@ namespace WinPaletter
 
         private void TextBox3_TextChanged(object sender, EventArgs e)
         {
-            using (Bitmap b = BitmapMgr.Load(TextBox3.Text)) img_untouched = b.Resize(pnl_preview.Width, pnl_preview.Height);
+            using (Bitmap b = BitmapMgr.Load(TextBox3.Text)) img_untouched = b?.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor));
 
             ApplyHSLPreview();
         }
@@ -712,7 +722,7 @@ namespace WinPaletter
             ApplyPreviewStyle();
         }
 
-  
+
 
         private void Color_pick_DragDrop(object sender, DragEventArgs e)
         {
@@ -757,11 +767,11 @@ namespace WinPaletter
                 if (RadioButton1.Checked)
                 {
                     ImgLs1.Clear();
-                    if (System.IO.Directory.Exists(TextBox2.Text)) ImgLs1.AddRange(Directory.EnumerateFiles(TextBox2.Text, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")));
+                    if (Directory.Exists(TextBox2.Text)) ImgLs1.AddRange(Directory.EnumerateFiles(TextBox2.Text, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")));
 
                     if (index > ImgLs1.Count - 1) index = 0;
                     img_path = ImgLs1.Count > 0 ? ImgLs1[index] : string.Empty;
-                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b?.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor));
                     img_filled = img?.FillInSize(pnl_preview.Size);
                     img_tile = img?.Tile(pnl_preview.Size);
 
@@ -775,7 +785,7 @@ namespace WinPaletter
                     if (index > ImgLs2.Count - 1) index = 0;
 
                     img_path = ImgLs2.Count > 0 ? ImgLs2[index] : string.Empty;
-                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b?.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor));
                     img_filled = img?.FillInSize(pnl_preview.Size);
                     img_tile = img?.Tile(pnl_preview.Size);
 
@@ -788,7 +798,7 @@ namespace WinPaletter
 
         private void Style_fill_CheckedChanged(object sender, EventArgs e)
         {
-            if (((UI.WP.RadioImage)sender).Checked)
+            if (((RadioImage)sender).Checked)
                 ApplyPreviewStyle();
         }
 
@@ -828,13 +838,13 @@ namespace WinPaletter
 
         private void source_pic_CheckedChanged(object sender, EventArgs e)
         {
-            if (((UI.WP.RadioImage)sender).Checked)
+            if (((RadioImage)sender).Checked)
             {
                 tablessControl1.SelectedIndex = 0;
                 if (img_path.ToUpper() != TextBox1.Text.ToUpper())
                 {
                     img_path = TextBox1.Text;
-                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b.Resize(pnl_preview.Width, pnl_preview.Height);
+                    using (Bitmap b = BitmapMgr.Load(img_path)) img = b?.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor));
                     img_filled = img?.FillInSize(pnl_preview.Size);
                     img_tile = img?.Tile(pnl_preview.Size);
                 }
@@ -847,7 +857,7 @@ namespace WinPaletter
 
         private void source_color_CheckedChanged(object sender, EventArgs e)
         {
-            if (((UI.WP.RadioImage)sender).Checked)
+            if (((RadioImage)sender).Checked)
             {
                 tablessControl1.SelectedIndex = 1;
 
@@ -859,7 +869,7 @@ namespace WinPaletter
 
         private void source_wallpapertone_CheckedChanged(object sender, EventArgs e)
         {
-            if (((UI.WP.RadioImage)sender).Checked)
+            if (((RadioImage)sender).Checked)
             {
                 tablessControl1.SelectedIndex = 2;
 
@@ -875,7 +885,7 @@ namespace WinPaletter
         {
             ColorsExtensions.HSL HSL_ = new();
             HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
-            HSL_.H = Conversions.ToInteger(((UI.WP.ColorBarX)sender).Value);
+            HSL_.H = Conversions.ToInteger(((ColorBarX)sender).Value);
             HSL_.S = 1f;
             HSL_.L = 0.5f;
 

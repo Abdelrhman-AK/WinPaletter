@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -54,7 +56,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Accessibility data structure</param>
         public void Load(Accessibility @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Accessibility settings from registry and User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Accessibility settings from registry and User32.SystemParametersInfo");
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Accessibility", string.Empty, @default.Enabled));
 
@@ -73,7 +75,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Accessibility settings into registry and by using User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Accessibility settings into registry and by using User32.SystemParametersInfo");
 
             // Save Accessibility toggle state
             SaveToggleState(treeView);
@@ -97,7 +99,7 @@ namespace WinPaletter.Theme.Structures
                     // Classic high contrast theme settings correction
                     string content = ToString();
                     string path = $"{SysPaths.appData}\\hc.theme";
-                    System.IO.File.WriteAllText(path, content);
+                    File.WriteAllText(path, content);
                     EditReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", path, RegistryValueKind.String);
 
                     DelKey(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\HighContrast\Pre-High Contrast Scheme");
@@ -110,7 +112,7 @@ namespace WinPaletter.Theme.Structures
 
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);
                 EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
-                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, RegistryValueKind.String);
             }
         }
 

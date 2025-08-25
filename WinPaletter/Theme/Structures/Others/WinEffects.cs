@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Serilog.Events;
+using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -216,7 +219,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WinEffects data structure</param>
         public void Load(WinEffects @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Effects settings from registry and User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Effects settings from registry and User32.SystemParametersInfo");
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, true));
 
@@ -367,7 +370,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="silent">If true, no alert will be shown</param>
         public async void Apply(TreeView treeView = null, bool silent = false)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Effects settings into registry and by using User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Effects settings into registry and by using User32.SystemParametersInfo");
 
             SaveToggleState(treeView);
 
@@ -380,8 +383,8 @@ namespace WinPaletter.Theme.Structures
                     // Apply WinEffects in a new thread to prevent freezing the UI
                     await Task.Run(() =>
                     {
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Windows Effects settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Windows Effects settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
+                        Program.Log?.Write(LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
 
                         ANIMATIONINFO anim = new();
                         anim.cbSize = (uint)Marshal.SizeOf(anim);
@@ -414,7 +417,7 @@ namespace WinPaletter.Theme.Structures
 
                     EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", IconsShadow ? 1 : 0);
                     EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", IconsDesktopTranslSel ? 1 : 0);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, Microsoft.Win32.RegistryValueKind.String);
+                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "MenuShowDelay", MenuShowDelay, RegistryValueKind.String);
                     EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", NotificationDuration);
                     EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", (!ShakeToMinimize) ? 1 : 0);
                     EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", ShowSecondsInSystemClock ? 1 : 0);
@@ -453,7 +456,7 @@ namespace WinPaletter.Theme.Structures
                         switch (Win11ExplorerBar)
                         {
                             case ExplorerBar.Bar:
-                                if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll"))
+                                if (File.Exists($@"{SysPaths.System32}\UIRibbon.dll"))
                                 {
                                     if (treeView is not null)
                                         ThemeLog.AddNode(treeView, Program.Lang.Strings.ThemeManager.Advanced.EnableExplorerBar, "file_rename");
@@ -467,7 +470,7 @@ namespace WinPaletter.Theme.Structures
                                 break;
 
                             default:
-                                if (System.IO.File.Exists($@"{SysPaths.System32}\UIRibbon.dll_bak"))
+                                if (File.Exists($@"{SysPaths.System32}\UIRibbon.dll_bak"))
                                 {
                                     if (treeView is not null)
                                         ThemeLog.AddNode(treeView, Program.Lang.Strings.ThemeManager.Advanced.RestoreExplorerBar, "file_rename");
@@ -485,12 +488,12 @@ namespace WinPaletter.Theme.Structures
                             if (Win11ExplorerBar != ExplorerBar.Default)
                             {
                                 // Windows 11 22H2 and higher
-                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", string.Empty, "CLSID_ItemsViewAdapter", Microsoft.Win32.RegistryValueKind.String);
-                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", string.Empty, "File Explorer Xaml Island View Adapter", Microsoft.Win32.RegistryValueKind.String);
-                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InprocServer32", string.Empty, SysPaths.System32 + "Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
-                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InprocServer32", "ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
-                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}\InprocServer32", string.Empty, SysPaths.System32 + "Windows.UI.FileExplorer.dll_", Microsoft.Win32.RegistryValueKind.String);
-                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}\InprocServer32", "ThreadingModel", "Apartment", Microsoft.Win32.RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}", string.Empty, "CLSID_ItemsViewAdapter", RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}", string.Empty, "File Explorer Xaml Island View Adapter", RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InprocServer32", string.Empty, SysPaths.System32 + "Windows.UI.FileExplorer.dll_", RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}\InprocServer32", "ThreadingModel", "Apartment", RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}\InprocServer32", string.Empty, SysPaths.System32 + "Windows.UI.FileExplorer.dll_", RegistryValueKind.String);
+                                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}\InprocServer32", "ThreadingModel", "Apartment", RegistryValueKind.String);
 
                                 // Windows 11 lower than 22H2
                                 DelValue(treeView, "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}");
@@ -500,7 +503,7 @@ namespace WinPaletter.Theme.Structures
                                 DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{2aa9162e-c906-4dd9-ad0b-3d24a8eef5a0}");
                                 DelKey(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{6480100b-5a83-4d1e-9f69-8ae5a88e9a33}");
 
-                                EditReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                                EditReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}", string.Empty, RegistryValueKind.String);
                             }
                         }
                     }
@@ -529,7 +532,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (Win11ClassicContextMenu)
                         {
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32", string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32", string.Empty, string.Empty, RegistryValueKind.String);
                         }
                         else
                         {
@@ -541,7 +544,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (SysListView32)
                         {
-                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32", string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{1eeb5b5a-06fb-4732-96b3-975c0194eb39}\InprocServer32", string.Empty, string.Empty, RegistryValueKind.String);
                         }
                         else
                         {
@@ -551,7 +554,7 @@ namespace WinPaletter.Theme.Structures
 
                     if (DisableNavBar)
                     {
-                        EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32", string.Empty, string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                        EditReg(treeView, @"HKEY_CURRENT_USER\Software\Classes\CLSID\{056440FD-8568-48e7-A632-72157243B55B}\InprocServer32", string.Empty, string.Empty, RegistryValueKind.String);
                     }
                     else
                     {

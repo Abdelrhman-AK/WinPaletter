@@ -1,9 +1,13 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
 {
@@ -25,7 +29,7 @@ namespace WinPaletter.UI.WP
         private Color C1, C2;
         private float _Angle = 0f;
         private bool _Focused = true;
-        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.9f));
+        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.9f));
         public enum Styles
         {
             SwapColors,
@@ -102,7 +106,7 @@ namespace WinPaletter.UI.WP
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
@@ -125,11 +129,11 @@ namespace WinPaletter.UI.WP
                     {
                         if (Color == C1 || Color == Color1)
                         {
-                            await Task.Run(() => FluentTransitions.Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
+                            await Task.Run(() => Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                         }
                         else
                         {
-                            await Task.Run(() => FluentTransitions.Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
+                            await Task.Run(() => Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                         }
                         needInvalidate = true;
                     }
@@ -153,14 +157,6 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events/Overrides
-
-        TabControl? GetTabControl(TabPage page)
-        {
-            for (Control? p = page.Parent; p != null; p = p.Parent)
-                if (p is TabControl tc && tc.TabPages.Contains(page))
-                    return tc;
-            return null;
-        }
 
         protected override void OnHandleCreated(EventArgs e)
         {

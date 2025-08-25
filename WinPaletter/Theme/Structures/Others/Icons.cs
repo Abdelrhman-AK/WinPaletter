@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,32 +114,32 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Path to Computer icon
         /// </summary>
-        public string Computer = Structures.Icons.DesktopCLSIDs.ElementAt(0).Item3;
+        public string Computer = DesktopCLSIDs.ElementAt(0).Item3;
 
         /// <summary>
         /// Path to Control Panel icon
         /// </summary>
-        public string ControlPanel = Structures.Icons.DesktopCLSIDs.ElementAt(1).Item3;
+        public string ControlPanel = DesktopCLSIDs.ElementAt(1).Item3;
 
         /// <summary>
         /// Path to Network icon
         /// </summary>
-        public string Network = Structures.Icons.DesktopCLSIDs.ElementAt(2).Item3;
+        public string Network = DesktopCLSIDs.ElementAt(2).Item3;
 
         /// <summary>
         /// Path to User icon
         /// </summary>
-        public string User = Structures.Icons.DesktopCLSIDs.ElementAt(3).Item3;
+        public string User = DesktopCLSIDs.ElementAt(3).Item3;
 
         /// <summary>
         /// Path to Recycle Bin empty icon
         /// </summary>
-        public string RecycleBinEmpty = Structures.Icons.DesktopCLSIDs.ElementAt(4).Item3.Split('|')[0];
+        public string RecycleBinEmpty = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[0];
 
         /// <summary>
         /// Path to Recycle Bin full icon
         /// </summary>
-        public string RecycleBinFull = Structures.Icons.DesktopCLSIDs.ElementAt(4).Item3.Split('|')[1];
+        public string RecycleBinFull = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[1];
 
         /// <summary>
         /// Hide Computer icon in desktop
@@ -181,7 +182,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Icons data structure</param>
         public void Load(Icons @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows icons from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows icons from registry.");
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled));
 
@@ -241,7 +242,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows icons into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows icons into registry.");
 
             SaveToggleState(treeView);
 
@@ -254,7 +255,7 @@ namespace WinPaletter.Theme.Structures
 
                 foreach (KeyValuePair<string, string> item in Shell32Wrapper)
                 {
-                    EditReg(treeView, "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons", item.Key, item.Value, Microsoft.Win32.RegistryValueKind.String);
+                    EditReg(treeView, "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons", item.Key, item.Value, RegistryValueKind.String);
                 }
 
                 foreach (Tuple<string, string, string> item in ControlPanelCLSIDs)
@@ -267,7 +268,7 @@ namespace WinPaletter.Theme.Structures
 
                 foreach (KeyValuePair<string, string> item in ControlPanelWrapper)
                 {
-                    EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, Microsoft.Win32.RegistryValueKind.String);
+                    EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, RegistryValueKind.String);
                 }
 
                 foreach (Tuple<string, string, string> item in ExplorerCLSIDs)
@@ -280,7 +281,7 @@ namespace WinPaletter.Theme.Structures
 
                 foreach (KeyValuePair<string, string> item in ExplorerWrapper)
                 {
-                    EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, Microsoft.Win32.RegistryValueKind.String);
+                    EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, RegistryValueKind.String);
                 }
 
                 EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(0).Item1}\DefaultIcon", string.Empty, Computer, RegistryValueKind.String);

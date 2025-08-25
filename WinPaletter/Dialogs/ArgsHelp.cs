@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Media;
 using System.Windows.Forms;
 
@@ -27,7 +28,7 @@ namespace WinPaletter.Dialogs
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    System.IO.File.WriteAllText(dlg.FileName, TextBox1.Text);
+                    File.WriteAllText(dlg.FileName, TextBox1.Text);
                 }
 
             }

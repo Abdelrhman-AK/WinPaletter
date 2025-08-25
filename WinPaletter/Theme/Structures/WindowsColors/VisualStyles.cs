@@ -1,5 +1,7 @@
 ﻿using Devcorp.Controls.VisualStyles;
+using libmsstyle;
 using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -116,7 +118,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default VisualStyles data structure</param>
         public void Load(string edition, VisualStyles @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows {edition} Visual Styles using UxTheme.GetCurrentVS");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {edition} Visual Styles using UxTheme.GetCurrentVS");
 
             Enabled = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, @default.Enabled));
 
@@ -187,7 +189,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(string edition, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows {edition} Visual Styles using UxTheme.SetSystemVisualStyle and writing into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows {edition} Visual Styles using UxTheme.SetSystemVisualStyle and writing into registry.");
 
             SaveToggleState(edition, treeView);
 
@@ -283,24 +285,24 @@ namespace WinPaletter.Theme.Structures
 
                 if (!string.IsNullOrEmpty(result))
                 {
-                    if (System.IO.File.Exists(result))
+                    if (File.Exists(result))
                     {
                         return result;
                     }
                     else
                     {
                         result = Environment.ExpandEnvironmentVariables(result);
-                        if (System.IO.File.Exists(result))
+                        if (File.Exists(result))
                         {
                             return result;
                         }
                         else
                         {
-                            string fileName = System.IO.Path.GetFileName(result);
+                            string fileName = Path.GetFileName(result);
 
-                            DirectoryInfo di = new(System.IO.Path.GetDirectoryName(themeFile));
-                            List<string> matchingStyles = System.IO.Directory.GetFiles(di.FullName, "*.msstyles", System.IO.SearchOption.AllDirectories)
-                                .Where(f => System.IO.Path.GetFileName(f).Equals(fileName, StringComparison.OrdinalIgnoreCase))
+                            DirectoryInfo di = new(Path.GetDirectoryName(themeFile));
+                            List<string> matchingStyles = Directory.GetFiles(di.FullName, "*.msstyles", SearchOption.AllDirectories)
+                                .Where(f => Path.GetFileName(f).Equals(fileName, StringComparison.OrdinalIgnoreCase))
                                 .ToList();
 
                             if (matchingStyles.Count > 0)
@@ -331,30 +333,30 @@ namespace WinPaletter.Theme.Structures
         {
             try
             {
-                using (libmsstyle.VisualStyle vs = new(theme))
+                using (VisualStyle vs = new(theme))
                 {
                     // Let's assume that W12 is identical to Win11 until official release !
-                    if (vs.Platform == libmsstyle.Platform.Win11 && Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12)
+                    if (vs.Platform == Platform.Win11 && Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12)
                     {
                         return new(false, Program.Lang.Strings.Windows.W11);
                     }
-                    else if (vs.Platform == libmsstyle.Platform.Win10 && Program.WindowStyle != WindowStyle.W10)
+                    else if (vs.Platform == Platform.Win10 && Program.WindowStyle != WindowStyle.W10)
                     {
                         return new(false, Program.Lang.Strings.Windows.W10);
                     }
-                    else if (vs.Platform == libmsstyle.Platform.Win81 && Program.WindowStyle != WindowStyle.W81)
+                    else if (vs.Platform == Platform.Win81 && Program.WindowStyle != WindowStyle.W81)
                     {
                         return new(false, Program.Lang.Strings.Windows.W81);
                     }
-                    else if (vs.Platform == libmsstyle.Platform.Win8 && Program.WindowStyle != WindowStyle.W8)
+                    else if (vs.Platform == Platform.Win8 && Program.WindowStyle != WindowStyle.W8)
                     {
                         return new(false, Program.Lang.Strings.Windows.W8);
                     }
-                    else if (vs.Platform == libmsstyle.Platform.Win7 && Program.WindowStyle != WindowStyle.W7)
+                    else if (vs.Platform == Platform.Win7 && Program.WindowStyle != WindowStyle.W7)
                     {
                         return new(false, Program.Lang.Strings.Windows.W7);
                     }
-                    else if (vs.Platform == libmsstyle.Platform.Vista && Program.WindowStyle != WindowStyle.WVista)
+                    else if (vs.Platform == Platform.Vista && Program.WindowStyle != WindowStyle.WVista)
                     {
                         return new(false, Program.Lang.Strings.Windows.WVista);
                     }
@@ -368,13 +370,13 @@ namespace WinPaletter.Theme.Structures
             {
                 try
                 {
-                    if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                    if (Path.GetExtension(theme).ToLower() == ".msstyles")
                     {
-                        System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                        File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                         theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                     }
 
-                    if (System.IO.File.Exists(theme))
+                    if (File.Exists(theme))
                     {
                         using (VisualStyleFile vs = new(theme))
                         {

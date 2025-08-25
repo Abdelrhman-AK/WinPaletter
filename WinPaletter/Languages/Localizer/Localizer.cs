@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Newtonsoft.Json.Linq;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -76,7 +77,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading language from file `{File}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"Loading language from file `{File}`.");
 
                 JObject JObj;
 
@@ -90,22 +91,22 @@ namespace WinPaletter
                 Strings = new();
                 Forms = [];
 
-                bool isValid = JObj.ContainsKey("Information") && JObj.ContainsKey("Global Strings") && JObj.ContainsKey("Forms Strings");
+                bool isValid = JObj.ContainsKey(nameof(Information)) && JObj.ContainsKey("Global Strings") && JObj.ContainsKey("Forms Strings");
 
                 if (!isValid) return;
 
-                Information = JObj["Information"].ToObject<Information_Cls>();
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Information of language file have been loaded.");
+                Information = JObj[nameof(Information)].ToObject<Information_Cls>();
+                Program.Log?.Write(LogEventLevel.Information, $"Information of language file have been loaded.");
 
                 Strings = JObj["Global Strings"].ToObject<Strings_Cls>();
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Global strings inside language file have been loaded.");
+                Program.Log?.Write(LogEventLevel.Information, $"Global strings inside language file have been loaded.");
 
                 Forms = (JObject)JObj["Forms Strings"];
 
                 _tree = DeserializeFormsJSONIntoList(Forms);
 
                 LoadFromStrings(form);
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Forms strings inside language file have been loaded.");
+                Program.Log?.Write(LogEventLevel.Information, $"Forms strings inside language file have been loaded.");
             }
         }
 
@@ -156,7 +157,7 @@ namespace WinPaletter
                 }
             }
 
-            JSON_Overall.Add("Information", JObject.FromObject(Information));
+            JSON_Overall.Add(nameof(Information), JObject.FromObject(Information));
             JSON_Overall.Add("Global Strings", JObject.FromObject(Strings));
             JSON_Overall.Add("Forms Strings", j_Forms);
 
@@ -173,7 +174,7 @@ namespace WinPaletter
             Information.AppVer = Program.Version;
             JObject JSON_Overall = [];
 
-            JSON_Overall.Add("Information", JObject.FromObject(Information));
+            JSON_Overall.Add(nameof(Information), JObject.FromObject(Information));
             JSON_Overall.Add("Global Strings", JObject.FromObject(Strings));
             JSON_Overall.Add("Forms Strings", formsJObject);
 
@@ -365,7 +366,7 @@ namespace WinPaletter
         /// <param name="form"></param>
         private void SetFormValues(List<Tuple<string, string, string, string>> PopCtrlList, Form form)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Setting strings for form `{form.Name}`.");
+            Program.Log?.Write(LogEventLevel.Information, $"Setting strings for form `{form.Name}`.");
 
             if (PopCtrlList is null) return;
 

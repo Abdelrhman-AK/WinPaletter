@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
 using System.Windows.Forms;
-using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -51,7 +51,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
         public void Load(string edition, LogonUI10x @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
 
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, @default.Enabled));
 
@@ -77,7 +77,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
         public void Apply(string edition, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
 
             SaveToggleState(edition, treeView);
 

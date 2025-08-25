@@ -1,4 +1,7 @@
-﻿using System.Management;
+﻿using Serilog.Events;
+using System.Management;
+using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -78,7 +81,7 @@ namespace WinPaletter
         {
             if (!Enabled)
             {
-                if (MsgBox(Program.Lang.Strings.Messages.SysRestore_Msg0, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, string.Format(Program.Lang.Strings.Messages.SysRestore_Msg1, Program.SystemPartition)) == System.Windows.Forms.DialogResult.Yes)
+                if (MsgBox(Program.Lang.Strings.Messages.SysRestore_Msg0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Format(Program.Lang.Strings.Messages.SysRestore_Msg1, Program.SystemPartition)) == DialogResult.Yes)
                 {
                     SetSystemRestoreStatus(Program.SystemPartition, true);
                 }
@@ -93,7 +96,7 @@ namespace WinPaletter
             // Reset frequency to 0 instead of 24 hours
             EditReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "SystemRestorePointCreationFrequency", 0);
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Creating system restore point with description: {description}", description);
+            Program.Log?.Write(LogEventLevel.Information, "Creating system restore point with description: {description}", description);
 
             // Start actions
             var mScope = new ManagementScope("\\\\localhost\\root\\default");
@@ -123,9 +126,9 @@ namespace WinPaletter
         /// </summary>
         public static void SetSystemRestoreStatus(char driveLetter, bool enable)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Setting system restore status for drive {driveLetter} to {enable}", driveLetter, enable);
+            Program.Log?.Write(LogEventLevel.Information, "Setting system restore status for drive {driveLetter} to {enable}", driveLetter, enable);
 
-            if (enable) { NativeMethods.SrClient.EnableSR(driveLetter + ":"); } else { NativeMethods.SrClient.DisableSR(driveLetter + ":"); }
+            if (enable) { SrClient.EnableSR(driveLetter + ":"); } else { SrClient.DisableSR(driveLetter + ":"); }
         }
     }
 }

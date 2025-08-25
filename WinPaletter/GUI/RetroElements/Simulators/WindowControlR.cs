@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.Templates;
 
 namespace WinPaletter.UI.Retro
 {
@@ -221,12 +222,12 @@ namespace WinPaletter.UI.Retro
             // If editing is enabled, invoke the editor event with the appropriate color name
             if (!DesignMode && EnableEditingColors)
             {
-                if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonShadow)));
-                else if (CursorOnDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonDkShadow)));
-                else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonHilight)));
-                else if (CursorOnLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonLight)));
-                else if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.WindowText)));
-                else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.Window)));
+                if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonShadow)));
+                else if (CursorOnDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonDkShadow)));
+                else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
+                else if (CursorOnLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonLight)));
+                else if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.WindowText)));
+                else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.Window)));
             }
 
             base.OnClick(e);

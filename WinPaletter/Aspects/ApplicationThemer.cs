@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
@@ -28,7 +29,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -38,14 +39,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -59,7 +60,7 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -114,7 +115,7 @@ namespace WinPaletter
             FixLanguageDarkModeBug = true;
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.AppTheme.Enabled;
             appearance_dark.Checked = TM.AppTheme.DarkMode;
@@ -128,7 +129,7 @@ namespace WinPaletter
             DisabledBackColor.BackColor = TM.AppTheme.DisabledBackColor;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.AppTheme.Enabled = AspectEnabled;
             TM.AppTheme.DarkMode = appearance_dark.Checked;

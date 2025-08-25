@@ -9,8 +9,10 @@ using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.Simulation;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -39,11 +41,11 @@ namespace WinPaletter
                 return;
             }
 
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx.CommandPrompt);
                         ApplyPreview();
@@ -60,7 +62,7 @@ namespace WinPaletter
                 return;
             }
 
-            Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx.CommandPrompt);
             ApplyPreview();
             TMx.Dispose();
@@ -74,7 +76,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+            using (Manager _Def = Default.Get(Program.WindowStyle))
             {
                 LoadFromTM(_Def.CommandPrompt);
                 ApplyPreview();
@@ -89,7 +91,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W12)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.W12)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin11Preset(object sender, EventArgs e)
@@ -100,7 +102,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
@@ -111,7 +113,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
@@ -122,7 +124,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
@@ -133,7 +135,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W8)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
@@ -144,7 +146,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
@@ -155,7 +157,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
@@ -166,7 +168,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ExternalTerminal_Load(object sender, EventArgs e)
@@ -178,7 +180,7 @@ namespace WinPaletter
             RasterList.BringToFront();
             CMD_Preview.BackgroundImage = Program.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
 
-            Icon = Properties.Resources.cmd;
+            Icon = Resources.cmd;
 
             CMD_PopupForegroundLbl.Font = Fonts.Console;
             CMD_PopupBackgroundLbl.Font = Fonts.Console;
@@ -407,7 +409,7 @@ namespace WinPaletter
 
             object temp;
 
-            using (Manager @default = Theme.Default.Get(Program.WindowStyle))
+            using (Manager @default = Default.Get(Program.WindowStyle))
             {
                 ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", @default.CommandPrompt.ColorTable00.Reverse().ToArgb()))).Reverse());
                 ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", @default.CommandPrompt.ColorTable01.Reverse().ToArgb()))).Reverse());
@@ -1059,79 +1061,79 @@ namespace WinPaletter
             {
                 case "4x6":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._4x6;
                         break;
                     }
 
                 case "6x8":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._6x8;
                         break;
                     }
 
                 case "6x9":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._6x8;
                         break;
                     }
 
                 case "8x8":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x8;
                         break;
                     }
 
                 case "8x9":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x8;
                         break;
                     }
 
                 case "16x8":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._16x8;
                         break;
                     }
 
                 case "5x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._5x12;
                         break;
                     }
 
                 case "7x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._7x12;
                         break;
                     }
 
                 case "8x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x12;
                         break;
                     }
 
                 case "16x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._16x12;
                         break;
                     }
 
                 case "12x16":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._12x16;
                         break;
                     }
 
                 case "10x18":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._10x18;
                         break;
                     }
 
                 default:
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x12;
                         break;
                     }
 
@@ -1751,7 +1753,7 @@ namespace WinPaletter
         {
             Program.ToolTip.ToolTipText = Program.Lang.Strings.Aspects.Consoles.CMD_NotAllWeights;
             Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
-            Program.ToolTip.Image = Assets.Notifications.Info;
+            Program.ToolTip.Image = Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
 
@@ -1859,7 +1861,7 @@ namespace WinPaletter
 
         private void CMD_OpacityBar_ValueChanged(object sender, EventArgs e)
         {
-            CMD_Preview.Alpha = (sender as UI.Controllers.TrackBarX).Value;
+            CMD_Preview.Alpha = (sender as TrackBarX).Value;
         }
 
         private void ColorTable00_Click(object sender, DragEventArgs e)

@@ -1,12 +1,16 @@
 ﻿using Cyotek.Windows.Forms;
 using Devcorp.Controls.VisualStyles;
+using FluentTransitions;
+using libmsstyle;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -46,7 +50,7 @@ namespace WinPaletter
         private void ColorPicker_Load(object sender, EventArgs e)
         {
             ComboBox1.Items.Clear();
-            ComboBox1.Items.AddRange(Theme.Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray());
+            ComboBox1.Items.AddRange(Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray());
         }
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
@@ -67,7 +71,8 @@ namespace WinPaletter
 
             FlowLayoutPanel1.Controls.Clear();
 
-            foreach (Color c in ColorItem.ColorsHistory)
+            // Skip the first color because it's default gray and the second color is the current color
+            foreach (Color c in ColorItem.ColorsHistory.Skip(1))
             {
                 ColorItem MiniColorItem = new();
                 MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
@@ -83,7 +88,7 @@ namespace WinPaletter
             FlowLayoutPanel1.ResumeLayout();
         }
 
-        public void GetColorsFromPalette(Theme.Manager TM)
+        public void GetColorsFromPalette(Manager TM)
         {
             PaletteContainer.SuspendLayout();
 
@@ -210,7 +215,7 @@ namespace WinPaletter
                     {
                         try
                         {
-                            FluentTransitions.Transition
+                            Transition
                                 .With(entry.Key, prop ?? "BackColor", c)
                                 .HookOnCompletion(() =>
                                 {
@@ -289,7 +294,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        FluentTransitions.Transition.With(entry.Key, prop ?? "BackColor", color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        Transition.With(entry.Key, prop ?? "BackColor", color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
                     catch
                     {
@@ -325,9 +330,7 @@ namespace WinPaletter
                 {
                     if (img is not null)
                     {
-                        ColorThiefDotNet.ColorThief ColorThiefX = new();
-                        List<ColorThiefDotNet.QuantizedColor> Colors = ColorThiefX.GetPalette(img as Bitmap, trackBarX1.Value, trackBarX2.Value, CheckBox1.Checked);
-                        foreach (ColorThiefDotNet.QuantizedColor C in Colors) Colors_List.Add(Color.FromArgb(255, C.Color.R, C.Color.G, C.Color.B));
+                        Colors_List = img.ToPalette(trackBarX1.Value, trackBarX2.Value, CheckBox1.Checked);
                         img?.Dispose();
                     }
 
@@ -424,32 +427,32 @@ namespace WinPaletter
                     }
                 case 1:
                     {
-                        GetColorsFromPalette(Theme.Default.Windows11());
+                        GetColorsFromPalette(Default.Windows11());
                         break;
                     }
                 case 2:
                     {
-                        GetColorsFromPalette(Theme.Default.Windows10());
+                        GetColorsFromPalette(Default.Windows10());
                         break;
                     }
                 case 3:
                     {
-                        GetColorsFromPalette(Theme.Default.Windows81());
+                        GetColorsFromPalette(Default.Windows81());
                         break;
                     }
                 case 4:
                     {
-                        GetColorsFromPalette(Theme.Default.WindowsVista());
+                        GetColorsFromPalette(Default.WindowsVista());
                         break;
                     }
                 case 5:
                     {
-                        GetColorsFromPalette(Theme.Default.WindowsXP());
+                        GetColorsFromPalette(Default.WindowsXP());
                         break;
                     }
                 case 6:
                     {
-                        GetColorsFromPalette(Theme.Default.Windows7());
+                        GetColorsFromPalette(Default.Windows7());
                         break;
                     }
 
@@ -477,7 +480,7 @@ namespace WinPaletter
 
             if (!string.IsNullOrWhiteSpace(ComboBox1.SelectedItem.ToString()))
             {
-                List<Color> colors = Theme.Manager.ListColorsFromString(Theme.Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
+                List<Color> colors = Manager.ListColorsFromString(Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
                 if (colors is not null && colors.Count > 0)
                 {
                     foreach (Color C in colors)
@@ -498,7 +501,7 @@ namespace WinPaletter
 
         private void TextBox2_TextChanged(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(TextBox2.Text))
+            if (File.Exists(TextBox2.Text))
             {
                 foreach (ColorItem c in ThemePaletteContainer.Controls.OfType<ColorItem>())
                 {
@@ -512,11 +515,11 @@ namespace WinPaletter
                 List<Color> colors = [];
                 colors.Clear();
 
-                if (System.IO.Path.GetExtension(TextBox2.Text).ToLower() == ".theme")
+                if (Path.GetExtension(TextBox2.Text).ToLower() == ".theme")
                 {
                     try
                     {
-                        colors = Theme.Manager.ListColorsFromMSTheme(TextBox2.Text);
+                        colors = Manager.ListColorsFromMSTheme(TextBox2.Text);
                         if (colors is not null && colors.Count > 0)
                         {
                             foreach (Color C in colors)
@@ -539,11 +542,11 @@ namespace WinPaletter
                     }
                 }
 
-                if (System.IO.Path.GetExtension(TextBox2.Text).ToLower() == ".msstyles" || colors.Count == 0)
+                if (Path.GetExtension(TextBox2.Text).ToLower() == ".msstyles" || colors.Count == 0)
                 {
                     try
                     {
-                        using (libmsstyle.VisualStyle visualStyle = new(TextBox2.Text))
+                        using (VisualStyle visualStyle = new(TextBox2.Text))
                         {
                             Theme.Structures.Win32UI win32UI = visualStyle.ClassicColors();
                             foreach (FieldInfo field in typeof(Theme.Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
@@ -567,7 +570,7 @@ namespace WinPaletter
                     {
                         try
                         {
-                            System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={TextBox2.Text}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={TextBox2.Text}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
 
                             using (VisualStyleFile vs = new($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme"))
                             {

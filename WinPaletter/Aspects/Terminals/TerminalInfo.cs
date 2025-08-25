@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.Theme.Structures;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {
     public partial class TerminalInfo
     {
-        public WinPaletter.Theme.Structures.WinTerminal.Types.Profile Profile = new();
+        public WinTerminal.Types.Profile Profile = new();
 
         public TerminalInfo()
         {
@@ -81,7 +82,7 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                WinPaletter.Theme.Structures.WinTerminal.Types.Profile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
+                WinTerminal.Types.Profile temp = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
                     Forms.WindowsTerminal._Terminal.Profiles.Defaults :
                     Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
 
@@ -95,7 +96,7 @@ namespace WinPaletter
             {
                 Color cx = Forms.SubMenu.ShowMenu((ColorItem)sender, true);
 
-                WinPaletter.Theme.Structures.WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
+                WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
                     Forms.WindowsTerminal._Terminal.Profiles.Defaults :
                     Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
 

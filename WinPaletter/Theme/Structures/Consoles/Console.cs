@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -123,7 +124,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Console structure that has default data</param>
         public void Load(string RegKey, string Signature_Of_Enable, Console @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading console settings from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading console settings from registry.");
 
             Enabled = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0)) == 1;
 
@@ -148,12 +149,12 @@ namespace WinPaletter.Theme.Structures
             ColorTable15 = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(GetReg(RegAddress, "ColorTable15", @default.ColorTable15.Reverse().ToArgb()))).Reverse());
 
             // Popup colors (stored as single hex value "background + foreground")
-            string popupHex = ((int)GetReg(RegAddress, "PopupColors",Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16))).ToString("X").PadLeft(2, '0');
+            string popupHex = ((int)GetReg(RegAddress, "PopupColors", Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16))).ToString("X").PadLeft(2, '0');
             PopupBackground = Convert.ToInt32(popupHex[0].ToString(), 16);
             PopupForeground = Convert.ToInt32(popupHex[1].ToString(), 16);
 
             // Screen colors (same storage format as popup)
-            string screenHex = ((int)GetReg(RegAddress, "ScreenColors",Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16))).ToString("X").PadLeft(2, '0');
+            string screenHex = ((int)GetReg(RegAddress, "ScreenColors", Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16))).ToString("X").PadLeft(2, '0');
             ScreenColorsBackground = Convert.ToInt32(screenHex[0].ToString(), 16);
             ScreenColorsForeground = Convert.ToInt32(screenHex[1].ToString(), 16);
 
@@ -222,7 +223,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Console.Enabled)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving console settings into registry.");
+                Program.Log?.Write(LogEventLevel.Information, $"Saving console settings into registry.");
 
                 string RegAddress = $@"{scopeReg}\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
 

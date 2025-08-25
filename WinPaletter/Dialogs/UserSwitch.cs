@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter
@@ -84,7 +86,7 @@ namespace WinPaletter
                     Checked = (User.SID != null) ? user.Key == User.SID : User.UserSID_OpenedWP != null ? user.Key == User.UserSID_OpenedWP : user.Key == User.AdminSID_GrantedUAC,
                     Size = new(250, 70),
                     Tag = user.Key,
-                    Image = NativeMethods.Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()).Resize(48, 48),
+                    Image = Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()).Resize(48, 48),
                     Text = Scheme,
                     ForeColor = ForeColor
                 };
@@ -109,7 +111,7 @@ namespace WinPaletter
         {
             if (sender is RadioImage radio && radio.Checked)
             {
-                Button1.Image = User.IsAdmin(radio.Tag.ToString()) ? Properties.Resources.Login_Admin : Properties.Resources.Login;
+                Button1.Image = User.IsAdmin(radio.Tag.ToString()) ? Resources.Login_Admin : Resources.Login;
             }
         }
 

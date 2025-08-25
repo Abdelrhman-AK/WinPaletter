@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Serilog.Core;
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
+using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -18,7 +22,7 @@ namespace WinPaletter
         /// <summary>
         /// An instance of the Serilog logger class
         /// </summary>
-        public static Serilog.Core.Logger Log;
+        public static Logger Log;
 
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
@@ -28,7 +32,7 @@ namespace WinPaletter
         /// <summary>
         /// WinPaletter version, instead of using long statement 'System.Windows.Forms.Application.ProductVersion'
         /// </summary>
-        public readonly static string Version = System.Windows.Forms.Application.ProductVersion;
+        public readonly static string Version = Application.ProductVersion;
 
         /// <summary>
         /// WinPaletter elements animation interval in ms.
@@ -48,7 +52,7 @@ namespace WinPaletter
         /// <summary>
         /// WinPaletter executable File size in bytes
         /// </summary>
-        public readonly static long Length = new System.IO.FileInfo(AppFile).Length;
+        public readonly static long Length = new FileInfo(AppFile).Length;
 
         /// <summary>
         /// Get if Application is started as administrator or not
@@ -69,7 +73,7 @@ namespace WinPaletter
             get
             {
                 Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
-                return string.IsNullOrEmpty(ThemeTuple.Item1.ToString()) || !System.IO.File.Exists(ThemeTuple.Item1.ToString());
+                return string.IsNullOrEmpty(ThemeTuple.Item1.ToString()) || !File.Exists(ThemeTuple.Item1.ToString());
             }
         }
 
@@ -96,7 +100,7 @@ namespace WinPaletter
         /// <summary>
         /// Global variables to manage WinPaletter theme
         /// </summary>
-        public static Theme.Manager TM, TM_Original, TM_FirstTime;
+        public static Manager TM, TM_Original, TM_FirstTime;
 
         /// <summary>
         /// Process that kills (stops by force) Windows Explorer
@@ -146,7 +150,7 @@ namespace WinPaletter
         /// <summary>
         /// AnimatorNS control to be exposed globally to all forms and classes
         /// </summary>
-        public static WinPaletter.Animator Animator = new();
+        public static Animator Animator = new();
 
         /// <summary>
         /// A global ToolTip to be used in all forms

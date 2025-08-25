@@ -1,8 +1,10 @@
-﻿using Microsoft.VisualBasic;
+﻿using FluentTransitions;
+using Microsoft.VisualBasic;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {
@@ -18,7 +20,7 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        public Color ShowMenu(UI.Controllers.ColorItem ColorItem, bool EnableDelete = false)
+        public Color ShowMenu(ColorItem ColorItem, bool EnableDelete = false)
         {
             Button5.Visible = EnableDelete;
 
@@ -109,7 +111,7 @@ namespace WinPaletter
             {
                 Button4.Text = ">";
 
-                FluentTransitions.Transition
+                Transition
                     .With(this, nameof(Width), PaletteContainer.Left + 3)
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
@@ -120,7 +122,7 @@ namespace WinPaletter
             {
                 Button4.Text = "<";
 
-                FluentTransitions.Transition
+                Transition
                     .With(this, nameof(Width), PaletteContainer.Right + 8)
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
@@ -216,8 +218,8 @@ namespace WinPaletter
 
         public void MiniColorItem_Clicked(object sender, EventArgs e)
         {
-            MainColor.BackColor = ((UI.Controllers.ColorItem)sender).BackColor;
-            MainColor.DefaultBackColor = ((UI.Controllers.ColorItem)sender).BackColor;
+            MainColor.BackColor = ((ColorItem)sender).BackColor;
+            MainColor.DefaultBackColor = ((ColorItem)sender).BackColor;
 
             InvertedColor.BackColor = MainColor.BackColor.Invert().CB((float)((trackBarX4.Value - 100) / 100d));
             InvertedColor.DefaultBackColor = MainColor.BackColor.Invert();
@@ -225,7 +227,7 @@ namespace WinPaletter
             Collapse_Expand();
         }
 
-        public void GetHistoryColors(UI.Controllers.ColorItem ColorItem)
+        public void GetHistoryColors(ColorItem ColorItem)
         {
             PaletteContainer.SuspendLayout();
 
@@ -288,7 +290,7 @@ namespace WinPaletter
         {
             _eventDone = true;
             ColorClipboard.Event = ColorClipboard.MenuEvent.Override;
-            _overrideColor = ((UI.Controllers.ColorItem)sender).BackColor;
+            _overrideColor = ((ColorItem)sender).BackColor;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -310,7 +312,7 @@ namespace WinPaletter
         {
             _eventDone = true;
             ColorClipboard.Event = ColorClipboard.MenuEvent.Override;
-            _overrideColor = ((UI.Controllers.ColorItem)sender).BackColor;
+            _overrideColor = ((ColorItem)sender).BackColor;
             DialogResult = DialogResult.OK;
             Close();
         }

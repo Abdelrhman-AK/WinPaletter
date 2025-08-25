@@ -79,7 +79,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static SizeF Measure(this string text, Font font)
         {
-            return System.Windows.Forms.TextRenderer.MeasureText(text, font) + new SizeF(3, 2);
+            return TextRenderer.MeasureText(text, font) + new SizeF(3, 2);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static SizeF Measure(this string text, Font font, int maxWidth)
         {
-            return System.Windows.Forms.TextRenderer.MeasureText(text, font, new Size(maxWidth, int.MaxValue), TextFormatFlags.WordBreak);
+            return TextRenderer.MeasureText(text, font, new Size(maxWidth, int.MaxValue), TextFormatFlags.WordBreak);
         }
 
         /// <summary>

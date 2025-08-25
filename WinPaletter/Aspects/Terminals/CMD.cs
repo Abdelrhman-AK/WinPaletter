@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.Simulation;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -42,7 +47,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx, _Edition);
                     }
@@ -52,14 +57,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx, _Edition);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx, _Edition);
             TMx.Dispose();
         }
@@ -71,42 +76,42 @@ namespace WinPaletter
         }
         private void ImportWin12Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W12)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.W12)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W8)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void Apply(object sender, EventArgs e)
@@ -119,12 +124,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx, _Edition);
@@ -196,7 +201,7 @@ namespace WinPaletter
                 case Edition.CMD:
                     {
                         Text = Program.Lang.Strings.Aspects.CommandPrompt;
-                        Icon = Properties.Resources.cmd;
+                        Icon = Resources.cmd;
                         data.AspectName = Program.Lang.Strings.Aspects.CommandPrompt;
                         data.Enabled = Program.TM.CommandPrompt.Enabled;
                         break;
@@ -205,7 +210,7 @@ namespace WinPaletter
                 case Edition.PowerShellx86:
                     {
                         Text = Program.Lang.Strings.Aspects.PowerShellx86;
-                        Icon = Properties.Resources.ps;
+                        Icon = Resources.ps;
                         data.AspectName = Program.Lang.Strings.Aspects.PowerShellx86;
                         data.Enabled = Program.TM.PowerShellx86.Enabled;
                         break;
@@ -214,7 +219,7 @@ namespace WinPaletter
                 case Edition.PowerShellx64:
                     {
                         Text = Program.Lang.Strings.Aspects.PowerShellx64;
-                        Icon = Properties.Resources.ps;
+                        Icon = Resources.ps;
                         data.AspectName = Program.Lang.Strings.Aspects.PowerShellx64;
                         data.Enabled = Program.TM.PowerShellx64.Enabled;
                         break;
@@ -360,79 +365,79 @@ namespace WinPaletter
             {
                 case "4x6":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._4x6;
                         break;
                     }
 
                 case "6x8":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._6x8;
                         break;
                     }
 
                 case "6x9":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._6x8;
                         break;
                     }
 
                 case "8x8":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x8;
                         break;
                     }
 
                 case "8x9":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x8;
                         break;
                     }
 
                 case "16x8":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._16x8;
                         break;
                     }
 
                 case "5x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._5x12;
                         break;
                     }
 
                 case "7x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._7x12;
                         break;
                     }
 
                 case "8x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x12;
                         break;
                     }
 
                 case "16x12":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._16x12;
                         break;
                     }
 
                 case "12x16":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._12x16;
                         break;
                     }
 
                 case "10x18":
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._10x18;
                         break;
                     }
 
                 default:
                     {
-                        CMD_Preview.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
+                        CMD_Preview.RasterSize = WinCMD.Raster_Sizes._8x12;
                         break;
                     }
 
@@ -832,7 +837,7 @@ namespace WinPaletter
         #endregion
 
         #region    TM Handling
-        public void LoadFromTM(Theme.Manager TM, Edition Edition)
+        public void LoadFromTM(Manager TM, Edition Edition)
         {
             switch (Edition)
             {
@@ -1005,7 +1010,7 @@ namespace WinPaletter
             UpdateCurPreview();
         }
 
-        public void ApplyToTM(Theme.Manager TM, Edition Edition)
+        public void ApplyToTM(Manager TM, Edition Edition)
         {
             Theme.Structures.Console Console = new()
             {
@@ -1281,7 +1286,7 @@ namespace WinPaletter
                     Arguments = $"/k \"{tempcmd}\""
                 };
 
-                System.IO.File.WriteAllText(tempcmd, _testCommand);
+                File.WriteAllText(tempcmd, _testCommand);
 
                 using Process process = Process.Start(info);
             }
@@ -1378,7 +1383,7 @@ while ($true) {{
                     Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{psScript.Replace("\"", "`\"")}\"",
                 };
 
-                using (var process = Process.Start(psi)) { }
+                using (Process.Start(psi)) { }
             }
 
             Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -1556,7 +1561,7 @@ while ($true) {{
         {
             Program.ToolTip.ToolTipText = Program.Lang.Strings.Aspects.Consoles.CMD_NotAllWeights;
             Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
-            Program.ToolTip.Image = Assets.Notifications.Info;
+            Program.ToolTip.Image = Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
 
@@ -1617,16 +1622,16 @@ while ($true) {{
             ColorItem colorItem = e.Data.GetData(typeof(ColorItem).FullName) as ColorItem;
 
             if (sender == Label49 || sender == CMD_AccentForegroundLbl || sender == CMD_AccentForegroundBar)
-                CMD_AccentForegroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+                CMD_AccentForegroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", string.Empty));
 
             else if (sender == Label50 || sender == CMD_AccentBackgroundLbl || sender == CMD_AccentBackgroundBar)
-                CMD_AccentBackgroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+                CMD_AccentBackgroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", string.Empty));
 
             else if (sender == Label17 || sender == CMD_PopupForegroundLbl || sender == CMD_PopupForegroundBar)
-                CMD_PopupForegroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+                CMD_PopupForegroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", string.Empty));
 
             else if (sender == Label18 || sender == CMD_PopupBackgroundLbl || sender == CMD_PopupBackgroundBar)
-                CMD_PopupBackgroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", ""));
+                CMD_PopupBackgroundBar.Value = int.Parse(colorItem.Name.Replace("ColorTable", string.Empty));
         }
 
         private void Label49_DragOver(object sender, DragEventArgs e)
@@ -1639,7 +1644,7 @@ while ($true) {{
         {
             if (IsShown)
             {
-                CMD_Preview.Alpha = (sender as UI.Controllers.TrackBarX).Value;
+                CMD_Preview.Alpha = (sender as TrackBarX).Value;
             }
         }
 
@@ -1652,12 +1657,12 @@ while ($true) {{
                 string selected = comboBox1.SelectedItem.ToString();
                 if (selected.StartsWith($"{Program.Lang.Strings.Aspects.TerminalStable} > "))
                 {
-                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalStable} > ", "");
+                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalStable} > ", string.Empty);
                     scheme = Program.TM.Terminal.Schemes.FirstOrDefault(x => x.Name == selected);
                 }
                 else if (selected.StartsWith($"{Program.Lang.Strings.Aspects.TerminalPreview} > "))
                 {
-                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalPreview} > ", "");
+                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalPreview} > ", string.Empty);
                     scheme = Program.TM.TerminalPreview.Schemes.FirstOrDefault(x => x.Name == selected);
                 }
 

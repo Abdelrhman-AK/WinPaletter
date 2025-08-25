@@ -59,6 +59,8 @@
             this.theme_custom_check = new WinPaletter.UI.WP.RadioImage();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.button2 = new WinPaletter.UI.WP.Button();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox26.SuspendLayout();
@@ -569,10 +571,47 @@
             this.label5.Text = "Presets";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.CustomColor = System.Drawing.Color.Empty;
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button2.Image = null;
+            this.button2.ImageGlyph = null;
+            this.button2.ImageGlyphEnabled = false;
+            this.button2.Location = new System.Drawing.Point(475, 484);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(87, 48);
+            this.button2.TabIndex = 245;
+            this.button2.Text = "Get it";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(7, 484);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(462, 48);
+            this.alertBox2.TabIndex = 244;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "Use UxTheme Multi-Patcher by Windows X Live on Neowin to let WinPaletter apply un" +
+    "signed Visual Styles.";
+            // 
             // WinXPColors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.ClientSize = new System.Drawing.Size(1109, 531);
+            this.ClientSize = new System.Drawing.Size(1109, 587);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.alertBox2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox2);
@@ -587,6 +626,8 @@
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.groupBox5, 0);
             this.Controls.SetChildIndex(this.groupBox4, 0);
+            this.Controls.SetChildIndex(this.alertBox2, 0);
+            this.Controls.SetChildIndex(this.button2, 0);
             this.groupBox2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox26.ResumeLayout(false);
@@ -633,5 +674,7 @@
         internal UI.WP.RadioImage theme_custom_check;
         internal System.Windows.Forms.PictureBox pictureBox9;
         internal System.Windows.Forms.Label label5;
+        private UI.WP.Button button2;
+        internal UI.WP.AlertBox alertBox2;
     }
 }

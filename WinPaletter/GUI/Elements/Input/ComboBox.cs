@@ -1,10 +1,12 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
 {
@@ -37,8 +39,8 @@ namespace WinPaletter.UI.WP
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.3f));
-        private readonly static TextureBrush Noise2 = new(Properties.Resources.Noise.Fade(0.9f));
+        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.3f));
+        private readonly static TextureBrush Noise2 = new(Resources.Noise.Fade(0.9f));
 
         #endregion
 
@@ -64,7 +66,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
             base.OnMouseEnter(e);
@@ -72,7 +74,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseDown(e);
@@ -80,7 +82,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseLeave(e);
@@ -107,7 +109,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnDropDown(EventArgs e)
         {
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha2), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha2 = 0; }
 
             base.OnDropDown(e);
@@ -115,7 +117,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnDropDownClosed(EventArgs e)
         {
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha2), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha2 = 255; }
 
             base.OnDropDownClosed(e);

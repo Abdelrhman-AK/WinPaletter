@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Media;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -14,7 +15,7 @@ namespace WinPaletter
         /// <summary>
         /// The <see cref="Theme.Manager"/> instance to be used.
         /// </summary>
-        public Theme.Manager TM;
+        public Manager TM;
 
         /// <summary>
         /// Creates a new instance of <see cref="Store_CPToggles"/>.
@@ -29,7 +30,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="TM"></param>
         /// <returns></returns>
-        public static List<string> EnabledAspects(Theme.Manager TM)
+        public static List<string> EnabledAspects(Manager TM)
         {
             List<string> aspects_list = [];
             aspects_list.Clear();

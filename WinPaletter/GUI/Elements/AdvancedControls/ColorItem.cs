@@ -1,12 +1,16 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.Controllers
 {
@@ -65,7 +69,7 @@ namespace WinPaletter.UI.Controllers
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
         [DefaultValue("")]
         public override string Text { get; set; } = string.Empty;
@@ -378,7 +382,7 @@ namespace WinPaletter.UI.Controllers
             InitializeDrag = Program.Settings.NerdStats.DragAndDrop;
             State = MouseState.Down;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseDown(e);
@@ -389,7 +393,7 @@ namespace WinPaletter.UI.Controllers
             InitializeDrag = false;
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
@@ -399,7 +403,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
             base.OnMouseEnter(e);
@@ -411,7 +415,7 @@ namespace WinPaletter.UI.Controllers
             HoverOverDefColorDot = false;
             State = MouseState.None;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseLeave(e);
@@ -511,9 +515,9 @@ namespace WinPaletter.UI.Controllers
 
                 if (BackColor.A < 255)
                 {
-                    using (TextureBrush br = new(Properties.Resources.BackgroundOpacity)) { G.FillRoundedRect(br, RectInner); }
+                    using (TextureBrush br = new(Resources.BackgroundOpacity)) { G.FillRoundedRect(br, RectInner); }
 
-                    using (Bitmap b = Properties.Resources.BackgroundOpacity.Fade(alpha / 255f))
+                    using (Bitmap b = Resources.BackgroundOpacity.Fade(alpha / 255f))
                     using (TextureBrush br = new(b))
                     {
                         G.FillRoundedRect(br, Rect);

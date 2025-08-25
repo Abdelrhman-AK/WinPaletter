@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -41,7 +42,6 @@ namespace WinPaletter
             static readonly string REG_WindowsTerminals = $"{REG}\\WindowsTerminals";
             static readonly string REG_Store = $"{REG}\\Store";
             static readonly string REG_NerdStats = $"{REG}\\NerdStats";
-            static readonly string REG_UsersServices = $"{REG}\\UsersServices";
             static readonly string REG_Miscellaneous = $"{REG}\\Miscellaneous";
             static readonly string REG_Backup = $"{REG}\\Backup";
             static readonly string REG_AspectsControl = $"{REG}\\AspectsControl";
@@ -1376,9 +1376,9 @@ namespace WinPaletter
                     break;
 
                 case Source.File:
-                    if (System.IO.File.Exists(file))
+                    if (File.Exists(file))
                     {
-                        string[] txt = System.IO.File.ReadAllLines(file);
+                        string[] txt = File.ReadAllLines(file);
 
                         if (IsValidJson(string.Join("\r\n", txt)))
                         {
@@ -1471,7 +1471,7 @@ namespace WinPaletter
                         Store.Online_Repositories[Store.Online_Repositories.Length - 1] = Links.Store_2ndDB;
                     }
 
-                    System.IO.File.WriteAllText(file, ToString());
+                    File.WriteAllText(file, ToString());
                     break;
             }
         }

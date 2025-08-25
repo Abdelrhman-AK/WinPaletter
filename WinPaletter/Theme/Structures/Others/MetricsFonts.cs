@@ -1,7 +1,10 @@
 ﻿using Devcorp.Controls.VisualStyles;
+using libmsstyle;
 using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -166,7 +169,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default MetricsFonts data structure</param>
         public void Load(MetricsFonts @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Metrics and Fonts settings from registry and User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Metrics and Fonts settings from registry and User32.SystemParametersInfo");
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Metrics", string.Empty, @default.Enabled));
             BorderWidth = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "BorderWidth", @default.BorderWidth * -15)) / -15;
@@ -226,7 +229,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public async void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Metrics and Fonts settings into registry and by using User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Metrics and Fonts settings into registry and by using User32.SystemParametersInfo");
 
             SaveToggleState(treeView);
 
@@ -268,11 +271,11 @@ namespace WinPaletter.Theme.Structures
                 // Override Metrics/Fonts by visual styles
                 if (_vs.Enabled && _vs.OverrideSizes)
                 {
-                    if (System.IO.File.Exists(_vs.ThemeFile))
+                    if (File.Exists(_vs.ThemeFile))
                     {
                         try
                         {
-                            using (libmsstyle.VisualStyle vs = new(_vs.ThemeFile))
+                            using (VisualStyle vs = new(_vs.ThemeFile))
                             {
                                 this.CopyFrom(vs.MetricsFonts());
                                 Enabled = true;
@@ -281,13 +284,13 @@ namespace WinPaletter.Theme.Structures
                         catch
                         {
                             string theme = _vs.ThemeFile;
-                            if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                            if (Path.GetExtension(theme).ToLower() == ".msstyles")
                             {
-                                System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                                 theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                             }
 
-                            if (System.IO.File.Exists(theme))
+                            if (File.Exists(theme))
                             {
                                 using (VisualStyleFile vs = new(theme))
                                 {
@@ -338,8 +341,8 @@ namespace WinPaletter.Theme.Structures
                 // Apply Metrics/Fonts in a new thread to avoid UI freeze when applying changes
                 await Task.Run(() =>
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Metrics and Fonts settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Metrics and Fonts settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
+                    Program.Log?.Write(LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
 
                     NONCLIENTMETRICS NCM = new();
                     NCM.cbSize = (uint)Marshal.SizeOf(NCM);
@@ -386,7 +389,7 @@ namespace WinPaletter.Theme.Structures
                 // Apply metrics on HKEY_USERS\.DEFAULT (New users and default user) if it is set to overwrite in WinPaletter settings
                 if (Program.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying Metrics and Fonts settings to HKEY_USERS\\.DEFAULT registry key.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Applying Metrics and Fonts settings to HKEY_USERS\\.DEFAULT registry key.");
 
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToBytes(), RegistryValueKind.Binary);
                     EditReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToBytes(), RegistryValueKind.Binary);
@@ -415,7 +418,7 @@ namespace WinPaletter.Theme.Structures
 
                 // Apply font substitutes
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying font substitutes to HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes registry key.");
+                Program.Log?.Write(LogEventLevel.Information, $"Applying font substitutes to HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes registry key.");
 
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String);
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String);

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -54,7 +57,7 @@ namespace WinPaletter.UI.WP
                     _Checked = value;
                     CheckedChanged?.Invoke(this, new EventArgs());
 
-                    if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+                    if (CanAnimate) { Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
                     else { alpha2 = Checked ? 255 : 0; }
                 }
             }
@@ -63,7 +66,7 @@ namespace WinPaletter.UI.WP
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
         public override string Text { get; set; }
 
@@ -79,7 +82,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Down;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseDown(e);
@@ -89,7 +92,7 @@ namespace WinPaletter.UI.WP
         {
             Checked = !Checked;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha2), Checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha2 = Checked ? 255 : 0; }
 
             base.OnMouseClick(e);
@@ -99,7 +102,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
@@ -109,7 +112,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
             base.OnMouseEnter(e);
@@ -119,7 +122,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.None;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseLeave(e);
@@ -214,7 +217,7 @@ namespace WinPaletter.UI.WP
             // #################################################################################
 
             using (LinearGradientBrush lgb0 = new(InnerRect_GradienceFix, scheme.Colors.Back(parentLevel - 10), scheme.Colors.Back_Hover(parentLevel - 10), LinearGradientMode.Horizontal))
-            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line_Hover(parentLevel - 10)), Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line(parentLevel - 10)), LinearGradientMode.Vertical))
+            using (LinearGradientBrush lgb1 = new(OuterRect_GradienceFix, Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line_Hover(parentLevel - 10)), Color.FromArgb(Math.Max(255 - alpha, 0), scheme.Colors.Line(parentLevel + 20)), LinearGradientMode.Vertical))
             using (LinearGradientBrush lgb2 = new(OuterRect_GradienceFix, Color.FromArgb(alpha, scheme.Colors.Line_Checked_Hover), Color.FromArgb(alpha, scheme.Colors.Accent), LinearGradientMode.Horizontal))
             using (Pen P0 = new(lgb1))
             using (Pen P1 = new(lgb2))

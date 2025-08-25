@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace WinPaletter
@@ -15,7 +16,7 @@ namespace WinPaletter
         public static void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)
         {
             if (!Debugger.IsAttached)
-                Forms.BugReport.ThrowError(e.Exception, true, System.Runtime.InteropServices.Marshal.GetLastWin32Error());
+                Forms.BugReport.ThrowError(e.Exception, true, Marshal.GetLastWin32Error());
             else
                 ExceptionDispatchInfo.Capture(e.Exception).Throw();
         }
@@ -29,7 +30,7 @@ namespace WinPaletter
         {
 #if DEBUG
             if (!Debugger.IsAttached)
-                Forms.BugReport.ThrowError(e.ExceptionObject as Exception, true, System.Runtime.InteropServices.Marshal.GetLastWin32Error());
+                Forms.BugReport.ThrowError(e.ExceptionObject as Exception, true, Marshal.GetLastWin32Error());
             else
                 ExceptionDispatchInfo.Capture(e.ExceptionObject as Exception).Throw();
 #else

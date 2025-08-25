@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Devcorp.Controls.VisualStyles;
+using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
+using WinPaletter.Theme.Structures;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
+using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.UI.Simulation.Window;
 
@@ -442,7 +447,7 @@ namespace WinPaletter.Templates
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public Theme.Manager HookedTM
+        public Manager HookedTM
         {
             get => !DesignMode ? _hookedTM ?? HookedTM : null;
             set
@@ -451,7 +456,7 @@ namespace WinPaletter.Templates
                 LoadFromTM(_hookedTM);
             }
         }
-        private Theme.Manager _hookedTM = Program.TM;
+        private Manager _hookedTM = Program.TM;
 
 
         private VisualStylesRes resVS
@@ -478,7 +483,7 @@ namespace WinPaletter.Templates
         }
         private VisualStylesRes _resVS = null;
 
-        private Theme.Structures.VisualStyles.DefaultVisualStyles VisualStyles
+        private VisualStyles.DefaultVisualStyles VisualStyles
         {
             get => _visualStyles;
             set
@@ -490,8 +495,8 @@ namespace WinPaletter.Templates
                 }
             }
         }
-        private Theme.Structures.VisualStyles.DefaultVisualStyles _visualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
-   
+        private VisualStyles.DefaultVisualStyles _visualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
+
         private string VisualStylesPath
         {
             get => _visualStylesPath;
@@ -1350,9 +1355,9 @@ namespace WinPaletter.Templates
                 switch (_visualStyles)
                 {
                     case Theme.Structures.VisualStyles.DefaultVisualStyles.LunaOlive:
-                    {
+                        {
                             msstyles = SysPaths.Theme_Luna_WP;
-                            System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
+                            File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
                             resVS = new(msstyles);
                             Classic = false;
                             break;
@@ -1361,7 +1366,7 @@ namespace WinPaletter.Templates
                     case Theme.Structures.VisualStyles.DefaultVisualStyles.LunaSilver:
                         {
                             msstyles = SysPaths.Theme_Luna_WP;
-                            System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
+                            File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
                             resVS = new(msstyles);
                             Classic = false;
                             break;
@@ -1369,16 +1374,16 @@ namespace WinPaletter.Templates
 
                     case Theme.Structures.VisualStyles.DefaultVisualStyles.Custom:
                         {
-                            if (System.IO.File.Exists(_visualStylesPath))
+                            if (File.Exists(_visualStylesPath))
                             {
-                                if (System.IO.Path.GetExtension(_visualStylesPath) == ".theme")
+                                if (Path.GetExtension(_visualStylesPath) == ".theme")
                                 {
                                     msstyles = _visualStylesPath;
                                 }
-                                else if (System.IO.Path.GetExtension(_visualStylesPath) == ".msstyles")
+                                else if (Path.GetExtension(_visualStylesPath) == ".msstyles")
                                 {
                                     msstyles = SysPaths.Theme_Temp;
-                                    System.IO.File.WriteAllText(SysPaths.Theme_Temp, $"[VisualStyles]{"\r\n"}Path={_visualStylesPath}{"\r\n"}ColorStyle={_visualStylesColor}{"\r\n"}Size=NormalSize");
+                                    File.WriteAllText(SysPaths.Theme_Temp, $"[VisualStyles]{"\r\n"}Path={_visualStylesPath}{"\r\n"}ColorStyle={_visualStylesColor}{"\r\n"}Size=NormalSize");
                                 }
                             }
                             Classic = false;
@@ -1395,7 +1400,7 @@ namespace WinPaletter.Templates
                     default:
                         {
                             msstyles = SysPaths.Theme_Luna_WP;
-                            System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                             resVS = new(msstyles);
                             Classic = false;
                             break;
@@ -1404,9 +1409,9 @@ namespace WinPaletter.Templates
 
                 if (_visualStyles != Theme.Structures.VisualStyles.DefaultVisualStyles.Classic)
                 {
-                    if (System.IO.File.Exists(msstyles))
+                    if (File.Exists(msstyles))
                     {
-                        using (Devcorp.Controls.VisualStyles.VisualStyleFile vs = new(msstyles))
+                        using (VisualStyleFile vs = new(msstyles))
                         {
                             if (WXP_VS_ReplaceColors) HookedTM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics);
 
@@ -1488,7 +1493,7 @@ namespace WinPaletter.Templates
         /// Load all theme settings from a <see cref="Theme.Manager"/> 
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             ForceRefresh = true;
 
@@ -1588,7 +1593,7 @@ namespace WinPaletter.Templates
         /// Load all metrics settings from a <see cref="Theme.Manager"/>
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadMetrics(Theme.Manager TM)
+        public void LoadMetrics(Manager TM)
         {
             CaptionFont = TM.MetricsFonts.CaptionFont;
             CaptionHeight = TM.MetricsFonts.CaptionHeight;
@@ -1613,7 +1618,7 @@ namespace WinPaletter.Templates
         /// Load all color settings from a <see cref="Theme.Manager"/>
         /// </summary>
         /// <param name="TM"></param>
-        private void LoadColors(Theme.Manager TM)
+        private void LoadColors(Manager TM)
         {
             EnableTheming = TM.Win32.EnableTheming;
             EnableGradient = TM.Win32.EnableGradient;
@@ -1652,7 +1657,7 @@ namespace WinPaletter.Templates
 
                 LoadFromTM(Program.TM);
 
-                MenuStrip1.Renderer = new UI.WP.StripRenderer();  //Removes inferior white line from menu strip
+                MenuStrip1.Renderer = new StripRenderer();  //Removes inferior white line from menu strip
 
                 windowR1.EnableEditingMetrics = true;
                 windowR2.EnableEditingMetrics = true;

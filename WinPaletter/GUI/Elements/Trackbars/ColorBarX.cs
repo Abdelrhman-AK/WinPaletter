@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -113,15 +114,15 @@ namespace WinPaletter.UI.WP
         {
             switch (colorBar1.Mode)
             {
-                case UI.WP.ColorBar.ModesList.Hue:
+                case ColorBar.ModesList.Hue:
                     Value = 0;
                     break;
 
-                case UI.WP.ColorBar.ModesList.Saturation:
+                case ColorBar.ModesList.Saturation:
                     Value = 50;
                     break;
 
-                case UI.WP.ColorBar.ModesList.Light:
+                case ColorBar.ModesList.Light:
                     Value = 50;
                     break;
             }
@@ -155,7 +156,7 @@ namespace WinPaletter.UI.WP
 
                         if (_animateChanges)
                         {
-                            FluentTransitions.Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                            Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                         }
                         else
                         {

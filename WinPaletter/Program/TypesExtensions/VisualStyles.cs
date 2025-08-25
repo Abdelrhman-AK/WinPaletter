@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -160,13 +161,13 @@ namespace WinPaletter.TypesExtensions
         /// <param name="PartID"></param>
         /// <param name="StateID"></param>
         /// <returns></returns>
-        public static Theme.Structures.MetricsFonts MetricsFonts(this VisualStyle visualStyle, int PartID = 0, int StateID = 0)
+        public static MetricsFonts MetricsFonts(this VisualStyle visualStyle, int PartID = 0, int StateID = 0)
         {
             StylePart cp = visualStyle.Class("sysmetrics").Value.Parts.FirstOrDefault().Value;
             StyleState state = cp.States.FirstOrDefault().Value;
             Dictionary<int, string> fonts = StringTable.FilterFonts(visualStyle.PreferredStringTable);
 
-            Theme.Structures.MetricsFonts metricsFonts = new()
+            MetricsFonts metricsFonts = new()
             {
                 CaptionHeight = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.CAPTIONBARHEIGHT).FirstOrDefault().GetValue(),
                 CaptionWidth = (int)state.Properties.Where(p => p.Header.nameID == (int)IDENTIFIER.CAPTIONBARWIDTH).FirstOrDefault().GetValue(),

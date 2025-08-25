@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.Templates;
 
 namespace WinPaletter.UI.Retro
 {
@@ -61,7 +62,7 @@ namespace WinPaletter.UI.Retro
         {
             if (!DesignMode && EnableEditingColors)
             {
-                if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.WindowText)));
+                if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.WindowText)));
             }
 
             base.OnClick(e);

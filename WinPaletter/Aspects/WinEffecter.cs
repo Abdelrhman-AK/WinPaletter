@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using WinPaletter.Theme;
+using WinPaletter.UI.Controllers;
+using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -26,7 +28,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -36,14 +38,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -56,37 +58,37 @@ namespace WinPaletter
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
         private void Apply(object sender, EventArgs e)
@@ -99,12 +101,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -270,17 +272,17 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            ButtonR1.FocusRectWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            ButtonR1.FocusRectWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            ButtonR1.FocusRectHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            ButtonR1.FocusRectHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX1_ValueChanged_1(object sender, EventArgs e)
         {
-            Panel2.Width = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            Panel2.Width = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void button21_Click(object sender, EventArgs e)
@@ -538,12 +540,12 @@ namespace WinPaletter
 
         private void WinEffecter_AspectEnabledChanged(object sender, EventArgs e)
         {
-            if ((sender as UI.WP.Toggle).Checked
+            if ((sender as Toggle).Checked
                 && Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert
                 && Forms.WinEffectsAlert.ShowDialog(this) != DialogResult.OK)
             {
                 AspectEnabled = false;
-                (sender as UI.WP.Toggle).Checked = false;
+                (sender as Toggle).Checked = false;
             }
         }
     }

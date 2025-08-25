@@ -281,7 +281,7 @@ public class EOIcoCurLoader
         m_reader.Read(imgBytes, 0, imgBytes.Length);
         fixed (byte* bits = imgBytes)
         {
-            bm = EOFC.BitmapOps.FromRawBitsbpp(bits, Palette, (int)w, (int)h, (int)bpp, true);
+            bm = BitmapOps.FromRawBitsbpp(bits, Palette, (int)w, (int)h, (int)bpp, true);
         }
         if (bm != null && bpp != 32)
         {
@@ -292,9 +292,9 @@ public class EOIcoCurLoader
             Bitmap bmMask = null;
             fixed (byte* mask = maskBytes)
             {
-                bmMask = EOFC.BitmapOps.FromRawBitsBinary(mask, (int)w, (int)h, true);
+                bmMask = BitmapOps.FromRawBitsBinary(mask, (int)w, (int)h, true);
             }
-            EOFC.BitmapOps.MaskToAlpha(bm, bmMask);
+            BitmapOps.MaskToAlpha(bm, bmMask);
         }
 
         bm.RotateFlip(RotateFlipType.Rotate180FlipX);

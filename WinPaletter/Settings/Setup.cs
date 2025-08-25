@@ -1,11 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Media;
+﻿using Ookii.Dialogs.WinForms;
+using System;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
 
 namespace WinPaletter
 {
@@ -27,7 +25,7 @@ namespace WinPaletter
             next_btn.Text = Program.Lang.Strings.General.Next;
 
             textBox1.Font = Fonts.ConsoleLarge;
-            textBox1.Text = Properties.Resources.LICENSE;
+            textBox1.Text = Resources.LICENSE;
 
             // Get the assembly of the current executing code
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -101,9 +99,9 @@ namespace WinPaletter
             {
                 if (!OS.WXP)
                 {
-                    Ookii.Dialogs.WinForms.ProgressDialog dlg = new()
+                    ProgressDialog dlg = new()
                     {
-                        Animation = Ookii.Dialogs.WinForms.AnimationResource.GetShellAnimation(Ookii.Dialogs.WinForms.ShellAnimation.FlyingPapers),
+                        Animation = AnimationResource.GetShellAnimation(ShellAnimation.FlyingPapers),
                         Text = Program.Lang.Strings.General.RestorePoint_FirstTime_DialogTitle,
                         Description = Program.Lang.Strings.General.RestorePoint_FirstTime_Desc,
                         ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
@@ -152,7 +150,7 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new() { SelectedPath = textBox2.Text })
+                using (VistaFolderBrowserDialog FD = new() { SelectedPath = textBox2.Text })
                 {
                     if (FD.ShowDialog() == DialogResult.OK) textBox2.Text = FD.SelectedPath;
                 }
@@ -168,7 +166,7 @@ namespace WinPaletter
 
         private void button13_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
 
         private void button21_Click(object sender, EventArgs e)

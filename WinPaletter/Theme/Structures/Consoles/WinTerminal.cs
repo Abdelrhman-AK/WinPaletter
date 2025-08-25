@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -1433,7 +1434,7 @@ namespace WinPaletter.Theme.Structures
                 // Load Windows Terminal settings from JSON File
                 case Mode.JSONFile:
                     {
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Terminal settings from JSON file `{File}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from JSON file `{File}`.");
 
                         WinTerminal result = new(string.Empty, Mode.Empty, Version);
 
@@ -1453,7 +1454,7 @@ namespace WinPaletter.Theme.Structures
                         Theme = result.Theme;
                         DefaultProfile = result.DefaultProfile;
                         Profiles = result.Profiles;
-                        Schemes = result.Schemes.Count ==  0 ? DefaultSchemes : result.Schemes;
+                        Schemes = result.Schemes.Count == 0 ? DefaultSchemes : result.Schemes;
                         Themes = result.Themes;
                         UseAcrylicInTabRow = result.UseAcrylicInTabRow;
 
@@ -1463,9 +1464,9 @@ namespace WinPaletter.Theme.Structures
                 // Load Windows Terminal settings from WinPaletter theme File
                 case Mode.WinPaletterFile:
                     {
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Terminal settings from WinPaletter theme file `{File}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from WinPaletter theme file `{File}`.");
 
-                        using (Theme.Manager TMx = new(WinPaletter.Theme.Manager.Source.File, File))
+                        using (Manager TMx = new(Manager.Source.File, File))
                         {
                             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
                             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
@@ -1486,7 +1487,7 @@ namespace WinPaletter.Theme.Structures
 
                 case Mode.Empty:
                     {
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"An empty instance of Windows Terminal settings has been created.");
+                        Program.Log?.Write(LogEventLevel.Information, $"An empty instance of Windows Terminal settings has been created.");
 
                         break;
                     }
@@ -1527,7 +1528,7 @@ namespace WinPaletter.Theme.Structures
                                         SettingsFile = SysPaths.TerminalJSON;
                                     }
 
-                                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Terminal settings into JSON file `{SettingsFile}`.");
+                                    Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal settings into JSON file `{SettingsFile}`.");
 
                                     break;
                                 }
@@ -1547,7 +1548,7 @@ namespace WinPaletter.Theme.Structures
                                         SettingsFile = SysPaths.TerminalPreviewJSON;
                                     }
 
-                                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Terminal Preview settings into JSON file `{SettingsFile}`.");
+                                    Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal Preview settings into JSON file `{SettingsFile}`.");
 
                                     break;
                                 }
@@ -1581,7 +1582,7 @@ namespace WinPaletter.Theme.Structures
 
                         // Remove default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does)
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Removing default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does).");
+                            Program.Log?.Write(LogEventLevel.Information, $"Removing default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does).");
 
                             // Retrieve the list of profiles and the defaults JObject
                             JArray profilesList = (JArray)existingJson["profiles"]["list"];
@@ -1625,7 +1626,7 @@ namespace WinPaletter.Theme.Structures
                             streamWriter.Write(result);
                         }
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving `{SettingsFile}` has just been completed.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Saving `{SettingsFile}` has just been completed.");
 
                         return result;
                     }

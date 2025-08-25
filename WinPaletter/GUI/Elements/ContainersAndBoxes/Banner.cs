@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
 {
@@ -19,7 +20,7 @@ namespace WinPaletter.UI.WP
             BackColor = Color.Transparent;
         }
 
-        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
 
         private Bitmap _image;
         [Description("Image to display on the banner")]

@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
-using static System.Net.Mime.MediaTypeNames;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.Tabs
@@ -107,7 +104,7 @@ namespace WinPaletter.Tabs
             helpButton.Click += (s, e) => TriggerHelp();
 
             contextMenu.Items.AddRange([closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis,
-                toolStripSeparator0, 
+                toolStripSeparator0,
                 detach, detachAll, detachAllButThis,
                 toolStripSeparator1,
                 helpButton
@@ -128,14 +125,14 @@ namespace WinPaletter.Tabs
                 {
                     TabControl.SelectedTab = TPx;
                     Cursor = Cursors.Default;
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"`{form.Name}` form is already shown and added into tabs, re-focusing it.");
+                    Program.Log?.Write(LogEventLevel.Information, $"`{form.Name}` form is already shown and added into tabs, re-focusing it.");
                     return;
                 }
             }
 
             if (busy)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"`{form.Name}` form cannot be added into tabs as the tabs container is busy.");
+                Program.Log?.Write(LogEventLevel.Warning, $"`{form.Name}` form cannot be added into tabs as the tabs container is busy.");
                 Cursor = Cursors.Default;
                 return;
             }
@@ -177,7 +174,7 @@ namespace WinPaletter.Tabs
 
             if (!DesignMode && !TabControl.IsInUse()) Program.Animator.ShowSync(TabControl);
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"`{form.Name}` form has been shown and added into tabs.");
+            Program.Log?.Write(LogEventLevel.Information, $"`{form.Name}` form has been shown and added into tabs.");
 
             busy = false;
 
@@ -1138,7 +1135,7 @@ namespace WinPaletter.Tabs
                     }
                 }
             }
-  
+
             base.OnDragOver(e);
         }
 
@@ -1318,8 +1315,8 @@ namespace WinPaletter.Tabs
                             if (OS.WVista || OS.W7 || OS.W8x)
                             {
                                 // Draw a line around the tab to fix appearance issue that doesn't fit Windows style
-                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 128, 255, 255, 255))) 
-                                { 
+                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 128, 255, 255, 255)))
+                                {
                                     G.ExcludeClip(new Rectangle(rect.X, rect.Y + rect.Height - 2, rect.Width + 1, 2));
                                     G.DrawPath(Px, path);
                                     G.ResetClip();

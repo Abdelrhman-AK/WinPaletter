@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
@@ -882,7 +883,7 @@ namespace WinPaletter.Templates
         /// Load metrics from a <see cref="Theme.Manager"/> instance
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadMetrics(Theme.Manager TM)
+        public void LoadMetrics(Manager TM)
         {
             if (TM is null) return;
 
@@ -1106,7 +1107,7 @@ namespace WinPaletter.Templates
         /// Load colors from a <see cref="Theme.Manager"/>
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadColors(Theme.Manager TM)
+        public void LoadColors(Manager TM)
         {
             Visible = false;
             EnableTheming = TM.Win32.EnableTheming;
@@ -1316,7 +1317,7 @@ namespace WinPaletter.Templates
         {
             if (!DesignMode && EnableEditingColors)
             {
-                if (_CursorMovingInBackground) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.Background)));
+                if (_CursorMovingInBackground) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Background)));
             }
 
             base.OnClick(e);

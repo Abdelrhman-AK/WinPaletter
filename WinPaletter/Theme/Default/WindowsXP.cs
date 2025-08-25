@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme
 {
@@ -20,9 +21,9 @@ namespace WinPaletter.Theme
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
 
-            ref Structures.WindowsXP WinXP = ref TM.WindowsXP;
+            ref WindowsXP WinXP = ref TM.WindowsXP;
             WinXP.Enabled = true;
-            WinXP.VisualStyles.VisualStylesType = Structures.VisualStyles.DefaultVisualStyles.LunaBlue;
+            WinXP.VisualStyles.VisualStylesType = VisualStyles.DefaultVisualStyles.LunaBlue;
 
             ref Structures.LogonUIXP logonUI = ref TM.LogonUIXP;
             logonUI.Enabled = true;
@@ -62,7 +63,7 @@ namespace WinPaletter.Theme
             Win32.MenuHilight = Color.FromArgb(49, 106, 197);
             Win32.Desktop = Color.FromArgb(0, 0, 0);
 
-            ref Structures.Console CMD = ref TM.CommandPrompt;
+            ref Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable00 = Color.FromArgb(12, 12, 12);
             CMD.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -89,7 +90,7 @@ namespace WinPaletter.Theme
             CMD.FontRaster = true;
             CMD.W10_1909_ForceV2 = false;
 
-            ref Structures.Console PS86 = ref TM.PowerShellx86;
+            ref Console PS86 = ref TM.PowerShellx86;
             PS86.Enabled = true;
             PS86.ColorTable00 = Color.FromArgb(12, 12, 12);
             PS86.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -116,7 +117,7 @@ namespace WinPaletter.Theme
             PS86.FontRaster = true;
             PS86.W10_1909_ForceV2 = false;
 
-            ref Structures.Console PS64 = ref TM.PowerShellx64;
+            ref Console PS64 = ref TM.PowerShellx64;
             PS64.Enabled = true;
             PS64.ColorTable00 = Color.FromArgb(12, 12, 12);
             PS64.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -222,8 +223,8 @@ namespace WinPaletter.Theme
             Icons.RecycleBinFull = $"{SysPaths.System32}\\shell32.dll,32";
             Icons.ControlPanel = $"{SysPaths.System32}\\shell32.dll,21";
 
-            TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             ref Structures.ScreenSaver ScreenSaver = ref TM.ScreenSaver;
             ScreenSaver.Enabled = true;

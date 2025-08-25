@@ -1,9 +1,11 @@
 ﻿using Devcorp.Controls.VisualStyles;
+using libmsstyle;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -32,7 +34,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                    using (Manager _Def = Default.Get(Program.WindowStyle))
                     {
                         LoadFromWin9xTheme(dlg.FileName, _Def.Win32);
                     }
@@ -46,7 +48,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -56,14 +58,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -79,7 +81,7 @@ namespace WinPaletter
                     try
                     {
                         // Newer versions of msstyles
-                        using (libmsstyle.VisualStyle visualStyle = new(theme)) { LoadFromWin32UI(visualStyle.ClassicColors()); }
+                        using (VisualStyle visualStyle = new(theme)) { LoadFromWin32UI(visualStyle.ClassicColors()); }
                         ApplyRetroPreview();
                     }
                     catch
@@ -87,13 +89,13 @@ namespace WinPaletter
                         // Old msstyles (Windows XP)
                         try
                         {
-                            if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                            if (Path.GetExtension(theme).ToLower() == ".msstyles")
                             {
-                                System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                                 theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                             }
 
-                            if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                            if (!string.IsNullOrEmpty(theme) && File.Exists(theme))
                             {
                                 using (VisualStyleFile vs = new(theme)) { LoadColors(vs.Metrics); }
                                 ApplyRetroPreview();
@@ -123,12 +125,12 @@ namespace WinPaletter
             }
 
             Cursor = Cursors.WaitCursor;
-            using (Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -153,7 +155,7 @@ namespace WinPaletter
 
                     try
                     {
-                        System.IO.File.WriteAllText(dlg.FileName, win32UI.ToString(sender is not ToolStripMenuItem ? Program.TM.MetricsFonts : null));
+                        File.WriteAllText(dlg.FileName, win32UI.ToString(sender is not ToolStripMenuItem ? Program.TM.MetricsFonts : null));
                     }
                     catch (Exception ex)
                     {
@@ -218,7 +220,7 @@ namespace WinPaletter
             splitContainer1.Panel2Collapsed = !checkBox1.Checked;
 
             ComboBox1.Items.Clear();
-            ComboBox1.Items.AddRange(Theme.Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray());
+            ComboBox1.Items.AddRange(Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray());
             ComboBox1.SelectedIndex = 0;
 
             ApplyDefaultTMValues();
@@ -398,7 +400,7 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            using (Manager DefTM = Theme.Default.Get())
+            using (Manager DefTM = Default.Get())
             {
                 ActiveBorder_pick.DefaultBackColor = DefTM.Win32.ActiveBorder;
                 activetitle_pick.DefaultBackColor = DefTM.Win32.ActiveTitle;
@@ -772,7 +774,7 @@ namespace WinPaletter
             Toggle1.Checked = condition0 | condition1 | condition2;
             Toggle2.Checked = true;
 
-            retroDesktopColors1.LoadFromWinThemeString(Theme.Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
+            retroDesktopColors1.LoadFromWinThemeString(Schemes.ClassicColors, ComboBox1.SelectedItem.ToString());
 
             LoadFromRetroPreview(retroDesktopColors1);
         }

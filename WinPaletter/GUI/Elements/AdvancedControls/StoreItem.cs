@@ -1,10 +1,14 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.IO;
 using System.Windows.Forms;
+using WinPaletter.Properties;
+using WinPaletter.Theme;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.Controllers
@@ -26,7 +30,7 @@ namespace WinPaletter.UI.Controllers
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.65f));
+        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.65f));
         private TextureBrush pattern;
         private readonly List<Bitmap> DesignedFor_Badges = [];
 
@@ -45,8 +49,8 @@ namespace WinPaletter.UI.Controllers
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public new Color BackColor { get => Color.Transparent; set {; } }
 
-        private Theme.Manager _TM;
-        public Theme.Manager TM
+        private Manager _TM;
+        public Manager TM
         {
             get => _TM;
             set
@@ -101,7 +105,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Down;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 128; }
 
             base.OnMouseDown(e);
@@ -111,7 +115,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
@@ -121,7 +125,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
             base.OnMouseEnter(e);
@@ -131,7 +135,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.None;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseLeave(e);
@@ -378,7 +382,7 @@ namespace WinPaletter.UI.Controllers
                 float CircleR = rect_inner.Height * 0.4f;
                 float factor = CircleR * (alpha / 255f) / 4f;
 
-                int rowsNumber = System.IO.File.Exists(URL_ThemeFile) ? 4 : 3;
+                int rowsNumber = File.Exists(URL_ThemeFile) ? 4 : 3;
                 if (DesignedFor_Badges.Count > 0) rowsNumber++;
                 int titleHeight = 26;
                 int itemsHeight = 18;
@@ -430,10 +434,10 @@ namespace WinPaletter.UI.Controllers
 
                     G.DrawString($"{Program.Lang.Strings.General.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
 
-                    if (System.IO.File.Exists(URL_ThemeFile))
+                    if (File.Exists(URL_ThemeFile))
                     {
                         G.DrawImage(Assets.Store.Folder, FileRect_Img);
-                        G.DrawString(System.IO.Path.GetFileName(URL_ThemeFile), Fonts.Console, foreBrush, File_Rect, sf);
+                        G.DrawString(Path.GetFileName(URL_ThemeFile), Fonts.Console, foreBrush, File_Rect, sf);
                     }
 
                     if (hasUpdate)

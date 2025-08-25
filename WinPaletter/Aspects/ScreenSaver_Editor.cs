@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Theme;
@@ -29,7 +30,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -39,14 +40,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -57,7 +58,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                    using (Manager _Def = Default.Get(Program.WindowStyle))
                     {
                         GetFromClassicThemeFile(dlg.FileName, _Def.ScreenSaver);
                     }
@@ -73,37 +74,37 @@ namespace WinPaletter
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
         private void Apply(object sender, EventArgs e)
@@ -116,12 +117,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -204,7 +205,7 @@ namespace WinPaletter
                     previewHandle = pnl_preview.Handle.ToInt32();
                 });
 
-                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                if (File.Exists(filename) && Path.GetExtension(filename).ToUpper() == ".SCR")
                 {
                     if (Proc is not null && !Proc.HasExited) Proc.Kill();
 
@@ -237,7 +238,7 @@ namespace WinPaletter
                     previewHandle = pnl_preview.Handle.ToInt32();
                 });
 
-                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                if (File.Exists(filename) && Path.GetExtension(filename).ToUpper() == ".SCR")
                 {
                     if (Proc is not null && !Proc.HasExited) Proc.Kill();
 
@@ -259,7 +260,7 @@ namespace WinPaletter
 
                 Invoke(() => { filename = TextBox1.Text; });
 
-                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                if (File.Exists(filename) && Path.GetExtension(filename).ToUpper() == ".SCR")
                 {
                     if (Proc is not null && !Proc.HasExited) Proc.Kill();
 
@@ -281,7 +282,7 @@ namespace WinPaletter
                     previewHandle = pnl_preview.Handle.ToInt32();
                 });
 
-                if (System.IO.File.Exists(filename) && System.IO.Path.GetExtension(filename).ToUpper() == ".SCR")
+                if (File.Exists(filename) && Path.GetExtension(filename).ToUpper() == ".SCR")
                 {
                     if (Proc is not null && !Proc.HasExited) Proc.Kill();
 

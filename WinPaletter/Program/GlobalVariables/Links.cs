@@ -83,6 +83,16 @@ namespace WinPaletter.GlobalVariables
         public readonly static string SecureUxThemeReleases = $"{GitHub}/namazso/SecureUxTheme/releases";
 
         /// <summary>
+        /// Link to the SecureUxTheme login loop issue wiki page.
+        /// </summary>
+        public readonly static string SecureUxThemeLoginLoopIssue = $"{GitHub}/namazso/SecureUxTheme/wiki/Help:-Login-loop-after-installing-SecureUxTheme";
+
+        /// <summary>
+        /// Gets the URL for the UXTheme Multi-Patcher software download page.
+        /// </summary>
+        public readonly static string UxTheme_multi_patcher = "https://www.neowin.net/software/download-uxtheme-multi-patcher-90-for-windows-881/";
+
+        /// <summary>
         /// Links to WinPaletter Wiki pages.
         /// </summary>
         public static class Wiki

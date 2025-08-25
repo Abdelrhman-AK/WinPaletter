@@ -1,11 +1,14 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Templates;
 
 namespace WinPaletter.UI.Retro
 {
@@ -112,7 +115,7 @@ namespace WinPaletter.UI.Retro
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
         public override string Text { get; set; } = "New window";
 
@@ -818,16 +821,16 @@ namespace WinPaletter.UI.Retro
         {
             if (!DesignMode && oldPoint == newPoint && EnableEditingColors)
             {
-                if (CursorOnTitlebarColor1) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(Templates.RetroDesktopColors.ActiveTitle) : nameof(Templates.RetroDesktopColors.InactiveTitle)));
-                else if (CursorOnTitlebarColor2) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(Templates.RetroDesktopColors.GradientActiveTitle) : nameof(Templates.RetroDesktopColors.GradientInactiveTitle)));
-                else if (CursorOnTitlebarColor2) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(Templates.RetroDesktopColors.GradientActiveTitle) : nameof(Templates.RetroDesktopColors.GradientInactiveTitle)));
-                else if (CursorOnTitlebarText) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(Templates.RetroDesktopColors.TitleText) : nameof(Templates.RetroDesktopColors.InactiveTitleText)));
-                else if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonShadow)));
-                else if (CursorOnDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonDkShadow)));
-                else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonHilight)));
-                else if (CursorOnLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonLight)));
-                else if (CursorOnBorder) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(Templates.RetroDesktopColors.ActiveBorder) : nameof(Templates.RetroDesktopColors.InactiveBorder)));
-                else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonFace)));
+                if (CursorOnTitlebarColor1) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.ActiveTitle) : nameof(RetroDesktopColors.InactiveTitle)));
+                else if (CursorOnTitlebarColor2) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.GradientActiveTitle) : nameof(RetroDesktopColors.GradientInactiveTitle)));
+                else if (CursorOnTitlebarColor2) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.GradientActiveTitle) : nameof(RetroDesktopColors.GradientInactiveTitle)));
+                else if (CursorOnTitlebarText) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.TitleText) : nameof(RetroDesktopColors.InactiveTitleText)));
+                else if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonShadow)));
+                else if (CursorOnDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonDkShadow)));
+                else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
+                else if (CursorOnLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonLight)));
+                else if (CursorOnBorder) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.ActiveBorder) : nameof(RetroDesktopColors.InactiveBorder)));
+                else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
             }
 
             else if (!DesignMode && _MetricsEdit_CaptionFont)

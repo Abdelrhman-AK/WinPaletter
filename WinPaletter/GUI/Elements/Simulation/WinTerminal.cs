@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.Simulation
 {
@@ -23,7 +24,7 @@ namespace WinPaletter.UI.Simulation
         #region Variables
         readonly Timer Timer = new() { Enabled = false, Interval = 500 };
 
-        private static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
+        private static TextureBrush Noise = new(Resources.Noise.Fade(0.15f));
         private Bitmap adaptedBack;
         private Bitmap adaptedBackBlurred;
         private bool tick = false;
@@ -529,7 +530,7 @@ namespace WinPaletter.UI.Simulation
 
         private void NoiseBack()
         {
-            using (Bitmap b = Properties.Resources.Noise.Fade(0.5f)) { Noise = new(b); }
+            using (Bitmap b = Resources.Noise.Fade(0.5f)) { Noise = new(b); }
         }
 
         #endregion

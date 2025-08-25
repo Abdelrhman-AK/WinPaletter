@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Controllers
@@ -145,7 +146,7 @@ namespace WinPaletter.UI.Controllers
         {
             if (isMouseOver)
             {
-                using (Pen pen = new(Color.Black) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot })
+                using (Pen pen = new(Color.Black) { DashStyle = DashStyle.Dot })
                 {
                     e.Graphics.DrawRectangle(Pens.Gray, new Rectangle(0, 0, control.Width - 1, control.Height - 1));
                     e.Graphics.DrawRectangle(pen, new Rectangle(0, 0, control.Width - 1, control.Height - 1));

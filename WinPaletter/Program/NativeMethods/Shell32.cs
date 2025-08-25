@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -116,7 +117,7 @@ namespace WinPaletter.NativeMethods
             {
                 string file = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microsoft\\User Account Pictures\\{username}.bmp";
                 string @default = $"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\\Microsoft\\User Account Pictures\\Default Pictures\\chess.bmp";
-                return System.IO.File.Exists(file) ? file : @default;
+                return File.Exists(file) ? file : @default;
             }
         }
 
@@ -129,7 +130,7 @@ namespace WinPaletter.NativeMethods
         {
             string file = GetUserTilePath(username);
 
-            if (System.IO.File.Exists(file))
+            if (File.Exists(file))
             {
                 return Image.FromFile(file);
             }

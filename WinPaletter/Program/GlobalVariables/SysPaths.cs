@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Application = System.Windows.Forms.Application;
 
 namespace WinPaletter.GlobalVariables
@@ -50,7 +51,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// WinPaletter application data folder
         /// </summary>
-        public static string appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
+        public static string appData = Directory.GetParent(Application.LocalUserAppDataPath).FullName;
 
         /// <summary>
         /// WinPaletter application data folder

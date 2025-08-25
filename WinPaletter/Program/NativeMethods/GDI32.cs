@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.NativeMethods
 {

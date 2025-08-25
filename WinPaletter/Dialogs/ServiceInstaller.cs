@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -82,17 +83,17 @@ namespace WinPaletter
             try
             {
                 textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Extracting, _serviceName)}\r\n");
-                if (!System.IO.Directory.Exists(Directory.GetParent(_destinationPath).FullName)) { System.IO.Directory.CreateDirectory(Directory.GetParent(_destinationPath).FullName); }
-                if (System.IO.File.Exists(_destinationPath))
-                    System.IO.File.Delete(_destinationPath);
+                if (!Directory.Exists(Directory.GetParent(_destinationPath).FullName)) { Directory.CreateDirectory(Directory.GetParent(_destinationPath).FullName); }
+                if (File.Exists(_destinationPath))
+                    File.Delete(_destinationPath);
 
-                System.IO.File.WriteAllBytes(_destinationPath, _PE);
+                File.WriteAllBytes(_destinationPath, _PE);
             }
             catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
 
-            if (System.IO.File.Exists(_destinationPath))
+            if (File.Exists(_destinationPath))
             {
-                IEnumerable<string> installutils = System.IO.Directory.EnumerateFiles(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", System.IO.SearchOption.AllDirectories);
+                IEnumerable<string> installutils = Directory.EnumerateFiles(RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", SearchOption.AllDirectories);
 
                 if (installutils is not null && installutils.Count() != 0)
                 {
@@ -134,9 +135,9 @@ namespace WinPaletter
             List<Process> Processes = Program.ProgramsRunning(_destinationPath);
             if (Processes.Count > 0) { foreach (Process process in Processes) { process.Kill(); }; Thread.Sleep(100); }
 
-            if (System.IO.File.Exists(_destinationPath))
+            if (File.Exists(_destinationPath))
             {
-                IEnumerable<string> installutils = System.IO.Directory.EnumerateFiles(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", System.IO.SearchOption.AllDirectories);
+                IEnumerable<string> installutils = Directory.EnumerateFiles(RuntimeEnvironment.GetRuntimeDirectory(), "installutil.exe", SearchOption.AllDirectories);
 
                 if (installutils is not null && installutils.Count() != 0)
                 {
@@ -158,9 +159,9 @@ namespace WinPaletter
 
             try
             {
-                if (!System.IO.Directory.Exists(Directory.GetParent(_destinationPath).FullName)) { System.IO.Directory.CreateDirectory(Directory.GetParent(_destinationPath).FullName); }
-                if (System.IO.File.Exists(_destinationPath))
-                    System.IO.File.Delete(_destinationPath);
+                if (!Directory.Exists(Directory.GetParent(_destinationPath).FullName)) { Directory.CreateDirectory(Directory.GetParent(_destinationPath).FullName); }
+                if (File.Exists(_destinationPath))
+                    File.Delete(_destinationPath);
             }
             catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
 

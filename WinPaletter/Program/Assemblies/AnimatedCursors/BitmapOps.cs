@@ -243,7 +243,7 @@ namespace EOFC
             Bitmap bm2 = new(w, h, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
-            Graphics g = System.Drawing.Graphics.FromImage(bm2);
+            Graphics g = Graphics.FromImage(bm2);
             g.DrawImage(bm,
                 new Rectangle(0, 0, w, h), // dest rect
                 new Rectangle(x1, y1, w, h), // source rect
@@ -270,7 +270,7 @@ namespace EOFC
             Bitmap bm2 = new(w, bm.Height, PixelFormat.Format32bppArgb);
 
             // Get the graphics object and render the subsection
-            Graphics g = System.Drawing.Graphics.FromImage(bm2);
+            Graphics g = Graphics.FromImage(bm2);
             g.DrawImage(bm,
                 new Rectangle(0, 0, w, bm.Height), // dest rect
                 new Rectangle(x1, 0, w, bm.Height), // source rect
@@ -559,8 +559,8 @@ namespace EOFC
             int PixelCount = w * h;
             Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect,
-                System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format32bppArgb);
             unsafe
             {
                 uint* iImg = (uint*)bd.Scan0.ToPointer();
@@ -581,8 +581,8 @@ namespace EOFC
             int PixelCount = w * h;
             Rectangle rect = new(0, 0, w, h);
             BitmapData bd = bm.LockBits(rect,
-                System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format32bppArgb);
             unsafe
             {
                 uint* iImg = (uint*)bd.Scan0.ToPointer();

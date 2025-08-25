@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme
 {
@@ -20,7 +21,7 @@ namespace WinPaletter.Theme
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
 
-            ref Structures.Windows81 Win81 = ref TM.Windows81;
+            ref Windows81 Win81 = ref TM.Windows81;
             Win81.Enabled = true;
             Win81.ColorizationColor = Color.FromArgb(246, 195, 74);
             Win81.ColorizationColorBalance = 78;
@@ -30,7 +31,7 @@ namespace WinPaletter.Theme
             Win81.AccentColor = Color.FromArgb(72, 29, 178);
             Win81.Start = 0;
 
-            ref Structures.Console CMD = ref TM.CommandPrompt;
+            ref Console CMD = ref TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable05 = Color.FromArgb(136, 23, 152);
             CMD.ColorTable06 = Color.FromArgb(193, 156, 0);
@@ -43,7 +44,7 @@ namespace WinPaletter.Theme
             CMD.FontRaster = true;
             CMD.W10_1909_ForceV2 = false;
 
-            ref Structures.Console PS86 = ref TM.PowerShellx86;
+            ref Console PS86 = ref TM.PowerShellx86;
             PS86.Enabled = true;
             PS86.ColorTable05 = Color.FromArgb(1, 36, 86);
             PS86.ColorTable06 = Color.FromArgb(238, 237, 240);
@@ -56,7 +57,7 @@ namespace WinPaletter.Theme
             PS86.FontRaster = true;
             PS86.W10_1909_ForceV2 = false;
 
-            ref Structures.Console PS64 = ref TM.PowerShellx64;
+            ref Console PS64 = ref TM.PowerShellx64;
             PS64.Enabled = true;
             PS64.ColorTable05 = Color.FromArgb(1, 36, 86);
             PS64.ColorTable06 = Color.FromArgb(238, 237, 240);
@@ -101,8 +102,8 @@ namespace WinPaletter.Theme
             ref Structures.Icons Icons = ref TM.Icons;
             Icons.Enabled = true;
 
-            TM.Terminal = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinPaletter.Theme.Structures.WinTerminal.Mode.Empty);
+            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursors.Enabled = true;
             TM.Cursors.Shadow = false;

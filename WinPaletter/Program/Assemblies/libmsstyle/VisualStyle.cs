@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
+using WinPaletter;
 
 namespace libmsstyle
 {
@@ -106,20 +109,20 @@ namespace libmsstyle
         {
             if (System.IO.Path.GetExtension(msstyles).ToLower() == ".theme")
             {
-                using (WinPaletter.INI ini = new(msstyles))
+                using (INI ini = new(msstyles))
                 {
                     string result = ini.Read("VisualStyles", "Path");
 
                     if (!string.IsNullOrEmpty(result))
                     {
-                        if (System.IO.File.Exists(result))
+                        if (File.Exists(result))
                         {
                             msstyles = result;
                         }
                         else
                         {
                             result = Environment.ExpandEnvironmentVariables(result);
-                            if (System.IO.File.Exists(result))
+                            if (File.Exists(result))
                             {
                                 msstyles = result;
                             }
@@ -128,7 +131,7 @@ namespace libmsstyle
                                 string fileName = System.IO.Path.GetFileName(result);
 
                                 DirectoryInfo di = new(System.IO.Path.GetDirectoryName(msstyles));
-                                var matchingStyles = System.IO.Directory.GetFiles(di.FullName, "*.msstyles", System.IO.SearchOption.AllDirectories)
+                                var matchingStyles = Directory.GetFiles(di.FullName, "*.msstyles", SearchOption.AllDirectories)
                                     .Where(f => System.IO.Path.GetFileName(f).Equals(fileName, StringComparison.OrdinalIgnoreCase))
                                     .ToList();
 
@@ -280,7 +283,7 @@ namespace libmsstyle
                     return false;
                 }
 
-                string type = "";
+                string type = string.Empty;
                 switch (res.Key.Type)
                 {
                     case StyleResourceType.None:
@@ -368,7 +371,7 @@ namespace libmsstyle
                 {
                     if (!Win32Api.UpdateResource(updateHandle, "MUI", 1, langId, null, 0))
                     {
-                        int err = System.Runtime.InteropServices.Marshal.GetLastWin32Error();
+                        int err = Marshal.GetLastWin32Error();
                         throw new Exception($"Deleting MUI for lang {langId} failed with error '{err}'!");
                     }
                 }
@@ -477,7 +480,7 @@ namespace libmsstyle
 
             // Get users preferred language for display purposes.
             // If we don't have it, choose any.
-            int uiLang = System.Threading.Thread.CurrentThread.CurrentUICulture.LCID;
+            int uiLang = Thread.CurrentThread.CurrentUICulture.LCID;
             if (!m_stringTables.TryGetValue(uiLang, out m_stringTable))
             {
                 var kvp = m_stringTables.FirstOrDefault((t) => t.Value.Count > 0);

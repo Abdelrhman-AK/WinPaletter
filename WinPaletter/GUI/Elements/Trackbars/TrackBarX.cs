@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -124,7 +125,7 @@ namespace WinPaletter.UI.Controllers
                     {
                         if (_animateChanges)
                         {
-                            FluentTransitions.Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                            Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                         }
                         else
                         {
@@ -139,7 +140,7 @@ namespace WinPaletter.UI.Controllers
         {
             if (_animateChanges)
             {
-                FluentTransitions.Transition.With(this, nameof(Value), Math.Min(Math.Max(defaultValue, Minimum), Maximum)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(Value), Math.Min(Math.Max(defaultValue, Minimum), Maximum)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
             else
             {

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Ressy;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 using WinPaletter.UI.Simulation;
 using static WinPaletter.Theme.Manager;
 
@@ -21,7 +24,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -31,14 +34,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -59,7 +62,7 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -194,12 +197,12 @@ namespace WinPaletter
                 string defaultIconPath = Theme.Structures.Icons.ControlPanelCLSIDs[i].Item3;
                 Icon icon;
 
-                if (defaultIconPath != null && defaultIconPath.Contains(",") && System.IO.File.Exists(defaultIconPath.Split(',')[0]))
+                if (defaultIconPath != null && defaultIconPath.Contains(",") && File.Exists(defaultIconPath.Split(',')[0]))
                 {
                     string[] parts = defaultIconPath.Split(',');
                     icon = PE.GetIcon(parts[0], int.Parse(parts[1]));
                 }
-                else if (defaultIconPath != null && System.IO.File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
+                else if (defaultIconPath != null && File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
                 {
                     icon = new(defaultIconPath);
                 }
@@ -245,12 +248,12 @@ namespace WinPaletter
                 string defaultIconPath = Theme.Structures.Icons.ExplorerCLSIDs[i].Item3;
                 Icon icon;
 
-                if (defaultIconPath != null && defaultIconPath.Contains(",") && System.IO.File.Exists(defaultIconPath.Split(',')[0]))
+                if (defaultIconPath != null && defaultIconPath.Contains(",") && File.Exists(defaultIconPath.Split(',')[0]))
                 {
                     string[] parts = defaultIconPath.Split(',');
                     icon = PE.GetIcon(parts[0], int.Parse(parts[1]));
                 }
-                else if (defaultIconPath != null && System.IO.File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
+                else if (defaultIconPath != null && File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
                 {
                     icon = new(defaultIconPath);
                 }
@@ -327,7 +330,7 @@ namespace WinPaletter
             //pictureBox8?.Image?.Dispose();
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Icons.Enabled;
 
@@ -424,7 +427,7 @@ namespace WinPaletter
             explorerData.Visible = true;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.Icons.Enabled = AspectEnabled;
 
@@ -479,11 +482,11 @@ namespace WinPaletter
                 string filename;
                 int index = 0;
 
-                if (path != null && !path.Contains(",") && System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+                if (path != null && !path.Contains(",") && File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
                     filename = path;
                 }
-                else if (path != null && path.Contains(",") && System.IO.File.Exists(path.Split(',')[0]))
+                else if (path != null && path.Contains(",") && File.Exists(path.Split(',')[0]))
                 {
                     filename = path.Split(',')[0];
                     int.TryParse(path.Split(',')[1], out index);
@@ -523,11 +526,11 @@ namespace WinPaletter
 
                 path = Environment.ExpandEnvironmentVariables(path);
 
-                if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+                if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
                 {
                     shell32Data.Rows[e.RowIndex].Cells[2].Value = PE.GetIcon(path, index);
                 }
-                else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+                else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
                     shell32Data.Rows[e.RowIndex].Cells[2].Value = new Icon(path);
                 }
@@ -549,11 +552,11 @@ namespace WinPaletter
                 string filename;
                 int index = 0;
 
-                if (path != null && !path.Contains(",") && System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+                if (path != null && !path.Contains(",") && File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
                     filename = path;
                 }
-                else if (path != null && path.Contains(",") && System.IO.File.Exists(path.Split(',')[0]))
+                else if (path != null && path.Contains(",") && File.Exists(path.Split(',')[0]))
                 {
                     filename = path.Split(',')[0];
                     int.TryParse(path.Split(',')[1], out index);
@@ -593,11 +596,11 @@ namespace WinPaletter
 
                 path = Environment.ExpandEnvironmentVariables(path);
 
-                if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+                if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
                 {
                     cpData.Rows[e.RowIndex].Cells[3].Value = PE.GetIcon(path, index);
                 }
-                else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+                else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
                     cpData.Rows[e.RowIndex].Cells[3].Value = new Icon(path);
                 }
@@ -616,11 +619,11 @@ namespace WinPaletter
                 string filename;
                 int index = 0;
 
-                if (path != null && !path.Contains(",") && System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+                if (path != null && !path.Contains(",") && File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
                     filename = path;
                 }
-                else if (path != null && path.Contains(",") && System.IO.File.Exists(path.Split(',')[0]))
+                else if (path != null && path.Contains(",") && File.Exists(path.Split(',')[0]))
                 {
                     filename = path.Split(',')[0];
                     int.TryParse(path.Split(',')[1], out index);
@@ -660,11 +663,11 @@ namespace WinPaletter
 
                 path = Environment.ExpandEnvironmentVariables(path);
 
-                if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+                if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
                 {
                     explorerData.Rows[e.RowIndex].Cells[3].Value = PE.GetIcon(path, index);
                 }
-                else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+                else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
                 {
                     explorerData.Rows[e.RowIndex].Cells[3].Value = new Icon(path);
                 }
@@ -691,8 +694,8 @@ namespace WinPaletter
                         {
                             try
                             {
-                                Ressy.PortableExecutable PE = new(dlg.FileName);
-                                count = PE.GetResourceIdentifiers().Where(x => x.Type.Code == Ressy.ResourceType.IconGroup.Code).Count();
+                                PortableExecutable PE = new(dlg.FileName);
+                                count = PE.GetResourceIdentifiers().Where(x => x.Type.Code == ResourceType.IconGroup.Code).Count();
                             }
                             catch { }
                         }
@@ -730,11 +733,11 @@ namespace WinPaletter
             string filename;
             int index = 0;
 
-            if (path != null && !path.Contains(",") && System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+            if (path != null && !path.Contains(",") && File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
             {
                 filename = path;
             }
-            else if (path != null && path.Contains(",") && System.IO.File.Exists(path.Split(',')[0]))
+            else if (path != null && path.Contains(",") && File.Exists(path.Split(',')[0]))
             {
                 filename = path.Split(',')[0];
                 int.TryParse(path.Split(',')[1], out index);
@@ -797,11 +800,11 @@ namespace WinPaletter
 
             path = Environment.ExpandEnvironmentVariables(path);
 
-            if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
                 iconControl.Icon = PE.GetIcon(path, index);
             }
-            else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
             {
                 iconControl.Icon = new Icon(path);
             }
@@ -843,32 +846,32 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle)) { textBox3.Text = TMx.Icons.Computer; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox3.Text = TMx.Icons.Computer; }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle)) { textBox1.Text = TMx.Icons.User; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox1.Text = TMx.Icons.User; }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle)) { textBox2.Text = TMx.Icons.RecycleBinEmpty; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox2.Text = TMx.Icons.RecycleBinEmpty; }
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle)) { textBox6.Text = TMx.Icons.RecycleBinFull; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox6.Text = TMx.Icons.RecycleBinFull; }
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle)) { textBox5.Text = TMx.Icons.Network; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox5.Text = TMx.Icons.Network; }
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle)) { textBox4.Text = TMx.Icons.ControlPanel; }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox4.Text = TMx.Icons.ControlPanel; }
         }
 
         private void winIcon3_Click(object sender, EventArgs e)
@@ -883,7 +886,7 @@ namespace WinPaletter
 
             explorerData.Visible = false;
 
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle))
+            using (Manager TMx = Default.Get(Program.WindowStyle))
             {
                 for (int r = 0; r < explorerData.RowCount; r++)
                 {
@@ -942,14 +945,14 @@ namespace WinPaletter
 
             path = Environment.ExpandEnvironmentVariables(path);
 
-            if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
                 using (Icon ico = PE.GetIcon(path, index))
                 {
                     pictureBox2.Image = ico.ToBitmap();
                 }
             }
-            else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
             {
                 using (Icon ico = new(path))
                 {
@@ -992,14 +995,14 @@ namespace WinPaletter
 
             path = Environment.ExpandEnvironmentVariables(path);
 
-            if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
                 using (Icon ico = PE.GetIcon(path, index))
                 {
                     pictureBox5.Image = ico.ToBitmap();
                 }
             }
-            else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
             {
                 using (Icon ico = new(path))
                 {
@@ -1034,14 +1037,14 @@ namespace WinPaletter
 
             path = Environment.ExpandEnvironmentVariables(path);
 
-            if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
             {
                 using (Icon ico = PE.GetIcon(path, index))
                 {
                     pictureBox8.Image = ico.ToBitmap();
                 }
             }
-            else if (System.IO.File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
             {
                 using (Icon ico = new(path))
                 {

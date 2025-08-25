@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Ookii.Dialogs.WinForms;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,6 +13,7 @@ using WinPaletter.NativeMethods;
 using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.Simulation;
 
 namespace WinPaletter
 {
@@ -71,8 +76,8 @@ namespace WinPaletter
         /// <param name="CMD"></param>
         /// <param name="Console"></param>
         /// <param name="PS"></param>
-        public void ApplyCMDPreview(UI.Simulation.WinCMD CMD, Theme.Structures.Console Console, bool PS)
-        { 
+        public void ApplyCMDPreview(WinCMD CMD, Theme.Structures.Console Console, bool PS)
+        {
             CMD.CMD_ColorTable00 = Console.ColorTable00;
             CMD.CMD_ColorTable01 = Console.ColorTable01;
             CMD.CMD_ColorTable02 = Console.ColorTable02;
@@ -111,19 +116,19 @@ namespace WinPaletter
             CMD.Raster = Console.FontRaster;
 
             string key = $"{Console.PixelWidth}x{Console.PixelHeight}";
-            if (key == "4x6") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._4x6;
-            else if (key == "6x8") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
-            else if (key == "6x9") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._6x8;
-            else if (key == "8x8") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
-            else if (key == "8x9") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x8;
-            else if (key == "16x8") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x8;
-            else if (key == "5x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._5x12;
-            else if (key == "7x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._7x12;
-            else if (key == "8x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12;
-            else if (key == "16x12") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._16x12;
-            else if (key == "12x16") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._12x16;
-            else if (key == "10x18") CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._10x18;
-            else CMD.RasterSize = UI.Simulation.WinCMD.Raster_Sizes._8x12; // default
+            if (key == "4x6") CMD.RasterSize = WinCMD.Raster_Sizes._4x6;
+            else if (key == "6x8") CMD.RasterSize = WinCMD.Raster_Sizes._6x8;
+            else if (key == "6x9") CMD.RasterSize = WinCMD.Raster_Sizes._6x8;
+            else if (key == "8x8") CMD.RasterSize = WinCMD.Raster_Sizes._8x8;
+            else if (key == "8x9") CMD.RasterSize = WinCMD.Raster_Sizes._8x8;
+            else if (key == "16x8") CMD.RasterSize = WinCMD.Raster_Sizes._16x8;
+            else if (key == "5x12") CMD.RasterSize = WinCMD.Raster_Sizes._5x12;
+            else if (key == "7x12") CMD.RasterSize = WinCMD.Raster_Sizes._7x12;
+            else if (key == "8x12") CMD.RasterSize = WinCMD.Raster_Sizes._8x12;
+            else if (key == "16x12") CMD.RasterSize = WinCMD.Raster_Sizes._16x12;
+            else if (key == "12x16") CMD.RasterSize = WinCMD.Raster_Sizes._12x16;
+            else if (key == "10x18") CMD.RasterSize = WinCMD.Raster_Sizes._10x18;
+            else CMD.RasterSize = WinCMD.Raster_Sizes._8x12; // default
 
             CMD.Refresh();
         }
@@ -257,7 +262,7 @@ namespace WinPaletter
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
             // To prevent effect of a store theme on the other forms
-            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             Program.Settings.Appearance = new();
             Program.Settings.Appearance.Load();
 
@@ -342,11 +347,11 @@ namespace WinPaletter
                 {
                     string[] x = DB.Replace("https://", string.Empty).Replace("http://", string.Empty).Split('/');
                     reposName = $"{x[1]}_{x[2]}";
-                    reposName = string.Join("_", reposName.Split(System.IO.Path.GetInvalidFileNameChars()));
+                    reposName = string.Join("_", reposName.Split(Path.GetInvalidFileNameChars()));
                 }
                 else
                 {
-                    reposName = string.Join("_", DB.Replace("https://", string.Empty).Replace("http://", string.Empty).Split(System.IO.Path.GetInvalidFileNameChars()));
+                    reposName = string.Join("_", DB.Replace("https://", string.Empty).Replace("http://", string.Empty).Split(Path.GetInvalidFileNameChars()));
                 }
 
                 // Access the repository and fetch the theme data
@@ -393,7 +398,7 @@ namespace WinPaletter
                 Status_lbl.SetText(string.Empty);
 
                 // Create a folder for storing the theme
-                if (!System.IO.Directory.Exists(theme.FolderPath)) System.IO.Directory.CreateDirectory(theme.FolderPath);
+                if (!Directory.Exists(theme.FolderPath)) Directory.CreateDirectory(theme.FolderPath);
 
                 string fileName = theme.FileName;
 
@@ -401,7 +406,7 @@ namespace WinPaletter
                 DownloadThemeFile(theme);
 
                 // Create StoreItem if the theme is valid and of correct format
-                if (System.IO.File.Exists(theme.FullPath) && Manager.GetEdition(theme.FullPath) == Manager.Editions.JSON)
+                if (File.Exists(theme.FullPath) && Manager.GetEdition(theme.FullPath) == Manager.Editions.JSON)
                 {
                     AddThemeToStore(theme);
                 }
@@ -526,12 +531,12 @@ namespace WinPaletter
         /// </summary>
         private void DownloadThemeFile(ThemeData theme)
         {
-            if (System.IO.File.Exists(theme.FullPath))
+            if (File.Exists(theme.FullPath))
             {
                 // If the theme file exists, check its MD5 hash
                 if ((Program.CalculateMD5(theme.FullPath) ?? string.Empty) != theme.MD5_ThemeFile)
                 {
-                    System.IO.File.Delete(theme.FullPath); // Delete the old file if MD5 doesn't match
+                    File.Delete(theme.FullPath); // Delete the old file if MD5 doesn't match
                     Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
                     Download(theme);
                 }
@@ -602,10 +607,10 @@ namespace WinPaletter
 
             foreach (string folder in Program.Settings.Store.Offline_Directories)
             {
-                if (System.IO.Directory.Exists(folder))
+                if (Directory.Exists(folder))
                 {
                     Status_lbl.SetText($"Accessing themes from folder \"{folder}\"");
-                    allProgress += System.IO.Directory.GetFiles(folder, "*.wpth", Program.Settings.Store.Offline_SubFolders ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly).Count();
+                    allProgress += Directory.GetFiles(folder, "*.wpth", Program.Settings.Store.Offline_SubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).Count();
                 }
             }
 
@@ -613,9 +618,9 @@ namespace WinPaletter
 
             foreach (string folder in Program.Settings.Store.Offline_Directories)
             {
-                if (System.IO.Directory.Exists(folder))
+                if (Directory.Exists(folder))
                 {
-                    foreach (string file in System.IO.Directory.GetFiles(folder, "*.wpth", Program.Settings.Store.Offline_SubFolders ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly))
+                    foreach (string file in Directory.GetFiles(folder, "*.wpth", Program.Settings.Store.Offline_SubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
                     {
                         try
                         {
@@ -624,7 +629,7 @@ namespace WinPaletter
 
                                 Status_lbl.SetText($"Enumerating themes: \"{file}\"");
 
-                                using (Manager TMx = new(Theme.Manager.Source.File, file, true, true))
+                                using (Manager TMx = new(Manager.Source.File, file, true, true))
                                 {
                                     TMList.Add(file, TMx);
                                 }
@@ -651,7 +656,7 @@ namespace WinPaletter
                     MD5_ThemeFile = Program.CalculateMD5(StoreItem.Key),
                     DoneByWinPaletter = false,
                     Size = new(w, h),
-                    URL_ThemeFile = new System.IO.FileInfo(StoreItem.Key).FullName
+                    URL_ThemeFile = new FileInfo(StoreItem.Key).FullName
                 };
 
                 if (ctrl.DoneByWinPaletter)
@@ -680,7 +685,7 @@ namespace WinPaletter
             FinishedLoadingInitialTMs = true;
         }
 
-        private void FilesFetcher_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void FilesFetcher_DoWork(object sender, DoWorkEventArgs e)
         {
             if (Program.Settings.Store.Online_or_Offline)
             {
@@ -711,12 +716,12 @@ namespace WinPaletter
             Program.Animator.HideSync(Status_pnl);
         }
 
-        private void FilesFetcher_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        private void FilesFetcher_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             ProgressBar1.Value = Math.Max(Math.Min(e.ProgressPercentage, ProgressBar1.Maximum), ProgressBar1.Minimum);
         }
 
-        private void FilesFetcher_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void FilesFetcher_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
 
         }
@@ -817,7 +822,7 @@ namespace WinPaletter
                     ApplyCMDPreview(CMD2, selectedItem.TM.PowerShellx86, true);
                     ApplyCMDPreview(CMD3, selectedItem.TM.PowerShellx64, true);
                     LoadCursorsFromTM(selectedItem.TM);
-                    Program.Style.TextRenderingHint = selectedItem.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                    Program.Style.TextRenderingHint = selectedItem.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
                     foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>()
                         .Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
@@ -825,7 +830,7 @@ namespace WinPaletter
                         AnimateList.Add(i);
                     }
 
-                    themeSize_lbl.Text = new System.IO.FileInfo(selectedItem.FileName).Length.ToStringFileSize();
+                    themeSize_lbl.Text = new FileInfo(selectedItem.FileName).Length.ToStringFileSize();
 
                     // Get if there is a pack file and its size to be calculated in a separate thread to make loading faster and doesn't freeze the UI
                     if (!string.IsNullOrWhiteSpace(selectedItem.MD5_PackFile) && selectedItem.MD5_PackFile != "0")
@@ -990,7 +995,7 @@ namespace WinPaletter
             oldAppearance = Appearance;
             ApplyStyle(null, true);
 
-            using (Manager TMx = new(Theme.Manager.Source.File, selectedItem.FileName, false, true))
+            using (Manager TMx = new(Manager.Source.File, selectedItem.FileName, false, true))
             {
                 if (selectedItem.DoneByWinPaletter)
                     TMx.Info.Author = Application.CompanyName;
@@ -1015,7 +1020,7 @@ namespace WinPaletter
                     Program.TM = selectedItem.TM;
                     Program.TM_Original = (Manager)Program.TM.Clone();
                     Forms.Home.LoadFromTM(Program.TM);
-                    Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
+                    Forms.Home.Text = Path.GetFileName(selectedItem.FileName);
                     UpdateTitlebarColors();
                 }
             }
@@ -1026,9 +1031,9 @@ namespace WinPaletter
                     // Edit button is pressed
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Program.TM_Original = (Manager)Program.TM.Clone();
-                    Program.TM = new(Theme.Manager.Source.File, selectedItem.FileName, false, true);
+                    Program.TM = new(Manager.Source.File, selectedItem.FileName, false, true);
                     if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
-                    Forms.Home.Text = System.IO.Path.GetFileName(selectedItem.FileName);
+                    Forms.Home.Text = Path.GetFileName(selectedItem.FileName);
                     ApplyStyle(Forms.Home);
                     Forms.Home.LoadFromTM(Program.TM);
                 }
@@ -1156,7 +1161,7 @@ namespace WinPaletter
         private void Back_btn_Click(object sender, EventArgs e)
         {
             Program.Animator.HideSync(Tabs);
-            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit : System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
             if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
             {
@@ -1199,20 +1204,20 @@ namespace WinPaletter
                 temp = temp.Replace($"/{FileName}", string.Empty);
                 string FolderName = temp.Split('/').Last();
                 string Dir;
-                if (System.IO.File.Exists(selectedItem.FileName))
+                if (File.Exists(selectedItem.FileName))
                 {
-                    Dir = new System.IO.FileInfo(selectedItem.FileName).Directory.FullName;
+                    Dir = new FileInfo(selectedItem.FileName).Directory.FullName;
                 }
                 else
                 {
                     Dir = selectedItem.FileName.Replace($@"\{selectedItem.FileName.Split('\\').Last()}", string.Empty);
                 }
-                if (!System.IO.Directory.Exists(Dir))
-                    System.IO.Directory.CreateDirectory(Dir);
+                if (!Directory.Exists(Dir))
+                    Directory.CreateDirectory(Dir);
 
                 if (selectedItem.MD5_PackFile != "0")
                 {
-                    if (System.IO.File.Exists($@"{Dir}\{FileName}") && (Program.CalculateMD5($"{Dir}\\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !System.IO.File.Exists($@"{Dir}\{FileName}"))
+                    if (File.Exists($@"{Dir}\{FileName}") && (Program.CalculateMD5($"{Dir}\\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !File.Exists($@"{Dir}\{FileName}"))
                     {
                         Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
                         Forms.Store_DownloadProgress.File = $@"{Dir}\{FileName}";
@@ -1228,11 +1233,11 @@ namespace WinPaletter
 
                 else
                 {
-                    if (System.IO.File.Exists($@"{Dir}\{FileName}"))
+                    if (File.Exists($@"{Dir}\{FileName}"))
                     {
                         try
                         {
-                            System.IO.File.Delete($@"{Dir}\{FileName}");
+                            File.Delete($@"{Dir}\{FileName}");
                         }
                         catch { } // Couldn't delete the File
                     }
@@ -1351,7 +1356,7 @@ namespace WinPaletter
 
             if (!OS.WXP)
             {
-                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new())
+                using (VistaFolderBrowserDialog FD = new())
                 {
                     if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
                 }
@@ -1364,19 +1369,19 @@ namespace WinPaletter
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(selectedPath) && System.IO.Directory.Exists(selectedPath))
+            if (!string.IsNullOrWhiteSpace(selectedPath) && Directory.Exists(selectedPath))
             {
-                string themeFileName = new System.IO.FileInfo(selectedItem.FileName).Name;
+                string themeFileName = new FileInfo(selectedItem.FileName).Name;
                 string filename = $"{selectedPath}\\{themeFileName}";
 
-                if (!System.IO.Directory.Exists(selectedPath)) System.IO.Directory.CreateDirectory(selectedPath);
-                if (System.IO.File.Exists(filename)) System.IO.File.Delete(filename);
+                if (!Directory.Exists(selectedPath)) Directory.CreateDirectory(selectedPath);
+                if (File.Exists(filename)) File.Delete(filename);
 
-                System.IO.File.Copy(selectedItem.FileName, filename);
+                File.Copy(selectedItem.FileName, filename);
 
                 if (selectedItem.MD5_PackFile != "0")
                 {
-                    string themepackfilename = $@"{selectedPath}\{new System.IO.FileInfo(selectedItem.FileName).Name}";
+                    string themepackfilename = $@"{selectedPath}\{new FileInfo(selectedItem.FileName).Name}";
                     themepackfilename = themepackfilename.Replace(themepackfilename.Split('.').Last(), "wptp");
 
                     Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;

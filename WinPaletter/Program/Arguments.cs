@@ -1,9 +1,12 @@
 ﻿using CommandLine;
 using CommandLine.Text;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -116,12 +119,12 @@ namespace WinPaletter
                           // Skip user login when help, version, uninstall, uninstall-quiet or SOS is requested. User login is then not needed.
                           value = true;
                       }
-                      else if (o.Apply != null && System.IO.File.Exists(o.Apply))
+                      else if (o.Apply != null && File.Exists(o.Apply))
                       {
                           // Skip user login when applying a theme file. User login is then not needed and the theme will be applied to the current user.
                           value = true;
                       }
-                      else if (o.Apply == null && o.Edit == null && o.InputFiles.Where(s => System.IO.File.Exists(s) && System.IO.Path.GetExtension(s).ToLower() == ".wpth").Count() > 0)
+                      else if (o.Apply == null && o.Edit == null && o.InputFiles.Where(s => File.Exists(s) && Path.GetExtension(s).ToLower() == ".wpth").Count() > 0)
                       {
                           // Skip user login when opening a theme file. User login is then not needed and the theme will be opened for the current user.
                           value = true;
@@ -147,7 +150,7 @@ namespace WinPaletter
             bool shouldExit = false;
             bool displayHelp = false;
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments: {string.Join(" ", args ?? Environment.GetCommandLineArgs().Skip(1))}");
+            Program.Log?.Write(LogEventLevel.Information, $"Command line arguments: {string.Join(" ", args ?? Environment.GetCommandLineArgs().Skip(1))}");
 
             using (Parser parser = new(config => config.HelpWriter = null))
             {
@@ -157,14 +160,14 @@ namespace WinPaletter
                     {
                         displayHelp = true;
                         shouldExit = true;
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments help requested.");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments help requested.");
                     }
 
                     if (o.Version)
                     {
                         MsgBox($"WinPaletter version: {Program.Version}");
                         shouldExit = true;
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments version requested.");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments version requested.");
                     }
 
                     if (o.ExportLang)
@@ -172,49 +175,49 @@ namespace WinPaletter
                         Lang.Save($"language-en {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.json");
                         MsgBox(Lang.Strings.Languages.Exported, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         shouldExit = true;
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments export language requested.");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments export language requested.");
                     }
 
                     if (o.Setup)
                     {
                         Forms.Setup.ShowDialog();
                         shouldExit = false;
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments setup requested.");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments setup requested.");
                     }
 
                     if (o.Uninstall)
                     {
                         Forms.Uninstall.ShowDialog();
                         shouldExit = true;
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments uninstall requested.");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments uninstall requested.");
                     }
 
                     if (o.Uninstall_Quiet)
                     {
                         Uninstall_Quiet();
                         shouldExit = true;
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments uninstall quiet requested.");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments uninstall quiet requested.");
                     }
 
                     if (o.SOS)
                     {
                         Forms.SOS.ShowDialog();
                         shouldExit = true;
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments SOS requested.");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments SOS requested.");
                     }
 
                     if (o.Apply != null)
                     {
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments apply requested: {o.Apply}");
-                        if (o.SilentApply) Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments apply requested silently: {o.Apply}.");
+                        Log?.Write(LogEventLevel.Information, $"Command line arguments apply requested: {o.Apply}");
+                        if (o.SilentApply) Log?.Write(LogEventLevel.Information, $"Command line arguments apply requested silently: {o.Apply}.");
 
-                        if (System.IO.File.Exists(o.Apply))
+                        if (File.Exists(o.Apply))
                         {
-                            using (Theme.Manager TMx = new(Theme.Manager.Source.File, o.Apply, false, o.SilentApply))
+                            using (Manager TMx = new(Manager.Source.File, o.Apply, false, o.SilentApply))
                             {
-                                Forms.Home.Text = System.IO.Path.GetFileName(o.Apply);
-                                Program.TM = TMx.Clone() as Theme.Manager;
-                                TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
+                                Forms.Home.Text = Path.GetFileName(o.Apply);
+                                Program.TM = TMx.Clone() as Manager;
+                                TMx.Save(Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
                                 if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
 
                                 ExternalLink = true;
@@ -225,36 +228,36 @@ namespace WinPaletter
                         shouldExit = true;
                     }
 
-                    if (o.Edit != null && System.IO.File.Exists(o.Edit))
+                    if (o.Edit != null && File.Exists(o.Edit))
                     {
-                        Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments edit requested: {o.Edit}");
+                        Log?.Write(LogEventLevel.Information, $"Command line arguments edit requested: {o.Edit}");
 
-                        TM = new(Theme.Manager.Source.File, o.Edit);
-                        TM_Original = (Theme.Manager)TM.Clone();
+                        TM = new(Manager.Source.File, o.Edit);
+                        TM_Original = (Manager)TM.Clone();
                         Forms.Home.File = o.Edit;
                         Forms.Home.LoadFromTM(TM);
-                        Forms.Home.Text = System.IO.Path.GetFileName(o.Edit);
+                        Forms.Home.Text = Path.GetFileName(o.Edit);
 
                         ExternalLink = true;
                         ExternalLink_File = o.Edit;
                         shouldExit = false;
                     }
 
-                    IEnumerable<string> files = o.InputFiles.Where(s => System.IO.File.Exists(s));
+                    IEnumerable<string> files = o.InputFiles.Where(s => File.Exists(s));
 
                     if (files.Count() > 0)
                     {
                         foreach (string file in files)
                         {
-                            if (System.IO.Path.GetExtension(file).ToLower() == ".wpth")
+                            if (Path.GetExtension(file).ToLower() == ".wpth")
                             {
-                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments open requested: {file}");
+                                Log?.Write(LogEventLevel.Information, $"Command line arguments open requested: {file}");
 
                                 if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt)
                                 {
-                                    Forms.Home.Text = System.IO.Path.GetFileName(file);
-                                    TM = new(Theme.Manager.Source.File, file, false);
-                                    TM_Original = (Theme.Manager)TM.Clone();
+                                    Forms.Home.Text = Path.GetFileName(file);
+                                    TM = new(Manager.Source.File, file, false);
+                                    TM_Original = (Manager)TM.Clone();
                                     Forms.Home.File = file;
                                     Forms.Home.LoadFromTM(TM);
 
@@ -265,21 +268,21 @@ namespace WinPaletter
                                 }
                                 else
                                 {
-                                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments apply requested: {file}");
+                                    Log?.Write(LogEventLevel.Information, $"Command line arguments apply requested: {file}");
 
-                                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, file, o.SilentApply))
+                                    using (Manager TMx = new(Manager.Source.File, file, o.SilentApply))
                                     {
-                                        TMx.Save(Theme.Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
+                                        TMx.Save(Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
                                         if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
-                                        Forms.Home.Text = System.IO.Path.GetFileName(file);
+                                        Forms.Home.Text = Path.GetFileName(file);
                                         shouldExit = true;
                                     }
                                 }
                             }
 
-                            else if (System.IO.Path.GetExtension(file).ToLower() == ".wpsf")
+                            else if (Path.GetExtension(file).ToLower() == ".wpsf")
                             {
-                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command line arguments settings requested: {file}");
+                                Log?.Write(LogEventLevel.Information, $"Command line arguments settings requested: {file}");
 
                                 Forms.SettingsX._External = true;
                                 Forms.SettingsX._File = file;
@@ -302,7 +305,7 @@ namespace WinPaletter
                         return HelpText.DefaultParsingErrorsHandler(parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()), h);
                     }, e => e);
 
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments help requested: {helpText}", helpText);
+                    Log?.Write(LogEventLevel.Information, "Command line arguments help requested: {helpText}", helpText);
 
                     Forms.ArgsHelp.TextBox1.Text = helpText;
                     Forms.ArgsHelp.ShowDialog();
@@ -313,7 +316,7 @@ namespace WinPaletter
 
             if (canExit && shouldExit)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Command line arguments exit requested (No GUI interaction is required for arguments).");
+                Log?.Write(LogEventLevel.Information, "Command line arguments exit requested (No GUI interaction is required for arguments).");
                 Program.ForceExit();
             }
         }

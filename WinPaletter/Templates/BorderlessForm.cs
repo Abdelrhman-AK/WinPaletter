@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -107,7 +108,7 @@ namespace WinPaletter
         {
             if (_shown)
             {
-                FluentTransitions.Transition
+                Transition
                     .With(this, nameof(Opacity), (double)0)
                     .HookOnCompletionInUiThread(this, () => { if (close) Close(); })
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
@@ -126,7 +127,7 @@ namespace WinPaletter
             if (!DesignMode && Animate)
             {
                 Opacity = 0;
-                FluentTransitions.Transition
+                Transition
                     .With(this, nameof(Opacity), (double)1)
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }

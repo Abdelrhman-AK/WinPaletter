@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
 
 namespace WinPaletter.Dialogs
 {
@@ -14,11 +16,6 @@ namespace WinPaletter.Dialogs
         {
             InitializeComponent();
         }
-
-        /// <summary>
-        /// The search text used to highlight the search results.
-        /// </summary>
-        private string SearchText;
 
         BindingList<SerilogJsonLogEntry> entries = [];
         BindingList<SerilogJsonLogEntry> filteredLogs = [];
@@ -46,8 +43,8 @@ namespace WinPaletter.Dialogs
 
                     entries.Clear();
 
-                    using (System.IO.FileStream fs = new(dlg.FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
-                    using (System.IO.StreamReader sr = new(fs))
+                    using (FileStream fs = new(dlg.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (StreamReader sr = new(fs))
                     {
                         string line = string.Empty;
                         while ((line = sr.ReadLine()) != null)
@@ -58,7 +55,7 @@ namespace WinPaletter.Dialogs
                                 if (entry != null) entries.Add(entry);
                             }
                             catch /*(JsonException ex)*/ // Ignore parsing non-JSON lines
-                            {  }
+                            { }
                         }
                     }
 
@@ -88,25 +85,25 @@ namespace WinPaletter.Dialogs
                 switch (entry.Level)
                 {
                     case "Information":
-                        entry.Icon = Assets.Notifications.Info;
+                        entry.Icon = Notifications.Info;
                         break;
                     case "Error":
-                        entry.Icon = Assets.Notifications.Error;
+                        entry.Icon = Notifications.Error;
                         break;
                     case "Fatal":
-                        entry.Icon = Assets.Notifications.Error;
+                        entry.Icon = Notifications.Error;
                         break;
                     case "Warning":
-                        entry.Icon = Assets.Notifications.Warning;
+                        entry.Icon = Notifications.Warning;
                         break;
                     case "Debug":
-                        entry.Icon = Assets.Notifications.DLL;
+                        entry.Icon = Notifications.DLL;
                         break;
                     case "Verbose":
-                        entry.Icon = Assets.Notifications.DLL;
+                        entry.Icon = Notifications.DLL;
                         break;
                     default:
-                        entry.Icon = Assets.Notifications.Info;
+                        entry.Icon = Notifications.Info;
                         break;
                 }
                 entries[i] = entry;
@@ -242,20 +239,20 @@ namespace WinPaletter.Dialogs
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(Label9.Text))
+            if (File.Exists(Label9.Text))
             {
                 using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        using (System.IO.StreamWriter sw = new(dlg.FileName))
+                        using (StreamWriter sw = new(dlg.FileName))
                         {
                             foreach (var entry in filteredLogs)
                             {
                                 sw.WriteLine($"{entry.Timestamp} [{entry.Level}] {entry.MessageTemplate}");
                             }
                         }
-                        Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Strings.General.Done, string.Format(Program.Lang.Strings.Messages.LogSaved, dlg.FileName), null, new Point(2, - ((UI.WP.Button)sender).Height - 5));
+                        Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Strings.General.Done, string.Format(Program.Lang.Strings.Messages.LogSaved, dlg.FileName), null, new Point(2, -((UI.WP.Button)sender).Height - 5));
                     }
                 }
             }
@@ -263,29 +260,29 @@ namespace WinPaletter.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(Label9.Text))
+            if (File.Exists(Label9.Text))
             {
-                using (System.IO.FileStream fs = new(Label9.Text, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite))
-                using (System.IO.StreamReader sr = new(fs))
+                using (FileStream fs = new(Label9.Text, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (StreamReader sr = new(fs))
                 {
                     string content = sr.ReadToEnd();
                     Clipboard.SetText(content);
-                    Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Strings.General.Done, Program.Lang.Strings.Messages.LogToClipboard, null, new Point(2, - ((UI.WP.Button)sender).Height - 5));
+                    Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Strings.General.Done, Program.Lang.Strings.Messages.LogToClipboard, null, new Point(2, -((UI.WP.Button)sender).Height - 5));
                 }
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(Label9.Text))
+            if (File.Exists(Label9.Text))
             {
-                string extension = System.IO.Path.GetExtension(Label9.Text).ToLowerInvariant();
+                string extension = Path.GetExtension(Label9.Text).ToLowerInvariant();
 
                 using (SaveFileDialog dlg = new() { Filter = $"*{extension}|*{extension}" })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
-                        System.IO.File.Copy(Label9.Text, dlg.FileName, true);
+                        File.Copy(Label9.Text, dlg.FileName, true);
                         Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Strings.General.Done, string.Format(Program.Lang.Strings.Messages.LogCopied, dlg.FileName), null, new Point(2, -((UI.WP.Button)sender).Height - 5));
                     }
                 }

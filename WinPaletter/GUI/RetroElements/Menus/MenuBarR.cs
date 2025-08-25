@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.Templates;
 
 namespace WinPaletter.UI.Retro
 {
@@ -306,28 +307,28 @@ namespace WinPaletter.UI.Retro
                 if (EnableEditingColors)
                 {
                     // Edit shadow color when the cursor is on the shadow area.
-                    if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonShadow)));
+                    if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonShadow)));
 
                     // Edit hilight color when the cursor is on the hilight area.
-                    else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonHilight)));
+                    else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
 
                     // Edit face color when the cursor is on the face area.
-                    else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(Flat ? nameof(Templates.RetroDesktopColors.MenuBar) : nameof(Templates.RetroDesktopColors.ButtonFace)));
+                    else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(Flat ? nameof(RetroDesktopColors.MenuBar) : nameof(RetroDesktopColors.ButtonFace)));
 
                     // Edit text color when the cursor is on the text area.
-                    else if (CursorOnText0 | CursorOnText1) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonText)));
+                    else if (CursorOnText0 | CursorOnText1) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonText)));
 
                     // Edit gray text color when the cursor is on the gray text area.
-                    else if (CursorOnGrayText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.GrayText)));
+                    else if (CursorOnGrayText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.GrayText)));
 
                     // Edit menu hilight color when the cursor is on the menu hilight area.
-                    else if (CursorOnSelectionText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.HilightText)));
+                    else if (CursorOnSelectionText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.HilightText)));
 
                     // Edit menu hilight color when the cursor is on the menu hilight area.
-                    else if (CursorOnMenuHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.MenuHilight)));
+                    else if (CursorOnMenuHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.MenuHilight)));
 
                     // Edit selection hilight color when the cursor is on the selection hilight area.
-                    else if (CursorOnSelectionHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.Hilight)));
+                    else if (CursorOnSelectionHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.Hilight)));
                 }
 
                 // If this flag is enabled, the user can edit the metrics after clicking on the control.

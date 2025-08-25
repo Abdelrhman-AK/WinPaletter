@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.WP
 {
@@ -14,8 +15,8 @@ namespace WinPaletter.UI.WP
         {
             if (m.Msg == WM_SETCURSOR)
             {
-                int cursor = NativeMethods.User32.LoadCursor(0, IDC_HAND);
-                NativeMethods.User32.SetCursor(cursor);
+                int cursor = User32.LoadCursor(0, IDC_HAND);
+                User32.SetCursor(cursor);
                 m.Result = IntPtr.Zero;
                 return;
             }

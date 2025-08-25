@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Controllers
 {
@@ -34,7 +36,7 @@ namespace WinPaletter.UI.Controllers
 
                     G.CopyFromScreen(sourceRectangle.Location, Point.Empty, sourceRectangle.Size);
 
-                    return bmpScreenshot.Clone(magnifiedRectangle, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+                    return bmpScreenshot.Clone(magnifiedRectangle, PixelFormat.Format32bppRgb);
                 }
             }
             else
@@ -64,7 +66,7 @@ namespace WinPaletter.UI.Controllers
                     }
                     else if (!DesignMode)
                     {
-                        NativeMethods.User32.UnhookWindowsHookEx(mouseHook);
+                        User32.UnhookWindowsHookEx(mouseHook);
                     }
 
                     Invalidate();
@@ -92,15 +94,15 @@ namespace WinPaletter.UI.Controllers
 
         private const int WH_MOUSE_LL = 14;
         private const int WM_MOUSEMOVE = 0x0200;
-        private NativeMethods.User32.LowLevelMouseProc mouseHookProc;
+        private User32.LowLevelMouseProc mouseHookProc;
         private IntPtr mouseHook;
 
-        private IntPtr SetMouseHook(NativeMethods.User32.LowLevelMouseProc proc)
+        private IntPtr SetMouseHook(User32.LowLevelMouseProc proc)
         {
             using (ProcessModule curModule = Process.GetCurrentProcess().MainModule)
             {
-                return NativeMethods.User32.SetWindowsHookEx(WH_MOUSE_LL, proc,
-                    NativeMethods.Kernel32.GetModuleHandle(curModule.ModuleName), 0);
+                return User32.SetWindowsHookEx(WH_MOUSE_LL, proc,
+                    Kernel32.GetModuleHandle(curModule.ModuleName), 0);
             }
         }
 
@@ -119,12 +121,12 @@ namespace WinPaletter.UI.Controllers
                 );
             }
 
-            return NativeMethods.User32.CallNextHookEx(mouseHook, nCode, wParam, lParam);
+            return User32.CallNextHookEx(mouseHook, nCode, wParam, lParam);
         }
 
         protected override void Dispose(bool disposing)
         {
-            NativeMethods.User32.UnhookWindowsHookEx(mouseHook);
+            User32.UnhookWindowsHookEx(mouseHook);
             base.Dispose(disposing);
         }
 

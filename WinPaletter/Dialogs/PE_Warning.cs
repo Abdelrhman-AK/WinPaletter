@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Media;
 using System.Windows.Forms;
 
@@ -42,7 +43,7 @@ namespace WinPaletter
 
             PE_File = SourceFile;
 
-            TreeView1.Nodes.Add(Program.Lang.Strings.PE.FileTypeDescription).Nodes.Add(System.IO.Path.GetFullPath(SourceFile));
+            TreeView1.Nodes.Add(Program.Lang.Strings.PE.FileTypeDescription).Nodes.Add(Path.GetFullPath(SourceFile));
 
             {
                 TreeNode temp = TreeView1.Nodes.Add(Program.Lang.Strings.PE.ReplacedResourceProperties);
@@ -53,7 +54,7 @@ namespace WinPaletter
 
             {
                 TreeNode temp1 = TreeView1.Nodes.Add(Program.Lang.Strings.PE.RunSFCinCMD_Node);
-                temp1.Nodes.Add($"sfc /scanfile=\"{System.IO.Path.GetFullPath(SourceFile)}\"");
+                temp1.Nodes.Add($"sfc /scanfile=\"{Path.GetFullPath(SourceFile)}\"");
                 temp1.Nodes.Add(Program.Lang.Strings.PE.DontForgetToRestart);
             }
 

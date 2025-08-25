@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -78,7 +80,7 @@ namespace WinPaletter.NativeMethods
                     if (treeView != null)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"));
+                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"));
 
                     // Add the error message to the Exceptions.ThemeApply list
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), ex));
@@ -92,7 +94,7 @@ namespace WinPaletter.NativeMethods
             if (treeView != null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()), "dll");
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()));
+            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()));
         }
 
         /// <summary>
@@ -313,7 +315,7 @@ namespace WinPaletter.NativeMethods
                 PrivateFunctions.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
 
                 // Check if the theme file exists and is not empty
-                result = !string.IsNullOrWhiteSpace(vsFile.ToString()) && System.IO.File.Exists(vsFile.ToString());
+                result = !string.IsNullOrWhiteSpace(vsFile.ToString()) && File.Exists(vsFile.ToString());
             }
 
             else
@@ -330,7 +332,7 @@ namespace WinPaletter.NativeMethods
                     PrivateFunctions.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
 
                     // Check if the theme file exists and is not empty
-                    result = !string.IsNullOrWhiteSpace(vsFile.ToString()) && System.IO.File.Exists(vsFile.ToString());
+                    result = !string.IsNullOrWhiteSpace(vsFile.ToString()) && File.Exists(vsFile.ToString());
 
                     // Revert impersonation
                     if (advapi_switched) { advapi.RevertToSelf(); }

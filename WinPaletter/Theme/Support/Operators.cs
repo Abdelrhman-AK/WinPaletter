@@ -1,4 +1,6 @@
-﻿namespace WinPaletter.Theme
+﻿using Serilog.Events;
+
+namespace WinPaletter.Theme
 {
     public partial class Manager
     {
@@ -86,7 +88,7 @@
 
             //if (TerminalPreview != TMx.TerminalPreview) _Equals = false;
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Debug, $"Comparing WinPaletter themes: {Info.ThemeName} == {TMx.Info.ThemeName} => {_Equals}");
+            Program.Log?.Write(LogEventLevel.Debug, $"Comparing WinPaletter themes: {Info.ThemeName} == {TMx.Info.ThemeName} => {_Equals}");
 
             return _Equals;
         }

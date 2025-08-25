@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -40,7 +42,7 @@ namespace WinPaletter.TypesExtensions
         {
             if (Localizer is null)
             {
-                if (Program.Settings.Language.Enabled && System.IO.File.Exists(Program.Settings.Language.File))
+                if (Program.Settings.Language.Enabled && File.Exists(Program.Settings.Language.File))
                     Program.Lang.LoadFromStrings(Form);
             }
             else
@@ -69,7 +71,7 @@ namespace WinPaletter.TypesExtensions
                 {
                     try
                     {
-                        if (!form.Controls.OfType<UI.WP.TablessControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & ctrl is not TabPage
+                        if (!form.Controls.OfType<TablessControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & ctrl is not TabPage
                             && !j_child.ContainsKey($"{ctrl.Name}.Text"))
                         {
                             j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
@@ -77,7 +79,7 @@ namespace WinPaletter.TypesExtensions
                     }
                     catch { if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text); }
                 }
-                if (ctrl is UI.WP.Card card)
+                if (ctrl is Card card)
                 {
                     if (card.Tag is not null && !string.IsNullOrWhiteSpace(card.Tag) && !card.Tag.All(char.IsDigit) && !j_child.ContainsKey($"{card.Name}.Tag"))
                     {

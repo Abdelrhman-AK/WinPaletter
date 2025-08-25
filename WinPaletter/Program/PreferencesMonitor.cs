@@ -1,14 +1,18 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.Tabs;
+using WinPaletter.Theme;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter
 {
@@ -129,9 +133,9 @@ namespace WinPaletter
         /// <param name="TM"></param>
         /// <param name="previewConfig"></param>
         /// <returns></returns>
-        public static Bitmap FetchSuitableWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle previewConfig)
+        public static Bitmap FetchSuitableWallpaper(Manager TM, PreviewHelpers.WindowStyle previewConfig)
         {
-            Log?.Write(Serilog.Events.LogEventLevel.Information, $"Fetching suitable wallpaper for {previewConfig}");
+            Log?.Write(LogEventLevel.Information, $"Fetching suitable wallpaper for {previewConfig}");
 
             // Create a PictureBox to mimic the Windows desktop ratio and wallpaper style
             using (PictureBox picbox = new() { Size = Program.PreviewSize, BackColor = TM.Win32.Background })
@@ -150,7 +154,7 @@ namespace WinPaletter
                     // If the wallpaper is not tinted, get the wallpaper according to the theme manager settings.
                     wallpaper ??= TM.Wallpaper.WallpaperType switch
                     {
-                        Theme.Structures.Wallpaper.WallpaperTypes.Picture when System.IO.File.Exists(TM.Wallpaper.ImageFile) => BitmapMgr.Load(TM.Wallpaper.ImageFile),
+                        Theme.Structures.Wallpaper.WallpaperTypes.Picture when File.Exists(TM.Wallpaper.ImageFile) => BitmapMgr.Load(TM.Wallpaper.ImageFile),
                         Theme.Structures.Wallpaper.WallpaperTypes.SolidColor => null,
                         Theme.Structures.Wallpaper.WallpaperTypes.SlideShow => FetchSlideShowWallpaper(TM),
                         _ => ThumbnailWallpaper
@@ -174,41 +178,41 @@ namespace WinPaletter
         /// <param name="TM"></param>
         /// <param name="previewConfig"></param>
         /// <returns></returns>
-        private static Bitmap GetTintedWallpaper(Theme.Manager TM, PreviewHelpers.WindowStyle previewConfig)
+        private static Bitmap GetTintedWallpaper(Manager TM, PreviewHelpers.WindowStyle previewConfig)
         {
             if (previewConfig == PreviewHelpers.WindowStyle.W12 && TM.WallpaperTone_W12.Enabled)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 12's section.");
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 12's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W12);
             }
             else if (previewConfig == PreviewHelpers.WindowStyle.W11 && TM.WallpaperTone_W11.Enabled)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 11's section.");
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 11's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W11);
             }
             else if (previewConfig == PreviewHelpers.WindowStyle.W10 && TM.WallpaperTone_W10.Enabled)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 10's section.");
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 10's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W10);
             }
             else if (previewConfig == PreviewHelpers.WindowStyle.W81 && TM.WallpaperTone_W81.Enabled)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 8.1's section.");
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 8.1's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W81);
             }
             else if (previewConfig == PreviewHelpers.WindowStyle.W7 && TM.WallpaperTone_W7.Enabled)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 7's section.");
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 7's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W7);
             }
             else if (previewConfig == PreviewHelpers.WindowStyle.WVista && TM.WallpaperTone_WVista.Enabled)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows Vista's section.");
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows Vista's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_WVista);
             }
             else if (previewConfig == PreviewHelpers.WindowStyle.WXP && TM.WallpaperTone_WXP.Enabled)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows XP's section.");
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows XP's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_WXP);
             }
 
@@ -220,7 +224,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="TM"></param>
         /// <returns></returns>
-        private static Bitmap FetchSlideShowWallpaper(Theme.Manager TM)
+        private static Bitmap FetchSlideShowWallpaper(Manager TM)
         {
             string[] imageFiles;
 
@@ -228,9 +232,9 @@ namespace WinPaletter
             {
                 string slideshowPath = TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath;
 
-                if (System.IO.Directory.Exists(slideshowPath))
+                if (Directory.Exists(slideshowPath))
                 {
-                    imageFiles = [.. System.IO.Directory.EnumerateFiles(slideshowPath, "*.*", System.IO.SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif"))];
+                    imageFiles = [.. Directory.EnumerateFiles(slideshowPath, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif"))];
                 }
                 else
                 {
@@ -243,9 +247,9 @@ namespace WinPaletter
                 imageFiles = TM.Wallpaper.Wallpaper_Slideshow_Images;
             }
 
-            if (imageFiles.Length > 0 && System.IO.File.Exists(imageFiles[0]))
+            if (imageFiles.Length > 0 && File.Exists(imageFiles[0]))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Fetching the first image from the slideshow folder to be used as a preview: {imageFiles[0]}", imageFiles[0]);
+                Program.Log?.Write(LogEventLevel.Information, "Fetching the first image from the slideshow folder to be used as a preview: {imageFiles[0]}", imageFiles[0]);
 
                 return BitmapMgr.Load(imageFiles[0]);
             }
@@ -261,7 +265,7 @@ namespace WinPaletter
         /// <param name="targetSize"></param>
         /// <param name="wallpaperStyle"></param>
         /// <returns></returns>
-        private static Bitmap GetWallpaperWithStyle(Bitmap wallpaper, Size targetSize, Theme.Structures.Wallpaper.WallpaperStyles wallpaperStyle)
+        private static Bitmap GetWallpaperWithStyle(Bitmap wallpaper, Size targetSize, Wallpaper.WallpaperStyles wallpaperStyle)
         {
             double scaleW = 1;
             double scaleH = 1;
@@ -276,7 +280,7 @@ namespace WinPaletter
             // Resize the wallpaper according to the scale and preview area siz
             wallpaper = wallpaper.Resize((int)Math.Round(wallpaper.Width / scaleW), (int)Math.Round(wallpaper.Height / scaleH));
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
+            Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
 
             // Apply the wallpaper style
             return wallpaperStyle switch
@@ -296,11 +300,11 @@ namespace WinPaletter
             // Get wallpaper type and path
             int wallpaperType = Convert.ToInt32(GetReg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers", "BackgroundType", 0));
             string wallpaperPath = (wallpaperType != 1)
-                ? (GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty) ?? "").ToString()
+                ? (GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty) ?? string.Empty).ToString()
                 : null;
 
             // If the wallpaper type is valid (image), return the wallpaper from the registry
-            if (wallpaperType != 1 && !string.IsNullOrEmpty(wallpaperPath) && System.IO.File.Exists(wallpaperPath))
+            if (wallpaperType != 1 && !string.IsNullOrEmpty(wallpaperPath) && File.Exists(wallpaperPath))
             {
                 using (Bitmap bmp = BitmapMgr.Load(wallpaperPath))
                 {
@@ -324,7 +328,7 @@ namespace WinPaletter
             }
 
             // If the wallpaper type is solid color, return the solid color wallpaper
-            string backgroundColor = (GetReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Theme.Default.Get().Win32.Background.ToStringWin32()) ?? "255 255 255").ToString();
+            string backgroundColor = (GetReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.Get().Win32.Background.ToStringWin32()) ?? "255 255 255").ToString();
             return backgroundColor.ToColorFromWin32().ToBitmap(Screen.PrimaryScreen.Bounds.Size);
         }
 
@@ -344,7 +348,7 @@ namespace WinPaletter
                 stopwatch.Reset();
                 stopwatch.Start();
 
-                while (!System.IO.File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString()))
+                while (!File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString()))
                 {
                     // Wait for the wallpaper to be available as there is a delay between the registry change and the actual wallpaper change
                     if (stopwatch.ElapsedMilliseconds > 5000L) break;
@@ -353,7 +357,7 @@ namespace WinPaletter
                 stopwatch.Stop();
             }
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Wallpaper type changed to {wallpaperType}", wallpaperType);
+            Program.Log?.Write(LogEventLevel.Information, "Wallpaper type changed to {wallpaperType}", wallpaperType);
 
             Wallpaper_Changed();
         }

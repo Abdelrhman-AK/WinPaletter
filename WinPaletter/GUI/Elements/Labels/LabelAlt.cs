@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Ookii.Dialogs.WinForms;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -126,7 +127,7 @@ namespace WinPaletter.UI.WP
 
                     else if (!DesignMode & DrawOnGlass)
                     {
-                        Ookii.Dialogs.WinForms.Glass.DrawCompositedText(G, Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
+                        Glass.DrawCompositedText(G, Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
                     }
                 }
                 catch

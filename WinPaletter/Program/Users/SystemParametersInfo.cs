@@ -1,4 +1,4 @@
-﻿using CommandLine;
+﻿using Serilog.Events;
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -198,7 +198,7 @@ namespace WinPaletter.NativeMethods
                     if (treeView != null)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"));
+                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"));
 
                     // Add the exception to the appropriate list
                     if (uAction.ToString().StartsWith("SPI_GET", StringComparison.OrdinalIgnoreCase))
@@ -219,7 +219,7 @@ namespace WinPaletter.NativeMethods
             if (treeView != null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()), "dll");
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()));
+            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()));
         }
 
         /// <summary>

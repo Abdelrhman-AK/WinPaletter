@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -39,7 +42,7 @@ namespace WinPaletter
                     treeView.SelectedNode = treeView.Nodes[treeView.Nodes.Count - 1];
                 });
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"An item is added to themes log: `{Text}` with image key `{ImageKey}`");
+                Program.Log?.Write(LogEventLevel.Information, $"An item is added to themes log: `{Text}` with image key `{ImageKey}`");
             }
         }
 
@@ -95,7 +98,7 @@ namespace WinPaletter
         /// <param name="TM">WinPaletter theme manager</param>
         /// <param name="AdditionalStoreTips">If true, it will show additional tips for store apps</param>
         /// <param name="dontInvoke">If true, it will not invoke the controls</param>
-        public void Apply_Theme(Theme.Manager TM = null, bool AdditionalStoreTips = false, bool dontInvoke = false)
+        public void Apply_Theme(Manager TM = null, bool AdditionalStoreTips = false, bool dontInvoke = false)
         {
             TM ??= Program.TM;
 
@@ -150,7 +153,7 @@ namespace WinPaletter
 
                 try
                 {
-                    TM?.Save(Theme.Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
+                    TM?.Save(Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
 
                     if (LogEnabled)
                         AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.Complete}", "info");
@@ -164,8 +167,8 @@ namespace WinPaletter
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
-                Program.TM = TM.Clone() as Theme.Manager;
-                Program.TM_Original = TM.Clone() as Theme.Manager;
+                Program.TM = TM.Clone() as Manager;
+                Program.TM_Original = TM.Clone() as Manager;
 
                 Cursor = Cursors.Default;
 
@@ -274,7 +277,7 @@ namespace WinPaletter
                     foreach (TreeNode N in TreeView1.Nodes)
                         sb.AppendLine($"[{N.ImageKey}]{"\t"} {N.Text}{"\r\n"}");
 
-                    System.IO.File.WriteAllText(dlg.FileName, sb.ToString());
+                    File.WriteAllText(dlg.FileName, sb.ToString());
                 }
             }
         }

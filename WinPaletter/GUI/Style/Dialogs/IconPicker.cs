@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Text;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Style
 {
@@ -23,12 +25,12 @@ namespace WinPaletter.UI.Style
             StringBuilder sb = new(PEfileName, MAX_PATH);
 
             // Hide the icon picker dialog
-            int retval = NativeMethods.Shell32.PickIconDlg(windowHandle, sb, sb.MaxCapacity, ref index);
+            int retval = Shell32.PickIconDlg(windowHandle, sb, sb.MaxCapacity, ref index);
 
             // If the user selected an icon, return the path to the icon
             if (retval != 0)
             {
-                if (System.IO.Path.GetExtension(sb.ToString()).ToLower() != ".ico")
+                if (Path.GetExtension(sb.ToString()).ToLower() != ".ico")
                 {
                     // If the user selected an icon from a PE file, return the path to the icon and the index
                     return $"{sb},{index}";

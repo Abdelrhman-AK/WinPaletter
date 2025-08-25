@@ -1,16 +1,21 @@
-﻿using System;
+﻿using FluentTransitions;
+using Serilog.Events;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Properties;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -47,7 +52,7 @@ namespace WinPaletter
                     int targetX = (area.Width / 2) - (Width / 2);
                     int targetY = (area.Height / 2) - (Height / 2);
 
-                    FluentTransitions.Transition
+                    Transition
                         .With(this, nameof(Left), targetX)
                         .With(this, nameof(Top), targetY)
                         .Spring(TimeSpan.FromSeconds(0.75));
@@ -155,7 +160,7 @@ namespace WinPaletter
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnExError && Program.TM is not null)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    Program.TM.Save(Theme.Manager.Source.File, filename);
+                    Program.TM.Save(Manager.Source.File, filename);
                 }
             }
             catch { }
@@ -229,15 +234,15 @@ namespace WinPaletter
 
             TreeView1.SelectedNode = TreeView1.Nodes[0];
 
-            if (!System.IO.Directory.Exists($@"{SysPaths.appData}\Reports")) System.IO.Directory.CreateDirectory($@"{SysPaths.appData}\Reports");
+            if (!Directory.Exists($@"{SysPaths.appData}\Reports")) Directory.CreateDirectory($@"{SysPaths.appData}\Reports");
 
             string exLogPath = $@"{SysPaths.appData}\Reports\{DateTime.Now:HHmmss_ddMMyy}.txt";
 
-            System.IO.File.WriteAllText(exLogPath, GetDetails());
+            File.WriteAllText(exLogPath, GetDetails());
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"{ex}:\r\n{GetDetails().Trim()}");
+            Program.Log?.Write(LogEventLevel.Error, $"{ex}:\r\n{GetDetails().Trim()}");
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Exception error full details text file is saved as {exLogPath}");
+            Program.Log?.Write(LogEventLevel.Information, $"Exception error full details text file is saved as {exLogPath}");
 
             ShowDialog();
 
@@ -276,7 +281,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    System.IO.File.WriteAllText(dlg.FileName, GetDetails());
+                    File.WriteAllText(dlg.FileName, GetDetails());
                 }
             }
         }
@@ -341,7 +346,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            if (System.IO.Directory.Exists($@"{SysPaths.appData}\Reports"))
+            if (Directory.Exists($@"{SysPaths.appData}\Reports"))
             {
                 Forms.GlassWindow.Close();
                 Process.Start($@"{SysPaths.appData}\Reports");
@@ -368,9 +373,9 @@ namespace WinPaletter
             {
                 collapsed = false;
                 GroupBox3.Visible = false;
-                (sender as UI.WP.Button).ImageGlyph = Properties.Resources.Glyph_Up;
+                (sender as UI.WP.Button).ImageGlyph = Resources.Glyph_Up;
 
-                FluentTransitions.Transition
+                Transition
                     .With(this, nameof(Height), previousHeight)
                     .With(this, nameof(Top), Top - (previousHeight - Height) / 2)
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
@@ -380,7 +385,7 @@ namespace WinPaletter
                 // Make async delay to make fading in groupbox is consistent with form animation
                 Task.Run(() =>
                 {
-                    System.Threading.Thread.Sleep(Program.AnimationDuration / 3);
+                    Thread.Sleep(Program.AnimationDuration / 3);
                     Invoke(() => Program.Animator.ShowSync(GroupBox3));
                 });
             }
@@ -388,12 +393,12 @@ namespace WinPaletter
             {
                 collapsed = true;
                 previousHeight = Height;
-                (sender as UI.WP.Button).ImageGlyph = Properties.Resources.Glyph_Down;
+                (sender as UI.WP.Button).ImageGlyph = Resources.Glyph_Down;
 
                 Program.Animator.Hide(GroupBox3);
                 Program.Animator.Show(label2);
 
-                FluentTransitions.Transition
+                Transition
                     .With(this, nameof(Height), CollapsedHeight)
                     .With(this, nameof(Top), Top + (Height - CollapsedHeight) / 2)
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
@@ -407,8 +412,8 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     Forms.Home.File = dlg.FileNames[0];
-                    Program.TM.Save(Theme.Manager.Source.File, Forms.Home.File);
-                    Forms.Home.Text = System.IO.Path.GetFileName(Forms.Home.File);
+                    Program.TM.Save(Manager.Source.File, Forms.Home.File);
+                    Forms.Home.Text = Path.GetFileName(Forms.Home.File);
                     Forms.Home.LoadFromTM(Program.TM);
                 }
             }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Theme;
+using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {
@@ -22,7 +25,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -32,14 +35,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -83,12 +86,12 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -131,7 +134,7 @@ namespace WinPaletter
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 Focus();
                 BringToFront();
@@ -144,7 +147,7 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             StoreItem1.TM = TM;
             TextBox1.Text = TM.Info.ThemeName;
@@ -169,9 +172,9 @@ namespace WinPaletter
             CheckBox6.Checked = TM.Info.DesignedFor_WinXP;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
-            TM.Info.ThemeName = string.Concat(TextBox1.Text.Split(System.IO.Path.GetInvalidFileNameChars())).Trim();
+            TM.Info.ThemeName = string.Concat(TextBox1.Text.Split(Path.GetInvalidFileNameChars())).Trim();
             TM.Info.ThemeVersion = TextBox2.Text;
             TM.Info.Description = TextBox3.Text;
             TM.Info.Author = TextBox4.Text;
@@ -204,8 +207,8 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                ((UI.Controllers.ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                StoreItem1.TM.Info.Color1 = ((UI.Controllers.ColorItem)sender).BackColor;
+                ((ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
+                StoreItem1.TM.Info.Color1 = ((ColorItem)sender).BackColor;
                 return;
             }
 
@@ -228,8 +231,8 @@ namespace WinPaletter
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                ((UI.Controllers.ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((UI.Controllers.ColorItem)sender);
-                StoreItem1.TM.Info.Color2 = ((UI.Controllers.ColorItem)sender).BackColor;
+                ((ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
+                StoreItem1.TM.Info.Color2 = ((ColorItem)sender).BackColor;
                 return;
             }
 

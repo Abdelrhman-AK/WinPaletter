@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Threading.Tasks;
@@ -88,7 +90,7 @@ namespace WinPaletter.UI.Simulation
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
@@ -165,15 +167,15 @@ namespace WinPaletter.UI.Simulation
 
                 if (sizingRect.Contains(e.Location))
                 {
-                    Cursor = System.Windows.Forms.Cursors.SizeNWSE;
+                    Cursor = Cursors.SizeNWSE;
                 }
                 else if (spacingRect.Contains(e.Location) && (EnableEditingSpacingV || EnableEditingSpacingH))
                 {
-                    Cursor = System.Windows.Forms.Cursors.SizeAll;
+                    Cursor = Cursors.SizeAll;
                 }
                 else
                 {
-                    Cursor = System.Windows.Forms.Cursors.Default;
+                    Cursor = Cursors.Default;
                 }
 
                 CursorOnLabel = LabelRect.Contains(e.Location);
@@ -217,7 +219,7 @@ namespace WinPaletter.UI.Simulation
                 _sizing = false;
                 _moving = false;
                 CursorOnLabel = false;
-                Cursor = System.Windows.Forms.Cursors.Default;
+                Cursor = Cursors.Default;
 
                 await Task.Delay(10);
                 Invalidate();

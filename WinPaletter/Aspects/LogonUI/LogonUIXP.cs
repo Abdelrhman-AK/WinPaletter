@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -31,7 +33,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -41,7 +43,7 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 LoadFromTM(TMx);
             }
@@ -49,7 +51,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle))
+            using (Manager TMx = Default.Get(Program.WindowStyle))
             {
                 LoadFromTM(TMx);
             }
@@ -71,12 +73,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -134,7 +136,7 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.LogonUIXP.Enabled;
             switch (TM.LogonUIXP.Mode)
@@ -162,7 +164,7 @@ namespace WinPaletter
             UpdateWin2000Preview(TM.LogonUIXP.BackColor);
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.LogonUIXP.Enabled = AspectEnabled;
 
@@ -177,12 +179,12 @@ namespace WinPaletter
 
         private void UpdateWin2000Preview(Color color)
         {
-            using (Bitmap b = new(Assets.LogonUIRes.Win2000.Width, Assets.LogonUIRes.Win2000.Height))
+            using (Bitmap b = new(LogonUIRes.Win2000.Width, LogonUIRes.Win2000.Height))
             {
                 using (Graphics g = Graphics.FromImage(b))
                 {
                     g.Clear(color);
-                    g.DrawImage(Assets.LogonUIRes.Win2000, 0, 0);
+                    g.DrawImage(LogonUIRes.Win2000, 0, 0);
                     g.Save();
                 }
                 RadioImage2.Image = (Bitmap)b.Clone();

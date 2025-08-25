@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,13 +10,15 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
+using WinPaletter.Theme;
 using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
@@ -32,22 +34,22 @@ namespace WinPaletter
         {
             string MD5_str;
 
-            if (System.IO.File.Exists(path))
+            if (File.Exists(path))
             {
                 using (MD5 md5 = MD5.Create())
                 {
-                    byte[] hash = md5.ComputeHash(System.IO.File.ReadAllBytes(path));
+                    byte[] hash = md5.ComputeHash(File.ReadAllBytes(path));
                     string result = BitConverter.ToString(hash).Replace("-", string.Empty);
                     MD5_str = result.ToUpper();
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MD5 hash of the file `{path}` is: {MD5_str}");
+                    Program.Log?.Write(LogEventLevel.Information, $"MD5 hash of the file `{path}` is: {MD5_str}");
                 }
             }
             else
             {
                 MD5_str = "0";
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"File `{path}` does not exist, MD5 hash cannot be calculated. Returning 0.");
+                Program.Log?.Write(LogEventLevel.Warning, $"File `{path}` does not exist, MD5 hash cannot be calculated. Returning 0.");
             }
 
             return MD5_str;
@@ -61,11 +63,11 @@ namespace WinPaletter
         /// <returns></returns>
         public static string GetUniqueFileName(string directoryPath, string baseFileName)
         {
-            string fullFilePath = System.IO.Path.Combine(directoryPath, baseFileName);
+            string fullFilePath = Path.Combine(directoryPath, baseFileName);
 
-            if (!System.IO.File.Exists(fullFilePath))
+            if (!File.Exists(fullFilePath))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File `{fullFilePath}` does not exist, returning it as unique file name.");
+                Program.Log?.Write(LogEventLevel.Information, $"File `{fullFilePath}` does not exist, returning it as unique file name.");
 
                 // The File with the given name does not exist, so it is already unique
                 return fullFilePath;
@@ -73,18 +75,18 @@ namespace WinPaletter
 
             // If the File exists, generate a unique File name
             int counter = 1;
-            string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(baseFileName);
-            string fileExtension = System.IO.Path.GetExtension(baseFileName);
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(baseFileName);
+            string fileExtension = Path.GetExtension(baseFileName);
 
             do
             {
                 string uniqueFileName = $"{fileNameWithoutExtension}_{counter}{fileExtension}";
-                fullFilePath = System.IO.Path.Combine(directoryPath, uniqueFileName);
+                fullFilePath = Path.Combine(directoryPath, uniqueFileName);
                 counter++;
             }
-            while (System.IO.File.Exists(fullFilePath));
+            while (File.Exists(fullFilePath));
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File `{fullFilePath}` already exists, returning a unique file name: {fullFilePath}.");
+            Program.Log?.Write(LogEventLevel.Information, $"File `{fullFilePath}` already exists, returning a unique file name: {fullFilePath}.");
 
             return fullFilePath;
         }
@@ -114,10 +116,10 @@ namespace WinPaletter
                         }
                     })
                     {
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Sending command to Command Prompt as Administrator: {command}");
+                        Program.Log?.Write(LogEventLevel.Information, $"Sending command to Command Prompt as Administrator: {command}");
                         process.Start();
                         if (Wait) process.WaitForExit();
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command executed successfully: {command}");
+                        Program.Log?.Write(LogEventLevel.Information, $"Command executed successfully: {command}");
                     }
 
                     wic.Undo();
@@ -128,27 +130,27 @@ namespace WinPaletter
                 Task.Run(() =>
                 {
                     string taskName = "WinPaletter_CommandNonAdminDeflector";
-                string userName = Environment.UserName;
+                    string userName = Environment.UserName;
 
-                // Create future time (safe for Windows 7)
-                // When you create a one-time task with /SC ONCE, the task must have a valid future start time.
-                // If the time(/ ST) is equal to or before the current time, Windows Task Scheduler will not run it.
-                DateTime startTime = DateTime.Now.AddMinutes(1);
-                string formattedTime = startTime.ToString("HH:mm");
+                    // Create future time (safe for Windows 7)
+                    // When you create a one-time task with /SC ONCE, the task must have a valid future start time.
+                    // If the time(/ ST) is equal to or before the current time, Windows Task Scheduler will not run it.
+                    DateTime startTime = DateTime.Now.AddMinutes(1);
+                    string formattedTime = startTime.ToString("HH:mm");
 
-                // Create task
-                string createCmd = $"schtasks /Create /TN \"{taskName}\" /TR \"{command}\" /SC ONCE /ST {formattedTime} {(!OS.WXP ? "/RL LIMITED" : "")} /F /RU \"{userName}\"";
-                SendCommand(createCmd);
+                    // Create task
+                    string createCmd = $"schtasks /Create /TN \"{taskName}\" /TR \"{command}\" /SC ONCE /ST {formattedTime} {(!OS.WXP ? "/RL LIMITED" : string.Empty)} /F /RU \"{userName}\"";
+                    SendCommand(createCmd);
 
-                // Run the task
-                string runCmd = $"schtasks /Run /TN \"{taskName}\"";
-                SendCommand(runCmd);
+                    // Run the task
+                    string runCmd = $"schtasks /Run /TN \"{taskName}\"";
+                    SendCommand(runCmd);
 
-                if (OS.WVista || OS.W7) Thread.Sleep(500);
+                    if (OS.WVista || OS.W7) Thread.Sleep(500);
 
-                // Delete task
-                string deleteCmd = $"schtasks /Delete /TN \"{taskName}\" /F";
-                SendCommand(deleteCmd);
+                    // Delete task
+                    string deleteCmd = $"schtasks /Delete /TN \"{taskName}\" /F";
+                    SendCommand(deleteCmd);
                 });
             }
         }
@@ -161,21 +163,21 @@ namespace WinPaletter
         public static List<Process> ProgramsRunning(string FullPath)
         {
             List<Process> processes = [];
-            string FileName = System.IO.Path.GetFileNameWithoutExtension(FullPath).ToLower();
+            string FileName = Path.GetFileNameWithoutExtension(FullPath).ToLower();
 
             foreach (Process p in Process.GetProcessesByName(FileName))
             {
-                if (FullPath.ToLower() == NativeMethods.Kernel32.GetProcessFilename(p).ToLower())
+                if (FullPath.ToLower() == Kernel32.GetProcessFilename(p).ToLower())
                     processes.Add(p);
             }
 
             if (processes.Count > 0)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {processes.Count} running processes with the FullPath: {FullPath}");
+                Program.Log?.Write(LogEventLevel.Information, $"Found {processes.Count} running processes with the FullPath: {FullPath}");
             }
             else
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"No running processes found with the FullPath: {FullPath}");
+                Program.Log?.Write(LogEventLevel.Information, $"No running processes found with the FullPath: {FullPath}");
             }
 
             return processes;
@@ -186,7 +188,7 @@ namespace WinPaletter
         /// </summary>
         private static void LoadThemeManager()
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Theme Manager and setting Window Style for the preview.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager and setting Window Style for the preview.");
 
             if (OS.W12)
                 WindowStyle = PreviewHelpers.WindowStyle.W12;
@@ -218,28 +220,28 @@ namespace WinPaletter
             // Load Manager
             if (!ExternalLink)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Theme Manager from selected user preferences and registry.");
+                Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager from selected user preferences and registry.");
 
-                if (TM is null) TM = new(Theme.Manager.Source.Registry);
+                if (TM is null) TM = new(Source.Registry);
                 Forms.Home.Text = Application.ProductName;
             }
             else
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Theme Manager from File: {ExternalLink_File}");
+                Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager from File: {ExternalLink_File}");
 
-                TM = new(Theme.Manager.Source.File, ExternalLink_File);
+                TM = new(Source.File, ExternalLink_File);
                 Forms.Home.File = ExternalLink_File;
-                Forms.Home.Text = System.IO.Path.GetFileName(ExternalLink_File);
+                Forms.Home.Text = Path.GetFileName(ExternalLink_File);
                 ExternalLink = false;
                 ExternalLink_File = string.Empty;
             }
 
-            TM_Original = TM.Clone() as Theme.Manager;
-            TM_FirstTime = TM.Clone() as Theme.Manager;
+            TM_Original = TM.Clone() as Manager;
+            TM_FirstTime = TM.Clone() as Manager;
 
             if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnAppOpen)
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"Creating a backup of the current theme on application open.");
+                Log?.Write(LogEventLevel.Information, $"Creating a backup of the current theme on application open.");
 
                 string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", $"{TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                 TM.Save(Source.File, filename);
@@ -253,15 +255,15 @@ namespace WinPaletter
         {
             try
             {
-                if (System.IO.File.Exists("oldWinpaletter.trash"))
+                if (File.Exists("oldWinpaletter.trash"))
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter.trash");
-                    System.IO.File.Delete("oldWinpaletter.trash");
+                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter.trash");
+                    File.Delete("oldWinpaletter.trash");
                 }
-                if (System.IO.File.Exists("oldWinpaletter_2.trash"))
+                if (File.Exists("oldWinpaletter_2.trash"))
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter_2.trash");
-                    System.IO.File.Delete("oldWinpaletter_2.trash");
+                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter_2.trash");
+                    File.Delete("oldWinpaletter_2.trash");
                 }
 
             }
@@ -275,16 +277,16 @@ namespace WinPaletter
         {
             try
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
+                Program.Log?.Write(LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
 
-                MemoryFonts.AddMemoryFont(Properties.Resources.JetBrainsMono_Medium);
+                MemoryFonts.AddMemoryFont(Resources.JetBrainsMono_Medium);
                 Fonts.Console = MemoryFonts.GetFont(0, 7.75f);
                 Fonts.ConsoleMedium = MemoryFonts.GetFont(0, 9f);
                 Fonts.ConsoleLarge = MemoryFonts.GetFont(0, 10f);
             }
             catch
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"Failed to load JetBrains Mono font from memory, falling back to Lucida Console.");
+                Program.Log?.Write(LogEventLevel.Warning, $"Failed to load JetBrains Mono font from memory, falling back to Lucida Console.");
 
                 Fonts.Console = new("Lucida Console", 7.5f);
                 Fonts.ConsoleMedium = new("Lucida Console", 9f);
@@ -301,12 +303,12 @@ namespace WinPaletter
             {
                 try
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading language file: {Settings.Language.File}");
+                    Program.Log?.Write(LogEventLevel.Information, $"Loading language file: {Settings.Language.File}");
                     Lang.Load(Settings.Language.File);
                 }
                 catch (Exception ex)
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, ex, $"Failed to load language file: {Settings.Language.File}. Using default language instead.");
+                    Program.Log?.Write(LogEventLevel.Error, ex, $"Failed to load language file: {Settings.Language.File}. Using default language instead.");
                     Forms.BugReport.ThrowError(ex);
                 }
             }
@@ -321,12 +323,12 @@ namespace WinPaletter
             {
                 if (Forms.Setup.ShowDialog() != DialogResult.OK)
                 {
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"The setup has not been completed, WinPaletter will exit.");
+                    Log?.Write(LogEventLevel.Information, $"The setup has not been completed, WinPaletter will exit.");
                     Program.ForceExit();
                 }
             }
 
-            Log?.Write(Serilog.Events.LogEventLevel.Information, $"The setup has not been completed, continuing...");
+            Log?.Write(LogEventLevel.Information, $"The setup has not been completed, continuing...");
         }
 
         /// <summary>
@@ -351,29 +353,29 @@ namespace WinPaletter
         /// </summary>
         private static void InitializeImageLists()
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Initializing Image Lists for Theme Log and Language TreeView.");
+            Program.Log?.Write(LogEventLevel.Information, $"Initializing Image Lists for Theme Log and Language TreeView.");
 
-            ImageLists.ThemeLog.Images.Add("info", Assets.Notifications.Info);
-            ImageLists.ThemeLog.Images.Add("apply", Assets.Notifications.Applying);
-            ImageLists.ThemeLog.Images.Add("error", Assets.Notifications.Error);
-            ImageLists.ThemeLog.Images.Add("warning", Assets.Notifications.Warning);
-            ImageLists.ThemeLog.Images.Add("time", Assets.Notifications.Time);
-            ImageLists.ThemeLog.Images.Add("success", Assets.Notifications.Success);
-            ImageLists.ThemeLog.Images.Add("skip", Assets.Notifications.Skip);
-            ImageLists.ThemeLog.Images.Add("admin", Assets.Notifications.Administrator);
-            ImageLists.ThemeLog.Images.Add("reg_add", Assets.Notifications.Reg_add);
-            ImageLists.ThemeLog.Images.Add("reg_delete", Assets.Notifications.Reg_delete);
-            ImageLists.ThemeLog.Images.Add("reg_skip", Assets.Notifications.Reg_skip);
-            ImageLists.ThemeLog.Images.Add("task_remove", Assets.Notifications.Task_remove);
-            ImageLists.ThemeLog.Images.Add("file_rename", Assets.Notifications.File_rename);
-            ImageLists.ThemeLog.Images.Add("dll", Assets.Notifications.DLL);
-            ImageLists.ThemeLog.Images.Add("pe_patch", Assets.Notifications.PE_patch);
-            ImageLists.ThemeLog.Images.Add("pe_backup", Assets.Notifications.PE_backup);
-            ImageLists.ThemeLog.Images.Add("pe_restore", Assets.Notifications.PE_restore);
+            ImageLists.ThemeLog.Images.Add("info", Notifications.Info);
+            ImageLists.ThemeLog.Images.Add("apply", Notifications.Applying);
+            ImageLists.ThemeLog.Images.Add("error", Notifications.Error);
+            ImageLists.ThemeLog.Images.Add("warning", Notifications.Warning);
+            ImageLists.ThemeLog.Images.Add("time", Notifications.Time);
+            ImageLists.ThemeLog.Images.Add("success", Notifications.Success);
+            ImageLists.ThemeLog.Images.Add("skip", Notifications.Skip);
+            ImageLists.ThemeLog.Images.Add("admin", Notifications.Administrator);
+            ImageLists.ThemeLog.Images.Add("reg_add", Notifications.Reg_add);
+            ImageLists.ThemeLog.Images.Add("reg_delete", Notifications.Reg_delete);
+            ImageLists.ThemeLog.Images.Add("reg_skip", Notifications.Reg_skip);
+            ImageLists.ThemeLog.Images.Add("task_remove", Notifications.Task_remove);
+            ImageLists.ThemeLog.Images.Add("file_rename", Notifications.File_rename);
+            ImageLists.ThemeLog.Images.Add("dll", Notifications.DLL);
+            ImageLists.ThemeLog.Images.Add("pe_patch", Notifications.PE_patch);
+            ImageLists.ThemeLog.Images.Add("pe_backup", Notifications.PE_backup);
+            ImageLists.ThemeLog.Images.Add("pe_restore", Notifications.PE_restore);
 
-            ImageLists.Language.Images.Add("main", Properties.Resources.LangNode_Main);
-            ImageLists.Language.Images.Add("value", Properties.Resources.LangNode_Value);
-            ImageLists.Language.Images.Add("json", Properties.Resources.LangNode_JSON);
+            ImageLists.Language.Images.Add("main", Resources.LangNode_Main);
+            ImageLists.Language.Images.Add("value", Resources.LangNode_Value);
+            ImageLists.Language.Images.Add("json", Resources.LangNode_JSON);
 
             Exceptions.ThemeApply.Clear();
             Exceptions.ThemeLoad.Clear();
@@ -386,15 +388,15 @@ namespace WinPaletter
         {
             if (Settings.FileTypeManagement.AutoAddExt)
             {
-                if (!System.IO.Directory.Exists(SysPaths.appData))
+                if (!Directory.Exists(SysPaths.appData))
                 {
-                    System.IO.Directory.CreateDirectory(SysPaths.appData);
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.appData}");
+                    Directory.CreateDirectory(SysPaths.appData);
+                    Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.appData}");
                 }
 
-                WriteIfChangedOrNotExists($"{SysPaths.appData}\\fileextension.ico", Properties.Resources.fileextension.ToBytes());
-                WriteIfChangedOrNotExists($"{SysPaths.appData}\\settingsfile.ico", Properties.Resources.settingsfile.ToBytes());
-                WriteIfChangedOrNotExists($"{SysPaths.appData}\\themerespack.ico", Properties.Resources.ThemesResIcon.ToBytes());
+                WriteIfChangedOrNotExists($"{SysPaths.appData}\\fileextension.ico", Resources.fileextension.ToBytes());
+                WriteIfChangedOrNotExists($"{SysPaths.appData}\\settingsfile.ico", Resources.settingsfile.ToBytes());
+                WriteIfChangedOrNotExists($"{SysPaths.appData}\\themerespack.ico", Resources.ThemesResIcon.ToBytes());
 
                 bool assoc0 = CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.Strings.Extensions.WinPaletterTheme, $@"{SysPaths.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
                 bool assoc1 = CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.Strings.Extensions.WinPaletterSettings, $@"{SysPaths.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
@@ -403,8 +405,8 @@ namespace WinPaletter
                 if (!assoc0 || !assoc1 || !assoc2)
                 {
                     // Notify Windows that File associations have changed
-                    Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"File associations have been updated.");
+                    Shell32.SHChangeNotify(Shell32.ShellConstants.SHCNE_ASSOCCHANGED, Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
+                    Log?.Write(LogEventLevel.Information, $"File associations have been updated.");
                 }
             }
         }
@@ -416,15 +418,15 @@ namespace WinPaletter
         /// <param name="data"></param>
         private static void WriteIfChangedOrNotExists(string file, byte[] data)
         {
-            if (!System.IO.File.Exists(file))
+            if (!File.Exists(file))
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new file has been created: {file}");
-                System.IO.File.WriteAllBytes(file, data);
+                Log?.Write(LogEventLevel.Information, $"A new file has been created: {file}");
+                File.WriteAllBytes(file, data);
             }
-            else if (!System.IO.File.ReadAllBytes(file).Equals_Method2(data))
+            else if (!File.ReadAllBytes(file).Equals_Method2(data))
             {
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A file has been updated: {file}");
-                System.IO.File.WriteAllBytes(file, data);
+                Log?.Write(LogEventLevel.Information, $"A file has been updated: {file}");
+                File.WriteAllBytes(file, data);
             }
         }
 
@@ -435,28 +437,28 @@ namespace WinPaletter
         {
             try
             {
-                if (!System.IO.Directory.Exists(SysPaths.Theme_Dir_WP))
+                if (!Directory.Exists(SysPaths.Theme_Dir_WP))
                 {
-                    System.IO.Directory.CreateDirectory(SysPaths.Theme_Dir_WP);
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.Theme_Dir_WP}");
+                    Directory.CreateDirectory(SysPaths.Theme_Dir_WP);
+                    Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.Theme_Dir_WP}");
                 }
 
-                WriteIfChangedOrNotExists(SysPaths.Theme_ZIP_WP, Properties.Resources.luna);
+                WriteIfChangedOrNotExists(SysPaths.Theme_ZIP_WP, Resources.luna);
 
-                using (System.IO.FileStream archiveStream = new(SysPaths.Theme_ZIP_WP, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-                using (ZipArchive zip = new(archiveStream, System.IO.Compression.ZipArchiveMode.Read))
+                using (FileStream archiveStream = new(SysPaths.Theme_ZIP_WP, FileMode.Open, FileAccess.Read))
+                using (ZipArchive zip = new(archiveStream, ZipArchiveMode.Read))
                 {
                     foreach (ZipArchiveEntry entry in zip.Entries)
                     {
-                        string destinationPath = System.IO.Path.Combine(SysPaths.Theme_Dir_WP, entry.FullName);
+                        string destinationPath = Path.Combine(SysPaths.Theme_Dir_WP, entry.FullName);
 
                         if (entry.FullName.Contains("\\"))
                         {
                             string destDir = destinationPath.Replace($"\\{destinationPath.Split('\\').Last()}", string.Empty);
-                            if (!System.IO.Directory.Exists(destDir))
+                            if (!Directory.Exists(destDir))
                             {
-                                System.IO.Directory.CreateDirectory(destDir);
-                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {destDir}");
+                                Directory.CreateDirectory(destDir);
+                                Log?.Write(LogEventLevel.Information, $"A new directory has been created: {destDir}");
                             }
                         }
 
@@ -466,20 +468,20 @@ namespace WinPaletter
                             entryStream.CopyTo(ms, 4096 * 32);
                             byte[] entryBytes = ms.ToArray();
 
-                            if (System.IO.File.Exists(destinationPath))
+                            if (File.Exists(destinationPath))
                             {
-                                byte[] existingBytes = System.IO.File.ReadAllBytes(destinationPath);
+                                byte[] existingBytes = File.ReadAllBytes(destinationPath);
 
                                 if (!existingBytes.Equals_Method2(entryBytes))
                                 {
-                                    System.IO.File.WriteAllBytes(destinationPath, entryBytes);
-                                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A file has been updated: {destinationPath}");
+                                    File.WriteAllBytes(destinationPath, entryBytes);
+                                    Log?.Write(LogEventLevel.Information, $"A file has been updated: {destinationPath}");
                                 }
                             }
                             else
                             {
-                                System.IO.File.WriteAllBytes(destinationPath, entryBytes);
-                                Log?.Write(Serilog.Events.LogEventLevel.Information, $"A file has been extracted: {destinationPath}");
+                                File.WriteAllBytes(destinationPath, entryBytes);
+                                Log?.Write(LogEventLevel.Information, $"A file has been extracted: {destinationPath}");
                             }
                         }
                     }
@@ -487,7 +489,7 @@ namespace WinPaletter
                     archiveStream.Close();
                 }
 
-                System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
             }
             catch (Exception ex)
             {
@@ -502,10 +504,10 @@ namespace WinPaletter
         {
             try
             {
-                if (!OS.WXP && !System.IO.File.Exists($@"{SysPaths.appData}\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && !File.Exists($@"{SysPaths.appData}\WindowsStartup_Backup.wav"))
                 {
                     byte[] SoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                    System.IO.File.WriteAllBytes($@"{SysPaths.appData}\WindowsStartup_Backup.wav", SoundBytes);
+                    File.WriteAllBytes($@"{SysPaths.appData}\WindowsStartup_Backup.wav", SoundBytes);
                     Program.Log.Information($"Windows startup sound has been backed-up: {SysPaths.appData}\\WindowsStartup_Backup.wav");
                 }
             }
@@ -522,10 +524,10 @@ namespace WinPaletter
         {
             if (!Program.UninstallDone)
             {
-                if (System.IO.File.Exists(SysPaths.SysEventsSounds) && !Properties.Resources.WinPaletter_SysEventsSounds.Equals_Method2(System.IO.File.ReadAllBytes(SysPaths.SysEventsSounds)))
+                if (File.Exists(SysPaths.SysEventsSounds) && !Resources.WinPaletter_SysEventsSounds.Equals_Method2(File.ReadAllBytes(SysPaths.SysEventsSounds)))
                 {
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"SysEventsSounds service is not up to date, updating it.");
-                    Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Update);
+                    Log?.Write(LogEventLevel.Information, $"SysEventsSounds service is not up to date, updating it.");
+                    Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Update);
                     return;
                 }
             }
@@ -538,7 +540,7 @@ namespace WinPaletter
         {
             if (!Settings.General.WhatsNewRecord.Contains(Version))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"This application version is running for the first time: {Version}");
+                Program.Log?.Write(LogEventLevel.Information, $"This application version is running for the first time: {Version}");
 
                 // Display the What'archiveStream New pop-up
                 ShowWhatsNew = true;
@@ -561,13 +563,13 @@ namespace WinPaletter
         /// Refresh DWM colorization parameters from the given <see cref="Theme.Manager"/> impersonating the selected user
         /// </summary>
         /// <param name="TM"></param>
-        public static void RefreshDWM(Theme.Manager TM)
+        public static void RefreshDWM(Manager TM)
         {
             Task.Run(() =>
             {
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Refreshing DWM colorization parameters from the given Theme Manager for user `{User.Domain}\\{User.Name}`.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Refreshing DWM colorization parameters from the given Theme Manager for user `{User.Domain}\\{User.Name}`.");
 
                     if (DWMAPI.IsCompositionEnabled())
                     {
@@ -632,7 +634,7 @@ namespace WinPaletter
         /// <param name="treeView"></param>
         public static void RestartExplorer(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}` as non-administrator account.");
+            Program.Log?.Write(LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}` as non-administrator account.");
 
             Program.ExplorerKiller?.Start();
             Program.ExplorerKiller?.WaitForExit();
@@ -660,8 +662,8 @@ namespace WinPaletter
             {
                 try
                 {
-                    var interfaces = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
-                    return interfaces.Any(nic => nic.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up);
+                    var interfaces = NetworkInterface.GetAllNetworkInterfaces();
+                    return interfaces.Any(nic => nic.OperationalStatus == OperationalStatus.Up);
                 }
                 catch (Exception ex)
                 {
@@ -703,7 +705,7 @@ namespace WinPaletter
         {
             try
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Pinging URL: {url}");
+                Program.Log?.Write(LogEventLevel.Information, $"Pinging URL: {url}");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Timeout = Timeout;
                 request.AllowAutoRedirect = false;
@@ -711,13 +713,13 @@ namespace WinPaletter
 
                 using (request.GetResponse())
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Ping to URL `{url}` was successful.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Ping to URL `{url}` was successful.");
                     return true;
                 }
             }
             catch
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"Ping to URL `{url}` failed.");
+                Program.Log?.Write(LogEventLevel.Warning, $"Ping to URL `{url}` failed.");
                 return false;
             }
         }
@@ -731,7 +733,7 @@ namespace WinPaletter
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Getting Windows Screen Scaling Factor. Returning as percentage: {percentage}");
+                Program.Log?.Write(LogEventLevel.Information, $"Getting Windows Screen Scaling Factor. Returning as percentage: {percentage}");
 
                 Graphics GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
                 IntPtr DeviceContextHandle = GraphicsObject.GetHdc();
@@ -747,7 +749,7 @@ namespace WinPaletter
 
                 wic.Undo();
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Windows Screen Scaling Factor: {ScreenScalingFactor} (as percentage: {percentage})");
+                Program.Log?.Write(LogEventLevel.Information, $"Windows Screen Scaling Factor: {ScreenScalingFactor} (as percentage: {percentage})");
                 return ScreenScalingFactor;
             }
         }
@@ -757,7 +759,7 @@ namespace WinPaletter
         /// </summary>
         public static void ForceExit()
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Exiting WinPaletter by force.");
+            Program.Log?.Write(LogEventLevel.Information, $"Exiting WinPaletter by force.");
 
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
             using (Process process = Process.GetCurrentProcess())

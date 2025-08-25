@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -57,7 +58,7 @@ namespace WinPaletter
             /// <summary>
             /// Path of user profile picture that invoked the event
             /// </summary>
-            public string ProfilePicturePath { get { return NativeMethods.Shell32.GetUserTilePath(UserName); } }
+            public string ProfilePicturePath { get { return Shell32.GetUserTilePath(UserName); } }
 
             /// <summary>
             /// Get path of user profile
@@ -277,7 +278,7 @@ namespace WinPaletter
         public static bool UpdateToken(string Domain, string UserName, string Password, bool ignoreError = false)
         {
             // Close previous token if it is opened
-            if (Token != IntPtr.Zero) { NativeMethods.Kernel32.CloseHandle(Token); }
+            if (Token != IntPtr.Zero) { Kernel32.CloseHandle(Token); }
 
             // Reset token and identity
             IntPtr token = IntPtr.Zero;
@@ -294,13 +295,13 @@ namespace WinPaletter
             if (!SystemProfile)
             {
                 // Logon user with password if it is not a system profile
-                result = NativeMethods.advapi.LogonUser(UserName, Domain, Password, NativeMethods.advapi.LOGON32_LOGON_INTERACTIVE, NativeMethods.advapi.LOGON32_PROVIDER_DEFAULT, ref token);
+                result = advapi.LogonUser(UserName, Domain, Password, advapi.LOGON32_LOGON_INTERACTIVE, advapi.LOGON32_PROVIDER_DEFAULT, ref token);
                 error = Marshal.GetLastWin32Error();
             }
             else
             {
                 // Logon user without password if it is a system profile
-                result = NativeMethods.advapi.LogonUser(UserName, Domain, string.Empty, NativeMethods.advapi.LOGON32_LOGON_SERVICE, NativeMethods.advapi.LOGON32_PROVIDER_DEFAULT, ref token);
+                result = advapi.LogonUser(UserName, Domain, string.Empty, advapi.LOGON32_LOGON_SERVICE, advapi.LOGON32_PROVIDER_DEFAULT, ref token);
                 error = Marshal.GetLastWin32Error();
             }
 
@@ -445,12 +446,12 @@ namespace WinPaletter
         /// <summary>
         /// Path of current user profile picture
         /// </summary>
-        public static string ProfilePicturePath => NativeMethods.Shell32.GetUserTilePath(Name);
+        public static string ProfilePicturePath => Shell32.GetUserTilePath(Name);
 
         /// <summary>
         /// Path of current user profile picture
         /// </summary>
-        public static Bitmap ProfilePicture => NativeMethods.Shell32.GetUserAccountPicture(Name) as Bitmap;
+        public static Bitmap ProfilePicture => Shell32.GetUserAccountPicture(Name) as Bitmap;
 
         /// <summary>
         /// Handle to current user profile
@@ -542,7 +543,7 @@ namespace WinPaletter
                     bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid));
 
                     // Check if user profile is unloaded or not
-                    bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
+                    bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
 
                     // Load user profile if it is unloaded into registry key HKEY_USERS to make WinPaletter able to read and write on it
                     if (condition_DAT_Unloaded)
@@ -551,7 +552,7 @@ namespace WinPaletter
 
                         // Recheck if user profile is loaded or not
                         condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid));
-                        condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && System.IO.File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
+                        condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
                     }
 
                     // Add user to the list if it is loaded or unloaded
@@ -620,7 +621,7 @@ namespace WinPaletter
                 }
 
                 // Make it the last line in loop to make it gets credentials correctly
-                credsResult = NativeMethods.Credui.Login(Forms.UserSwitch.Handle,
+                credsResult = Credui.Login(Forms.UserSwitch.Handle,
                     !userEnteredWrongPassword ? string.Format(Program.Lang.Strings.Users.EnterPassword_Caption, userName) : Program.Lang.Strings.Users.IncorrectPassword,
                     !userEnteredWrongPassword ? Program.Lang.Strings.Users.WindowsHello_NotSupported : string.Format(Program.Lang.Strings.Users.EnterPassword_Caption, userName) + "\r\n\r\n" + Program.Lang.Strings.Users.WindowsHello_NotSupported,
                     doamin, userName);
@@ -777,13 +778,13 @@ namespace WinPaletter
                 // Get user profile path from current user as SID is not provided
                 SysPaths.UserProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 SysPaths.LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                SysPaths.appData = System.IO.Directory.GetParent(Application.LocalUserAppDataPath).FullName;
+                SysPaths.appData = Directory.GetParent(Application.LocalUserAppDataPath).FullName;
             }
 
             // Create directories if they are not exist
-            if (!System.IO.Directory.Exists(SysPaths.UserProfile)) { System.IO.Directory.CreateDirectory(SysPaths.UserProfile); }
-            if (!System.IO.Directory.Exists(SysPaths.LocalAppData)) { System.IO.Directory.CreateDirectory(SysPaths.LocalAppData); }
-            if (!System.IO.Directory.Exists(SysPaths.appData)) { System.IO.Directory.CreateDirectory(SysPaths.appData); }
+            if (!Directory.Exists(SysPaths.UserProfile)) { Directory.CreateDirectory(SysPaths.UserProfile); }
+            if (!Directory.Exists(SysPaths.LocalAppData)) { Directory.CreateDirectory(SysPaths.LocalAppData); }
+            if (!Directory.Exists(SysPaths.appData)) { Directory.CreateDirectory(SysPaths.appData); }
         }
 
         /// <summary>

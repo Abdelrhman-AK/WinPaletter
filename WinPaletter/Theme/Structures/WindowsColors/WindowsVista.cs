@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Serilog.Events;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -39,7 +40,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WindowsVista data structure</param>
         public void Load(WindowsVista @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Vista colors and appearance preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Vista colors and appearance preferences from registry.");
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, @default.Enabled));
 
@@ -58,7 +59,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Vista colors and appearance preferences into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Vista colors and appearance preferences into registry.");
 
             SaveToggleState(treeView);
 
@@ -66,7 +67,7 @@ namespace WinPaletter.Theme.Structures
             {
                 VisualStyles.Apply("Vista", treeView);
 
-                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb(Alpha, ColorizationColor).ToArgb(), Microsoft.Win32.RegistryValueKind.DWord);
+                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb(Alpha, ColorizationColor).ToArgb(), RegistryValueKind.DWord);
 
                 // Broadcast the system message to notify about the setting change
                 User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);

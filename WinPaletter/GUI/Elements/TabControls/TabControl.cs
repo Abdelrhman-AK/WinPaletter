@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.Properties;
+using WinPaletter.UI.Controllers;
 
 namespace WinPaletter.UI.WP
 {
@@ -23,14 +25,14 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
-        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
         #endregion
 
         #region Events/Overrides
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(Controllers.ColorItem).FullName) is Controllers.ColorItem)
+            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
             {
                 e.Effect = DragDropEffects.None;
                 for (int i = 0, loopTo = TabCount - 1; i <= loopTo; i++)

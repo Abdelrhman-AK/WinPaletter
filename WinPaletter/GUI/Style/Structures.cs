@@ -409,34 +409,42 @@ namespace WinPaletter.UI.Style
                 }
                 else
                 {
+                    Back_Method = Method.CB;
+                    Back_Factor = -0.02f;
+                    Line_Method = Method.CB;
+                    Line_Factor = -0.1f;
+                    Back_Hover_Method = Method.CB;
+                    Back_Hover_Factor = -0.01f;
+                    Line_Hover_Method = Method.CB;
+                    Line_Hover_Factor = -0.15f;
+
                     Accent_Method = Method.CB;
                     Accent_Factor = 0f;
-                    AccentAlt_Method = Method.Light;
-                    AccentAlt_Factor = 0.75f;
+                    AccentAlt_Method = Method.CB;
+                    AccentAlt_Factor = 0.6f;
+
                     BackColor_Method = Method.CB;
                     BackColor_Factor = 0f;
+
                     Button_Method = Method.Light;
                     Button_Factor = -0.24f;
                     Button_Over_Method = Method.Light;
                     Button_Over_Factor = -0.74f;
                     Button_Down_Method = Method.Light;
                     Button_Down_Factor = -0.37f;
-                    Back_Method = Method.Dark;
-                    Back_Factor = -0.47f;
-                    Line_Method = Method.Dark;
-                    Line_Factor = -0.36f;
-                    Back_Hover_Method = Method.CB;
-                    Back_Hover_Factor = -0.05f;
-                    Line_Hover_Method = Method.CB;
-                    Line_Hover_Factor = -0.04f;
+
                     Back_Checked_Method = Method.CB;
-                    Back_Checked_Factor = 0.76f;
+                    Back_Checked_Factor = 0.65f;
+
                     Line_Checked_Method = Method.CB;
-                    Line_Checked_Factor = 0.72f;
+                    Line_Checked_Factor = 0.5f;
+
                     Back_Checked_Hover_Method = Method.CB;
-                    Back_Checked_Hover_Factor = 0.63f;
+                    Back_Checked_Hover_Factor = 0.5f;
+
                     Line_Checked_Hover_Method = Method.CB;
-                    Line_Checked_Hover_Factor = 0.58f;
+                    Line_Checked_Hover_Factor = 0.5f;
+
                     ForeColor_Method = Method.Dark;
                     ForeColor_Factor = 0.6f;
                     ForeColor_Accent_Method = Method.Dark;

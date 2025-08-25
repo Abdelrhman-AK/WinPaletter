@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using WinPaletter.Theme.Structures;
@@ -21,12 +23,12 @@ namespace WinPaletter.Theme
         /// <returns></returns>
         public static List<Color> ListColorsFromMSTheme(string Filename)
         {
-            if (System.IO.File.Exists(Filename))
+            if (File.Exists(Filename))
             {
                 List<Color> ls = [];
                 ls.Clear();
 
-                foreach (string x in System.IO.File.ReadAllText(Filename).Split('\r'))
+                foreach (string x in File.ReadAllText(Filename).Split('\r'))
                 {
                     if (x.Contains("=") && x.Split('=').Count() >= 2 && x.Split('=')[1].Contains(" ") && x.Split('=')[1].Split(' ').Count() == 3)
                     {
@@ -43,7 +45,7 @@ namespace WinPaletter.Theme
                 ls = [.. ls.Distinct()];
                 ls.Sort(colorComparer);
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {ls.Count} colors in `{Filename}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{Filename}`.");
 
                 return ls;
             }
@@ -99,7 +101,7 @@ namespace WinPaletter.Theme
             ls = [.. ls.Distinct()];
             ls.Sort(colorComparer);
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {ls.Count} colors in `{ThemeName}` inside WinPaletter's themes database.");
+            Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{ThemeName}` inside WinPaletter's themes database.");
 
             return ls;
         }
@@ -303,7 +305,7 @@ namespace WinPaletter.Theme
                     while (CL.Contains(Color.FromArgb(0, 0, 0, 0))) CL.Remove(Color.FromArgb(0, 0, 0, 0));
                 }
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Found {CL.Count} colors in current WinPaletter theme.");
+                Program.Log?.Write(LogEventLevel.Information, $"Found {CL.Count} colors in current WinPaletter theme.");
 
                 return CL;
             }

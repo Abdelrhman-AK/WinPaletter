@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using WinPaletter.Templates;
 
 namespace WinPaletter.UI.Retro
 {
@@ -15,7 +17,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public AppWorkspaceR()
         {
-            BorderStyle = System.Windows.Forms.BorderStyle.None;
+            BorderStyle = BorderStyle.None;
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace WinPaletter.UI.Retro
         /// Handles the MouseLeave event.
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnMouseLeave(System.EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             // If editing colors is enabled, reset cursor on the panel flag.
             if (EnableEditingColors)
@@ -66,10 +68,10 @@ namespace WinPaletter.UI.Retro
         /// Handles the Click event.
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnClick(System.EventArgs e)
+        protected override void OnClick(EventArgs e)
         {
             // If editing colors is enabled, invoke the editor.
-            if (!DesignMode && _ColorEdit) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.AppWorkspace)));
+            if (!DesignMode && _ColorEdit) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.AppWorkspace)));
 
             base.OnClick(e);
         }

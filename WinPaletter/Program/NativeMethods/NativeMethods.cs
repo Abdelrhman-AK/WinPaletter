@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace WinPaletter.NativeMethods
@@ -147,7 +148,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="file">The path to the audio File.</param>
         public static void PlayAudio(string file)
         {
-            if (System.IO.File.Exists(file))
+            if (File.Exists(file))
             {
                 // Close any existing audio player
                 Winmm.mciSendString("close myWAV", null, 0, IntPtr.Zero);

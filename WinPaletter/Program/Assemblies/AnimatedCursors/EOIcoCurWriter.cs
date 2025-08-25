@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 
 public class EOIcoCurWriter
 {
@@ -158,7 +159,7 @@ public class EOIcoCurWriter
         m_StreamStart = outputStream.Position;
 
         // Create a binary writer
-        m_writer = new BinaryWriter(outputStream, System.Text.Encoding.ASCII, true);
+        m_writer = new BinaryWriter(outputStream, Encoding.ASCII, true);
 
         // Store the type
         m_type = type;
@@ -191,11 +192,11 @@ public class EOIcoCurWriter
             {
                 if (*bimg > 127)
                 {
-                    EOFC.BooleanBitArray.SetMSbFirst(maskdata, i, false);
+                    BooleanBitArray.SetMSbFirst(maskdata, i, false);
                 }
                 else
                 {
-                    EOFC.BooleanBitArray.SetMSbFirst(maskdata, i, true);
+                    BooleanBitArray.SetMSbFirst(maskdata, i, true);
                 }
 
                 i++;
@@ -327,7 +328,7 @@ public class EOIcoCurWriter
             BitmapData bd = img.LockBits(rect, ImageLockMode.ReadOnly, img.PixelFormat);
             unsafe
             {
-                EOFC.StreamOps.Write(m_writer, bd.Scan0.ToPointer(), imgsize);
+                StreamOps.Write(m_writer, bd.Scan0.ToPointer(), imgsize);
             }
             img.UnlockBits(bd);
             img.RotateFlip(RotateFlipType.RotateNoneFlipY);

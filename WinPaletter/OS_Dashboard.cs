@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using static WinPaletter.PreviewHelpers;
@@ -71,7 +72,7 @@ namespace WinPaletter
             Location = Forms.Home.winEdition.PointToScreen(Point.Empty);
 
             // Animate the form.
-            FluentTransitions.Transition
+            Transition
                 .With(this, nameof(Width), targetSize.Width)
                 .With(this, nameof(Height), targetSize.Height)
                 .With(this, nameof(Left), targetLocation.X)

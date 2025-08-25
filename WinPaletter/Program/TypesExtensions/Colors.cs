@@ -152,7 +152,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static string ToStringWin32(this Color Color, bool Alpha = false)
         {
-            return (Alpha ? $"{Color.A} " : "") + $"{Color.R} {Color.G} {Color.B}";
+            return (Alpha ? $"{Color.A} " : string.Empty) + $"{Color.R} {Color.G} {Color.B}";
         }
 
         /// <summary>
@@ -267,17 +267,16 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Get image From Color
+        /// Create a solid color bitmap of the given size.
         /// </summary>
-        public static Bitmap ToBitmap(this Color Color, Size Size)
+        public static Bitmap ToBitmap(this Color color, Size size)
         {
-            using (Bitmap b = new(Size.Width, Size.Height))
-            using (Graphics G = Graphics.FromImage(b))
+            Bitmap bmp = new(size.Width, size.Height);
+            using (Graphics g = Graphics.FromImage(bmp))
             {
-                G.Clear(Color);
-                G.Save();
-                return new(b);
+                g.Clear(color);
             }
+            return bmp;
         }
 
         /// <summary>Blends the specified colors together.</summary>
@@ -352,11 +351,15 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Get If the color is dark or not
+        /// Determines if the color is dark based on relative luminance.
         /// </summary>
-        public static bool IsDark(this Color Color)
+        public static bool IsDark(this Color color)
         {
-            return !(Color.R * 0.2126d + Color.G * 0.7152d + Color.B * 0.0722d > 255d / 2d);
+            double luminance = color.R * 0.2126 +
+                               color.G * 0.7152 +
+                               color.B * 0.0722;
+
+            return luminance <= 127.5;
         }
 
         /// <summary>
@@ -418,7 +421,7 @@ namespace WinPaletter.TypesExtensions
                 float l = hsl1.L + hsl2.L;
                 l = l < 0f ? 0f : (l > 1f ? 1f : l);
 
-                return new () { H = h, S = s, L = l };
+                return new() { H = h, S = s, L = l };
             }
 
             /// <summary>
@@ -446,7 +449,7 @@ namespace WinPaletter.TypesExtensions
                 float l = hsl1.L - hsl2.L;
                 l = l < 0f ? 0f : (l > 1f ? 1f : l);
 
-                return new () { H = h, S = s, L = l };
+                return new() { H = h, S = s, L = l };
             }
 
         }

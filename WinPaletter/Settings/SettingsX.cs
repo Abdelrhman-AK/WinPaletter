@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
+using Ookii.Dialogs.WinForms;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Properties;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter
@@ -851,20 +854,20 @@ namespace WinPaletter
 
             // Do some minor adjustments for appearance
             int w = 19;
-            EP_Start_11.Image = Assets.WinLogos.Win11.Resize(w, w);
-            EP_Start_10.Image = Assets.WinLogos.Win10.Resize(w, w);
+            EP_Start_11.Image = WinLogos.Win11.Resize(w, w);
+            EP_Start_10.Image = WinLogos.Win10.Resize(w, w);
             EP_Taskbar_11.Image = EP_Start_11.Image;
             EP_Taskbar_10.Image = EP_Start_10.Image;
 
             if (Program.Style.DarkMode)
             {
-                EP_ORB_11.Image = Assets.Win11Preview.StartBtn_11_EP.Resize(w, w);
-                EP_ORB_10.Image = Assets.Win10Preview.StartBtn_10Light.Invert().Resize(w, w);
+                EP_ORB_11.Image = Win11Preview.StartBtn_11_EP.Resize(w, w);
+                EP_ORB_10.Image = Win10Preview.StartBtn_10Light.Invert().Resize(w, w);
             }
             else
             {
-                EP_ORB_11.Image = Assets.Win11Preview.StartBtn_11_EP.Invert().Resize(w, w);
-                EP_ORB_10.Image = Assets.Win10Preview.StartBtn_10Light.Resize(w, w);
+                EP_ORB_11.Image = Win11Preview.StartBtn_11_EP.Invert().Resize(w, w);
+                EP_ORB_10.Image = Win10Preview.StartBtn_10Light.Resize(w, w);
             }
 
             if (OS.WXP)
@@ -1157,7 +1160,7 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                Ookii.Dialogs.WinForms.VistaFolderBrowserDialog dlg = new();
+                VistaFolderBrowserDialog dlg = new();
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     if (!ListBox2.Items.Contains(dlg.SelectedPath))
@@ -1243,7 +1246,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button13_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
 
         /// <summary>
@@ -1279,7 +1282,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button26_Click(object sender, EventArgs e)
         {
-            if (System.IO.Directory.Exists($@"{SysPaths.appData}\Reports"))
+            if (Directory.Exists($@"{SysPaths.appData}\Reports"))
             {
                 Process.Start($@"{SysPaths.appData}\Reports");
             }
@@ -1316,7 +1319,7 @@ namespace WinPaletter
         {
             if (!OS.WXP)
             {
-                using (Ookii.Dialogs.WinForms.VistaFolderBrowserDialog FD = new())
+                using (VistaFolderBrowserDialog FD = new())
                 {
                     if (FD.ShowDialog() == DialogResult.OK) textBox4.Text = FD.SelectedPath;
                 }
@@ -1408,7 +1411,7 @@ namespace WinPaletter
         {
             if (Directory.Exists(SysPaths.Logs))
             {
-                foreach (string file in System.IO.Directory.GetFiles(SysPaths.Logs))
+                foreach (string file in Directory.GetFiles(SysPaths.Logs))
                 {
                     try
                     {

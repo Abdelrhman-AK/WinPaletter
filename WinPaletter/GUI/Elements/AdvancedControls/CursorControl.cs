@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -567,7 +568,7 @@ namespace WinPaletter.UI.Controllers
                 {
                     _focused = value;
 
-                    if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha2), _focused ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+                    if (CanAnimate) { Transition.With(this, nameof(alpha2), _focused ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
                     else { alpha2 = _focused ? 255 : 0; }
                 }
             }
@@ -595,7 +596,7 @@ namespace WinPaletter.UI.Controllers
             Focused = true;
             State = MouseState.Down;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseDown(e);
@@ -612,7 +613,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
@@ -622,7 +623,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
             base.OnMouseEnter(e);
@@ -632,7 +633,7 @@ namespace WinPaletter.UI.Controllers
         {
             State = MouseState.None;
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnMouseLeave(e);
@@ -774,7 +775,7 @@ namespace WinPaletter.UI.Controllers
 
             using (Pen P = new(line_hover)) { G.DrawRoundedRectBeveled(P, MainRect); }
 
-            if (CurOptions.UseFromFile && System.IO.File.Exists(CurOptions.File) && System.IO.Path.GetExtension(CurOptions.File).ToUpper() == ".ANI")
+            if (CurOptions.UseFromFile && File.Exists(CurOptions.File) && Path.GetExtension(CurOptions.File).ToUpper() == ".ANI")
             {
                 float _Angle = 0;
                 if (CurOptions.Angle >= 180) { _Angle = CurOptions.Angle - 180f; }

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -399,7 +400,7 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        private static readonly float[] Positions = [0f, 0.0005f, 0.5f, 0.9995f, 1.0f];
+        private static readonly float[] Positions = [0f, 0.005f, 0.5f, 0.995f, 1.0f];
 
         /// <summary>
         /// Draws a rounded rectangle similar to Windows 11 buttons (with top or bottom bevel effect).
@@ -417,7 +418,7 @@ namespace WinPaletter.TypesExtensions
             radius *= 2;
 
             Color baseColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;
-            Color bevelColor = baseColor.CB(dark ? 0.09f : -0.15f);
+            Color bevelColor = baseColor.CB(dark ? 0.09f : -0.08f);
 
             bool drawTop = dark ^ ReverseBevel;
 
@@ -563,7 +564,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="bounds"></param>
         /// <param name="imageRect"></param>
         /// <param name="textRect"></param>
-        public static void GetTextAndImageRectangles(this UI.WP.RadioImage button, Rectangle bounds, out RectangleF imageRect, out RectangleF textRect)
+        public static void GetTextAndImageRectangles(this RadioImage button, Rectangle bounds, out RectangleF imageRect, out RectangleF textRect)
         {
             Image img = button.Image;
             SizeF imageSize = img?.Size ?? SizeF.Empty;

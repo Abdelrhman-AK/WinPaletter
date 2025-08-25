@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using static WinPaletter.NativeMethods.User32;
@@ -45,7 +47,7 @@ namespace WinPaletter.Theme.Structures
         /// </param>
         public void Load(string SubKey)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading WinPaletter Wallpaper Tone from registry, targeting {SubKey}");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter Wallpaper Tone from registry, targeting {SubKey}");
 
             string wallpaper = SubKey.ToLower() != "winxp" ? $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
 
@@ -97,7 +99,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (!File.Exists(Image))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't find base image file: `{Image}`.");
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't find base image file: `{Image}`.");
                 return;
             }
 
@@ -111,17 +113,17 @@ namespace WinPaletter.Theme.Structures
                 path = Path.Combine(SysPaths.Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
             }
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving WinPaletter Wallpaper Tone into registry and by rendering a custom image.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter Wallpaper Tone into registry and by rendering a custom image.");
 
             if (treeView is not null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.SettingHSLImage, path), "pe_patch");
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Rendering a custom image with HSL values: H={H}, S={S}, L={L}.");
+            Program.Log?.Write(LogEventLevel.Information, $"Rendering a custom image with HSL values: H={H}, S={S}, L={L}.");
 
             using (Bitmap wall_source = BitmapMgr.Load(Image))
             using (Bitmap wall = wall_source.AdjustHSL(H, S / 100f, L / 100f))
             {
-                wall?.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
+                wall?.Save(path, ImageFormat.Bmp);
             }
 
             // Apply the processed image

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
@@ -45,7 +46,7 @@ namespace WinPaletter.NativeMethods
                     if (treeView != null)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"));
+                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"));
 
                     // Add the exception to the list of exceptions
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
@@ -58,7 +59,7 @@ namespace WinPaletter.NativeMethods
             if (treeView != null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()), "dll");
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()));
+            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()));
         }
 
         /// <summary>

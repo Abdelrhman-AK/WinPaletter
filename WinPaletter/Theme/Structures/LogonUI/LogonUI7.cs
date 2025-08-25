@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -84,7 +86,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition</param>
         public void Load(LogonUI7 @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 7 LogonUI screen preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 7 LogonUI screen preferences from registry.");
 
             Enabled = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", string.Empty, @default.Enabled));
             ImagePath = GetReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "ImagePath", string.Empty).ToString();
@@ -104,7 +106,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used to show applying log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7 LogonUI screen data into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 7 LogonUI screen data into registry.");
 
             SaveToggleState(treeView);
 
@@ -123,7 +125,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 7 LogonUI screen extended data into registry.");
+                Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 7 LogonUI screen extended data into registry.");
 
                 bool ReportProgress = Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None && treeView is not null;
                 bool ReportProgress_Detailed = ReportProgress && Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed;
@@ -137,9 +139,9 @@ namespace WinPaletter.Theme.Structures
 
                 Directory.CreateDirectory(DirX);
 
-                foreach (string fileX in System.IO.Directory.GetFiles(DirX))
+                foreach (string fileX in Directory.GetFiles(DirX))
                 {
-                    try { System.IO.File.Delete(fileX); }
+                    try { File.Delete(fileX); }
                     catch { } // Couldn't delete a logonUI background File
                 }
 
@@ -150,21 +152,21 @@ namespace WinPaletter.Theme.Structures
 
                 switch (Mode)
                 {
-                    case Theme.Structures.LogonUI7.Sources.Default:
+                    case Sources.Default:
                         {
                             // Windows 7 Default LogonUI Backgrounds are stored in imageres.dll from index 5031 to 5043
                             for (int i = 5031; i <= 5043; i += +1)
                             {
                                 bmpList.Add(PE.GetPNG(SysPaths.imageres, i, "IMAGE", Screen.PrimaryScreen.Bounds.Size.Width, Screen.PrimaryScreen.Bounds.Size.Height));
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Extracting default Windows 7 LogonUI background with ID `{i}` from `{SysPaths.imageres}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Extracting default Windows 7 LogonUI background with ID `{i}` from `{SysPaths.imageres}`.");
                             }
 
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Sources.CustomImage:
+                    case Sources.CustomImage:
                         {
-                            if (System.IO.File.Exists(ImagePath))
+                            if (File.Exists(ImagePath))
                             {
                                 bmpList.Add(BitmapMgr.Load(ImagePath).Resize(Screen.PrimaryScreen.Bounds.Size));
                             }
@@ -173,26 +175,26 @@ namespace WinPaletter.Theme.Structures
                                 bmpList.Add(Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
                             }
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Custom image `{ImagePath ?? "null"}` will be used as a Windows 7 LogonUI background.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Custom image `{ImagePath ?? "null"}` will be used as a Windows 7 LogonUI background.");
 
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Sources.SolidColor:
+                    case Sources.SolidColor:
                         {
                             bmpList.Add(Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size));
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Solid color to be used as LogonUI screen background is `{Color}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Solid color to be used as LogonUI screen background is `{Color}`.");
                             break;
                         }
 
-                    case Theme.Structures.LogonUI7.Sources.Wallpaper:
+                    case Sources.Wallpaper:
                         {
                             using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
                             {
                                 bmpList.Add((Bitmap)b.Resize(Screen.PrimaryScreen.Bounds.Size).Clone());
                             }
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Using current wallpaper as a LogonUI screen.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Using current wallpaper as a LogonUI screen.");
 
                             break;
                         }
@@ -212,7 +214,7 @@ namespace WinPaletter.Theme.Structures
                         if (ReportProgress_Detailed)
                             ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Grayscaling LogonUI screen image number `{x}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Grayscaling LogonUI screen image number `{x}`.");
 
                         bmpList[x] = bmpList[x].Grayscale();
                     }
@@ -222,7 +224,7 @@ namespace WinPaletter.Theme.Structures
                         if (ReportProgress_Detailed)
                             ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Blurring LogonUI screen image number `{x}` with radius `{Blur_Intensity}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Blurring LogonUI screen image number `{x}` with radius `{Blur_Intensity}`.");
 
                         using (Bitmap b = new(bmpList[x]))
                         {
@@ -235,7 +237,7 @@ namespace WinPaletter.Theme.Structures
                         if (ReportProgress_Detailed)
                             ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating noise effect for LogonUI screen image number `{x}` with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Generating noise effect for LogonUI screen image number `{x}` with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
 
                         bmpList[x] = bmpList[x].Noise(Noise_Mode, (float)(Noise_Intensity / 100d));
                     }
@@ -245,16 +247,16 @@ namespace WinPaletter.Theme.Structures
                 {
                     if (Program.Elevated)
                     {
-                        bmpList[0].Save($@"{DirX}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bmpList[0].Save($@"{DirX}\backgroundDefault.jpg", ImageFormat.Jpeg);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{DirX}\\backgroundDefault.jpg`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"LogonUI screen image saved to `{DirX}\\backgroundDefault.jpg`.");
                     }
                     else
                     {
-                        bmpList[0].Save($@"{SysPaths.appData}\backgroundDefault.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        bmpList[0].Save($@"{SysPaths.appData}\backgroundDefault.jpg", ImageFormat.Jpeg);
                         Reg_IO.Move_File($@"{SysPaths.appData}\backgroundDefault.jpg", $@"{DirX}\backgroundDefault.jpg");
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image saved to `{SysPaths.appData}\\backgroundDefault.jpg` and moved to `{DirX}\\backgroundDefault.jpg`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"LogonUI screen image saved to `{SysPaths.appData}\\backgroundDefault.jpg` and moved to `{DirX}\\backgroundDefault.jpg`.");
                     }
 
                     if (ReportProgress_Detailed)
@@ -266,16 +268,16 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (Program.Elevated)
                         {
-                            bmpList[x].Save($"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                            bmpList[x].Save($"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", ImageFormat.Jpeg);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
                         }
                         else
                         {
-                            bmpList[x].Save($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", System.Drawing.Imaging.ImageFormat.Jpeg);
+                            bmpList[x].Save($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", ImageFormat.Jpeg);
                             Reg_IO.Move_File($"{SysPaths.appData}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}");
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{SysPaths.appData}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg` and moved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"LogonUI screen image number `{x}` saved to `{SysPaths.appData}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg` and moved to `{DirX}\\background{bmpList[x].Width}x{bmpList[x].Height}.jpg`.");
                         }
 
                         if (ReportProgress_Detailed)
@@ -283,7 +285,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Generating LogonUI screen image\\s is done.");
+                Program.Log?.Write(LogEventLevel.Information, $"Generating LogonUI screen image\\s is done.");
 
                 // Restore WOW64 redirection
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);

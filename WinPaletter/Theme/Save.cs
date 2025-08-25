@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme
@@ -37,15 +37,15 @@ namespace WinPaletter.Theme
                     // Impersonate the user to apply the theme into the correct user registry
                     using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                     {
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Applying WinPaletter theme to registry for user `{User.Domain}\\{User.Name}`.");
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Theme name: {Info.ThemeName}");
+                        Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter theme to registry for user `{User.Domain}\\{User.Name}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Theme name: {Info.ThemeName}");
 
                         // If theme backup option is enabled, backup it before applying
                         if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApply)
                         {
                             string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", $"{Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Backing up WinPaletter theme before applying it as `{filename}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Backing up WinPaletter theme before applying it as `{filename}`.");
 
                             Save(Source.File, filename);
                         }
@@ -114,7 +114,7 @@ namespace WinPaletter.Theme
 
                             ThemeLog.AddNode(treeView, $"{string.Format(Program.Lang.Strings.ThemeManager.Actions.ApplyOS, OS_str)}", "info");
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter will apply the theme as if you are using {OS_str}");
+                            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter will apply the theme as if you are using {OS_str}");
 
                             ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.Applying_Started}", "info");
 
@@ -128,11 +128,11 @@ namespace WinPaletter.Theme
                         // Reset to default Windows theme if requested
                         if (resetToDefault)
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Resetting Windows theme to default before applying a new WinPaletter theme.");
+                            Program.Log?.Write(LogEventLevel.Information, "Resetting Windows theme to default before applying a new WinPaletter theme.");
 
                             Execute(() =>
                             {
-                                using (Manager def = Theme.Default.Get())
+                                using (Manager def = Default.Get())
                                 {
                                     def.Wallpaper.Enabled = false;
                                     def.Save(Source.Registry);
@@ -144,7 +144,7 @@ namespace WinPaletter.Theme
 
                         // Save toggles states (toggle states are saved before applying the theme to make WinPaletter apply enabled features and skip disabled features)
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Saving toggles states before applying the theme.");
+                        Program.Log?.Write(LogEventLevel.Information, "Saving toggles states before applying the theme.");
 
                         ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.ThemeManager.Actions.SavingToggles}", "info");
                         AppTheme.SaveToggleState(tv);
@@ -534,7 +534,7 @@ namespace WinPaletter.Theme
                             }
                             else
                             {
-                                if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                                 {
                                     TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                                 }
@@ -543,7 +543,7 @@ namespace WinPaletter.Theme
                                     TerDir = SysPaths.TerminalJSON;
                                 }
 
-                                if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
+                                if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                                 {
                                     TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                                 }
@@ -555,7 +555,7 @@ namespace WinPaletter.Theme
 
                             if (Terminal.Enabled && !Program.Settings.AspectsControl.Enabled && !(Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals))
                             {
-                                if (System.IO.File.Exists(TerDir))
+                                if (File.Exists(TerDir))
                                 {
                                     try
                                     {
@@ -591,7 +591,7 @@ namespace WinPaletter.Theme
 
                             if (TerminalPreview.Enabled && !Program.Settings.AspectsControl.Enabled && !(Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals))
                             {
-                                if (System.IO.File.Exists(TerPreDir))
+                                if (File.Exists(TerPreDir))
                                 {
 
                                     try
@@ -731,7 +731,7 @@ namespace WinPaletter.Theme
                     break;
 
                 case Source.File:
-                    if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(file))) System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(file));
+                    if (!Directory.Exists(Path.GetDirectoryName(file))) Directory.CreateDirectory(Path.GetDirectoryName(file));
 
                     if (Info.ExportResThemePack)
                     {
@@ -742,7 +742,7 @@ namespace WinPaletter.Theme
                         }
                     }
 
-                    else { System.IO.File.WriteAllText(file, ToString()); }
+                    else { File.WriteAllText(file, ToString()); }
 
                     break;
             }
@@ -792,12 +792,12 @@ namespace WinPaletter.Theme
         /// <param name="Pack">WinTheme resources pack File</param>
         public void PackThemeResources(Manager TM, string ThemeFile, string Pack)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"A query to make a theme resources pack for `{ThemeFile}` is made. It will be saved as `{Pack}`.");
+            Program.Log?.Write(LogEventLevel.Information, $"A query to make a theme resources pack for `{ThemeFile}` is made. It will be saved as `{Pack}`.");
 
             // Create a cache directory for the theme resources pack
             string cache = $"%WinPaletterAppData%\\ThemeResPack_Cache\\{string.Concat(TM.Info.ThemeName.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()))}\\";
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Cache directory for the theme resources pack is `{cache}`.");
+            Program.Log?.Write(LogEventLevel.Information, $"Cache directory for the theme resources pack is `{cache}`.");
 
             Dictionary<string, string> filesList = [];
             filesList.Clear();
@@ -805,48 +805,48 @@ namespace WinPaletter.Theme
             string ZipEntry;
 
             // Delete the previous pack if exists
-            if (System.IO.File.Exists(Pack)) System.IO.File.Delete(Pack);
-            if (!System.IO.Directory.Exists($"{SysPaths.appData}\\Temp")) System.IO.Directory.CreateDirectory($"{SysPaths.appData}\\Temp");
-            foreach (string file_to_delete in System.IO.Directory.GetFiles($"{SysPaths.appData}\\Temp")) System.IO.File.Delete(file_to_delete);
+            if (File.Exists(Pack)) File.Delete(Pack);
+            if (!Directory.Exists($"{SysPaths.appData}\\Temp")) Directory.CreateDirectory($"{SysPaths.appData}\\Temp");
+            foreach (string file_to_delete in Directory.GetFiles($"{SysPaths.appData}\\Temp")) File.Delete(file_to_delete);
 
             // Create the pack
             using (ZipArchive archive = ZipFile.Open(Pack, ZipArchiveMode.Create))
             {
                 // Add Windows 8.1 logonUI files
-                if (TM.LogonUI81.Enabled && TM.LogonUI81.Mode == Theme.Structures.LogonUI81.Sources.CustomImage)
+                if (TM.LogonUI81.Enabled && TM.LogonUI81.Mode == Structures.LogonUI81.Sources.CustomImage)
                 {
                     x = TM.LogonUI81.ImagePath;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}LogonUI81{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 8.1 LogonUI image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 8.1 LogonUI image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.LogonUI81.ImagePath = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 8.1 LogonUI image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 8.1 LogonUI image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
                 // Add Windows 7 logonUI files
-                if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.CustomImage)
+                if (TM.LogonUI7.Enabled && TM.LogonUI7.Mode == Structures.LogonUI7.Sources.CustomImage)
                 {
                     x = TM.LogonUI7.ImagePath;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}LogonUI7{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 7 LogonUI image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 7 LogonUI image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.LogonUI7.ImagePath = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 7 LogonUI image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 7 LogonUI image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -857,30 +857,30 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_defprofile_backimg{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal default profile background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal default profile background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Terminal.Profiles.Defaults.BackgroundImage = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal default profile background image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal default profile background image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Terminal.Profiles.Defaults.Icon;
                     if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_defprofile_icon{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal default profile icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal default profile icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Terminal.Profiles.Defaults.Icon = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal default profile icon `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal default profile icon `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     foreach (WinTerminal.Types.Profile i in TM.Terminal.Profiles.List)
@@ -889,30 +889,30 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}winterminal_profile({string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()))})_backimg{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal profile `{i.Name}` background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal profile `{i.Name}` background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 i.BackgroundImage = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal profile `{i.Name}` background image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal profile `{i.Name}` background image `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         x = i.Icon;
                         if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}winterminal_profile({string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()))})_icon{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal profile `{i.Name}` icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal profile `{i.Name}` icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 i.Icon = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal profile `{i.Name}` icon `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal profile `{i.Name}` icon `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
                     }
                 }
@@ -924,30 +924,30 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_preview_defprofile_backimg{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview default profile background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview default profile background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.TerminalPreview.Profiles.Defaults.BackgroundImage = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal Preview default profile background image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal Preview default profile background image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.TerminalPreview.Profiles.Defaults.Icon;
                     if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}winterminal_preview_defprofile_icon{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview default profile icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview default profile icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.TerminalPreview.Profiles.Defaults.Icon = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal Preview default profile icon `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal Preview default profile icon `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     foreach (WinTerminal.Types.Profile i in TM.TerminalPreview.Profiles.List)
@@ -956,30 +956,30 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}winterminal_preview_profile({string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()))})_backimg{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview profile `{i.Name}` background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview profile `{i.Name}` background image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 i.BackgroundImage = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal Preview profile `{i.Name}` background image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal Preview profile `{i.Name}` background image `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         x = i.Icon;
                         if (!string.IsNullOrWhiteSpace(x) && !(x.Length <= 1) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}winterminal_preview_profile({string.Concat(i.Name.Replace(" ", string.Empty).Split(Path.GetInvalidFileNameChars()))})_icon{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview profile `{i.Name}` icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Terminal Preview profile `{i.Name}` icon inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 i.Icon = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Terminal Preview profile `{i.Name}` icon `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Terminal Preview profile `{i.Name}` icon `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
                     }
                 }
@@ -991,15 +991,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_w12{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 12 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 12 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_W12.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 12 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 12 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1009,15 +1009,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_w11{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 11 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 11 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_W11.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 11 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 11 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1027,15 +1027,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_w10{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 10 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 10 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_W10.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 10 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 10 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1045,15 +1045,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_w81{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 8.1 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 8.1 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_W81.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 8.1 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 8.1 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1063,15 +1063,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_w8{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 8 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 8 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_W8.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 8 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 8 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1081,15 +1081,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_w7{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 7 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 7 Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_W7.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows 7 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows 7 Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1099,15 +1099,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_wvista{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Vista Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Vista Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_WVista.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Vista Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Vista Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1117,15 +1117,15 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wt_wxp{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows XP Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows XP Wallpaper Tone image inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WallpaperTone_WXP.Image = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows XP Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows XP Wallpaper Tone image `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
@@ -1136,37 +1136,37 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x))
                     {
                         ZipEntry = $"{cache}scrsvr{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of ScreenSaver file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of ScreenSaver file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.ScreenSaver.File = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding ScreenSaver file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding ScreenSaver file `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
                 // Add Cursor files (that are not rendered by WinPaletter)
                 if (TM.Cursors.Enabled)
                 {
-                    if (TM.Cursors.Cursor_Arrow.UseFromFile && System.IO.File.Exists(TM.Cursors.Cursor_Arrow.File))
+                    if (TM.Cursors.Cursor_Arrow.UseFromFile && File.Exists(TM.Cursors.Cursor_Arrow.File))
                     {
                         // Cursor_Arrow
                         x = TM.Cursors.Cursor_Arrow.File;
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Arrow{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Arrow file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Arrow file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Arrow.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Arrow file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Arrow file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_AppLoading
@@ -1174,15 +1174,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_AppLoading{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_AppLoading file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_AppLoading file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_AppLoading.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_AppLoading file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_AppLoading file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Busy
@@ -1190,15 +1190,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Busy{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Busy file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Busy file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Busy.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Busy file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Busy file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Help
@@ -1206,15 +1206,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Help{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Help file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Help file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Help.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Help file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Help file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Move
@@ -1222,15 +1222,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Move{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Move file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Move file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Move.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Move file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Move file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_NS
@@ -1238,15 +1238,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_NS{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_NS file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_NS file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_NS.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_NS file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_NS file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_EW
@@ -1254,15 +1254,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_EW{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_EW file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_EW file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_EW.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_EW file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_EW file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_NESW
@@ -1270,15 +1270,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_NESW{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_NESW file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_NESW file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_NESW.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_NESW file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_NESW file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_NWSE
@@ -1286,15 +1286,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_NWSE{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_NWSE file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_NWSE file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_NWSE.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_NWSE file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_NWSE file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Up
@@ -1302,15 +1302,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Up{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Up file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Up file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Up.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Up file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Up file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Pen
@@ -1318,15 +1318,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Pen{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Pen file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Pen file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Pen.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Pen file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Pen file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_None
@@ -1334,15 +1334,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_None{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_None file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_None file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_None.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_None file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_None file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Link
@@ -1350,15 +1350,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Link{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Link file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Link file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Link.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Link file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Link file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Pin
@@ -1366,15 +1366,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Pin{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Pin file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Pin file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Pin.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Pin file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Pin file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Person
@@ -1382,15 +1382,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Person{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Person file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Person file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Person.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Person file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Person file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_IBeam
@@ -1398,15 +1398,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_IBeam{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_IBeam file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_IBeam file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_IBeam.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_IBeam file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_IBeam file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
 
                         // Cursor_Cross
@@ -1414,15 +1414,15 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Cursors", StringComparison.OrdinalIgnoreCase))
                         {
                             ZipEntry = $"{cache}Cursor_Cross{Path.GetExtension(x)}";
-                            if (System.IO.File.Exists(x))
+                            if (File.Exists(x))
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Cursor_Cross file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Cursor_Cross file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                                 TM.Cursors.Cursor_Cross.File = ZipEntry;
                             }
 
                             filesList.Add(ZipEntry, x);
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Cursor_Cross file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Cursor_Cross file `{x}` to the theme resources pack as `{ZipEntry}`.");
                         }
                     }
                 }
@@ -1435,1335 +1435,1335 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Default{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Default sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Default sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Default = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Default sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Default sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_AppGPFault;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_AppGPFault{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows App GP Fault sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows App GP Fault sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_AppGPFault = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows App GP Fault sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows App GP Fault sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_CCSelect;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_CCSelect{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows CC Select sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows CC Select sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_CCSelect = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows CC Select sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows CC Select sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_ChangeTheme;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_ChangeTheme{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Change Theme sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Change Theme sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_ChangeTheme = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Change Theme sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Change Theme sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Close;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Close{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Close sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Close sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Close = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Close sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Close sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_CriticalBatteryAlarm;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_CriticalBatteryAlarm{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Critical Battery Alarm sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Critical Battery Alarm sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_CriticalBatteryAlarm = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Critical Battery Alarm sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Critical Battery Alarm sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceConnect;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_DeviceConnect{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Device Connect sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Device Connect sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_DeviceConnect = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Device Connect sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Device Connect sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceDisconnect;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_DeviceDisconnect{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Device Disconnect sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Device Disconnect sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_DeviceDisconnect = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Device Disconnect sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Device Disconnect sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_DeviceFail;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_DeviceFail{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Device Fail sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Device Fail sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_DeviceFail = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Device Fail sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Device Fail sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_FaxBeep;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_FaxBeep{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Fax Beep sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Fax Beep sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_FaxBeep = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Fax Beep sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Fax Beep sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_LowBatteryAlarm;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_LowBatteryAlarm{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Low Battery Alarm sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Low Battery Alarm sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_LowBatteryAlarm = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Low Battery Alarm sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Low Battery Alarm sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_MailBeep;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_MailBeep{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Mail Beep sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Mail Beep sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_MailBeep = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Mail Beep sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Mail Beep sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Maximize;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Maximize{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Maximize sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Maximize sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Maximize = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Maximize sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Maximize sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_MenuCommand;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_MenuCommand{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Menu Command sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Menu Command sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_MenuCommand = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Menu Command sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Menu Command sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_MenuPopup;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_MenuPopup{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Menu Popup sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Menu Popup sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_MenuPopup = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Menu Popup sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Menu Popup sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_MessageNudge;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_MessageNudge{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Message Nudge sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Message Nudge sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_MessageNudge = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Message Nudge sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Message Nudge sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Minimize;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Minimize{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Minimize sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Minimize sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Minimize = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Minimize sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Minimize sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Default;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Default{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Default sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Default sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Default = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Default sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Default sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_IM;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_IM{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification IM sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification IM sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_IM = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification IM sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification IM sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm10;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm10{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 10 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 10 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm10 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 10 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 10 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm2;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm2{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 2 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 2 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm2 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 2 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 2 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm3;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm3{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 3 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 3 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm3 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 3 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 3 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm4;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm4{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 4 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 4 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm4 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 4 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 4 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm5;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm5{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 5 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 5 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm5 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 5 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 5 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm6;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm6{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 6 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 6 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm6 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 6 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 6 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm7;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm7{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 7 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 7 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm7 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 7 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 7 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm8;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm8{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 8 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 8 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm8 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 8 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 8 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Alarm9;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Alarm9{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 9 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Alarm 9 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Alarm9 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 9 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Alarm 9 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call10;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call10{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 10 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 10 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call10 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 10 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 10 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call2;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call2{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 2 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 2 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call2 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 2 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 2 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call3;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call3{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 3 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 3 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call3 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 3 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 3 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call4;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call4{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 4 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 4 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call4 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 4 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 4 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call5;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call5{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 5 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 5 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call5 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 5 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 5 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call6;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call6{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 6 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 6 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call6 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 6 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 6 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call7;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call7{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 7 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 7 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call7 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 7 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 7 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call8;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call8{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 8 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 8 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call8 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 8 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 8 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Looping_Call9;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Looping_Call9{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 9 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Looping Call 9 sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Looping_Call9 = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Looping Call 9 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Looping Call 9 sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Mail;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Mail{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Mail sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Mail sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Mail = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Mail sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Mail sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Proximity;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Proximity{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Proximity sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Proximity sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Proximity = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Proximity sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Proximity sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_Reminder;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_Reminder{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification Reminder sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification Reminder sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_Reminder = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification Reminder sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification Reminder sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Notification_SMS;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Notification_SMS{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Notification SMS sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Notification SMS sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Notification_SMS = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Notification SMS sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Notification SMS sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_Open;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_Open{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Open sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Open sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_Open = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Open sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Open sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_PrintComplete;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_PrintComplete{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Print Complete sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Print Complete sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_PrintComplete = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Print Complete sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Print Complete sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_ProximityConnection;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_ProximityConnection{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Proximity Connection sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Proximity Connection sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_ProximityConnection = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Proximity Connection sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Proximity Connection sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_RestoreDown;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_RestoreDown{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Restore Down sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Restore Down sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_RestoreDown = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Restore Down sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Restore Down sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_RestoreUp;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_RestoreUp{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Restore Up sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Restore Up sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_RestoreUp = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Restore Up sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Restore Up sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_ShowBand;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_ShowBand{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Show Band sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Show Band sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_ShowBand = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Show Band sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Show Band sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_SystemAsterisk;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_SystemAsterisk{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows System Asterisk sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows System Asterisk sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_SystemAsterisk = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows System Asterisk sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows System Asterisk sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_SystemExclamation;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_SystemExclamation{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows System Exclamation sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows System Exclamation sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_SystemExclamation = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows System Exclamation sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows System Exclamation sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_SystemExit;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_SystemExit{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows System Exit sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows System Exit sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_SystemExit = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows System Exit sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows System Exit sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_SystemStart;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_SystemStart{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows System Start sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows System Start sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_SystemStart = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows System Start sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows System Start sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Imageres_SystemStart;
                     if (!string.IsNullOrWhiteSpace(x))  // Don't include the condition: Not x.StartsWith(My.Directories.Windows & "\media", My.StringComparison.OrdinalIgnoreCase)
                     {
                         ZipEntry = $"{cache}Snd_Imageres_SystemStart{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Imageres System Start sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Imageres System Start sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Imageres_SystemStart = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Imageres System Start sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Imageres System Start sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_SystemHand;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_SystemHand{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows System Hand sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows System Hand sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_SystemHand = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows System Hand sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows System Hand sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_SystemNotification;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_SystemNotification{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows System Notification sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows System Notification sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_SystemNotification = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows System Notification sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows System Notification sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_SystemQuestion;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_SystemQuestion{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows System Question sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows System Question sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_SystemQuestion = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows System Question sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows System Question sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsLogoff;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_WindowsLogoff{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Logoff sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Logoff sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_WindowsLogoff = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Logoff sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Logoff sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsLogon;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_WindowsLogon{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Logon sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Logon sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_WindowsLogon = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Logon sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Logon sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsUAC;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_WindowsUAC{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows UAC sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows UAC sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_WindowsUAC = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows UAC sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows UAC sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsUnlock;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Win_WindowsUnlock{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Unlock sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Unlock sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_WindowsUnlock = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Unlock sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Unlock sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_ActivatingDocument;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_ActivatingDocument{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Activating Document sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Activating Document sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_ActivatingDocument = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Activating Document sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Activating Document sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_BlockedPopup;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_BlockedPopup{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Blocked Popup sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Blocked Popup sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_BlockedPopup = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Blocked Popup sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Blocked Popup sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_EmptyRecycleBin;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_EmptyRecycleBin{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Empty Recycle Bin sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Empty Recycle Bin sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_EmptyRecycleBin = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Empty Recycle Bin sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Empty Recycle Bin sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_FeedDiscovered;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_FeedDiscovered{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Feed Discovered sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Feed Discovered sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_FeedDiscovered = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Feed Discovered sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Feed Discovered sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_MoveMenuItem;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_MoveMenuItem{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Move Menu Item sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Move Menu Item sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_MoveMenuItem = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Move Menu Item sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Move Menu Item sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_Navigating;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_Navigating{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Navigating sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Navigating sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_Navigating = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Navigating sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Navigating sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_SecurityBand;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_SecurityBand{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Security Band sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Security Band sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_SecurityBand = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Security Band sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Security Band sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_SearchProviderDiscovered;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_SearchProviderDiscovered{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Search Provider Discovered sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Search Provider Discovered sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_SearchProviderDiscovered = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Search Provider Discovered sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Search Provider Discovered sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxError;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_FaxError{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Fax Error sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Fax Error sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_FaxError = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Fax Error sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Fax Error sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxLineRings;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_FaxLineRings{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Fax Line Rings sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Fax Line Rings sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_FaxLineRings = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Fax Line Rings sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Fax Line Rings sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxNew;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_FaxNew{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Fax New sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Fax New sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_FaxNew = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Fax New sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Fax New sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Explorer_FaxSent;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_Explorer_FaxSent{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Explorer Fax Sent sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Explorer Fax Sent sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Explorer_FaxSent = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer Fax Sent sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer Fax Sent sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_PersonJoins;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_NetMeeting_PersonJoins{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of NetMeeting Person Joins sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of NetMeeting Person Joins sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_NetMeeting_PersonJoins = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding NetMeeting Person Joins sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding NetMeeting Person Joins sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_PersonLeaves;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_NetMeeting_PersonLeaves{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of NetMeeting Person Leaves sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of NetMeeting Person Leaves sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_NetMeeting_PersonLeaves = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding NetMeeting Person Leaves sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding NetMeeting Person Leaves sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_ReceiveCall;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_NetMeeting_ReceiveCall{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of NetMeeting Receive Call sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of NetMeeting Receive Call sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_NetMeeting_ReceiveCall = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding NetMeeting Receive Call sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding NetMeeting Receive Call sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_NetMeeting_ReceiveRequestToJoin;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_NetMeeting_ReceiveRequestToJoin{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of NetMeeting Receive Request To Join sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of NetMeeting Receive Request To Join sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_NetMeeting_ReceiveRequestToJoin = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding NetMeeting Receive Request To Join sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding NetMeeting Receive Request To Join sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_DisNumbersSound;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_SpeechRec_DisNumbersSound{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Speech Recognition Disable Numbers sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Speech Recognition Disable Numbers sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_SpeechRec_DisNumbersSound = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Speech Recognition Disable Numbers sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Speech Recognition Disable Numbers sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubOffSound;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_SpeechRec_HubOffSound{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Speech Recognition Hub Off sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Speech Recognition Hub Off sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_SpeechRec_HubOffSound = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Speech Recognition Hub Off sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Speech Recognition Hub Off sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubOnSound;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_SpeechRec_HubOnSound{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Speech Recognition Hub On sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Speech Recognition Hub On sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_SpeechRec_HubOnSound = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Speech Recognition Hub On sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Speech Recognition Hub On sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_HubSleepSound;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_SpeechRec_HubSleepSound{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Speech Recognition Hub Sleep sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Speech Recognition Hub Sleep sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_SpeechRec_HubSleepSound = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Speech Recognition Hub Sleep sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Speech Recognition Hub Sleep sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_MisrecoSound;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_SpeechRec_MisrecoSound{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Speech Recognition Misrecognition sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Speech Recognition Misrecognition sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_SpeechRec_MisrecoSound = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Speech Recognition Misrecognition sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Speech Recognition Misrecognition sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_SpeechRec_PanelSound;
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\media", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}Snd_SpeechRec_PanelSound{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Speech Recognition Panel sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Speech Recognition Panel sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_SpeechRec_PanelSound = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Speech Recognition Panel sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Speech Recognition Panel sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_ChargerConnected;
                     if (!string.IsNullOrWhiteSpace(x))
                     {
                         ZipEntry = $"{cache}Snd_ChargerConnected{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Charger Connected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Charger Connected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_ChargerConnected = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Charger Connected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Charger Connected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_ChargerDisconnected;
                     if (!string.IsNullOrWhiteSpace(x))
                     {
                         ZipEntry = $"{cache}Snd_ChargerDisconnected{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Charger Disconnected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Charger Disconnected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_ChargerDisconnected = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Charger Disconnected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Charger Disconnected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_Win_WindowsLock;
                     if (!string.IsNullOrWhiteSpace(x))
                     {
                         ZipEntry = $"{cache}Snd_Win_WindowsLock{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Lock sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Lock sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_Win_WindowsLock = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Windows Lock sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Windows Lock sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_WiFiConnected;
                     if (!string.IsNullOrWhiteSpace(x))
                     {
                         ZipEntry = $"{cache}Snd_WiFiConnected{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of WiFi Connected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of WiFi Connected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_WiFiConnected = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding WiFi Connected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding WiFi Connected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_WiFiDisconnected;
                     if (!string.IsNullOrWhiteSpace(x))
                     {
                         ZipEntry = $"{cache}Snd_WiFiDisconnected{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of WiFi Disconnected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of WiFi Disconnected sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_WiFiDisconnected = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding WiFi Disconnected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding WiFi Disconnected sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
 
                     x = TM.Sounds.Snd_WiFiConnectionFailed;
                     if (!string.IsNullOrWhiteSpace(x))
                     {
                         ZipEntry = $"{cache}Snd_WiFiConnectionFailed{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of WiFi Connection Failed sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of WiFi Connection Failed sound inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Sounds.Snd_WiFiConnectionFailed = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding WiFi Connection Failed sound `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding WiFi Connection Failed sound `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
                 #endregion
@@ -2786,7 +2786,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Computer icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Computer icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -2810,7 +2810,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Computer icon is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Computer icon is extracted from system and added to list of files to be compressed.");
 
                                 TargetProperty = ZipEntry;
                             }
@@ -2831,7 +2831,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding User icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding User icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -2855,7 +2855,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"User icon is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"User icon is extracted from system and added to list of files to be compressed.");
 
                                 TargetProperty = ZipEntry;
                             }
@@ -2876,7 +2876,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Network icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Network icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -2900,7 +2900,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Network icon is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Network icon is extracted from system and added to list of files to be compressed.");
 
                                 TargetProperty = ZipEntry;
                             }
@@ -2921,7 +2921,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Control Panel icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Control Panel icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -2945,7 +2945,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Control Panel icon is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Control Panel icon is extracted from system and added to list of files to be compressed.");
 
                                 TargetProperty = ZipEntry;
                             }
@@ -2966,7 +2966,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Recycle Bin (Empty) icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Recycle Bin (Empty) icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -2990,7 +2990,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Recycle Bin (Empty) icon is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Recycle Bin (Empty) icon is extracted from system and added to list of files to be compressed.");
 
                                 TargetProperty = ZipEntry;
                             }
@@ -3011,7 +3011,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Recycle Bin (Full) icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Recycle Bin (Full) icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -3035,7 +3035,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Recycle Bin (Full) icon is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Recycle Bin (Full) icon is extracted from system and added to list of files to be compressed.");
 
                                 TargetProperty = ZipEntry;
                             }
@@ -3056,7 +3056,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding System Drive icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding System Drive icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -3080,7 +3080,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"System Drive icon is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"System Drive icon is extracted from system and added to list of files to be compressed.");
 
                                 TargetProperty = ZipEntry;
                             }
@@ -3104,7 +3104,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Shell32.dll icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Shell32.dll icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -3128,7 +3128,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Shell32.dll icon ID `{shell32Index}` is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Shell32.dll icon ID `{shell32Index}` is extracted from system and added to list of files to be compressed.");
 
                                 TM.Icons.Shell32Wrapper[entry.Key] = ZipEntry;
                             }
@@ -3152,7 +3152,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Control Panel icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Control Panel icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -3176,7 +3176,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Control Panel icon ID `{controlPanelIndex}` is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Control Panel icon ID `{controlPanelIndex}` is extracted from system and added to list of files to be compressed.");
 
                                 TM.Icons.ControlPanelWrapper[entry.Key] = ZipEntry;
                             }
@@ -3200,7 +3200,7 @@ namespace WinPaletter.Theme
 
                             ZipEntry = $"{cache}icons\\{iconName}";
 
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Explorer icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Adding Explorer icon `{TargetProperty}` to the theme resources pack as `{ZipEntry}`.");
 
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
@@ -3224,7 +3224,7 @@ namespace WinPaletter.Theme
                                     filesList.Add(ZipEntry, iconFile);
                                 }
 
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Explorer icon ID `{explorerIndex}` is extracted from system and added to list of files to be compressed.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Explorer icon ID `{explorerIndex}` is extracted from system and added to list of files to be compressed.");
 
                                 TM.Icons.ExplorerWrapper[entry.Key] = ZipEntry;
                             }
@@ -3239,48 +3239,48 @@ namespace WinPaletter.Theme
                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $"{cache}wallpaper_file{Path.GetExtension(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Wallpaper file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Wallpaper file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.Wallpaper.ImageFile = ZipEntry;
                         }
 
                         filesList.Add(ZipEntry, x);
 
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Adding Wallpaper file `{x}` to the theme resources pack as `{ZipEntry}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Adding Wallpaper file `{x}` to the theme resources pack as `{ZipEntry}`.");
                     }
                 }
 
                 // Create the archive by adding files from the built list
                 foreach (KeyValuePair<string, string> _file in filesList)
                 {
-                    if (System.IO.File.Exists(_file.Value))
+                    if (File.Exists(_file.Value))
                     {
                         archive.CreateEntryFromFile(_file.Value, _file.Key.Split('\\').Last(), CompressionLevel.Optimal);
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File `{_file.Value}` is compressed inside themes resources pack as `{_file.Key}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"File `{_file.Value}` is compressed inside themes resources pack as `{_file.Key}`.");
                     }
                 }
 
                 // Add Visual Styles files of Windows XP
-                if (TM.WindowsXP.VisualStyles.VisualStylesType == Structures.VisualStyles.DefaultVisualStyles.Custom)
+                if (TM.WindowsXP.VisualStyles.VisualStylesType == VisualStyles.DefaultVisualStyles.Custom)
                 {
                     x = TM.WindowsXP.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(x) && System.IO.File.Exists(x) && !x.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Luna", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(x) && File.Exists(x) && !x.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Luna", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WXP_VS\{Path.GetFileName(x)}";
-                        if (System.IO.File.Exists(x))
+                        if (File.Exists(x))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows XP Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows XP Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{x}`.");
                             TM.WindowsXP.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(x).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"WXP_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows XP Visual Style file `{file}` to the theme resources pack as `WXP_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows XP Visual Style file `{file}` to the theme resources pack as `WXP_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3290,22 +3290,22 @@ namespace WinPaletter.Theme
                 if (TM.Windows12.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.Windows12.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W12_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 12 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 12 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"W12_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 12 Visual Style file `{file}` to the theme resources pack as `W12_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows 12 Visual Style file `{file}` to the theme resources pack as `W12_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3315,22 +3315,22 @@ namespace WinPaletter.Theme
                 if (TM.Windows11.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.Windows11.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W11_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 11 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 11 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"W11_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 11 Visual Style file `{file}` to the theme resources pack as `W11_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows 11 Visual Style file `{file}` to the theme resources pack as `W11_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3340,22 +3340,22 @@ namespace WinPaletter.Theme
                 if (TM.Windows10.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.Windows10.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W10_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 10 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 10 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"W10_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 10 Visual Style file `{file}` to the theme resources pack as `W10_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows 10 Visual Style file `{file}` to the theme resources pack as `W10_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3365,22 +3365,22 @@ namespace WinPaletter.Theme
                 if (TM.Windows81.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.Windows81.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W81_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 8.1 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 8.1 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"W81_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 8.1 Visual Style file `{file}` to the theme resources pack as `W81_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows 8.1 Visual Style file `{file}` to the theme resources pack as `W81_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3390,22 +3390,22 @@ namespace WinPaletter.Theme
                 if (TM.Windows8.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.Windows8.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W8_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 8 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 8 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"W8_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 8 Visual Style file `{file}` to the theme resources pack as `W8_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows 8 Visual Style file `{file}` to the theme resources pack as `W8_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3415,22 +3415,22 @@ namespace WinPaletter.Theme
                 if (TM.Windows7.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.Windows7.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W7_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows 7 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 7 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"W7_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows 7 Visual Style file `{file}` to the theme resources pack as `W7_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows 7 Visual Style file `{file}` to the theme resources pack as `W7_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3440,22 +3440,22 @@ namespace WinPaletter.Theme
                 if (TM.WindowsVista.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.WindowsVista.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WVista_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows Vista Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Vista Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"WVista_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows Vista Visual Style file `{file}` to the theme resources pack as `WVista_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows Vista Visual Style file `{file}` to the theme resources pack as `WVista_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3465,22 +3465,22 @@ namespace WinPaletter.Theme
                 if (TM.WindowsXP.VisualStyles.Enabled)
                 {
                     ref string targetProperty = ref TM.WindowsXP.VisualStyles.ThemeFile;
-                    if (!string.IsNullOrWhiteSpace(targetProperty) && System.IO.File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WXP_VS\{Path.GetFileName(targetProperty)}";
-                        if (System.IO.File.Exists(targetProperty))
+                        if (File.Exists(targetProperty))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Windows XP Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows XP Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
                             targetProperty = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
                         foreach (string file in Directory.EnumerateFiles(DirName, "*.*", SearchOption.AllDirectories))
                         {
-                            if (System.IO.File.Exists(file))
+                            if (File.Exists(file))
                             {
                                 archive.CreateEntryFromFile(file, $"WXP_VS{file.Replace(DirName, string.Empty)}", CompressionLevel.Optimal);
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Windows XP Visual Style file `{file}` to the theme resources pack as `WXP_VS{file.Replace(DirName, string.Empty)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Compressing Windows XP Visual Style file `{file}` to the theme resources pack as `WXP_VS{file.Replace(DirName, string.Empty)}`.");
                             }
                         }
                     }
@@ -3496,14 +3496,14 @@ namespace WinPaletter.Theme
                         if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = $"{cache}wallpapers_slideshow";
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Wallpaper Slideshow root folder inside the theme resources pack to be `{TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath}`. The previous value was `{x}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Wallpaper Slideshow root folder inside the theme resources pack to be `{TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath}`. The previous value was `{x}`.");
 
                             foreach (string image in Directory.EnumerateFiles(x, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".bmp") || s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".gif")))
                             {
-                                if (System.IO.File.Exists(image))
+                                if (File.Exists(image))
                                 {
                                     archive.CreateEntryFromFile(image, $@"wallpapers_slideshow\{new FileInfo(image).Name}", CompressionLevel.Optimal);
-                                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Wallpaper Slideshow image `{image}` to the theme resources pack as `wallpapers_slideshow\\{new FileInfo(image).Name}`.");
+                                    Program.Log?.Write(LogEventLevel.Information, $"Compressing Wallpaper Slideshow image `{image}` to the theme resources pack as `wallpapers_slideshow\\{new FileInfo(image).Name}`.");
                                 }
                             }
                         }
@@ -3517,7 +3517,7 @@ namespace WinPaletter.Theme
                             if (!arr[0].StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                             {
                                 TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath = $"{cache}WallpapersList";
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Wallpaper Slideshow images list inside the theme resources pack to be `{TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath}`. The previous value was `{string.Join(", ", arr)}`.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Wallpaper Slideshow images list inside the theme resources pack to be `{TM.Wallpaper.Wallpaper_Slideshow_ImagesRootPath}`. The previous value was `{string.Join(", ", arr)}`.");
 
                                 TM.Wallpaper.Wallpaper_Slideshow_Images = [];
                                 for (int x0 = 0, loopTo = arr.Count() - 1; x0 <= loopTo; x0++)
@@ -3526,12 +3526,12 @@ namespace WinPaletter.Theme
                                     if (!string.IsNullOrWhiteSpace(x) && !x.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                                     {
                                         ZipEntry = $@"{cache}WallpapersList\wallpaperlist_{x0}_file{Path.GetExtension(x)}";
-                                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Modifying entry of Wallpaper Slideshow image `{x}` inside the theme resources pack to be `{ZipEntry}`.");
-                                        if (System.IO.File.Exists(x))
+                                        Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Wallpaper Slideshow image `{x}` inside the theme resources pack to be `{ZipEntry}`.");
+                                        if (File.Exists(x))
                                         {
                                             TM.Wallpaper.Wallpaper_Slideshow_Images = [.. TM.Wallpaper.Wallpaper_Slideshow_Images, ZipEntry];
                                             archive.CreateEntryFromFile(x, $@"WallpapersList\wallpaperlist_{x0}_file{Path.GetExtension(x)}", CompressionLevel.Optimal);
-                                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Compressing Wallpaper Slideshow image `{x}` to the theme resources pack as `WallpapersList\\wallpaperlist_{x0}_file{Path.GetExtension(x)}`.");
+                                            Program.Log?.Write(LogEventLevel.Information, $"Compressing Wallpaper Slideshow image `{x}` to the theme resources pack as `WallpapersList\\wallpaperlist_{x0}_file{Path.GetExtension(x)}`.");
                                         }
                                     }
                                 }
@@ -3542,15 +3542,15 @@ namespace WinPaletter.Theme
                 }
 
                 // Write the modified theme manager that has modified entries with environment variables that are suitable with the created pack
-                System.IO.File.WriteAllText(ThemeFile, TM.ToString());
+                File.WriteAllText(ThemeFile, TM.ToString());
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Theme Manager file `{ThemeFile}` is written with modified entries suitable for the created theme resources pack.");
+                Program.Log?.Write(LogEventLevel.Information, $"Theme Manager file `{ThemeFile}` is written with modified entries suitable for the created theme resources pack.");
             }
 
-            foreach (string file_to_delete in System.IO.Directory.GetFiles($"{SysPaths.appData}\\Temp"))
+            foreach (string file_to_delete in Directory.GetFiles($"{SysPaths.appData}\\Temp"))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting temporary file: {file_to_delete}");
-                System.IO.File.Delete(file_to_delete);
+                Program.Log?.Write(LogEventLevel.Information, $"Deleting temporary file: {file_to_delete}");
+                File.Delete(file_to_delete);
             }
         }
     }

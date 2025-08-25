@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -119,7 +120,7 @@ namespace WinPaletter
             }
         }
 
-        private void ThemeDownloader_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private void ThemeDownloader_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             SW.Stop();
             SW.Reset();

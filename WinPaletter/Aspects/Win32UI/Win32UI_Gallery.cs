@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Templates;
+using WinPaletter.Theme;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter
@@ -32,9 +33,9 @@ namespace WinPaletter
             {
                 RDC.LoadMetrics(Program.TM);
                 RDC.Size = new(350, 300);
-                foreach (string item in Theme.Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray())
+                foreach (string item in Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray())
                 {
-                    RDC.LoadFromWinThemeString(Theme.Schemes.ClassicColors, item);
+                    RDC.LoadFromWinThemeString(Schemes.ClassicColors, item);
 
                     RadioImage radioImage = new()
                     {

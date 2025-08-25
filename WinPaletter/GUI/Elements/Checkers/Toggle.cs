@@ -1,9 +1,13 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
 {
@@ -48,7 +52,7 @@ namespace WinPaletter.UI.WP
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(System.ComponentModel.Design.MultilineStringEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
@@ -82,7 +86,7 @@ namespace WinPaletter.UI.WP
         {
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(CheckerX), Checked ? Width - 17 : 4).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(CheckerX), Checked ? Width - 17 : 4).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
@@ -279,8 +283,8 @@ namespace WinPaletter.UI.WP
 
                 if (Checked)
                 {
-                    using (Bitmap b0 = (scheme.Colors.Line(parentLevel).IsDark() ? Properties.Resources.darkmode_light : Properties.Resources.darkmode_dark).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.Line(parentLevel).IsDark() ? Properties.Resources.lightmode_light : Properties.Resources.lightmode_dark).Fade((float)(1m - val)))
+                    using (Bitmap b0 = (scheme.Colors.Line(parentLevel).IsDark() ? Resources.darkmode_light : Resources.darkmode_dark).Fade((float)val))
+                    using (Bitmap b1 = (scheme.Colors.Line(parentLevel).IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1m - val)))
                     {
                         G.DrawImage(b0, CheckC);
                         G.DrawImage(b1, CheckC);
@@ -288,8 +292,8 @@ namespace WinPaletter.UI.WP
                 }
                 else
                 {
-                    using (Bitmap b0 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.darkmode_light : Properties.Resources.darkmode_dark).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Properties.Resources.lightmode_light : Properties.Resources.lightmode_dark).Fade((float)(1m - val)))
+                    using (Bitmap b0 = (scheme.Colors.AccentAlt.IsDark() ? Resources.darkmode_light : Resources.darkmode_dark).Fade((float)val))
+                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1m - val)))
                     {
                         G.DrawImage(b0, CheckC);
                         G.DrawImage(b1, CheckC);

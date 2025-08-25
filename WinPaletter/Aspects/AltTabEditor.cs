@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Theme;
+using WinPaletter.UI.Simulation;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
 
@@ -25,7 +29,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -35,14 +39,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -63,7 +67,7 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -108,54 +112,54 @@ namespace WinPaletter
             {
                 case WindowStyle.W12:
                     {
-                        RadioImage1.Image = Assets.WinLogos.Win12;
+                        RadioImage1.Image = WinLogos.Win12;
                         break;
                     }
 
                 case WindowStyle.W11:
                     {
-                        RadioImage1.Image = Assets.WinLogos.Win11;
+                        RadioImage1.Image = WinLogos.Win11;
                         break;
                     }
 
                 case WindowStyle.W10:
                     {
-                        RadioImage1.Image = Assets.WinLogos.Win10;
+                        RadioImage1.Image = WinLogos.Win10;
                         break;
                     }
 
                 case WindowStyle.W81:
                     {
-                        RadioImage1.Image = Assets.WinLogos.Win8_1;
+                        RadioImage1.Image = WinLogos.Win8_1;
                         break;
                     }
 
                 case WindowStyle.W7:
                     {
-                        RadioImage1.Image = Assets.WinLogos.Win7;
+                        RadioImage1.Image = WinLogos.Win7;
                         break;
                     }
 
                 case WindowStyle.WVista:
                     {
-                        RadioImage1.Image = Assets.WinLogos.WinVista;
+                        RadioImage1.Image = WinLogos.WinVista;
                         break;
                     }
 
                 case WindowStyle.WXP:
                     {
-                        RadioImage1.Image = Assets.WinLogos.WinXP;
+                        RadioImage1.Image = WinLogos.WinXP;
                         break;
                     }
 
                 default:
                     {
-                        RadioImage1.Image = Assets.WinLogos.Win12;
+                        RadioImage1.Image = WinLogos.Win12;
                         break;
                     }
             }
 
-            RadioImage2.Image = Assets.WinLogos.WinXP;
+            RadioImage2.Image = WinLogos.WinXP;
 
             pnl_preview1.BackgroundImage = Program.Wallpaper;
             Classic_Preview1.BackgroundImage = Program.Wallpaper;
@@ -169,21 +173,21 @@ namespace WinPaletter
             {
                 case WindowStyle.W12:
                     {
-                        WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab11;
+                        WinElement1.Style = WinElement.Styles.AltTab11;
                         WinElement1.DarkMode = !Program.TM.Windows12.WinMode_Light;
                         break;
                     }
 
                 case WindowStyle.W11:
                     {
-                        WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab11;
+                        WinElement1.Style = WinElement.Styles.AltTab11;
                         WinElement1.DarkMode = !Program.TM.Windows11.WinMode_Light;
                         break;
                     }
 
                 case WindowStyle.W10:
                     {
-                        WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10;
+                        WinElement1.Style = WinElement.Styles.AltTab10;
                         WinElement1.DarkMode = !Program.TM.Windows10.WinMode_Light;
                         break;
                     }
@@ -192,7 +196,7 @@ namespace WinPaletter
                     {
                         if (Program.TM.Windows81.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite)
                         {
-                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8AeroLite;
+                            WinElement1.Style = WinElement.Styles.AltTab8AeroLite;
                             WinElement1.Background = Program.TM.Win32.Window;
                             WinElement1.Background2 = Program.TM.Win32.Hilight;
                             WinElement1.LinkColor = Program.TM.Win32.ButtonText;
@@ -200,7 +204,7 @@ namespace WinPaletter
                         }
                         else
                         {
-                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab8Aero;
+                            WinElement1.Style = WinElement.Styles.AltTab8Aero;
                             WinElement1.Background = Program.TM.Windows81.PersonalColors_Background;
                             WinElement1.Background2 = Program.TM.Windows81.PersonalColors_Background;
                         }
@@ -212,15 +216,15 @@ namespace WinPaletter
                     {
                         if (Program.TM.Windows7.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroOpaque)
                         {
-                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Opaque;
+                            WinElement1.Style = WinElement.Styles.AltTab7Opaque;
                         }
                         else if (Program.TM.Windows7.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.Basic)
                         {
-                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Basic;
+                            WinElement1.Style = WinElement.Styles.AltTab7Basic;
                         }
                         else
                         {
-                            WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab7Aero;
+                            WinElement1.Style = WinElement.Styles.AltTab7Aero;
                         }
 
                         WinElement1.Background = Program.TM.Windows7.ColorizationColor;
@@ -237,7 +241,7 @@ namespace WinPaletter
             Panel2.BackColor = PanelRRaised1.BackColor;
             LabelR1.Font = Program.TM.MetricsFonts.CaptionFont;
 
-            GroupBox4.Enabled = WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10 || ExplorerPatcher.CanBeUsed;
+            GroupBox4.Enabled = WinElement1.Style == WinElement.Styles.AltTab10 || ExplorerPatcher.CanBeUsed;
 
             if (ExplorerPatcher.CanBeUsed)
             {
@@ -245,17 +249,17 @@ namespace WinPaletter
                 {
                     if (Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0)) == 3)
                     {
-                        WinElement1.Style = UI.Simulation.WinElement.Styles.AltTab10;
+                        WinElement1.Style = WinElement.Styles.AltTab10;
                         WinElement1.DarkMode = !Program.TM.Windows11.WinMode_Light;
                     }
                 }
                 finally
                 {
-                    Microsoft.Win32.Registry.CurrentUser.Close();
+                    Registry.CurrentUser.Close();
                 }
             }
 
-            if (WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab7Basic)
+            if (WinElement1.Style == WinElement.Styles.AltTab7Basic)
             {
                 WinElement1.Size = new(360, 100);
             }
@@ -270,7 +274,7 @@ namespace WinPaletter
             tabs_preview_1.DoubleBuffer();
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.AltTab.Enabled;
             RadioImage1.Checked = TM.AltTab.Style == Theme.Structures.AltTab.Styles.Default | TM.AltTab.Style == Theme.Structures.AltTab.Styles.EP_Win10;
@@ -278,11 +282,11 @@ namespace WinPaletter
             Trackbar1.Value = TM.AltTab.Win10Opacity;
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.AltTab.Enabled = AspectEnabled;
             TM.AltTab.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
-            if (ExplorerPatcher.CanBeUsed & WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10)
+            if (ExplorerPatcher.CanBeUsed & WinElement1.Style == WinElement.Styles.AltTab10)
                 TM.AltTab.Style = Theme.Structures.AltTab.Styles.EP_Win10;
             TM.AltTab.Win10Opacity = Trackbar1.Value;
         }
@@ -301,7 +305,7 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            if (WinElement1.Style == UI.Simulation.WinElement.Styles.AltTab10) { WinElement1.BackColorAlpha = Trackbar1.Value; }
+            if (WinElement1.Style == WinElement.Styles.AltTab10) { WinElement1.BackColorAlpha = Trackbar1.Value; }
         }
     }
 }

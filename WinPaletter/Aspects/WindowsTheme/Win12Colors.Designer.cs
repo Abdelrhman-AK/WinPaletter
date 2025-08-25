@@ -124,6 +124,9 @@
             this.pictureBox13 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button3 = new WinPaletter.UI.WP.Button();
+            this.button2 = new WinPaletter.UI.WP.Button();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.alertBox3 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox26 = new WinPaletter.UI.WP.GroupBox();
@@ -1129,7 +1132,7 @@
             this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox1.Image = null;
-            this.alertBox1.Location = new System.Drawing.Point(4, 540);
+            this.alertBox1.Location = new System.Drawing.Point(4, 460);
             this.alertBox1.Name = "alertBox1";
             this.alertBox1.Size = new System.Drawing.Size(581, 60);
             this.alertBox1.TabIndex = 229;
@@ -1567,6 +1570,9 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage1.Controls.Add(this.button3);
+            this.tabPage1.Controls.Add(this.button2);
+            this.tabPage1.Controls.Add(this.alertBox2);
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox22);
@@ -1577,6 +1583,59 @@
             this.tabPage1.Size = new System.Drawing.Size(588, 604);
             this.tabPage1.TabIndex = 5;
             this.tabPage1.Text = "Visual Styles";
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.CustomColor = System.Drawing.Color.Empty;
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button3.Image = null;
+            this.button3.ImageGlyph = null;
+            this.button3.ImageGlyphEnabled = false;
+            this.button3.Location = new System.Drawing.Point(472, 565);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(113, 33);
+            this.button3.TabIndex = 234;
+            this.button3.Text = "Learn more";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.CustomColor = System.Drawing.Color.Empty;
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button2.Image = null;
+            this.button2.ImageGlyph = null;
+            this.button2.ImageGlyphEnabled = false;
+            this.button2.Location = new System.Drawing.Point(472, 526);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(113, 33);
+            this.button2.TabIndex = 233;
+            this.button2.Text = "Get it";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(4, 526);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(462, 72);
+            this.alertBox2.TabIndex = 232;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "Use SecureUxTheme by namazso on GitHub (untested on Windows 12) to let WinPalette" +
+    "r apply unsigned styles without patching Windows. Click \"Learn more\" for the bla" +
+    "ck screen (login loop) issue and fix.";
             // 
             // groupBox4
             // 
@@ -1896,6 +1955,7 @@
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 6;
+            this.toggle1.CheckedChanged += new System.EventHandler(this.toggle1_CheckedChanged);
             // 
             // groupBox22
             // 
@@ -2151,5 +2211,8 @@
         internal UI.WP.ComboBox VS_ColorsList;
         private UI.WP.AlertBox alertBox3;
         internal System.Windows.Forms.PictureBox pictureBox13;
+        internal UI.WP.AlertBox alertBox2;
+        private UI.WP.Button button3;
+        private UI.WP.Button button2;
     }
 }

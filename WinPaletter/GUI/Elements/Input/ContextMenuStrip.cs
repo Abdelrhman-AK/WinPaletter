@@ -2,9 +2,8 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
 {
@@ -112,7 +111,7 @@ namespace WinPaletter.UI.WP
             Renderer = new ContextMenuStripRenderer();
         }
 
-        private static readonly TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]

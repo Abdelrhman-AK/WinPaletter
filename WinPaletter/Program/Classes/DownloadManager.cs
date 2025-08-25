@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
+using System.ComponentModel;
+using System.IO;
 using System.Net.Http;
-using System.Security.Policy;
+using System.Net.Http.Headers;
+using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,7 +41,7 @@ namespace WinPaletter
         /// <summary>
         /// Event raised when the download is completed
         /// </summary>
-        public event EventHandler<System.ComponentModel.AsyncCompletedEventArgs> DownloadFileCompleted;
+        public event EventHandler<AsyncCompletedEventArgs> DownloadFileCompleted;
 
         /// <summary>       
         /// Event raised when an error occurs during the download
@@ -79,13 +83,13 @@ namespace WinPaletter
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't read string from `{url}`");
+                    Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
                     throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
                 }
                 else
                 {
                     result = await response.Content.ReadAsStringAsync();
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
+                    Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
                 }
             }
 
@@ -126,8 +130,8 @@ namespace WinPaletter
                     long totalBytes = response.Content.Headers.ContentLength.GetValueOrDefault();
 
                     // Open a stream to read the response content and create a file stream to write the downloaded data
-                    using (System.IO.Stream stream = await response.Content.ReadAsStreamAsync())
-                    using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
+                    using (Stream stream = await response.Content.ReadAsStreamAsync())
+                    using (FileStream fileStream = File.Create(destinationPath))
                     {
                         // Create a buffer to read the data
                         byte[] buffer = new byte[8192];
@@ -162,13 +166,13 @@ namespace WinPaletter
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
                 OnDownloadErrorOccurred($"Error downloading file: {ex.Message}", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
                 IsBusy = false;
             }
         }
@@ -204,7 +208,7 @@ namespace WinPaletter
                 {
                     Headers =
             {
-                Range = new System.Net.Http.Headers.RangeHeaderValue(startByte, endByte)
+                Range = new RangeHeaderValue(startByte, endByte)
             }
                 };
 
@@ -214,8 +218,8 @@ namespace WinPaletter
                 response.EnsureSuccessStatusCode();
 
                 // Open a stream to read the response content and create a file stream to write the downloaded data
-                using (System.IO.Stream stream = await response.Content.ReadAsStreamAsync())
-                using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
+                using (Stream stream = await response.Content.ReadAsStreamAsync())
+                using (FileStream fileStream = File.Create(destinationPath))
                 {
                     // Create a buffer to read the data
                     byte[] buffer = new byte[8192];
@@ -246,13 +250,13 @@ namespace WinPaletter
             {
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
                 OnDownloadErrorOccurred($"Error downloading file from byte {startByte} for length of {endByte} bytes: {ex.Message}", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
                 IsBusy = false;
             }
         }
@@ -281,11 +285,11 @@ namespace WinPaletter
                     result = response.Content.Headers.ContentLength.GetValueOrDefault();
                 }
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
                 OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}", ex);
                 result = 0;
             }
@@ -303,11 +307,11 @@ namespace WinPaletter
             {
                 UseDefaultCredentials = true,
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
-                SslProtocols = System.Security.Authentication.SslProtocols.Tls12 | System.Security.Authentication.SslProtocols.Tls11 | System.Security.Authentication.SslProtocols.Tls
+                SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls
 
             };
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Creating HttpClient with timeout of {Program.Timeout} ms and protocols {handler.SslProtocols}");
+            Program.Log?.Write(LogEventLevel.Information, $"Creating HttpClient with timeout of {Program.Timeout} ms and protocols {handler.SslProtocols}");
 
             return new HttpClient(handler)
             {
@@ -337,13 +341,13 @@ namespace WinPaletter
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't read string from `{url}`");
+                    Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
                     throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
                 }
                 else
                 {
                     result = response.Content.ReadAsStringAsync().Result;
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
+                    Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
                 }
             }
 
@@ -383,8 +387,8 @@ namespace WinPaletter
                     long totalBytes = response.Content.Headers.ContentLength.GetValueOrDefault();
 
                     // Open a stream to read the response content and create a file stream to write the downloaded data
-                    using (System.IO.Stream stream = response.Content.ReadAsStreamAsync().Result)
-                    using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
+                    using (Stream stream = response.Content.ReadAsStreamAsync().Result)
+                    using (FileStream fileStream = File.Create(destinationPath))
                     {
                         // Create a buffer to read the data
                         byte[] buffer = new byte[8192];
@@ -416,13 +420,13 @@ namespace WinPaletter
             {
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
                 OnDownloadErrorOccurred($"Error downloading file: {ex.Message}", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
                 IsBusy = false;
             }
         }
@@ -457,7 +461,7 @@ namespace WinPaletter
                 {
                     Headers =
             {
-                Range = new System.Net.Http.Headers.RangeHeaderValue(startByte, endByte)
+                Range = new RangeHeaderValue(startByte, endByte)
             }
                 };
 
@@ -467,8 +471,8 @@ namespace WinPaletter
                 response.EnsureSuccessStatusCode();
 
                 // Open a stream to read the response content and create a file stream to write the downloaded data
-                using (System.IO.Stream stream = response.Content.ReadAsStreamAsync().Result)
-                using (System.IO.FileStream fileStream = System.IO.File.Create(destinationPath))
+                using (Stream stream = response.Content.ReadAsStreamAsync().Result)
+                using (FileStream fileStream = File.Create(destinationPath))
                 {
                     // Create a buffer to read the data
                     byte[] buffer = new byte[8192];
@@ -500,13 +504,13 @@ namespace WinPaletter
             {
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
                 OnDownloadErrorOccurred($"Error downloading file: {ex.Message} from byte {startByte} for length of {endByte} bytes", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
                 IsBusy = false;
             }
         }
@@ -538,11 +542,11 @@ namespace WinPaletter
                     result = response.Content.Headers.ContentLength.GetValueOrDefault();
                 }
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
                 OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}", ex);
                 result = 0;
             }
@@ -557,7 +561,7 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Download is paused.");
+                Program.Log?.Write(LogEventLevel.Information, $"Download is paused.");
                 cancellationTokenSource?.Cancel();
             }
         }
@@ -569,7 +573,7 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Download is stopped.");
+                Program.Log?.Write(LogEventLevel.Information, $"Download is stopped.");
                 cancellationTokenSource?.Cancel();
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
                 // Additional cleanup if needed
@@ -593,7 +597,7 @@ namespace WinPaletter
         /// Method to raise the DownloadFileCompleted event
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnDownloadCompleted(System.ComponentModel.AsyncCompletedEventArgs e)
+        protected virtual void OnDownloadCompleted(AsyncCompletedEventArgs e)
         {
             DownloadFileCompleted?.Invoke(this, e);
         }

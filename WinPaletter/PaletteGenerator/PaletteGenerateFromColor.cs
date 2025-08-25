@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Theme.Structures;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -42,12 +44,14 @@ namespace WinPaletter
             actions.Clear();
             listBox1.Items.Clear();
 
+            listBox1.Font = Fonts.ConsoleMedium;
+
             // Backup the colors before the generation.
             if (Application.OpenForms.OfType<Win12Colors>().Count() > 0)
             {
                 Left = Forms.Win12Colors.Left + 10;
 
-                backup = new Theme.Structures.Windows10x()
+                backup = new Windows10x()
                 {
                     Titlebar_Active = Forms.Win12Colors.TActive.BackColor,
                     Titlebar_Inactive = Forms.Win12Colors.TInactive.BackColor,
@@ -67,7 +71,7 @@ namespace WinPaletter
             {
                 Left = Forms.Win11Colors.Left + 10;
 
-                backup = new Theme.Structures.Windows10x()
+                backup = new Windows10x()
                 {
                     Titlebar_Active = Forms.Win11Colors.TActive.BackColor,
                     Titlebar_Inactive = Forms.Win11Colors.TInactive.BackColor,
@@ -87,7 +91,7 @@ namespace WinPaletter
             {
                 Left = Forms.Win10Colors.Left + 10;
 
-                backup = new Theme.Structures.Windows10x()
+                backup = new Windows10x()
                 {
                     Titlebar_Active = Forms.Win10Colors.TActive.BackColor,
                     Titlebar_Inactive = Forms.Win10Colors.TInactive.BackColor,
@@ -107,7 +111,7 @@ namespace WinPaletter
             {
                 Left = Forms.Win81Colors.Left + 10;
 
-                backup = new Theme.Structures.Windows81()
+                backup = new Windows81()
                 {
                     ColorizationColor = Forms.Win81Colors.ColorizationColor_pick.BackColor,
                     PersonalColors_Background = Forms.Win81Colors.personalcls_background_pick.BackColor,
@@ -121,7 +125,7 @@ namespace WinPaletter
             {
                 Left = Forms.Win8Colors.Left + 10;
 
-                backup = new Theme.Structures.Windows8()
+                backup = new Windows8()
                 {
                     ColorizationColor = Forms.Win8Colors.ColorizationColor_pick.BackColor,
                 };
@@ -131,10 +135,19 @@ namespace WinPaletter
             {
                 Left = Forms.Win7Colors.Left + 10;
 
-                backup = new Theme.Structures.Windows7()
+                backup = new Windows7()
                 {
                     ColorizationColor = Forms.Win7Colors.ColorizationColor_pick.BackColor,
                     ColorizationAfterglow = Forms.Win7Colors.ColorizationAfterglow_pick.BackColor
+                };
+            }
+
+            else if (Application.OpenForms.OfType<WinVistaColors>().Count() > 0)
+            {
+                Left = Forms.WinVistaColors.Left + 10;
+                backup = new Windows7()
+                {
+                    ColorizationColor = Forms.WinVistaColors.ColorizationColor_pick.BackColor,
                 };
             }
 
@@ -180,11 +193,6 @@ namespace WinPaletter
         private void SelectedColor_BackColorChanged(object sender, EventArgs e)
         {
             if (!PickerOpened) GetColors();
-        }
-
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            GetColors();
         }
 
         private void RadioButton3_CheckedChanged(object sender, EventArgs e)
@@ -241,7 +249,7 @@ namespace WinPaletter
             Colors_List.Add(_Color);
 
             // Add the inverted color into the list of colors if the Invert checkbox is checked.
-            if (CheckBox1.Checked) Colors_List.Add(_ColorInverted);
+            if (toggle1.Checked) Colors_List.Add(_ColorInverted);
 
             // Add the lighter and darker colors into the list of colors to complete palette generation.
             // Trackbar1.Value is the number of colors to generate.
@@ -251,7 +259,7 @@ namespace WinPaletter
                 Colors_List.Add(_Color.Light((float)(i / Trackbar1.Value)));
 
                 // Add the inverted lighter and darker colors into the list of colors if the Invert checkbox is checked.
-                if (CheckBox1.Checked)
+                if (toggle1.Checked)
                 {
                     Colors_List.Add(_ColorInverted.Dark((float)(i / Trackbar1.Value)));
                     Colors_List.Add(_ColorInverted.Light((float)(i / Trackbar1.Value)));
@@ -473,13 +481,34 @@ namespace WinPaletter
                     actions.Last().Invoke();
                 }
 
+                else if (Application.OpenForms.OfType<WinVistaColors>().Count() > 0)
+                {
+                    Color color0 = Colors_List[arr[0]];
+                    Color color1 = Colors_List[arr[1]];
+
+                    actions.Add(() =>
+                    {
+                        Forms.WinVistaColors.ColorizationColor_pick.BackColor = color0;
+                        Forms.WinVistaColors.windowsDesktop1.TitlebarColor_Active = color0;
+                        Forms.WinVistaColors.windowsDesktop1.TitlebarColor_Inactive = color0;
+                    });
+
+                    listBox1.Items.Add(DateTime.Now.ToLongTimeString());
+
+                    actions.Last().Invoke();
+                }
+
+                Button2.Enabled = true;
+
             }
             else
             {
+                Button2.Enabled = false;
+
                 // Hide a tooltip notification as an error message as the palette generation has failed.
                 Program.ToolTip.ToolTipText = Program.Lang.Strings.Tips.PaletteSourceGeneration;
                 Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Error;
-                Program.ToolTip.Image = Assets.Notifications.Error;
+                Program.ToolTip.Image = Notifications.Error;
 
                 Point location = new(0, ((Control)sender).Height + 2);
 
@@ -493,104 +522,111 @@ namespace WinPaletter
 
             if (Application.OpenForms.OfType<Win12Colors>().Count() > 0)
             {
-                Forms.Win12Colors.TActive.BackColor = ((Theme.Structures.Windows10x)backup).Titlebar_Active;
-                Forms.Win12Colors.TInactive.BackColor = ((Theme.Structures.Windows10x)backup).Titlebar_Inactive;
-                Forms.Win12Colors.C1.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index5;
-                Forms.Win12Colors.C2.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index0;
-                Forms.Win12Colors.C3.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index1;
-                Forms.Win12Colors.C4.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index4;
-                Forms.Win12Colors.C5.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index3;
-                Forms.Win12Colors.C6.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index2;
-                Forms.Win12Colors.C7.BackColor = ((Theme.Structures.Windows10x)backup).StartMenu_Accent;
-                Forms.Win12Colors.C8.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index6;
-                Forms.Win12Colors.C9.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index7;
-                Forms.Win12Colors.windowsDesktop1.TitlebarColor_Active = ((Theme.Structures.Windows10x)backup).Titlebar_Active;
-                Forms.Win12Colors.windowsDesktop1.TitlebarColor_Inactive = ((Theme.Structures.Windows10x)backup).Titlebar_Inactive;
-                Forms.Win12Colors.windowsDesktop1.Color1 = ((Theme.Structures.Windows10x)backup).Color_Index5;
-                Forms.Win12Colors.windowsDesktop1.Color2 = ((Theme.Structures.Windows10x)backup).Color_Index0;
-                Forms.Win12Colors.windowsDesktop1.Color3 = ((Theme.Structures.Windows10x)backup).Color_Index1;
-                Forms.Win12Colors.windowsDesktop1.Color4 = ((Theme.Structures.Windows10x)backup).Color_Index4;
-                Forms.Win12Colors.windowsDesktop1.Color5 = ((Theme.Structures.Windows10x)backup).Color_Index3;
-                Forms.Win12Colors.windowsDesktop1.Color6 = ((Theme.Structures.Windows10x)backup).Color_Index2;
-                Forms.Win12Colors.windowsDesktop1.Color7 = ((Theme.Structures.Windows10x)backup).StartMenu_Accent;
-                Forms.Win12Colors.windowsDesktop1.Color8 = ((Theme.Structures.Windows10x)backup).Color_Index6;
-                Forms.Win12Colors.windowsDesktop1.Color9 = ((Theme.Structures.Windows10x)backup).Color_Index7;
+                Forms.Win12Colors.TActive.BackColor = ((Windows10x)backup).Titlebar_Active;
+                Forms.Win12Colors.TInactive.BackColor = ((Windows10x)backup).Titlebar_Inactive;
+                Forms.Win12Colors.C1.BackColor = ((Windows10x)backup).Color_Index5;
+                Forms.Win12Colors.C2.BackColor = ((Windows10x)backup).Color_Index0;
+                Forms.Win12Colors.C3.BackColor = ((Windows10x)backup).Color_Index1;
+                Forms.Win12Colors.C4.BackColor = ((Windows10x)backup).Color_Index4;
+                Forms.Win12Colors.C5.BackColor = ((Windows10x)backup).Color_Index3;
+                Forms.Win12Colors.C6.BackColor = ((Windows10x)backup).Color_Index2;
+                Forms.Win12Colors.C7.BackColor = ((Windows10x)backup).StartMenu_Accent;
+                Forms.Win12Colors.C8.BackColor = ((Windows10x)backup).Color_Index6;
+                Forms.Win12Colors.C9.BackColor = ((Windows10x)backup).Color_Index7;
+                Forms.Win12Colors.windowsDesktop1.TitlebarColor_Active = ((Windows10x)backup).Titlebar_Active;
+                Forms.Win12Colors.windowsDesktop1.TitlebarColor_Inactive = ((Windows10x)backup).Titlebar_Inactive;
+                Forms.Win12Colors.windowsDesktop1.Color1 = ((Windows10x)backup).Color_Index5;
+                Forms.Win12Colors.windowsDesktop1.Color2 = ((Windows10x)backup).Color_Index0;
+                Forms.Win12Colors.windowsDesktop1.Color3 = ((Windows10x)backup).Color_Index1;
+                Forms.Win12Colors.windowsDesktop1.Color4 = ((Windows10x)backup).Color_Index4;
+                Forms.Win12Colors.windowsDesktop1.Color5 = ((Windows10x)backup).Color_Index3;
+                Forms.Win12Colors.windowsDesktop1.Color6 = ((Windows10x)backup).Color_Index2;
+                Forms.Win12Colors.windowsDesktop1.Color7 = ((Windows10x)backup).StartMenu_Accent;
+                Forms.Win12Colors.windowsDesktop1.Color8 = ((Windows10x)backup).Color_Index6;
+                Forms.Win12Colors.windowsDesktop1.Color9 = ((Windows10x)backup).Color_Index7;
             }
 
             else if (Application.OpenForms.OfType<Win11Colors>().Count() > 0)
             {
-                Forms.Win11Colors.TActive.BackColor = ((Theme.Structures.Windows10x)backup).Titlebar_Active;
-                Forms.Win11Colors.TInactive.BackColor = ((Theme.Structures.Windows10x)backup).Titlebar_Inactive;
-                Forms.Win11Colors.C1.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index5;
-                Forms.Win11Colors.C2.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index0;
-                Forms.Win11Colors.C3.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index1;
-                Forms.Win11Colors.C4.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index4;
-                Forms.Win11Colors.C5.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index3;
-                Forms.Win11Colors.C6.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index2;
-                Forms.Win11Colors.C7.BackColor = ((Theme.Structures.Windows10x)backup).StartMenu_Accent;
-                Forms.Win11Colors.C8.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index6;
-                Forms.Win11Colors.C9.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index7;
-                Forms.Win11Colors.windowsDesktop1.TitlebarColor_Active = ((Theme.Structures.Windows10x)backup).Titlebar_Active;
-                Forms.Win11Colors.windowsDesktop1.TitlebarColor_Inactive = ((Theme.Structures.Windows10x)backup).Titlebar_Inactive;
-                Forms.Win11Colors.windowsDesktop1.Color1 = ((Theme.Structures.Windows10x)backup).Color_Index5;
-                Forms.Win11Colors.windowsDesktop1.Color2 = ((Theme.Structures.Windows10x)backup).Color_Index0;
-                Forms.Win11Colors.windowsDesktop1.Color3 = ((Theme.Structures.Windows10x)backup).Color_Index1;
-                Forms.Win11Colors.windowsDesktop1.Color4 = ((Theme.Structures.Windows10x)backup).Color_Index4;
-                Forms.Win11Colors.windowsDesktop1.Color5 = ((Theme.Structures.Windows10x)backup).Color_Index3;
-                Forms.Win11Colors.windowsDesktop1.Color6 = ((Theme.Structures.Windows10x)backup).Color_Index2;
-                Forms.Win11Colors.windowsDesktop1.Color7 = ((Theme.Structures.Windows10x)backup).StartMenu_Accent;
-                Forms.Win11Colors.windowsDesktop1.Color8 = ((Theme.Structures.Windows10x)backup).Color_Index6;
-                Forms.Win11Colors.windowsDesktop1.Color9 = ((Theme.Structures.Windows10x)backup).Color_Index7;
+                Forms.Win11Colors.TActive.BackColor = ((Windows10x)backup).Titlebar_Active;
+                Forms.Win11Colors.TInactive.BackColor = ((Windows10x)backup).Titlebar_Inactive;
+                Forms.Win11Colors.C1.BackColor = ((Windows10x)backup).Color_Index5;
+                Forms.Win11Colors.C2.BackColor = ((Windows10x)backup).Color_Index0;
+                Forms.Win11Colors.C3.BackColor = ((Windows10x)backup).Color_Index1;
+                Forms.Win11Colors.C4.BackColor = ((Windows10x)backup).Color_Index4;
+                Forms.Win11Colors.C5.BackColor = ((Windows10x)backup).Color_Index3;
+                Forms.Win11Colors.C6.BackColor = ((Windows10x)backup).Color_Index2;
+                Forms.Win11Colors.C7.BackColor = ((Windows10x)backup).StartMenu_Accent;
+                Forms.Win11Colors.C8.BackColor = ((Windows10x)backup).Color_Index6;
+                Forms.Win11Colors.C9.BackColor = ((Windows10x)backup).Color_Index7;
+                Forms.Win11Colors.windowsDesktop1.TitlebarColor_Active = ((Windows10x)backup).Titlebar_Active;
+                Forms.Win11Colors.windowsDesktop1.TitlebarColor_Inactive = ((Windows10x)backup).Titlebar_Inactive;
+                Forms.Win11Colors.windowsDesktop1.Color1 = ((Windows10x)backup).Color_Index5;
+                Forms.Win11Colors.windowsDesktop1.Color2 = ((Windows10x)backup).Color_Index0;
+                Forms.Win11Colors.windowsDesktop1.Color3 = ((Windows10x)backup).Color_Index1;
+                Forms.Win11Colors.windowsDesktop1.Color4 = ((Windows10x)backup).Color_Index4;
+                Forms.Win11Colors.windowsDesktop1.Color5 = ((Windows10x)backup).Color_Index3;
+                Forms.Win11Colors.windowsDesktop1.Color6 = ((Windows10x)backup).Color_Index2;
+                Forms.Win11Colors.windowsDesktop1.Color7 = ((Windows10x)backup).StartMenu_Accent;
+                Forms.Win11Colors.windowsDesktop1.Color8 = ((Windows10x)backup).Color_Index6;
+                Forms.Win11Colors.windowsDesktop1.Color9 = ((Windows10x)backup).Color_Index7;
             }
 
             else if (Application.OpenForms.OfType<Win10Colors>().Count() > 0)
             {
-                Forms.Win10Colors.TActive.BackColor = ((Theme.Structures.Windows10x)backup).Titlebar_Active;
-                Forms.Win10Colors.TInactive.BackColor = ((Theme.Structures.Windows10x)backup).Titlebar_Inactive;
-                Forms.Win10Colors.C1.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index5;
-                Forms.Win10Colors.C2.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index0;
-                Forms.Win10Colors.C3.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index1;
-                Forms.Win10Colors.C4.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index4;
-                Forms.Win10Colors.C5.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index3;
-                Forms.Win10Colors.C6.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index2;
-                Forms.Win10Colors.C7.BackColor = ((Theme.Structures.Windows10x)backup).StartMenu_Accent;
-                Forms.Win10Colors.C8.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index6;
-                Forms.Win10Colors.C9.BackColor = ((Theme.Structures.Windows10x)backup).Color_Index7;
-                Forms.Win10Colors.windowsDesktop1.TitlebarColor_Active = ((Theme.Structures.Windows10x)backup).Titlebar_Active;
-                Forms.Win10Colors.windowsDesktop1.TitlebarColor_Inactive = ((Theme.Structures.Windows10x)backup).Titlebar_Inactive;
-                Forms.Win10Colors.windowsDesktop1.Color1 = ((Theme.Structures.Windows10x)backup).Color_Index5;
-                Forms.Win10Colors.windowsDesktop1.Color2 = ((Theme.Structures.Windows10x)backup).Color_Index0;
-                Forms.Win10Colors.windowsDesktop1.Color3 = ((Theme.Structures.Windows10x)backup).Color_Index1;
-                Forms.Win10Colors.windowsDesktop1.Color4 = ((Theme.Structures.Windows10x)backup).Color_Index4;
-                Forms.Win10Colors.windowsDesktop1.Color5 = ((Theme.Structures.Windows10x)backup).Color_Index3;
-                Forms.Win10Colors.windowsDesktop1.Color6 = ((Theme.Structures.Windows10x)backup).Color_Index2;
-                Forms.Win10Colors.windowsDesktop1.Color7 = ((Theme.Structures.Windows10x)backup).StartMenu_Accent;
-                Forms.Win10Colors.windowsDesktop1.Color8 = ((Theme.Structures.Windows10x)backup).Color_Index6;
-                Forms.Win10Colors.windowsDesktop1.Color9 = ((Theme.Structures.Windows10x)backup).Color_Index7;
+                Forms.Win10Colors.TActive.BackColor = ((Windows10x)backup).Titlebar_Active;
+                Forms.Win10Colors.TInactive.BackColor = ((Windows10x)backup).Titlebar_Inactive;
+                Forms.Win10Colors.C1.BackColor = ((Windows10x)backup).Color_Index5;
+                Forms.Win10Colors.C2.BackColor = ((Windows10x)backup).Color_Index0;
+                Forms.Win10Colors.C3.BackColor = ((Windows10x)backup).Color_Index1;
+                Forms.Win10Colors.C4.BackColor = ((Windows10x)backup).Color_Index4;
+                Forms.Win10Colors.C5.BackColor = ((Windows10x)backup).Color_Index3;
+                Forms.Win10Colors.C6.BackColor = ((Windows10x)backup).Color_Index2;
+                Forms.Win10Colors.C7.BackColor = ((Windows10x)backup).StartMenu_Accent;
+                Forms.Win10Colors.C8.BackColor = ((Windows10x)backup).Color_Index6;
+                Forms.Win10Colors.C9.BackColor = ((Windows10x)backup).Color_Index7;
+                Forms.Win10Colors.windowsDesktop1.TitlebarColor_Active = ((Windows10x)backup).Titlebar_Active;
+                Forms.Win10Colors.windowsDesktop1.TitlebarColor_Inactive = ((Windows10x)backup).Titlebar_Inactive;
+                Forms.Win10Colors.windowsDesktop1.Color1 = ((Windows10x)backup).Color_Index5;
+                Forms.Win10Colors.windowsDesktop1.Color2 = ((Windows10x)backup).Color_Index0;
+                Forms.Win10Colors.windowsDesktop1.Color3 = ((Windows10x)backup).Color_Index1;
+                Forms.Win10Colors.windowsDesktop1.Color4 = ((Windows10x)backup).Color_Index4;
+                Forms.Win10Colors.windowsDesktop1.Color5 = ((Windows10x)backup).Color_Index3;
+                Forms.Win10Colors.windowsDesktop1.Color6 = ((Windows10x)backup).Color_Index2;
+                Forms.Win10Colors.windowsDesktop1.Color7 = ((Windows10x)backup).StartMenu_Accent;
+                Forms.Win10Colors.windowsDesktop1.Color8 = ((Windows10x)backup).Color_Index6;
+                Forms.Win10Colors.windowsDesktop1.Color9 = ((Windows10x)backup).Color_Index7;
             }
 
             else if (Application.OpenForms.OfType<Win81Colors>().Count() > 0)
             {
-                Forms.Win81Colors.ColorizationColor_pick.BackColor = ((Theme.Structures.Windows81)backup).ColorizationColor;
-                Forms.Win81Colors.personalcls_background_pick.BackColor = ((Theme.Structures.Windows81)backup).PersonalColors_Background;
-                Forms.Win81Colors.accent_pick.BackColor = ((Theme.Structures.Windows81)backup).AccentColor;
-                Forms.Win81Colors.personalcolor_accent_pick.BackColor = ((Theme.Structures.Windows81)backup).PersonalColors_Accent;
-                Forms.Win81Colors.start_pick.BackColor = ((Theme.Structures.Windows81)backup).StartColor;
+                Forms.Win81Colors.ColorizationColor_pick.BackColor = ((Windows81)backup).ColorizationColor;
+                Forms.Win81Colors.personalcls_background_pick.BackColor = ((Windows81)backup).PersonalColors_Background;
+                Forms.Win81Colors.accent_pick.BackColor = ((Windows81)backup).AccentColor;
+                Forms.Win81Colors.personalcolor_accent_pick.BackColor = ((Windows81)backup).PersonalColors_Accent;
+                Forms.Win81Colors.start_pick.BackColor = ((Windows81)backup).StartColor;
             }
 
             else if (Application.OpenForms.OfType<Win8Colors>().Count() > 0)
             {
-                Forms.Win8Colors.ColorizationColor_pick.BackColor = ((Theme.Structures.Windows8)backup).ColorizationColor;
+                Forms.Win8Colors.ColorizationColor_pick.BackColor = ((Windows8)backup).ColorizationColor;
             }
 
             else if (Application.OpenForms.OfType<Win7Colors>().Count() > 0)
             {
-                Forms.Win7Colors.ColorizationColor_pick.BackColor = ((Theme.Structures.Windows7)backup).ColorizationColor;
-                Forms.Win7Colors.ColorizationAfterglow_pick.BackColor = ((Theme.Structures.Windows7)backup).ColorizationAfterglow;
-                Forms.Win7Colors.windowsDesktop1.TitlebarColor_Active = ((Theme.Structures.Windows7)backup).ColorizationColor;
-                Forms.Win7Colors.windowsDesktop1.TitlebarColor_Inactive = ((Theme.Structures.Windows7)backup).ColorizationColor;
-                Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Active = ((Theme.Structures.Windows7)backup).ColorizationAfterglow;
-                Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Inactive = ((Theme.Structures.Windows7)backup).ColorizationAfterglow;
+                Forms.Win7Colors.ColorizationColor_pick.BackColor = ((Windows7)backup).ColorizationColor;
+                Forms.Win7Colors.ColorizationAfterglow_pick.BackColor = ((Windows7)backup).ColorizationAfterglow;
+                Forms.Win7Colors.windowsDesktop1.TitlebarColor_Active = ((Windows7)backup).ColorizationColor;
+                Forms.Win7Colors.windowsDesktop1.TitlebarColor_Inactive = ((Windows7)backup).ColorizationColor;
+                Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Active = ((Windows7)backup).ColorizationAfterglow;
+                Forms.Win7Colors.windowsDesktop1.AfterGlowColor_Inactive = ((Windows7)backup).ColorizationAfterglow;
+            }
+
+            else if (Application.OpenForms.OfType<WinVistaColors>().Count() > 0)
+            {
+                Forms.WinVistaColors.ColorizationColor_pick.BackColor = ((Windows7)backup).ColorizationColor;
+                Forms.WinVistaColors.windowsDesktop1.TitlebarColor_Active = ((Windows7)backup).ColorizationColor;
+                Forms.WinVistaColors.windowsDesktop1.TitlebarColor_Inactive = ((Windows7)backup).ColorizationColor;
             }
 
             Close();
@@ -601,16 +637,21 @@ namespace WinPaletter
             Close();
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Undo the color changes and restore from a saved action.
-            actions?.ElementAt(listBox1.SelectedIndex)?.Invoke();
-        }
-
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
             // Update the colors when the trackbar value changes.
             GetColors();
+        }
+
+        private void toggle1_CheckedChanged(object sender, EventArgs e)
+        {
+            GetColors();
+        }
+
+        private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            // Undo the color changes and restore from a saved action.
+            actions?.ElementAt(listBox1.SelectedIndex)?.Invoke();
         }
     }
 }

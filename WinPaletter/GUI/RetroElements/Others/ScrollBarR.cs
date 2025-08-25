@@ -496,12 +496,12 @@ namespace WinPaletter.UI.Retro
                     if (CursorOnFace)
                     {
                         // Invoke the editor for the face color
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonFace)));
+                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
                     }
                     else if (CursorOnHilight)
                     {
                         // Invoke the editor for the hilight color
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.ButtonHilight)));
+                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
                     }
                 }
             }

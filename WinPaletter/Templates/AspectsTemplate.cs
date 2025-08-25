@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -507,7 +508,7 @@ namespace WinPaletter
         {
             _data.Enabled = ((UI.WP.Toggle)sender).Checked;
 
-            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Properties.Resources.checker_enabled : Properties.Resources.checker_disabled;
+            checker_img.Image = ((UI.WP.Toggle)sender).Checked ? Resources.checker_enabled : Resources.checker_disabled;
 
             AspectEnabledChanged?.Invoke(sender, EventArgs.Empty);
 
@@ -587,11 +588,11 @@ namespace WinPaletter
                 // Create a restore point in a separate thread to avoid UI freeze, followed by applying the aspect
                 Task.Run(() =>
                 {
-                    Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.WaitCursor));
+                    Invoke((Action)(() => Cursor = Cursors.WaitCursor));
 
                     SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Lang.Strings.General.RestorePoint_Aspect, _data.AspectName));
 
-                    Invoke((Action)(() => Cursor = System.Windows.Forms.Cursors.Default));
+                    Invoke((Action)(() => Cursor = Cursors.Default));
 
                     Invoke(() =>
                     {
@@ -604,11 +605,6 @@ namespace WinPaletter
 
                 wic.Undo();
             }
-        }
-
-        private void btn_apply_Click(object sender, EventArgs e)
-        {
-
         }
     }
 

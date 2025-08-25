@@ -2,8 +2,11 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -44,7 +47,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
                             LoadFromTM(TMx.LogonUI12);
@@ -61,7 +64,7 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
                     LoadFromTM(TMx.LogonUI12);
@@ -76,7 +79,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle))
+            using (Manager TMx = Default.Get(Program.WindowStyle))
             {
                 if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
                     LoadFromTM(TMx.LogonUI12);
@@ -105,12 +108,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(ref LogonUI10x);
@@ -167,7 +170,7 @@ namespace WinPaletter
             LoadData(data);
 
             tabs_preview_1.SelectedIndex = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? 1 : 0;
-            pictureBox1.Image = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? Assets.Win10Preview.LockScreen : Assets.Win11Preview.LockScreen;
+            pictureBox1.Image = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? Win10Preview.LockScreen : Win11Preview.LockScreen;
 
             label1.Text = DateTime.Now.ToString("h:mm");
             label2.Text = DateTime.Now.ToString("dddd, MMMM d");
@@ -226,25 +229,25 @@ namespace WinPaletter
             string defaultLockScreen = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg") as string;
 
             // Get the path to the current user's lock screen image
-            string lockScreenPath = System.IO.Path.Combine(SysPaths.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
+            string lockScreenPath = Path.Combine(SysPaths.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
 
-            if (System.IO.Directory.Exists(lockScreenPath))
+            if (Directory.Exists(lockScreenPath))
             {
                 // Get the list of files in the lock screen folder
-                string[] files = System.IO.Directory.GetFiles(lockScreenPath);
+                string[] files = Directory.GetFiles(lockScreenPath);
 
                 if (files.Count() > 0)
                 {
                     // Find the most recently accessed File (assuming it's the lock screen image)
-                    mostRecentFile = files.OrderByDescending(System.IO.File.GetLastAccessTime).FirstOrDefault();
+                    mostRecentFile = files.OrderByDescending(File.GetLastAccessTime).FirstOrDefault();
                 }
             }
 
-            if (mostRecentFile != null && System.IO.File.Exists(mostRecentFile))
+            if (mostRecentFile != null && File.Exists(mostRecentFile))
             {
                 return BitmapMgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
             }
-            else if (System.IO.File.Exists(defaultLockScreen))
+            else if (File.Exists(defaultLockScreen))
             {
                 return BitmapMgr.Load(defaultLockScreen).Resize(tabs_preview_1.Size);
             }

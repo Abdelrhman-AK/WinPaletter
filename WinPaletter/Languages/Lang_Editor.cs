@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.Simulation;
 
 namespace WinPaletter
 {
@@ -143,7 +145,7 @@ namespace WinPaletter
             data.Columns[2].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
 
             // Load the global strings from the language file and also load from native localizer (Default English)
-            JObject JObject_File = JToken.Parse(System.IO.File.ReadAllText(LangFile))["Global Strings"] as JObject;
+            JObject JObject_File = JToken.Parse(File.ReadAllText(LangFile))["Global Strings"] as JObject;
             JObject JObject_App = JObject.FromObject(nativeLang.Strings);
 
             // Populate loaded localizer's global string and also load native English (To make user see both in DataGridView)
@@ -378,7 +380,7 @@ namespace WinPaletter
                         To.Controls.Add(tabs);
                     }
 
-                    else if (ctrl is UI.Simulation.Window)
+                    else if (ctrl is Window)
                     {
                         // Create a new window simulation control
                         TextTranslationItem c = new()
@@ -1269,13 +1271,13 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button2_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists(LangFile))
+            if (File.Exists(LangFile))
             {
                 JObject formsJObject = JObject.FromObject(FormsList);
 
                 modifiedLang.Save(LangFile, formsJObject);
 
-                JObject JObj = JToken.Parse(System.IO.File.ReadAllText(LangFile)) as JObject;
+                JObject JObj = JToken.Parse(File.ReadAllText(LangFile)) as JObject;
 
                 // Create a new JObject for the information
                 JObject j_info = new()
@@ -1293,7 +1295,7 @@ namespace WinPaletter
                 JObj["Global Strings"] = CreateJObjectFromDataGridView(data);
 
                 // Save the main JObject to the language file
-                System.IO.File.WriteAllText(LangFile, JObj.ToString());
+                File.WriteAllText(LangFile, JObj.ToString());
 
                 // Hide a message box that the language file is saved
                 MsgBox(Program.Lang.Strings.Languages.Saved, MessageBoxButtons.OK, MessageBoxIcon.Information);

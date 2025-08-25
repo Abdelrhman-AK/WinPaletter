@@ -41,6 +41,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button2 = new WinPaletter.UI.WP.Button();
+            this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.alertBox3 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox26 = new WinPaletter.UI.WP.GroupBox();
@@ -268,7 +270,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(678, 534);
+            this.tabControl1.Size = new System.Drawing.Size(678, 578);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 228;
             // 
@@ -279,7 +281,7 @@
             this.tabPage2.Location = new System.Drawing.Point(144, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(530, 526);
+            this.tabPage2.Size = new System.Drawing.Size(530, 570);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Windows color";
             // 
@@ -325,15 +327,52 @@
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage4.Controls.Add(this.button2);
+            this.tabPage4.Controls.Add(this.alertBox2);
             this.tabPage4.Controls.Add(this.groupBox4);
             this.tabPage4.Controls.Add(this.groupBox3);
             this.tabPage4.Controls.Add(this.groupBox5);
             this.tabPage4.Location = new System.Drawing.Point(144, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(530, 526);
+            this.tabPage4.Size = new System.Drawing.Size(530, 570);
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "Visual Styles";
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.CustomColor = System.Drawing.Color.Empty;
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button2.Image = null;
+            this.button2.ImageGlyph = null;
+            this.button2.ImageGlyphEnabled = false;
+            this.button2.Location = new System.Drawing.Point(437, 516);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(87, 48);
+            this.button2.TabIndex = 243;
+            this.button2.Text = "Get it";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // alertBox2
+            // 
+            this.alertBox2.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox2.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox2.CenterText = false;
+            this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox2.Image = null;
+            this.alertBox2.Location = new System.Drawing.Point(6, 516);
+            this.alertBox2.Name = "alertBox2";
+            this.alertBox2.Size = new System.Drawing.Size(425, 48);
+            this.alertBox2.TabIndex = 242;
+            this.alertBox2.TabStop = false;
+            this.alertBox2.Text = "Use UxTheme Multi-Patcher by Windows X Live on Neowin to let WinPaletter apply un" +
+    "signed Visual Styles.";
             // 
             // groupBox4
             // 
@@ -653,6 +692,7 @@
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 6;
+            this.toggle1.CheckedChanged += new System.EventHandler(this.toggle1_CheckedChanged);
             // 
             // groupBox5
             // 
@@ -785,7 +825,7 @@
             // WinVistaColors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.ClientSize = new System.Drawing.Size(1229, 641);
+            this.ClientSize = new System.Drawing.Size(1229, 685);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tips_box);
             this.Controls.Add(this.groupBox2);
@@ -866,5 +906,7 @@
         internal System.Windows.Forms.Label label5;
         internal UI.WP.RadioImage theme_basic;
         internal UI.WP.RadioImage theme_aeroopaque;
+        private UI.WP.Button button2;
+        internal UI.WP.AlertBox alertBox2;
     }
 }

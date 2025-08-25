@@ -1,4 +1,5 @@
 ﻿using Devcorp.Controls.VisualStyles;
+using libmsstyle;
 using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
@@ -6,10 +7,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
+using WinPaletter.UI.Controllers;
+using WinPaletter.UI.Retro;
 
 namespace WinPaletter
 {
@@ -31,7 +35,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -110,14 +114,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -133,7 +137,7 @@ namespace WinPaletter
                     try
                     {
                         //Newer versions of msstyles
-                        using (libmsstyle.VisualStyle visualStyle = new(theme))
+                        using (VisualStyle visualStyle = new(theme))
                         {
                             using (Manager TMx = new(Manager.Source.Empty) { MetricsFonts = visualStyle.MetricsFonts() })
                             {
@@ -146,13 +150,13 @@ namespace WinPaletter
                         // Old msstyles (Windows XP)
                         try
                         {
-                            if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                            if (Path.GetExtension(theme).ToLower() == ".msstyles")
                             {
-                                System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                                 theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                             }
 
-                            if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                            if (!string.IsNullOrEmpty(theme) && File.Exists(theme))
                             {
                                 using (VisualStyleFile vs = new(theme))
                                 {
@@ -186,7 +190,7 @@ namespace WinPaletter
                         ApplyToTM(TMx);
                         try
                         {
-                            System.IO.File.WriteAllText(dlg.FileName, TMx.MetricsFonts.ToString(sender is not ToolStripMenuItem ? Program.TM.Win32 : null));
+                            File.WriteAllText(dlg.FileName, TMx.MetricsFonts.ToString(sender is not ToolStripMenuItem ? Program.TM.Win32 : null));
                         }
                         catch (Exception ex)
                         {
@@ -207,12 +211,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -272,7 +276,7 @@ namespace WinPaletter
             alertBox1.Visible = Program.WindowStyle == PreviewHelpers.WindowStyle.W11 || Program.WindowStyle == PreviewHelpers.WindowStyle.W12;
 
             comboBox1.Items.Clear();
-            comboBox1.Items.AddRange(Theme.Schemes.Metrics.Split('\n').Select(f => f.Split('|')[0]).ToArray());
+            comboBox1.Items.AddRange(Schemes.Metrics.Split('\n').Select(f => f.Split('|')[0]).ToArray());
             comboBox1.SelectedIndex = 0;
 
             LoadFromTM(Program.TM);
@@ -727,7 +731,7 @@ namespace WinPaletter
             windowMetrics1.Refresh();
         }
 
-        private void EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        private void EditorInvoker(object sender, EditorEventArgs e)
         {
             if (e.PropertyName == nameof(windowMetrics1.CaptionFont))
             {
@@ -792,7 +796,7 @@ namespace WinPaletter
             }
         }
 
-        private void Desktop_icons_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        private void Desktop_icons_EditorInvoker(object sender, EditorEventArgs e)
         {
             if (e.PropertyName == nameof(Desktop_icons.IconSize))
             {
@@ -816,62 +820,62 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.CaptionHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.CaptionHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.CaptionWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.CaptionWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX3_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.BorderWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.BorderWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX4_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.PaddedBorderWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.PaddedBorderWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX5_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.SmCaptionHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.SmCaptionHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX6_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.SmCaptionWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.SmCaptionWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX7_ValueChanged(object sender, EventArgs e)
         {
-            Desktop_icons.IconSpacing_Vertical = ((UI.Controllers.TrackBarX)sender).Value;
+            Desktop_icons.IconSpacing_Vertical = ((TrackBarX)sender).Value;
         }
 
         private void trackBarX8_ValueChanged(object sender, EventArgs e)
         {
-            Desktop_icons.IconSpacing_Horizontal = ((UI.Controllers.TrackBarX)sender).Value;
+            Desktop_icons.IconSpacing_Horizontal = ((TrackBarX)sender).Value;
         }
 
         private void trackBarX9_ValueChanged(object sender, EventArgs e)
         {
-            Desktop_icons.IconSize = ((UI.Controllers.TrackBarX)sender).Value;
+            Desktop_icons.IconSize = ((TrackBarX)sender).Value;
         }
 
         private void trackBarX12_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.MenuHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.MenuHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX14_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.ScrollHeight = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.ScrollHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void trackBarX15_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.ScrollWidth = Conversions.ToInteger(((UI.Controllers.TrackBarX)sender).Value);
+            windowMetrics1.ScrollWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
         }
 
         private void undo_Click(object sender, EventArgs e)

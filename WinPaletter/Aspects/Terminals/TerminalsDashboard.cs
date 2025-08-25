@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme.Structures;
@@ -29,12 +31,12 @@ namespace WinPaletter
             this.DropEffect(Padding.Empty, true, DWM.FormStyle.Acrylic);
 
             //FluentTransitions.Transition
-                //.With(this, nameof(Width), targetSize.Width)
-                //.With(this, nameof(Height), targetSize.Height)
-                //.With(this, nameof(Left), targetLocation.X)
-                //.With(this, nameof(Top), targetLocation.Y)
-                //.HookOnCompletion(() => Program.Animator.ShowSync(panel1))
-                //.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
+            //.With(this, nameof(Width), targetSize.Width)
+            //.With(this, nameof(Height), targetSize.Height)
+            //.With(this, nameof(Left), targetLocation.X)
+            //.With(this, nameof(Top), targetLocation.Y)
+            //.HookOnCompletion(() => Program.Animator.ShowSync(panel1))
+            //.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
         }
 
         private void Button6_Click(object sender, EventArgs e)
@@ -54,7 +56,7 @@ namespace WinPaletter
                 {
                     TerDir = SysPaths.TerminalJSON;
                 }
-                else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
+                else if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
                 {
                     TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
                 }
@@ -63,7 +65,7 @@ namespace WinPaletter
                     TerDir = SysPaths.TerminalJSON;
                 }
 
-                if (System.IO.File.Exists(TerDir))
+                if (File.Exists(TerDir))
                 {
                     Forms.WindowsTerminal._Mode = WinTerminal.Version.Stable;
                     Close();
@@ -97,7 +99,7 @@ namespace WinPaletter
                 {
                     TerPreDir = SysPaths.TerminalPreviewJSON;
                 }
-                else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
+                else if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                 {
                     TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                 }
@@ -106,7 +108,7 @@ namespace WinPaletter
                     TerPreDir = SysPaths.TerminalPreviewJSON;
                 }
 
-                if (System.IO.File.Exists(TerPreDir))
+                if (File.Exists(TerPreDir))
                 {
                     Forms.WindowsTerminal._Mode = WinTerminal.Version.Preview;
                     Close();
@@ -151,7 +153,7 @@ namespace WinPaletter
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string Dir = $@"{Environment.GetEnvironmentVariable("WINDIR")}\System32\WindowsPowerShell\v1.0";
 
-                if (System.IO.Directory.Exists(Dir))
+                if (Directory.Exists(Dir))
                 {
                     Forms.CMD._Edition = CMD.Edition.PowerShellx86;
                     Close();
@@ -180,7 +182,7 @@ namespace WinPaletter
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string Dir = $@"{Environment.GetEnvironmentVariable("WINDIR")}\SysWOW64\WindowsPowerShell\v1.0";
 
-                if (System.IO.Directory.Exists(Dir))
+                if (Directory.Exists(Dir))
                 {
                     Forms.CMD._Edition = CMD.Edition.PowerShellx64;
                     Close();
@@ -202,12 +204,12 @@ namespace WinPaletter
 
         private void Button1_MouseEnter(object sender, EventArgs e)
         {
-            FluentTransitions.Transition.With(labelAlt1, nameof(labelAlt1.Text), (sender as UI.WP.Button).Tag.ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            Transition.With(labelAlt1, nameof(labelAlt1.Text), (sender as UI.WP.Button).Tag.ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
         }
 
         private void Button1_MouseLeave(object sender, EventArgs e)
         {
-            FluentTransitions.Transition.With(labelAlt1, nameof(labelAlt1.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            Transition.With(labelAlt1, nameof(labelAlt1.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
         }
 
         private void TerminalsDashboard_Shown(object sender, EventArgs e)

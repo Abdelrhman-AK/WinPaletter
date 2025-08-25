@@ -21,11 +21,6 @@ namespace WinPaletter
             Process.Start("https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker");
         }
 
-        private void LinkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("https://github.com/KSemenenko/ColorThief");
-        }
-
         private void Button1_Click(object sender, EventArgs e)
         {
             Process.Start(Links.RepositoryURL);
@@ -93,11 +88,6 @@ namespace WinPaletter
         private void LinkLabel11_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper");
-        }
-
-        private void LinkLabel12_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("https://imageprocessor.org");
         }
 
         private void LinkLabel13_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

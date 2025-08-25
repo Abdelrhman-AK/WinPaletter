@@ -1,9 +1,12 @@
 ﻿using Microsoft.VisualBasic;
+using Ookii.Dialogs.WinForms;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Theme;
 
 namespace WinPaletter.Dialogs
 {
@@ -38,13 +41,13 @@ namespace WinPaletter.Dialogs
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Messages.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.Messages.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+            if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.Messages.LogoffQuestion : Program.Lang.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
+                if (File.Exists($@"{SysPaths.System32}\logoff.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
                     Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
@@ -64,7 +67,7 @@ namespace WinPaletter.Dialogs
 
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
                     Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /t 0", AppWinStyle.Hide);
@@ -84,7 +87,7 @@ namespace WinPaletter.Dialogs
 
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                if (System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
                     Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /s /t 0", AppWinStyle.Hide);
@@ -192,7 +195,7 @@ namespace WinPaletter.Dialogs
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Forms.ThemeLog.Apply_Theme(Theme.Default.Get());
+            Forms.ThemeLog.Apply_Theme(Default.Get());
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -213,7 +216,7 @@ namespace WinPaletter.Dialogs
             }
             else if (OS.WXP)
             {
-                if (System.IO.File.Exists($"{SysPaths.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll"))
+                if (File.Exists($"{SysPaths.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll"))
                 {
                     // Use legacy update if it is installed
                     Process.Start($"{SysPaths.System32}\\rundll32.exe", $"\"{SysPaths.ProgramFiles}\\Legacy Update\\LegacyUpdate.dll\",LaunchUpdateSite");
@@ -232,11 +235,11 @@ namespace WinPaletter.Dialogs
 
         private void button15_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists($"{SysPaths.System32}\\restore\\rstrui.exe"))
+            if (File.Exists($"{SysPaths.System32}\\restore\\rstrui.exe"))
             {
                 Process.Start($"{SysPaths.System32}\\restore\\rstrui.exe");
             }
-            else if (System.IO.File.Exists($"{SysPaths.System32}\\rstrui.exe"))
+            else if (File.Exists($"{SysPaths.System32}\\rstrui.exe"))
             {
                 Process.Start($"{SysPaths.System32}\\rstrui.exe");
             }
@@ -244,11 +247,6 @@ namespace WinPaletter.Dialogs
             {
                 Process.Start("control", "sysdm.cpl,,4");
             }
-        }
-
-        private void pin_button_Click(object sender, EventArgs e)
-        {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
 
         private void button16_Click(object sender, EventArgs e)
@@ -262,7 +260,7 @@ namespace WinPaletter.Dialogs
 
                 if (OS.W8x || OS.W10 || OS.W11 || OS.W12)
                 {
-                    if (System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                    if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                     {
                         Forms.MainForm.LoggingOff = true;
                         Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /o /f /t 0", AppWinStyle.Hide);
@@ -274,7 +272,7 @@ namespace WinPaletter.Dialogs
                 }
                 else if (OS.W7)
                 {
-                    if (System.IO.File.Exists($@"{SysPaths.System32}\bcdedit.exe") && System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                    if (File.Exists($@"{SysPaths.System32}\bcdedit.exe") && File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                     {
                         Forms.MainForm.LoggingOff = true;
                         Interaction.Shell($@"{SysPaths.System32}\bcdedit.exe /set " + "{current} recoverysequence {default}", AppWinStyle.Hide);
@@ -283,7 +281,7 @@ namespace WinPaletter.Dialogs
                     }
                     else
                     {
-                        if (!System.IO.File.Exists($@"{SysPaths.System32}\shutdown.exe"))
+                        if (!File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                         {
                             MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         }
@@ -302,7 +300,7 @@ namespace WinPaletter.Dialogs
 
         private void button17_Click(object sender, EventArgs e)
         {
-            if ((OS.W7 || OS.W8x) && System.IO.File.Exists($"{SysPaths.System32}\\control.exe"))
+            if ((OS.W7 || OS.W8x) && File.Exists($"{SysPaths.System32}\\control.exe"))
             {
                 Process.Start($"{SysPaths.System32}\\control.exe", "panel.dll, /name Microsoft.Troubleshooting");
             }

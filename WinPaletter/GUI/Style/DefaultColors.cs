@@ -40,12 +40,12 @@ namespace WinPaletter.UI.Style
         /// <summary>
         /// Default back color for the light mode.
         /// </summary>
-        public readonly static Color BackColor_Light = Color.FromArgb(235, 235, 235);
+        public readonly static Color BackColor_Light = Color.FromArgb(240, 240, 240);
 
         /// <summary>
         /// Default disabled back color for the light mode.
         /// </summary>
-        public readonly static Color DisabledBackColor_Light = Color.FromArgb(173, 173, 173);
+        public readonly static Color DisabledBackColor_Light = Color.FromArgb(210, 210, 210);
 
         /// <summary>
         /// Default primary color for the light mode.

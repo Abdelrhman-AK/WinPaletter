@@ -92,10 +92,6 @@
       <HintPath>..\packages\Animator.1.0.3\lib\net20\Animator.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ColorThief.Desktop.v46, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ksemenenko.ColorThief.1.1.1.4\lib\net46\ColorThief.Desktop.v46.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="CommandLine, Version=2.9.1.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.9.1\lib\net461\CommandLine.dll</HintPath>
       <Private>False</Private>
@@ -417,6 +413,7 @@
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
+    <Compile Include="Program\TypesExtensions\Images.cs" />
     <Compile Include="Program\TypesExtensions\Types.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Windows.Forms;
 
@@ -33,7 +34,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default ScreenSaver data structure</param>
         public void Load(ScreenSaver @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows Screen Saver settings from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Screen Saver settings from registry.");
 
             Enabled = Convert.ToBoolean(Conversion.Val(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", @default.Enabled ? 1 : 0)));
             IsSecure = Convert.ToBoolean(Conversion.Val(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", @default.IsSecure ? 1 : 0)));
@@ -47,7 +48,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows Screen Saver settings into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Screen Saver settings into registry.");
 
             SaveToggleState(treeView);
 

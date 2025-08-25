@@ -22,7 +22,7 @@ namespace WinPaletter.UI.Style
             try
             {
                 //Windows XP does not support the modern input box dialog.
-            if (!OS.WXP)
+                if (!OS.WXP)
                 {
                     // Create a new instance of the modern input box dialog.
                     using (InputDialog ib = new()

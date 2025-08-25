@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter
 {
@@ -27,7 +28,7 @@ namespace WinPaletter
             uint c = 0U;
             p = Marshal.AllocCoTaskMem(fontResource.Length);
             Marshal.Copy(fontResource, 0, p, fontResource.Length);
-            NativeMethods.GDI32.AddFontMemResourceEx(p, (uint)fontResource.Length, IntPtr.Zero, ref c);
+            GDI32.AddFontMemResourceEx(p, (uint)fontResource.Length, IntPtr.Zero, ref c);
             Pfc.AddMemoryFont(p, fontResource.Length);
             Marshal.FreeCoTaskMem(p);
         }

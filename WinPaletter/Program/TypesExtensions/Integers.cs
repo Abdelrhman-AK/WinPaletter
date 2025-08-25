@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WinPaletter.TypesExtensions
@@ -148,7 +149,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="int"></param>
         /// <param name="count">Count of the generated numbers</param>
         /// <returns></returns>
-        public static System.Collections.Generic.List<int> GetUniqueRandomNumbers(this int @int, int count)
+        public static List<int> GetUniqueRandomNumbers(this int @int, int count)
         {
             lock (StaticRandom) return [.. Enumerable.Range(@int, count).OrderBy(__ => StaticRandom.Next())];
         }

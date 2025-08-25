@@ -50,7 +50,7 @@ namespace libmsstyle
         public const ushort LANG_NEUTRAL = 0;
         public const ushort LANG_EN_US = 1033;
 
-        [System.Flags]
+        [Flags]
         public enum EnumResourceFlags : uint
         {
             None = 0,
@@ -72,7 +72,7 @@ namespace libmsstyle
         public static extern bool EnumResourceNamesEx(IntPtr hModule, uint lpType, [MarshalAs(UnmanagedType.FunctionPtr)] EnumResNameDelegate lpEnumFunc, IntPtr lParam, EnumResourceFlags dwFlags, ushort langId);
 
 
-        [System.Flags]
+        [Flags]
         public enum LoadLibraryFlags : uint
         {
             None = 0,

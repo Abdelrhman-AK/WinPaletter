@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter
 {
@@ -12,7 +14,7 @@ namespace WinPaletter
         }
         private void Button16_Click(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.EXE })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.EXE })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -30,7 +32,7 @@ namespace WinPaletter
                     MsgBox(Program.Lang.Strings.Aspects.Terminals.EmptyError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                else if (!System.IO.File.Exists(TextBox1.Text))
+                else if (!File.Exists(TextBox1.Text))
                 {
                     MsgBox(Program.Lang.Strings.Aspects.Terminals.NotExist, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -68,7 +70,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Properties.Resources.cmd;
+            Icon = Resources.cmd;
         }
     }
 }

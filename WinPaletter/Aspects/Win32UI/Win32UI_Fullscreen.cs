@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using WinPaletter.UI.Retro;
 
 namespace WinPaletter
 {
@@ -27,7 +28,7 @@ namespace WinPaletter
             if (e.KeyCode == Keys.Escape) Close();
         }
 
-        private void retroDesktopColors1_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        private void retroDesktopColors1_EditorInvoker(object sender, EditorEventArgs e)
         {
             Forms.Win32UI.retroDesktopColors1_EditorInvoker(sender, e);
         }

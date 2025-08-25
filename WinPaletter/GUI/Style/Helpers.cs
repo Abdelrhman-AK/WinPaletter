@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Tabs;
 using WinPaletter.UI.Retro;
 
 namespace WinPaletter.UI.Style
@@ -20,7 +22,7 @@ namespace WinPaletter.UI.Style
         public static void SetRoundedCorners()
         {
             Program.Style.RoundedCorners = GetRoundedCorners();
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter's style will be with {(Program.Style.RoundedCorners ? "rounded" : "sharp")} corners");
+            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be with {(Program.Style.RoundedCorners ? "rounded" : "sharp")} corners");
         }
 
         /// <summary>
@@ -35,7 +37,7 @@ namespace WinPaletter.UI.Style
                     // Check if appearance is managed by theme and custom colors are enabled
                     return Program.Settings.Appearance.RoundedCorners;
                 }
-                else if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
+                else if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 {
                     // Check if running in design mode. Drawing rounded corners in design mode is not necessary.
                     return false;
@@ -112,7 +114,7 @@ namespace WinPaletter.UI.Style
                 Program.Style.DarkMode = true;
             }
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter's style will be {(Program.Style.DarkMode ? "dark" : "light")} mode");
+            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be {(Program.Style.DarkMode ? "dark" : "light")} mode");
         }
 
         /// <summary>
@@ -122,7 +124,7 @@ namespace WinPaletter.UI.Style
         /// <param name="IgnoreTitleBar">Flag indicating whether to ignore the title bar when applying the style.</param>
         public static void ApplyStyle(Form Form = null, bool IgnoreTitleBar = false)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
+            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
 
             bool DarkMode;
             bool RoundedCorners;
@@ -417,7 +419,7 @@ namespace WinPaletter.UI.Style
                 temp6.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            else if (ctrl is Tabs.TitlebarExtender titlebarExtender)
+            else if (ctrl is TitlebarExtender titlebarExtender)
             {
                 titlebarExtender.UpdateBackDrop();
                 titlebarExtender.Refresh();

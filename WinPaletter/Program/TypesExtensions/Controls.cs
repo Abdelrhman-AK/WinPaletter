@@ -78,72 +78,74 @@ namespace WinPaletter.TypesExtensions
             return default;
         }
 
+        private static readonly object lockObject = new();
+
         /// <summary>
         /// Return graphical state of a control to a bitmap
         /// </summary>
-        public static Bitmap ToBitmap(this Control Control, bool FixMethod = false)
+        public static Bitmap ToBitmap(this Control control, bool FixMethod = false)
         {
+            if (control == null) throw new ArgumentNullException(nameof(control));
+
             if (!FixMethod)
             {
-                using (Bitmap bmp = new(Control.Width, Control.Height))
+                // Keep original semantics: draw into a temp bitmap under the Control lock,
+                // then return a detached clone (so caller owns the image).
+                using (Bitmap bmp = new Bitmap(Math.Max(1, control.Width), Math.Max(1, control.Height)))
                 {
-                    Rectangle rect = new(0, 0, bmp.Width, bmp.Height);
-                    lock (Control)
+                    Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                    lock (control) // preserved from your original code
                     {
-                        Control.DrawToBitmap(bmp, rect);
-                        return bmp.Clone() as Bitmap;
+                        control.DrawToBitmap(bmp, rect);
+                        return (Bitmap)bmp.Clone();
                     }
                 }
             }
             else
             {
-                return DrawToBitmap(Control);
+                return DrawToBitmap(control);
             }
-
         }
-
-        private static readonly object lockObject = new();
 
         private static Bitmap DrawToBitmap(Control control)
         {
-            Bitmap bmp = new(control.Width, control.Height);
-            List<Control> visibleChildControls = [];
+            if (control == null) throw new ArgumentNullException(nameof(control));
+
+            Bitmap bmp = new Bitmap(Math.Max(1, control.Width), Math.Max(1, control.Height));
+
+            // Preserve your original behavior: copy controls, reverse array
             Control[] childControls = control.Controls.Cast<Control>().ToArray();
             Array.Reverse(childControls);
 
+            var visibleChildControls = new List<Control>(childControls.Length);
+
             lock (lockObject)
             {
-                using (Graphics.FromImage(bmp))
+                // Temporarily hide visible children (in the reversed order you used)
+                foreach (Control childControl in childControls)
                 {
-                    // Temporarily make visible child controls not visible
-                    foreach (Control childControl in childControls)
+                    if (childControl.Visible)
                     {
-                        if (childControl.Visible)
-                        {
-                            visibleChildControls.Add(childControl);
-                            childControl.Visible = false;
-                        }
+                        visibleChildControls.Add(childControl);
+                        childControl.Visible = false;
                     }
+                }
 
-                    // Draw the parent control
-                    control.DrawToBitmap(bmp, control.ClientRectangle);
+                // Draw the parent (without those children)
+                control.DrawToBitmap(bmp, control.ClientRectangle);
 
-                    // Restore visibility of child controls
-                    foreach (Control childControl in visibleChildControls)
-                    {
-                        childControl.Visible = true;
-                    }
+                // Restore children visibility
+                foreach (Control childControl in visibleChildControls)
+                    childControl.Visible = true;
 
-                    visibleChildControls.Clear();
+                // Draw children manually (same iteration order as your original)
+                foreach (Control childControl in childControls)
+                {
+                    if (!childControl.Visible) continue;
 
-                    // Draw child controls manually in the correct order
-                    foreach (Control childControl in childControls)
-                    {
-                        if (childControl.Visible)
-                        {
-                            childControl.DrawToBitmap(bmp, childControl.Bounds);
-                        }
-                    }
+                    if (childControl.Bounds.Width <= 0 || childControl.Bounds.Height <= 0) continue;
+
+                    childControl.DrawToBitmap(bmp, childControl.Bounds);
                 }
             }
 
@@ -151,124 +153,82 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Get the color of the parent of a control
+        /// Gets the effective background color of a control's parent, blending through transparent ancestors until a solid color is reached.
         /// </summary>
-        /// <param name="ctrl"></param>
-        /// <param name="Accept_Transparent"></param>
-        /// <returns></returns>
-        public static Color GetParentColor(this Control ctrl, bool Accept_Transparent = false)
+        /// <param name="ctrl">The control whose parent color is retrieved.</param>
+        /// <param name="acceptTransparent">If true, returns the parent color directly, even if transparent.</param>
+        /// <returns>The effective parent color, or <see cref="Color.Empty"/> if none.</returns>
+        public static Color GetParentColor(this Control ctrl, bool acceptTransparent = false)
         {
-            if (ctrl is null) return default;
-            if (ctrl.Parent is null) return default;
+            if (ctrl?.Parent == null) return Color.Empty;
 
-            if (Accept_Transparent)
+            Color parentColor = ctrl.Parent.BackColor;
+
+            // If transparency is accepted or fully opaque, return directly
+            if (acceptTransparent || parentColor.A == 255) return parentColor;
+
+            // Blend recursively with ancestor background
+            Color ancestorColor = GetParentColor(ctrl.Parent, acceptTransparent: false);
+            if (ancestorColor.IsEmpty) ancestorColor = Program.Style.Schemes.Main.Colors.Back(); // final fallback
+
+            float alpha = parentColor.A / 255f;
+            byte r = (byte)Math.Round(parentColor.R * alpha + ancestorColor.R * (1 - alpha));
+            byte g = (byte)Math.Round(parentColor.G * alpha + ancestorColor.G * (1 - alpha));
+            byte b = (byte)Math.Round(parentColor.B * alpha + ancestorColor.B * (1 - alpha));
+
+            return Color.FromArgb(r, g, b);
+        }
+
+        private static readonly PropertyInfo DoubleBufferedProp =
+            typeof(Control).GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+
+        public static void DoubleBuffer(this Control control)
+        {
+            if (control == null) return;
+
+            // Apply double buffering to current control
+            DoubleBufferedProp?.SetValue(control, true, null);
+
+            // Recursively apply to children
+            foreach (Control child in control.Controls)
             {
-                return ctrl.Parent.BackColor;
-            }
-            else
-            {
-                if (ctrl.Parent.BackColor.A == 255)
-                {
-                    return Color.FromArgb(255, ctrl.Parent.BackColor);
-                }
-                else
-                {
-                    Color c1 = ctrl.Parent.BackColor;
-                    Color c2 = ctrl.Parent.BackColor;
-
-                    if (ctrl.Parent.Parent is not null && ctrl.Parent.Parent is not Form)
-                    {
-                        c2 = ctrl.Parent.Parent.BackColor;
-                    }
-                    else if (ctrl.Parent.Parent is Form form && form is not null)
-                    {
-                        c2 = form.BackColor;
-                    }
-
-                    float amount = c1.A / 255f;
-                    byte r = (byte)Math.Round(c1.R * amount + c2.R * (1f - amount));
-                    byte g = (byte)Math.Round(c1.G * amount + c2.G * (1f - amount));
-                    byte b = (byte)Math.Round(c1.B * amount + c2.B * (1f - amount));
-                    return Color.FromArgb(r, g, b);
-                }
+                child.DoubleBuffer();
             }
         }
 
         /// <summary>
-        /// Make a control double buffered
+        /// Get all controls within a parent control and its children.
         /// </summary>
-        /// <param name="Parent"></param>
-        public static void DoubleBuffer(this Control Parent)
+        /// <param name="parent">The root control.</param>
+        /// <param name="sort">Whether to sort controls by Name.</param>
+        /// <returns>All descendant controls, optionally sorted.</returns>
+        public static IEnumerable<Control> GetAllControls(this Control parent, bool sort = false)
         {
-            DoubleBufferedControl(Parent, true);
+            if (parent == null) yield break;
 
-            foreach (Control ctrl in Parent.Controls)
+            IEnumerable<Control> children = parent.Controls.OfType<Control>();
+
+            if (sort) children = children.OrderBy(c => c.Name);
+
+            foreach (var child in children)
             {
-                if (ctrl.HasChildren)
-                {
-                    foreach (Control c in ctrl.Controls) c.DoubleBuffer();
-                }
+                // Recurse into children
+                foreach (var grandChild in child.GetAllControls(sort)) yield return grandChild;
 
-                DoubleBufferedControl(ctrl, true);
-            }
-        }
-
-        private static void DoubleBufferedControl(Control Control, bool setting)
-        {
-            Type panType = Control.GetType();
-            PropertyInfo pi = panType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(Control, setting, null);
-        }
-
-        /// <summary>
-        /// Get all controls in a control and its children
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <returns></returns>
-        public static IEnumerable<Control> GetAllControls(this Control parent)
-        {
-            try
-            {
-                if (parent != null && parent.Controls.Count > 0)
-                {
-                    IOrderedEnumerable<Control> cs = parent.Controls.OfType<Control>().OrderBy(c => c.Name);
-                    return cs.SelectMany(c => c.GetAllControls()).Concat(cs).OrderBy(c => c.Name);
-                }
-                else
-                {
-                    return [];
-                }
-
-            }
-            catch (Exception) // Use another method to get all controls
-            {
-                if (parent != null && parent.Controls.Count > 0)
-                {
-                    IEnumerable<Control> cs = parent.Controls.OfType<Control>();
-                    return cs.SelectMany(c => c.GetAllControls()).Concat(cs);
-                }
-                else
-                {
-                    return [];
-                }
+                yield return child;
             }
         }
 
         /// <summary>
-        /// Get level of a control in the control tree
+        /// Get the depth (level) of a control in the control tree.
         /// </summary>
-        /// <param name="control"></param>
-        /// <returns></returns>
+        /// <param name="control">The control to measure.</param>
+        /// <returns>The level (0 = top-level control).</returns>
         public static int Level(this Control control)
         {
             int level = 0;
-            Control currentControl = control;
 
-            while (currentControl.Parent != null)
-            {
-                currentControl = currentControl.Parent;
-                level++;
-            }
+            for (var parent = control?.Parent; parent != null; parent = parent.Parent) level++;
 
             return level;
         }
@@ -359,12 +319,22 @@ namespace WinPaletter.TypesExtensions
         }
         private delegate void PerformStepMethod2Invoker(UI.WP.ProgressBar ProgressBar);
 
+        /// <summary>
+        /// Determines whether the specified <see cref="Control"/> is currently in use or disposed.
+        /// </summary>
+        /// <remarks>This method attempts to access the <see cref="Control.Handle"/> property to determine
+        /// the state of the control. If an <see cref="InvalidOperationException"/> is thrown during this access, the
+        /// control is considered to be in use or disposed.</remarks>
+        /// <param name="control">The <see cref="Control"/> to check. Must not be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the <see cref="Control"/> is in use or has been disposed; otherwise, <see
+        /// langword="false"/>.</returns>
         public static bool IsInUse(this Control control)
         {
-            // Checks if the control's handle is being used by another thread or operation
+            if (control is null) return false;
+
             try
             {
-                var handle = control.Handle; // Accessing Handle can throw if in use elsewhere
+                _ = control.Handle; // Attempt to access
                 return false;
             }
             catch (InvalidOperationException)

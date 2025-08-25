@@ -3,6 +3,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Theme;
+using WinPaletter.UI.WP;
 using static WinPaletter.Theme.Manager;
 
 namespace WinPaletter
@@ -25,7 +28,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -35,14 +38,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Theme.Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -63,7 +66,7 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
@@ -114,7 +117,7 @@ namespace WinPaletter
 
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Accessibility.Enabled;
             highContrastToggle.Checked = TM.Accessibility.HighContrast;
@@ -173,7 +176,7 @@ namespace WinPaletter
             }
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.Accessibility.Enabled = AspectEnabled;
             TM.Accessibility.HighContrast = highContrastToggle.Checked;
@@ -222,10 +225,10 @@ namespace WinPaletter
 
         private void RadioImage1_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((UI.WP.RadioImage)sender).Checked))
+            if (Convert.ToBoolean(((RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Normal;
-                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Normal;
+                PictureBox33.Image = Accessibility_Vision.CF_Img_Normal;
+                PictureBox32.Image = Accessibility_Vision.CF_Pie_Normal;
 
                 R1.BackColor = Color.FromArgb(204, 50, 47);
                 R2.BackColor = Color.FromArgb(233, 80, 63);
@@ -255,10 +258,10 @@ namespace WinPaletter
 
         private void RadioImage7_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((UI.WP.RadioImage)sender).Checked))
+            if (Convert.ToBoolean(((RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Normal.Invert();
-                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Normal.Invert();
+                PictureBox33.Image = Accessibility_Vision.CF_Img_Normal.Invert();
+                PictureBox32.Image = Accessibility_Vision.CF_Pie_Normal.Invert();
 
                 R1.BackColor = Color.FromArgb(53, 208, 211);
                 R2.BackColor = Color.FromArgb(28, 174, 193);
@@ -288,10 +291,10 @@ namespace WinPaletter
 
         private void RadioImage5_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((UI.WP.RadioImage)sender).Checked))
+            if (Convert.ToBoolean(((RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Grayscale;
-                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Grayscale;
+                PictureBox33.Image = Accessibility_Vision.CF_Img_Grayscale;
+                PictureBox32.Image = Accessibility_Vision.CF_Pie_Grayscale;
 
                 R1.BackColor = Color.FromArgb(93, 93, 93);
                 R2.BackColor = Color.FromArgb(122, 122, 122);
@@ -321,10 +324,10 @@ namespace WinPaletter
 
         private void RadioImage6_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((UI.WP.RadioImage)sender).Checked))
+            if (Convert.ToBoolean(((RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Grayscale.Invert();
-                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Grayscale.Invert();
+                PictureBox33.Image = Accessibility_Vision.CF_Img_Grayscale.Invert();
+                PictureBox32.Image = Accessibility_Vision.CF_Pie_Grayscale.Invert();
 
                 R1.BackColor = Color.FromArgb(160, 160, 160);
                 R2.BackColor = Color.FromArgb(131, 131, 131);
@@ -354,10 +357,10 @@ namespace WinPaletter
 
         private void RadioImage2_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((UI.WP.RadioImage)sender).Checked))
+            if (Convert.ToBoolean(((RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Red_green_green_weak_deuteranopia;
-                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Red_green_green_weak_deuteranopia;
+                PictureBox33.Image = Accessibility_Vision.CF_Img_Red_green_green_weak_deuteranopia;
+                PictureBox32.Image = Accessibility_Vision.CF_Pie_Red_green_green_weak_deuteranopia;
 
                 R1.BackColor = Color.FromArgb(255, 50, 20);
                 R2.BackColor = Color.FromArgb(255, 80, 35);
@@ -387,10 +390,10 @@ namespace WinPaletter
 
         private void RadioImage3_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((UI.WP.RadioImage)sender).Checked))
+            if (Convert.ToBoolean(((RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Red_green_red_weak_protanopia;
-                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Red_green_red_weak_protanopia;
+                PictureBox33.Image = Accessibility_Vision.CF_Img_Red_green_red_weak_protanopia;
+                PictureBox32.Image = Accessibility_Vision.CF_Pie_Red_green_red_weak_protanopia;
 
                 R1.BackColor = Color.FromArgb(204, 121, 137);
                 R2.BackColor = Color.FromArgb(233, 151, 151);
@@ -420,10 +423,10 @@ namespace WinPaletter
 
         private void RadioImage4_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((UI.WP.RadioImage)sender).Checked))
+            if (Convert.ToBoolean(((RadioImage)sender).Checked))
             {
-                PictureBox33.Image = Assets.Accessibility_Vision.CF_Img_Blue_yellow_tritanopia;
-                PictureBox32.Image = Assets.Accessibility_Vision.CF_Pie_Blue_yellow__tritanopia;
+                PictureBox33.Image = Accessibility_Vision.CF_Img_Blue_yellow_tritanopia;
+                PictureBox32.Image = Accessibility_Vision.CF_Pie_Blue_yellow__tritanopia;
 
                 R1.BackColor = Color.FromArgb(160, 60, 47);
                 R2.BackColor = Color.FromArgb(180, 85, 63);

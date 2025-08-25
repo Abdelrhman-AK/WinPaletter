@@ -1,7 +1,9 @@
 ﻿using Ressy;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
@@ -32,7 +34,7 @@ namespace WinPaletter
                 if (PE is null) throw new ArgumentNullException(nameof(PE));
                 if (iconGroupResourceIdentifier is null) throw new ArgumentNullException(nameof(iconGroupResourceIdentifier));
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Extracting icon group '{iconGroupResourceIdentifier}' from PE file '{PE.FilePath}'.");
+                Program.Log?.Write(LogEventLevel.Information, $"Extracting icon group '{iconGroupResourceIdentifier}' from PE file '{PE.FilePath}'.");
 
                 int structureSize = 14;
                 byte[] iconBytes = [.. PE.GetResource(iconGroupResourceIdentifier).Data.Skip(6)];
@@ -52,19 +54,19 @@ namespace WinPaletter
                     iconWidth = iconWidth == 0 ? 256 : iconWidth;
                     iconHeight = iconHeight == 0 ? 256 : iconHeight;
 
-                    Resource resource = PE.TryGetResource(new(Ressy.ResourceType.Icon, Ressy.ResourceName.FromCode(iconIndex)));
+                    Resource resource = PE.TryGetResource(new(Ressy.ResourceType.Icon, ResourceName.FromCode(iconIndex)));
                     if (resource is not null) icons.Add(new() { Width = iconWidth, Height = iconHeight, ColorCount = iconColors, Buffer = resource.Data });
                 }
 
-                using (System.IO.MemoryStream stream = new())
-                using (System.IO.BinaryWriter writer = new(stream))
+                using (MemoryStream stream = new())
+                using (BinaryWriter writer = new(stream))
                 {
                     BytesToIcon(icons, writer);
 
                     // Reset the stream position before reading the icon data
-                    stream.Seek(0, System.IO.SeekOrigin.Begin);
+                    stream.Seek(0, SeekOrigin.Begin);
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Successfully extracted {icons.Count} icons from PE file '{PE.FilePath}'.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Successfully extracted {icons.Count} icons from PE file '{PE.FilePath}'.");
 
                     return new Icon(stream);
                 }
@@ -109,7 +111,7 @@ namespace WinPaletter
             /// <param name="imageBuffers"></param>
             /// <param name="writer"></param>
             /// <exception cref="ArgumentNullException"></exception>
-            private static void BytesToIcon(IEnumerable<IconInfo> imageBuffers, System.IO.BinaryWriter writer)
+            private static void BytesToIcon(IEnumerable<IconInfo> imageBuffers, BinaryWriter writer)
             {
                 // Validate the input
                 if (imageBuffers == null)
@@ -159,7 +161,7 @@ namespace WinPaletter
                 // Write the icon data
                 foreach (KeyValuePair<uint, byte[]> kvp in buffers)
                 {
-                    writer.BaseStream.Seek(kvp.Key, System.IO.SeekOrigin.Begin);
+                    writer.BaseStream.Seek(kvp.Key, SeekOrigin.Begin);
                     writer.Write(kvp.Value);
                 }
             }
@@ -206,7 +208,7 @@ namespace WinPaletter
         /// <returns></returns>
         public static byte[] GetResource(string SourceFile, string ResourceType, int ID, ushort LangID = 1033)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Getting resource '{ResourceType}' with ID '{ID}' from PE file '{SourceFile}'.");
+            Program.Log?.Write(LogEventLevel.Information, $"Getting resource '{ResourceType}' with ID '{ID}' from PE file '{SourceFile}'.");
             PortableExecutable PE_File = new(SourceFile);
             return PE_File.GetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID))).Data;
         }
@@ -236,42 +238,42 @@ namespace WinPaletter
         /// <param name="treeView"></param>
         public static void ReplaceResource(string SourceFile, string ResourceType, int ID, byte[] NewRes, ushort LangID = 1033, TreeView treeView = null)
         {
-            if (System.IO.Path.GetFullPath(SourceFile).ToLower().StartsWith(SysPaths.Windows, StringComparison.OrdinalIgnoreCase))
+            if (Path.GetFullPath(SourceFile).ToLower().StartsWith(SysPaths.Windows, StringComparison.OrdinalIgnoreCase))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Replacing resource '{ResourceType}' with ID '{ID}' in PE file '{SourceFile}'.");
+                Program.Log?.Write(LogEventLevel.Information, $"Replacing resource '{ResourceType}' with ID '{ID}' in PE file '{SourceFile}'.");
 
                 // It is a system PE File that needs rights/permissions modification.
 
                 if (Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Program.Settings.ThemeApplyingBehavior.PE_ModifyByDefault || !Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert && Forms.PE_Warning.NotifyAction(SourceFile, ResourceType, ID, LangID) == DialogResult.OK)
                 {
-                    string TempFile = System.IO.Path.GetTempFileName();
+                    string TempFile = Path.GetTempFileName();
 
                     if (treeView is not null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GettingAccess, System.IO.Path.GetFileName(SourceFile)), "admin");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GettingAccess, Path.GetFileName(SourceFile)), "admin");
                     PreparePrivileges();                                     // To get authorized access to change PE File access/permissions
 
                     if (treeView is not null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_CreateBackup, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_CreateBackup, Path.GetFileName(SourceFile)), "pe_backup");
                     if (CreateBackup(SourceFile))                        // Makes a copy of EP File as a backup File
                     {
 
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetBackupPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_backup");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetBackupPermissions, Path.GetFileName(SourceFile)), "pe_backup");
                         if (BackupPermissions(SourceFile, TempFile))     // Source File rights have been backed up successfully
                         {
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetAccessToChangeResources, System.IO.Path.GetFileName(SourceFile)), "admin");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetAccessToChangeResources, Path.GetFileName(SourceFile)), "admin");
                             PreparePrivileges();                             // To get authorized access to change resources for PE File
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_PatchingPE, System.IO.Path.GetFileName(SourceFile)), "pe_patch");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_PatchingPE, Path.GetFileName(SourceFile)), "pe_patch");
                             PortableExecutable PE_File = new(SourceFile);
                             PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_RestoringPermissions, System.IO.Path.GetFileName(SourceFile)), "pe_restore");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_RestoringPermissions, Path.GetFileName(SourceFile)), "pe_restore");
                             RestorePermissions(SourceFile, TempFile);        // Restore source File rights
 
                         }
@@ -284,10 +286,10 @@ namespace WinPaletter
             {
                 // It isn't in system directory and can be modified without changing rights/permissions.
                 if (treeView is not null)
-                    ThemeLog.AddNode(treeView, $"Replacing '{System.IO.Path.GetFileName(SourceFile)}' resources", "pe_patch");
+                    ThemeLog.AddNode(treeView, $"Replacing '{Path.GetFileName(SourceFile)}' resources", "pe_patch");
                 PortableExecutable PE_File = new(SourceFile);
                 PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
+                Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
             }
 
         }
@@ -299,12 +301,12 @@ namespace WinPaletter
         /// <returns></returns>
         private static bool CreateBackup(string SourceFile)
         {
-            foreach (string backupFile in System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(SourceFile), $"{System.IO.Path.GetFileNameWithoutExtension(SourceFile)}*.bak"))
+            foreach (string backupFile in Directory.GetFiles(Path.GetDirectoryName(SourceFile), $"{Path.GetFileNameWithoutExtension(SourceFile)}*.bak"))
             {
                 try
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting old PE backup file `{backupFile}`");
-                    System.IO.File.Delete(backupFile);
+                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old PE backup file `{backupFile}`");
+                    File.Delete(backupFile);
                 }
                 catch { } // Ignore deleting backup File if it fails
 
@@ -314,17 +316,17 @@ namespace WinPaletter
             try
             {
                 PreparePrivileges();
-                string backupFile = $@"{System.IO.Path.GetDirectoryName(SourceFile)}\{System.IO.Path.GetFileNameWithoutExtension(SourceFile)}{Math.Abs(DateTime.Now.ToBinary())}.bak";
+                string backupFile = $@"{Path.GetDirectoryName(SourceFile)}\{Path.GetFileNameWithoutExtension(SourceFile)}{Math.Abs(DateTime.Now.ToBinary())}.bak";
 
-                System.IO.File.Move(SourceFile, backupFile);
-                System.IO.File.Copy(backupFile, SourceFile);
+                File.Move(SourceFile, backupFile);
+                File.Copy(backupFile, SourceFile);
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"A backup to PE file has been created as `{backupFile}`");
+                Program.Log?.Write(LogEventLevel.Information, $"A backup to PE file has been created as `{backupFile}`");
                 return result;
             }
             catch
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't backup PE file `{SourceFile}");
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't backup PE file `{SourceFile}");
                 return false;
             }
         }
@@ -337,20 +339,20 @@ namespace WinPaletter
         /// <returns></returns>
         private static bool BackupPermissions(string SourceFile, string BackupFile)
         {
-            FileSecurity accessControl = System.IO.File.GetAccessControl(SourceFile);
+            FileSecurity accessControl = File.GetAccessControl(SourceFile);
             if (accessControl is null)
                 return false;
 
-            using (System.IO.FileStream fileStream = System.IO.File.Create(BackupFile, 1, System.IO.FileOptions.None, accessControl))
+            using (FileStream fileStream = File.Create(BackupFile, 1, FileOptions.None, accessControl))
             {
                 fileStream.Close();
             }
 
             accessControl.SetOwner(AdminAccount);
             accessControl.AddAccessRule(AccessRule);
-            System.IO.File.SetAccessControl(SourceFile, accessControl);
+            File.SetAccessControl(SourceFile, accessControl);
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been backed up to `{BackupFile}`");
+            Program.Log?.Write(LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been backed up to `{BackupFile}`");
 
             return true;
         }
@@ -363,14 +365,14 @@ namespace WinPaletter
         /// <returns></returns>
         private static bool RestorePermissions(string SourceFile, string BackupFile)
         {
-            FileSecurity BackupAccessControl = System.IO.File.GetAccessControl(SourceFile);
+            FileSecurity BackupAccessControl = File.GetAccessControl(SourceFile);
             if (BackupAccessControl is null)
                 return false;
 
-            System.IO.File.SetAccessControl(SourceFile, BackupAccessControl);
-            System.IO.File.Delete(BackupFile);
+            File.SetAccessControl(SourceFile, BackupAccessControl);
+            File.Delete(BackupFile);
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been restored from `{BackupFile}`");
+            Program.Log?.Write(LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been restored from `{BackupFile}`");
 
             return true;
         }
@@ -381,13 +383,13 @@ namespace WinPaletter
         /// <exception cref="Exception"></exception>
         private static void PreparePrivileges()
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Preparing privileges for PE file modification.");
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Enabling SeTakeOwnershipPrivilege, SeSecurityPrivilege, SeRestorePrivilege, and SeBackupPrivilege.");
+            Program.Log?.Write(LogEventLevel.Information, "Preparing privileges for PE file modification.");
+            Program.Log?.Write(LogEventLevel.Information, "Enabling SeTakeOwnershipPrivilege, SeSecurityPrivilege, SeRestorePrivilege, and SeBackupPrivilege.");
 
-            if (!NativeMethods.advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
-            if (!NativeMethods.advapi.EnablePrivilege("SeSecurityPrivilege", false)) throw new Exception("Failed to get SeSecurityPrivilege");
-            if (!NativeMethods.advapi.EnablePrivilege("SeRestorePrivilege", false)) throw new Exception("Failed to get SeRestorePrivilege");
-            if (!NativeMethods.advapi.EnablePrivilege("SeBackupPrivilege", false)) throw new Exception("Failed to get SeBackupPrivilege");
+            if (!advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
+            if (!advapi.EnablePrivilege("SeSecurityPrivilege", false)) throw new Exception("Failed to get SeSecurityPrivilege");
+            if (!advapi.EnablePrivilege("SeRestorePrivilege", false)) throw new Exception("Failed to get SeRestorePrivilege");
+            if (!advapi.EnablePrivilege("SeBackupPrivilege", false)) throw new Exception("Failed to get SeBackupPrivilege");
         }
 
         /// <summary>
@@ -405,7 +407,7 @@ namespace WinPaletter
             {
                 if (System.IO.File.Exists(File))
                 {
-                    using (System.IO.MemoryStream ms = new(PE.GetResource(File, ResourceType, ResourceID)))
+                    using (MemoryStream ms = new(PE.GetResource(File, ResourceType, ResourceID)))
                     {
                         return (Bitmap)Image.FromStream(ms);
                     }
@@ -443,7 +445,7 @@ namespace WinPaletter
         /// <returns></returns>
         public static Icon GetIcon(string dllPath, int iconIndex = 0)
         {
-            if (!System.IO.File.Exists(dllPath)) return null;
+            if (!File.Exists(dllPath)) return null;
 
             IntPtr[] largeIcons = new IntPtr[1];
             IntPtr[] smallIcons = new IntPtr[1];
@@ -483,7 +485,7 @@ namespace WinPaletter
         /// <returns></returns>
         public static int GetIconGroupCount(string dllPath)
         {
-            if (!System.IO.File.Exists(dllPath)) return 0;
+            if (!File.Exists(dllPath)) return 0;
 
             int count = 0;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter.Interfaces
 {
@@ -72,6 +73,6 @@ namespace WinPaletter.Interfaces
         /// </summary>
         /// <param name="hwnd">The handle to the window whose progress state is to be set.</param>
         /// <param name="tbpFlags">The progress state flags.</param>
-        void SetProgressState(IntPtr hwnd, UI.WP.ProgressBar.TaskbarProgressBarState tbpFlags);
+        void SetProgressState(IntPtr hwnd, ProgressBar.TaskbarProgressBarState tbpFlags);
     }
 }

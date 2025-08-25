@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
+using Serilog.Events;
 using System;
 using System.Windows.Forms;
 using WinPaletter;
@@ -23,7 +24,7 @@ public class SingleInstanceApplication : WindowsFormsApplicationBase
     /// <param name="startupHandler"></param>
     public static void Run(Form form, StartupNextInstanceEventHandler startupHandler)
     {
-        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Starting WinPaletter in single-instance mode");
+        Program.Log?.Write(LogEventLevel.Information, "Starting WinPaletter in single-instance mode");
 
         SingleInstanceApplication app = new()
         {

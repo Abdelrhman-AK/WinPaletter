@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -322,7 +323,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Sounds data structure</param>
         public void Load(Sounds @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows sounds settings from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows sounds settings from registry.");
 
             Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", string.Empty, @default.Enabled));
             Snd_Imageres_SystemStart = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", @default.Snd_Imageres_SystemStart).ToString();
@@ -430,12 +431,12 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows sounds settings into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows sounds settings into registry.");
 
             SaveToggleState(treeView);
 
             // Save Windows sounds and unofficial sounds entries in WinPaletter's registry scope
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving unofficial Windows sounds entries in WinPaletter's registry scope.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving unofficial Windows sounds entries in WinPaletter's registry scope.");
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Imageres.dll_Startup", Snd_Imageres_SystemStart, RegistryValueKind.String);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerConnected", Snd_ChargerConnected, RegistryValueKind.String);
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_ChargerDisconnected", Snd_ChargerDisconnected, RegistryValueKind.String);
@@ -445,11 +446,11 @@ namespace WinPaletter.Theme.Structures
             EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Sounds", "Snd_WiFiConnectionFailed", Snd_WiFiConnectionFailed, RegistryValueKind.String);
 
             // Save Windows sounds and unofficial sounds entries in Windows registry scope
-            if (System.IO.File.Exists(SysPaths.SysEventsSounds_Local_INI)) { System.IO.File.Delete(SysPaths.SysEventsSounds_Local_INI); }
+            if (File.Exists(SysPaths.SysEventsSounds_Local_INI)) { File.Delete(SysPaths.SysEventsSounds_Local_INI); }
 
-            if (System.IO.File.Exists(SysPaths.SysEventsSounds_Global_INI))
+            if (File.Exists(SysPaths.SysEventsSounds_Global_INI))
             {
-                try { System.IO.File.Delete(SysPaths.SysEventsSounds_Global_INI); }
+                try { File.Delete(SysPaths.SysEventsSounds_Global_INI); }
                 catch { Program.SendCommand($"{SysPaths.CMD} /C del \"{SysPaths.SysEventsSounds_Global_INI}\" && exit"); }
             }
 
@@ -460,19 +461,19 @@ namespace WinPaletter.Theme.Structures
 
                 if (string.IsNullOrWhiteSpace(Snd_Imageres_SystemStart))
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Disabling Windows startup sound in registry.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Disabling Windows startup sound in registry.");
                     EditReg_CMD(treeView, destination_StartupSnd[0], "DisableStartupSound", 1);
                     EditReg_CMD(treeView, destination_StartupSnd[1], "DisableStartupSound", 1);
                 }
                 else if (File.Exists(Snd_Imageres_SystemStart))
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Enabling Windows startup sound in registry.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Enabling Windows startup sound in registry.");
                     EditReg_CMD(treeView, destination_StartupSnd[0], "DisableStartupSound", 0);
                     EditReg_CMD(treeView, destination_StartupSnd[1], "DisableStartupSound", 0);
                 }
                 else if (Snd_Imageres_SystemStart.Trim().ToUpper() == "DEFAULT")
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"{((!OS.W12 && !OS.W11) ? "Enabling" : "Disabling")} Windows startup sound in registry.");
+                    Program.Log?.Write(LogEventLevel.Information, $"{((!OS.W12 && !OS.W11) ? "Enabling" : "Disabling")} Windows startup sound in registry.");
                     EditReg_CMD(treeView, destination_StartupSnd[0], "DisableStartupSound", (!OS.W12 && !OS.W11) ? 1 : 0);
                     EditReg_CMD(treeView, destination_StartupSnd[1], "DisableStartupSound", (!OS.W12 && !OS.W11) ? 1 : 0);
                 }
@@ -497,7 +498,7 @@ namespace WinPaletter.Theme.Structures
 
                         if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Patching Windows startup sound in `imageres.dll`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Patching Windows startup sound in `imageres.dll`.");
                             PE.ReplaceResource(treeView, SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080, TargetSoundBytes);
                         }
                     }
@@ -509,7 +510,7 @@ namespace WinPaletter.Theme.Structures
 
                         if (!CurrentSoundBytes.Equals_Method2(OriginalSoundBytes))
                         {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Restoring default Windows startup sound by repatching `imageres.dll` with the default sound.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Restoring default Windows startup sound by repatching `imageres.dll` with the default sound.");
                             PE.ReplaceResource(treeView, SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080, OriginalSoundBytes);
                         }
 
@@ -554,7 +555,7 @@ namespace WinPaletter.Theme.Structures
                     EditReg(treeView, string.Format(Scope, "MenuPopup"), string.Empty, Snd_Win_MenuPopup, RegistryValueKind.String);
                     EditReg(treeView, string.Format(Scope, "MessageNudge"), string.Empty, Snd_Win_MessageNudge, RegistryValueKind.String);
                     EditReg(treeView, string.Format(Scope, "Minimize"), string.Empty, Snd_Win_Minimize, RegistryValueKind.String);
-                   
+
                     if (!OS.WXP && !OS.WVista && !OS.W7)
                     {
                         EditReg(treeView, string.Format(Scope, "Notification.Default"), string.Empty, Snd_Win_Notification_Default, RegistryValueKind.String);
@@ -645,10 +646,10 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 // Create INI files for Windows sounds used by service
-                if (!System.IO.Directory.Exists(SysPaths.SysEventsSoundsDir))
+                if (!Directory.Exists(SysPaths.SysEventsSoundsDir))
                 {
-                    System.IO.Directory.CreateDirectory(SysPaths.SysEventsSoundsDir);
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Creating directory for Windows sounds INI files: {SysPaths.SysEventsSoundsDir}.");
+                    Directory.CreateDirectory(SysPaths.SysEventsSoundsDir);
+                    Program.Log?.Write(LogEventLevel.Information, $"Creating directory for Windows sounds INI files: {SysPaths.SysEventsSoundsDir}.");
                 }
 
                 INI[] INIs = [new(SysPaths.SysEventsSounds_Local_INI), new(SysPaths.SysEventsSounds_Global_INI)];

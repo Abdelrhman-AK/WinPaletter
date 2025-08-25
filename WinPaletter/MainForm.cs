@@ -2,8 +2,8 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Media;
 using System.Windows.Forms;
+using WinPaletter.Theme;
 
 namespace WinPaletter
 {
@@ -67,10 +67,10 @@ namespace WinPaletter
                 {
                     using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
                     {
-                        if (System.IO.File.Exists(dlg.FileName) || dlg.ShowDialog() == DialogResult.OK)
+                        if (File.Exists(dlg.FileName) || dlg.ShowDialog() == DialogResult.OK)
                         {
-                            Program.TM.Save(Theme.Manager.Source.File, dlg.FileName);
-                            Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                            Program.TM.Save(Manager.Source.File, dlg.FileName);
+                            Program.TM_Original = (Manager)Program.TM.Clone();
                         }
                     }
 
@@ -155,11 +155,6 @@ namespace WinPaletter
                     Appearance.Save();
                 }
             }
-        }
-
-        private void tabsContainer1_UserSwitchRequest(object sender, EventArgs e)
-        {
-            User.Login(true);
         }
     }
 }

@@ -1,13 +1,19 @@
 ﻿using Devcorp.Controls.VisualStyles;
+using libmsstyle;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.Retro;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.TypesExtensions.ColorsExtensions;
 
@@ -26,7 +32,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -36,12 +42,12 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Manager TMx = new(Theme.Manager.Source.Registry)) { LoadFromTM(TMx); }
+            using (Manager TMx = new(Manager.Source.Registry)) { LoadFromTM(TMx); }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Theme.Default.Get(Program.WindowStyle)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.Get(Program.WindowStyle)) { LoadFromTM(TMx); }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
@@ -60,12 +66,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -235,8 +241,8 @@ namespace WinPaletter
             else TM.Windows10.VisualStyles.VisualStylesType = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
 
             TM.Windows10.VisualStyles.ThemeFile = VS_textbox.Text;
-            TM.Windows10.VisualStyles.ColorScheme = (VS_ColorsList.SelectedItem ?? "").ToString();
-            TM.Windows10.VisualStyles.SizeScheme = (VS_SizesList.SelectedItem ?? "").ToString().ToLower() == "normal" ? "NormalSize" : (VS_SizesList.SelectedItem ?? "").ToString();
+            TM.Windows10.VisualStyles.ColorScheme = (VS_ColorsList.SelectedItem ?? string.Empty).ToString();
+            TM.Windows10.VisualStyles.SizeScheme = (VS_SizesList.SelectedItem ?? string.Empty).ToString().ToLower() == "normal" ? "NormalSize" : (VS_SizesList.SelectedItem ?? string.Empty).ToString();
             TM.Windows10.VisualStyles.OverrideColors = VS_ReplaceColors.Checked;
             TM.Windows10.VisualStyles.OverrideSizes = VS_ReplaceMetrics.Checked;
 
@@ -247,20 +253,20 @@ namespace WinPaletter
                 try
                 {
                     // Newer versions of msstyles
-                    using (libmsstyle.VisualStyle visualStyle = new(theme)) { TM.Win32 = visualStyle.ClassicColors(); }
+                    using (VisualStyle visualStyle = new(theme)) { TM.Win32 = visualStyle.ClassicColors(); }
                 }
                 catch
                 {
                     // Old msstyles (Windows XP)
                     try
                     {
-                        if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                        if (Path.GetExtension(theme).ToLower() == ".msstyles")
                         {
-                            System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                             theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                         }
 
-                        if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                        if (!string.IsNullOrEmpty(theme) && File.Exists(theme))
                         {
                             using (VisualStyleFile vs = new(theme)) { TM.Win32.Load(Theme.Structures.Win32UI.Sources.VisualStyles, vs.Metrics); }
                         }
@@ -279,20 +285,20 @@ namespace WinPaletter
                 try
                 {
                     // Newer versions of msstyles
-                    using (libmsstyle.VisualStyle visualStyle = new(theme)) { TM.MetricsFonts = visualStyle.MetricsFonts(); }
+                    using (VisualStyle visualStyle = new(theme)) { TM.MetricsFonts = visualStyle.MetricsFonts(); }
                 }
                 catch
                 {
                     // Old msstyles (Windows XP)
                     try
                     {
-                        if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                        if (Path.GetExtension(theme).ToLower() == ".msstyles")
                         {
-                            System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                             theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                         }
 
-                        if (!string.IsNullOrEmpty(theme) && System.IO.File.Exists(theme))
+                        if (!string.IsNullOrEmpty(theme) && File.Exists(theme))
                         {
                             using (VisualStyleFile vs = new(theme))
                             {
@@ -311,7 +317,7 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            using (Manager DefTM = Theme.Default.Get(WindowStyle.W10))
+            using (Manager DefTM = Default.Get(WindowStyle.W10))
             {
                 TActive.DefaultBackColor = DefTM.Windows10.Titlebar_Active;
                 TInactive.DefaultBackColor = DefTM.Windows10.Titlebar_Inactive;
@@ -731,14 +737,14 @@ namespace WinPaletter
         {
             Program.ToolTip.ToolTipText = Program.Lang.Strings.Tips.TitlebarColorNotice;
             Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
-            Program.ToolTip.Image = Assets.Notifications.Info;
+            Program.ToolTip.Image = Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
 
             Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 5000);
         }
 
-        private void windowsDesktop1_EditorInvoker(object sender, UI.Retro.EditorEventArgs e)
+        private void windowsDesktop1_EditorInvoker(object sender, EditorEventArgs e)
         {
             if (e.PropertyName.ToLower() == nameof(windowsDesktop1.DarkMode_App).ToLower())
             {
@@ -1126,9 +1132,9 @@ namespace WinPaletter
             groupBox4.Visible = (sender as UI.WP.RadioImage).Checked;
         }
 
-        private void Win10xColors_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Win10xColors_HelpButtonClicked(object sender, CancelEventArgs e)
         {
-            System.Diagnostics.Process.Start(Links.Wiki.Win10xColors);
+            Process.Start(Links.Wiki.Win10xColors);
         }
 
         private void winmode_dark_CheckedChanged(object sender, EventArgs e)
@@ -1176,7 +1182,7 @@ namespace WinPaletter
         {
             using (OpenFileDialog dlg = new() { FileName = VS_textbox.Text, Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
             {
-                if (dlg.ShowDialog() == DialogResult.OK) VS_textbox.Text = libmsstyle.VisualStyle.GetCorrectMSStyles(dlg.FileName);
+                if (dlg.ShowDialog() == DialogResult.OK) VS_textbox.Text = VisualStyle.GetCorrectMSStyles(dlg.FileName);
             }
         }
 
@@ -1190,13 +1196,13 @@ namespace WinPaletter
             VS_ColorsList.Items.Clear();
             VS_SizesList.Items.Clear();
 
-            if (!System.IO.File.Exists(theme)) theme = UxTheme.GetCurrentVS().Item1;
+            if (!File.Exists(theme)) theme = UxTheme.GetCurrentVS().Item1;
 
             try
             {
-                using (libmsstyle.VisualStyle vs = new(theme))
+                using (VisualStyle vs = new(theme))
                 {
-                    foreach (libmsstyle.StyleClass @class in vs.Classes.Values)
+                    foreach (StyleClass @class in vs.Classes.Values)
                     {
                         if (@class.ClassName.StartsWith("colorvariant.", StringComparison.OrdinalIgnoreCase))
                         {
@@ -1213,13 +1219,13 @@ namespace WinPaletter
             }
             catch
             {
-                if (System.IO.Path.GetExtension(theme).ToLower() == ".msstyles")
+                if (Path.GetExtension(theme).ToLower() == ".msstyles")
                 {
-                    System.IO.File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                    File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                     theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
                 }
 
-                if (System.IO.File.Exists(theme))
+                if (File.Exists(theme))
                 {
                     using (VisualStyleFile vs = new(theme))
                     {
@@ -1240,6 +1246,21 @@ namespace WinPaletter
         private void button21_Click(object sender, EventArgs e)
         {
             VS_textbox.Text = SysPaths.MSSTYLES_Aero_Win;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.SecureUxThemeReleases);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.SecureUxThemeLoginLoopIssue);
+        }
+
+        private void toggle1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            groupBox22.Enabled = (sender as UI.WP.Toggle).Checked;
         }
     }
 }

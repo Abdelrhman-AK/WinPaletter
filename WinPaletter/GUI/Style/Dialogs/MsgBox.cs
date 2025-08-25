@@ -1,6 +1,7 @@
 ﻿using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Media;
 using System.Reflection;
@@ -471,7 +472,7 @@ namespace WinPaletter.UI.Style
             if (isValidUrl)
             {
                 // e.Href is a valid URL, proceed with opening it
-                System.Diagnostics.Process.Start(e.Href);
+                Process.Start(e.Href);
             }
         }
 

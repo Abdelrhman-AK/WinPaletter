@@ -1,10 +1,13 @@
 ﻿using Microsoft.VisualBasic;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Media;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
 using WinPaletter.Theme;
 
 namespace WinPaletter
@@ -15,7 +18,7 @@ namespace WinPaletter
         private SoundPlayer SP = new();
         private bool AltPlayingMethod = false;
 
-        private void Sounds_Editor_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Sounds_Editor_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.Sounds);
         }
@@ -31,7 +34,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -41,14 +44,14 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Theme.Manager.Source.Registry);
+            Manager TMx = new(Manager.Source.Registry);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Theme.Default.Get(Program.WindowStyle);
+            Manager TMx = Default.Get(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -59,7 +62,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager _Def = Theme.Default.Get(Program.WindowStyle))
+                    using (Manager _Def = Default.Get(Program.WindowStyle))
                     {
                         GetFromClassicThemeFile(dlg.FileName, _Def.Sounds);
                     }
@@ -90,12 +93,12 @@ namespace WinPaletter
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             Program.Settings.Save(Settings.Source.Registry);
 
-            using (Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -135,7 +138,7 @@ namespace WinPaletter
                         string tmp = Path.GetTempFileName();
                         File.WriteAllBytes(tmp, SoundBytes);
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio(tmp);
+                        DLLFunc.PlayAudio(tmp);
                         if (File.Exists(tmp))
                             FileSystem.Kill(tmp);
                     }
@@ -159,7 +162,7 @@ namespace WinPaletter
                     catch // Use method #2
                     {
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio($@"{SysPaths.appData}\WindowsStartup_Backup.wav");
+                        DLLFunc.PlayAudio($@"{SysPaths.appData}\WindowsStartup_Backup.wav");
                     }
 
                 }
@@ -186,13 +189,13 @@ namespace WinPaletter
                     catch // Use method #2
                     {
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio(snd);
+                        DLLFunc.PlayAudio(snd);
                     }
                 }
 
                 else
                 {
-                    if (AltPlayingMethod) NativeMethods.DLLFunc.StopAudio();
+                    if (AltPlayingMethod) DLLFunc.StopAudio();
 
                     if (SP is not null)
                     {
@@ -233,14 +236,14 @@ namespace WinPaletter
                 catch // Use method #2
                 {
                     AltPlayingMethod = true;
-                    NativeMethods.DLLFunc.PlayAudio(snd);
+                    DLLFunc.PlayAudio(snd);
                 }
             }
 
             else
             {
                 if (AltPlayingMethod)
-                    NativeMethods.DLLFunc.StopAudio();
+                    DLLFunc.StopAudio();
 
                 if (SP is not null)
                 {
@@ -252,7 +255,7 @@ namespace WinPaletter
 
         public void StopPlayer(object sender, EventArgs e)
         {
-            if (AltPlayingMethod) NativeMethods.DLLFunc.StopAudio();
+            if (AltPlayingMethod) DLLFunc.StopAudio();
 
             if (SP is not null)
             {
@@ -289,7 +292,7 @@ namespace WinPaletter
                     catch // Use method #2
                     {
                         AltPlayingMethod = true;
-                        NativeMethods.DLLFunc.PlayAudio(snd);
+                        DLLFunc.PlayAudio(snd);
                     }
                 }
             }
@@ -1123,7 +1126,7 @@ namespace WinPaletter
 
         private void button347_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Properties.Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
     }
 }

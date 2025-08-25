@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.TypesExtensions;
+using WinPaletter.Properties;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.WP
@@ -44,7 +45,7 @@ namespace WinPaletter.UI.WP
         Rectangle MenuSplitterRectangle;
         bool isMouseOverMenuSplitter = false;
 
-        private readonly static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.6f));
+        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
         private Color imageColor;
 
         public MouseState State = MouseState.None;
@@ -427,11 +428,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    Transition.With(this, nameof(HoverSize), Math.Max(Width, Height)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 }
             }
             else
@@ -451,11 +452,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 }
             }
             else
@@ -475,11 +476,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 }
             }
             else
@@ -497,11 +498,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), ContainsFocus && State == MouseState.Over ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), ContainsFocus && State == MouseState.Over ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), ContainsFocus && State == MouseState.Over ? Math.Max(Width, Height) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    Transition.With(this, nameof(HoverSize), ContainsFocus && State == MouseState.Over ? Math.Max(Width, Height) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 }
             }
             else
@@ -525,11 +526,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 }
             }
             else
@@ -548,7 +549,7 @@ namespace WinPaletter.UI.WP
             _hoverSize = Math.Max(Width, Height);
             hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize);
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
             base.OnKeyUp(e);
@@ -591,7 +592,7 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            if (CanAnimate) { FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
             base.OnLeave(e);
@@ -621,11 +622,11 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                FluentTransitions.Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
 
                 if (_ripple)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 }
             }
             else
@@ -698,7 +699,7 @@ namespace WinPaletter.UI.WP
             {
                 if (State != MouseState.None) { hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize); }
 
-                FluentTransitions.Transition.With(this, nameof(Color), Colorize()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(Color), Colorize()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
             else
             {
@@ -762,17 +763,24 @@ namespace WinPaletter.UI.WP
 
             if (!_imageGlyphEnabled || DesignMode)
             {
-                if (Flag == Flags.None || Flag == Flags.TintedOnHover || Flag == Flags.ErrorOnHover || Flag == Flags.TertiaryOnHover || Flag == Flags.CustomColorOnHover)
+                if (Enabled)
                 {
-                    using (SolidBrush br = new(Color.FromArgb(255, Color))) { G.FillRoundedRect(br, RectInner); }
+                    if (Flag == Flags.None || Flag == Flags.TintedOnHover || Flag == Flags.ErrorOnHover || Flag == Flags.TertiaryOnHover || Flag == Flags.CustomColorOnHover)
+                    {
+                        using (SolidBrush br = new(Color.FromArgb(255, Color))) { G.FillRoundedRect(br, RectInner); }
+                    }
+                    else
+                    {
+                        using (Colors_Collection colors = new(Color, Color, Program.Style.DarkMode))
+                        using (LinearGradientBrush br = new(Rect, Color.FromArgb(255, Color), colors.Back_Checked, LinearGradientMode.ForwardDiagonal))
+                        {
+                            G.FillRoundedRect(br, RectInner);
+                        }
+                    }
                 }
                 else
                 {
-                    using (Colors_Collection colors = new(Color, Color, Program.Style.DarkMode))
-                    using (LinearGradientBrush br = new(Rect, Color.FromArgb(255, Color), colors.Back_Checked, LinearGradientMode.ForwardDiagonal))
-                    {
-                        G.FillRoundedRect(br, RectInner);
-                    }
+                    G.FillRoundedRect(scheme1.Brushes.BackColor, RectInner);
                 }
 
                 using (Pen P = new(Color.FromArgb(255, _lineColor)))

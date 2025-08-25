@@ -1,9 +1,9 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -46,7 +46,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows XP LogonUI data structure</param>
         public void Load(LogonUIXP @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
 
             if (OS.WXP)
             {
@@ -96,7 +96,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows XP LogonUI screen preferences into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP LogonUI screen preferences into registry.");
 
             SaveToggleState(treeView);
 

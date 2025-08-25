@@ -7,6 +7,8 @@ using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Properties;
 using WinPaletter.Templates;
 using WinPaletter.UI.Retro;
 
@@ -29,9 +31,9 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
-        private static TextureBrush Noise = new(Properties.Resources.Noise.Fade(0.15f));
-        private static Bitmap Noise7 = Assets.Win7Preview.AeroGlass;
-        private static Bitmap Noise7Start = Assets.Win7Preview.StartGlass;
+        private static TextureBrush Noise = new(Resources.Noise.Fade(0.15f));
+        private static Bitmap Noise7 = Win7Preview.AeroGlass;
+        private static Bitmap Noise7Start = Win7Preview.StartGlass;
 
         private Bitmap back;
         private Bitmap back_blurred;
@@ -431,7 +433,7 @@ namespace WinPaletter.UI.Simulation
             {
                 if (Transparency)
                 {
-                    using (Bitmap b = Properties.Resources.Noise.Fade(_NoisePower))
+                    using (Bitmap b = Resources.Noise.Fade(_NoisePower))
                     {
                         Noise = new(b);
                     }
@@ -440,8 +442,8 @@ namespace WinPaletter.UI.Simulation
             else if (Style == Styles.Start7Aero || Style == Styles.Taskbar7Aero || Style == Styles.AltTab7Aero ||
                      Style == Styles.Start7Opaque || Style == Styles.Taskbar7Opaque || Style == Styles.AltTab7Opaque)
             {
-                using (Bitmap b0 = Assets.Win7Preview.AeroGlass.Fade(_NoisePower / 100f))
-                using (Bitmap b1 = Assets.Win7Preview.StartGlass.Fade(_NoisePower / 100f))
+                using (Bitmap b0 = Win7Preview.AeroGlass.Fade(_NoisePower / 100f))
+                using (Bitmap b1 = Win7Preview.StartGlass.Fade(_NoisePower / 100f))
                 {
                     Noise7 = new(b0);
                     Noise7Start = new(b1);
@@ -769,7 +771,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawRoundImage(DarkMode ? Assets.Win11Preview.Start11_Dark : Assets.Win11Preview.Start11_Light, RRect, Radius, true);
+                        G.DrawRoundImage(DarkMode ? Win11Preview.Start11_Dark : Win11Preview.Start11_Light, RRect, Radius, true);
 
                         Color SearchColor, SearchBorderColor;
                         if (DarkMode)
@@ -847,7 +849,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawRoundImage(DarkMode ? Assets.Win11Preview.AC_11_Dark : Assets.Win11Preview.AC_11_Light, RRect, Radius, true);
+                        G.DrawRoundImage(DarkMode ? Win11Preview.AC_11_Dark : Win11Preview.AC_11_Light, RRect, Radius, true);
 
                         Color Cx1 = default, Cx2 = default;
 
@@ -990,7 +992,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRoundedRectBeveled(P, StartBtnRect, 3);
                         }
-                        G.DrawImage(DarkMode ? Assets.Win11Preview.StartBtn_11Dark : Assets.Win11Preview.StartBtn_11Light, StartImgRect);
+                        G.DrawImage(DarkMode ? Win11Preview.StartBtn_11Dark : Win11Preview.StartBtn_11Light, StartImgRect);
 
                         using (SolidBrush br = new(BackC))
                         {
@@ -1000,7 +1002,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRoundedRectBeveled(P, AppBtnRect, 3);
                         }
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppImgRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppImgRect);
                         using (SolidBrush br = new(_AppUnderline))
                         {
                             G.FillRoundedRect(br, AppBtnRectUnderline, 2, true);
@@ -1020,7 +1022,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2ImgRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2ImgRect);
                         using (SolidBrush br = new(Color.FromArgb(255, BackC)))
                         {
                             G.FillRoundedRect(br, App2BtnRectUnderline, 2, true);
@@ -1126,7 +1128,7 @@ namespace WinPaletter.UI.Simulation
                             {
                                 G.FillRoundedRect(br, r, Radius * 2, true);
                             }
-                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
+                            G.DrawImage(x == 0 ? Resources.SampleApp_Active : Resources.SampleApp_Inactive, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
 
                             using (SolidBrush br = new(Color.FromArgb(150, back2)))
                             {
@@ -1173,7 +1175,7 @@ namespace WinPaletter.UI.Simulation
 
                             #endregion
 
-                            G.DrawImage(DarkMode ? Assets.Win10Preview.Start10_Dark : Assets.Win10Preview.Start10_Light, new Rectangle(0, 0, Width - 1, Height - 1));
+                            G.DrawImage(DarkMode ? Win10Preview.Start10_Dark : Win10Preview.Start10_Light, new Rectangle(0, 0, Width - 1, Height - 1));
                         }
 
                         else if (UseWin11RoundedCorners_WithWin10_Level1)
@@ -1203,7 +1205,7 @@ namespace WinPaletter.UI.Simulation
 
                             #endregion
 
-                            G.DrawImage(DarkMode ? Assets.Win11Preview.Start11_EP_Rounded_Dark : Assets.Win11Preview.Start11_EP_Rounded_Light, new Rectangle(0, 0, Width - 1, Height - 1));
+                            G.DrawImage(DarkMode ? Win11Preview.Start11_EP_Rounded_Dark : Win11Preview.Start11_EP_Rounded_Light, new Rectangle(0, 0, Width - 1, Height - 1));
                         }
 
                         else if (UseWin11RoundedCorners_WithWin10_Level2)
@@ -1233,7 +1235,7 @@ namespace WinPaletter.UI.Simulation
 
                             #endregion
 
-                            G.DrawRoundImage(DarkMode ? Assets.Win11Preview.Start11_EP_Rounded_Dark : Assets.Win11Preview.Start11_EP_Rounded_Light, new Rectangle(0, 0, Width - 1, Height - 1), Radius, true);
+                            G.DrawRoundImage(DarkMode ? Win11Preview.Start11_EP_Rounded_Dark : Win11Preview.Start11_EP_Rounded_Light, new Rectangle(0, 0, Width - 1, Height - 1), Radius, true);
                         }
 
                         break;
@@ -1289,7 +1291,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawImage(DarkMode ? Assets.Win10Preview.AC_10_Dark : Assets.Win10Preview.AC_10_Light, new Rectangle(0, 0, Width - 1, Height - 1));
+                        G.DrawImage(DarkMode ? Win10Preview.AC_10_Dark : Win10Preview.AC_10_Light, new Rectangle(0, 0, Width - 1, Height - 1));
 
                         using (SolidBrush br = new(LinkColor))
                         {
@@ -1360,18 +1362,18 @@ namespace WinPaletter.UI.Simulation
 
                         if (!UseWin11ORB_WithWin10)
                         {
-                            StartBtnImgRect = new(StartBtnRect.X + (StartBtnRect.Width - Assets.Win10Preview.StartBtn_10Light.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Assets.Win10Preview.StartBtn_10Light.Height) / 2, Assets.Win10Preview.StartBtn_10Light.Width, Assets.Win10Preview.StartBtn_10Light.Height);
+                            StartBtnImgRect = new(StartBtnRect.X + (StartBtnRect.Width - Win10Preview.StartBtn_10Light.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Win10Preview.StartBtn_10Light.Height) / 2, Win10Preview.StartBtn_10Light.Width, Win10Preview.StartBtn_10Light.Height);
                         }
                         else
                         {
-                            StartBtnImgRect = new(StartBtnRect.X + (StartBtnRect.Width - Assets.Win11Preview.StartBtn_11_EP.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Assets.Win11Preview.StartBtn_11_EP.Height) / 2, Assets.Win11Preview.StartBtn_11_EP.Width, Assets.Win11Preview.StartBtn_11_EP.Height);
+                            StartBtnImgRect = new(StartBtnRect.X + (StartBtnRect.Width - Win11Preview.StartBtn_11_EP.Width) / 2, StartBtnRect.Y + (StartBtnRect.Height - Win11Preview.StartBtn_11_EP.Height) / 2, Win11Preview.StartBtn_11_EP.Width, Win11Preview.StartBtn_11_EP.Height);
                         }
 
                         Rectangle AppBtnRect = new(StartBtnRect.Right, -1, 40, Height + 2);
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2 - 1, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2 - 1, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
                         Rectangle AppBtnRectUnderline = new(AppBtnRect.X, AppBtnRect.Y + AppBtnRect.Height - 3, AppBtnRect.Width, 2);
                         Rectangle App2BtnRect = new(AppBtnRect.Right, -1, 40, Height + 2);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
                         Rectangle App2BtnRectUnderline = new(App2BtnRect.X + 14 / 2, App2BtnRect.Y + App2BtnRect.Height - 3, App2BtnRect.Width - 14, 2);
 
                         #region Editor
@@ -1390,11 +1392,11 @@ namespace WinPaletter.UI.Simulation
 
                         if (!UseWin11ORB_WithWin10)
                         {
-                            G.DrawImage(Assets.Win10Preview.StartBtn_10Light.ReplaceColor(Color.Black, _StartColor), StartBtnImgRect);
+                            G.DrawImage(Win10Preview.StartBtn_10Light.ReplaceColor(Color.Black, _StartColor), StartBtnImgRect);
                         }
                         else
                         {
-                            G.DrawImage(Assets.Win11Preview.StartBtn_11_EP.ReplaceColor(Color.Black, _StartColor), StartBtnImgRect);
+                            G.DrawImage(Win11Preview.StartBtn_11_EP.ReplaceColor(Color.Black, _StartColor), StartBtnImgRect);
                         }
 
                         Color AppColor = _AppBackground;
@@ -1437,13 +1439,13 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (SolidBrush br = new(_AppUnderline.Light()))
                         {
                             G.FillRectangle(br, App2BtnRectUnderline);
                         }
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -1495,7 +1497,7 @@ namespace WinPaletter.UI.Simulation
                                 }
                             }
 
-                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
+                            G.DrawImage(x == 0 ? Resources.SampleApp_Active : Resources.SampleApp_Inactive, new Rectangle(r.X + 5, r.Y + 5, 20, 20));
 
                             G.FillRectangle(Brushes.White, new Rectangle(r.X + 5 + 20 + 5, r.Y + 5 + (20 - 4) / 2, 20, 4));
 
@@ -1544,15 +1546,15 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        Bitmap StartORB = new(Assets.Win81Preview.ORB);
+                        Bitmap StartORB = new(Win81Preview.ORB);
                         Rectangle StartBtnRect = new((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
                         Rectangle AppBtnRect = new(StartBtnRect.Right + 8, 0, 45, Height - 1);
                         Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
 
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
                         Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
                         Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -1569,7 +1571,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawRectangle(P, AppBtnRectInner);
                         }
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (SolidBrush br = new(Color.FromArgb(50, Color.White)))
                         {
@@ -1584,7 +1586,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawRectangle(P, App2BtnRectInner);
                         }
 
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -1625,15 +1627,15 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        Bitmap StartORB = new(Assets.Win81Preview.ORB);
+                        Bitmap StartORB = new(Win81Preview.ORB);
                         Rectangle StartBtnRect = new((35 - 27) / 2 + 2, (35 - 27) / 2 - 1, 27, 27);
                         Rectangle AppBtnRect = new(StartBtnRect.Right + 8, 0, 45, Height - 1);
                         Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
 
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
                         Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
                         Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -1654,7 +1656,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawRectangle(P, AppBtnRect);
                         }
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (SolidBrush br = new(Color.FromArgb(255, bc.Light(0.1f))))
                         {
@@ -1672,7 +1674,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRectangle(P, App2BtnRect);
                         }
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -1715,10 +1717,10 @@ namespace WinPaletter.UI.Simulation
                         Rectangle AppBtnRect = new(20, 0, 45, Height - 1);
                         Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
 
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
                         Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
                         Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
 
                         using (SolidBrush br = new(Color.FromArgb(100, Color.White)))
                         {
@@ -1733,7 +1735,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawRectangle(P, AppBtnRectInner);
                         }
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (SolidBrush br = new(Color.FromArgb(50, Color.White)))
                         {
@@ -1748,7 +1750,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawRectangle(P, App2BtnRectInner);
                         }
 
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -1792,10 +1794,10 @@ namespace WinPaletter.UI.Simulation
                         Rectangle AppBtnRect = new(20, 0, 45, Height - 1);
                         Rectangle AppBtnRectInner = new(AppBtnRect.X + 1, AppBtnRect.Y + 1, AppBtnRect.Width - 2, AppBtnRect.Height - 2);
 
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
                         Rectangle App2BtnRect = new(AppBtnRect.Right + 2, 0, 45, Height - 1);
                         Rectangle App2BtnRectInner = new(App2BtnRect.X + 1, App2BtnRect.Y + 1, App2BtnRect.Width - 2, App2BtnRect.Height - 2);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
 
                         using (SolidBrush br = new(Color.FromArgb(255, bc.CB(0.5f))))
                         {
@@ -1814,7 +1816,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawRectangle(P, AppBtnRect);
                         }
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (SolidBrush br = new(Color.FromArgb(255, bc.Light(0.1f))))
                         {
@@ -1832,7 +1834,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRectangle(P, App2BtnRect);
                         }
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -1881,9 +1883,9 @@ namespace WinPaletter.UI.Simulation
                             }
 
                             G.FillRectangle(Brushes.White, r);
-                            int icon_w = Properties.Resources.SampleApp_Active.Width;
+                            int icon_w = Resources.SampleApp_Active.Width;
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
-                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
+                            G.DrawImage(x == 0 ? Resources.SampleApp_Active : Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
@@ -1944,9 +1946,9 @@ namespace WinPaletter.UI.Simulation
                             }
 
                             G.FillRectangle(Brushes.White, r);
-                            int icon_w = Properties.Resources.SampleApp_Active.Width;
+                            int icon_w = Resources.SampleApp_Active.Width;
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
-                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
+                            G.DrawImage(x == 0 ? Resources.SampleApp_Active : Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
@@ -2007,7 +2009,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawRoundImage(Assets.Win7Preview.Start, Rect, 5, true);
+                        G.DrawRoundImage(Win7Preview.Start, Rect, 5, true);
                         break;
                     }
                 #endregion
@@ -2044,7 +2046,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawRoundImage(Assets.Win7Preview.Start, Rect, 5, true);
+                        G.DrawRoundImage(Win7Preview.Start, Rect, 5, true);
                         break;
                     }
                 #endregion
@@ -2052,7 +2054,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.Start7Basic:
                     #region Start 7 Basic
                     {
-                        G.DrawImage(Assets.Win7Preview.StartBasic, Rect);
+                        G.DrawImage(Win7Preview.StartBasic, Rect);
                         break;
                     }
                 #endregion
@@ -2078,7 +2080,7 @@ namespace WinPaletter.UI.Simulation
                             G.DrawAeroEffect(Rect, back_blurred, Color1, ColBal, Color2, GlowBal, alphaX, 0, false);
                         }
 
-                        G.DrawImage(Assets.Win7Preview.TaskbarSides, Rect);
+                        G.DrawImage(Win7Preview.TaskbarSides, Rect);
 
                         if (Noise7Start != null)
                             G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
@@ -2108,17 +2110,17 @@ namespace WinPaletter.UI.Simulation
                             G.DrawLine(P, new Point(0, 1), new Point(Width - 1, 1));
                         }
 
-                        G.DrawImage(Assets.Win7Preview.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
+                        G.DrawImage(Win7Preview.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        Bitmap StartORB = new(Assets.Win7Preview.ORB);
+                        Bitmap StartORB = new(Win7Preview.ORB);
 
                         Rectangle StartBtnRect = new(3, -3, 39, 39);
 
                         Rectangle AppBtnRect = new(StartBtnRect.Right + 5, 0, 43, 34);
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2 - 1, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2 - 1, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
 
                         Rectangle App2BtnRect = new(AppBtnRect.Right + 1, 0, 43, 34);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2 - 1, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2 - 1, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -2126,15 +2128,15 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRoundedRect(P, new Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2, true);
                         }
-                        G.DrawImage(Assets.Win7Preview.Taskbar_ActiveApp, AppBtnRect);
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Win7Preview.Taskbar_ActiveApp, AppBtnRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (Pen P = new(Color.FromArgb(110, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2, true);
                         }
-                        G.DrawImage(Assets.Win7Preview.Taskbar_InactiveApp, App2BtnRect);
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Win7Preview.Taskbar_InactiveApp, App2BtnRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -2150,7 +2152,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRectangle(br, Rect);
                         }
-                        G.DrawImage(Assets.Win7Preview.TaskbarSides, Rect);
+                        G.DrawImage(Win7Preview.TaskbarSides, Rect);
 
                         if (Noise7Start != null)
                             G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
@@ -2180,17 +2182,17 @@ namespace WinPaletter.UI.Simulation
                             G.DrawLine(P, new Point(0, 1), new Point(Width - 1, 1));
                         }
 
-                        G.DrawImage(Assets.Win7Preview.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
+                        G.DrawImage(Win7Preview.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        Bitmap StartORB = new(Assets.Win7Preview.ORB);
+                        Bitmap StartORB = new(Win7Preview.ORB);
 
                         Rectangle StartBtnRect = new(3, -3, 39, 39);
 
                         Rectangle AppBtnRect = new(StartBtnRect.Right + 5, 0, 43, 34);
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2 - 1, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2 - 1, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
 
                         Rectangle App2BtnRect = new(AppBtnRect.Right + 1, 0, 43, 34);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2 - 1, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2 - 1, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -2198,15 +2200,15 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRoundedRect(P, new Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2, true);
                         }
-                        G.DrawImage(Assets.Win7Preview.Taskbar_ActiveApp, AppBtnRect);
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Win7Preview.Taskbar_ActiveApp, AppBtnRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (Pen P = new(Color.FromArgb(110, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2, true);
                         }
-                        G.DrawImage(Assets.Win7Preview.Taskbar_InactiveApp, App2BtnRect);
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Win7Preview.Taskbar_InactiveApp, App2BtnRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -2214,19 +2216,19 @@ namespace WinPaletter.UI.Simulation
                 case Styles.Taskbar7Basic:
                     #region Taskbar 7 Basic
                     {
-                        G.DrawImage(Assets.Win7Preview.BasicTaskbar, Rect);
+                        G.DrawImage(Win7Preview.BasicTaskbar, Rect);
 
-                        G.DrawImage(Assets.Win7Preview.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
+                        G.DrawImage(Win7Preview.AeroPeek, new Rectangle(Width - 10, 0, 10, Height));
 
-                        Bitmap StartORB = new(Assets.Win7Preview.ORB);
+                        Bitmap StartORB = new(Win7Preview.ORB);
 
                         Rectangle StartBtnRect = new(3, -3, 39, 39);
 
                         Rectangle AppBtnRect = new(StartBtnRect.Right + 5, 0, 43, 34);
-                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Properties.Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Properties.Resources.SampleApp_Active.Height) / 2 - 1, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                        Rectangle AppBtnImgRect = new(AppBtnRect.X + (AppBtnRect.Width - Resources.SampleApp_Active.Width) / 2, AppBtnRect.Y + (AppBtnRect.Height - Resources.SampleApp_Active.Height) / 2 - 1, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
 
                         Rectangle App2BtnRect = new(AppBtnRect.Right + 1, 0, 43, 34);
-                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Properties.Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Properties.Resources.SampleApp_Inactive.Height) / 2 - 1, Properties.Resources.SampleApp_Inactive.Width, Properties.Resources.SampleApp_Inactive.Height);
+                        Rectangle App2BtnImgRect = new(App2BtnRect.X + (App2BtnRect.Width - Resources.SampleApp_Inactive.Width) / 2, App2BtnRect.Y + (App2BtnRect.Height - Resources.SampleApp_Inactive.Height) / 2 - 1, Resources.SampleApp_Inactive.Width, Resources.SampleApp_Inactive.Height);
 
                         G.DrawImage(StartORB, StartBtnRect);
 
@@ -2234,15 +2236,15 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRoundedRect(P, new Rectangle(AppBtnRect.X, AppBtnRect.Y, AppBtnRect.Width - 2, AppBtnRect.Height - 2), 2, true);
                         }
-                        G.DrawImage(Assets.Win7Preview.Taskbar_ActiveApp, AppBtnRect);
-                        G.DrawImage(Properties.Resources.SampleApp_Active, AppBtnImgRect);
+                        G.DrawImage(Win7Preview.Taskbar_ActiveApp, AppBtnRect);
+                        G.DrawImage(Resources.SampleApp_Active, AppBtnImgRect);
 
                         using (Pen P = new(Color.FromArgb(110, 0, 0, 0)))
                         {
                             G.DrawRoundedRect(P, new Rectangle(App2BtnRect.X, App2BtnRect.Y, App2BtnRect.Width - 2, App2BtnRect.Height - 2), 2, true);
                         }
-                        G.DrawImage(Assets.Win7Preview.Taskbar_InactiveApp, App2BtnRect);
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, App2BtnImgRect);
+                        G.DrawImage(Win7Preview.Taskbar_InactiveApp, App2BtnRect);
+                        G.DrawImage(Resources.SampleApp_Inactive, App2BtnImgRect);
                         break;
                     }
                 #endregion
@@ -2304,8 +2306,8 @@ namespace WinPaletter.UI.Simulation
                                     G.FillRoundedRect(br, surround, 1, true);
                                 }
 
-                                using (Bitmap b0 = Assets.Win7Preview.TitleTopL.Fade(0.35f))
-                                using (Bitmap b1 = Assets.Win7Preview.TitleTopR.Fade(0.35f))
+                                using (Bitmap b0 = Win7Preview.TitleTopL.Fade(0.35f))
+                                using (Bitmap b1 = Win7Preview.TitleTopR.Fade(0.35f))
                                 {
                                     G.DrawRoundImage(b0, surround, 2, true);
                                     G.DrawRoundImage(b1, surround, 2, true);
@@ -2325,11 +2327,11 @@ namespace WinPaletter.UI.Simulation
                             G.FillRoundedRect(Brushes.White, r, 2, true);
                             G.DrawRoundedRect(Pens.Black, r, 2, true);
 
-                            int icon_w = Properties.Resources.SampleApp_Active.Width;
+                            int icon_w = Resources.SampleApp_Active.Width;
 
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
 
-                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
+                            G.DrawImage(x == 0 ? Resources.SampleApp_Active : Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
@@ -2406,8 +2408,8 @@ namespace WinPaletter.UI.Simulation
                                     G.FillRoundedRect(br, surround, 1, true);
                                 }
 
-                                using (Bitmap b0 = Assets.Win7Preview.TitleTopL.Fade(0.35f))
-                                using (Bitmap b1 = Assets.Win7Preview.TitleTopR.Fade(0.35f))
+                                using (Bitmap b0 = Win7Preview.TitleTopL.Fade(0.35f))
+                                using (Bitmap b1 = Win7Preview.TitleTopR.Fade(0.35f))
                                 {
                                     G.DrawRoundImage(b0, surround, 2, true);
                                     G.DrawRoundImage(b1, surround, 2, true);
@@ -2427,11 +2429,11 @@ namespace WinPaletter.UI.Simulation
                             G.FillRoundedRect(Brushes.White, r, 2, true);
                             G.DrawRoundedRect(Pens.Black, r, 2, true);
 
-                            int icon_w = Properties.Resources.SampleApp_Active.Width;
+                            int icon_w = Resources.SampleApp_Active.Width;
 
                             Rectangle icon_rect = new(r.X + r.Width - (int)(0.7 * icon_w), r.Y + r.Height - (int)(0.6 * icon_w), icon_w, icon_w);
 
-                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, icon_rect);
+                            G.DrawImage(x == 0 ? Resources.SampleApp_Active : Resources.SampleApp_Inactive, icon_rect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
@@ -2498,11 +2500,11 @@ namespace WinPaletter.UI.Simulation
                         }
 
 
-                        int AppHeight = Assets.Win7Preview.AltTabBasicButton.Height;
+                        int AppHeight = Win7Preview.AltTabBasicButton.Height;
                         int _padding = 5;
 
                         int appsNumber = 3;
-                        int AppWidth = Assets.Win7Preview.AltTabBasicButton.Width;
+                        int AppWidth = Win7Preview.AltTabBasicButton.Width;
 
                         int _paddingOuter = (RRect.Width - AppWidth * appsNumber - _padding * (appsNumber - 1)) / 2;
 
@@ -2525,11 +2527,11 @@ namespace WinPaletter.UI.Simulation
                         {
                             Rectangle r = Rects[x];
                             if (x == 0)
-                                G.DrawImage(Assets.Win7Preview.AltTabBasicButton, r);
+                                G.DrawImage(Win7Preview.AltTabBasicButton, r);
 
-                            Rectangle imgrect = new(r.X + (r.Width - Properties.Resources.SampleApp_Active.Width) / 2, r.Y + (r.Height - Properties.Resources.SampleApp_Active.Height) / 2, Properties.Resources.SampleApp_Active.Width, Properties.Resources.SampleApp_Active.Height);
+                            Rectangle imgrect = new(r.X + (r.Width - Resources.SampleApp_Active.Width) / 2, r.Y + (r.Height - Resources.SampleApp_Active.Height) / 2, Resources.SampleApp_Active.Width, Resources.SampleApp_Active.Height);
 
-                            G.DrawImage(x == 0 ? Properties.Resources.SampleApp_Active : Properties.Resources.SampleApp_Inactive, imgrect);
+                            G.DrawImage(x == 0 ? Resources.SampleApp_Active : Resources.SampleApp_Inactive, imgrect);
                         }
 
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30);
@@ -2573,7 +2575,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawImage(Assets.WinVistaPreview.Start, new Rectangle(0, 0, Width, Height));
+                        G.DrawImage(WinVistaPreview.Start, new Rectangle(0, 0, Width, Height));
                         break;
                     }
                 #endregion
@@ -2604,7 +2606,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawImage(Assets.WinVistaPreview.Start, new Rectangle(0, 0, Width, Height));
+                        G.DrawImage(WinVistaPreview.Start, new Rectangle(0, 0, Width, Height));
                         break;
                     }
                 #endregion
@@ -2612,7 +2614,7 @@ namespace WinPaletter.UI.Simulation
                 case Styles.StartVistaBasic:
                     #region Start Vista Basic
                     {
-                        G.DrawImage(Assets.WinVistaPreview.StartBasic, new Rectangle(0, 0, Width, Height));
+                        G.DrawImage(WinVistaPreview.StartBasic, new Rectangle(0, 0, Width, Height));
                         break;
                     }
                 #endregion
@@ -2626,7 +2628,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRectangle(br, Rect);
                         }
-                        G.FillRectangle(new TextureBrush(Assets.WinVistaPreview.Taskbar), Rect);
+                        G.FillRectangle(new TextureBrush(WinVistaPreview.Taskbar), Rect);
 
                         #region Editor
 
@@ -2644,7 +2646,7 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        Bitmap orb = Assets.WinVistaPreview.ORB;
+                        Bitmap orb = WinVistaPreview.ORB;
                         G.DrawImage(orb, new Rectangle(0, 0, orb.Width, Height));
 
                         Rectangle apprect1 = new(Rect.X + 60, 1, 140, Rect.Height - 4);
@@ -2654,11 +2656,11 @@ namespace WinPaletter.UI.Simulation
                         Rectangle appLabel1 = new(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
                         Rectangle appLabel2 = new(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
 
-                        G.DrawImage(Assets.WinVistaPreview.Taskbar_ActiveApp, apprect1);
-                        G.DrawImage(Assets.WinVistaPreview.Taskbar_InactiveApp, apprect2);
+                        G.DrawImage(WinVistaPreview.Taskbar_ActiveApp, apprect1);
+                        G.DrawImage(WinVistaPreview.Taskbar_InactiveApp, apprect2);
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
+                        G.DrawImage(Resources.SampleApp_Active, appIcon1);
+                        G.DrawImage(Resources.SampleApp_Inactive, appIcon2);
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
@@ -2672,13 +2674,13 @@ namespace WinPaletter.UI.Simulation
                 case Styles.TaskbarVistaOpaque:
                     #region Taskbar Vista Opaque
                     {
-                        Bitmap orb = Assets.WinVistaPreview.ORB;
+                        Bitmap orb = WinVistaPreview.ORB;
                         G.FillRectangle(Brushes.White, Rect);
                         using (SolidBrush br = new(Color.FromArgb((int)(Win7ColorBal * 255f / 100f), Background)))
                         {
                             G.FillRectangle(br, Rect);
                         }
-                        G.FillRectangle(new TextureBrush(Assets.WinVistaPreview.Taskbar), Rect);
+                        G.FillRectangle(new TextureBrush(WinVistaPreview.Taskbar), Rect);
 
                         #region Editor
 
@@ -2705,11 +2707,11 @@ namespace WinPaletter.UI.Simulation
                         Rectangle appLabel1 = new(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
                         Rectangle appLabel2 = new(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
 
-                        G.DrawImage(Assets.WinVistaPreview.Taskbar_ActiveApp, apprect1);
-                        G.DrawImage(Assets.WinVistaPreview.Taskbar_InactiveApp, apprect2);
+                        G.DrawImage(WinVistaPreview.Taskbar_ActiveApp, apprect1);
+                        G.DrawImage(WinVistaPreview.Taskbar_InactiveApp, apprect2);
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
+                        G.DrawImage(Resources.SampleApp_Active, appIcon1);
+                        G.DrawImage(Resources.SampleApp_Inactive, appIcon2);
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
@@ -2723,9 +2725,9 @@ namespace WinPaletter.UI.Simulation
                 case Styles.TaskbarVistaBasic:
                     #region Taskbar Vista Basic
                     {
-                        Bitmap orb = Assets.WinVistaPreview.ORB;
+                        Bitmap orb = WinVistaPreview.ORB;
                         G.FillRectangle(Brushes.Black, Rect);
-                        G.FillRectangle(new TextureBrush(Assets.WinVistaPreview.Taskbar), Rect);
+                        G.FillRectangle(new TextureBrush(WinVistaPreview.Taskbar), Rect);
                         G.DrawImage(orb, new Rectangle(0, 0, orb.Width, Height));
 
                         Rectangle apprect1 = new(Rect.X + 60, 1, 140, Rect.Height - 4);
@@ -2735,11 +2737,11 @@ namespace WinPaletter.UI.Simulation
                         Rectangle appLabel1 = new(apprect1.X + 25, apprect1.Y, apprect1.Width - 30, apprect1.Height);
                         Rectangle appLabel2 = new(apprect2.X + 25, apprect2.Y, apprect2.Width - 30, apprect2.Height);
 
-                        G.DrawImage(Assets.WinVistaPreview.Taskbar_ActiveApp, apprect1);
-                        G.DrawImage(Assets.WinVistaPreview.Taskbar_InactiveApp, apprect2);
+                        G.DrawImage(WinVistaPreview.Taskbar_ActiveApp, apprect1);
+                        G.DrawImage(WinVistaPreview.Taskbar_InactiveApp, apprect2);
 
-                        G.DrawImage(Properties.Resources.SampleApp_Active, appIcon1);
-                        G.DrawImage(Properties.Resources.SampleApp_Inactive, appIcon2);
+                        G.DrawImage(Resources.SampleApp_Active, appIcon1);
+                        G.DrawImage(Resources.SampleApp_Inactive, appIcon2);
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {

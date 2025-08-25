@@ -1,11 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using Serilog.Events;
 using System;
 using System.Drawing;
 using System.Linq;
-using System.Security.Principal;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
-using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -48,7 +45,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows8 data structure</param>
         public void Load(Windows8 @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 8.1 colors and appearance preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 8.1 colors and appearance preferences from registry.");
 
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8", string.Empty, @default.Enabled));
 
@@ -70,9 +67,9 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         /// <param name="TM">Theme manager used to apply theme</param>
         /// <param name="treeView">treeView used as theme log</param>
-        public void Apply(Theme.Manager TM, TreeView treeView = null)
+        public void Apply(Manager TM, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 8.1 colors and appearance preferences into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 8.1 colors and appearance preferences into registry.");
 
             SaveToggleState(treeView);
 

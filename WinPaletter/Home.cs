@@ -1,12 +1,19 @@
-﻿using System;
+﻿using FluentTransitions;
+using Microsoft.VisualBasic;
+using Ookii.Dialogs.WinForms;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.Dialogs;
+using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
+using WinPaletter.Theme;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
@@ -77,14 +84,14 @@ namespace WinPaletter
             // Add animations to toolbar buttons and cards.
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                button.MouseLeave += (s, e) => FluentTransitions.Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseEnter += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), (s as UI.WP.Button).Tag ?? string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseLeave += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
             foreach (Card card in flowLayoutPanel1.Controls)
             {
-                card.MouseEnter += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                card.MouseLeave += (s, e) => FluentTransitions.Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
         }
 
@@ -107,7 +114,7 @@ namespace WinPaletter
 
             Forms.MainForm.MinimumSize = Program.Settings.General.CompactAspects ? new(925, 660) : oldMainFormMinSize;
 
-            button1.ImageGlyph = Program.Settings.General.CompactAspects ? Properties.Resources.Glyph_Expand : Properties.Resources.Glyph_Compact;
+            button1.ImageGlyph = Program.Settings.General.CompactAspects ? Resources.Glyph_Expand : Resources.Glyph_Compact;
         }
 
         /// <summary>
@@ -170,56 +177,56 @@ namespace WinPaletter
             switch (Program.WindowStyle)
             {
                 case WindowStyle.W12:
-                    card1.Image = Assets.Themes_Banners.Theme_12;
-                    winEdition.Image = Assets.WinLogos.Win12;
+                    card1.Image = Themes_Banners.Theme_12;
+                    winEdition.Image = WinLogos.Win12;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;
 
                 case WindowStyle.W11:
-                    card1.Image = Assets.Themes_Banners.Theme_11;
-                    winEdition.Image = Assets.WinLogos.Win11;
+                    card1.Image = Themes_Banners.Theme_11;
+                    winEdition.Image = WinLogos.Win11;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W11);
                     break;
 
                 case WindowStyle.W10:
-                    card1.Image = Assets.Themes_Banners.Theme_10;
-                    winEdition.Image = Assets.WinLogos.Win10;
+                    card1.Image = Themes_Banners.Theme_10;
+                    winEdition.Image = WinLogos.Win10;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W10);
                     break;
 
                 case WindowStyle.W81:
-                    card1.Image = Assets.Themes_Banners.Theme_8_1;
-                    winEdition.Image = Assets.WinLogos.Win8_1;
+                    card1.Image = Themes_Banners.Theme_8_1;
+                    winEdition.Image = WinLogos.Win8_1;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W8:
-                    card1.Image = Assets.Themes_Banners.Theme_8;
-                    winEdition.Image = Assets.WinLogos.Win8;
+                    card1.Image = Themes_Banners.Theme_8;
+                    winEdition.Image = WinLogos.Win8;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W7:
-                    card1.Image = Assets.Themes_Banners.Theme_7;
-                    winEdition.Image = Assets.WinLogos.Win7;
+                    card1.Image = Themes_Banners.Theme_7;
+                    winEdition.Image = WinLogos.Win7;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W7);
                     break;
 
                 case WindowStyle.WVista:
-                    card1.Image = Assets.Themes_Banners.Theme_Vista;
-                    winEdition.Image = Assets.WinLogos.WinVista;
+                    card1.Image = Themes_Banners.Theme_Vista;
+                    winEdition.Image = WinLogos.WinVista;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WVista);
                     break;
 
                 case WindowStyle.WXP:
-                    card1.Image = Assets.Themes_Banners.Theme_XP;
-                    winEdition.Image = Assets.WinLogos.WinXP;
+                    card1.Image = Themes_Banners.Theme_XP;
+                    winEdition.Image = WinLogos.WinXP;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WXP);
                     break;
 
                 default:
-                    card1.Image = Assets.Themes_Banners.Theme_12;
-                    winEdition.Image = Assets.WinLogos.Win12;
+                    card1.Image = Themes_Banners.Theme_12;
+                    winEdition.Image = WinLogos.Win12;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;
             }
@@ -233,7 +240,7 @@ namespace WinPaletter
         /// Load the theme data from the theme manager.
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             labelAlt1.Text = $"{TM.Info.ThemeName}";
             labelAlt2.Text = $"{Program.Lang.Strings.General.By} {TM.Info.Author}";
@@ -304,7 +311,7 @@ namespace WinPaletter
                         NotifyUpdates.Visible = true;
 
                         // Change the update button image to the update notification image that has an indicator dot.
-                        Button5.ImageGlyph = Properties.Resources.Glyph_Update_Dot;
+                        Button5.ImageGlyph = Resources.Glyph_Update_Dot;
 
                         // Hide the update notification.
                         NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}", ToolTipIcon.Info);
@@ -358,7 +365,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
-            Button5.ImageGlyph = Properties.Resources.Glyph_Update;
+            Button5.ImageGlyph = Resources.Glyph_Update;
         }
 
         private void Button11_Click(object sender, EventArgs e)
@@ -565,8 +572,8 @@ namespace WinPaletter
         {
             if (Forms.MainForm.ExitWithChangedFileResponse())
             {
-                Program.TM = new(Theme.Manager.Source.Registry);
-                Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                Program.TM = new(Source.Registry);
+                Program.TM_Original = (Manager)Program.TM.Clone();
                 File = null;
                 Text = Application.ProductName;
                 LoadFromTM(Program.TM);
@@ -577,8 +584,8 @@ namespace WinPaletter
         {
             if (Forms.MainForm.ExitWithChangedFileResponse())
             {
-                Program.TM = (Theme.Manager)Theme.Default.Get().Clone();
-                Program.TM_Original = (Theme.Manager)Program.TM.Clone();
+                Program.TM = (Manager)Default.Get().Clone();
+                Program.TM_Original = (Manager)Program.TM.Clone();
                 File = null;
                 Text = Application.ProductName;
                 LoadFromTM(Program.TM);
@@ -600,9 +607,9 @@ namespace WinPaletter
                         }
 
                         File = dlg.FileName;
-                        Program.TM = new(Theme.Manager.Source.File, dlg.FileName);
-                        Program.TM_Original = (Theme.Manager)Program.TM.Clone();
-                        Text = System.IO.Path.GetFileName(File);
+                        Program.TM = new(Source.File, dlg.FileName);
+                        Program.TM_Original = (Manager)Program.TM.Clone();
+                        Text = Path.GetFileName(File);
                         LoadFromTM(Program.TM);
                     }
                 }
@@ -616,8 +623,8 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     File = dlg.FileNames[0];
-                    Program.TM.Save(Theme.Manager.Source.File, File);
-                    Text = System.IO.Path.GetFileName(File);
+                    Program.TM.Save(Source.File, File);
+                    Text = Path.GetFileName(File);
                     LoadFromTM(Program.TM);
                 }
             }
@@ -632,16 +639,16 @@ namespace WinPaletter
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
                         File = dlg.FileNames[0];
-                        Program.TM.Save(Theme.Manager.Source.File, File);
-                        Text = System.IO.Path.GetFileName(File);
+                        Program.TM.Save(Source.File, File);
+                        Text = Path.GetFileName(File);
                         LoadFromTM(Program.TM);
                     }
                 }
                 else
                 {
                     File = dlg.FileNames[0];
-                    Program.TM.Save(Theme.Manager.Source.File, File);
-                    Text = System.IO.Path.GetFileName(File);
+                    Program.TM.Save(Source.File, File);
+                    Text = Path.GetFileName(File);
                     LoadFromTM(Program.TM);
                 }
             }
@@ -666,7 +673,7 @@ namespace WinPaletter
         {
             Forms.MainForm.LoggingOff = false;
 
-            if (MsgBox(Program.Lang.Strings.Messages.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.Messages.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+            if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.Messages.LogoffQuestion : Program.Lang.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 // Disable the file system redirection to access the system32 folder.
                 IntPtr intPtr = IntPtr.Zero;
@@ -675,7 +682,7 @@ namespace WinPaletter
                 {
                     // Set the logging off flag to true to make WinPaletter exits without confirmation.
                     Forms.MainForm.LoggingOff = true;
-                    Microsoft.VisualBasic.Interaction.Shell($@"{SysPaths.System32}\logoff.exe", Microsoft.VisualBasic.AppWinStyle.Hide);
+                    Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
                 }
                 else
                 {
@@ -715,7 +722,7 @@ namespace WinPaletter
             groupBox1.Refresh();
         }
 
-        private void Home_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Home_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.WikiURL);
         }

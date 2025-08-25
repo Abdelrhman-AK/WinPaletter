@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -35,9 +36,9 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="fontBytes">The byte array containing font information.</param>
         /// <returns>A <see cref="NativeMethods.GDI32.LogFont"/> structure representing the font.</returns>
-        public static NativeMethods.GDI32.LogFont ToLogFont(this byte[] fontBytes)
+        public static GDI32.LogFont ToLogFont(this byte[] fontBytes)
         {
-            NativeMethods.GDI32.LogFont lOGFONT = new()
+            GDI32.LogFont lOGFONT = new()
             {
                 lfHeight = BitConverter.ToInt32(fontBytes, 0),
                 lfWidth = 0,

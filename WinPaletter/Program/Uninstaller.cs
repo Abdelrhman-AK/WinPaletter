@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows.Forms;
+using WinPaletter.Properties;
 
 namespace WinPaletter
 {
@@ -14,14 +16,14 @@ namespace WinPaletter
             string guidText = Application.ProductName;
             string RegPath = $"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{guidText}";
 
-            if (!System.IO.Directory.Exists(SysPaths.appData))
+            if (!Directory.Exists(SysPaths.appData))
             {
-                System.IO.Directory.CreateDirectory(SysPaths.appData);
+                Directory.CreateDirectory(SysPaths.appData);
                 Program.Log.Information($"A new directory has been created: {SysPaths.appData}");
             }
 
             // Write uninstaller icon to application data folder if it doesn't exist or changed
-            WriteIfChangedOrNotExists($"{SysPaths.appData}\\uninstall.ico", Properties.Resources.Icon_Uninstall.ToBytes());
+            WriteIfChangedOrNotExists($"{SysPaths.appData}\\uninstall.ico", Resources.Icon_Uninstall.ToBytes());
 
             EditReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);
             EditReg(RegPath, "ApplicationVersion", Version, RegistryValueKind.String);
@@ -34,7 +36,7 @@ namespace WinPaletter
             EditReg(RegPath, "Comments", Lang.Strings.General.Uninstall_Comment, RegistryValueKind.String);
             EditReg(RegPath, "UninstallString", $"{AppFile} -u", RegistryValueKind.String);
             EditReg(RegPath, "QuietUninstallString", $"{AppFile} -q", RegistryValueKind.String);
-            EditReg(RegPath, "InstallLocation", new System.IO.FileInfo(Application.ExecutablePath).DirectoryName, RegistryValueKind.String);
+            EditReg(RegPath, "InstallLocation", new FileInfo(Application.ExecutablePath).DirectoryName, RegistryValueKind.String);
             EditReg(RegPath, "NoModify", 1, RegistryValueKind.DWord);
             EditReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);
             EditReg(RegPath, "EstimatedSize", Length / 1024, RegistryValueKind.DWord);
@@ -58,12 +60,12 @@ namespace WinPaletter
             // Restore Windows startup sound if it was changed by the application
             try
             {
-                if (!OS.WXP && System.IO.File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
+                if (!OS.WXP && File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
                 {
                     string file = $"{SysPaths.appData}\\WindowsStartup_Backup.wav";
 
                     byte[] CurrentSoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                    byte[] TargetSoundBytes = System.IO.File.ReadAllBytes(file);
+                    byte[] TargetSoundBytes = File.ReadAllBytes(file);
 
                     if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
                     {
@@ -74,7 +76,7 @@ namespace WinPaletter
             catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
 
             // Delete the application data folder and restore the system cursors as WinPaletter cursors are rendered in this folder
-            if (System.IO.Directory.Exists(SysPaths.appData))
+            if (Directory.Exists(SysPaths.appData))
             {
                 if (!OS.WXP)
                 {
@@ -90,7 +92,7 @@ namespace WinPaletter
                         Theme.Structures.Cursors.ResetCursorsToNone_XP(@"HKEY_USERS\.DEFAULT");
                 }
 
-                try { System.IO.Directory.Delete(SysPaths.appData, true); }
+                try { Directory.Delete(SysPaths.appData, true); }
                 catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
 
             }
@@ -99,9 +101,9 @@ namespace WinPaletter
             Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall, true);
 
             // Delete the program data folder
-            if (System.IO.Directory.Exists(SysPaths.ProgramFilesData))
+            if (Directory.Exists(SysPaths.ProgramFilesData))
             {
-                try { System.IO.Directory.Delete(SysPaths.ProgramFilesData, true); }
+                try { Directory.Delete(SysPaths.ProgramFilesData, true); }
                 catch { } // Ignore errors, could be caused by lack of permissions and we need to continue with the uninstallation as silent as possible
             }
 

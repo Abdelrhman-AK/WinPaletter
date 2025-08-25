@@ -5,6 +5,7 @@
 //    BinaryReader/BinaryWriter class, so redundant functions should probably be 
 //    eliminated. Also, untested stuff should either be tested or removed.
 
+using System;
 using System.IO;
 using System.Text;
 
@@ -89,7 +90,7 @@ namespace EOFC
 
             int bytesRead = inS.Read(buf, 0, count * 4);
 
-            System.Buffer.BlockCopy(buf, 0, destinationArray, index * 4, count * 4);
+            Buffer.BlockCopy(buf, 0, destinationArray, index * 4, count * 4);
 
             return bytesRead / 4;
         }

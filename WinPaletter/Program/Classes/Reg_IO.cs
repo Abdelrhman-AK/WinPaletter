@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.AccessControl;
@@ -426,7 +428,7 @@ namespace WinPaletter
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Error, ex, $"Exception: {ex}");
+            Program.Log?.Write(LogEventLevel.Error, ex, $"Exception: {ex}");
         }
 
         /// <summary>
@@ -501,12 +503,12 @@ namespace WinPaletter
             object existingValue = GetReg(Key_BeforeModification, ValueName, null);
             if (existingValue is not null && CanSkip(existingValue, Value, RegType))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
+                Program.Log?.Write(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
                 AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
                 return;
             }
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`");
+            Program.Log?.Write(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`");
 
             // Set the value to the registry
             try
@@ -529,14 +531,14 @@ namespace WinPaletter
             {
                 // A security exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Security exception: {@PermissionEx.Message}");
+                Program.Log?.Write(LogEventLevel.Error, $"Security exception: {@PermissionEx.Message}");
 
                 try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(treeView, @PermissionEx, Key, ValueName, Value, RegType); }
             }
             catch (UnauthorizedAccessException @UnauthorizedAccessEx)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Unauthorized access exception: {@UnauthorizedAccessEx.Message}");
+                Program.Log?.Write(LogEventLevel.Error, $"Unauthorized access exception: {@UnauthorizedAccessEx.Message}");
 
                 // An unauthorized access exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
                 try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
@@ -544,7 +546,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Exception: {ex.Message}");
+                Program.Log?.Write(LogEventLevel.Error, $"Exception: {ex.Message}");
 
                 // An exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
                 try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
@@ -581,7 +583,7 @@ namespace WinPaletter
             // Process the key to be valid for Command Prompt.
             Key = ProcessKey_CMD(Key);
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` by using REG.EXE instead of native .NET Framework methods.");
+            Program.Log?.Write(LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` by using REG.EXE instead of native .NET Framework methods.");
 
             string _Value;
 
@@ -666,14 +668,14 @@ namespace WinPaletter
 
             try
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"The sent command is `reg {string.Format(regTemplate, Key, ValueName, _Value)}`");
+                Program.Log?.Write(LogEventLevel.Information, $"The sent command is `reg {string.Format(regTemplate, Key, ValueName, _Value)}`");
 
                 Program.SendCommand($"reg {string.Format(regTemplate, Key, ValueName, _Value)}");
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Exception: {ex.Message}");
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Registry edit couldn't be done by the two methods; .NET Framework methods and REG.EXE");
+                Program.Log?.Write(LogEventLevel.Error, $"Exception: {ex.Message}");
+                Program.Log?.Write(LogEventLevel.Error, $"Registry edit couldn't be done by the two methods; .NET Framework methods and REG.EXE");
 
                 AddVerboseException(treeView, ex, Key, ValueName, Value, RegType);
             }
@@ -772,13 +774,13 @@ namespace WinPaletter
                     Result = GetReg($"HKEY_REAL_CURRENT_USER\\{Result.ToString().Replace("#USR:", string.Empty)}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
                 }
 
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && Result is null ? DefaultValue : Result)}`");
+                Program.Log?.Write(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && Result is null ? DefaultValue : Result)}`");
 
                 return IfNullReturnDefaultValue && Result is null ? DefaultValue : Result;
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, ex, $"Exception: {ex.Message}");
+                Program.Log?.Write(LogEventLevel.Error, ex, $"Exception: {ex.Message}");
 
                 Exceptions.ThemeLoad.Add(new Tuple<string, Exception>($"{Key} : {ValueName}", ex));
                 if (RaiseExceptions) Forms.BugReport.ThrowError(ex);
@@ -865,7 +867,7 @@ namespace WinPaletter
                     if (subKey is not null)
                     {
                         Result = subKey?.GetValueNames();
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", Result)}`");
+                        Program.Log?.Write(LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", Result)}`");
                     }
                     subKey?.Close();
                 }
@@ -955,7 +957,7 @@ namespace WinPaletter
                     if (subKey is not null)
                     {
                         Result = subKey?.GetSubKeyNames();
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", Result)}`");
+                        Program.Log?.Write(LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", Result)}`");
                     }
                     subKey?.Close();
                 }
@@ -1001,18 +1003,18 @@ namespace WinPaletter
 
             try
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}");
+                Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}");
                 R.DeleteSubKeyTree(Key, true);
                 if (deleteSubKeysAndValuesOnly)
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Keeping the key intact and empty without subkeys and values.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Keeping the key intact and empty without subkeys and values.");
                     R.CreateSubKey(Key, true);
                 }
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
             catch
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't delete key using .NET Framework methods. WinPaletter will use REG.EXE");
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete key using .NET Framework methods. WinPaletter will use REG.EXE");
                 // An exception occurred while trying to delete the key. Try to use the DelKey_AdministratorDeflector function to solve the security access issues.
                 DelKey_AdministratorDeflector(Key);
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
@@ -1070,7 +1072,7 @@ namespace WinPaletter
             {
                 using (RegistryKey subR = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree))
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.");
+                    Program.Log?.Write(LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.");
                     subR?.DeleteValue(ValueName, true);
                     subR?.Close();
                     AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
@@ -1078,7 +1080,7 @@ namespace WinPaletter
             }
             catch
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't delete value using .NET Framework methods. WinPaletter will use REG.EXE");
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete value using .NET Framework methods. WinPaletter will use REG.EXE");
 
                 // An exception occurred while trying to delete the value. Try to use the DelValue_AdministratorDeflector function to solve the security access issues.
                 DelValue_AdministratorDeflector(Key, ValueName);
@@ -1234,7 +1236,7 @@ namespace WinPaletter
         /// <param name="ValueName">Name of value to be edited</param>
         public static void DelValue_AdministratorDeflector(string Key, string ValueName)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting registry value using REG.EXE: reg {$@"delete ""{ProcessKey_CMD(Key)}\{ValueName}"" /f"}");
+            Program.Log?.Write(LogEventLevel.Information, $"Deleting registry value using REG.EXE: reg {$@"delete ""{ProcessKey_CMD(Key)}\{ValueName}"" /f"}");
 
             // /f = Disable prompt
             Program.SendCommand($"reg {$@"delete ""{ProcessKey_CMD(Key)}\{ValueName}"" /f"}");
@@ -1246,7 +1248,7 @@ namespace WinPaletter
         /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
         public static void DelKey_AdministratorDeflector(string Key)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Deleting registry key using REG.EXE: reg {$@"delete ""{ProcessKey_CMD(Key)}"" /f"}");
+            Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key using REG.EXE: reg {$@"delete ""{ProcessKey_CMD(Key)}"" /f"}");
 
             // /f = Disable prompt
             Program.SendCommand($"reg {$@"delete ""{ProcessKey_CMD(Key)}"" /f"}");
@@ -1297,14 +1299,14 @@ namespace WinPaletter
                         return;
                     }
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Starting SFC scan for file: {File}");
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"The command is: {process.StartInfo.Arguments}");
+                    Program.Log?.Write(LogEventLevel.Information, $"Starting SFC scan for file: {File}");
+                    Program.Log?.Write(LogEventLevel.Information, $"The command is: {process.StartInfo.Arguments}");
 
                     // Start the process and wait for it to finish.
                     process.Start();
                     process.WaitForExit();
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"SFC scan finished for file: {File}");
+                    Program.Log?.Write(LogEventLevel.Information, $"SFC scan finished for file: {File}");
                 }
 
                 // Restore the file system redirection.
@@ -1321,16 +1323,16 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Taking ownership of file: {File}");
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"The command is: {SysPaths.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : string.Empty)}");
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"TakeOwn as Administrator: {AsAdministrator}");
+                Program.Log?.Write(LogEventLevel.Information, $"Taking ownership of file: {File}");
+                Program.Log?.Write(LogEventLevel.Information, $"The command is: {SysPaths.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : string.Empty)}");
+                Program.Log?.Write(LogEventLevel.Information, $"TakeOwn as Administrator: {AsAdministrator}");
 
                 Program.SendCommand($"{SysPaths.TakeOwn} {string.Format("/f \"{0}\"", File, AsAdministrator ? " /a" : string.Empty)}");
 
                 // Try to set the access control to the current user.
                 try
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Setting access control to the current user using .NET Framework methods too: {File}");
+                    Program.Log?.Write(LogEventLevel.Information, $"Setting access control to the current user using .NET Framework methods too: {File}");
 
                     FileSecurity fSecurity = System.IO.File.GetAccessControl(File);
                     fSecurity.AddAccessRule(new FileSystemAccessRule(User.Identity.Name, FileSystemRights.FullControl, AccessControlType.Allow));
@@ -1338,14 +1340,14 @@ namespace WinPaletter
                 }
                 catch (Exception ex) // Couldn't set the access control.
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Couldn't set the access control using .NET Framework methods.");
+                    Program.Log?.Write(LogEventLevel.Error, $"Couldn't set the access control using .NET Framework methods.");
 
                     Forms.BugReport.ThrowError(ex);
                 }
             }
             else
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"The file doesn't exist: {File}, so the ownership can't be taken.");
+                Program.Log?.Write(LogEventLevel.Error, $"The file doesn't exist: {File}, so the ownership can't be taken.");
             }
         }
 
@@ -1358,16 +1360,16 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Taking ownership of file: {File}");
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"The command is: {SysPaths.System32}\\ICACLS.exe {$"\"{File}\" /grant {(AsAdministrator ? "administrators" : "%username%")}:F"}");
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"ICACLS as Administrator: {AsAdministrator}");
+                Program.Log?.Write(LogEventLevel.Information, $"Taking ownership of file: {File}");
+                Program.Log?.Write(LogEventLevel.Information, $"The command is: {SysPaths.System32}\\ICACLS.exe {$"\"{File}\" /grant {(AsAdministrator ? "administrators" : "%username%")}:F"}");
+                Program.Log?.Write(LogEventLevel.Information, $"ICACLS as Administrator: {AsAdministrator}");
 
                 Program.SendCommand($"{SysPaths.System32}\\ICACLS.exe {$"\"{File}\" /grant {(AsAdministrator ? "administrators" : "%username%")}:F"}");
 
                 // Try to set the access control to the current user.
                 try
                 {
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Setting access control to the current user using .NET Framework methods too: {File}");
+                    Program.Log?.Write(LogEventLevel.Information, $"Setting access control to the current user using .NET Framework methods too: {File}");
 
                     FileSecurity fSecurity = System.IO.File.GetAccessControl(File);
                     fSecurity.AddAccessRule(new FileSystemAccessRule(User.Identity.Name, FileSystemRights.FullControl, AccessControlType.Allow));
@@ -1384,11 +1386,11 @@ namespace WinPaletter
         /// <param name="destination">Destination File</param>
         public static void Move_File(string source, string destination)
         {
-            if (System.IO.File.Exists(source))
+            if (File.Exists(source))
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Moving file `{source}` to `{destination}`");
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"The command is: {SysPaths.CMD} /C move \"{source}\" \"{destination}\" && exit");
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Command prompt is used to move the file to try to solve security access issues or administrator issues.");
+                Program.Log?.Write(LogEventLevel.Information, $"Moving file `{source}` to `{destination}`");
+                Program.Log?.Write(LogEventLevel.Information, $"The command is: {SysPaths.CMD} /C move \"{source}\" \"{destination}\" && exit");
+                Program.Log?.Write(LogEventLevel.Information, $"Command prompt is used to move the file to try to solve security access issues or administrator issues.");
 
                 Program.SendCommand($"{SysPaths.CMD} /C move \"{source}\" \"{destination}\" && exit");
             }

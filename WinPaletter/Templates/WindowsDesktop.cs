@@ -2,8 +2,13 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Properties;
+using WinPaletter.Theme;
+using WinPaletter.Theme.Structures;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 using static WinPaletter.PreviewHelpers;
@@ -83,7 +88,7 @@ namespace WinPaletter.Templates
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
-        public Theme.Manager HookedTM
+        public Manager HookedTM
         {
             get => !DesignMode ? _hookedTM ?? Program.TM : null;
             set
@@ -92,7 +97,7 @@ namespace WinPaletter.Templates
                 LoadFromTM(_hookedTM);
             }
         }
-        private Theme.Manager _hookedTM = Program.TM;
+        private Manager _hookedTM = Program.TM;
 
         /// <summary>
         /// Visual style resources used for Windows XP preview
@@ -124,7 +129,7 @@ namespace WinPaletter.Templates
         /// <summary>
         /// Windows visual styles used in the preview
         /// </summary>
-        public Theme.Structures.VisualStyles.DefaultVisualStyles VisualStyles
+        public VisualStyles.DefaultVisualStyles VisualStyles
         {
             get => _visualStyles;
             set
@@ -136,7 +141,7 @@ namespace WinPaletter.Templates
                 }
             }
         }
-        private Theme.Structures.VisualStyles.DefaultVisualStyles _visualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
+        private VisualStyles.DefaultVisualStyles _visualStyles = Theme.Structures.VisualStyles.DefaultVisualStyles.Aero;
 
         /// <summary>
         /// Windows theme path used in the preview
@@ -221,27 +226,27 @@ namespace WinPaletter.Templates
                                 ref ExplorerPatcher EP = ref Program.EP;
                                 if ((bool)!EP?.UseStart10)
                                 {
-                                    start.Style = UI.Simulation.WinElement.Styles.Start11;
+                                    start.Style = WinElement.Styles.Start11;
                                 }
                                 else
                                 {
-                                    start.Style = UI.Simulation.WinElement.Styles.Start10;
+                                    start.Style = WinElement.Styles.Start10;
                                 }
 
                                 if ((bool)!EP?.UseTaskbar10)
                                 {
-                                    taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar11;
+                                    taskbar.Style = WinElement.Styles.Taskbar11;
                                 }
                                 else
                                 {
-                                    taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar10;
+                                    taskbar.Style = WinElement.Styles.Taskbar10;
                                 }
                             }
                         }
                         else
                         {
-                            start.Style = UI.Simulation.WinElement.Styles.Start11;
-                            taskbar.Style = UI.Simulation.WinElement.Styles.Taskbar11;
+                            start.Style = WinElement.Styles.Start11;
+                            taskbar.Style = WinElement.Styles.Taskbar11;
                         }
 
                         ActionCenter.Visible = true;
@@ -342,11 +347,13 @@ namespace WinPaletter.Templates
             get => _darkMode_App;
             set
             {
+                // Fix bug of blsck text on blsck background with light mode applied in application
+                Label8.ForeColor = value ? Color.White : Color.Black;
+
                 if (value != _darkMode_App)
                 {
                     _darkMode_App = value;
                     foreach (Window window in this.GetAllControls().OfType<Window>()) window.DarkMode = value;
-                    Label8.ForeColor = value ? Color.White : Color.Black;
                     RefreshColors();
                 }
             }
@@ -1947,7 +1954,6 @@ namespace WinPaletter.Templates
 
                         else
                         {
-                            taskbar.BlurPower = 8;
                             taskbar.Height = 42;
                             taskbar.NoisePower = 0.3f;
 
@@ -2073,12 +2079,11 @@ namespace WinPaletter.Templates
 
                         else
                         {
-                            taskbar.BlurPower = 8;
                             taskbar.Height = 42;
                             taskbar.NoisePower = 0.3f;
 
-                            start.BlurPower = 6;
-                            start.NoisePower = 0.3f;
+                            start.BlurPower = 9;
+                            start.NoisePower = 0.4f;
                             start.Size = new(135, 200);
                             start.Location = new(10, taskbar.Bottom - taskbar.Height - start.Height - 10);
                         }
@@ -2102,7 +2107,7 @@ namespace WinPaletter.Templates
                             }
                             else
                             {
-                                (TB_Alpha, TB_Blur, S_Alpha) = (105, 8, 90);
+                                (TB_Alpha, TB_Blur, S_Alpha) = (105, 14, 120);
                             }
                         }
                         else
@@ -2117,7 +2122,7 @@ namespace WinPaletter.Templates
                             }
                             else
                             {
-                                (TB_Alpha, TB_Blur, S_Alpha) = (180, 8, 180);
+                                (TB_Alpha, TB_Blur, S_Alpha) = (180, 14, 180);
                             }
                         }
 
@@ -2239,7 +2244,7 @@ namespace WinPaletter.Templates
                         start.Left = 0;
                         start.Top = taskbar.Top - start.Height;
 
-                        ButtonR2.Image = Assets.WinLogos.Win7.Resize(18, 16);
+                        ButtonR2.Image = WinLogos.Win7.Resize(18, 16);
                         break;
                     }
 
@@ -2251,7 +2256,7 @@ namespace WinPaletter.Templates
                         start.Left = 0;
                         start.Top = taskbar.Top - start.Height;
 
-                        ButtonR2.Image = Assets.WinLogos.WinXP.Resize(18, 16);
+                        ButtonR2.Image = WinLogos.WinXP.Resize(18, 16);
                         break;
                     }
 
@@ -2262,9 +2267,9 @@ namespace WinPaletter.Templates
             if (_windowStyle != WindowStyle.WVista & _windowStyle != WindowStyle.WXP)
             {
                 ClassicTaskbar.Height = 44;
-                ButtonR3.Image = Properties.Resources.SampleApp_Active;
-                ButtonR4.Image = Properties.Resources.SampleApp_Inactive;
-                ButtonR2.Image = Assets.WinLogos.Win7.Resize(18, 16);
+                ButtonR3.Image = Resources.SampleApp_Active;
+                ButtonR4.Image = Resources.SampleApp_Inactive;
+                ButtonR2.Image = WinLogos.Win7.Resize(18, 16);
                 ButtonR3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 ButtonR4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 ButtonR3.Width = 48;
@@ -2278,8 +2283,8 @@ namespace WinPaletter.Templates
             else
             {
                 ClassicTaskbar.Height = taskbar.Height;
-                ButtonR3.Image = Properties.Resources.SampleApp_Active.Resize(23, 23);
-                ButtonR4.Image = Properties.Resources.SampleApp_Inactive.Resize(23, 23);
+                ButtonR3.Image = Resources.SampleApp_Active.Resize(23, 23);
+                ButtonR4.Image = Resources.SampleApp_Inactive.Resize(23, 23);
                 ButtonR3.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
                 ButtonR4.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
                 ButtonR3.Width = 140;
@@ -2361,7 +2366,7 @@ namespace WinPaletter.Templates
                     case Theme.Structures.VisualStyles.DefaultVisualStyles.LunaOlive:
                         {
                             msstyles = SysPaths.Theme_Luna_WP;
-                            System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
+                            File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=HomeStead{"\r\n"}Size=NormalSize");
                             resVS = new(msstyles);
                             Classic = false;
                             break;
@@ -2370,7 +2375,7 @@ namespace WinPaletter.Templates
                     case Theme.Structures.VisualStyles.DefaultVisualStyles.LunaSilver:
                         {
                             msstyles = SysPaths.Theme_Luna_WP;
-                            System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
+                            File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=Metallic{"\r\n"}Size=NormalSize");
                             resVS = new(msstyles);
                             Classic = false;
                             break;
@@ -2378,16 +2383,16 @@ namespace WinPaletter.Templates
 
                     case Theme.Structures.VisualStyles.DefaultVisualStyles.Custom:
                         {
-                            if (System.IO.File.Exists(_visualStylesPath))
+                            if (File.Exists(_visualStylesPath))
                             {
-                                if (System.IO.Path.GetExtension(_visualStylesPath) == ".theme")
+                                if (Path.GetExtension(_visualStylesPath) == ".theme")
                                 {
                                     msstyles = _visualStylesPath;
                                 }
-                                else if (System.IO.Path.GetExtension(_visualStylesPath) == ".msstyles")
+                                else if (Path.GetExtension(_visualStylesPath) == ".msstyles")
                                 {
                                     msstyles = SysPaths.Theme_Temp;
-                                    System.IO.File.WriteAllText(SysPaths.Theme_Temp, $"[VisualStyles]{"\r\n"}Path={_visualStylesPath}{"\r\n"}ColorStyle={_visualStylesColorScheme}{"\r\n"}Size=NormalSize");
+                                    File.WriteAllText(SysPaths.Theme_Temp, $"[VisualStyles]{"\r\n"}Path={_visualStylesPath}{"\r\n"}ColorStyle={_visualStylesColorScheme}{"\r\n"}Size=NormalSize");
                                 }
                             }
                             Classic = false;
@@ -2404,7 +2409,7 @@ namespace WinPaletter.Templates
                     default:
                         {
                             msstyles = SysPaths.Theme_Luna_WP;
-                            System.IO.File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                            File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
                             resVS = new(msstyles);
                             Classic = false;
                             break;
@@ -2413,7 +2418,7 @@ namespace WinPaletter.Templates
 
                 if (_visualStyles != Theme.Structures.VisualStyles.DefaultVisualStyles.Classic)
                 {
-                    if (System.IO.File.Exists(msstyles))
+                    if (File.Exists(msstyles))
                     {
                         using (VisualStyleFile vs = new(msstyles))
                         {
@@ -2510,7 +2515,7 @@ namespace WinPaletter.Templates
         /// Load preferernces from a <see cref="Theme.Manager"/>
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             ForceRefresh = true;
 
@@ -2660,7 +2665,7 @@ namespace WinPaletter.Templates
         /// Load metrics and fonts from a <see cref="Theme.Manager"/>
         /// </summary>
         /// <param name="TM"></param>
-        public void LoadMetricsFonts(Theme.Manager TM)
+        public void LoadMetricsFonts(Manager TM)
         {
             Metrics_BorderWidth = TM.MetricsFonts.BorderWidth;
             Metrics_CaptionHeight = TM.MetricsFonts.CaptionHeight;
@@ -2699,7 +2704,7 @@ namespace WinPaletter.Templates
         /// <param name="vs"></param>
         public void LoadMetricsFonts(VisualStyleMetrics vs)
         {
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Empty))
+            using (Manager TMx = new(Manager.Source.Empty))
             {
                 TMx.MetricsFonts.Overwrite_Metrics(vs);
                 TMx.MetricsFonts.Overwrite_Fonts(vs);

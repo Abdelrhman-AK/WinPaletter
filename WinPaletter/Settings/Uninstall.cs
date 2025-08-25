@@ -1,9 +1,13 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.Win32;
+using Ookii.Dialogs.WinForms;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
+using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
+using WinPaletter.Properties;
 using WinPaletter.Theme;
 
 namespace WinPaletter
@@ -24,51 +28,51 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            Icon = Properties.Resources.Icon_Uninstall;
+            Icon = Resources.Icon_Uninstall;
 
             if (OS.W12)
             {
-                button11.Image = Assets.WinLogos.Win12.Resize(20, 20);
+                button11.Image = WinLogos.Win12.Resize(20, 20);
             }
 
             else if (OS.W11)
             {
-                button11.Image = Assets.WinLogos.Win11.Resize(20, 20);
+                button11.Image = WinLogos.Win11.Resize(20, 20);
             }
 
             else if (OS.W10)
             {
-                button11.Image = Assets.WinLogos.Win10.Resize(20, 20);
+                button11.Image = WinLogos.Win10.Resize(20, 20);
             }
 
             else if (OS.W81)
             {
-                button11.Image = Assets.WinLogos.Win8_1.Resize(20, 20);
+                button11.Image = WinLogos.Win8_1.Resize(20, 20);
             }
 
             else if (OS.W8)
             {
-                button11.Image = Assets.WinLogos.Win8.Resize(20, 20);
+                button11.Image = WinLogos.Win8.Resize(20, 20);
             }
 
             else if (OS.W7)
             {
-                button11.Image = Assets.WinLogos.Win7.Resize(20, 20);
+                button11.Image = WinLogos.Win7.Resize(20, 20);
             }
 
             else if (OS.WVista)
             {
-                button11.Image = Assets.WinLogos.WinVista.Resize(20, 20);
+                button11.Image = WinLogos.WinVista.Resize(20, 20);
             }
 
             else if (OS.WXP)
             {
-                button11.Image = Assets.WinLogos.WinXP.Resize(20, 20);
+                button11.Image = WinLogos.WinXP.Resize(20, 20);
             }
 
             else
             {
-                button11.Image = Assets.WinLogos.Win11.Resize(20, 20);
+                button11.Image = WinLogos.Win11.Resize(20, 20);
             }
         }
 
@@ -100,12 +104,12 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (!OS.WXP && System.IO.File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
+                    if (!OS.WXP && File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
                     {
                         string file = $"{SysPaths.appData}\\WindowsStartup_Backup.wav";
 
                         byte[] CurrentSoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                        byte[] TargetSoundBytes = System.IO.File.ReadAllBytes(file);
+                        byte[] TargetSoundBytes = File.ReadAllBytes(file);
 
                         if (!CurrentSoundBytes.Equals_Method2(TargetSoundBytes))
                         {
@@ -141,15 +145,15 @@ namespace WinPaletter
             // Delete the folders
             if (CheckBox2.Checked)
             {
-                if (System.IO.Directory.Exists(SysPaths.appData))
+                if (Directory.Exists(SysPaths.appData))
                 {
-                    try { System.IO.Directory.Delete(SysPaths.appData, true); }
+                    try { Directory.Delete(SysPaths.appData, true); }
                     catch { } // Ignore deleting the folder if it fails
                 }
 
-                if (System.IO.Directory.Exists(SysPaths.ProgramFilesData))
+                if (Directory.Exists(SysPaths.ProgramFilesData))
                 {
-                    try { System.IO.Directory.Delete(SysPaths.ProgramFilesData, true); }
+                    try { Directory.Delete(SysPaths.ProgramFilesData, true); }
                     catch { } // Ignore deleting the folder if it fails
                 }
             }
@@ -212,13 +216,13 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button10_Click(object sender, EventArgs e)
         {
-            using (System.Windows.Forms.OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
-                        TMx.Save(Theme.Manager.Source.Registry);
+                        TMx.Save(Manager.Source.Registry);
 
                         if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 
@@ -235,9 +239,9 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button11_Click(object sender, EventArgs e)
         {
-            using (Manager _Def = Theme.Default.Get())
+            using (Manager _Def = Default.Get())
             {
-                _Def.Save(Theme.Manager.Source.Registry, string.Empty, null, true);
+                _Def.Save(Manager.Source.Registry, string.Empty, null, true);
 
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 
@@ -303,19 +307,19 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button17_Click(object sender, EventArgs e)
         {
-            using (Manager _Def = Theme.Default.Get())
+            using (Manager _Def = Default.Get())
             {
                 _Def.MetricsFonts.Enabled = true;
                 _Def.MetricsFonts.Apply();
 
-                if (MsgBox(Program.Lang.Strings.Messages.LogoffQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.Messages.LogoffAlert2, Ookii.Dialogs.WinForms.TaskDialogIcon.Information) == DialogResult.Yes)
+                if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.Messages.LogoffQuestion : Program.Lang.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
                 {
                     Forms.MainForm.LoggingOff = false;
 
                     IntPtr intPtr = IntPtr.Zero;
                     // Disable file system redirection to prevent the logoff.exe file from being redirected to SysWOW64
                     Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
-                    if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
+                    if (File.Exists($@"{SysPaths.System32}\logoff.exe"))
                     {
                         Forms.MainForm.LoggingOff = true;
                         Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
@@ -372,11 +376,11 @@ namespace WinPaletter
 
         private void button16_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists($"{SysPaths.System32}\\restore\\rstrui.exe"))
+            if (File.Exists($"{SysPaths.System32}\\restore\\rstrui.exe"))
             {
                 Process.Start($"{SysPaths.System32}\\restore\\rstrui.exe");
             }
-            else if (System.IO.File.Exists($"{SysPaths.System32}\\rstrui.exe"))
+            else if (File.Exists($"{SysPaths.System32}\\rstrui.exe"))
             {
                 Process.Start($"{SysPaths.System32}\\rstrui.exe");
             }

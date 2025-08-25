@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
+using WinPaletter.Templates;
 
 namespace WinPaletter.UI.Retro
 {
@@ -121,10 +123,10 @@ namespace WinPaletter.UI.Retro
             if (!DesignMode && EnableEditingColors)
             {
                 // Invoke editing Info Text color based on the cursor position.
-                if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.InfoText)));
+                if (CursorOnText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.InfoText)));
 
                 // Invoke editing Info Window color based on the cursor position.
-                else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Templates.RetroDesktopColors.InfoWindow)));
+                else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.InfoWindow)));
             }
 
             base.OnClick(e);
@@ -165,7 +167,7 @@ namespace WinPaletter.UI.Retro
             Graphics G = e.Graphics;
 
             // Set the text rendering hint.
-            G.TextRenderingHint = DesignMode ? System.Drawing.Text.TextRenderingHint.SystemDefault : Program.Style.TextRenderingHint;
+            G.TextRenderingHint = DesignMode ? TextRenderingHint.SystemDefault : Program.Style.TextRenderingHint;
 
             // Draw the background of the control.
             G.Clear(BackColor);

@@ -4,8 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -117,7 +120,7 @@ namespace WinPaletter
                             Program.Animator.Show(Panel1, true);
                             Button1.Text = Program.Lang.Strings.General.DoAction;
                             AlertBox2.Text = $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}";
-                            AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
+                            AlertBox2.AlertStyle = AlertBox.Style.Indigo;
                         }
                         else
                         {
@@ -127,7 +130,7 @@ namespace WinPaletter
                             url = null;
                             Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
                             AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoUpdateAvailable);
-                            AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success;
+                            AlertBox2.AlertStyle = AlertBox.Style.Success;
                         }
 
                         Label17.SetText(Text);
@@ -159,16 +162,16 @@ namespace WinPaletter
                     Button1.Enabled = false;
                     Panel1.Enabled = false;
                     ProgressBar1.Visible = true;
-                    OldName = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                    OldName = Assembly.GetExecutingAssembly().Location;
 
                     try
                     {
-                        if (System.IO.File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
-                        if (System.IO.File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
+                        if (File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
+                        if (File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
                     }
                     catch { } // Couldn't delete old executable files (may be in use)
 
-                    System.IO.File.Move(OldName, "oldWinpaletter.trash");
+                    File.Move(OldName, "oldWinpaletter.trash");
                     await DM.DownloadFileAsync(url, OldName);
                 }
 
@@ -215,7 +218,7 @@ namespace WinPaletter
 
             _Shown = false;
 
-            AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
+            AlertBox2.AlertStyle = AlertBox.Style.Warning;
             AlertBox2.Visible = false;
 
             Panel1.Visible = false;
@@ -267,7 +270,7 @@ namespace WinPaletter
                     Program.Animator.Show(Panel1, true);
                     Button1.Text = Program.Lang.Strings.General.DoAction;
                     AlertBox2.Text = $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}";
-                    AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Indigo;
+                    AlertBox2.AlertStyle = AlertBox.Style.Indigo;
 
                     Program.Animator.Show(AlertBox2, true);
                     Program.Animator.ShowSync(Button1, true);
@@ -279,14 +282,14 @@ namespace WinPaletter
                     url = null;
                     Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
                     AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoUpdateAvailable);
-                    AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Success;
+                    AlertBox2.AlertStyle = AlertBox.Style.Success;
                 }
             }
 
             // Hide a warning if the user is using Windows XP or Windows Vista as they don't support TLS 1.2.
             if (OS.WXP || OS.WVista)
             {
-                AlertBox2.AlertStyle = UI.WP.AlertBox.Style.Warning;
+                AlertBox2.AlertStyle = AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
                 AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoTLS12, OS.WXP ? Program.Lang.Strings.Windows.WXP : Program.Lang.Strings.Windows.WVista);
             }
@@ -370,17 +373,17 @@ namespace WinPaletter
                 {
                     try
                     {
-                        if (System.IO.File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
+                        if (File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
                     }
                     catch { } // Couldn't delete old executable files (may be in use)
 
-                    System.IO.File.Move(OldName, "oldWinpaletter_2.trash");
-                    System.IO.File.Move("oldWinpaletter.trash", OldName.Split('\\').Last());
+                    File.Move(OldName, "oldWinpaletter_2.trash");
+                    File.Move("oldWinpaletter.trash", OldName.Split('\\').Last());
 
                     try
                     {
-                        if (System.IO.File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
-                        if (System.IO.File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
+                        if (File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
+                        if (File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
                     }
                     catch { } // Couldn't delete old executable files (may be in use)
                 }

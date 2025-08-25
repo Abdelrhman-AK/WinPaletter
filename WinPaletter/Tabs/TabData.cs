@@ -1,8 +1,10 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Tabs
 {
@@ -159,11 +161,11 @@ namespace WinPaletter.Tabs
 
                     if (Program.Style.Animations)
                     {
-                        FluentTransitions.Transition.With(this, nameof(HoverAlpha), value ? (int)255 : (int)0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        Transition.With(this, nameof(HoverAlpha), value ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                     }
                     else
                     {
-                        HoverAlpha = value ? (int)255 : (int)0;
+                        HoverAlpha = value ? 255 : 0;
                     }
                 }
             }
@@ -296,7 +298,7 @@ namespace WinPaletter.Tabs
                 {
                     if (tabsContainer.CanAnimate_Global)
                     {
-                        FluentTransitions.Transition.With(this, nameof(TabTop), afterAnimationValue)
+                        Transition.With(this, nameof(TabTop), afterAnimationValue)
                         .HookOnCompletion(() => { tabsContainer.Invoke(HookOnCompletion); })
                         .CriticalDamp(TimeSpan.FromMilliseconds(animate ? animationDuration : 1));
                     }
@@ -484,7 +486,7 @@ namespace WinPaletter.Tabs
             if (m.Msg == WM_SETICON)
             {
                 // Get the current icon handle
-                IntPtr currentIconHandle = NativeMethods.User32.SendMessage(Handle, 0x7F /*WM_GETICON*/, (IntPtr)1, IntPtr.Zero);
+                IntPtr currentIconHandle = User32.SendMessage(Handle, 0x7F /*WM_GETICON*/, (IntPtr)1, IntPtr.Zero);
 
                 // If the icon handle has changed, trigger the OnIconChanged event
                 if (lastIconHandle == IntPtr.Zero || lastIconHandle != currentIconHandle)

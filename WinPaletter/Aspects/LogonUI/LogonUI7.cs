@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -30,7 +33,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Theme.Manager TMx = new(Theme.Manager.Source.File, dlg.FileName))
+                    using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
                         LoadFromTM(TMx);
                     }
@@ -40,7 +43,7 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 LoadFromTM(TMx);
             }
@@ -48,7 +51,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Theme.Manager TMx = Theme.Default.Get(Program.WindowStyle))
+            using (Manager TMx = Default.Get(Program.WindowStyle))
             {
                 LoadFromTM(TMx);
             }
@@ -70,12 +73,12 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Theme.Manager TMx = new(Theme.Manager.Source.Registry))
+            using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    TMx.Save(Theme.Manager.Source.File, filename);
+                    TMx.Save(Manager.Source.File, filename);
                 }
 
                 ApplyToTM(TMx);
@@ -113,8 +116,8 @@ namespace WinPaletter
             ApplyPreview();
             Icon = FormsExtensions.Icon<LogonUI>();
 
-            PictureBox11.Image = Assets.LogonUIRes.Win7;
-            PictureBox4.Image = Assets.WinLogos.Win7;
+            PictureBox11.Image = LogonUIRes.Win7;
+            PictureBox4.Image = WinLogos.Win7;
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -132,7 +135,7 @@ namespace WinPaletter
             base.OnDragOver(e);
         }
 
-        public void LoadFromTM(Theme.Manager TM)
+        public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.LogonUI7.Enabled;
 
@@ -189,7 +192,7 @@ namespace WinPaletter
             }
         }
 
-        public void ApplyToTM(Theme.Manager TM)
+        public void ApplyToTM(Manager TM)
         {
             TM.LogonUI7.Enabled = AspectEnabled;
 
@@ -237,7 +240,7 @@ namespace WinPaletter
             {
                 bmpX = color_pick.BackColor.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
             }
-            else if (RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
+            else if (RadioButton4.Checked & File.Exists(TextBox1.Text))
             {
                 bmpX = BitmapMgr.Load(TextBox1.Text);
             }
@@ -312,7 +315,7 @@ namespace WinPaletter
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (IsShown & RadioButton4.Checked & System.IO.File.Exists(TextBox1.Text))
+            if (IsShown & RadioButton4.Checked & File.Exists(TextBox1.Text))
                 pnl_preview.BackgroundImage = ReturnBK();
         }
 

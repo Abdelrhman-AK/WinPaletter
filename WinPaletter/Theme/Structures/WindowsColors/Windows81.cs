@@ -1,11 +1,11 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Security.Principal;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.CMD;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -57,7 +57,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows81 data structure</param>
         public void Load(Windows81 @default)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading Windows 8.1 colors and appearance preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 8.1 colors and appearance preferences from registry.");
 
             Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8.1", string.Empty, @default.Enabled));
 
@@ -92,9 +92,9 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         /// <param name="TM">Theme manager</param>
         /// <param name="treeView">treeView used as theme log</param>
-        public void Apply(Theme.Manager TM, TreeView treeView = null)
+        public void Apply(Manager TM, TreeView treeView = null)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Saving Windows 8.1 colors and appearance preferences into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 8.1 colors and appearance preferences into registry.");
 
             SaveToggleState(treeView);
 
@@ -121,7 +121,7 @@ namespace WinPaletter.Theme.Structures
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Broadcast the system message to notify about the setting change
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
+                    Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
 
                     User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
                     User32.NotifySettingChanged("ImmersiveColorSet");  // for theme/accent

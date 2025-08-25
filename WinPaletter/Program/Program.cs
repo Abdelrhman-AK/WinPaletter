@@ -1,13 +1,13 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.Win32;
 using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Media;
 using System.Net;
 using System.Security.Principal;
-using System.ServiceProcess;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -60,7 +60,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private static void OnExit(object sender, EventArgs e)
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
+            Program.Log?.Write(LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
 
             DeleteUpdateResiduals();
 
@@ -70,7 +70,7 @@ namespace WinPaletter
             User.UserSwitch -= User.OnUserSwitch;
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
 
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "WinPaletter has exited successfully.");
+            Program.Log?.Write(LogEventLevel.Information, "WinPaletter has exited successfully.");
         }
 
         /// <summary>
@@ -82,29 +82,30 @@ namespace WinPaletter
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
                 // Initialize log
-                if (!System.IO.Directory.Exists(SysPaths.Logs)) { System.IO.Directory.CreateDirectory(SysPaths.Logs); }
+                if (!Directory.Exists(SysPaths.Logs)) { Directory.CreateDirectory(SysPaths.Logs); }
                 string logFileName = $"{SysPaths.Logs}\\WinPaletter_Log_{DateTime.Now:yyyyMMdd_HHmmss}.json";
                 if (File.Exists(logFileName)) using (FileStream fs = new(logFileName, FileMode.Truncate)) { }
+
                 LoggerConfiguration log = new();
-                log.WriteTo.File(new Serilog.Formatting.Json.JsonFormatter(), logFileName);
+                log.WriteTo.File(new JsonFormatter(), logFileName);
                 Log = log.CreateLogger();
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter version: {Version}");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter file MD5: {Program.CalculateMD5(AppFile)}");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter log file path: {logFileName}");
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter file MD5: {Program.CalculateMD5(AppFile)}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {logFileName}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
 
                 // Create the data directory if it does not exist
-                if (!System.IO.Directory.Exists(SysPaths.ProgramFilesData))
+                if (!Directory.Exists(SysPaths.ProgramFilesData))
                 {
-                    System.IO.Directory.CreateDirectory(SysPaths.ProgramFilesData);
-                    Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.ProgramFilesData}");
+                    Directory.CreateDirectory(SysPaths.ProgramFilesData);
+                    Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.ProgramFilesData}");
                 }
 
                 // Important to load proper style and language before showing login dialog
-                Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading application style.");
+                Log?.Write(LogEventLevel.Information, $"Loading application style.");
                 SetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog.Events;
+using System;
 
 namespace WinPaletter.Theme
 {
@@ -10,7 +11,7 @@ namespace WinPaletter.Theme
         /// <returns><see cref="Manager"/></returns>
         public object Clone()
         {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Debug, "Cloning WinPaletter theme...");
+            Program.Log?.Write(LogEventLevel.Debug, "Cloning WinPaletter theme...");
             return MemberwiseClone();
         }
     }
