@@ -306,8 +306,8 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            Deactivate();
+            //DialogResult = DialogResult.No;
         }
 
         private void Button6_Click(object sender, EventArgs e)

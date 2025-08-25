@@ -1,5 +1,6 @@
 ﻿using FluentTransitions;
 using Microsoft.VisualBasic;
+using Serilog.Sinks.File;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -167,51 +168,41 @@ namespace WinPaletter
             Label2.Visible = false;
             Button4.Text = ">";
 
-            if (ColorClipboard.CopiedColor == null)
+            if (Clipboard.GetData("Text") is not null)
             {
-                Button3.Enabled = false;
+                string s = Clipboard.GetData("Text").ToString().ToLower();
 
-                try
+                if (s.StartsWith("color "))
                 {
-                    if (Clipboard.GetData("Text") is not null)
+                    Color C = Color.FromArgb(255, 0, 0, 0);
+                    s = s.Remove(0, "color ".Count());
+                    s = s.Replace("[", string.Empty);
+                    s = s.Replace("]", string.Empty);
+                    s = s.Replace(" ", string.Empty);
+
+                    foreach (string x in s.Split(','))
                     {
-                        string s = Clipboard.GetData("Text").ToString().ToLower();
-
-                        if (s.StartsWith("color "))
-                        {
-                            Color C = Color.FromArgb(255, 0, 0, 0);
-                            s = s.Remove(0, "color ".Count());
-                            s = s.Replace("[", string.Empty);
-                            s = s.Replace("]", string.Empty);
-                            s = s.Replace(" ", string.Empty);
-
-                            foreach (string x in s.Split(','))
-                            {
-                                int i = (int)Math.Round(Conversion.Val(x.Remove(0, 2)));
-                                if (x.StartsWith("a="))
-                                    C = Color.FromArgb(i, C);
-                                if (x.StartsWith("r="))
-                                    C = Color.FromArgb(C.A, i, C.G, C.B);
-                                if (x.StartsWith("g="))
-                                    C = Color.FromArgb(C.A, C.R, i, C.B);
-                                if (x.StartsWith("b="))
-                                    C = Color.FromArgb(C.A, C.R, C.G, i);
-                            }
-
-                            ColorClipboard.CopiedColor = C;
-                            Button3.Enabled = true;
-                        }
+                        int i = (int)Math.Round(Conversion.Val(x.Remove(0, 2)));
+                        if (x.StartsWith("a="))
+                            C = Color.FromArgb(i, C);
+                        if (x.StartsWith("r="))
+                            C = Color.FromArgb(C.A, i, C.G, C.B);
+                        if (x.StartsWith("g="))
+                            C = Color.FromArgb(C.A, C.R, i, C.B);
+                        if (x.StartsWith("b="))
+                            C = Color.FromArgb(C.A, C.R, C.G, i);
                     }
+
+                    ColorClipboard.CopiedColor = C;
                 }
-                catch
+
+                else if (s.IsHexColor())
                 {
-                    Button3.Enabled = false;
+                    ColorClipboard.CopiedColor = s.ToColorFromHex();
                 }
             }
-            else
-            {
-                Button3.Enabled = true;
-            }
+
+            Button3.Enabled = ColorClipboard.CopiedColor != Color.Empty;
 
             BackColor = Program.Style.DarkMode ? MainColor.BackColor.Dark(_dark) : MainColor.BackColor.LightLight();
         }
@@ -263,7 +254,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetData("Text", MainColor.BackColor);
+            Clipboard.SetData("Text", MainColor.BackColor.ToStringHex(true, true));
             _eventDone = true;
             ColorClipboard.Event = ColorClipboard.MenuEvent.Copy;
             DialogResult = DialogResult.OK;

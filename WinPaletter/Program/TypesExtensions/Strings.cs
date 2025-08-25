@@ -17,25 +17,56 @@ namespace WinPaletter.TypesExtensions
     {
 
         /// <summary>
-        /// Return Color From HEX String
+        /// Convert a HEX string into a Color.
+        /// Supports: #RGB, #ARGB, #RRGGBB, #AARRGGBB (with or without '#').
         /// </summary>
-        public static Color ToColorFromHex(this string String, bool Alpha = false)
+        public static Color ToColorFromHex(this string hex)
         {
+            if (!IsHexColor(hex)) return Color.Empty;
+
             try
             {
-                if (!Alpha)
+                // Remove '#' and trim spaces
+                hex = hex.Trim().TrimStart('#');
+
+                // Handle short hex (#RGB or #ARGB)
+                if (hex.Length == 3) hex = string.Concat(hex.Select(c => $"{c}{c}"));       // RGB -> RRGGBB
+                else if (hex.Length == 4) hex = string.Concat(hex.Select(c => $"{c}{c}"));  // ARGB -> AARRGGBB
+
+                if (hex.Length == 6) // RRGGBB
                 {
-                    return Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(String.Replace("#", string.Empty), 16)));
+                    int r = int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                    int g = int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+                    int b = int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+
+                    return Color.FromArgb(255, r, g, b);
                 }
-                else
+                else if (hex.Length == 8) // AARRGGBB
                 {
-                    return Color.FromArgb(Convert.ToInt32(String.Replace("#", string.Empty), 16));
+                    int a = int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                    int r = int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+                    int g = int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                    int b = int.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+
+                    return Color.FromArgb(a, r, g, b);
                 }
             }
-            catch
-            {
-                return Color.Empty;
-            }
+            catch { }
+
+            return Color.Empty;
+        }
+
+        /// <summary>
+        /// Checks if a string looks like a valid HEX color.
+        /// Supports #RGB, #ARGB, #RRGGBB, #AARRGGBB (with or without '#').
+        /// </summary>
+        public static bool IsHexColor(this string hex)
+        {
+            if (string.IsNullOrWhiteSpace(hex)) return false;
+
+            hex = hex.Trim().TrimStart('#');
+
+            return hex.Length is 3 or 4 or 6 or 8 && hex.All(c => Uri.IsHexDigit(c));
         }
 
         /// <summary>
