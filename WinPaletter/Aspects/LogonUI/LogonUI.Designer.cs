@@ -386,7 +386,7 @@ namespace WinPaletter
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LogonUI";
-            this.Text = "LogonUI";
+            this.Text = "Lock screen";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
             this.Load += new System.EventHandler(this.LogonUI_Load);
             this.Controls.SetChildIndex(this.GroupBox3, 0);

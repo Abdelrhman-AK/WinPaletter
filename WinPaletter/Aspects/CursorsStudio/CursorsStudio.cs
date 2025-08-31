@@ -485,16 +485,6 @@ namespace WinPaletter
                 return;
             }
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_PrimaryColor1 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -537,17 +527,6 @@ namespace WinPaletter
             {
                 _SelectedControl.Prop_PrimaryColor2 = ((ColorItem)sender).BackColor;
                 _SelectedControl.Invalidate();
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_PrimaryColor2 = ((ColorItem)sender).BackColor;
-
-                }
                 return;
             }
 
@@ -596,17 +575,6 @@ namespace WinPaletter
                 return;
             }
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_SecondaryColor1 = ((ColorItem)sender).BackColor;
-
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -648,17 +616,6 @@ namespace WinPaletter
             {
                 _SelectedControl.Prop_SecondaryColor2 = ((ColorItem)sender).BackColor;
                 _SelectedControl.Invalidate();
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_SecondaryColor2 = ((ColorItem)sender).BackColor;
-
-                }
                 return;
             }
 
@@ -704,17 +661,6 @@ namespace WinPaletter
             {
                 _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
                 _SelectedControl.Invalidate();
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
-
-                }
                 return;
             }
 
@@ -958,22 +904,10 @@ namespace WinPaletter
 
         private void GroupBox9_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
                 _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
                 _SelectedControl.Invalidate();
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
-
-                }
                 return;
             }
 
@@ -1021,17 +955,6 @@ namespace WinPaletter
                 return;
             }
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_LoadingCircleHot1 = ((ColorItem)sender).BackColor;
-
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -1073,17 +996,6 @@ namespace WinPaletter
             {
                 _SelectedControl.Prop_LoadingCircleHot2 = ((ColorItem)sender).BackColor;
                 _SelectedControl.Invalidate();
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_LoadingCircleHot2 = ((ColorItem)sender).BackColor;
-
-                }
                 return;
             }
 
@@ -1350,17 +1262,6 @@ namespace WinPaletter
             if (e is DragEventArgs)
             {
                 _SelectedControl.Prop_Shadow_Color = ((ColorItem)sender).BackColor;
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    _SelectedControl.Prop_Shadow_Color = ((ColorItem)sender).BackColor;
-
-                }
                 return;
             }
 
@@ -1791,6 +1692,51 @@ namespace WinPaletter
                 toggle1.Checked = !(sender as UI.WP.CheckBox).Checked;
                 if (tablessControl2.SelectedIndex == 4 && (sender as UI.WP.CheckBox).Checked) radioImage2.Checked = true;
             }
+        }
+
+        private void PrimaryColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_PrimaryColor1 = e.ColorItem.BackColor;
+        }
+
+        private void PrimaryColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_PrimaryColor2 = e.ColorItem.BackColor;
+        }
+
+        private void SecondaryColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_SecondaryColor1 = e.ColorItem.BackColor;
+        }
+
+        private void SecondaryColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_SecondaryColor2 = e.ColorItem.BackColor;
+        }
+
+        private void CircleColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_LoadingCircleBack1 = e.ColorItem.BackColor;
+        }
+
+        private void CircleColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_LoadingCircleBack2 = e.ColorItem.BackColor;
+        }
+
+        private void LoadingColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_LoadingCircleHot1 = e.ColorItem.BackColor;
+        }
+
+        private void LoadingColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_LoadingCircleHot2 = e.ColorItem.BackColor;
+        }
+
+        private void ColorItem1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            _SelectedControl.Prop_Shadow_Color = e.ColorItem.BackColor;
         }
     }
 }

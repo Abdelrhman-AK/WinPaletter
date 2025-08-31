@@ -77,12 +77,6 @@ namespace WinPaletter
         /// </summary>
         public static ColorPickerDlg ColorPickerDlg => (_ColorPickerDlg == null || _ColorPickerDlg.IsDisposed) ? (_ColorPickerDlg = CreateInstance(_ColorPickerDlg)) : _ColorPickerDlg;
 
-        private static SubMenu _SubMenu;
-        /// <summary>
-        /// Gets the instance of the form <see cref="SubMenu"/> to create colors picking context menu.
-        /// </summary>
-        public static SubMenu SubMenu => (_SubMenu == null || _SubMenu.IsDisposed) ? (_SubMenu = CreateInstance(_SubMenu)) : _SubMenu;
-
         private static CursorsStudio _CursorsStudio;
         /// <summary>
         /// Gets the instance of the form <see cref="CursorsStudio"/> to manage Windows cursors.

@@ -425,16 +425,6 @@ namespace WinPaletter
                 return;
             }
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    pnl_preview.BackgroundImage = ReturnBK();
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -472,6 +462,11 @@ namespace WinPaletter
         private void imgX_CheckedChanged(object sender, EventArgs e)
         {
             if (IsShown && (sender as RadioImage).Checked) pnl_preview.BackgroundImage = ReturnBK();
+        }
+
+        private void color_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            pnl_preview.BackgroundImage = ReturnBK();
         }
     }
 }

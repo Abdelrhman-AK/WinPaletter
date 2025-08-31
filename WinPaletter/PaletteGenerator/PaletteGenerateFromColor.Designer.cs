@@ -262,6 +262,7 @@ namespace WinPaletter
             this.SelectedColor.Name = "SelectedColor";
             this.SelectedColor.Size = new System.Drawing.Size(100, 24);
             this.SelectedColor.TabIndex = 154;
+            this.SelectedColor.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.SelectedColor_ContextMenuItemClickedInvoker);
             this.SelectedColor.BackColorChanged += new System.EventHandler(this.SelectedColor_BackColorChanged);
             this.SelectedColor.Click += new System.EventHandler(this.SelectedColor_Click);
             this.SelectedColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.SelectedColor_DragDrop);

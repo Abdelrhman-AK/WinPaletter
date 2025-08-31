@@ -341,16 +341,6 @@ namespace WinPaletter
 
         private void TActive_pick_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.TitlebarColor_Active = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -368,16 +358,6 @@ namespace WinPaletter
 
         private void TInactive_pick_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.TitlebarColor_Inactive = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -487,16 +467,6 @@ namespace WinPaletter
         }
         private void C1_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color1 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -514,16 +484,6 @@ namespace WinPaletter
 
         private void C2_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color2 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -541,16 +501,6 @@ namespace WinPaletter
 
         private void C3_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color3 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -568,16 +518,6 @@ namespace WinPaletter
 
         private void C4_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color4 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -595,16 +535,6 @@ namespace WinPaletter
 
         private void C5_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color5 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -622,16 +552,6 @@ namespace WinPaletter
 
         private void C6_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color6 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -649,16 +569,6 @@ namespace WinPaletter
 
         private void C7_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color7 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -676,16 +586,6 @@ namespace WinPaletter
 
         private void C8_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color8 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -703,16 +603,6 @@ namespace WinPaletter
 
         private void C9_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.Color9 = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
          {
@@ -1163,6 +1053,61 @@ namespace WinPaletter
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             groupBox22.Enabled = (sender as UI.WP.Toggle).Checked;
+        }
+
+        private void TActive_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.TitlebarColor_Active = e.ColorItem.BackColor;
+        }
+
+        private void TInactive_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.TitlebarColor_Inactive = e.ColorItem.BackColor;
+        }
+
+        private void C1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color1 = e.ColorItem.BackColor;
+        }
+
+        private void C2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color2 = e.ColorItem.BackColor;
+        }
+
+        private void C3_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color3 = e.ColorItem.BackColor;
+        }
+
+        private void C4_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color4 = e.ColorItem.BackColor;
+        }
+
+        private void C5_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color5 = e.ColorItem.BackColor;
+        }
+
+        private void C6_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color6 = e.ColorItem.BackColor;
+        }
+
+        private void C7_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color7 = e.ColorItem.BackColor;
+        }
+
+        private void C8_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color8 = e.ColorItem.BackColor;
+        }
+
+        private void C9_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.Color9 = e.ColorItem.BackColor;
         }
     }
 }

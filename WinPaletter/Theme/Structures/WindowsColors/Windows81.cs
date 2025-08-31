@@ -78,10 +78,10 @@ namespace WinPaletter.Theme.Structures
 
             string S;
 
-            S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.ToStringHex(false, true)).ToString();
+            S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.ToString(Settings.Structures.NerdStats.Formats.HEX, false)).ToString();
             PersonalColors_Background = S.ToColorFromHex();
 
-            S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.ToStringHex(false, true)).ToString();
+            S = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.ToString(Settings.Structures.NerdStats.Formats.HEX, false)).ToString();
             PersonalColors_Accent = S.ToColorFromHex();
 
             Start = Convert.ToInt32(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0));
@@ -113,8 +113,8 @@ namespace WinPaletter.Theme.Structures
                 EditReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", AccentColor.Reverse().ToArgb());
 
                 EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", Start);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", $"#{PersonalColors_Background.ToStringHex(false)}", RegistryValueKind.String);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.ToStringHex(false)}", RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", $"#{PersonalColors_Background.ToString(Settings.Structures.NerdStats.Formats.HEX, false)}", RegistryValueKind.String);
+                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", $"#{PersonalColors_Accent.ToString(Settings.Structures.NerdStats.Formats.HEX, false)}", RegistryValueKind.String);
 
                 Program.RefreshDWM(TM);
 

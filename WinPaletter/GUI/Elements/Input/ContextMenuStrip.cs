@@ -10,6 +10,12 @@ namespace WinPaletter.UI.WP
     [ToolboxItem(false)]
     public class ContextMenuStripRenderer : ToolStripRenderer
     {
+        protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+        {
+            e.ArrowColor = Program.Style.DarkMode ? Color.White : Color.Black;
+            base.OnRenderArrow(e);
+        }
+
         protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
         {
             if (e.Item.Selected)

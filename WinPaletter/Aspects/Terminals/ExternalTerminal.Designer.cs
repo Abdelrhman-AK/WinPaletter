@@ -54,6 +54,14 @@ namespace WinPaletter
             this.Label50 = new System.Windows.Forms.Label();
             this.Label17 = new System.Windows.Forms.Label();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.PictureBox29 = new System.Windows.Forms.PictureBox();
+            this.PictureBox30 = new System.Windows.Forms.PictureBox();
+            this.PictureBox31 = new System.Windows.Forms.PictureBox();
+            this.PictureBox34 = new System.Windows.Forms.PictureBox();
+            this.PictureBox26 = new System.Windows.Forms.PictureBox();
+            this.PictureBox28 = new System.Windows.Forms.PictureBox();
+            this.PictureBox23 = new System.Windows.Forms.PictureBox();
+            this.PictureBox22 = new System.Windows.Forms.PictureBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -173,19 +181,19 @@ namespace WinPaletter
             this.Button7 = new WinPaletter.UI.WP.Button();
             this.ComboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.Button6 = new WinPaletter.UI.WP.Button();
-            this.PictureBox29 = new System.Windows.Forms.PictureBox();
-            this.PictureBox30 = new System.Windows.Forms.PictureBox();
-            this.PictureBox31 = new System.Windows.Forms.PictureBox();
-            this.PictureBox34 = new System.Windows.Forms.PictureBox();
-            this.PictureBox26 = new System.Windows.Forms.PictureBox();
-            this.PictureBox28 = new System.Windows.Forms.PictureBox();
-            this.PictureBox23 = new System.Windows.Forms.PictureBox();
-            this.PictureBox22 = new System.Windows.Forms.PictureBox();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox23)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.TabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -220,14 +228,6 @@ namespace WinPaletter
             this.bottom_buttons.SuspendLayout();
             this.GroupBox73.SuspendLayout();
             this.GroupBox51.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox23)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).BeginInit();
             this.SuspendLayout();
             // 
             // TabControl1
@@ -577,6 +577,102 @@ namespace WinPaletter
             this.groupBox1.Size = new System.Drawing.Size(485, 311);
             this.groupBox1.TabIndex = 202;
             // 
+            // PictureBox29
+            // 
+            this.PictureBox29.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox29.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox29.Image")));
+            this.PictureBox29.Location = new System.Drawing.Point(31, 278);
+            this.PictureBox29.Name = "PictureBox29";
+            this.PictureBox29.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox29.TabIndex = 249;
+            this.PictureBox29.TabStop = false;
+            // 
+            // PictureBox30
+            // 
+            this.PictureBox30.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox30.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox30.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox30.Image")));
+            this.PictureBox30.Location = new System.Drawing.Point(31, 247);
+            this.PictureBox30.Name = "PictureBox30";
+            this.PictureBox30.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox30.TabIndex = 248;
+            this.PictureBox30.TabStop = false;
+            // 
+            // PictureBox31
+            // 
+            this.PictureBox31.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox31.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox31.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox31.Image")));
+            this.PictureBox31.Location = new System.Drawing.Point(31, 216);
+            this.PictureBox31.Name = "PictureBox31";
+            this.PictureBox31.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox31.TabIndex = 247;
+            this.PictureBox31.TabStop = false;
+            // 
+            // PictureBox34
+            // 
+            this.PictureBox34.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox34.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox34.Image")));
+            this.PictureBox34.Location = new System.Drawing.Point(31, 185);
+            this.PictureBox34.Name = "PictureBox34";
+            this.PictureBox34.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox34.TabIndex = 246;
+            this.PictureBox34.TabStop = false;
+            // 
+            // PictureBox26
+            // 
+            this.PictureBox26.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox26.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox26.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox26.Image")));
+            this.PictureBox26.Location = new System.Drawing.Point(31, 154);
+            this.PictureBox26.Name = "PictureBox26";
+            this.PictureBox26.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox26.TabIndex = 245;
+            this.PictureBox26.TabStop = false;
+            // 
+            // PictureBox28
+            // 
+            this.PictureBox28.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox28.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox28.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox28.Image")));
+            this.PictureBox28.Location = new System.Drawing.Point(31, 123);
+            this.PictureBox28.Name = "PictureBox28";
+            this.PictureBox28.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox28.TabIndex = 244;
+            this.PictureBox28.TabStop = false;
+            // 
+            // PictureBox23
+            // 
+            this.PictureBox23.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox23.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox23.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox23.Image")));
+            this.PictureBox23.Location = new System.Drawing.Point(31, 92);
+            this.PictureBox23.Name = "PictureBox23";
+            this.PictureBox23.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox23.TabIndex = 243;
+            this.PictureBox23.TabStop = false;
+            // 
+            // PictureBox22
+            // 
+            this.PictureBox22.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
+            this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
+            this.PictureBox22.Location = new System.Drawing.Point(31, 61);
+            this.PictureBox22.Name = "PictureBox22";
+            this.PictureBox22.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox22.TabIndex = 242;
+            this.PictureBox22.TabStop = false;
+            // 
             // label36
             // 
             this.label36.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -757,6 +853,7 @@ namespace WinPaletter
             this.ColorTable06.Name = "ColorTable06";
             this.ColorTable06.Size = new System.Drawing.Size(110, 25);
             this.ColorTable06.TabIndex = 15;
+            this.ColorTable06.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable06.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable06.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -772,6 +869,7 @@ namespace WinPaletter
             this.ColorTable00.Name = "ColorTable00";
             this.ColorTable00.Size = new System.Drawing.Size(110, 25);
             this.ColorTable00.TabIndex = 3;
+            this.ColorTable00.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable00.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable00.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -799,6 +897,7 @@ namespace WinPaletter
             this.ColorTable10.Name = "ColorTable10";
             this.ColorTable10.Size = new System.Drawing.Size(110, 25);
             this.ColorTable10.TabIndex = 23;
+            this.ColorTable10.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable10.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable10.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -814,6 +913,7 @@ namespace WinPaletter
             this.ColorTable15.Name = "ColorTable15";
             this.ColorTable15.Size = new System.Drawing.Size(110, 25);
             this.ColorTable15.TabIndex = 33;
+            this.ColorTable15.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable15.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable15.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -853,6 +953,7 @@ namespace WinPaletter
             this.ColorTable12.Name = "ColorTable12";
             this.ColorTable12.Size = new System.Drawing.Size(110, 25);
             this.ColorTable12.TabIndex = 27;
+            this.ColorTable12.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable12.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable12.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -868,6 +969,7 @@ namespace WinPaletter
             this.ColorTable07.Name = "ColorTable07";
             this.ColorTable07.Size = new System.Drawing.Size(110, 25);
             this.ColorTable07.TabIndex = 17;
+            this.ColorTable07.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable07.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable07.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -883,6 +985,7 @@ namespace WinPaletter
             this.ColorTable01.Name = "ColorTable01";
             this.ColorTable01.Size = new System.Drawing.Size(110, 25);
             this.ColorTable01.TabIndex = 5;
+            this.ColorTable01.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable01.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable01.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -898,6 +1001,7 @@ namespace WinPaletter
             this.ColorTable05.Name = "ColorTable05";
             this.ColorTable05.Size = new System.Drawing.Size(110, 25);
             this.ColorTable05.TabIndex = 13;
+            this.ColorTable05.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable05.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable05.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -913,6 +1017,7 @@ namespace WinPaletter
             this.ColorTable02.Name = "ColorTable02";
             this.ColorTable02.Size = new System.Drawing.Size(110, 25);
             this.ColorTable02.TabIndex = 7;
+            this.ColorTable02.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable02.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable02.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -964,6 +1069,7 @@ namespace WinPaletter
             this.ColorTable11.Name = "ColorTable11";
             this.ColorTable11.Size = new System.Drawing.Size(110, 25);
             this.ColorTable11.TabIndex = 25;
+            this.ColorTable11.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable11.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable11.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -979,6 +1085,7 @@ namespace WinPaletter
             this.ColorTable08.Name = "ColorTable08";
             this.ColorTable08.Size = new System.Drawing.Size(110, 25);
             this.ColorTable08.TabIndex = 19;
+            this.ColorTable08.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable08.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable08.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -994,6 +1101,7 @@ namespace WinPaletter
             this.ColorTable03.Name = "ColorTable03";
             this.ColorTable03.Size = new System.Drawing.Size(110, 25);
             this.ColorTable03.TabIndex = 9;
+            this.ColorTable03.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable03.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable03.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1021,6 +1129,7 @@ namespace WinPaletter
             this.ColorTable13.Name = "ColorTable13";
             this.ColorTable13.Size = new System.Drawing.Size(110, 25);
             this.ColorTable13.TabIndex = 29;
+            this.ColorTable13.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable13.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable13.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1048,6 +1157,7 @@ namespace WinPaletter
             this.ColorTable14.Name = "ColorTable14";
             this.ColorTable14.Size = new System.Drawing.Size(110, 25);
             this.ColorTable14.TabIndex = 31;
+            this.ColorTable14.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable14.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable14.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1075,6 +1185,7 @@ namespace WinPaletter
             this.ColorTable04.Name = "ColorTable04";
             this.ColorTable04.Size = new System.Drawing.Size(110, 25);
             this.ColorTable04.TabIndex = 11;
+            this.ColorTable04.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable04.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable04.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1090,6 +1201,7 @@ namespace WinPaletter
             this.ColorTable09.Name = "ColorTable09";
             this.ColorTable09.Size = new System.Drawing.Size(110, 25);
             this.ColorTable09.TabIndex = 21;
+            this.ColorTable09.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable00_ContextMenuItemClickedInvoker);
             this.ColorTable09.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable09.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1638,6 +1750,7 @@ namespace WinPaletter
             this.CMD_CursorColor.Name = "CMD_CursorColor";
             this.CMD_CursorColor.Size = new System.Drawing.Size(100, 24);
             this.CMD_CursorColor.TabIndex = 107;
+            this.CMD_CursorColor.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.CMD_CursorColor_ContextMenuItemClickedInvoker);
             this.CMD_CursorColor.Click += new System.EventHandler(this.CMD_CursorColor_Click);
             this.CMD_CursorColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_CursorColor_Click);
             // 
@@ -2214,102 +2327,6 @@ namespace WinPaletter
             this.Button6.UseVisualStyleBackColor = false;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
             // 
-            // PictureBox29
-            // 
-            this.PictureBox29.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox29.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox29.Image")));
-            this.PictureBox29.Location = new System.Drawing.Point(31, 278);
-            this.PictureBox29.Name = "PictureBox29";
-            this.PictureBox29.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox29.TabIndex = 249;
-            this.PictureBox29.TabStop = false;
-            // 
-            // PictureBox30
-            // 
-            this.PictureBox30.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox30.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox30.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox30.Image")));
-            this.PictureBox30.Location = new System.Drawing.Point(31, 247);
-            this.PictureBox30.Name = "PictureBox30";
-            this.PictureBox30.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox30.TabIndex = 248;
-            this.PictureBox30.TabStop = false;
-            // 
-            // PictureBox31
-            // 
-            this.PictureBox31.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox31.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox31.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox31.Image")));
-            this.PictureBox31.Location = new System.Drawing.Point(31, 216);
-            this.PictureBox31.Name = "PictureBox31";
-            this.PictureBox31.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox31.TabIndex = 247;
-            this.PictureBox31.TabStop = false;
-            // 
-            // PictureBox34
-            // 
-            this.PictureBox34.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox34.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox34.Image")));
-            this.PictureBox34.Location = new System.Drawing.Point(31, 185);
-            this.PictureBox34.Name = "PictureBox34";
-            this.PictureBox34.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox34.TabIndex = 246;
-            this.PictureBox34.TabStop = false;
-            // 
-            // PictureBox26
-            // 
-            this.PictureBox26.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox26.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox26.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox26.Image")));
-            this.PictureBox26.Location = new System.Drawing.Point(31, 154);
-            this.PictureBox26.Name = "PictureBox26";
-            this.PictureBox26.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox26.TabIndex = 245;
-            this.PictureBox26.TabStop = false;
-            // 
-            // PictureBox28
-            // 
-            this.PictureBox28.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox28.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox28.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox28.Image")));
-            this.PictureBox28.Location = new System.Drawing.Point(31, 123);
-            this.PictureBox28.Name = "PictureBox28";
-            this.PictureBox28.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox28.TabIndex = 244;
-            this.PictureBox28.TabStop = false;
-            // 
-            // PictureBox23
-            // 
-            this.PictureBox23.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox23.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox23.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox23.Image")));
-            this.PictureBox23.Location = new System.Drawing.Point(31, 92);
-            this.PictureBox23.Name = "PictureBox23";
-            this.PictureBox23.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox23.TabIndex = 243;
-            this.PictureBox23.TabStop = false;
-            // 
-            // PictureBox22
-            // 
-            this.PictureBox22.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
-            this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
-            this.PictureBox22.Location = new System.Drawing.Point(31, 61);
-            this.PictureBox22.Name = "PictureBox22";
-            this.PictureBox22.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox22.TabIndex = 242;
-            this.PictureBox22.TabStop = false;
-            // 
             // ExternalTerminal
             // 
             this.AllowDrop = true;
@@ -2340,6 +2357,14 @@ namespace WinPaletter
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox23)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.TabPage2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -2374,14 +2399,6 @@ namespace WinPaletter
             this.bottom_buttons.ResumeLayout(false);
             this.GroupBox73.ResumeLayout(false);
             this.GroupBox51.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox23)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).EndInit();
             this.ResumeLayout(false);
 
         }

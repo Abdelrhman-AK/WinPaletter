@@ -16,6 +16,27 @@
                 public string Close { get; set; } = "Close";
                 public string Retry { get; set; } = "Retry";
                 public string Error { get; set; } = "Error";
+                public string Copy { get; set; } = "Copy";
+                public string Copy_HSL { get; set; } = "Copy in HSL format";
+                public string Copy_HEX { get; set; } = "Copy in HEX format";
+                public string Copy_RGB { get; set; } = "Copy in RGB format";
+                public string Copy_Win32 { get; set; } = "Copy in Win32 format";
+                public string Copy_Decimal { get; set; } = "Copy in decimal format";
+                public string Copy_RGBPercent { get; set; } = "Copy in RGB% format";
+                public string Copy_ARGB { get; set; } = "Copy in ARGB format";
+                public string Copy_HSLA { get; set; } = "Copy in HSLA format";
+                public string Copy_HSV { get; set; } = "Copy in HSV format";
+                public string Copy_CMYK { get; set; } = "Copy in CMYK format";
+                public string Copy_KnownName { get; set; } = "Copy as known name";
+                public string Copy_CSS { get; set; } = "Copy in CSS format";
+
+                public string Paste { get; set; } = "Paste";
+                public string Cut { get; set; } = "Cut";
+                public string Delete { get; set; } = "Delete";
+                public string Invert { get; set; } = "Invert";
+                public string Darken { get; set; } = "Darken";
+                public string Lighten { get; set; } = "Lighten";
+                public string PreviousColor { get; set; } = "Previous color from its history";
                 public string ExpandNote { get; set; } = "Expand note";
                 public string CollapseNote { get; set; } = "Collapse note";
                 public string By { get; set; } = "By";

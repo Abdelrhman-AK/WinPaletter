@@ -346,7 +346,6 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                AccentColor.BackColor = Forms.SubMenu.ShowMenu(AccentColor);
                 AdjustPreview();
                 return;
             }
@@ -372,7 +371,6 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                BackColorPick.BackColor = Forms.SubMenu.ShowMenu(BackColorPick);
                 AdjustPreview();
                 return;
             }
@@ -398,7 +396,6 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                SecColor.BackColor = Forms.SubMenu.ShowMenu(SecColor);
                 AdjustPreview();
                 return;
             }
@@ -424,7 +421,6 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                TerColor.BackColor = Forms.SubMenu.ShowMenu(TerColor);
                 AdjustPreview();
                 return;
             }
@@ -450,7 +446,6 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                DisabledColor.BackColor = Forms.SubMenu.ShowMenu(DisabledColor);
                 AdjustPreview();
                 return;
             }
@@ -476,7 +471,6 @@ namespace WinPaletter
 
             if (((MouseEventArgs)e).Button == MouseButtons.Right)
             {
-                DisabledBackColor.BackColor = Forms.SubMenu.ShowMenu(DisabledBackColor);
                 AdjustPreview();
                 return;
             }

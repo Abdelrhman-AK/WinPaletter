@@ -328,7 +328,7 @@ namespace WinPaletter
             }
 
             // If the wallpaper type is solid color, return the solid color wallpaper
-            string backgroundColor = (GetReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.Get().Win32.Background.ToStringWin32()) ?? "255 255 255").ToString();
+            string backgroundColor = (GetReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.Get().Win32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)) ?? "255 255 255").ToString();
             return backgroundColor.ToColorFromWin32().ToBitmap(Screen.PrimaryScreen.Bounds.Size);
         }
 

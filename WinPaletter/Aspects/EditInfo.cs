@@ -205,13 +205,6 @@ namespace WinPaletter
 
         private void Color1_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                ((ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
-                StoreItem1.TM.Info.Color1 = ((ColorItem)sender).BackColor;
-                return;
-            }
-
             Dictionary<Control, string[]> CList = new()
             {
                 { color1, new string[] { nameof(color1.BackColor) } },
@@ -229,14 +222,6 @@ namespace WinPaletter
 
         private void Color2_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                ((ColorItem)sender).BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
-                StoreItem1.TM.Info.Color2 = ((ColorItem)sender).BackColor;
-                return;
-            }
-
-
             Dictionary<Control, string[]> CList = new()
             {
                 { color2, new string[] { nameof(color2.BackColor) } },
@@ -373,5 +358,14 @@ namespace WinPaletter
             StoreItem1.UpdatePattern(trackBarX1.Value);
         }
 
+        private void color1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            StoreItem1.TM.Info.Color1 = e.ColorItem.BackColor;
+        }
+
+        private void color2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            StoreItem1.TM.Info.Color2 = e.ColorItem.BackColor;
+        }
     }
 }

@@ -605,17 +605,6 @@ namespace WinPaletter
 
         private void ColorizationColor_pick_Click(object sender, EventArgs e)
         {
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    windowsDesktop1.TitlebarColor_Active = ((ColorItem)sender).BackColor;
-                    windowsDesktop1.TitlebarColor_Inactive = ((ColorItem)sender).BackColor;
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -810,6 +799,12 @@ namespace WinPaletter
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             groupBox22.Enabled = (sender as Toggle).Checked;
+        }
+
+        private void ColorizationColor_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            windowsDesktop1.TitlebarColor_Active = e.ColorItem.BackColor;
+            windowsDesktop1.TitlebarColor_Inactive = e.ColorItem.BackColor;
         }
     }
 }

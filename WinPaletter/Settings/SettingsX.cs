@@ -100,30 +100,7 @@ namespace WinPaletter
             TextBox1.Text = Sets.WindowsTerminals.Terminal_Stable_Path;
             TextBox2.Text = Sets.WindowsTerminals.Terminal_Preview_Path;
             toggle14.Checked = Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences;
-
-            switch (Sets.NerdStats.Type)
-            {
-                case Settings.Structures.NerdStats.Formats.HEX:
-                    {
-                        ComboBox3.SelectedIndex = 0;
-                        break;
-                    }
-                case Settings.Structures.NerdStats.Formats.RGB:
-                    {
-                        ComboBox3.SelectedIndex = 1;
-                        break;
-                    }
-                case Settings.Structures.NerdStats.Formats.HSL:
-                    {
-                        ComboBox3.SelectedIndex = 2;
-                        break;
-                    }
-                case Settings.Structures.NerdStats.Formats.Dec:
-                    {
-                        ComboBox3.SelectedIndex = 3;
-                        break;
-                    }
-            }
+            ComboBox3.SelectedIndex = (int)Sets.NerdStats.Type;
             toggle25.Checked = Sets.NerdStats.Enabled;
             CheckBox11.Checked = Sets.NerdStats.ShowHexHash;
             toggle27.Checked = Sets.NerdStats.MoreLabelTransparency;

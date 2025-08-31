@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
+using WinPaletter.UI.Retro;
+using static WinPaletter.Settings.Structures.NerdStats;
 
 namespace WinPaletter.UI.Controllers
 {
@@ -35,7 +37,83 @@ namespace WinPaletter.UI.Controllers
             Text = string.Empty;
             ColorsHistory.Clear();
             Timer2.Tick += Timer2_Tick;
+
+            copy.DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = false };
+            copy.DropDownItems.Add(copy_AsHex);
+            copy.DropDownItems.Add(copy_AsRGB);
+            copy.DropDownItems.Add(copy_AsHSL);
+            copy.DropDownItems.Add(copy_AsDecimal);
+            copy.DropDownItems.Add(copy_AsRGBPercent);
+            copy.DropDownItems.Add(copy_AsARGB);
+            copy.DropDownItems.Add(copy_AsHSLA);
+            copy.DropDownItems.Add(copy_AsHSV);
+            copy.DropDownItems.Add(copy_AsCMYK);
+            copy.DropDownItems.Add(copy_AsWin32);
+            copy.DropDownItems.Add(copy_AsKnownName);
+            copy.DropDownItems.Add(copy_AsCSS);
+
+            contextMenu.Items.Add(cut);
+            contextMenu.Items.Add(copy);
+            contextMenu.Items.Add(paste);
+            contextMenu.Items.Add(toolStripSeparator0);
+            contextMenu.Items.Add(delete);
+            contextMenu.Items.Add(reset);
+            contextMenu.Items.Add(previousColor);
+            contextMenu.Items.Add(toolStripSeparator1);
+            contextMenu.Items.Add(darken);
+            contextMenu.Items.Add(lighten);
+            contextMenu.Items.Add(invert);
+
+            copy.Click += Copy_Click;
+            cut.Click += Cut_Click;
+            paste.Click += Paste_Click;
+            delete.Click += Delete_Click;
+            darken.Click += Darken_Click;
+            lighten.Click += Lighten_Click;
+            invert.Click += Invert_Click;
+            reset.Click += Reset_Click;
+            previousColor.Click += PreviousColor_Click;
+
+            copy_AsHex.Click += Copy_AsHEX;
+            copy_AsRGB.Click += Copy_AsRGB;
+            copy_AsHSL.Click += Copy_AsHSL;
+            copy_AsDecimal.Click += Copy_AsDec;
+            copy_AsRGBPercent.Click += Copy_AsRGBPercent;
+            copy_AsARGB.Click += Copy_AsARGB;
+            copy_AsHSLA.Click += Copy_AsHSLA;
+            copy_AsHSV.Click += Copy_AsHSV;
+            copy_AsCMYK.Click += Copy_AsCMYK;
+            copy_AsWin32.Click += Copy_AsWin32;
+            copy_AsKnownName.Click += Copy_AsKnownName;
+            copy_AsCSS.Click += Copy_AsCSS;
         }
+
+        WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
+        ToolStripMenuItem darken = new() { Image = Assets.ColorItemContextMenu.Darken };
+        ToolStripMenuItem lighten = new() { Image = Assets.ColorItemContextMenu.Lighten };
+        ToolStripMenuItem invert = new() { Image = Assets.ColorItemContextMenu.Invert };
+        ToolStripSeparator toolStripSeparator0 = new();
+        ToolStripMenuItem copy = new() { Image = Assets.ColorItemContextMenu.Copy };
+        ToolStripMenuItem paste = new();
+        ToolStripMenuItem cut = new() { Image = Assets.ColorItemContextMenu.Cut };
+        ToolStripMenuItem delete = new() { Image = Assets.ColorItemContextMenu.Delete };
+        ToolStripSeparator toolStripSeparator1 = new();
+        ToolStripMenuItem reset = new() { Image = Assets.ColorItemContextMenu.Default };
+        ToolStripMenuItem previousColor = new();
+
+        ToolStripMenuItem copy_AsHex = new();
+        ToolStripMenuItem copy_AsRGB = new();
+        ToolStripMenuItem copy_AsHSL = new();
+        ToolStripMenuItem copy_AsDecimal = new();
+        ToolStripMenuItem copy_AsRGBPercent = new();
+        ToolStripMenuItem copy_AsARGB = new();
+        ToolStripMenuItem copy_AsHSLA = new();
+        ToolStripMenuItem copy_AsHSV = new();
+        ToolStripMenuItem copy_AsCMYK = new();
+        ToolStripMenuItem copy_AsWin32 = new();
+        ToolStripMenuItem copy_AsKnownName = new();
+        ToolStripMenuItem copy_AsCSS = new();
+
 
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
@@ -359,6 +437,188 @@ namespace WinPaletter.UI.Controllers
 
         #region Events/Overrides
 
+        /// <summary>
+        /// Represents the method that will handle the event when a context menu item is clicked.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the control that raised the event.</param>
+        /// <param name="e">An <see cref="ContextMenuItemClickedEventArgs"/> instance containing the event data.</param>
+        public delegate void ContextMenuItemClicked(object sender, ContextMenuItemClickedEventArgs e);
+
+        /// <summary>
+        /// Occurs when a context menu item is clicked.
+        /// </summary>
+        /// <remarks>Subscribe to this event to handle actions triggered by context menu item selections.
+        /// The event provides information about the clicked item through the associated event arguments.</remarks>
+        public event ContextMenuItemClicked ContextMenuItemClickedInvoker;
+
+        /// <summary>
+        /// Event args containing data from context menu of an color item
+        /// </summary>
+        /// <param name="colorItem"></param>
+        /// <param name="clickedItem"></param>
+        public class ContextMenuItemClickedEventArgs(ColorItem colorItem, object clickedItem) : EventArgs
+        {
+            public object ClickedItem { get; set; } = clickedItem;
+            public ColorItem ColorItem { get; } = colorItem;
+        }
+
+        /// <summary>
+        /// Processes Windows messages sent to the control, including handling custom behavior for the right mouse
+        /// button release.
+        /// </summary>
+        /// <remarks>This method overrides the default message processing to display a custom context menu
+        /// when the right mouse button is released. If the message is not handled, it is passed to the base
+        /// implementation.</remarks>
+        /// <param name="m">A <see cref="Message"/> object that represents the Windows message to process.</param>
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_RBUTTONUP = 0x0205;
+
+            if (m.Msg == WM_RBUTTONUP)
+            {
+                // Custom context menu implementation
+                copy_AsHex.Text = Program.Lang.Strings.General.Copy_HEX;
+                copy_AsRGB.Text = Program.Lang.Strings.General.Copy_RGB;
+                copy_AsHSL.Text = Program.Lang.Strings.General.Copy_HSL;
+                copy_AsDecimal.Text = Program.Lang.Strings.General.Copy_Decimal;
+                copy_AsRGBPercent.Text = Program.Lang.Strings.General.Copy_RGBPercent;
+                copy_AsARGB.Text = Program.Lang.Strings.General.Copy_ARGB;
+                copy_AsHSLA.Text = Program.Lang.Strings.General.Copy_HSLA;
+                copy_AsHSV.Text = Program.Lang.Strings.General.Copy_HSV;
+                copy_AsCMYK.Text = Program.Lang.Strings.General.Copy_CMYK;
+                copy_AsWin32.Text = Program.Lang.Strings.General.Copy_Win32;
+                copy_AsKnownName.Text = Program.Lang.Strings.General.Copy_KnownName;
+                copy_AsCSS.Text = Program.Lang.Strings.General.Copy_CSS;
+
+                copy.Text = Program.Lang.Strings.General.Copy;
+                cut.Text = Program.Lang.Strings.General.Cut;
+                paste.Text = Program.Lang.Strings.General.Paste;
+                delete.Text = Program.Lang.Strings.General.Delete;
+                reset.Text = Program.Lang.Strings.General.Default + " - " + OS.Name;
+                darken.Text = Program.Lang.Strings.General.Darken;
+                lighten.Text = Program.Lang.Strings.General.Lighten;
+                invert.Text = Program.Lang.Strings.General.Invert;
+                previousColor.Text = Program.Lang.Strings.General.PreviousColor;
+
+                paste.Enabled = ColorClipboard.CopiedColor != Color.Empty;
+                paste.Image = paste.Enabled
+                    ? Assets.ColorItemContextMenu.Paste
+                    : Assets.ColorItemContextMenu.Paste.Grayscale();
+
+                previousColor.Enabled = ColorsHistory.Count > 2;
+                previousColor.Image = previousColor.Enabled
+                    ? Assets.ColorItemContextMenu.Reset
+                    : Assets.ColorItemContextMenu.Reset.Grayscale();
+
+                // Screen coordinates
+                Point screenPoint = new((short)(m.LParam.ToInt32() & 0xFFFF), (short)(m.LParam.ToInt32() >> 16));
+
+                // release mouse capture so the menu can take focus
+                NativeMethods.User32.ReleaseCapture();
+
+                contextMenu.Show(this, screenPoint);
+
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
+
+        private void Copy_Click(object sender, EventArgs e)
+        {
+            ColorClipboard.CopiedColor = BackColor;
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+        }
+
+        private void Copy_AsHEX(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HEX));
+
+        private void Copy_AsRGB(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.RGB));
+
+        private void Copy_AsHSL(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HSL));
+
+        private void Copy_AsDec(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.Dec));
+
+        private void Copy_AsRGBPercent(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.RGBPercent));
+
+        private void Copy_AsARGB(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.ARGB));
+
+        private void Copy_AsHSLA(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HSLA));
+
+        private void Copy_AsHSV(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HSV));
+
+        private void Copy_AsCMYK(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.CMYK));
+
+        private void Copy_AsWin32(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.Win32));
+
+        private void Copy_AsKnownName(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.KnownName));
+
+        private void Copy_AsCSS(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.CSS));
+
+        private void CopyColor(string text)
+        {
+            Clipboard.SetText(text);
+            ColorClipboard.CopiedColor = BackColor;
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, null));
+        }
+
+        private void Cut_Click(object sender, EventArgs e)
+        {
+            ColorClipboard.CopiedColor = BackColor;
+            BackColor = Color.Empty;
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+        }
+
+        private void Paste_Click(object sender, EventArgs e)
+        {
+            if (ColorClipboard.CopiedColor != Color.Empty)
+            {
+                BackColor = ColorClipboard.CopiedColor;
+                ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+            }
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            BackColor = Color.Empty;
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+        }
+
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            BackColor = DefaultBackColor;
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+        }
+
+        private void PreviousColor_Click(object sender, EventArgs e)
+        {
+            if (ColorsHistory.Count > 1)
+            {
+                PauseColorsHistory = true;
+                BackColor = ColorsHistory[ColorsHistory.Count - 2];
+                ColorsHistory.RemoveAt(ColorsHistory.Count - 1);
+                PauseColorsHistory = false;
+                ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+            }
+        }
+
+        private void Darken_Click(object sender, EventArgs e)
+        {
+            BackColor = BackColor.Dark();
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+        }
+
+        private void Lighten_Click(object sender, EventArgs e)
+        {
+            BackColor = BackColor.Light();
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+        }
+
+        private void Invert_Click(object sender, EventArgs e)
+        {
+            BackColor = BackColor.Invert();
+            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+        }
+
         protected override void OnSizeChanged(EventArgs e)
         {
             Rect = new(0, 0, Width - 1, Height - 1);
@@ -651,17 +911,7 @@ namespace WinPaletter.UI.Controllers
 
                     Rectangle RectX = Rect; RectX.Y += 1;
 
-                    ColorsExtensions.ColorFormat CF = ColorsExtensions.ColorFormat.HEX;
-                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.HEX)
-                        CF = ColorsExtensions.ColorFormat.HEX;
-                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.RGB)
-                        CF = ColorsExtensions.ColorFormat.RGB;
-                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.HSL)
-                        CF = ColorsExtensions.ColorFormat.HSL;
-                    if (Program.Settings.NerdStats.Type == Settings.Structures.NerdStats.Formats.Dec)
-                        CF = ColorsExtensions.ColorFormat.Dec;
-
-                    string S = Enabled ? TargetColor.ReturnFormat(CF, Program.Settings.NerdStats.ShowHexHash, !(TargetColor.A == 255)) : Program.Lang.Strings.General.Disabled;
+                    string S = Enabled ? TargetColor.ToString(default, Program.Settings.NerdStats.ShowHexHash, true) : Program.Lang.Strings.General.Disabled;
 
                     Font F = Program.Settings.NerdStats.UseWindowsMonospacedFont ? new Font(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular) : Fonts.Console;
 

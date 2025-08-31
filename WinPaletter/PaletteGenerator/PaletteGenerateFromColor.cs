@@ -164,15 +164,6 @@ namespace WinPaletter
         {
             if (e is DragEventArgs) return;
 
-            // If the right mouse button is clicked, show colors context menu.
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                PickerOpened = true;
-                SelectedColor.BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
-                GetColors();
-                PickerOpened = false;
-            }
-
             // If the left mouse button is clicked, show color picker dialog.
             else
             {
@@ -652,6 +643,11 @@ namespace WinPaletter
         {
             // Undo the color changes and restore from a saved action.
             actions?.ElementAt(listBox1.SelectedIndex)?.Invoke();
+        }
+
+        private void SelectedColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            GetColors();
         }
     }
 }

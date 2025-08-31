@@ -252,7 +252,6 @@
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Resources\Assemblies.zip" />
-    <None Include="Resources\ClassicThemesDB" />
     <None Include="Resources\JetBrainsMono-Medium.ttf" />
     <None Include="Resources\luna.zip" />
   </ItemGroup>
@@ -291,6 +290,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Accessibility_Vision.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\ColorItemContextMenu.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ColorItemContextMenu.resx</DependentUpon>
     </Compile>
     <Compile Include="Assets\Themes_Banners.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -938,12 +942,6 @@
     <Compile Include="Dialogs\Saving_ex_list.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorItemControllers\SubMenu.Designer.cs">
-      <DependentUpon>SubMenu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ColorItemControllers\SubMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Theme\Manager.cs" />
     <Compile Include="Theme\Default\Default.cs" />
     <Compile Include="Aspects\CursorsStudio\CursorsCustomizer.cs" />
@@ -1192,7 +1190,6 @@
     <Content Include="Icon.ico" />
     <Content Include="Resources\WinPaletter.SysEventsSounds.exe" />
     <Content Include="Resources\LICENSE.txt" />
-    <None Include="Resources\MetricsFontsDB" />
     <None Include="Resources\SecureUxTheme.zip" />
   </ItemGroup>
   <ItemGroup>
@@ -1215,6 +1212,10 @@
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\ColorItemContextMenu.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ColorItemContextMenu.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Themes_Banners.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1319,9 +1320,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Saving_ex_list.resx">
       <DependentUpon>Saving_ex_list.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ColorItemControllers\SubMenu.resx">
-      <DependentUpon>SubMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\CursorsStudio\CursorsStudio.resx">
       <DependentUpon>CursorsStudio.cs</DependentUpon>

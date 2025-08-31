@@ -242,7 +242,6 @@ namespace WinPaletter
 
             if (_data.Import_theme || _data.Import_msstyles || _data.Import_JSON)
             {
-
                 ToolStripSeparator separator = new();
                 button_import.Menu.Items.Add(separator);
             }

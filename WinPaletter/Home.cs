@@ -178,54 +178,81 @@ namespace WinPaletter
             {
                 case WindowStyle.W12:
                     card1.Image = Themes_Banners.Theme_12;
+                    card3.Image = Themes_Banners.LogonUI_12;
+                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win12;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;
 
                 case WindowStyle.W11:
                     card1.Image = Themes_Banners.Theme_11;
+                    card3.Image = Themes_Banners.LogonUI_11;
+                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win11;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W11);
                     break;
 
                 case WindowStyle.W10:
                     card1.Image = Themes_Banners.Theme_10;
+                    card3.Image = Themes_Banners.LogonUI_10;
+                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win10;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W10);
                     break;
 
                 case WindowStyle.W81:
                     card1.Image = Themes_Banners.Theme_8_1;
+                    card3.Image = Themes_Banners.LogonUI_8x;
+                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win8_1;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W8:
                     card1.Image = Themes_Banners.Theme_8;
+                    card3.Image = Themes_Banners.LogonUI_8x;
+                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win8;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W7:
                     card1.Image = Themes_Banners.Theme_7;
+                    card3.Image = Themes_Banners.LogonUI_7;
+                    card3.Text = Program.Lang.Strings.Aspects.LogonUI;
+                    card3.Tag = Program.Lang.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.Win7;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W7);
                     break;
 
                 case WindowStyle.WVista:
                     card1.Image = Themes_Banners.Theme_Vista;
+                    card3.Image = Themes_Banners.LogonUI_Vista;
+                    card3.Text = Program.Lang.Strings.Aspects.LogonUI;
+                    card3.Tag = Program.Lang.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.WinVista;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WVista);
                     break;
 
                 case WindowStyle.WXP:
                     card1.Image = Themes_Banners.Theme_XP;
+                    card3.Image = Themes_Banners.LogonUI_XP;
+                    card3.Text = Program.Lang.Strings.Aspects.LogonUI;
+                    card3.Tag = Program.Lang.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.WinXP;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WXP);
                     break;
 
                 default:
                     card1.Image = Themes_Banners.Theme_12;
+                    card3.Image = Themes_Banners.LogonUI_12;
+                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win12;
                     winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
                     break;

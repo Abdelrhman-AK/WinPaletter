@@ -17,8 +17,11 @@
                 public string WinTheme { get; set; } = "{0} theme";
                 public string ClassicColors { get; set; } = "Classic colors";
                 public string LockScreen { get; set; } = "Lock screen";
-                public string AppTheme { get; set; } = "WinPaletter application theme";
+                public string LockScreen_Description { get; set; } = "Modify your Lock screen appearance and preferences";
                 public string LogonUI { get; set; } = "LogonUI screen";
+                public string LogonUI_Description { get; set; } = "Modify your LogonUI screen appearance and preferences";
+
+                public string AppTheme { get; set; } = "WinPaletter application theme";
                 public string Cursors { get; set; } = "Cursors";
                 public string CommandPrompt { get; set; } = "Command Prompt";
                 public string PowerShellx86 { get; set; } = "PowerShell x86";

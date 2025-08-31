@@ -604,6 +604,7 @@ namespace WinPaletter
             this.CMD_CursorColor.Name = "CMD_CursorColor";
             this.CMD_CursorColor.Size = new System.Drawing.Size(100, 24);
             this.CMD_CursorColor.TabIndex = 107;
+            this.CMD_CursorColor.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.CMD_CursorColor_ContextMenuItemClickedInvoker);
             this.CMD_CursorColor.Click += new System.EventHandler(this.CMD_CursorColor_Click);
             this.CMD_CursorColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.CMD_CursorColor_Click);
             // 
@@ -844,6 +845,7 @@ namespace WinPaletter
             this.ColorTable00.Name = "ColorTable00";
             this.ColorTable00.Size = new System.Drawing.Size(110, 25);
             this.ColorTable00.TabIndex = 3;
+            this.ColorTable00.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable00.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable00.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -883,6 +885,7 @@ namespace WinPaletter
             this.ColorTable01.Name = "ColorTable01";
             this.ColorTable01.Size = new System.Drawing.Size(110, 25);
             this.ColorTable01.TabIndex = 5;
+            this.ColorTable01.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable01.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable01.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -910,6 +913,7 @@ namespace WinPaletter
             this.ColorTable02.Name = "ColorTable02";
             this.ColorTable02.Size = new System.Drawing.Size(110, 25);
             this.ColorTable02.TabIndex = 7;
+            this.ColorTable02.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable02.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable02.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -925,6 +929,7 @@ namespace WinPaletter
             this.ColorTable03.Name = "ColorTable03";
             this.ColorTable03.Size = new System.Drawing.Size(110, 25);
             this.ColorTable03.TabIndex = 9;
+            this.ColorTable03.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable03.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable03.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -976,6 +981,7 @@ namespace WinPaletter
             this.ColorTable04.Name = "ColorTable04";
             this.ColorTable04.Size = new System.Drawing.Size(110, 25);
             this.ColorTable04.TabIndex = 11;
+            this.ColorTable04.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable04.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable04.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1015,6 +1021,7 @@ namespace WinPaletter
             this.ColorTable05.Name = "ColorTable05";
             this.ColorTable05.Size = new System.Drawing.Size(110, 25);
             this.ColorTable05.TabIndex = 13;
+            this.ColorTable05.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable05.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable05.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1042,6 +1049,7 @@ namespace WinPaletter
             this.ColorTable06.Name = "ColorTable06";
             this.ColorTable06.Size = new System.Drawing.Size(110, 25);
             this.ColorTable06.TabIndex = 15;
+            this.ColorTable06.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable06.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable06.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1123,6 +1131,7 @@ namespace WinPaletter
             this.ColorTable08.Name = "ColorTable08";
             this.ColorTable08.Size = new System.Drawing.Size(110, 25);
             this.ColorTable08.TabIndex = 19;
+            this.ColorTable08.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable08.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable08.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1138,6 +1147,7 @@ namespace WinPaletter
             this.ColorTable14.Name = "ColorTable14";
             this.ColorTable14.Size = new System.Drawing.Size(110, 25);
             this.ColorTable14.TabIndex = 31;
+            this.ColorTable14.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable14.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable14.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1177,6 +1187,7 @@ namespace WinPaletter
             this.ColorTable09.Name = "ColorTable09";
             this.ColorTable09.Size = new System.Drawing.Size(110, 25);
             this.ColorTable09.TabIndex = 21;
+            this.ColorTable09.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable09.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable09.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1192,6 +1203,7 @@ namespace WinPaletter
             this.ColorTable13.Name = "ColorTable13";
             this.ColorTable13.Size = new System.Drawing.Size(110, 25);
             this.ColorTable13.TabIndex = 29;
+            this.ColorTable13.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable13.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable13.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1219,6 +1231,7 @@ namespace WinPaletter
             this.ColorTable12.Name = "ColorTable12";
             this.ColorTable12.Size = new System.Drawing.Size(110, 25);
             this.ColorTable12.TabIndex = 27;
+            this.ColorTable12.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable12.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable12.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1234,6 +1247,7 @@ namespace WinPaletter
             this.ColorTable10.Name = "ColorTable10";
             this.ColorTable10.Size = new System.Drawing.Size(110, 25);
             this.ColorTable10.TabIndex = 23;
+            this.ColorTable10.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable10.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable10.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 
@@ -1249,6 +1263,7 @@ namespace WinPaletter
             this.ColorTable11.Name = "ColorTable11";
             this.ColorTable11.Size = new System.Drawing.Size(110, 25);
             this.ColorTable11.TabIndex = 25;
+            this.ColorTable11.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorTable06_ContextMenuItemClickedInvoker);
             this.ColorTable11.Click += new System.EventHandler(this.ColorTable00_Click);
             this.ColorTable11.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorTable00_Click);
             // 

@@ -290,6 +290,15 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
+        /// Releases the mouse capture from a window in the current thread.
+        /// </summary>
+        /// <remarks>This method is a wrapper for the native <c>ReleaseCapture</c> function in the Windows
+        /// API.  It is typically used to release mouse capture when a window has captured the mouse input.</remarks>
+        /// <returns><see langword="true"/> if the mouse capture was successfully released; otherwise, <see langword="false"/>.</returns>
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        /// <summary>
         /// MSLLHOOKSTRUCT structure: Contains information about a low-level mouse input event.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]

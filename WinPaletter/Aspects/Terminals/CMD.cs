@@ -1444,12 +1444,6 @@ while ($true) {{
                 return;
             }
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                CMD_PreviewCUR2.BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -1470,17 +1464,6 @@ while ($true) {{
         {
             if (e is DragEventArgs)
             {
-                ApplyPreview();
-                UpdateFromTrack(1);
-                UpdateFromTrack(2);
-                UpdateFromTrack(3);
-                UpdateFromTrack(4);
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 ApplyPreview();
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -1694,6 +1677,20 @@ while ($true) {{
                 UpdateFromTrack(4);
                 ApplyPreview();
             }
+        }
+
+        private void CMD_CursorColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            CMD_PreviewCUR2.BackColor = e.ColorItem.BackColor;
+        }
+
+        private void ColorTable06_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            ApplyPreview();
+            UpdateFromTrack(1);
+            UpdateFromTrack(2);
+            UpdateFromTrack(3);
+            UpdateFromTrack(4);
         }
     }
 }

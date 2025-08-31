@@ -92,21 +92,6 @@ namespace WinPaletter
                 return;
             }
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Color cx = Forms.SubMenu.ShowMenu((ColorItem)sender, true);
-
-                WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
-                    Forms.WindowsTerminal._Terminal.Profiles.Defaults :
-                    Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
-
-                temp1.TabColor = cx;
-
-                Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
-
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -133,6 +118,19 @@ namespace WinPaletter
                     TerTabIcon.Text = dlg.FileName;
                 }
             }
+        }
+
+        private void TerTabColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            Color cx = e.ColorItem.BackColor;
+
+            WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
+                Forms.WindowsTerminal._Terminal.Profiles.Defaults :
+                Forms.WindowsTerminal._Terminal.Profiles.List[Forms.WindowsTerminal.TerProfiles.SelectedIndex - 1];
+
+            temp1.TabColor = cx;
+
+            Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
         }
     }
 }

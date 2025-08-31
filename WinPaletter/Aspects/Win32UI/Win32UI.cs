@@ -233,6 +233,7 @@ namespace WinPaletter
             foreach (ColorItem ColorItem in this.GetAllControls().OfType<ColorItem>())
             {
                 ColorItem.Click += ColorItem_Click;
+                ColorItem.ContextMenuItemClickedInvoker += ColorItem_ContextMenuItemClickedInvoker;
                 ColorItem.DragDrop += ColorItem_DragDrop;
             }
         }
@@ -242,6 +243,7 @@ namespace WinPaletter
             foreach (ColorItem ColorItem in this.GetAllControls().OfType<ColorItem>())
             {
                 ColorItem.Click -= ColorItem_Click;
+                ColorItem.ContextMenuItemClickedInvoker -= ColorItem_ContextMenuItemClickedInvoker;
                 ColorItem.DragDrop -= ColorItem_DragDrop;
             }
         }
@@ -485,16 +487,6 @@ namespace WinPaletter
         {
             if (e is DragEventArgs) return;
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    ApplyRetroPreview();
-                }
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -636,12 +628,12 @@ namespace WinPaletter
                 {
                     string Section = @"Control Panel\Colors";
 
-                    TitleText_pick.BackColor = _ini.Read(Section, "TitleText", _DefWin32.TitleText.ToStringWin32()).ToColorFromWin32();
-                    InactivetitleText_pick.BackColor = _ini.Read(Section, "InactiveTitleText", _DefWin32.InactiveTitleText.ToStringWin32()).ToColorFromWin32();
-                    ActiveBorder_pick.BackColor = _ini.Read(Section, "ActiveBorder", _DefWin32.ActiveBorder.ToStringWin32()).ToColorFromWin32();
-                    InactiveBorder_pick.BackColor = _ini.Read(Section, "InactiveBorder", _DefWin32.InactiveBorder.ToStringWin32()).ToColorFromWin32();
-                    activetitle_pick.BackColor = _ini.Read(Section, "ActiveTitle", _DefWin32.ActiveTitle.ToStringWin32()).ToColorFromWin32();
-                    InactiveTitle_pick.BackColor = _ini.Read(Section, "InactiveTitle", _DefWin32.InactiveTitle.ToStringWin32()).ToColorFromWin32();
+                    TitleText_pick.BackColor = _ini.Read(Section, "TitleText", _DefWin32.TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    InactivetitleText_pick.BackColor = _ini.Read(Section, "InactiveTitleText", _DefWin32.InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    ActiveBorder_pick.BackColor = _ini.Read(Section, "ActiveBorder", _DefWin32.ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    InactiveBorder_pick.BackColor = _ini.Read(Section, "InactiveBorder", _DefWin32.InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    activetitle_pick.BackColor = _ini.Read(Section, "ActiveTitle", _DefWin32.ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    InactiveTitle_pick.BackColor = _ini.Read(Section, "InactiveTitle", _DefWin32.InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
 
                     Color GA = _ini.Read(Section, "GradientActiveTitle").ToColorFromWin32();
                     Color GI = _ini.Read(Section, "GradientInactiveTitle").ToColorFromWin32();
@@ -664,35 +656,35 @@ namespace WinPaletter
                         GInactivetitle_pick.BackColor = InactiveTitle_pick.BackColor;
                     }
 
-                    btnface_pick.BackColor = _ini.Read(Section, "ButtonFace", _DefWin32.ButtonFace.ToStringWin32()).ToColorFromWin32();
-                    btnshadow_pick.BackColor = _ini.Read(Section, "ButtonShadow", _DefWin32.ButtonShadow.ToStringWin32()).ToColorFromWin32();
-                    btntext_pick.BackColor = _ini.Read(Section, "ButtonText", _DefWin32.ButtonText.ToStringWin32()).ToColorFromWin32();
-                    btnhilight_pick.BackColor = _ini.Read(Section, "ButtonHilight", _DefWin32.ButtonHilight.ToStringWin32()).ToColorFromWin32();
-                    btndkshadow_pick.BackColor = _ini.Read(Section, "ButtonDkShadow", _DefWin32.ButtonDkShadow.ToStringWin32()).ToColorFromWin32();
-                    btnlight_pick.BackColor = _ini.Read(Section, "ButtonLight", _DefWin32.ButtonLight.ToStringWin32()).ToColorFromWin32();
-                    btnaltface_pick.BackColor = _ini.Read(Section, "ButtonAlternateFace", _DefWin32.ButtonAlternateFace.ToStringWin32()).ToColorFromWin32();
-                    background_pick.BackColor = _ini.Read(Section, "Background", _DefWin32.Background.ToStringWin32()).ToColorFromWin32();
-                    hilight_pick.BackColor = _ini.Read(Section, "Hilight", _DefWin32.Hilight.ToStringWin32()).ToColorFromWin32();
-                    hilighttext_pick.BackColor = _ini.Read(Section, "HilightText", _DefWin32.HilightText.ToStringWin32()).ToColorFromWin32();
-                    Window_pick.BackColor = _ini.Read(Section, "Window", _DefWin32.Window.ToStringWin32()).ToColorFromWin32();
-                    WindowText_pick.BackColor = _ini.Read(Section, "WindowText", _DefWin32.WindowText.ToStringWin32()).ToColorFromWin32();
-                    Scrollbar_pick.BackColor = _ini.Read(Section, "ScrollBar", _DefWin32.Scrollbar.ToStringWin32()).ToColorFromWin32();
-                    menu_pick.BackColor = _ini.Read(Section, "Menu", _DefWin32.Menu.ToStringWin32()).ToColorFromWin32();
-                    Frame_pick.BackColor = _ini.Read(Section, "WindowFrame", _DefWin32.WindowFrame.ToStringWin32()).ToColorFromWin32();
-                    menutext_pick.BackColor = _ini.Read(Section, "MenuText", _DefWin32.MenuText.ToStringWin32()).ToColorFromWin32();
-                    AppWorkspace_pick.BackColor = _ini.Read(Section, "AppWorkspace", _DefWin32.AppWorkspace.ToStringWin32()).ToColorFromWin32();
-                    GrayText_pick.BackColor = _ini.Read(Section, "GrayText", _DefWin32.GrayText.ToStringWin32()).ToColorFromWin32();
-                    InfoText_pick.BackColor = _ini.Read(Section, "InfoText", _DefWin32.InfoText.ToStringWin32()).ToColorFromWin32();
-                    InfoWindow_pick.BackColor = _ini.Read(Section, "InfoWindow", _DefWin32.InfoWindow.ToStringWin32()).ToColorFromWin32();
-                    hottracking_pick.BackColor = _ini.Read(Section, "HotTrackingColor", _DefWin32.HotTrackingColor.ToStringWin32()).ToColorFromWin32();
-                    menubar_pick.BackColor = _ini.Read(Section, "MenuBar", _DefWin32.MenuBar.ToStringWin32()).ToColorFromWin32();
-                    menuhilight_pick.BackColor = _ini.Read(Section, "MenuHilight", _DefWin32.MenuHilight.ToStringWin32()).ToColorFromWin32();
-                    desktop_pick.BackColor = _ini.Read(Section, "Desktop", _DefWin32.Desktop.ToStringWin32()).ToColorFromWin32();
+                    btnface_pick.BackColor = _ini.Read(Section, "ButtonFace", _DefWin32.ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    btnshadow_pick.BackColor = _ini.Read(Section, "ButtonShadow", _DefWin32.ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    btntext_pick.BackColor = _ini.Read(Section, "ButtonText", _DefWin32.ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    btnhilight_pick.BackColor = _ini.Read(Section, "ButtonHilight", _DefWin32.ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    btndkshadow_pick.BackColor = _ini.Read(Section, "ButtonDkShadow", _DefWin32.ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    btnlight_pick.BackColor = _ini.Read(Section, "ButtonLight", _DefWin32.ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    btnaltface_pick.BackColor = _ini.Read(Section, "ButtonAlternateFace", _DefWin32.ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    background_pick.BackColor = _ini.Read(Section, "Background", _DefWin32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    hilight_pick.BackColor = _ini.Read(Section, "Hilight", _DefWin32.Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    hilighttext_pick.BackColor = _ini.Read(Section, "HilightText", _DefWin32.HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    Window_pick.BackColor = _ini.Read(Section, "Window", _DefWin32.Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    WindowText_pick.BackColor = _ini.Read(Section, "WindowText", _DefWin32.WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    Scrollbar_pick.BackColor = _ini.Read(Section, "ScrollBar", _DefWin32.Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    menu_pick.BackColor = _ini.Read(Section, "Menu", _DefWin32.Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    Frame_pick.BackColor = _ini.Read(Section, "WindowFrame", _DefWin32.WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    menutext_pick.BackColor = _ini.Read(Section, "MenuText", _DefWin32.MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    AppWorkspace_pick.BackColor = _ini.Read(Section, "AppWorkspace", _DefWin32.AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    GrayText_pick.BackColor = _ini.Read(Section, "GrayText", _DefWin32.GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    InfoText_pick.BackColor = _ini.Read(Section, "InfoText", _DefWin32.InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    InfoWindow_pick.BackColor = _ini.Read(Section, "InfoWindow", _DefWin32.InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    hottracking_pick.BackColor = _ini.Read(Section, "HotTrackingColor", _DefWin32.HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    menubar_pick.BackColor = _ini.Read(Section, "MenuBar", _DefWin32.MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    menuhilight_pick.BackColor = _ini.Read(Section, "MenuHilight", _DefWin32.MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    desktop_pick.BackColor = _ini.Read(Section, "Desktop", _DefWin32.Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
 
-                    _btn_shadow = _ini.Read(Section, "ButtonShadow", _DefWin32.ButtonShadow.ToStringWin32()).ToColorFromWin32();
-                    _btn_hilight = _ini.Read(Section, "ButtonHilight", _DefWin32.ButtonHilight.ToStringWin32()).ToColorFromWin32();
-                    _btn_light = _ini.Read(Section, "ButtonLight", _DefWin32.ButtonLight.ToStringWin32()).ToColorFromWin32();
-                    _btn_dkshadow = _ini.Read(Section, "ButtonDkShadow", _DefWin32.ButtonDkShadow.ToStringWin32()).ToColorFromWin32();
+                    _btn_shadow = _ini.Read(Section, "ButtonShadow", _DefWin32.ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    _btn_hilight = _ini.Read(Section, "ButtonHilight", _DefWin32.ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    _btn_light = _ini.Read(Section, "ButtonLight", _DefWin32.ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                    _btn_dkshadow = _ini.Read(Section, "ButtonDkShadow", _DefWin32.ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
                     trackBarX1.Value = 100;
                 }
             }
@@ -1056,6 +1048,11 @@ namespace WinPaletter
         private async void trackBarX1_Scroll(object sender, EventArgs e)
         {
             await Change3DStyle();
+        }
+
+        private void ColorItem_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            ApplyRetroPreview();
         }
     }
 }

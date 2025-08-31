@@ -163,18 +163,18 @@
             // 
             this.card3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(102)))), ((int)(((byte)(183)))));
             this.card3.Compact = false;
-            this.card3.Image = ((System.Drawing.Image)(resources.GetObject("card3.Image")));
+            this.card3.Image = null;
             this.card3.Location = new System.Drawing.Point(572, 8);
             this.card3.Name = "card3";
             this.card3.Size = new System.Drawing.Size(277, 130);
             this.card3.TabIndex = 122;
-            this.card3.Tag = "Modify your LogonUI appearance and preferences";
-            this.card3.Text = "Logon UI Screen";
+            this.card3.Tag = "";
+            this.card3.Text = null;
             this.card3.Click += new System.EventHandler(this.card3_Click);
             // 
             // card6
             // 
-            this.card6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(193)))), ((int)(((byte)(241)))));
+            this.card6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(7)))), ((int)(((byte)(14)))));
             this.card6.Compact = false;
             this.card6.Image = ((System.Drawing.Image)(resources.GetObject("card6.Image")));
             this.card6.Location = new System.Drawing.Point(855, 8);
@@ -188,7 +188,7 @@
             // 
             // card5
             // 
-            this.card5.Color = System.Drawing.Color.DarkOliveGreen;
+            this.card5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(75)))), ((int)(((byte)(17)))));
             this.card5.Compact = false;
             this.card5.Image = ((System.Drawing.Image)(resources.GetObject("card5.Image")));
             this.card5.Location = new System.Drawing.Point(6, 144);

@@ -919,18 +919,61 @@ namespace WinPaletter
                     /// Hexadecimal color code
                     /// </summary>
                     HEX,
+
                     /// <summary>
                     /// Red, Green, Blue color code
                     /// </summary>
                     RGB,
+
                     /// <summary>
                     /// Hue, Saturation, Lightness color code
                     /// </summary>
                     HSL,
+
                     /// <summary>
                     /// Decimal color code
                     /// </summary>
-                    Dec
+                    Dec,
+
+                    /// <summary>
+                    /// Red, Green, Blue as percentage (CSS style)
+                    /// </summary>
+                    RGBPercent,
+
+                    /// <summary>
+                    /// Alpha, Red, Green, Blue color code
+                    /// </summary>
+                    ARGB,
+
+                    /// <summary>
+                    /// Hue, Saturation, Lightness + Alpha
+                    /// </summary>
+                    HSLA,
+
+                    /// <summary>
+                    /// Hue, Saturation, Value/Brightness
+                    /// </summary>
+                    HSV,
+
+                    /// <summary>
+                    /// Cyan, Magenta, Yellow, Black
+                    /// </summary>
+                    CMYK,
+
+                    /// <summary>
+                    /// Win32 COLORREF (0x00BBGGRR)
+                    /// </summary>
+                    Win32,
+
+                    /// <summary>
+                    /// Known color name (e.g. "SkyBlue")
+                    /// </summary>
+                    KnownName,
+
+                    /// <summary>
+                    /// CSS color string (name if known, otherwise rgb/rgba)
+                    /// </summary>
+                    CSS
                 }
 
                 /// <summary>

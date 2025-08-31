@@ -726,6 +726,7 @@ namespace WinPaletter
             this.color1.Name = "color1";
             this.color1.Size = new System.Drawing.Size(121, 24);
             this.color1.TabIndex = 19;
+            this.color1.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.color1_ContextMenuItemClickedInvoker);
             this.color1.Click += new System.EventHandler(this.Color1_Click);
             this.color1.DragDrop += new System.Windows.Forms.DragEventHandler(this.Color1_2_DragDrop);
             // 
@@ -751,6 +752,7 @@ namespace WinPaletter
             this.color2.Name = "color2";
             this.color2.Size = new System.Drawing.Size(121, 24);
             this.color2.TabIndex = 20;
+            this.color2.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.color2_ContextMenuItemClickedInvoker);
             this.color2.Click += new System.EventHandler(this.Color2_Click);
             this.color2.DragDrop += new System.Windows.Forms.DragEventHandler(this.Color1_2_DragDrop);
             // 

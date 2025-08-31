@@ -362,20 +362,9 @@ namespace WinPaletter
 
         private void Color_pick_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
                 pnl_preview.BackgroundImage = ReturnBK();
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    pnl_preview.BackgroundImage = ReturnBK();
-                }
                 return;
             }
 
@@ -411,6 +400,11 @@ namespace WinPaletter
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
             if (IsShown & CheckBox6.Checked) pnl_preview.BackgroundImage = ReturnBK();
+        }
+
+        private void color_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            pnl_preview.BackgroundImage = ReturnBK();
         }
     }
 }

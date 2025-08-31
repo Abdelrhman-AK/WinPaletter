@@ -5381,7 +5381,15 @@ namespace WinPaletter
             "HEX",
             "RGB",
             "HSL",
-            "Decimal"});
+            "Decimal",
+            "RGB (percent)",
+            "ARGB",
+            "HSLA",
+            "HSV",
+            "CMYK",
+            "Win32",
+            "Known name",
+            "CSS"});
             this.ComboBox3.Location = new System.Drawing.Point(467, 10);
             this.ComboBox3.Name = "ComboBox3";
             this.ComboBox3.Size = new System.Drawing.Size(282, 28);

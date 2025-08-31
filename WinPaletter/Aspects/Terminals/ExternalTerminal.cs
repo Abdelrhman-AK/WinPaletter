@@ -858,20 +858,8 @@ namespace WinPaletter
 
         private void ColorTable00_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
-                ApplyPreview();
-                UpdateFromTrack(1);
-                UpdateFromTrack(2);
-                UpdateFromTrack(3);
-                UpdateFromTrack(4);
-                return;
-            }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
                 ApplyPreview();
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -1837,12 +1825,6 @@ namespace WinPaletter
                 return;
             }
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                CMD_PreviewCUR2.BackColor = Forms.SubMenu.ShowMenu((ColorItem)sender);
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -1864,14 +1846,18 @@ namespace WinPaletter
             CMD_Preview.Alpha = (sender as TrackBarX).Value;
         }
 
-        private void ColorTable00_Click(object sender, DragEventArgs e)
+        private void ColorTable00_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
         {
-
+            ApplyPreview();
+            UpdateFromTrack(1);
+            UpdateFromTrack(2);
+            UpdateFromTrack(3);
+            UpdateFromTrack(4);
         }
 
-        private void CMD_CursorColor_Click(object sender, DragEventArgs e)
+        private void CMD_CursorColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
         {
-
+            CMD_PreviewCUR2.BackColor = e.ColorItem.BackColor;
         }
     }
 }

@@ -196,12 +196,6 @@ namespace WinPaletter
             if (e is DragEventArgs)
                 return;
 
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                UpdateWin2000Preview(Forms.SubMenu.ShowMenu((ColorItem)sender));
-                return;
-            }
-
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -232,6 +226,11 @@ namespace WinPaletter
         private void RadioImage1_CheckedChanged(object sender, EventArgs e)
         {
             GroupBox1.Enabled = !RadioImage1.Checked;
+        }
+
+        private void color_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            UpdateWin2000Preview(e.ColorItem.BackColor);
         }
     }
 }

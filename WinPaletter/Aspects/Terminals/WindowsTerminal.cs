@@ -815,7 +815,6 @@ namespace WinPaletter
             }
         }
 
-
         private void Button12_Click(object sender, EventArgs e)
         {
             string s = InputBox(Program.Lang.Strings.Aspects.Terminals.TypeSchemeName, $"{Program.Lang.Strings.General.NewScheme} #{TerSchemes.Items.Count - 1}");
@@ -828,12 +827,6 @@ namespace WinPaletter
         private void ColorClick(object sender, EventArgs e)
         {
             if (e is DragEventArgs) return;
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Forms.SubMenu.ShowMenu((ColorItem)sender);
-                return;
-            }
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
@@ -915,59 +908,7 @@ namespace WinPaletter
                 ApplyPreview(_Terminal);
                 return;
             }
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Color cx = Forms.SubMenu.ShowMenu((ColorItem)sender, sender != TerBackground & sender != TerForeground & sender != TerSelection & sender != TerCursor);
-
-                if (ColorClipboard.Event != ColorClipboard.MenuEvent.None)
-                {
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
-                    {
-                        scheme.Background = cx;
-                    }
-
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerForeground.Name.ToLower()))
-                    {
-                        scheme.Foreground = cx;
-                    }
-
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerSelection.Name.ToLower()))
-                    {
-                        scheme.SelectionBackground = cx;
-                    }
-
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerCursor.Name.ToLower()))
-                    {
-                        scheme.CursorColor = cx;
-                    }
-
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabActive.Name.ToLower()))
-                    {
-                        theme.Tab.Background = cx;
-                    }
-
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabInactive.Name.ToLower()))
-                    {
-                        theme.Tab.UnfocusedBackground = cx;
-                    }
-
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarActive.Name.ToLower()))
-                    {
-                        theme.TabRow.Background = cx;
-                    }
-
-                    if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarInactive.Name.ToLower()))
-                    {
-                        theme.TabRow.UnfocusedBackground = cx;
-                    }
-
-                    ApplyPreview(_Terminal);
-                }
-
-                return;
-            }
-
+         
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {
@@ -1951,6 +1892,75 @@ namespace WinPaletter
                 TerSchemes.Items.RemoveAt(i);
                 TerSchemes.SelectedIndex = i > TerSchemes.Items.Count - 1 ? TerSchemes.Items.Count - 1 : i;
                 _Terminal.Schemes.RemoveAt(i - 1);
+            }
+        }
+
+        private void TerWhiteB_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            Color cx = e.ColorItem.BackColor;
+
+            WinTerminal.Types.Scheme scheme = new();
+            WinTerminal.Types.Theme theme = new();
+
+            if (TerProfiles.SelectedIndex == 0)
+            {
+                scheme = _Terminal.Schemes
+                    .Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault();
+            }
+            else if (TerProfiles.SelectedIndex > 0)
+            {
+                scheme = _Terminal.Schemes
+                    .Where(s => s.Name.ToLower() == _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme.ToString().ToLower()).FirstOrDefault();
+            }
+
+            if (TerThemes.SelectedIndex > 3)
+            {
+                theme = _Terminal.Themes[TerThemes.SelectedIndex - 4] ?? new();
+            }
+
+            if (ColorClipboard.Event != ColorClipboard.MenuEvent.None)
+            {
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
+                {
+                    scheme.Background = cx;
+                }
+
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerForeground.Name.ToLower()))
+                {
+                    scheme.Foreground = cx;
+                }
+
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerSelection.Name.ToLower()))
+                {
+                    scheme.SelectionBackground = cx;
+                }
+
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerCursor.Name.ToLower()))
+                {
+                    scheme.CursorColor = cx;
+                }
+
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabActive.Name.ToLower()))
+                {
+                    theme.Tab.Background = cx;
+                }
+
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabInactive.Name.ToLower()))
+                {
+                    theme.Tab.UnfocusedBackground = cx;
+                }
+
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarActive.Name.ToLower()))
+                {
+                    theme.TabRow.Background = cx;
+                }
+
+                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarInactive.Name.ToLower()))
+                {
+                    theme.TabRow.UnfocusedBackground = cx;
+                }
+
+                ApplyPreview(_Terminal);
             }
         }
     }

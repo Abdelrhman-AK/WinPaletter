@@ -731,19 +731,7 @@ namespace WinPaletter
 
         private void Color_pick_Click(object sender, EventArgs e)
         {
-
-            if (e is DragEventArgs)
-                return;
-
-            if (((MouseEventArgs)e).Button == MouseButtons.Right)
-            {
-                Color clr = Forms.SubMenu.ShowMenu((ColorItem)sender);
-                if (ColorClipboard.Event == ColorClipboard.MenuEvent.Cut | ColorClipboard.Event == ColorClipboard.MenuEvent.Paste | ColorClipboard.Event == ColorClipboard.MenuEvent.Override)
-                {
-                    pnl_preview.BackColor = clr;
-                }
-                return;
-            }
+            if (e is DragEventArgs) return;
 
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
@@ -865,6 +853,11 @@ namespace WinPaletter
             }
 
             Panel1.Visible = false;
+        }
+
+        private void color_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        {
+            pnl_preview.BackColor = e.ColorItem.BackColor;
         }
 
         private void source_wallpapertone_CheckedChanged(object sender, EventArgs e)
