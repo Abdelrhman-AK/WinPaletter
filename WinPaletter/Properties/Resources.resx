@@ -3048,11 +3048,10 @@
   </data>
   <data name="Glyph_Paste" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAACjSURBVDhPtczBDQFRFEbh2TIrtehE1IBORDcKEDWwHjVgN4lkHJE8FyfG3fAldzPvP1NV/wZM
-        gQNwLNcAE+8+AoblBzPgDMyBcbkFcCpv983AfQC2PF2AHbAuty/fHjbuA9C9DDOd++Blxn3wMOM+eJhx
-        HzzMuA8eZtwHDzPug4cZ98HDjPvgYcZ9AFqPv2jdB2DldY8rsHT/BqiBUXK1u5+5ARt9yEGFdYH0AAAA
-        AElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAKNJREFUOE+1
+        zMENAVEURuHZMiu16ETUgE5ENwoQNbAeNWA3iWQckTwXJ8bd8CV3M+8/U1X/BkyBA3As1wAT7z4ChuUH
+        M+AMzIFxuQVwKm/3zcB9ALY8XYAdsC63L98eNu4D0L0MM5374GXGffAw4z54mHEfPMy4Dx5m3AcPM+6D
+        hxn3wcOM++Bhxn0AWo+/aN0HYOV1jyuwdP8GqIFRcrW7n7kBG33IQYV1gfQAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="Glyph_Play" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -5849,8 +5848,8 @@
         Hh6Tgz/4g/8PCsuPEn3FtOwAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="JetBrainsMono_Medium" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\JetBrainsMono-Medium.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="JetBrainsMono" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\JetBrainsMono.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="LangNode_JSON" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -5925,7 +5924,7 @@
   <data name="Login_Admin" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAABh0RVh0U29mdHdhcmUAUGFpbnQuTkVUIDUuMS44G2nqqAAAAw5JREFUOE+9011I
+        vgAADr4B6kKxwAAAABh0RVh0U29mdHdhcmUAUGFpbnQuTkVUIDUuMS44G2nqqAAAAw5JREFUOE+9011I
         U2EYB/Dj3HJbkc5MXaKZZSGZuUkRpMvd1YVGQQQWpmZl2ZcI0k0gRAiiF1ZmLqqhttCZ2tS25pxpUytb
         ZohQ+XU2t7ammxQIQpx/nE1nntbXRf3hvTm8z4/D8zwvQfzXFIOV8MQZv13jkG5tc0jj2pzx9Dfmtd9m
         27NZgUjnKkvUztgT1DOIb5/GVpUDcS2fsKXJbo9ttJdGN08EMet8RtTpkoh1Lnui1gkfGGKVNmyq/4gY
@@ -6709,9 +6708,6 @@
         67rW+0DDO7qFt84m3tgbeE0akKn5m7RHldE0LaGq6jil9GIQBOP7uK77VwghY39+3X+eH3Q9A2FZE8qf
         AAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="SecureUxTheme" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SecureUxTheme.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="settingsfile" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

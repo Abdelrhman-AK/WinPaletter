@@ -1846,7 +1846,7 @@ namespace WinPaletter
             CMD_Preview.Alpha = (sender as TrackBarX).Value;
         }
 
-        private void ColorTable00_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void ColorTable00_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             ApplyPreview();
             UpdateFromTrack(1);
@@ -1855,9 +1855,9 @@ namespace WinPaletter
             UpdateFromTrack(4);
         }
 
-        private void CMD_CursorColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void CMD_CursorColor_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            CMD_PreviewCUR2.BackColor = e.ColorItem.BackColor;
+            CMD_PreviewCUR2.BackColor = e.Color;
         }
     }
 }

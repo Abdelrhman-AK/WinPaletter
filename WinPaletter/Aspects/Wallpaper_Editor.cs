@@ -855,9 +855,9 @@ namespace WinPaletter
             Panel1.Visible = false;
         }
 
-        private void color_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void color_pick_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            pnl_preview.BackColor = e.ColorItem.BackColor;
+            pnl_preview.BackColor = e.Color;
         }
 
         private void source_wallpapertone_CheckedChanged(object sender, EventArgs e)

@@ -419,7 +419,7 @@
             this.ColorizationAfterglow_pick.Name = "ColorizationAfterglow_pick";
             this.ColorizationAfterglow_pick.Size = new System.Drawing.Size(110, 24);
             this.ColorizationAfterglow_pick.TabIndex = 2;
-            this.ColorizationAfterglow_pick.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorizationAfterglow_pick_ContextMenuItemClickedInvoker);
+            this.ColorizationAfterglow_pick.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.ColorizationAfterglow_pick_ContextMenuMadeColorChangeInvoker);
             this.ColorizationAfterglow_pick.BackColorChanged += new System.EventHandler(this.ColorizationColor_pick_BackColorChanged);
             this.ColorizationAfterglow_pick.Click += new System.EventHandler(this.ColorizationAfterglow_pick_Click);
             this.ColorizationAfterglow_pick.DragDrop += new System.Windows.Forms.DragEventHandler(this.Pickers_DragDrop);
@@ -454,7 +454,7 @@
             this.ColorizationColor_pick.Name = "ColorizationColor_pick";
             this.ColorizationColor_pick.Size = new System.Drawing.Size(110, 24);
             this.ColorizationColor_pick.TabIndex = 2;
-            this.ColorizationColor_pick.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorizationColor_pick_ContextMenuItemClickedInvoker);
+            this.ColorizationColor_pick.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.ColorizationColor_pick_ContextMenuMadeColorChangeInvoker);
             this.ColorizationColor_pick.BackColorChanged += new System.EventHandler(this.ColorizationColor_pick_BackColorChanged);
             this.ColorizationColor_pick.Click += new System.EventHandler(this.ColorizationColor_pick_Click);
             this.ColorizationColor_pick.DragDrop += new System.Windows.Forms.DragEventHandler(this.Pickers_DragDrop);

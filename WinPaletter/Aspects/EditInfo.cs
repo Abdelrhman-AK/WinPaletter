@@ -358,14 +358,14 @@ namespace WinPaletter
             StoreItem1.UpdatePattern(trackBarX1.Value);
         }
 
-        private void color1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void color1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            StoreItem1.TM.Info.Color1 = e.ColorItem.BackColor;
+            StoreItem1.TM.Info.Color1 = e.Color;
         }
 
-        private void color2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void color2_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            StoreItem1.TM.Info.Color2 = e.ColorItem.BackColor;
+            StoreItem1.TM.Info.Color2 = e.Color;
         }
     }
 }

@@ -120,9 +120,9 @@ namespace WinPaletter
             }
         }
 
-        private void TerTabColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void TerTabColor_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            Color cx = e.ColorItem.BackColor;
+            Color cx = e.Color;
 
             WinTerminal.Types.Profile temp1 = Forms.WindowsTerminal.TerProfiles.SelectedIndex == 0 ?
                 Forms.WindowsTerminal._Terminal.Profiles.Defaults :

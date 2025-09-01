@@ -302,7 +302,7 @@
             this.C9.Name = "C9";
             this.C9.Size = new System.Drawing.Size(100, 22);
             this.C9.TabIndex = 2;
-            this.C9.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C9_ContextMenuItemClickedInvoker);
+            this.C9.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C9_ContextMenuMadeColorChangeInvoker);
             this.C9.Click += new System.EventHandler(this.C9_Click);
             this.C9.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -369,7 +369,7 @@
             this.C8.Name = "C8";
             this.C8.Size = new System.Drawing.Size(100, 22);
             this.C8.TabIndex = 2;
-            this.C8.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C8_ContextMenuItemClickedInvoker);
+            this.C8.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C8_ContextMenuMadeColorChangeInvoker);
             this.C8.Click += new System.EventHandler(this.C8_Click);
             this.C8.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -436,7 +436,7 @@
             this.C7.Name = "C7";
             this.C7.Size = new System.Drawing.Size(100, 22);
             this.C7.TabIndex = 2;
-            this.C7.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C7_ContextMenuItemClickedInvoker);
+            this.C7.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C7_ContextMenuMadeColorChangeInvoker);
             this.C7.Click += new System.EventHandler(this.C7_Click);
             this.C7.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -503,7 +503,7 @@
             this.C6.Name = "C6";
             this.C6.Size = new System.Drawing.Size(100, 22);
             this.C6.TabIndex = 2;
-            this.C6.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C6_ContextMenuItemClickedInvoker);
+            this.C6.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C6_ContextMenuMadeColorChangeInvoker);
             this.C6.Click += new System.EventHandler(this.C6_Click);
             this.C6.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -570,7 +570,7 @@
             this.C5.Name = "C5";
             this.C5.Size = new System.Drawing.Size(100, 22);
             this.C5.TabIndex = 2;
-            this.C5.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C5_ContextMenuItemClickedInvoker);
+            this.C5.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C5_ContextMenuMadeColorChangeInvoker);
             this.C5.Click += new System.EventHandler(this.C5_Click);
             this.C5.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -637,7 +637,7 @@
             this.C4.Name = "C4";
             this.C4.Size = new System.Drawing.Size(100, 22);
             this.C4.TabIndex = 2;
-            this.C4.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C4_ContextMenuItemClickedInvoker);
+            this.C4.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C4_ContextMenuMadeColorChangeInvoker);
             this.C4.Click += new System.EventHandler(this.C4_Click);
             this.C4.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -704,7 +704,7 @@
             this.C3.Name = "C3";
             this.C3.Size = new System.Drawing.Size(100, 22);
             this.C3.TabIndex = 2;
-            this.C3.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C3_ContextMenuItemClickedInvoker);
+            this.C3.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C3_ContextMenuMadeColorChangeInvoker);
             this.C3.Click += new System.EventHandler(this.C3_Click);
             this.C3.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -771,7 +771,7 @@
             this.C2.Name = "C2";
             this.C2.Size = new System.Drawing.Size(100, 22);
             this.C2.TabIndex = 2;
-            this.C2.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C2_ContextMenuItemClickedInvoker);
+            this.C2.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C2_ContextMenuMadeColorChangeInvoker);
             this.C2.Click += new System.EventHandler(this.C2_Click);
             this.C2.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -838,7 +838,7 @@
             this.C1.Name = "C1";
             this.C1.Size = new System.Drawing.Size(100, 22);
             this.C1.TabIndex = 2;
-            this.C1.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.C1_ContextMenuItemClickedInvoker);
+            this.C1.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.C1_ContextMenuMadeColorChangeInvoker);
             this.C1.Click += new System.EventHandler(this.C1_Click);
             this.C1.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 
@@ -986,7 +986,7 @@
             this.TActive.Name = "TActive";
             this.TActive.Size = new System.Drawing.Size(100, 22);
             this.TActive.TabIndex = 2;
-            this.TActive.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TActive_ContextMenuItemClickedInvoker);
+            this.TActive.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TActive_ContextMenuMadeColorChangeInvoker);
             this.TActive.BackColorChanged += new System.EventHandler(this.TActive_BackColorChanged);
             this.TActive.Click += new System.EventHandler(this.TActive_pick_Click);
             this.TActive.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
@@ -1003,7 +1003,7 @@
             this.TInactive.Name = "TInactive";
             this.TInactive.Size = new System.Drawing.Size(100, 22);
             this.TInactive.TabIndex = 2;
-            this.TInactive.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TInactive_ContextMenuItemClickedInvoker);
+            this.TInactive.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TInactive_ContextMenuMadeColorChangeInvoker);
             this.TInactive.Click += new System.EventHandler(this.TInactive_pick_Click);
             this.TInactive.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorPicker_DragDrop);
             // 

@@ -1153,59 +1153,59 @@ namespace WinPaletter
             groupBox22.Enabled = (sender as UI.WP.Toggle).Checked;
         }
 
-        private void TActive_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void TActive_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.TitlebarColor_Active = e.ColorItem.BackColor;
+            windowsDesktop1.TitlebarColor_Active = e.Color;
         }
 
-        private void TInactive_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void TInactive_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.TitlebarColor_Inactive = e.ColorItem.BackColor;
+            windowsDesktop1.TitlebarColor_Inactive = e.Color;
         }
 
-        private void C1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color1 = e.ColorItem.BackColor;
+            windowsDesktop1.Color1 = e.Color;
         }
 
-        private void C2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C2_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color2 = e.ColorItem.BackColor;
+            windowsDesktop1.Color2 = e.Color;
         }
 
-        private void C3_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C3_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color3 = e.ColorItem.BackColor;
+            windowsDesktop1.Color3 = e.Color;
         }
 
-        private void C4_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C4_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color4 = e.ColorItem.BackColor;
+            windowsDesktop1.Color4 = e.Color;
         }
 
-        private void C5_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C5_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color5 = e.ColorItem.BackColor;
+            windowsDesktop1.Color5 = e.Color;
         }
 
-        private void C6_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C6_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color6 = e.ColorItem.BackColor;
+            windowsDesktop1.Color6 = e.Color;
         }
 
-        private void C7_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C7_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color7 = e.ColorItem.BackColor;
+            windowsDesktop1.Color7 = e.Color;
         }
 
-        private void C8_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C8_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color8 = e.ColorItem.BackColor;
+            windowsDesktop1.Color8 = e.Color;
         }
 
-        private void C9_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void C9_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.Color9 = e.ColorItem.BackColor;
+            windowsDesktop1.Color9 = e.Color;
         }
     }
 }

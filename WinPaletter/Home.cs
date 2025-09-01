@@ -66,6 +66,8 @@ namespace WinPaletter
 
             oldMainFormMinSize = Forms.MainForm.MinimumSize;
 
+            Button28.Text = OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.General.Logoff : Program.Lang.Strings.General.SignOut;
+
             // Double buffer the flow layout panels to prevent flickering.
             flowLayoutPanel3.DoubleBuffer();
 

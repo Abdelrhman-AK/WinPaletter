@@ -233,7 +233,7 @@ namespace WinPaletter
             foreach (ColorItem ColorItem in this.GetAllControls().OfType<ColorItem>())
             {
                 ColorItem.Click += ColorItem_Click;
-                ColorItem.ContextMenuItemClickedInvoker += ColorItem_ContextMenuItemClickedInvoker;
+                ColorItem.ContextMenuMadeColorChangeInvoker += ColorItem_ContextMenuMadeColorChangeInvoker;
                 ColorItem.DragDrop += ColorItem_DragDrop;
             }
         }
@@ -243,7 +243,7 @@ namespace WinPaletter
             foreach (ColorItem ColorItem in this.GetAllControls().OfType<ColorItem>())
             {
                 ColorItem.Click -= ColorItem_Click;
-                ColorItem.ContextMenuItemClickedInvoker -= ColorItem_ContextMenuItemClickedInvoker;
+                ColorItem.ContextMenuMadeColorChangeInvoker -= ColorItem_ContextMenuMadeColorChangeInvoker;
                 ColorItem.DragDrop -= ColorItem_DragDrop;
             }
         }
@@ -974,40 +974,40 @@ namespace WinPaletter
                 {
                     if (radioButton2.Checked)
                     {
-                        if (trackBarX1.Value > 100)
+                        if (trackBarX1.Value > 100f)
                         {
                             float amount = (trackBarX1.Value - 100f) / 100f;
-                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_dkshadow.DarkDark(), amount);
-                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_shadow.DarkDark(), amount);
-                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_hilight.Dark(), amount);
-                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_light.Dark(), amount);
+                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_dkshadow.DarkDark(), amount);
+                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(_btn_shadow.DarkDark(), amount);
+                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_hilight.Dark(), amount);
+                            retroDesktopColors1.ButtonLight = _btn_light.Blend(_btn_light.Dark(), amount);
                         }
-                        else if (trackBarX1.Value < 100)
+                        else if (trackBarX1.Value < 100f)
                         {
                             float amount = 1f - trackBarX1.Value / 100f;
-                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_hilight, amount);
-                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, _btn_light, amount);
-                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_dkshadow, amount);
-                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, _btn_shadow, amount);
+                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_hilight, amount);
+                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(_btn_light, amount);
+                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_dkshadow, amount);
+                            retroDesktopColors1.ButtonLight = _btn_light.Blend(_btn_shadow, amount);
                         }
                     }
                     else
                     {
-                        if (trackBarX1.Value > 100)
+                        if (trackBarX1.Value > 100f)
                         {
                             float amount = (trackBarX1.Value - 100f) / 100f;
-                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, _btn_shadow, amount);
-                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, _btn_shadow, amount);
-                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_shadow, amount);
+                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_shadow, amount);
+                            retroDesktopColors1.ButtonLight = _btn_light.Blend(retroDesktopColors1.ButtonFace, amount);
                         }
-                        else if (trackBarX1.Value < 100)
+                        else if (trackBarX1.Value < 100f)
                         {
                             float amount = 1f - trackBarX1.Value / 100f;
-                            retroDesktopColors1.ButtonDkShadow = BlendColors(_btn_dkshadow, retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonShadow = BlendColors(_btn_shadow, retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonHilight = BlendColors(_btn_hilight, retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonLight = BlendColors(_btn_light, retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(retroDesktopColors1.ButtonFace, amount);
+                            retroDesktopColors1.ButtonLight = _btn_light.Blend(retroDesktopColors1.ButtonFace, amount);
                         }
                     }
                 }
@@ -1024,17 +1024,6 @@ namespace WinPaletter
             });
         }
 
-        static Color BlendColors(Color color1, Color color2, float amount)
-        {
-            amount = Math.Max(0, Math.Min(1, amount)); // Ensure amount is within [0, 1]
-
-            int r = (int)(color1.R * (1 - amount) + color2.R * amount);
-            int g = (int)(color1.G * (1 - amount) + color2.G * amount);
-            int b = (int)(color1.B * (1 - amount) + color2.B * amount);
-
-            return Color.FromArgb(r, g, b);
-        }
-
         private async void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             await Change3DStyle();
@@ -1045,14 +1034,14 @@ namespace WinPaletter
             await Change3DStyle();
         }
 
-        private async void trackBarX1_Scroll(object sender, EventArgs e)
-        {
-            await Change3DStyle();
-        }
-
-        private void ColorItem_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void ColorItem_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             ApplyRetroPreview();
+        }
+
+        private async void trackBarX1_ValueChanged(object sender, EventArgs e)
+        {
+            await Change3DStyle();
         }
     }
 }

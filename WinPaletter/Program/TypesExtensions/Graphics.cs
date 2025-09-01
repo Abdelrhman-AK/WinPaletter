@@ -105,7 +105,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="alpha"></param>
         /// <param name="radius"></param>
         /// <param name="roundedCorners"></param>
-        public static void DrawAeroEffect(this Graphics G, Rectangle rect, Bitmap backgroundBlurred, Color color1, decimal colorBalance, Color color2, decimal glowBalance, decimal alpha, int radius, bool roundedCorners)
+        public static void DrawAeroEffect(this Graphics G, Rectangle rect, Bitmap backgroundBlurred, Color color1, float colorBalance, Color color2, float glowBalance, float alpha, int radius, bool roundedCorners)
         {
             if (G is null) return;
             if (rect.Width <= 0 || rect.Height <= 0) return;
@@ -132,7 +132,7 @@ namespace WinPaletter.TypesExtensions
                 using (Bitmap bmpGrayscale = backgroundBlurred?.Grayscale())
                 using (Bitmap bmpBright = bmpGrayscale.Brighten(0.2f))
                 {
-                    glowImage = bmpBright.Tint(color1.Blend(color2, (double)colorBalance));
+                    glowImage = bmpBright.Tint(color1.Blend(color2, colorBalance));
                 }
 
                 Bitmap colorImage;

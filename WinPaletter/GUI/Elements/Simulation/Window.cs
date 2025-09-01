@@ -1435,9 +1435,9 @@ namespace WinPaletter.UI.Simulation
                         {
                             Bitmap bk = AdaptedBackBlurred;
 
-                            decimal alpha = Active ? 1 - (decimal)Win7Alpha / 100 : (decimal)0.25;   // ColorBlurBalance
-                            decimal ColBal = (decimal)Win7ColorBal / 100;   // ColorBalance
-                            decimal GlowBal = (decimal)Win7GlowBal / 100;   // AfterGlowBalance
+                            float alpha = Active ? 1 - (float)Win7Alpha / 100 : 0.25f;   // ColorBlurBalance
+                            float ColBal = Win7ColorBal / 100f;   // ColorBalance
+                            float GlowBal = Win7GlowBal / 100f;   // AfterGlowBalance
 
                             Color Color1 = Active ? AccentColor_Active : Color.FromArgb(128, AccentColor_Inactive);
                             Color Color2 = Active ? AccentColor2_Active : Color.Transparent;

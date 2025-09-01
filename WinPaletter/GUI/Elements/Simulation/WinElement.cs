@@ -1976,14 +1976,12 @@ namespace WinPaletter.UI.Simulation
                             G.DrawImage(back_blurred, Rect);
                             G.ResetClip();
 
-                            decimal alphaX = 1 - (decimal)BackColorAlpha / 100;  // ColorBlurBalance
-                            if (alphaX < 0)
-                                alphaX = 0;
-                            if (alphaX > 1)
-                                alphaX = 1;
+                            float alphaX = 1 - BackColorAlpha / 100f;  // ColorBlurBalance
+                            if (alphaX < 0) alphaX = 0;
+                            if (alphaX > 1) alphaX = 1;
 
-                            decimal ColBal = (decimal)Win7ColorBal / 100;   // ColorBalance
-                            decimal GlowBal = (decimal)Win7GlowBal / 100;   // AfterGlowBalance
+                            float ColBal = Win7ColorBal / 100f;   // ColorBalance
+                            float GlowBal = Win7GlowBal / 100f;   // AfterGlowBalance
                             Color Color1 = Background;
                             Color Color2 = Background2;
 
@@ -2066,14 +2064,12 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.DrawRoundImage(back_blurred, RRect, Radius, true);
 
-                            decimal alphaX = 1 - (decimal)BackColorAlpha / 100;  // ColorBlurBalance
-                            if (alphaX < 0)
-                                alphaX = 0;
-                            if (alphaX > 1)
-                                alphaX = 1;
+                            float alphaX = 1 - BackColorAlpha / 100f;  // ColorBlurBalance
+                            if (alphaX < 0) alphaX = 0;
+                            if (alphaX > 1) alphaX = 1;
 
-                            decimal ColBal = (decimal)Win7ColorBal / 100;        // ColorBalance
-                            decimal GlowBal = (decimal)Win7GlowBal / 100;        // AfterGlowBalance
+                            float ColBal = Win7ColorBal / 100f;        // ColorBalance
+                            float GlowBal = Win7GlowBal / 100f;        // AfterGlowBalance
                             Color Color1 = Background;
                             Color Color2 = Background2;
 
@@ -2260,9 +2256,9 @@ namespace WinPaletter.UI.Simulation
 
                         if (!DesignMode && back_blurred is not null)
                         {
-                            decimal alpha = 1 - (decimal)BackColorAlpha / 100;   // ColorBlurBalance
-                            decimal ColBal = (decimal)Win7ColorBal / 100;        // ColorBalance
-                            decimal GlowBal = (decimal)Win7GlowBal / 100;        // AfterGlowBalance
+                            float alpha = 1 - BackColorAlpha / 100f;   // ColorBlurBalance
+                            float ColBal = Win7ColorBal / 100f;        // ColorBalance
+                            float GlowBal = Win7GlowBal / 100f;        // AfterGlowBalance
                             G.DrawAeroEffect(RRect, back_blurred, Color1, ColBal, Color2, GlowBal, alpha, Radius, true);
                         }
 

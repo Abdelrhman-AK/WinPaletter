@@ -321,7 +321,7 @@ namespace WinPaletter.UI.Style
                 }
             }
 
-            //SetControlTheme(Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+            SetControlTheme(Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
             //IntPtr hDC = User32.GetDC(Handle);
             //User32.SetBkColor(hDC, Program.Style.Schemes.Main.Colors.BackColor.ToArgb() & 0x00FFFFFF);
             //User32.SetTextColor(hDC, (Program.Style.DarkMode ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);

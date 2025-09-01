@@ -252,7 +252,7 @@
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Resources\Assemblies.zip" />
-    <None Include="Resources\JetBrainsMono-Medium.ttf" />
+    <None Include="Resources\JetBrainsMono.zip" />
     <None Include="Resources\luna.zip" />
   </ItemGroup>
   <ItemGroup>
@@ -1190,7 +1190,6 @@
     <Content Include="Icon.ico" />
     <Content Include="Resources\WinPaletter.SysEventsSounds.exe" />
     <Content Include="Resources\LICENSE.txt" />
-    <None Include="Resources\SecureUxTheme.zip" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Aspects\AccessibilityEditor.resx">

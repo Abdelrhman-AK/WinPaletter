@@ -138,7 +138,7 @@ namespace WinPaletter
             this.color_pick.Name = "color_pick";
             this.color_pick.Size = new System.Drawing.Size(100, 25);
             this.color_pick.TabIndex = 93;
-            this.color_pick.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.color_pick_ContextMenuItemClickedInvoker);
+            this.color_pick.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.color_pick_ContextMenuMadeColorChangeInvoker);
             this.color_pick.Click += new System.EventHandler(this.color_pick_Click);
             this.color_pick.DragDrop += new System.Windows.Forms.DragEventHandler(this.color_pick_Click);
             // 

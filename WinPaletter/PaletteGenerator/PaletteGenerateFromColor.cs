@@ -645,7 +645,7 @@ namespace WinPaletter
             actions?.ElementAt(listBox1.SelectedIndex)?.Invoke();
         }
 
-        private void SelectedColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void SelectedColor_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             GetColors();
         }

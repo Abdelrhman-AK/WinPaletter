@@ -451,7 +451,7 @@ namespace WinPaletter
             this.trackBarX1.Size = new System.Drawing.Size(240, 24);
             this.trackBarX1.TabIndex = 97;
             this.trackBarX1.Value = 100;
-            this.trackBarX1.Scroll += new System.EventHandler(this.trackBarX1_Scroll);
+            this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
             // 
             // radioButton2
             // 

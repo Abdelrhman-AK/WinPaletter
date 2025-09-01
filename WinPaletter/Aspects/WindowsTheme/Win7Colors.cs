@@ -583,16 +583,16 @@ namespace WinPaletter
             groupBox5.Enabled = (sender as Toggle).Checked;
         }
 
-        private void ColorizationColor_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void ColorizationColor_pick_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.TitlebarColor_Active = e.ColorItem.BackColor;
-            windowsDesktop1.TitlebarColor_Inactive = e.ColorItem.BackColor;
+            windowsDesktop1.TitlebarColor_Active = e.Color;
+            windowsDesktop1.TitlebarColor_Inactive = e.Color;
         }
 
-        private void ColorizationAfterglow_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void ColorizationAfterglow_pick_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            windowsDesktop1.AfterGlowColor_Active = e.ColorItem.BackColor;
-            windowsDesktop1.AfterGlowColor_Inactive = e.ColorItem.BackColor;
+            windowsDesktop1.AfterGlowColor_Active = e.Color;
+            windowsDesktop1.AfterGlowColor_Inactive = e.Color;
         }
     }
 }

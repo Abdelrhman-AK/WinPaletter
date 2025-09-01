@@ -228,7 +228,7 @@ namespace WinPaletter
             GroupBox1.Enabled = !RadioImage1.Checked;
         }
 
-        private void color_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void color_pick_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             UpdateWin2000Preview(e.ColorItem.BackColor);
         }

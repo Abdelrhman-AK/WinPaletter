@@ -204,7 +204,7 @@
             this.ColorizationColor_pick.Name = "ColorizationColor_pick";
             this.ColorizationColor_pick.Size = new System.Drawing.Size(110, 24);
             this.ColorizationColor_pick.TabIndex = 2;
-            this.ColorizationColor_pick.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorizationColor_pick_ContextMenuItemClickedInvoker);
+            this.ColorizationColor_pick.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.ColorizationColor_pick_ContextMenuMadeColorChangeInvoker);
             this.ColorizationColor_pick.Click += new System.EventHandler(this.ColorizationColor_pick_Click);
             this.ColorizationColor_pick.DragDrop += new System.Windows.Forms.DragEventHandler(this.Pickers_DragDrop);
             // 

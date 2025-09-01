@@ -1679,12 +1679,12 @@ while ($true) {{
             }
         }
 
-        private void CMD_CursorColor_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void CMD_CursorColor_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            CMD_PreviewCUR2.BackColor = e.ColorItem.BackColor;
+            CMD_PreviewCUR2.BackColor = e.Color;
         }
 
-        private void ColorTable06_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void ColorTable06_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             ApplyPreview();
             UpdateFromTrack(1);

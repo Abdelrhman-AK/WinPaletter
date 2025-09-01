@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace WinPaletter.TypesExtensions
         /// notations (e.g., "rgb(255, 0, 0)", "hsl(0, 100%, 50%)").</param>
         /// <returns>A <see cref="Color"/> object that represents the parsed color. If the input string is null, empty, or cannot
         /// be parsed into a valid color, the method returns <see cref="Color.Empty"/>.</returns>
-        public static Color FromString(this string input)
+        public static Color ToColor(this string input)
         {
             if (string.IsNullOrWhiteSpace(input))
                 return Color.Empty;
@@ -522,34 +523,396 @@ namespace WinPaletter.TypesExtensions
             return bmp;
         }
 
-        /// <summary>Blends the specified colors together.</summary>
-        /// <param name="color">Color to blend onto the background color.</param>
-        /// <param name="backColor">Color to blend the other color onto.</param>
-        /// <param name="amount">How much of <paramref name="color"/> to keep,
-        /// “on top of” <paramref name="backColor"/>.</param>
-        /// <returns>The blended colors.</returns>
-        public static Color Blend(this Color color, Color backColor, double amount)
+        /// <summary>
+        /// Blends two colors together by a specified weighting factor.
+        /// </summary>
+        /// <param name="color">The foreground color to blend on top.</param>
+        /// <param name="backColor">The background color to blend with.</param>
+        /// <param name="amount">
+        /// The blending factor in the range [0, 1].  
+        /// A value of 0 returns <paramref name="backColor"/> only,  
+        /// a value of 1 returns <paramref name="color"/> only,  
+        /// and values in between return a linear interpolation of the two.
+        /// </param>
+        /// <returns>The resulting blended <see cref="Color"/>.</returns>
+        public static Color Blend(this Color color, Color backColor, float amount)
         {
+            // Clamp amount to [0, 1]
+            if (amount < 0f) amount = 0f;
+            else if (amount > 1f) amount = 1f;
+
             byte a = (byte)(color.A * amount + backColor.A * (1 - amount));
             byte r = (byte)(color.R * amount + backColor.R * (1 - amount));
             byte g = (byte)(color.G * amount + backColor.G * (1 - amount));
             byte b = (byte)(color.B * amount + backColor.B * (1 - amount));
+
             return Color.FromArgb(a, r, g, b);
         }
 
         /// <summary>
         /// Reverse Color From RGB To BGR or RGBA To ABGR (As used in some Windows Registry values)
         /// </summary>
-        public static Color Reverse(this Color Color, bool Alpha = false)
+        public static Color Reverse(this Color Color)
         {
-            if (!Alpha)
+            return Color.FromArgb(Color.A, Color.B, Color.G, Color.R);
+        }
+
+        /// <summary>
+        /// Change color brightness
+        /// </summary>
+        public static Color CB(this Color color, double correctionFactor)
+        {
+            double red = color.R;
+            double green = color.G;
+            double blue = color.B;
+
+            if (correctionFactor < 0f)
             {
-                return Color.FromArgb(Color.B, Color.G, Color.R);
+                correctionFactor = 1f + correctionFactor;
+                red *= correctionFactor;
+                green *= correctionFactor;
+                blue *= correctionFactor;
             }
             else
             {
-                return Color.FromArgb(Color.A, Color.B, Color.G, Color.R);
+                red = (255f - red) * correctionFactor + red;
+                green = (255f - green) * correctionFactor + green;
+                blue = (255f - blue) * correctionFactor + blue;
             }
+
+            red = Math.Min(Math.Max(red, 0f), 255f);
+            green = Math.Min(Math.Max(green, 0f), 255f);
+            blue = Math.Min(Math.Max(blue, 0f), 255f);
+
+            return Color.FromArgb(color.A, (int)red, (int)green, (int)blue);
+        }
+
+        /// <summary>
+        /// Get Darker Color From a Color
+        /// </summary>
+        public static Color Dark(this Color Color)
+        {
+            return ControlPaint.Dark(Color);
+        }
+
+        /// <summary>
+        /// Get Darker Color From a Color, with a given percentage
+        /// </summary>
+        public static Color Dark(this Color Color, float percentage)
+        {
+            return ControlPaint.Dark(Color, percentage);
+        }
+
+        /// <summary>
+        /// Get Darkest Color From a Color
+        /// </summary>
+        public static Color DarkDark(this Color Color)
+        {
+            return ControlPaint.DarkDark(Color);
+        }
+
+        /// <summary>
+        /// Get Lighter Color From a Color
+        /// </summary>
+        public static Color Light(this Color Color)
+        {
+            return ControlPaint.Light(Color);
+        }
+
+        /// <summary>
+        /// Get Lighter Color From a Color, with a given percentage
+        /// </summary>
+        public static Color Light(this Color Color, float percentage)
+        {
+            return ControlPaint.Light(Color, percentage);
+        }
+
+        /// <summary>
+        /// Get Lightest Color From a Color
+        /// </summary>
+        public static Color LightLight(this Color Color)
+        {
+            return ControlPaint.LightLight(Color);
+        }
+
+        /// <summary>
+        /// Get Inverted Color From a Color
+        /// </summary>
+        public static Color Invert(this Color Color)
+        {
+            return Color.FromArgb(Color.A, 255 - Color.R, 255 - Color.G, 255 - Color.B);
+        }
+
+        /// <summary>
+        /// Convert color to grayscale.
+        /// </summary>
+        public static Color Grayscale(this Color color)
+        {
+            int gray = (int)(color.R * 0.3 + color.G * 0.59 + color.B * 0.11);
+            return Color.FromArgb(color.A, gray, gray, gray);
+        }
+
+        /// <summary>
+        /// Convert color to sepia tone.
+        /// </summary>
+        public static Color Sepia(this Color color)
+        {
+            int tr = (int)(0.393 * color.R + 0.769 * color.G + 0.189 * color.B);
+            int tg = (int)(0.349 * color.R + 0.686 * color.G + 0.168 * color.B);
+            int tb = (int)(0.272 * color.R + 0.534 * color.G + 0.131 * color.B);
+
+            tr = Math.Min(255, tr);
+            tg = Math.Min(255, tg);
+            tb = Math.Min(255, tb);
+
+            return Color.FromArgb(color.A, tr, tg, tb);
+        }
+
+        /// <summary>
+        /// Rotate hue of a color by a given degree (0-360).
+        /// </summary>
+        public static Color RotateHue(this Color color, float degrees)
+        {
+            float hue = color.GetHue();
+            float sat = color.GetSaturation();
+            float bri = color.GetBrightness();
+            hue = (hue + degrees) % 360;
+            return FromAhsb(color.A, hue, sat, bri);
+        }
+
+        /// <summary>
+        /// Helper: Create color from Alpha, Hue, Saturation, Brightness
+        /// </summary>
+        private static Color FromAhsb(int a, float h, float s, float b)
+        {
+            if (s == 0) return Color.FromArgb(a, (int)(b * 255), (int)(b * 255), (int)(b * 255));
+
+            float fMax, fMid, fMin;
+            int iSextant;
+            if (b > 0.5)
+            {
+                fMax = b - (b * s) + s;
+                fMin = b + (b * s) - s;
+            }
+            else
+            {
+                fMax = b + (b * s);
+                fMin = b - (b * s);
+            }
+
+            iSextant = (int)Math.Floor(h / 60f);
+            if (h >= 300f) h -= 360f;
+            h /= 60f;
+            h -= 2f * (float)Math.Floor(((iSextant + 1f) % 6f) / 2f);
+            if (iSextant % 2 == 0)
+                fMid = h * (fMax - fMin) + fMin;
+            else
+                fMid = fMin - h * (fMax - fMin);
+
+            int iMax = (int)(fMax * 255);
+            int iMid = (int)(fMid * 255);
+            int iMin = (int)(fMin * 255);
+
+            switch (iSextant)
+            {
+                case 1: return Color.FromArgb(a, iMid, iMax, iMin);
+                case 2: return Color.FromArgb(a, iMin, iMax, iMid);
+                case 3: return Color.FromArgb(a, iMin, iMid, iMax);
+                case 4: return Color.FromArgb(a, iMid, iMin, iMax);
+                case 5: return Color.FromArgb(a, iMax, iMin, iMid);
+                default: return Color.FromArgb(a, iMax, iMid, iMin);
+            }
+        }
+
+        /// <summary>
+        /// Get complementary (opposite) color.
+        /// </summary>
+        public static Color Complementary(this Color color)
+        {
+            return Color.FromArgb(color.A, 255 - color.R, 255 - color.G, 255 - color.B);
+        }
+
+        /// <summary>
+        /// Reduce saturation of color.
+        /// </summary>
+        public static Color Desaturate(this Color color, float factor)
+        {
+            float h = color.GetHue();
+            float s = Math.Max(0, color.GetSaturation() - factor);
+            float b = color.GetBrightness();
+            return FromAhsb(color.A, h, s, b);
+        }
+
+        /// <summary>
+        /// Convert color to monochrome (black or white).
+        /// Threshold = 0.5 brightness by default.
+        /// </summary>
+        public static Color Monochrome(this Color color, double threshold = 0.5)
+        {
+            double brightness = color.GetBrightness();
+            return brightness < threshold
+                ? Color.FromArgb(color.A, 0, 0, 0)
+                : Color.FromArgb(color.A, 255, 255, 255);
+        }
+
+        /// <summary>
+        /// Get the triadic colors (3 colors spaced 120° apart on the hue wheel).
+        /// Returns an array of 3 colors: [original, triad1, triad2].
+        /// </summary>
+        public static Color[] Triadic(this Color color)
+        {
+            float hue = color.GetHue();
+            float sat = color.GetSaturation();
+            float bri = color.GetBrightness();
+
+            Color triad1 = FromAhsb(color.A, (hue + 120f) % 360f, sat, bri);
+            Color triad2 = FromAhsb(color.A, (hue + 240f) % 360f, sat, bri);
+
+            return [color, triad1, triad2];
+        }
+
+        /// <summary>
+        /// Get the tetradic colors (4 colors forming a rectangle on the hue wheel).
+        /// Returns an array of 4 colors: [original, complement, triad1, triad2].
+        /// </summary>
+        public static Color[] Tetradic(this Color color)
+        {
+            float hue = color.GetHue();
+            float sat = color.GetSaturation();
+            float bri = color.GetBrightness();
+
+            Color complement = FromAhsb(color.A, (hue + 180f) % 360f, sat, bri);
+            Color alt1 = FromAhsb(color.A, (hue + 90f) % 360f, sat, bri);
+            Color alt2 = FromAhsb(color.A, (hue + 270f) % 360f, sat, bri);
+
+            return new[] { color, complement, alt1, alt2 };
+        }
+
+        /// <summary>
+        /// Get analogous colors (neighbors on the hue wheel).
+        /// Returns an array of 3 colors: [previous, original, next].
+        /// </summary>
+        public static Color[] Analogous(this Color color, float angle = 30f)
+        {
+            float hue = color.GetHue();
+            float sat = color.GetSaturation();
+            float bri = color.GetBrightness();
+
+            Color prev = FromAhsb(color.A, (hue - angle + 360f) % 360f, sat, bri);
+            Color next = FromAhsb(color.A, (hue + angle) % 360f, sat, bri);
+
+            return new[] { prev, color, next };
+        }
+
+        /// <summary>
+        /// Convert color to 16-bit (RGB565).
+        /// </summary>
+        public static Color To16Bit(this Color color)
+        {
+            int r = (color.R >> 3) & 0x1F;  // 5 bits
+            int g = (color.G >> 2) & 0x3F;  // 6 bits
+            int b = (color.B >> 3) & 0x1F;  // 5 bits
+
+            // Expand back to 8-bit
+            int r8 = (r << 3) | (r >> 2);
+            int g8 = (g << 2) | (g >> 4);
+            int b8 = (b << 3) | (b >> 2);
+
+            return Color.FromArgb(color.A, r8, g8, b8);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="Color"/> to the closest matching color in the 256-color VGA palette.
+        /// </summary>
+        /// <remarks>This method calculates the closest color in the VGA 256-color palette by minimizing
+        /// the Euclidean distance in the RGB color space. The alpha channel of the input color is not used in the
+        /// distance calculation but is retained in the resulting color.</remarks>
+        /// <param name="input">The input <see cref="Color"/> to be converted.</param>
+        /// <returns>A <see cref="Color"/> representing the closest match to the input color in the 256-color VGA palette. The
+        /// alpha channel of the input color is preserved in the returned color.</returns>
+        public static Color To256Color(this Color input)
+        {
+            var palette = GenerateVGA256();
+            Color best = palette[0];
+            int bestDist = int.MaxValue;
+
+            foreach (var c in palette)
+            {
+                int dr = input.R - c.R;
+                int dg = input.G - c.G;
+                int db = input.B - c.B;
+                int dist = dr * dr + dg * dg + db * db;
+
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    best = c;
+                    if (dist == 0) break;
+                }
+            }
+            return Color.FromArgb(input.A, best);
+        }
+
+        private static Color[] GenerateVGA256()
+        {
+            var palette = new List<Color>(256);
+
+            Color[] vga16 =
+            [
+                Color.FromArgb(0,   0,   0),   // 0 = Black
+                Color.FromArgb(0,   0, 170),   // 1 = Blue
+                Color.FromArgb(0, 170,   0),   // 2 = Green
+                Color.FromArgb(0, 170, 170),   // 3 = Cyan
+                Color.FromArgb(170, 0,   0),   // 4 = Red
+                Color.FromArgb(170, 0, 170),   // 5 = Magenta
+                Color.FromArgb(170, 85,  0),   // 6 = Brown (Dark Yellow)
+                Color.FromArgb(170,170,170),   // 7 = Light Gray
+                Color.FromArgb(85,  85,  85),  // 8 = Dark Gray
+                Color.FromArgb(85,  85, 255),  // 9 = Light Blue
+                Color.FromArgb(85, 255,  85),  // 10 = Light Green
+                Color.FromArgb(85, 255, 255),  // 11 = Light Cyan
+                Color.FromArgb(255, 85,  85),  // 12 = Light Red
+                Color.FromArgb(255, 85, 255),  // 13 = Light Magenta
+                Color.FromArgb(255, 255, 85),  // 14 = Yellow
+                Color.FromArgb(255, 255, 255)  // 15 = White
+            ];
+
+            palette.AddRange(vga16);
+
+            // 2. 6x6x6 cube (216 colors, VGA mapping: 0–63 scale)
+            int[] steps = { 0x00, 0x24, 0x49, 0x6D, 0x92, 0xB6, 0xDB, 0xFF };
+            // note: VGA used 0–63 (6-bit DAC), scaled to 0–255 → these are multiples of 255/7 ≈ 36
+
+            for (int r = 0; r < 6; r++)
+                for (int g = 0; g < 6; g++)
+                    for (int b = 0; b < 6; b++)
+                    {
+                        int rr = (int)(r * 255.0 / 5);
+                        int gg = (int)(g * 255.0 / 5);
+                        int bb = (int)(b * 255.0 / 5);
+                        palette.Add(Color.FromArgb(rr, gg, bb));
+                    }
+
+            // 3. 24 grayscale
+            for (int i = 0; i < 24; i++)
+            {
+                int v = (int)(i * 255.0 / 23);
+                palette.Add(Color.FromArgb(v, v, v));
+            }
+
+            return [.. palette];
+        }
+
+        /// <summary>
+        /// Determines if the color is dark based on relative luminance.
+        /// </summary>
+        public static bool IsDark(this Color color)
+        {
+            double luminance = color.R * 0.2126 +
+                               color.G * 0.7152 +
+                               color.B * 0.0722;
+
+            return luminance <= 127.5;
         }
 
         /// <summary>
@@ -647,104 +1010,6 @@ namespace WinPaletter.TypesExtensions
             byte B = (byte)((b < 0f ? 0f : (b > 1f ? 1f : b)) * 255f);
 
             return Color.FromArgb(R, G, B);
-        }
-
-        /// <summary>
-        /// Change color brightness
-        /// </summary>
-        public static Color CB(this Color color, double correctionFactor)
-        {
-            double red = color.R;
-            double green = color.G;
-            double blue = color.B;
-
-            if (correctionFactor < 0f)
-            {
-                correctionFactor = 1f + correctionFactor;
-                red *= correctionFactor;
-                green *= correctionFactor;
-                blue *= correctionFactor;
-            }
-            else
-            {
-                red = (255f - red) * correctionFactor + red;
-                green = (255f - green) * correctionFactor + green;
-                blue = (255f - blue) * correctionFactor + blue;
-            }
-
-            red = Math.Min(Math.Max(red, 0f), 255f);
-            green = Math.Min(Math.Max(green, 0f), 255f);
-            blue = Math.Min(Math.Max(blue, 0f), 255f);
-
-            return Color.FromArgb(color.A, (int)red, (int)green, (int)blue);
-        }
-
-        /// <summary>
-        /// Get Darker Color From a Color
-        /// </summary>
-        public static Color Dark(this Color Color)
-        {
-            return ControlPaint.Dark(Color);
-        }
-
-        /// <summary>
-        /// Get Darker Color From a Color, with a given percentage
-        /// </summary>
-        public static Color Dark(this Color Color, float percentage)
-        {
-            return ControlPaint.Dark(Color, percentage);
-        }
-
-        /// <summary>
-        /// Get Darkest Color From a Color
-        /// </summary>
-        public static Color DarkDark(this Color Color)
-        {
-            return ControlPaint.DarkDark(Color);
-        }
-
-        /// <summary>
-        /// Get Lighter Color From a Color
-        /// </summary>
-        public static Color Light(this Color Color)
-        {
-            return ControlPaint.Light(Color);
-        }
-
-        /// <summary>
-        /// Get Lighter Color From a Color, with a given percentage
-        /// </summary>
-        public static Color Light(this Color Color, float percentage)
-        {
-            return ControlPaint.Light(Color, percentage);
-        }
-
-        /// <summary>
-        /// Get Lightest Color From a Color
-        /// </summary>
-        public static Color LightLight(this Color Color)
-        {
-            return ControlPaint.LightLight(Color);
-        }
-
-        /// <summary>
-        /// Get Inverted Color From a Color
-        /// </summary>
-        public static Color Invert(this Color Color)
-        {
-            return Color.FromArgb(Color.A, 255 - Color.R, 255 - Color.G, 255 - Color.B);
-        }
-
-        /// <summary>
-        /// Determines if the color is dark based on relative luminance.
-        /// </summary>
-        public static bool IsDark(this Color color)
-        {
-            double luminance = color.R * 0.2126 +
-                               color.G * 0.7152 +
-                               color.B * 0.0722;
-
-            return luminance <= 127.5;
         }
 
         /// <summary>

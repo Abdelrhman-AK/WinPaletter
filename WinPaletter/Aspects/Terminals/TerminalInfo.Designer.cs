@@ -236,7 +236,7 @@ namespace WinPaletter
             this.TerTabColor.Name = "TerTabColor";
             this.TerTabColor.Size = new System.Drawing.Size(132, 25);
             this.TerTabColor.TabIndex = 196;
-            this.TerTabColor.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerTabColor_ContextMenuItemClickedInvoker);
+            this.TerTabColor.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerTabColor_ContextMenuMadeColorChangeInvoker);
             this.TerTabColor.Click += new System.EventHandler(this.TerTabColor_Click);
             this.TerTabColor.DragDrop += new System.Windows.Forms.DragEventHandler(this.TerTabColor_Click);
             // 

@@ -972,7 +972,7 @@ namespace WinPaletter
             this.TerWhiteB.Name = "TerWhiteB";
             this.TerWhiteB.Size = new System.Drawing.Size(110, 25);
             this.TerWhiteB.TabIndex = 115;
-            this.TerWhiteB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerWhiteB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerWhiteB.Click += new System.EventHandler(this.ColorClick);
             this.TerWhiteB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1001,7 +1001,7 @@ namespace WinPaletter
             this.TerBlue.Name = "TerBlue";
             this.TerBlue.Size = new System.Drawing.Size(110, 25);
             this.TerBlue.TabIndex = 101;
-            this.TerBlue.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerBlue.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerBlue.Click += new System.EventHandler(this.ColorClick);
             this.TerBlue.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1058,7 +1058,7 @@ namespace WinPaletter
             this.TerWhite.Name = "TerWhite";
             this.TerWhite.Size = new System.Drawing.Size(110, 25);
             this.TerWhite.TabIndex = 107;
-            this.TerWhite.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerWhite.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerWhite.Click += new System.EventHandler(this.ColorClick);
             this.TerWhite.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1089,7 +1089,7 @@ namespace WinPaletter
             this.TerCyanB.Name = "TerCyanB";
             this.TerCyanB.Size = new System.Drawing.Size(110, 25);
             this.TerCyanB.TabIndex = 111;
-            this.TerCyanB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerCyanB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerCyanB.Click += new System.EventHandler(this.ColorClick);
             this.TerCyanB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1105,7 +1105,7 @@ namespace WinPaletter
             this.TerCyan.Name = "TerCyan";
             this.TerCyan.Size = new System.Drawing.Size(110, 25);
             this.TerCyan.TabIndex = 103;
-            this.TerCyan.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerCyan.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerCyan.Click += new System.EventHandler(this.ColorClick);
             this.TerCyan.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1121,7 +1121,7 @@ namespace WinPaletter
             this.TerGreen.Name = "TerGreen";
             this.TerGreen.Size = new System.Drawing.Size(110, 25);
             this.TerGreen.TabIndex = 102;
-            this.TerGreen.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerGreen.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerGreen.Click += new System.EventHandler(this.ColorClick);
             this.TerGreen.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1152,7 +1152,7 @@ namespace WinPaletter
             this.TerYellow.Name = "TerYellow";
             this.TerYellow.Size = new System.Drawing.Size(110, 25);
             this.TerYellow.TabIndex = 106;
-            this.TerYellow.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerYellow.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerYellow.Click += new System.EventHandler(this.ColorClick);
             this.TerYellow.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1168,7 +1168,7 @@ namespace WinPaletter
             this.TerGreenB.Name = "TerGreenB";
             this.TerGreenB.Size = new System.Drawing.Size(110, 25);
             this.TerGreenB.TabIndex = 110;
-            this.TerGreenB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerGreenB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerGreenB.Click += new System.EventHandler(this.ColorClick);
             this.TerGreenB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1197,7 +1197,7 @@ namespace WinPaletter
             this.TerBlack.Name = "TerBlack";
             this.TerBlack.Size = new System.Drawing.Size(110, 25);
             this.TerBlack.TabIndex = 100;
-            this.TerBlack.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerBlack.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerBlack.Click += new System.EventHandler(this.ColorClick);
             this.TerBlack.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1213,7 +1213,7 @@ namespace WinPaletter
             this.TerYellowB.Name = "TerYellowB";
             this.TerYellowB.Size = new System.Drawing.Size(110, 25);
             this.TerYellowB.TabIndex = 114;
-            this.TerYellowB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerYellowB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerYellowB.Click += new System.EventHandler(this.ColorClick);
             this.TerYellowB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1229,7 +1229,7 @@ namespace WinPaletter
             this.TerBlackB.Name = "TerBlackB";
             this.TerBlackB.Size = new System.Drawing.Size(110, 25);
             this.TerBlackB.TabIndex = 108;
-            this.TerBlackB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerBlackB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerBlackB.Click += new System.EventHandler(this.ColorClick);
             this.TerBlackB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1245,7 +1245,7 @@ namespace WinPaletter
             this.TerPurple.Name = "TerPurple";
             this.TerPurple.Size = new System.Drawing.Size(110, 25);
             this.TerPurple.TabIndex = 105;
-            this.TerPurple.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerPurple.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerPurple.Click += new System.EventHandler(this.ColorClick);
             this.TerPurple.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1261,7 +1261,7 @@ namespace WinPaletter
             this.TerPurpleB.Name = "TerPurpleB";
             this.TerPurpleB.Size = new System.Drawing.Size(110, 25);
             this.TerPurpleB.TabIndex = 113;
-            this.TerPurpleB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerPurpleB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerPurpleB.Click += new System.EventHandler(this.ColorClick);
             this.TerPurpleB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1277,7 +1277,7 @@ namespace WinPaletter
             this.TerBlueB.Name = "TerBlueB";
             this.TerBlueB.Size = new System.Drawing.Size(110, 25);
             this.TerBlueB.TabIndex = 109;
-            this.TerBlueB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerBlueB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerBlueB.Click += new System.EventHandler(this.ColorClick);
             this.TerBlueB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1293,7 +1293,7 @@ namespace WinPaletter
             this.TerRedB.Name = "TerRedB";
             this.TerRedB.Size = new System.Drawing.Size(110, 25);
             this.TerRedB.TabIndex = 112;
-            this.TerRedB.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerRedB.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerRedB.Click += new System.EventHandler(this.ColorClick);
             this.TerRedB.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 
@@ -1309,7 +1309,7 @@ namespace WinPaletter
             this.TerRed.Name = "TerRed";
             this.TerRed.Size = new System.Drawing.Size(110, 25);
             this.TerRed.TabIndex = 104;
-            this.TerRed.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.TerWhiteB_ContextMenuItemClickedInvoker);
+            this.TerRed.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.TerWhiteB_ContextMenuMadeColorChangeInvoker);
             this.TerRed.Click += new System.EventHandler(this.ColorClick);
             this.TerRed.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorClick);
             // 

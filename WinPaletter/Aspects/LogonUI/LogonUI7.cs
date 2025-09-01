@@ -402,7 +402,7 @@ namespace WinPaletter
             if (IsShown & CheckBox6.Checked) pnl_preview.BackgroundImage = ReturnBK();
         }
 
-        private void color_pick_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void color_pick_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             pnl_preview.BackgroundImage = ReturnBK();
         }

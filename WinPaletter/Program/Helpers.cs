@@ -279,7 +279,15 @@ namespace WinPaletter
             {
                 Program.Log?.Write(LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
 
-                MemoryFonts.AddMemoryFont(Resources.JetBrainsMono_Medium);
+                using (MemoryStream ms = new(Resources.JetBrainsMono))
+                using (ZipArchive zip = new(ms))
+                using (MemoryStream _as = new())
+                {
+                    zip.Entries[0].Open().CopyTo(_as);
+                    _as.Seek(0L, SeekOrigin.Begin);
+                    MemoryFonts.AddMemoryFont(_as.ToArray());
+                }
+
                 Fonts.Console = MemoryFonts.GetFont(0, 7.75f);
                 Fonts.ConsoleMedium = MemoryFonts.GetFont(0, 9f);
                 Fonts.ConsoleLarge = MemoryFonts.GetFont(0, 10f);

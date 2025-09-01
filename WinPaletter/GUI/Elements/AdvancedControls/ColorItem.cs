@@ -11,7 +11,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
-using WinPaletter.UI.Retro;
 using static WinPaletter.Settings.Structures.NerdStats;
 
 namespace WinPaletter.UI.Controllers
@@ -19,6 +18,47 @@ namespace WinPaletter.UI.Controllers
     [DefaultEvent("Click")]
     public class ColorItem : Panel
     {
+        WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
+        ToolStripMenuItem darken = new() { Image = Assets.ColorItemContextMenu.Darken };
+        ToolStripMenuItem lighten = new() { Image = Assets.ColorItemContextMenu.Lighten };
+        ToolStripMenuItem invert = new() { Image = Assets.ColorItemContextMenu.Invert };
+        ToolStripMenuItem copy = new() { Image = Assets.ColorItemContextMenu.Copy };
+        ToolStripMenuItem paste = new();
+        ToolStripMenuItem cut = new() { Image = Assets.ColorItemContextMenu.Cut };
+        ToolStripMenuItem delete = new() { Image = Assets.ColorItemContextMenu.Delete };
+        ToolStripMenuItem reset = new() { Image = Assets.ColorItemContextMenu.Default };
+        ToolStripMenuItem blend = new();
+        ToolStripMenuItem reverse = new() { Image = Assets.ColorItemContextMenu.Reverse };
+        ToolStripMenuItem effects = new() { Image = Assets.ColorItemContextMenu.Effects };
+        ToolStripMenuItem grayscale = new() { Image = Assets.ColorItemContextMenu.Grayscale };
+        ToolStripMenuItem sepia = new() { Image = Assets.ColorItemContextMenu.Sepia };
+        ToolStripMenuItem rotateHuePlus10 = new() { Image = Assets.ColorItemContextMenu.RotateHue };
+        ToolStripMenuItem rotateHueMinus10 = new() { Image = Assets.ColorItemContextMenu.RotateHue };
+        ToolStripMenuItem desaturate = new() { Image = Assets.ColorItemContextMenu.Desaturate};
+        ToolStripMenuItem complementary = new() { Image = Assets.ColorItemContextMenu.Complementary };
+        ToolStripMenuItem monochrome = new() { Image = Assets.ColorItemContextMenu.Monochrome };
+        ToolStripMenuItem analogous_next = new() { Image = Assets.ColorItemContextMenu.Analogous };
+        ToolStripMenuItem analogous_previous = new() { Image = Assets.ColorItemContextMenu.Analogous };
+        ToolStripMenuItem _16bitColor = new() { Image = Assets.ColorItemContextMenu._265Colors };
+        ToolStripMenuItem _256Colors = new() { Image = Assets.ColorItemContextMenu._265Colors };
+
+        ToolStripMenuItem previousColor = new();
+        ToolStripSeparator toolStripSeparator0 = new();
+        ToolStripSeparator toolStripSeparator1 = new();
+        ToolStripSeparator toolStripSeparator2 = new();
+        ToolStripMenuItem copy_AsHex = new();
+        ToolStripMenuItem copy_AsRGB = new();
+        ToolStripMenuItem copy_AsHSL = new();
+        ToolStripMenuItem copy_AsDecimal = new();
+        ToolStripMenuItem copy_AsRGBPercent = new();
+        ToolStripMenuItem copy_AsARGB = new();
+        ToolStripMenuItem copy_AsHSLA = new();
+        ToolStripMenuItem copy_AsHSV = new();
+        ToolStripMenuItem copy_AsCMYK = new();
+        ToolStripMenuItem copy_AsWin32 = new();
+        ToolStripMenuItem copy_AsKnownName = new();
+        ToolStripMenuItem copy_AsCSS = new();
+
         public ColorItem()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
@@ -55,6 +95,7 @@ namespace WinPaletter.UI.Controllers
             contextMenu.Items.Add(cut);
             contextMenu.Items.Add(copy);
             contextMenu.Items.Add(paste);
+            contextMenu.Items.Add(blend);
             contextMenu.Items.Add(toolStripSeparator0);
             contextMenu.Items.Add(delete);
             contextMenu.Items.Add(reset);
@@ -62,18 +103,35 @@ namespace WinPaletter.UI.Controllers
             contextMenu.Items.Add(toolStripSeparator1);
             contextMenu.Items.Add(darken);
             contextMenu.Items.Add(lighten);
+            contextMenu.Items.Add(toolStripSeparator2);
             contextMenu.Items.Add(invert);
+            contextMenu.Items.Add(reverse);
+
+            effects.DropDown = new WP.ContextMenuStrip();
+            effects.DropDownItems.Add(grayscale);
+            effects.DropDownItems.Add(sepia);
+            effects.DropDownItems.Add(rotateHuePlus10);
+            effects.DropDownItems.Add(rotateHueMinus10);
+            effects.DropDownItems.Add(desaturate);
+            effects.DropDownItems.Add(complementary);
+            effects.DropDownItems.Add(monochrome);
+            effects.DropDownItems.Add(analogous_next);
+            effects.DropDownItems.Add(analogous_previous);
+            effects.DropDownItems.Add(_16bitColor);
+            effects.DropDownItems.Add(_256Colors);
+            contextMenu.Items.Add(effects);
 
             copy.Click += Copy_Click;
             cut.Click += Cut_Click;
             paste.Click += Paste_Click;
+            blend.Click += Blend_Click;
             delete.Click += Delete_Click;
             darken.Click += Darken_Click;
             lighten.Click += Lighten_Click;
             invert.Click += Invert_Click;
             reset.Click += Reset_Click;
             previousColor.Click += PreviousColor_Click;
-
+            reverse.Click += Reverse_Click;
             copy_AsHex.Click += Copy_AsHEX;
             copy_AsRGB.Click += Copy_AsRGB;
             copy_AsHSL.Click += Copy_AsHSL;
@@ -86,34 +144,19 @@ namespace WinPaletter.UI.Controllers
             copy_AsWin32.Click += Copy_AsWin32;
             copy_AsKnownName.Click += Copy_AsKnownName;
             copy_AsCSS.Click += Copy_AsCSS;
+
+            grayscale.Click += Grayscale_Click;
+            sepia.Click += Sepia_Click;
+            rotateHuePlus10.Click += RotateHuePlus10_Click;
+            rotateHueMinus10.Click += RotateHueMinus10_Click;
+            desaturate.Click += Desaturate_Click;
+            complementary.Click += Complementary_Click;
+            monochrome.Click += Monochrome_Click;
+            analogous_next.Click += Analogous_Next_Click;
+            analogous_previous.Click += Analogous_Previous_Click;
+            _16bitColor.Click += _16bitColor_Click;
+            _256Colors.Click += _256Colors_Click;
         }
-
-        WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
-        ToolStripMenuItem darken = new() { Image = Assets.ColorItemContextMenu.Darken };
-        ToolStripMenuItem lighten = new() { Image = Assets.ColorItemContextMenu.Lighten };
-        ToolStripMenuItem invert = new() { Image = Assets.ColorItemContextMenu.Invert };
-        ToolStripSeparator toolStripSeparator0 = new();
-        ToolStripMenuItem copy = new() { Image = Assets.ColorItemContextMenu.Copy };
-        ToolStripMenuItem paste = new();
-        ToolStripMenuItem cut = new() { Image = Assets.ColorItemContextMenu.Cut };
-        ToolStripMenuItem delete = new() { Image = Assets.ColorItemContextMenu.Delete };
-        ToolStripSeparator toolStripSeparator1 = new();
-        ToolStripMenuItem reset = new() { Image = Assets.ColorItemContextMenu.Default };
-        ToolStripMenuItem previousColor = new();
-
-        ToolStripMenuItem copy_AsHex = new();
-        ToolStripMenuItem copy_AsRGB = new();
-        ToolStripMenuItem copy_AsHSL = new();
-        ToolStripMenuItem copy_AsDecimal = new();
-        ToolStripMenuItem copy_AsRGBPercent = new();
-        ToolStripMenuItem copy_AsARGB = new();
-        ToolStripMenuItem copy_AsHSLA = new();
-        ToolStripMenuItem copy_AsHSV = new();
-        ToolStripMenuItem copy_AsCMYK = new();
-        ToolStripMenuItem copy_AsWin32 = new();
-        ToolStripMenuItem copy_AsKnownName = new();
-        ToolStripMenuItem copy_AsCSS = new();
-
 
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
@@ -281,7 +324,7 @@ namespace WinPaletter.UI.Controllers
 
                     case AfterDropEffects.Mix:
                         {
-                            BackColor = base.BackColor.Blend(BeforeDropColor, 100d);
+                            BackColor = base.BackColor.Blend(BeforeDropColor, 0.5f);
                             break;
                         }
 
@@ -438,28 +481,44 @@ namespace WinPaletter.UI.Controllers
         #region Events/Overrides
 
         /// <summary>
-        /// Represents the method that will handle the event when a context menu item is clicked.
+        /// Represents the method that will handle an event when a context menu triggers a color change.
         /// </summary>
-        /// <param name="sender">The source of the event, typically the control that raised the event.</param>
-        /// <param name="e">An <see cref="ContextMenuItemClickedEventArgs"/> instance containing the event data.</param>
-        public delegate void ContextMenuItemClicked(object sender, ContextMenuItemClickedEventArgs e);
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An object that contains the event data, including details about the color change.</param>
+        public delegate void ContextMenuMadeColorChange(object sender, ContextMenuMadeColorChangeEventArgs e);
 
         /// <summary>
-        /// Occurs when a context menu item is clicked.
+        /// Occurs when a color change is triggered by the context menu.
         /// </summary>
-        /// <remarks>Subscribe to this event to handle actions triggered by context menu item selections.
-        /// The event provides information about the clicked item through the associated event arguments.</remarks>
-        public event ContextMenuItemClicked ContextMenuItemClickedInvoker;
+        /// <remarks>This event is raised to notify subscribers that a color change has been made through
+        /// the context menu. Subscribers can handle this event to perform actions in response to the color
+        /// change.</remarks>
+        public event ContextMenuMadeColorChange ContextMenuMadeColorChangeInvoker;
 
         /// <summary>
-        /// Event args containing data from context menu of an color item
+        /// Provides data for the event that occurs when a context menu action results in a color change.
         /// </summary>
+        /// <remarks>This event argument contains information about the selected color and the item that
+        /// was clicked in the context menu. It is typically used in scenarios where a user selects a color from a
+        /// context menu, and the application needs to respond to the selection.</remarks>
         /// <param name="colorItem"></param>
         /// <param name="clickedItem"></param>
-        public class ContextMenuItemClickedEventArgs(ColorItem colorItem, object clickedItem) : EventArgs
+        public class ContextMenuMadeColorChangeEventArgs(ColorItem colorItem, object clickedItem) : EventArgs
         {
+            /// <summary>
+            /// Gets or sets the item that was clicked.
+            /// </summary>
             public object ClickedItem { get; set; } = clickedItem;
+
+            /// <summary>
+            /// Gets the color item associated with this instance.
+            /// </summary>
             public ColorItem ColorItem { get; } = colorItem;
+
+            /// <summary>
+            /// Gets the background color associated with the current item.
+            /// </summary>
+            public Color Color => ColorItem?.BackColor ?? Color.Empty;
         }
 
         /// <summary>
@@ -493,12 +552,31 @@ namespace WinPaletter.UI.Controllers
                 copy.Text = Program.Lang.Strings.General.Copy;
                 cut.Text = Program.Lang.Strings.General.Cut;
                 paste.Text = Program.Lang.Strings.General.Paste;
+                blend.Text = Program.Lang.Strings.General.PasteByBlending;
                 delete.Text = Program.Lang.Strings.General.Delete;
-                reset.Text = Program.Lang.Strings.General.Default + " - " + OS.Name;
+                reset.Text = Program.Lang.Strings.General.Default + " (" + OS.Name + ")";
                 darken.Text = Program.Lang.Strings.General.Darken;
                 lighten.Text = Program.Lang.Strings.General.Lighten;
                 invert.Text = Program.Lang.Strings.General.Invert;
                 previousColor.Text = Program.Lang.Strings.General.PreviousColor;
+                reverse.Text = Program.Lang.Strings.General.Reverse;
+                grayscale.Text = Program.Lang.Strings.General.Grayscale;
+                effects.Text = Program.Lang.Strings.General.Effects;
+                sepia.Text = Program.Lang.Strings.General.Sepia;
+                rotateHuePlus10.Text = Program.Lang.Strings.General.RotateHuePlus10;
+                rotateHueMinus10.Text = Program.Lang.Strings.General.RotateHueMinus10;
+                desaturate.Text = Program.Lang.Strings.General.Desaturate;
+                complementary.Text = Program.Lang.Strings.General.Complementary;
+                monochrome.Text = Program.Lang.Strings.General.Monochrome;
+                analogous_next.Text = Program.Lang.Strings.General.Analogous_Next;
+                analogous_previous.Text = Program.Lang.Strings.General.Analogous_Previous;
+                _16bitColor.Text = Program.Lang.Strings.General._16BitColor;
+                _256Colors.Text = Program.Lang.Strings.General._256Colors;
+
+                blend.Enabled = ColorClipboard.CopiedColor != Color.Empty;
+                blend.Image = blend.Enabled
+                    ? Assets.ColorItemContextMenu.Blend
+                    : Assets.ColorItemContextMenu.Blend.Grayscale();
 
                 paste.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 paste.Image = paste.Enabled
@@ -527,7 +605,7 @@ namespace WinPaletter.UI.Controllers
         private void Copy_Click(object sender, EventArgs e)
         {
             ColorClipboard.CopiedColor = BackColor;
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+            contextMenu.Close();
         }
 
         private void Copy_AsHEX(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HEX));
@@ -558,35 +636,63 @@ namespace WinPaletter.UI.Controllers
         {
             Clipboard.SetText(text);
             ColorClipboard.CopiedColor = BackColor;
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, null));
         }
 
         private void Cut_Click(object sender, EventArgs e)
         {
             ColorClipboard.CopiedColor = BackColor;
+
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
             BackColor = Color.Empty;
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
         private void Paste_Click(object sender, EventArgs e)
         {
             if (ColorClipboard.CopiedColor != Color.Empty)
             {
+                BeforeDropColor = BackColor;
+                BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+                Timer2_factor = 0;
+                MakeAfterDropEffect = true;
+                Timer2.Enabled = true;
+                Timer2.Start();
                 BackColor = ColorClipboard.CopiedColor;
-                ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+
+                if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
             }
         }
 
         private void Delete_Click(object sender, EventArgs e)
         {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
             BackColor = Color.Empty;
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
         private void Reset_Click(object sender, EventArgs e)
         {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
             BackColor = DefaultBackColor;
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
         private void PreviousColor_Click(object sender, EventArgs e)
@@ -594,29 +700,227 @@ namespace WinPaletter.UI.Controllers
             if (ColorsHistory.Count > 1)
             {
                 PauseColorsHistory = true;
+
+                BeforeDropColor = BackColor;
+                BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+                Timer2_factor = 0;
+                MakeAfterDropEffect = true;
+                Timer2.Enabled = true;
+                Timer2.Start();
                 BackColor = ColorsHistory[ColorsHistory.Count - 2];
+
                 ColorsHistory.RemoveAt(ColorsHistory.Count - 1);
                 PauseColorsHistory = false;
-                ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+                if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
             }
         }
 
         private void Darken_Click(object sender, EventArgs e)
         {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
             BackColor = BackColor.Dark();
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
         private void Lighten_Click(object sender, EventArgs e)
         {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
             BackColor = BackColor.Light();
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
         private void Invert_Click(object sender, EventArgs e)
         {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
             BackColor = BackColor.Invert();
-            ContextMenuItemClickedInvoker?.Invoke(this, new ContextMenuItemClickedEventArgs(this, sender));
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Blend_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Blend(ColorClipboard.CopiedColor, 0.5f);
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Reverse_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Reverse();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void _256Colors_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.To256Color();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void _16bitColor_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.To16Bit();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Analogous_Next_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Analogous()[2];
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Analogous_Previous_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Analogous()[0];
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Monochrome_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Monochrome();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Complementary_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Complementary();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Desaturate_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Desaturate(0.3f);
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void RotateHuePlus10_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.RotateHue(10f);
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void RotateHueMinus10_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.RotateHue(-10f);
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Grayscale_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Grayscale();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Sepia_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.Sepia();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
         protected override void OnSizeChanged(EventArgs e)

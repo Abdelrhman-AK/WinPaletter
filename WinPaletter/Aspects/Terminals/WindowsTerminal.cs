@@ -1895,9 +1895,9 @@ namespace WinPaletter
             }
         }
 
-        private void TerWhiteB_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void TerWhiteB_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            Color cx = e.ColorItem.BackColor;
+            Color cx = e.Color;
 
             WinTerminal.Types.Scheme scheme = new();
             WinTerminal.Types.Theme theme = new();

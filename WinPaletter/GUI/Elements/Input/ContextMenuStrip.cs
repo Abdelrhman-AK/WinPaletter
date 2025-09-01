@@ -154,7 +154,7 @@ namespace WinPaletter.UI.WP
             Background = GraphicsExtensions.CaptureFromScreen(Bounds);
 
             BlurredBackground?.Dispose();
-            BlurredBackground = Background.Blur(6);
+            BlurredBackground = Background.Blur(8);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -178,7 +178,7 @@ namespace WinPaletter.UI.WP
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            using (SolidBrush br = new(Color.FromArgb(160, scheme.Colors.Back(parentLevel))))
+            using (SolidBrush br = new(Color.FromArgb(180, scheme.Colors.Back(parentLevel))))
             using (Pen P = new(Color.FromArgb(128, 128, 128, 128)))
             {
                 G.FillRoundedRect(br, rect);

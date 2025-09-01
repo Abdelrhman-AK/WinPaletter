@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.Theme;
+using WinPaletter.TypesExtensions;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -182,6 +183,22 @@ namespace WinPaletter
 
                 ColorEditorManager1.Color = c;
                 ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
+
+                effect_dark.BackColor = c.Dark(trackBar1.Value / 100f);
+                effect_light.BackColor = c.Light(trackBar2.Value / 100f);
+                effect_analogus_next.BackColor = c.Analogous(trackBar3.Value)[2];
+                effect_analogus_previous.BackColor = c.Analogous(trackBar3.Value)[0];
+                effect_desaturate.BackColor = c.Desaturate(trackBar4.Value / 100f);
+                effect_rotateHue.BackColor = c.RotateHue(trackBar5.Value);
+                effect_invert.BackColor = c.Invert();
+                effect_complementary.BackColor = c.Complementary();
+                effect_sepia.BackColor = c.Sepia();
+                effect_16bit.BackColor = c.To16Bit();
+                effect_256.BackColor = c.To256Color();
+                effect_monochrome.BackColor = c.Monochrome();
+                effect_grayscale.BackColor = c.Grayscale();
+
+                foreach (ColorItem effect in panel1.Controls.OfType<ColorItem>()) effect.DefaultBackColor = effect.BackColor;
 
                 if (colorItem != null)
                 {
@@ -374,7 +391,7 @@ namespace WinPaletter
 
         private void MiniColorItem_click(object sender, EventArgs e)
         {
-            ColorEditorManager1.Color = ((ColorItem)sender).BackColor;
+            ColorEditorManager1.Color = (sender as ColorItem).BackColor;
         }
 
         private void Button4_Click_1(object sender, EventArgs e)
@@ -598,6 +615,43 @@ namespace WinPaletter
                     }
                 }
             }
+        }
+
+        private void trackBar1_Scroll(object sender)
+        {
+            effect_dark.BackColor = InitColor.Dark(trackBar1.Value / 100f);
+            effect_dark.DefaultBackColor = effect_dark.BackColor;
+        }
+
+        private void trackBar2_Scroll(object sender)
+        {
+            effect_light.BackColor = InitColor.Light(trackBar2.Value / 100f);
+            effect_light.DefaultBackColor = effect_light.BackColor;
+        }
+
+        private void trackBar3_Scroll(object sender)
+        {
+            effect_analogus_next.BackColor = InitColor.Analogous(trackBar3.Value)[2];
+            effect_analogus_previous.BackColor = InitColor.Analogous(trackBar3.Value)[0];
+            effect_analogus_next.DefaultBackColor = effect_analogus_next.BackColor;
+            effect_analogus_previous.DefaultBackColor = effect_analogus_previous.BackColor;
+        }
+
+        private void trackBar4_Scroll(object sender)
+        {
+            effect_desaturate.BackColor = InitColor.Desaturate(trackBar4.Value / 100f);
+            effect_desaturate.DefaultBackColor = effect_desaturate.BackColor;
+        }
+
+        private void trackBar5_Scroll(object sender)
+        {
+            effect_rotateHue.BackColor = InitColor.RotateHue(trackBar5.Value);
+            effect_rotateHue.DefaultBackColor = effect_rotateHue.BackColor;
+        }
+
+        private void effects_Click(object sender, EventArgs e)
+        {
+            ColorEditorManager1.Color = (sender as ColorItem).BackColor;
         }
     }
 }

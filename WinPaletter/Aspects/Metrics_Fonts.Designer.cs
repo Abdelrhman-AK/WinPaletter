@@ -196,11 +196,11 @@ namespace WinPaletter
             this.label12 = new System.Windows.Forms.Label();
             this.tips_box = new WinPaletter.UI.WP.AlertBox();
             this.groupBox12 = new WinPaletter.UI.WP.GroupBox();
+            this.checkBox2 = new WinPaletter.UI.WP.CheckBox();
             this.pictureBox33 = new System.Windows.Forms.PictureBox();
             this.label13 = new System.Windows.Forms.Label();
             this.comboBox1 = new WinPaletter.UI.WP.ComboBox();
             this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
-            this.checkBox2 = new WinPaletter.UI.WP.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.checker_img)).BeginInit();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -2544,6 +2544,18 @@ namespace WinPaletter
             this.groupBox12.Size = new System.Drawing.Size(1076, 38);
             this.groupBox12.TabIndex = 224;
             // 
+            // checkBox2
+            // 
+            this.checkBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.checkBox2.Checked = false;
+            this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox2.ForeColor = System.Drawing.Color.White;
+            this.checkBox2.Location = new System.Drawing.Point(763, 7);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(309, 23);
+            this.checkBox2.TabIndex = 92;
+            this.checkBox2.Text = "Allow changing `Single bit per pixel font` preference";
+            // 
             // pictureBox33
             // 
             this.pictureBox33.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox33.Image")));
@@ -2597,18 +2609,6 @@ namespace WinPaletter
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = resources.GetString("alertBox1.Text");
             this.alertBox1.Visible = false;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.checkBox2.Checked = false;
-            this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.checkBox2.ForeColor = System.Drawing.Color.White;
-            this.checkBox2.Location = new System.Drawing.Point(763, 7);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(309, 23);
-            this.checkBox2.TabIndex = 92;
-            this.checkBox2.Text = "Allow changing `Single bit per pixel font` preference";
             // 
             // Metrics_Fonts
             // 

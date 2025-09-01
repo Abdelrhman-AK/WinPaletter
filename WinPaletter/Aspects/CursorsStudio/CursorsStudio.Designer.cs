@@ -469,7 +469,7 @@ namespace WinPaletter
             this.LoadingColor1.Name = "LoadingColor1";
             this.LoadingColor1.Size = new System.Drawing.Size(110, 24);
             this.LoadingColor1.TabIndex = 31;
-            this.LoadingColor1.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.LoadingColor1_ContextMenuItemClickedInvoker);
+            this.LoadingColor1.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.LoadingColor1_ContextMenuMadeColorChangeInvoker);
             this.LoadingColor1.Click += new System.EventHandler(this.GroupBox8_Click);
             this.LoadingColor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.GroupBox8_Click);
             // 
@@ -519,7 +519,7 @@ namespace WinPaletter
             this.CircleColor1.Name = "CircleColor1";
             this.CircleColor1.Size = new System.Drawing.Size(110, 24);
             this.CircleColor1.TabIndex = 11;
-            this.CircleColor1.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.CircleColor1_ContextMenuItemClickedInvoker);
+            this.CircleColor1.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.CircleColor1_ContextMenuMadeColorChangeInvoker);
             this.CircleColor1.Click += new System.EventHandler(this.GroupBox10_Click);
             this.CircleColor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.GroupBox10_Click);
             // 
@@ -548,7 +548,7 @@ namespace WinPaletter
             this.LoadingColor2.Size = new System.Drawing.Size(110, 24);
             this.LoadingColor2.TabIndex = 33;
             this.LoadingColor2.Visible = false;
-            this.LoadingColor2.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.LoadingColor2_ContextMenuItemClickedInvoker);
+            this.LoadingColor2.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.LoadingColor2_ContextMenuMadeColorChangeInvoker);
             this.LoadingColor2.Click += new System.EventHandler(this.GroupBox7_Click);
             this.LoadingColor2.DragDrop += new System.Windows.Forms.DragEventHandler(this.GroupBox7_Click);
             // 
@@ -565,7 +565,7 @@ namespace WinPaletter
             this.CircleColor2.Size = new System.Drawing.Size(110, 24);
             this.CircleColor2.TabIndex = 13;
             this.CircleColor2.Visible = false;
-            this.CircleColor2.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.CircleColor2_ContextMenuItemClickedInvoker);
+            this.CircleColor2.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.CircleColor2_ContextMenuMadeColorChangeInvoker);
             this.CircleColor2.Click += new System.EventHandler(this.GroupBox9_Click);
             this.CircleColor2.DragDrop += new System.Windows.Forms.DragEventHandler(this.GroupBox9_Click);
             // 
@@ -627,7 +627,7 @@ namespace WinPaletter
             this.SecondaryColor1.Name = "SecondaryColor1";
             this.SecondaryColor1.Size = new System.Drawing.Size(110, 24);
             this.SecondaryColor1.TabIndex = 31;
-            this.SecondaryColor1.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.SecondaryColor1_ContextMenuItemClickedInvoker);
+            this.SecondaryColor1.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.SecondaryColor1_ContextMenuMadeColorChangeInvoker);
             this.SecondaryColor1.Click += new System.EventHandler(this.GroupBox5_Click);
             this.SecondaryColor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.GroupBox5_Click);
             // 
@@ -644,7 +644,7 @@ namespace WinPaletter
             this.SecondaryColor2.Size = new System.Drawing.Size(110, 24);
             this.SecondaryColor2.TabIndex = 33;
             this.SecondaryColor2.Visible = false;
-            this.SecondaryColor2.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.SecondaryColor2_ContextMenuItemClickedInvoker);
+            this.SecondaryColor2.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.SecondaryColor2_ContextMenuMadeColorChangeInvoker);
             this.SecondaryColor2.Click += new System.EventHandler(this.GroupBox4_Click);
             this.SecondaryColor2.DragDrop += new System.Windows.Forms.DragEventHandler(this.GroupBox4_Click);
             // 
@@ -661,7 +661,7 @@ namespace WinPaletter
             this.PrimaryColor2.Size = new System.Drawing.Size(110, 24);
             this.PrimaryColor2.TabIndex = 13;
             this.PrimaryColor2.Visible = false;
-            this.PrimaryColor2.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.PrimaryColor2_ContextMenuItemClickedInvoker);
+            this.PrimaryColor2.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.PrimaryColor2_ContextMenuMadeColorChangeInvoker);
             this.PrimaryColor2.Click += new System.EventHandler(this.GroupBox3_Click);
             this.PrimaryColor2.DragDrop += new System.Windows.Forms.DragEventHandler(this.GroupBox3_Click);
             // 
@@ -677,7 +677,7 @@ namespace WinPaletter
             this.PrimaryColor1.Name = "PrimaryColor1";
             this.PrimaryColor1.Size = new System.Drawing.Size(110, 24);
             this.PrimaryColor1.TabIndex = 11;
-            this.PrimaryColor1.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.PrimaryColor1_ContextMenuItemClickedInvoker);
+            this.PrimaryColor1.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.PrimaryColor1_ContextMenuMadeColorChangeInvoker);
             this.PrimaryColor1.Click += new System.EventHandler(this.TaskbarFrontAndFoldersOnStart_picker_Click);
             this.PrimaryColor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.TaskbarFrontAndFoldersOnStart_picker_Click);
             // 
@@ -930,7 +930,7 @@ namespace WinPaletter
             this.ColorItem1.Name = "ColorItem1";
             this.ColorItem1.Size = new System.Drawing.Size(110, 24);
             this.ColorItem1.TabIndex = 77;
-            this.ColorItem1.ContextMenuItemClickedInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuItemClicked(this.ColorItem1_ContextMenuItemClickedInvoker);
+            this.ColorItem1.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.ColorItem1_ContextMenuMadeColorChangeInvoker);
             this.ColorItem1.Click += new System.EventHandler(this.ColorItem1_Click);
             this.ColorItem1.DragDrop += new System.Windows.Forms.DragEventHandler(this.ColorItem1_Click);
             // 

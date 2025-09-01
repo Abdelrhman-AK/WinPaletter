@@ -1694,49 +1694,49 @@ namespace WinPaletter
             }
         }
 
-        private void PrimaryColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void PrimaryColor1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_PrimaryColor1 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_PrimaryColor1 = e.Color;
         }
 
-        private void PrimaryColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void PrimaryColor2_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_PrimaryColor2 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_PrimaryColor2 = e.Color;
         }
 
-        private void SecondaryColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void SecondaryColor1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_SecondaryColor1 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_SecondaryColor1 = e.Color;
         }
 
-        private void SecondaryColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void SecondaryColor2_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_SecondaryColor2 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_SecondaryColor2 = e.Color;
         }
 
-        private void CircleColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void CircleColor1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_LoadingCircleBack1 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_LoadingCircleBack1 = e.Color;
         }
 
-        private void CircleColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void CircleColor2_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_LoadingCircleBack2 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_LoadingCircleBack2 = e.Color;
         }
 
-        private void LoadingColor1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void LoadingColor1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_LoadingCircleHot1 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_LoadingCircleHot1 = e.Color;
         }
 
-        private void LoadingColor2_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void LoadingColor2_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_LoadingCircleHot2 = e.ColorItem.BackColor;
+            _SelectedControl.Prop_LoadingCircleHot2 = e.Color;
         }
 
-        private void ColorItem1_ContextMenuItemClickedInvoker(object sender, ColorItem.ContextMenuItemClickedEventArgs e)
+        private void ColorItem1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
-            _SelectedControl.Prop_Shadow_Color = e.ColorItem.BackColor;
+            _SelectedControl.Prop_Shadow_Color = e.Color;
         }
     }
 }

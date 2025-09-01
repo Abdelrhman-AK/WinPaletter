@@ -413,9 +413,9 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] JetBrainsMono_Medium {
+        internal static byte[] JetBrainsMono {
             get {
-                object obj = ResourceManager.GetObject("JetBrainsMono_Medium", resourceCulture);
+                object obj = ResourceManager.GetObject("JetBrainsMono", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -592,16 +592,6 @@ namespace WinPaletter.Properties {
             get {
                 object obj = ResourceManager.GetObject("SampleApp_Small_Inactive", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] SecureUxTheme {
-            get {
-                object obj = ResourceManager.GetObject("SecureUxTheme", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         
