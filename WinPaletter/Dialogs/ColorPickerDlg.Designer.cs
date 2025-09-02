@@ -893,6 +893,7 @@ namespace WinPaletter
             this.trackBar5.Size = new System.Drawing.Size(161, 24);
             this.trackBar5.TabIndex = 57;
             this.trackBar5.Value = 180;
+            this.trackBar5.ValueChanged += new System.EventHandler(this.trackBar5_ValueChanged);
             // 
             // trackBar4
             // 
@@ -910,6 +911,7 @@ namespace WinPaletter
             this.trackBar4.Size = new System.Drawing.Size(161, 24);
             this.trackBar4.TabIndex = 53;
             this.trackBar4.Value = 50;
+            this.trackBar4.ValueChanged += new System.EventHandler(this.trackBar4_ValueChanged);
             // 
             // label14
             // 
@@ -970,6 +972,7 @@ namespace WinPaletter
             this.trackBar3.Size = new System.Drawing.Size(268, 24);
             this.trackBar3.TabIndex = 49;
             this.trackBar3.Value = 180;
+            this.trackBar3.ValueChanged += new System.EventHandler(this.trackBar3_ValueChanged);
             // 
             // label13
             // 
@@ -1017,9 +1020,10 @@ namespace WinPaletter
             this.trackBar2.Maximum = 100;
             this.trackBar2.Minimum = 0;
             this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(164, 24);
+            this.trackBar2.Size = new System.Drawing.Size(161, 24);
             this.trackBar2.TabIndex = 45;
             this.trackBar2.Value = 50;
+            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
             // 
             // label12
             // 
@@ -1067,9 +1071,10 @@ namespace WinPaletter
             this.trackBar1.Maximum = 100;
             this.trackBar1.Minimum = 0;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(164, 24);
+            this.trackBar1.Size = new System.Drawing.Size(161, 24);
             this.trackBar1.TabIndex = 41;
             this.trackBar1.Value = 50;
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
             // 
             // label11
             // 
@@ -1469,9 +1474,11 @@ namespace WinPaletter
             this.ComboBox2.ItemHeight = 20;
             this.ComboBox2.Items.AddRange(new object[] {
             "From current theme",
+            "Default Windows 12 theme",
             "Default Windows 11 theme",
             "Default Windows 10 theme",
             "Default Windows 8.1 theme",
+            "Default Windows 8 theme",
             "Default Windows 7 theme",
             "Default Windows Vista theme",
             "Default Windows XP theme"});

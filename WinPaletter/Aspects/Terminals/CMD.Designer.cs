@@ -826,7 +826,7 @@ namespace WinPaletter
             this.Label31.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label31.BackColor = System.Drawing.Color.Transparent;
             this.Label31.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label31.Location = new System.Drawing.Point(278, 328);
+            this.Label31.Location = new System.Drawing.Point(278, 313);
             this.Label31.Name = "Label31";
             this.Label31.Size = new System.Drawing.Size(38, 25);
             this.Label31.TabIndex = 99;
@@ -1084,7 +1084,7 @@ namespace WinPaletter
             this.ColorTable15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.ColorTable15.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.ColorTable15.DontShowInfo = false;
-            this.ColorTable15.Location = new System.Drawing.Point(323, 328);
+            this.ColorTable15.Location = new System.Drawing.Point(323, 313);
             this.ColorTable15.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable15.Name = "ColorTable15";
             this.ColorTable15.Size = new System.Drawing.Size(110, 25);
@@ -1099,7 +1099,7 @@ namespace WinPaletter
             this.ColorTable07.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.ColorTable07.DefaultBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.ColorTable07.DontShowInfo = false;
-            this.ColorTable07.Location = new System.Drawing.Point(157, 328);
+            this.ColorTable07.Location = new System.Drawing.Point(157, 313);
             this.ColorTable07.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorTable07.Name = "ColorTable07";
             this.ColorTable07.Size = new System.Drawing.Size(110, 25);
@@ -1112,7 +1112,7 @@ namespace WinPaletter
             this.Label23.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Label23.BackColor = System.Drawing.Color.Transparent;
             this.Label23.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label23.Location = new System.Drawing.Point(136, 328);
+            this.Label23.Location = new System.Drawing.Point(136, 313);
             this.Label23.Name = "Label23";
             this.Label23.Size = new System.Drawing.Size(14, 25);
             this.Label23.TabIndex = 91;
@@ -1353,7 +1353,7 @@ namespace WinPaletter
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(605, 566);
+            this.TabControl1.Size = new System.Drawing.Size(605, 594);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 200;
             // 
@@ -1365,7 +1365,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(104, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(497, 558);
+            this.TabPage1.Size = new System.Drawing.Size(497, 586);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Colors";
             // 
@@ -1388,7 +1388,7 @@ namespace WinPaletter
             this.groupBox2.Controls.Add(this.CMD_AccentForegroundLbl);
             this.groupBox2.Controls.Add(this.Label50);
             this.groupBox2.Controls.Add(this.Label17);
-            this.groupBox2.Location = new System.Drawing.Point(4, 323);
+            this.groupBox2.Location = new System.Drawing.Point(4, 352);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(489, 230);
@@ -1480,7 +1480,7 @@ namespace WinPaletter
             this.groupBox1.Location = new System.Drawing.Point(4, 4);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(489, 313);
+            this.groupBox1.Size = new System.Drawing.Size(489, 345);
             this.groupBox1.TabIndex = 202;
             // 
             // PictureBox29
@@ -1488,7 +1488,7 @@ namespace WinPaletter
             this.PictureBox29.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.PictureBox29.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox29.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox29.Image")));
-            this.PictureBox29.Location = new System.Drawing.Point(40, 328);
+            this.PictureBox29.Location = new System.Drawing.Point(40, 313);
             this.PictureBox29.Name = "PictureBox29";
             this.PictureBox29.Size = new System.Drawing.Size(24, 24);
             this.PictureBox29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1637,7 +1637,7 @@ namespace WinPaletter
             this.label13.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(70, 328);
+            this.label13.Location = new System.Drawing.Point(70, 313);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(60, 25);
             this.label13.TabIndex = 211;
@@ -2154,7 +2154,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1096, 678);
+            this.ClientSize = new System.Drawing.Size(1096, 706);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.GroupBox8);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;

@@ -444,27 +444,27 @@ namespace WinPaletter
                     }
                 case 1:
                     {
-                        GetColorsFromPalette(Default.Windows11());
+                        GetColorsFromPalette(Default.Windows12());
                         break;
                     }
                 case 2:
                     {
-                        GetColorsFromPalette(Default.Windows10());
+                        GetColorsFromPalette(Default.Windows11());
                         break;
                     }
                 case 3:
                     {
-                        GetColorsFromPalette(Default.Windows81());
+                        GetColorsFromPalette(Default.Windows10());
                         break;
                     }
                 case 4:
                     {
-                        GetColorsFromPalette(Default.WindowsVista());
+                        GetColorsFromPalette(Default.Windows81());
                         break;
                     }
                 case 5:
                     {
-                        GetColorsFromPalette(Default.WindowsXP());
+                        GetColorsFromPalette(Default.Windows8());
                         break;
                     }
                 case 6:
@@ -472,7 +472,16 @@ namespace WinPaletter
                         GetColorsFromPalette(Default.Windows7());
                         break;
                     }
-
+                case 7:
+                    {
+                        GetColorsFromPalette(Default.WindowsVista());
+                        break;
+                    }
+                case 8:
+                    {
+                        GetColorsFromPalette(Default.WindowsXP());
+                        break;
+                    }
                 default:
                     {
                         GetColorsFromPalette(Program.TM);
@@ -617,19 +626,24 @@ namespace WinPaletter
             }
         }
 
-        private void trackBar1_Scroll(object sender)
+        private void effects_Click(object sender, EventArgs e)
+        {
+            ColorEditorManager1.Color = (sender as ColorItem).BackColor;
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             effect_dark.BackColor = InitColor.Dark(trackBar1.Value / 100f);
             effect_dark.DefaultBackColor = effect_dark.BackColor;
         }
 
-        private void trackBar2_Scroll(object sender)
+        private void trackBar2_ValueChanged(object sender, EventArgs e)
         {
             effect_light.BackColor = InitColor.Light(trackBar2.Value / 100f);
             effect_light.DefaultBackColor = effect_light.BackColor;
         }
 
-        private void trackBar3_Scroll(object sender)
+        private void trackBar3_ValueChanged(object sender, EventArgs e)
         {
             effect_analogus_next.BackColor = InitColor.Analogous(trackBar3.Value)[2];
             effect_analogus_previous.BackColor = InitColor.Analogous(trackBar3.Value)[0];
@@ -637,21 +651,16 @@ namespace WinPaletter
             effect_analogus_previous.DefaultBackColor = effect_analogus_previous.BackColor;
         }
 
-        private void trackBar4_Scroll(object sender)
+        private void trackBar4_ValueChanged(object sender, EventArgs e)
         {
             effect_desaturate.BackColor = InitColor.Desaturate(trackBar4.Value / 100f);
             effect_desaturate.DefaultBackColor = effect_desaturate.BackColor;
         }
 
-        private void trackBar5_Scroll(object sender)
+        private void trackBar5_ValueChanged(object sender, EventArgs e)
         {
             effect_rotateHue.BackColor = InitColor.RotateHue(trackBar5.Value);
             effect_rotateHue.DefaultBackColor = effect_rotateHue.BackColor;
-        }
-
-        private void effects_Click(object sender, EventArgs e)
-        {
-            ColorEditorManager1.Color = (sender as ColorItem).BackColor;
         }
     }
 }

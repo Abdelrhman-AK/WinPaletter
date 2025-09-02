@@ -930,10 +930,10 @@
     <Compile Include="PaletteGenerator\PaletteGenerateFromImage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorItemControllers\ColorPickerDlg.Designer.cs">
+    <Compile Include="Dialogs\ColorPickerDlg.Designer.cs">
       <DependentUpon>ColorPickerDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorItemControllers\ColorPickerDlg.cs">
+    <Compile Include="Dialogs\ColorPickerDlg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\Saving_ex_list.Designer.cs">
@@ -1314,7 +1314,7 @@
     <EmbeddedResource Include="Dialogs\BugReport.resx">
       <DependentUpon>BugReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorItemControllers\ColorPickerDlg.resx">
+    <EmbeddedResource Include="Dialogs\ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Saving_ex_list.resx">

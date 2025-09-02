@@ -135,6 +135,14 @@ namespace WinPaletter.Theme
                     }
                 }
 
+                foreach (FieldInfo field in typeof(Windows8).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                {
+                    if (field.FieldType.Name.ToLower() == "color")
+                    {
+                        CL.Add((Color)field.GetValue(Windows8));
+                    }
+                }
+
                 foreach (FieldInfo field in typeof(Windows7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                 {
                     if (field.FieldType.Name.ToLower() == "color")
@@ -148,6 +156,14 @@ namespace WinPaletter.Theme
                     if (field.FieldType.Name.ToLower() == "color")
                     {
                         CL.Add((Color)field.GetValue(WindowsVista));
+                    }
+                }
+
+                foreach (FieldInfo field in typeof(Structures.LogonUI81).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                {
+                    if (field.FieldType.Name.ToLower() == "color")
+                    {
+                        CL.Add((Color)field.GetValue(LogonUI81));
                     }
                 }
 

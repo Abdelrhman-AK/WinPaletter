@@ -244,11 +244,11 @@ namespace WinPaletter
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(35, 100);
-            this.TabControl1.Location = new System.Drawing.Point(9, 146);
+            this.TabControl1.Location = new System.Drawing.Point(9, 142);
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(601, 566);
+            this.TabControl1.Size = new System.Drawing.Size(601, 560);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 204;
             this.TabControl1.Visible = false;
@@ -261,7 +261,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(104, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(493, 558);
+            this.TabPage1.Size = new System.Drawing.Size(493, 552);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "Colors";
             // 
@@ -284,7 +284,7 @@ namespace WinPaletter
             this.groupBox2.Controls.Add(this.CMD_AccentForegroundLbl);
             this.groupBox2.Controls.Add(this.Label50);
             this.groupBox2.Controls.Add(this.Label17);
-            this.groupBox2.Location = new System.Drawing.Point(4, 321);
+            this.groupBox2.Location = new System.Drawing.Point(4, 318);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(485, 230);
@@ -2116,7 +2116,7 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.Button10);
             this.bottom_buttons.Controls.Add(this.Button2);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 718);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 708);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(1099, 48);
             this.bottom_buttons.TabIndex = 202;
@@ -2164,7 +2164,7 @@ namespace WinPaletter
             this.GroupBox73.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox73.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.GroupBox73.Controls.Add(this.CMD_Preview);
-            this.GroupBox73.Location = new System.Drawing.Point(612, 146);
+            this.GroupBox73.Location = new System.Drawing.Point(612, 142);
             this.GroupBox73.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox73.Name = "GroupBox73";
             this.GroupBox73.Padding = new System.Windows.Forms.Padding(1);
@@ -2222,7 +2222,7 @@ namespace WinPaletter
             this.GroupBox51.Controls.Add(this.Button6);
             this.GroupBox51.Location = new System.Drawing.Point(9, 63);
             this.GroupBox51.Name = "GroupBox51";
-            this.GroupBox51.Size = new System.Drawing.Size(1078, 77);
+            this.GroupBox51.Size = new System.Drawing.Size(1078, 73);
             this.GroupBox51.TabIndex = 115;
             // 
             // alertBox1
@@ -2237,7 +2237,7 @@ namespace WinPaletter
             this.alertBox1.Image = ((System.Drawing.Image)(resources.GetObject("alertBox1.Image")));
             this.alertBox1.Location = new System.Drawing.Point(8, 38);
             this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(1063, 31);
+            this.alertBox1.Size = new System.Drawing.Size(1063, 28);
             this.alertBox1.TabIndex = 204;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = "This is a one-time manual modification for an unspecified terminal, not automated" +
@@ -2333,7 +2333,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(1099, 766);
+            this.ClientSize = new System.Drawing.Size(1099, 756);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.titlebarExtender1);
             this.Controls.Add(this.bottom_buttons);
