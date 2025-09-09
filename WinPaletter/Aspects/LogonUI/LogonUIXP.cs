@@ -177,7 +177,14 @@ namespace WinPaletter
             TM.LogonUIXP.ShowMoreOptions = CheckBox1.Checked;
         }
 
-        private void UpdateWin2000Preview(Color color)
+        /// <summary>
+        /// Updates the Windows 2000 preview image with the specified background color.
+        /// </summary>
+        /// <remarks>This method clears the current preview image, applies the specified background color,
+        /// and redraws the Windows 2000 UI elements onto the preview. The updated image is then  assigned to the
+        /// preview display.</remarks>
+        /// <param name="color">The <see cref="Color"/> to use as the background for the preview image.</param>
+        public void UpdateWin2000Preview(Color color)
         {
             using (Bitmap b = new(LogonUIRes.Win2000.Width, LogonUIRes.Win2000.Height))
             {

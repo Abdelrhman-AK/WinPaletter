@@ -201,13 +201,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Impersonate the user if a token is available using the advapi32 library
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Set the system visual style while impersonating the selected user
                     result = PrivateFunctions.SetSystemVisualStyle(pszFilename, pszColor, pszSize, dwReserved) == 1;
 
                     // Revert impersonation and undo changes
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo impersonation
                     wic.Undo();
@@ -260,13 +260,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Impersonate the user if a token is available using the advapi32 library
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Enable or disable theming while impersonating the selected user
                     result = PrivateFunctions.EnableTheming(fEnable) == 1;
 
                     // Revert impersonation and undo changes
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo impersonation
                     wic.Undo();
@@ -326,7 +326,7 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Impersonate the user if a token is available using the advapi32 library
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Get the current theme name, color name, and size name while impersonating the selected user
                     PrivateFunctions.GetCurrentThemeName(vsFile, vsFile.Capacity, colorName, colorName.Capacity, sizeName, sizeName.Capacity);
@@ -335,7 +335,7 @@ namespace WinPaletter.NativeMethods
                     result = !string.IsNullOrWhiteSpace(vsFile.ToString()) && File.Exists(vsFile.ToString());
 
                     // Revert impersonation
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     wic.Undo();
                 }

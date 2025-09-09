@@ -725,14 +725,6 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Get complementary (opposite) color.
-        /// </summary>
-        public static Color Complementary(this Color color)
-        {
-            return Color.FromArgb(color.A, 255 - color.R, 255 - color.G, 255 - color.B);
-        }
-
-        /// <summary>
         /// Reduce saturation of color.
         /// </summary>
         public static Color Desaturate(this Color color, float factor)
@@ -802,23 +794,6 @@ namespace WinPaletter.TypesExtensions
             Color next = FromAhsb(color.A, (hue + angle) % 360f, sat, bri);
 
             return new[] { prev, color, next };
-        }
-
-        /// <summary>
-        /// Convert color to 16-bit (RGB565).
-        /// </summary>
-        public static Color To16Bit(this Color color)
-        {
-            int r = (color.R >> 3) & 0x1F;  // 5 bits
-            int g = (color.G >> 2) & 0x3F;  // 6 bits
-            int b = (color.B >> 3) & 0x1F;  // 5 bits
-
-            // Expand back to 8-bit
-            int r8 = (r << 3) | (r >> 2);
-            int g8 = (g << 2) | (g >> 4);
-            int b8 = (b << 3) | (b >> 2);
-
-            return Color.FromArgb(color.A, r8, g8, b8);
         }
 
         /// <summary>
@@ -901,6 +876,571 @@ namespace WinPaletter.TypesExtensions
             }
 
             return [.. palette];
+        }
+
+        private static readonly (Color color, string name)[] MaterialPalette =
+        [
+        // Red
+        (ColorTranslator.FromHtml("#FFEBEE"), "Red 50"),
+        (ColorTranslator.FromHtml("#FFCDD2"), "Red 100"),
+        (ColorTranslator.FromHtml("#EF9A9A"), "Red 200"),
+        (ColorTranslator.FromHtml("#E57373"), "Red 300"),
+        (ColorTranslator.FromHtml("#EF5350"), "Red 400"),
+        (ColorTranslator.FromHtml("#F44336"), "Red 500"),
+        (ColorTranslator.FromHtml("#E53935"), "Red 600"),
+        (ColorTranslator.FromHtml("#D32F2F"), "Red 700"),
+        (ColorTranslator.FromHtml("#C62828"), "Red 800"),
+        (ColorTranslator.FromHtml("#B71C1C"), "Red 900"),
+        (ColorTranslator.FromHtml("#FF8A80"), "Red A100"),
+        (ColorTranslator.FromHtml("#FF5252"), "Red A200"),
+        (ColorTranslator.FromHtml("#FF1744"), "Red A400"),
+        (ColorTranslator.FromHtml("#D50000"), "Red A700"),
+
+        // Pink
+        (ColorTranslator.FromHtml("#FCE4EC"), "Pink 50"),
+        (ColorTranslator.FromHtml("#F8BBD0"), "Pink 100"),
+        (ColorTranslator.FromHtml("#F48FB1"), "Pink 200"),
+        (ColorTranslator.FromHtml("#F06292"), "Pink 300"),
+        (ColorTranslator.FromHtml("#EC407A"), "Pink 400"),
+        (ColorTranslator.FromHtml("#E91E63"), "Pink 500"),
+        (ColorTranslator.FromHtml("#D81B60"), "Pink 600"),
+        (ColorTranslator.FromHtml("#C2185B"), "Pink 700"),
+        (ColorTranslator.FromHtml("#AD1457"), "Pink 800"),
+        (ColorTranslator.FromHtml("#880E4F"), "Pink 900"),
+        (ColorTranslator.FromHtml("#FF80AB"), "Pink A100"),
+        (ColorTranslator.FromHtml("#FF4081"), "Pink A200"),
+        (ColorTranslator.FromHtml("#F50057"), "Pink A400"),
+        (ColorTranslator.FromHtml("#C51162"), "Pink A700"),
+
+        // Purple
+        (ColorTranslator.FromHtml("#F3E5F5"), "Purple 50"),
+        (ColorTranslator.FromHtml("#E1BEE7"), "Purple 100"),
+        (ColorTranslator.FromHtml("#CE93D8"), "Purple 200"),
+        (ColorTranslator.FromHtml("#BA68C8"), "Purple 300"),
+        (ColorTranslator.FromHtml("#AB47BC"), "Purple 400"),
+        (ColorTranslator.FromHtml("#9C27B0"), "Purple 500"),
+        (ColorTranslator.FromHtml("#8E24AA"), "Purple 600"),
+        (ColorTranslator.FromHtml("#7B1FA2"), "Purple 700"),
+        (ColorTranslator.FromHtml("#6A1B9A"), "Purple 800"),
+        (ColorTranslator.FromHtml("#4A148C"), "Purple 900"),
+        (ColorTranslator.FromHtml("#EA80FC"), "Purple A100"),
+        (ColorTranslator.FromHtml("#E040FB"), "Purple A200"),
+        (ColorTranslator.FromHtml("#D500F9"), "Purple A400"),
+        (ColorTranslator.FromHtml("#AA00FF"), "Purple A700"),
+
+        // Deep Purple
+        (ColorTranslator.FromHtml("#EDE7F6"), "Deep Purple 50"),
+        (ColorTranslator.FromHtml("#D1C4E9"), "Deep Purple 100"),
+        (ColorTranslator.FromHtml("#B39DDB"), "Deep Purple 200"),
+        (ColorTranslator.FromHtml("#9575CD"), "Deep Purple 300"),
+        (ColorTranslator.FromHtml("#7E57C2"), "Deep Purple 400"),
+        (ColorTranslator.FromHtml("#673AB7"), "Deep Purple 500"),
+        (ColorTranslator.FromHtml("#5E35B1"), "Deep Purple 600"),
+        (ColorTranslator.FromHtml("#512DA8"), "Deep Purple 700"),
+        (ColorTranslator.FromHtml("#4527A0"), "Deep Purple 800"),
+        (ColorTranslator.FromHtml("#311B92"), "Deep Purple 900"),
+        (ColorTranslator.FromHtml("#B388FF"), "Deep Purple A100"),
+        (ColorTranslator.FromHtml("#7C4DFF"), "Deep Purple A200"),
+        (ColorTranslator.FromHtml("#651FFF"), "Deep Purple A400"),
+        (ColorTranslator.FromHtml("#6200EA"), "Deep Purple A700"),
+
+        // Indigo
+        (ColorTranslator.FromHtml("#E8EAF6"), "Indigo 50"),
+        (ColorTranslator.FromHtml("#C5CAE9"), "Indigo 100"),
+        (ColorTranslator.FromHtml("#9FA8DA"), "Indigo 200"),
+        (ColorTranslator.FromHtml("#7986CB"), "Indigo 300"),
+        (ColorTranslator.FromHtml("#5C6BC0"), "Indigo 400"),
+        (ColorTranslator.FromHtml("#3F51B5"), "Indigo 500"),
+        (ColorTranslator.FromHtml("#3949AB"), "Indigo 600"),
+        (ColorTranslator.FromHtml("#303F9F"), "Indigo 700"),
+        (ColorTranslator.FromHtml("#283593"), "Indigo 800"),
+        (ColorTranslator.FromHtml("#1A237E"), "Indigo 900"),
+        (ColorTranslator.FromHtml("#8C9EFF"), "Indigo A100"),
+        (ColorTranslator.FromHtml("#536DFE"), "Indigo A200"),
+        (ColorTranslator.FromHtml("#3D5AFE"), "Indigo A400"),
+        (ColorTranslator.FromHtml("#304FFE"), "Indigo A700"),
+
+        // Blue
+        (ColorTranslator.FromHtml("#E3F2FD"), "Blue 50"),
+        (ColorTranslator.FromHtml("#BBDEFB"), "Blue 100"),
+        (ColorTranslator.FromHtml("#90CAF9"), "Blue 200"),
+        (ColorTranslator.FromHtml("#64B5F6"), "Blue 300"),
+        (ColorTranslator.FromHtml("#42A5F5"), "Blue 400"),
+        (ColorTranslator.FromHtml("#2196F3"), "Blue 500"),
+        (ColorTranslator.FromHtml("#1E88E5"), "Blue 600"),
+        (ColorTranslator.FromHtml("#1976D2"), "Blue 700"),
+        (ColorTranslator.FromHtml("#1565C0"), "Blue 800"),
+        (ColorTranslator.FromHtml("#0D47A1"), "Blue 900"),
+        (ColorTranslator.FromHtml("#82B1FF"), "Blue A100"),
+        (ColorTranslator.FromHtml("#448AFF"), "Blue A200"),
+        (ColorTranslator.FromHtml("#2979FF"), "Blue A400"),
+        (ColorTranslator.FromHtml("#2962FF"), "Blue A700"),
+
+        // Light Blue
+        (ColorTranslator.FromHtml("#E1F5FE"), "Light Blue 50"),
+        (ColorTranslator.FromHtml("#B3E5FC"), "Light Blue 100"),
+        (ColorTranslator.FromHtml("#81D4FA"), "Light Blue 200"),
+        (ColorTranslator.FromHtml("#4FC3F7"), "Light Blue 300"),
+        (ColorTranslator.FromHtml("#29B6F6"), "Light Blue 400"),
+        (ColorTranslator.FromHtml("#03A9F4"), "Light Blue 500"),
+        (ColorTranslator.FromHtml("#039BE5"), "Light Blue 600"),
+        (ColorTranslator.FromHtml("#0288D1"), "Light Blue 700"),
+        (ColorTranslator.FromHtml("#0277BD"), "Light Blue 800"),
+        (ColorTranslator.FromHtml("#01579B"), "Light Blue 900"),
+        (ColorTranslator.FromHtml("#80D8FF"), "Light Blue A100"),
+        (ColorTranslator.FromHtml("#40C4FF"), "Light Blue A200"),
+        (ColorTranslator.FromHtml("#00B0FF"), "Light Blue A400"),
+        (ColorTranslator.FromHtml("#0091EA"), "Light Blue A700"),
+
+        // Cyan
+        (ColorTranslator.FromHtml("#E0F7FA"), "Cyan 50"),
+        (ColorTranslator.FromHtml("#B2EBF2"), "Cyan 100"),
+        (ColorTranslator.FromHtml("#80DEEA"), "Cyan 200"),
+        (ColorTranslator.FromHtml("#4DD0E1"), "Cyan 300"),
+        (ColorTranslator.FromHtml("#26C6DA"), "Cyan 400"),
+        (ColorTranslator.FromHtml("#00BCD4"), "Cyan 500"),
+        (ColorTranslator.FromHtml("#00ACC1"), "Cyan 600"),
+        (ColorTranslator.FromHtml("#0097A7"), "Cyan 700"),
+        (ColorTranslator.FromHtml("#00838F"), "Cyan 800"),
+        (ColorTranslator.FromHtml("#006064"), "Cyan 900"),
+        (ColorTranslator.FromHtml("#84FFFF"), "Cyan A100"),
+        (ColorTranslator.FromHtml("#18FFFF"), "Cyan A200"),
+        (ColorTranslator.FromHtml("#00E5FF"), "Cyan A400"),
+        (ColorTranslator.FromHtml("#00B8D4"), "Cyan A700"),
+
+        // Teal
+        (ColorTranslator.FromHtml("#E0F2F1"), "Teal 50"),
+        (ColorTranslator.FromHtml("#B2DFDB"), "Teal 100"),
+        (ColorTranslator.FromHtml("#80CBC4"), "Teal 200"),
+        (ColorTranslator.FromHtml("#4DB6AC"), "Teal 300"),
+        (ColorTranslator.FromHtml("#26A69A"), "Teal 400"),
+        (ColorTranslator.FromHtml("#009688"), "Teal 500"),
+        (ColorTranslator.FromHtml("#00897B"), "Teal 600"),
+        (ColorTranslator.FromHtml("#00796B"), "Teal 700"),
+        (ColorTranslator.FromHtml("#00695C"), "Teal 800"),
+        (ColorTranslator.FromHtml("#004D40"), "Teal 900"),
+        (ColorTranslator.FromHtml("#A7FFEB"), "Teal A100"),
+        (ColorTranslator.FromHtml("#64FFDA"), "Teal A200"),
+        (ColorTranslator.FromHtml("#1DE9B6"), "Teal A400"),
+        (ColorTranslator.FromHtml("#00BFA5"), "Teal A700"),
+
+        // Green
+        (ColorTranslator.FromHtml("#E8F5E9"), "Green 50"),
+        (ColorTranslator.FromHtml("#C8E6C9"), "Green 100"),
+        (ColorTranslator.FromHtml("#A5D6A7"), "Green 200"),
+        (ColorTranslator.FromHtml("#81C784"), "Green 300"),
+        (ColorTranslator.FromHtml("#66BB6A"), "Green 400"),
+        (ColorTranslator.FromHtml("#4CAF50"), "Green 500"),
+        (ColorTranslator.FromHtml("#43A047"), "Green 600"),
+        (ColorTranslator.FromHtml("#388E3C"), "Green 700"),
+        (ColorTranslator.FromHtml("#2E7D32"), "Green 800"),
+        (ColorTranslator.FromHtml("#1B5E20"), "Green 900"),
+        (ColorTranslator.FromHtml("#B9F6CA"), "Green A100"),
+        (ColorTranslator.FromHtml("#69F0AE"), "Green A200"),
+        (ColorTranslator.FromHtml("#00E676"), "Green A400"),
+        (ColorTranslator.FromHtml("#00C853"), "Green A700"),
+
+        // Light Green
+        (ColorTranslator.FromHtml("#F1F8E9"), "Light Green 50"),
+        (ColorTranslator.FromHtml("#DCEDC8"), "Light Green 100"),
+        (ColorTranslator.FromHtml("#C5E1A5"), "Light Green 200"),
+        (ColorTranslator.FromHtml("#AED581"), "Light Green 300"),
+        (ColorTranslator.FromHtml("#9CCC65"), "Light Green 400"),
+        (ColorTranslator.FromHtml("#8BC34A"), "Light Green 500"),
+        (ColorTranslator.FromHtml("#7CB342"), "Light Green 600"),
+        (ColorTranslator.FromHtml("#689F38"), "Light Green 700"),
+        (ColorTranslator.FromHtml("#558B2F"), "Light Green 800"),
+        (ColorTranslator.FromHtml("#33691E"), "Light Green 900"),
+        (ColorTranslator.FromHtml("#CCFF90"), "Light Green A100"),
+        (ColorTranslator.FromHtml("#B2FF59"), "Light Green A200"),
+        (ColorTranslator.FromHtml("#76FF03"), "Light Green A400"),
+        (ColorTranslator.FromHtml("#64DD17"), "Light Green A700"),
+
+        // Lime
+        (ColorTranslator.FromHtml("#F9FBE7"), "Lime 50"),
+        (ColorTranslator.FromHtml("#F0F4C3"), "Lime 100"),
+        (ColorTranslator.FromHtml("#E6EE9C"), "Lime 200"),
+        (ColorTranslator.FromHtml("#DCE775"), "Lime 300"),
+        (ColorTranslator.FromHtml("#D4E157"), "Lime 400"),
+        (ColorTranslator.FromHtml("#CDDC39"), "Lime 500"),
+        (ColorTranslator.FromHtml("#C0CA33"), "Lime 600"),
+        (ColorTranslator.FromHtml("#AFB42B"), "Lime 700"),
+        (ColorTranslator.FromHtml("#9E9D24"), "Lime 800"),
+        (ColorTranslator.FromHtml("#827717"), "Lime 900"),
+        (ColorTranslator.FromHtml("#F4FF81"), "Lime A100"),
+        (ColorTranslator.FromHtml("#EEFF41"), "Lime A200"),
+        (ColorTranslator.FromHtml("#C6FF00"), "Lime A400"),
+        (ColorTranslator.FromHtml("#AEEA00"), "Lime A700"),
+
+        // Yellow
+        (ColorTranslator.FromHtml("#FFFDE7"), "Yellow 50"),
+        (ColorTranslator.FromHtml("#FFF9C4"), "Yellow 100"),
+        (ColorTranslator.FromHtml("#FFF59D"), "Yellow 200"),
+        (ColorTranslator.FromHtml("#FFF176"), "Yellow 300"),
+        (ColorTranslator.FromHtml("#FFEE58"), "Yellow 400"),
+        (ColorTranslator.FromHtml("#FFEB3B"), "Yellow 500"),
+        (ColorTranslator.FromHtml("#FDD835"), "Yellow 600"),
+        (ColorTranslator.FromHtml("#FBC02D"), "Yellow 700"),
+        (ColorTranslator.FromHtml("#F9A825"), "Yellow 800"),
+        (ColorTranslator.FromHtml("#F57F17"), "Yellow 900"),
+        (ColorTranslator.FromHtml("#FFFF8D"), "Yellow A100"),
+        (ColorTranslator.FromHtml("#FFFF00"), "Yellow A200"),
+        (ColorTranslator.FromHtml("#FFEA00"), "Yellow A400"),
+        (ColorTranslator.FromHtml("#FFD600"), "Yellow A700"),
+
+        // Amber
+        (ColorTranslator.FromHtml("#FFF8E1"), "Amber 50"),
+        (ColorTranslator.FromHtml("#FFECB3"), "Amber 100"),
+        (ColorTranslator.FromHtml("#FFE082"), "Amber 200"),
+        (ColorTranslator.FromHtml("#FFD54F"), "Amber 300"),
+        (ColorTranslator.FromHtml("#FFCA28"), "Amber 400"),
+        (ColorTranslator.FromHtml("#FFC107"), "Amber 500"),
+        (ColorTranslator.FromHtml("#FFB300"), "Amber 600"),
+        (ColorTranslator.FromHtml("#FFA000"), "Amber 700"),
+        (ColorTranslator.FromHtml("#FF8F00"), "Amber 800"),
+        (ColorTranslator.FromHtml("#FF6F00"), "Amber 900"),
+        (ColorTranslator.FromHtml("#FFE57F"), "Amber A100"),
+        (ColorTranslator.FromHtml("#FFD740"), "Amber A200"),
+        (ColorTranslator.FromHtml("#FFC400"), "Amber A400"),
+        (ColorTranslator.FromHtml("#FFAB00"), "Amber A700"),
+
+        // Orange
+        (ColorTranslator.FromHtml("#FFF3E0"), "Orange 50"),
+        (ColorTranslator.FromHtml("#FFE0B2"), "Orange 100"),
+        (ColorTranslator.FromHtml("#FFCC80"), "Orange 200"),
+        (ColorTranslator.FromHtml("#FFB74D"), "Orange 300"),
+        (ColorTranslator.FromHtml("#FFA726"), "Orange 400"),
+        (ColorTranslator.FromHtml("#FF9800"), "Orange 500"),
+        (ColorTranslator.FromHtml("#FB8C00"), "Orange 600"),
+        (ColorTranslator.FromHtml("#F57C00"), "Orange 700"),
+        (ColorTranslator.FromHtml("#EF6C00"), "Orange 800"),
+        (ColorTranslator.FromHtml("#E65100"), "Orange 900"),
+        (ColorTranslator.FromHtml("#FFD180"), "Orange A100"),
+        (ColorTranslator.FromHtml("#FFAB40"), "Orange A200"),
+        (ColorTranslator.FromHtml("#FF9100"), "Orange A400"),
+        (ColorTranslator.FromHtml("#FF6D00"), "Orange A700"),
+
+        // Deep Orange
+        (ColorTranslator.FromHtml("#FBE9E7"), "Deep Orange 50"),
+        (ColorTranslator.FromHtml("#FFCCBC"), "Deep Orange 100"),
+        (ColorTranslator.FromHtml("#FFAB91"), "Deep Orange 200"),
+        (ColorTranslator.FromHtml("#FF8A65"), "Deep Orange 300"),
+        (ColorTranslator.FromHtml("#FF7043"), "Deep Orange 400"),
+        (ColorTranslator.FromHtml("#FF5722"), "Deep Orange 500"),
+        (ColorTranslator.FromHtml("#F4511E"), "Deep Orange 600"),
+        (ColorTranslator.FromHtml("#E64A19"), "Deep Orange 700"),
+        (ColorTranslator.FromHtml("#D84315"), "Deep Orange 800"),
+        (ColorTranslator.FromHtml("#BF360C"), "Deep Orange 900"),
+        (ColorTranslator.FromHtml("#FF9E80"), "Deep Orange A100"),
+        (ColorTranslator.FromHtml("#FF6E40"), "Deep Orange A200"),
+        (ColorTranslator.FromHtml("#FF3D00"), "Deep Orange A400"),
+        (ColorTranslator.FromHtml("#DD2C00"), "Deep Orange A700"),
+
+        // Brown
+        (ColorTranslator.FromHtml("#EFEBE9"), "Brown 50"),
+        (ColorTranslator.FromHtml("#D7CCC8"), "Brown 100"),
+        (ColorTranslator.FromHtml("#BCAAA4"), "Brown 200"),
+        (ColorTranslator.FromHtml("#A1887F"), "Brown 300"),
+        (ColorTranslator.FromHtml("#8D6E63"), "Brown 400"),
+        (ColorTranslator.FromHtml("#795548"), "Brown 500"),
+        (ColorTranslator.FromHtml("#6D4C41"), "Brown 600"),
+        (ColorTranslator.FromHtml("#5D4037"), "Brown 700"),
+        (ColorTranslator.FromHtml("#4E342E"), "Brown 800"),
+        (ColorTranslator.FromHtml("#3E2723"), "Brown 900"),
+
+        // Grey
+        (ColorTranslator.FromHtml("#FAFAFA"), "Grey 50"),
+        (ColorTranslator.FromHtml("#F5F5F5"), "Grey 100"),
+        (ColorTranslator.FromHtml("#EEEEEE"), "Grey 200"),
+        (ColorTranslator.FromHtml("#E0E0E0"), "Grey 300"),
+        (ColorTranslator.FromHtml("#BDBDBD"), "Grey 400"),
+        (ColorTranslator.FromHtml("#9E9E9E"), "Grey 500"),
+        (ColorTranslator.FromHtml("#757575"), "Grey 600"),
+        (ColorTranslator.FromHtml("#616161"), "Grey 700"),
+        (ColorTranslator.FromHtml("#424242"), "Grey 800"),
+        (ColorTranslator.FromHtml("#212121"), "Grey 900"),
+
+        // Blue Grey
+        (ColorTranslator.FromHtml("#ECEFF1"), "Blue Grey 50"),
+        (ColorTranslator.FromHtml("#CFD8DC"), "Blue Grey 100"),
+        (ColorTranslator.FromHtml("#B0BEC5"), "Blue Grey 200"),
+        (ColorTranslator.FromHtml("#90A4AE"), "Blue Grey 300"),
+        (ColorTranslator.FromHtml("#78909C"), "Blue Grey 400"),
+        (ColorTranslator.FromHtml("#607D8B"), "Blue Grey 500"),
+        (ColorTranslator.FromHtml("#546E7A"), "Blue Grey 600"),
+        (ColorTranslator.FromHtml("#455A64"), "Blue Grey 700"),
+        (ColorTranslator.FromHtml("#37474F"), "Blue Grey 800"),
+        (ColorTranslator.FromHtml("#263238"), "Blue Grey 900"),
+        ];
+
+        private static readonly Color[] MaterialExpressivePalette =
+        {
+        // === Pink (Light) ===
+        ColorTranslator.FromHtml("#FCE4EC"), // 50
+        ColorTranslator.FromHtml("#F8BBD0"), // 100
+        ColorTranslator.FromHtml("#F48FB1"), // 200
+        ColorTranslator.FromHtml("#F06292"), // 300
+        ColorTranslator.FromHtml("#EC407A"), // 400
+        ColorTranslator.FromHtml("#E91E63"), // 500
+        ColorTranslator.FromHtml("#D81B60"), // 600
+        ColorTranslator.FromHtml("#C2185B"), // 700
+        ColorTranslator.FromHtml("#AD1457"), // 800
+        ColorTranslator.FromHtml("#880E4F"), // 900
+
+        // === Deep Purple (Light) ===
+        ColorTranslator.FromHtml("#EDE7F6"), // 50
+        ColorTranslator.FromHtml("#D1C4E9"), // 100
+        ColorTranslator.FromHtml("#B39DDB"), // 200
+        ColorTranslator.FromHtml("#9575CD"), // 300
+        ColorTranslator.FromHtml("#7E57C2"), // 400
+        ColorTranslator.FromHtml("#673AB7"), // 500
+        ColorTranslator.FromHtml("#5E35B1"), // 600
+        ColorTranslator.FromHtml("#512DA8"), // 700
+        ColorTranslator.FromHtml("#4527A0"), // 800
+        ColorTranslator.FromHtml("#311B92"), // 900
+
+        // === Cyan (Light) ===
+        ColorTranslator.FromHtml("#E0F7FA"), // 50
+        ColorTranslator.FromHtml("#B2EBF2"), // 100
+        ColorTranslator.FromHtml("#80DEEA"), // 200
+        ColorTranslator.FromHtml("#4DD0E1"), // 300
+        ColorTranslator.FromHtml("#26C6DA"), // 400
+        ColorTranslator.FromHtml("#00BCD4"), // 500
+        ColorTranslator.FromHtml("#00ACC1"), // 600
+        ColorTranslator.FromHtml("#0097A7"), // 700
+        ColorTranslator.FromHtml("#00838F"), // 800
+        ColorTranslator.FromHtml("#006064"), // 900
+
+        // === Orange (Light) ===
+        ColorTranslator.FromHtml("#FFF3E0"), // 50
+        ColorTranslator.FromHtml("#FFE0B2"), // 100
+        ColorTranslator.FromHtml("#FFCC80"), // 200
+        ColorTranslator.FromHtml("#FFB74D"), // 300
+        ColorTranslator.FromHtml("#FFA726"), // 400
+        ColorTranslator.FromHtml("#FF9800"), // 500
+        ColorTranslator.FromHtml("#FB8C00"), // 600
+        ColorTranslator.FromHtml("#F57C00"), // 700
+        ColorTranslator.FromHtml("#EF6C00"), // 800
+        ColorTranslator.FromHtml("#E65100"), // 900
+
+        // === Green (Light) ===
+        ColorTranslator.FromHtml("#E8F5E9"), // 50
+        ColorTranslator.FromHtml("#C8E6C9"), // 100
+        ColorTranslator.FromHtml("#A5D6A7"), // 200
+        ColorTranslator.FromHtml("#81C784"), // 300
+        ColorTranslator.FromHtml("#66BB6A"), // 400
+        ColorTranslator.FromHtml("#4CAF50"), // 500
+        ColorTranslator.FromHtml("#43A047"), // 600
+        ColorTranslator.FromHtml("#388E3C"), // 700
+        ColorTranslator.FromHtml("#2E7D32"), // 800
+        ColorTranslator.FromHtml("#1B5E20"), // 900
+
+        // === Pink (Dark) ===
+        ColorTranslator.FromHtml("#AD1457"), // 800
+        ColorTranslator.FromHtml("#880E4F"), // 900
+        ColorTranslator.FromHtml("#C2185B"), // 700
+        ColorTranslator.FromHtml("#D81B60"), // 600
+        ColorTranslator.FromHtml("#E91E63"), // 500
+        ColorTranslator.FromHtml("#EC407A"), // 400
+        ColorTranslator.FromHtml("#F06292"), // 300
+        ColorTranslator.FromHtml("#F48FB1"), // 200
+        ColorTranslator.FromHtml("#F8BBD0"), // 100
+        ColorTranslator.FromHtml("#FCE4EC"), // 50
+
+        // === Deep Purple (Dark) ===
+        ColorTranslator.FromHtml("#4527A0"), // 800
+        ColorTranslator.FromHtml("#311B92"), // 900
+        ColorTranslator.FromHtml("#512DA8"), // 700
+        ColorTranslator.FromHtml("#5E35B1"), // 600
+        ColorTranslator.FromHtml("#673AB7"), // 500
+        ColorTranslator.FromHtml("#7E57C2"), // 400
+        ColorTranslator.FromHtml("#9575CD"), // 300
+        ColorTranslator.FromHtml("#B39DDB"), // 200
+        ColorTranslator.FromHtml("#D1C4E9"), // 100
+        ColorTranslator.FromHtml("#EDE7F6"), // 50
+
+        // === Cyan (Dark) ===
+        ColorTranslator.FromHtml("#00838F"), // 800
+        ColorTranslator.FromHtml("#006064"), // 900
+        ColorTranslator.FromHtml("#0097A7"), // 700
+        ColorTranslator.FromHtml("#00ACC1"), // 600
+        ColorTranslator.FromHtml("#00BCD4"), // 500
+        ColorTranslator.FromHtml("#26C6DA"), // 400
+        ColorTranslator.FromHtml("#4DD0E1"), // 300
+        ColorTranslator.FromHtml("#80DEEA"), // 200
+        ColorTranslator.FromHtml("#B2EBF2"), // 100
+        ColorTranslator.FromHtml("#E0F7FA"), // 50
+
+        // === Orange (Dark) ===
+        ColorTranslator.FromHtml("#EF6C00"), // 800
+        ColorTranslator.FromHtml("#E65100"), // 900
+        ColorTranslator.FromHtml("#F57C00"), // 700
+        ColorTranslator.FromHtml("#FB8C00"), // 600
+        ColorTranslator.FromHtml("#FF9800"), // 500
+        ColorTranslator.FromHtml("#FFA726"), // 400
+        ColorTranslator.FromHtml("#FFB74D"), // 300
+        ColorTranslator.FromHtml("#FFCC80"), // 200
+        ColorTranslator.FromHtml("#FFE0B2"), // 100
+        ColorTranslator.FromHtml("#FFF3E0"), // 50
+
+        // === Green (Dark) ===
+        ColorTranslator.FromHtml("#2E7D32"), // 800
+        ColorTranslator.FromHtml("#1B5E20"), // 900
+        ColorTranslator.FromHtml("#388E3C"), // 700
+        ColorTranslator.FromHtml("#43A047"), // 600
+        ColorTranslator.FromHtml("#4CAF50"), // 500
+        ColorTranslator.FromHtml("#66BB6A"), // 400
+        ColorTranslator.FromHtml("#81C784"), // 300
+        ColorTranslator.FromHtml("#A5D6A7"), // 200
+        ColorTranslator.FromHtml("#C8E6C9"), // 100
+        ColorTranslator.FromHtml("#E8F5E9"), // 50
+
+        // === Neutral Grayscale (Shared) ===
+        ColorTranslator.FromHtml("#FFFFFF"), // White
+        ColorTranslator.FromHtml("#FAFAFA"), // Gray 50
+        ColorTranslator.FromHtml("#F5F5F5"), // Gray 100
+        ColorTranslator.FromHtml("#EEEEEE"), // Gray 200
+        ColorTranslator.FromHtml("#E0E0E0"), // Gray 300
+        ColorTranslator.FromHtml("#BDBDBD"), // Gray 400
+        ColorTranslator.FromHtml("#9E9E9E"), // Gray 500
+        ColorTranslator.FromHtml("#757575"), // Gray 600
+        ColorTranslator.FromHtml("#616161"), // Gray 700
+        ColorTranslator.FromHtml("#424242"), // Gray 800
+        ColorTranslator.FromHtml("#212121"), // Gray 900
+        ColorTranslator.FromHtml("#000000"), // Black
+    };
+
+        private static readonly Color[] MacSemantic =
+        {
+        // System Colors
+        Color.FromArgb(0, 122, 255),   // systemBlue (Light)
+        Color.FromArgb(10, 132, 255),  // systemBlue (Dark)
+
+        Color.FromArgb(52, 199, 89),   // systemGreen (Light)
+        Color.FromArgb(48, 209, 88),   // systemGreen (Dark)
+
+        Color.FromArgb(88, 86, 214),   // systemIndigo (Light)
+        Color.FromArgb(94, 92, 230),   // systemIndigo (Dark)
+
+        Color.FromArgb(255, 149, 0),   // systemOrange (Light)
+        Color.FromArgb(255, 159, 10),  // systemOrange (Dark)
+
+        Color.FromArgb(255, 45, 85),   // systemPink (Light)
+        Color.FromArgb(255, 55, 95),   // systemPink (Dark)
+
+        Color.FromArgb(175, 82, 222),  // systemPurple (Light)
+        Color.FromArgb(191, 90, 242),  // systemPurple (Dark)
+
+        Color.FromArgb(255, 59, 48),   // systemRed (Light)
+        Color.FromArgb(255, 69, 58),   // systemRed (Dark)
+
+        Color.FromArgb(90, 200, 250),  // systemTeal (Light)
+        Color.FromArgb(100, 210, 255), // systemTeal (Dark)
+
+        Color.FromArgb(255, 204, 0),   // systemYellow (Light)
+        Color.FromArgb(255, 214, 10),  // systemYellow (Dark)
+
+        // Label Colors
+        Color.FromArgb(0, 0, 0),       // label (Light)
+        Color.FromArgb(255, 255, 255), // label (Dark)
+
+        Color.FromArgb(60, 60, 67),    // secondaryLabel (Light)
+        Color.FromArgb(235, 235, 245), // secondaryLabel (Dark)
+
+        Color.FromArgb(118, 118, 122), // tertiaryLabel (Light)
+        Color.FromArgb(235, 235, 245), // tertiaryLabel (Dark, lighter opacity)
+
+        // Background Colors
+        Color.FromArgb(255, 255, 255), // systemBackground (Light)
+        Color.FromArgb(0, 0, 0),       // systemBackground (Dark)
+
+        Color.FromArgb(242, 242, 247), // secondarySystemBackground (Light)
+        Color.FromArgb(28, 28, 30),    // secondarySystemBackground (Dark)
+
+        Color.FromArgb(255, 255, 255), // tertiarySystemBackground (Light)
+        Color.FromArgb(44, 44, 46),    // tertiarySystemBackground (Dark)
+
+        // Separator
+        Color.FromArgb(200, 199, 204), // separator (Light)
+        Color.FromArgb(56, 56, 58),    // separator (Dark)
+
+        // Window & Control Background
+        Color.FromArgb(236, 236, 236), // windowBackgroundColor (Light)
+        Color.FromArgb(28, 28, 30),    // windowBackgroundColor (Dark)
+
+        Color.FromArgb(242, 242, 247), // controlBackgroundColor (Light)
+        Color.FromArgb(44, 44, 46),    // controlBackgroundColor (Dark)
+
+        // Selection Background
+        Color.FromArgb(0, 122, 255),   // selectedContentBackground (Light)
+        Color.FromArgb(10, 132, 255),  // selectedContentBackground (Dark)
+
+        Color.FromArgb(232, 232, 237), // unemphasizedSelectedContentBackground (Light)
+        Color.FromArgb(58, 58, 60),    // unemphasizedSelectedContentBackground (Dark)
+
+        // Text Background
+        Color.FromArgb(255, 255, 255), // textBackgroundColor (Light)
+        Color.FromArgb(0, 0, 0),       // textBackgroundColor (Dark)
+
+        // Under Page Background
+        Color.FromArgb(239, 239, 244), // underPageBackgroundColor (Light)
+        Color.FromArgb(28, 28, 30),    // underPageBackgroundColor (Dark)
+    };
+
+        /// <summary>
+        /// Converts the specified color to the closest matching Android material color.
+        /// </summary>
+        /// <remarks>The method determines the closest material color by calculating the distance between
+        /// the specified color and a predefined set of material colors, and then selecting the one with the smallest
+        /// distance.</remarks>
+        /// <param name="c">The color to be converted.</param>
+        /// <returns>The material color that is closest to the specified color.</returns>
+        public static Color ToMaterial(this Color c)
+        {
+            return MaterialPalette.OrderBy(s => ColorDistance(c, s.color)).First().color;
+        }
+
+        /// <summary>
+        /// Finds the closest matching color from the Material Expressive 3 Palette to the specified input color.
+        /// </summary>
+        /// <remarks>The method calculates the distance between the input color and each color in the Material Expressive
+        /// Palette, returning the color with the smallest distance. The distance metric used is determined by the
+        /// implementation of the <c>ColorDistance</c> method.</remarks>
+        /// <param name="input">The input <see cref="Color"/> to match against the Material Expressive Palette.</param>
+        /// <returns>The <see cref="Color"/> from the Material Expressive Palette that is closest to the input color.</returns>
+        public static Color ToMaterialExpressive3(this Color input)
+        {
+            Color nearest = MaterialExpressivePalette[0];
+            double bestDist = double.MaxValue;
+
+            foreach (var c in MaterialExpressivePalette)
+            {
+                double dist = ColorDistance(input, c);
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    nearest = c;
+                }
+            }
+            return nearest;
+        }
+
+        /// <summary>
+        /// Converts the specified color to the closest matching macOS semantic color.
+        /// </summary>
+        /// <remarks>This method determines the closest macOS semantic color by calculating the distance
+        /// between the specified color and a predefined set of macOS semantic colors.</remarks>
+        /// <param name="c">The color to be converted.</param>
+        /// <returns>The macOS semantic color that most closely matches the specified color.</returns>
+        public static Color ToMacSemantic(this Color c)
+        {
+            return MacSemantic.OrderBy(s => ColorDistance(c, s)).First();
+        }
+
+        private static int ColorDistance(Color a, Color b)
+        {
+            int dr = a.R - b.R, dg = a.G - b.G, db = a.B - b.B;
+            return dr * dr + dg * dg + db * db;
         }
 
         /// <summary>

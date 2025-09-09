@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using WinPaletter.Properties;
+using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.UI.WP
 {
@@ -26,8 +27,12 @@ namespace WinPaletter.UI.WP
                 Rectangle itemRectangle = e.Item.ContentRectangle;
                 itemRectangle.Height -= 1;
 
-                G.FillRoundedRect(Program.Style.Schemes.Main.Brushes.Back_Checked_Hover, itemRectangle);
-                G.DrawRoundedRectBeveled(Program.Style.Schemes.Main.Pens.Line_Checked_Hover, itemRectangle);
+                using (SolidBrush br = new(Color.FromArgb(128, Program.Style.Schemes.Main.Colors.Back_Checked_Hover)))
+                using (Pen P = new(Color.FromArgb(128, Program.Style.Schemes.Main.Colors.Line_Checked_Hover)))
+                {
+                    G.FillRoundedRect(br, itemRectangle);
+                    G.DrawRoundedRectBeveled(P, itemRectangle);
+                }
             }
             else
             {
@@ -104,6 +109,7 @@ namespace WinPaletter.UI.WP
 
     public partial class ContextMenuStrip : System.Windows.Forms.ContextMenuStrip
     {
+        AnimateWindowFlags AnimationType => Program.TM.WindowsEffects.MenuFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? AnimateWindowFlags.AW_BLEND : AnimateWindowFlags.AW_HOR_POSITIVE;
         public ContextMenuStrip()
         {
             AllowTransparency = true;
@@ -134,6 +140,31 @@ namespace WinPaletter.UI.WP
         private Bitmap BlurredBackground;
         private Bitmap Background;
 
+        void UpdateBackdrop()
+        {
+            Background?.Dispose();
+            Background = GraphicsExtensions.CaptureFromScreen(Bounds);
+
+            BlurredBackground?.Dispose();
+            BlurredBackground = Background.Blur(8);
+        }
+
+        protected override void OnOpening(CancelEventArgs e)
+        {
+            base.OnOpening(e);
+            UpdateBackdrop();
+        }
+
+        protected override void OnVisibleChanged(EventArgs e) 
+        { 
+            if (this.Handle != IntPtr.Zero && Program.Style.Animations)
+            {
+                AnimateWindow(this.Handle, 80, AnimationType | (Visible ? AnimateWindowFlags.AW_ACTIVATE : AnimateWindowFlags.AW_HIDE));
+            } 
+
+            base.OnVisibleChanged(e);
+        }
+
         protected override void OnClosed(ToolStripDropDownClosedEventArgs e)
         {
             base.OnClosed(e);
@@ -143,18 +174,6 @@ namespace WinPaletter.UI.WP
 
             BlurredBackground?.Dispose();
             BlurredBackground = null;
-        }
-
-        protected override void OnOpening(CancelEventArgs e)
-        {
-            base.OnOpening(e);
-            //CaptureFromScreen(null, Bounds.Location);
-
-            Background?.Dispose();
-            Background = GraphicsExtensions.CaptureFromScreen(Bounds);
-
-            BlurredBackground?.Dispose();
-            BlurredBackground = Background.Blur(8);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -172,7 +191,7 @@ namespace WinPaletter.UI.WP
 
             if (BlurredBackground != null)
             {
-                G.DrawRoundImage(BlurredBackground, rect);
+                G.DrawImage(BlurredBackground, rect);
                 G.FillRectangle(Noise, rect);
             }
 

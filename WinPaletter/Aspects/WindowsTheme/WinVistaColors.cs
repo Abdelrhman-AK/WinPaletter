@@ -121,6 +121,18 @@ namespace WinPaletter
             ApplyDefaultTMValues();
         }
 
+        /// <summary>
+        /// Updates the preview of the desktop window with the current color settings.
+        /// </summary>
+        /// <remarks>This method applies the current color values from the associated UI elements to the
+        /// preview of the desktop window. It updates the active and inactive title bar colors, as well as a series of
+        /// additional color properties.</remarks>
+        public void UpdatePreview()
+        {
+            windowsDesktop1.TitlebarColor_Active = ColorizationColor_pick.BackColor;
+            windowsDesktop1.TitlebarColor_Inactive = ColorizationColor_pick.BackColor;
+        }
+
         public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.WindowsVista.Enabled;

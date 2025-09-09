@@ -386,10 +386,10 @@ namespace WinPaletter
             Program.Log?.Write(LogEventLevel.Information, "Preparing privileges for PE file modification.");
             Program.Log?.Write(LogEventLevel.Information, "Enabling SeTakeOwnershipPrivilege, SeSecurityPrivilege, SeRestorePrivilege, and SeBackupPrivilege.");
 
-            if (!advapi.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
-            if (!advapi.EnablePrivilege("SeSecurityPrivilege", false)) throw new Exception("Failed to get SeSecurityPrivilege");
-            if (!advapi.EnablePrivilege("SeRestorePrivilege", false)) throw new Exception("Failed to get SeRestorePrivilege");
-            if (!advapi.EnablePrivilege("SeBackupPrivilege", false)) throw new Exception("Failed to get SeBackupPrivilege");
+            if (!ADVAPI.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
+            if (!ADVAPI.EnablePrivilege("SeSecurityPrivilege", false)) throw new Exception("Failed to get SeSecurityPrivilege");
+            if (!ADVAPI.EnablePrivilege("SeRestorePrivilege", false)) throw new Exception("Failed to get SeRestorePrivilege");
+            if (!ADVAPI.EnablePrivilege("SeBackupPrivilege", false)) throw new Exception("Failed to get SeBackupPrivilege");
         }
 
         /// <summary>

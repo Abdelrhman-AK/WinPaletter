@@ -191,12 +191,13 @@ namespace WinPaletter
                 effect_desaturate.BackColor = c.Desaturate(trackBar4.Value / 100f);
                 effect_rotateHue.BackColor = c.RotateHue(trackBar5.Value);
                 effect_invert.BackColor = c.Invert();
-                effect_complementary.BackColor = c.Complementary();
                 effect_sepia.BackColor = c.Sepia();
-                effect_16bit.BackColor = c.To16Bit();
                 effect_256.BackColor = c.To256Color();
                 effect_monochrome.BackColor = c.Monochrome();
                 effect_grayscale.BackColor = c.Grayscale();
+                effect_macOS.BackColor = c.ToMacSemantic();
+                effect_Material.BackColor = c.ToMaterial();
+                effect_MaterialExpressive.BackColor = c.ToMaterialExpressive3();
 
                 foreach (ColorItem effect in panel1.Controls.OfType<ColorItem>()) effect.DefaultBackColor = effect.BackColor;
 
@@ -661,6 +662,12 @@ namespace WinPaletter
         {
             effect_rotateHue.BackColor = InitColor.RotateHue(trackBar5.Value);
             effect_rotateHue.DefaultBackColor = effect_rotateHue.BackColor;
+        }
+
+        private void trackBarX3_ValueChanged(object sender, EventArgs e)
+        {
+            effect_brightness.BackColor = InitColor.CB((trackBar5.Value - 50f) / 50f);
+            effect_brightness.DefaultBackColor = effect_brightness.BackColor;
         }
     }
 }

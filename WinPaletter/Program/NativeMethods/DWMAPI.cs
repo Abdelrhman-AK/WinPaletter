@@ -103,37 +103,6 @@ namespace WinPaletter.NativeMethods
         public static extern int DwmIsCompositionEnabled(out bool isEnabled);
 
         /// <summary>
-        /// Enables or disables Desktop Window Manager (DWM) composition.
-        /// </summary>
-        /// <param name="bEnable">True to enable composition; false to disable composition.</param>
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmEnableComposition(bool bEnable);
-
-        /// <summary>
-        /// Enables or disables Desktop Window Manager (DWM) composition.
-        /// </summary>
-        /// <param name="fEnable">1 to enable composition; 0 to disable composition.</param>
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmEnableComposition(int fEnable);
-
-        /// <summary>
-        /// Retrieves the color used for Desktop Window Manager (DWM) glass composition.
-        /// </summary>
-        /// <param name="pcrColorization">Receives the color value.</param>
-        /// <param name="pfOpaqueBlend">Receives whether the color is opaque.</param>
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmGetColorizationColor(out int pcrColorization, [MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
-
-        /// <summary>
-        /// Retrieves the color used for Desktop Window Manager (DWM) glass composition.
-        /// </summary>
-        /// <param name="pcrColorization">Receives the color value.</param>
-        /// <param name="pfOpaqueBlend">Receives whether the color is opaque.</param>
-        /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetColorizationColor(ref int pcrColorization, ref int pfOpaqueBlend);
-
-        /// <summary>
         /// Extends the window frame into the client area.
         /// </summary>
         /// <param name="hWnd">A handle to the window.</param>
@@ -183,37 +152,6 @@ namespace WinPaletter.NativeMethods
         /// colorization settings. This parameter is passed uninitialized.</param>
         [DllImport("dwmapi.dll", EntryPoint = "#127", SetLastError = false)]
         public static extern void DwmGetColorizationParameters(out DWM_COLORIZATION_PARAMS parameters);
-
-        /// <summary>
-        /// Retrieves the value of Desktop Window Manager (DWM) non-client rendering attributes for a window.
-        /// </summary>
-        /// <param name="hwnd">A handle to the window.</param>
-        /// <param name="dwAttribute">The attribute to retrieve.</param>
-        /// <param name="pvAttribute">A pointer to a value that, when this function returns successfully, receives the value of the attribute.</param>
-        /// <param name="cbAttribute">The size, in bytes, of the pvAttribute value.</param>
-        /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, IntPtr pvAttribute, int cbAttribute);
-
-        /// <summary>
-        /// Sets the present parameters for Desktop Window Manager (DWM).
-        /// </summary>
-        /// <param name="hwnd">A handle to the window.</param>
-        /// <param name="pPresentParams">A pointer to a DWM_PRESENT_PARAMETERS structure that contains the present parameters to set.</param>
-        /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmSetPresentParameters(IntPtr hwnd, ref DWM_PRESENT_PARAMETERS pPresentParams);
-
-        /// <summary>
-        /// Sets the value of Desktop Window Manager (DWM) non-client rendering attributes for a window.
-        /// </summary>
-        /// <param name="hwnd">A handle to the window.</param>
-        /// <param name="dwAttribute">The attribute to set.</param>
-        /// <param name="pvAttribute">A pointer to a value that contains the attribute value.</param>
-        /// <param name="cbAttribute">The size, in bytes, of the pvAttribute value.</param>
-        /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
-        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, IntPtr pvAttribute, int cbAttribute);
 
         /// <summary>
         /// Checks if Desktop Window Manager (DWM) composition is enabled on the system.
@@ -308,40 +246,6 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
-        /// Struct that specifies a rectangle by the coordinates of its upper-left and lower-right corners.
-        /// </summary>
-        /// <remarks>
-        /// Initializes a new instance of the RECT structure with specified coordinates.
-        /// </remarks>
-        /// <param name="left">The x-coordinate of the upper-left corner.</param>
-        /// <param name="top">The y-coordinate of the upper-left corner.</param>
-        /// <param name="right">The x-coordinate of the lower-right corner.</param>
-        /// <param name="bottom">The y-coordinate of the lower-right corner.</param>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT(int left, int top, int right, int bottom)
-        {
-            /// <summary>
-            /// The x-coordinate of the upper-left corner of the rectangle.
-            /// </summary>
-            public int left = left;
-
-            /// <summary>
-            /// The y-coordinate of the upper-left corner of the rectangle.
-            /// </summary>
-            public int top = top;
-
-            /// <summary>
-            /// The x-coordinate of the lower-right corner of the rectangle.
-            /// </summary>
-            public int right = right;
-
-            /// <summary>
-            /// The y-coordinate of the lower-right corner of the rectangle.
-            /// </summary>
-            public int bottom = bottom;
-        }
-
-        /// <summary>
         /// Struct that specifies Desktop Window Manager (DWM) colorization parameters.
         /// </summary>
         public struct DWM_COLORIZATION_PARAMS
@@ -380,53 +284,6 @@ namespace WinPaletter.NativeMethods
             /// True if the colorization is opaque; false if it's not opaque.
             /// </summary>
             public bool fOpaque;
-        }
-
-        /// <summary>
-        /// Struct that specifies Desktop Window Manager (DWM) present parameters.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct DWM_PRESENT_PARAMETERS
-        {
-            /// <summary>
-            /// The size of this structure.
-            /// </summary>
-            public int cbSize;
-
-            /// <summary>
-            /// The frame to queue, if any.
-            /// </summary>
-            public int fQueue;
-
-            /// <summary>
-            /// The refresh start time, in 100-nanosecond units.
-            /// </summary>
-            public long cRefreshStart;
-
-            /// <summary>
-            /// The number of buffers in the flip chain.
-            /// </summary>
-            public int cBuffer;
-
-            /// <summary>
-            /// True if the source rate should be used; false otherwise.
-            /// </summary>
-            public int fUseSourceRate;
-
-            /// <summary>
-            /// The source rate.
-            /// </summary>
-            public UNSIGNED_RATIO rateSource;
-
-            /// <summary>
-            /// The number of refreshes per frame.
-            /// </summary>
-            public int cRefreshesPerFrame;
-
-            /// <summary>
-            /// The sampling type for the source frame.
-            /// </summary>
-            public DWM_SOURCE_FRAME_SAMPLING eSampling;
         }
 
         #endregion
@@ -598,27 +455,6 @@ namespace WinPaletter.NativeMethods
             /// Small round form corners.
             /// </summary>
             SmallRound
-        }
-
-        /// <summary>
-        /// Enumerates Desktop Window Manager (DWM) source frame sampling types.
-        /// </summary>
-        public enum DWM_SOURCE_FRAME_SAMPLING
-        {
-            /// <summary>
-            /// Specifies point sampling for source frames.
-            /// </summary>
-            DWM_SOURCE_FRAME_SAMPLING_POINT,
-
-            /// <summary>
-            /// Specifies coverage sampling for source frames.
-            /// </summary>
-            DWM_SOURCE_FRAME_SAMPLING_COVERAGE,
-
-            /// <summary>
-            /// Specifies the last available source frame sampling type.
-            /// </summary>
-            DWM_SOURCE_FRAME_SAMPLING_LAST
         }
 
         #endregion

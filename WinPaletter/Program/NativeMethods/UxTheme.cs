@@ -69,14 +69,17 @@ namespace WinPaletter.NativeMethods
         /// Do Not Draw The Caption (Text)
         /// </summary>
         public static uint WTNCA_NODRAWCAPTION = 0x1U;
+
         /// <summary>
         /// Do Not Draw the Icon
         /// </summary>
         public static uint WTNCA_NODRAWICON = 0x2U;
+
         /// <summary>
         /// Do Not Hide the System contextMenu
         /// </summary>
         public static uint WTNCA_NOSYSMENU = 0x4U;
+
         /// <summary>
         /// Do Not Mirror the Question mark Symbol
         /// </summary>
@@ -97,88 +100,6 @@ namespace WinPaletter.NativeMethods
             /// Mask specifying which attributes to modify.
             /// </summary>
             public uint Mask;
-        }
-
-        /// <summary>
-        /// Options for drawing themed text.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct DttOpts
-        {
-            /// <summary>
-            /// The size of the structure.
-            /// </summary>
-            public int dwSize;
-
-            /// <summary>
-            /// Flags specifying which options to apply.
-            /// </summary>
-            public DttOptsFlags dwFlags;
-
-            /// <summary>
-            /// The color of the text.
-            /// </summary>
-            public int crText;
-
-            /// <summary>
-            /// The color of the border.
-            /// </summary>
-            public int crBorder;
-
-            /// <summary>
-            /// The color of the shadow.
-            /// </summary>
-            public int crShadow;
-
-            /// <summary>
-            /// The type of text shadow.
-            /// </summary>
-            public int iTextShadowType;
-
-            /// <summary>
-            /// The offset of the shadow.
-            /// </summary>
-            public Point ptShadowOffset;
-
-            /// <summary>
-            /// The size of the border.
-            /// </summary>
-            public int iBorderSize;
-
-            /// <summary>
-            /// The font property ID.
-            /// </summary>
-            public int iFontPropId;
-
-            /// <summary>
-            /// The color property ID.
-            /// </summary>
-            public int iColorPropId;
-
-            /// <summary>
-            /// The state ID.
-            /// </summary>
-            public int iStateId;
-
-            /// <summary>
-            /// Indicates whether to apply overlay.
-            /// </summary>
-            public bool fApplyOverlay;
-
-            /// <summary>
-            /// The size of the glow.
-            /// </summary>
-            public int iGlowSize;
-
-            /// <summary>
-            /// Callback function for drawing text.
-            /// </summary>
-            public int pfnDrawTextCallback;
-
-            /// <summary>
-            /// User-defined parameter for the callback function.
-            /// </summary>
-            public IntPtr lParam;
         }
 
         /// <summary>

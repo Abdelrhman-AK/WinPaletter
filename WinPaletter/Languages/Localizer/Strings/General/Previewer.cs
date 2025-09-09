@@ -29,6 +29,7 @@
                 public string Apply { get; set; } = "Apply";
                 public string Apply_RestorePoint { get; set; } = "Create a system restore point then apply";
                 public string Open_in_CPL { get; set; } = "Open in Control Panel";
+                public string ColorsEffects { get; set; } = "Colors effects";
                 public string SaveAs_MSTheme { get; set; } = "Save as *.theme file";
                 public string SaveAs_MSTheme_OneAspect { get; set; } = "Save this aspect only as *.theme file";
             }

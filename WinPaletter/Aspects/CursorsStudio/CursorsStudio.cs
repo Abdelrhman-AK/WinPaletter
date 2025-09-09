@@ -430,6 +430,15 @@ namespace WinPaletter
             trackBarX8.Value = CursorControl.Prop_Shadow_OffsetY;
         }
 
+        public void ApplyColorsToPreview()
+        {
+            foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
+            {
+                ApplyColorsToPreview(i);
+                i.Invalidate();
+            }
+        }
+
         public void ApplyColorsToPreview(CursorControl CursorControl)
         {
             CursorControl.Prop_UseFromFile = source1.Checked;
@@ -441,14 +450,14 @@ namespace WinPaletter
             CursorControl.Prop_PrimaryColor1 = PrimaryColor1.BackColor;
             CursorControl.Prop_PrimaryColor2 = PrimaryColor2.BackColor;
             CursorControl.Prop_PrimaryColorGradient = CheckBox1.Checked;
-            CursorControl.Prop_PrimaryColorGradientMode = Paths.ReturnGradientModeFromString(ComboBox1.SelectedItem.ToString());
+            CursorControl.Prop_PrimaryColorGradientMode = Paths.ReturnGradientModeFromString((ComboBox1.SelectedItem ?? "vertical").ToString());
             CursorControl.Prop_PrimaryNoise = CheckBox5.Checked;
             CursorControl.Prop_PrimaryNoiseOpacity = trackBarX1.Value;
 
             CursorControl.Prop_SecondaryColor1 = SecondaryColor1.BackColor;
             CursorControl.Prop_SecondaryColor2 = SecondaryColor2.BackColor;
             CursorControl.Prop_SecondaryColorGradient = CheckBox4.Checked;
-            CursorControl.Prop_SecondaryColorGradientMode = Paths.ReturnGradientModeFromString(ComboBox2.SelectedItem.ToString());
+            CursorControl.Prop_SecondaryColorGradientMode = Paths.ReturnGradientModeFromString((ComboBox2.SelectedItem ?? "vertical").ToString());
             CursorControl.Prop_SecondaryNoise = CheckBox3.Checked;
             CursorControl.Prop_SecondaryNoiseOpacity = trackBarX2.Value / 100f;
             CursorControl.Prop_BorderThickness = ((float)trackBarX12.Value / (float)trackBarX12.Maximum) * 3f;
@@ -457,14 +466,14 @@ namespace WinPaletter
             CursorControl.Prop_LoadingCircleBack1 = CircleColor1.BackColor;
             CursorControl.Prop_LoadingCircleBack2 = CircleColor2.BackColor;
             CursorControl.Prop_LoadingCircleBackGradient = CheckBox8.Checked;
-            CursorControl.Prop_LoadingCircleBackGradientMode = Paths.ReturnGradientModeFromString(ComboBox4.SelectedItem.ToString());
+            CursorControl.Prop_LoadingCircleBackGradientMode = Paths.ReturnGradientModeFromString((ComboBox4.SelectedItem ?? "vertical").ToString());
             CursorControl.Prop_LoadingCircleBackNoise = CheckBox7.Checked;
             CursorControl.Prop_LoadingCircleBackNoiseOpacity = trackBarX3.Value / 100f;
 
             CursorControl.Prop_LoadingCircleHot1 = LoadingColor1.BackColor;
             CursorControl.Prop_LoadingCircleHot2 = LoadingColor2.BackColor;
             CursorControl.Prop_LoadingCircleHotGradient = CheckBox2.Checked;
-            CursorControl.Prop_LoadingCircleHotGradientMode = Paths.ReturnGradientModeFromString(ComboBox3.SelectedItem.ToString());
+            CursorControl.Prop_LoadingCircleHotGradientMode = Paths.ReturnGradientModeFromString((ComboBox3.SelectedItem ?? "vertical").ToString());
             CursorControl.Prop_LoadingCircleHotNoise = CheckBox6.Checked;
             CursorControl.Prop_LoadingCircleHotNoiseOpacity = trackBarX4.Value / 100f;
 

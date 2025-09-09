@@ -79,11 +79,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpdwSize">On input, specifies the size of the lpExeName Buffer, in characters. On success, receives the number of characters written to the Buffer, excluding the null-terminating character.</param>
         /// <returns>Returns true if the function succeeds; otherwise, false.</returns>
         [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool QueryFullProcessImageName(
-            [In] IntPtr hProcess,
-            [In] int dwFlags,
-            [Out] StringBuilder lpExeName,
-            ref int lpdwSize);
+        private static extern bool QueryFullProcessImageName([In] IntPtr hProcess, [In] int dwFlags, [Out] StringBuilder lpExeName, ref int lpdwSize);
 
         /// <summary>
         /// Opens an existing local process object.
@@ -159,15 +155,5 @@ namespace WinPaletter.NativeMethods
         /// <param name="lParam"></param>
         /// <returns></returns>
         public delegate bool EnumResNameProcDelegate(IntPtr hModule, IntPtr lpszType, IntPtr lpszName, IntPtr lParam);
-
-        /// <summary>
-        /// Opens an existing named event object.
-        /// </summary>
-        /// <param name="dwDesiredAccess"></param>
-        /// <param name="bInheritHandle"></param>
-        /// <param name="lpName"></param>
-        /// <returns></returns>
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern IntPtr OpenEventW(int dwDesiredAccess, bool bInheritHandle, string lpName);
     }
 }

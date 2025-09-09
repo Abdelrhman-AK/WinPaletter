@@ -372,6 +372,12 @@
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ColorsEffects.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ColorsEffects.Designer.cs">
+      <DependentUpon>ColorsEffects.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Logs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -562,7 +568,7 @@
     <Compile Include="Program\Assemblies\AnimatedCursors\StreamOps.cs" />
     <Compile Include="Program\TaskbarProgress\CTaskbarList.cs" />
     <Compile Include="Program\TaskbarProgress\ITaskbarList3.cs" />
-    <Compile Include="Program\NativeMethods\advapi.cs" />
+    <Compile Include="Program\NativeMethods\ADVAPI.cs" />
     <Compile Include="Program\NativeMethods\Dnsapi.cs" />
     <Compile Include="Program\NativeMethods\DWMAPI.cs" />
     <Compile Include="Program\NativeMethods\GDI32.cs" />
@@ -1274,6 +1280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ColorsEffects.resx">
+      <DependentUpon>ColorsEffects.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Logs.resx">
       <DependentUpon>Logs.cs</DependentUpon>

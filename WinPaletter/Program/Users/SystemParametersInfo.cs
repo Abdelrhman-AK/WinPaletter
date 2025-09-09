@@ -256,13 +256,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -330,13 +330,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -405,13 +405,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -480,13 +480,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -555,13 +555,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -630,13 +630,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -705,13 +705,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -780,13 +780,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -855,13 +855,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -930,13 +930,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -1005,13 +1005,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -1080,13 +1080,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -1155,13 +1155,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // If the user has a token, impersonate the user using Advapi32
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Perform the SystemParametersInfo function call
                     result = PrivateFunctions.SystemParametersInfo(uAction, uParam, lpvParam, fuWinIni);
 
                     // If the user was impersonated, revert to the original user
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();

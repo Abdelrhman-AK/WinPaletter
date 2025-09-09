@@ -1482,7 +1482,6 @@ namespace WinPaletter
         internal UI.WP.AlertBox AlertBox1;
         internal Label Label15;
         internal PictureBox PictureBox3;
-        internal UI.Controllers.ColorItem color_pick;
         internal UI.WP.AlertBox AlertBox2;
         internal UI.WP.RadioImage source_wallpapertone;
         internal UI.WP.SeparatorH Separator2;
@@ -1527,5 +1526,6 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox6;
         internal PictureBox pictureBox15;
         internal Label label6;
+        public UI.Controllers.ColorItem color_pick;
     }
 }

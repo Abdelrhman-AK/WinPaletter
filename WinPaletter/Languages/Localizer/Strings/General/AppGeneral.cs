@@ -47,8 +47,10 @@
                 public string Monochrome { get; set; } = "Monochrome (B/W)";
                 public string Analogous_Next { get; set; } = "Analogous color (next one)";
                 public string Analogous_Previous { get; set; } = "Analogous color (previous one)";
-                public string _16BitColor { get; set; } = "Convert to 16-bit palette";
                 public string _256Colors { get; set; } = "Convert to 256-color palette";
+                public string macOS_Color { get; set; } = "Convert to macOS palette";
+                public string AndroidMaterialColor { get; set; } = "Convert to Android Material (2015) palette";
+                public string AndroidMaterialExpressive3Color { get; set; } = "Convert to Android Material Expressive 3 palette";
                 public string PreviousColor { get; set; } = "Previously used color";
                 public string ExpandNote { get; set; } = "Expand note";
                 public string CollapseNote { get; set; } = "Collapse note";

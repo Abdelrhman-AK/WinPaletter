@@ -132,7 +132,7 @@ namespace WinPaletter.NativeMethods
 
             if (File.Exists(file))
             {
-                return Image.FromFile(file);
+                return BitmapMgr.Load(file);
             }
             else
             {

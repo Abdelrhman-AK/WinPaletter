@@ -757,14 +757,15 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="rectangleToScreen"></param>
         /// <returns></returns>
-        public static Bitmap CaptureFromScreen(Rectangle rectangleToScreen)
+        public static Bitmap CaptureFromScreen(Rectangle screenRect)
         {
-            using (Bitmap bmp = new(rectangleToScreen.Width, rectangleToScreen.Height))
+            Bitmap bmp = new (screenRect.Width, screenRect.Height);
             using (Graphics G = Graphics.FromImage(bmp))
             {
-                G.CopyFromScreen(rectangleToScreen.Location, Point.Empty, rectangleToScreen.Size);
-                return bmp.Clone() as Bitmap;
+                // copy from screen coordinates -> bitmap (destination origin 0,0)
+                G.CopyFromScreen(screenRect.Left, screenRect.Top, 0, 0, screenRect.Size, CopyPixelOperation.SourceCopy);
             }
+            return bmp;
         }
     }
 }

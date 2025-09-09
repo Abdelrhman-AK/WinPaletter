@@ -86,13 +86,13 @@ namespace WinPaletter.NativeMethods
                 // Impersonate the user and switch to the Advapi32 impersonation
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Set system cursor using the provided File path and ID under impersonation
                     result = PrivateFunctions.SetSystemCursor(LoadCursorFromFile(file), (int)id);
 
                     // Revert the Advapi32 impersonation and undo the impersonation
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();
@@ -143,13 +143,13 @@ namespace WinPaletter.NativeMethods
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Impersonate the user and switch to the Advapi32 impersonation
-                    if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                     // Set system cursor using the provided handle and ID under impersonation
                     result = PrivateFunctions.SetSystemCursor(hcur, (int)id);
 
                     // Revert the Advapi32 impersonation and undo the impersonation
-                    if (advapi_switched) { advapi.RevertToSelf(); }
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
                     wic.Undo();

@@ -91,6 +91,7 @@ namespace WinPaletter
                 GenerateMSTheme = false,
                 Import_preset = false,
                 CanSwitchMode = false,
+                CanOpenColorsEffects = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,

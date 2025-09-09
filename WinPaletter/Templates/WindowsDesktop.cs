@@ -2640,7 +2640,6 @@ namespace WinPaletter.Templates
                 Win7Noise = 100f;
                 Win7Alpha = 100 - HookedTM.WindowsVista.Alpha / 255 * 100;
                 VisualStyles = HookedTM.WindowsVista.VisualStyles.VisualStylesType;
-
             }
 
             else if (WindowStyle == WindowStyle.WXP)

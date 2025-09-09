@@ -295,13 +295,13 @@ namespace WinPaletter
             if (!SystemProfile)
             {
                 // Logon user with password if it is not a system profile
-                result = advapi.LogonUser(UserName, Domain, Password, advapi.LOGON32_LOGON_INTERACTIVE, advapi.LOGON32_PROVIDER_DEFAULT, ref token);
+                result = ADVAPI.LogonUser(UserName, Domain, Password, ADVAPI.LOGON32_LOGON_INTERACTIVE, ADVAPI.LOGON32_PROVIDER_DEFAULT, ref token);
                 error = Marshal.GetLastWin32Error();
             }
             else
             {
                 // Logon user without password if it is a system profile
-                result = advapi.LogonUser(UserName, Domain, string.Empty, advapi.LOGON32_LOGON_SERVICE, advapi.LOGON32_PROVIDER_DEFAULT, ref token);
+                result = ADVAPI.LogonUser(UserName, Domain, string.Empty, ADVAPI.LOGON32_LOGON_SERVICE, ADVAPI.LOGON32_PROVIDER_DEFAULT, ref token);
                 error = Marshal.GetLastWin32Error();
             }
 

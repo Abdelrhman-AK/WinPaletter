@@ -11,17 +11,6 @@ namespace WinPaletter.NativeMethods
     public class DLLFunc
     {
         #region User32\Shell32
-        /// <summary>
-        /// Combines low and high values to create an icon size value.
-        /// </summary>
-        /// <param name="low">The low word representing the large icon size.</param>
-        /// <param name="high">The high word representing the small icon size.</param>
-        /// <returns>Combined icon size value.</returns>
-        private static int MAKEICONSIZE(int low, int high)
-        {
-            // Shift the high word to the left by 16 bits and combine with low word using bitwise OR.
-            return high << 16 | low & 0xFFFF;
-        }
 
         /// <summary>
         /// Extracts a small icon from a File.
@@ -37,7 +26,7 @@ namespace WinPaletter.NativeMethods
             // Make the nIconSize value (See the Msdn documents). 
             // The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
             // The largest size for an icon is 256.
-            uint LargeAndSmallSize = (uint)MAKEICONSIZE(256, 16);
+            uint LargeAndSmallSize = 256 << 16 | 16 & 0xFFFF;
 
             // Initialize handles for large and small icons.
             IntPtr hLrgIcon = IntPtr.Zero;
@@ -110,8 +99,7 @@ namespace WinPaletter.NativeMethods
         public static void DarkTitlebar(IntPtr hWnd, bool darkMode)
         {
             // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x)
-                return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
 
             int attributeValue = darkMode ? 1 : 0;
 

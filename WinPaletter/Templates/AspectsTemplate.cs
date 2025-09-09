@@ -88,10 +88,11 @@ namespace WinPaletter
             UI.WP.Button button_palette_generate = buttons.Where(b => b.Name.StartsWith("btn_palette_generate")).FirstOrDefault() ?? null;
             UI.WP.Button button_saveas_MSTheme = buttons.Where(b => b.Name.StartsWith("btn_saveas_MSTheme")).FirstOrDefault() ?? null;
 
-            UI.WP.Button button_load = buttons.Where(b => b.Name.StartsWith("btn_load_into_theme")).FirstOrDefault() ?? null; ;
-            UI.WP.Button button_apply = buttons.Where(b => b.Name.StartsWith("btn_apply")).FirstOrDefault() ?? null; ;
-            UI.WP.Button button_cancel = buttons.Where(b => b.Name.StartsWith("btn_cancel")).FirstOrDefault() ?? null; ;
-            UI.WP.Button button_CPL = buttons.Where(b => b.Name.StartsWith("btn_CPL")).FirstOrDefault() ?? null; ;
+            UI.WP.Button button_load = buttons.Where(b => b.Name.StartsWith("btn_load_into_theme")).FirstOrDefault() ?? null;
+            UI.WP.Button button_apply = buttons.Where(b => b.Name.StartsWith("btn_apply")).FirstOrDefault() ?? null;
+            UI.WP.Button button_cancel = buttons.Where(b => b.Name.StartsWith("btn_cancel")).FirstOrDefault() ?? null;
+            UI.WP.Button button_Effects = buttons.Where(b => b.Name.StartsWith("btn_colorsEffects")).FirstOrDefault() ?? null;
+            UI.WP.Button button_CPL = buttons.Where(b => b.Name.StartsWith("btn_CPL")).FirstOrDefault() ?? null;
 
             UI.WP.RadioImage mode_advanced = modes.Where(b => b.Name.StartsWith("checker_mode_advanced")).FirstOrDefault() ?? null;
             UI.WP.RadioImage mode_simple = modes.Where(b => b.Name.StartsWith("checker_mode_simple")).FirstOrDefault() ?? null;
@@ -102,6 +103,8 @@ namespace WinPaletter
 
             button_palette_generate.Visible = _data.GeneratePalette;
             button_saveas_MSTheme.Visible = _data.GenerateMSTheme;
+            button_Effects.Visible = _data.CanOpenColorsEffects;
+            button_CPL.Visible = _data.CanOpenInControlPanel;
 
             if (toggle != null) toggle.Checked = _data.Enabled;
 
@@ -115,6 +118,7 @@ namespace WinPaletter
             button_import.Text = Program.Lang.Strings.Previewer.Import_wpth;
             button_palette_generate.Text = Program.Lang.Strings.Previewer.GeneratePalette_image;
             button_saveas_MSTheme.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme;
+            button_Effects.Text = Program.Lang.Strings.Previewer.ColorsEffects;
             button_CPL.Text = Program.Lang.Strings.Previewer.Open_in_CPL;
             mode_advanced.Text = Program.Lang.Strings.Previewer.Mode_advanced;
             mode_simple.Text = Program.Lang.Strings.Previewer.Mode_simple;
@@ -270,7 +274,7 @@ namespace WinPaletter
                 button_cancel.Click += _data.OnCancel ?? null;
 
             if (mode_advanced != null)
-                mode_advanced.CheckedChanged += _data.OnModeAdvanced ?? null; ;
+                mode_advanced.CheckedChanged += _data.OnModeAdvanced ?? null;
 
             if (mode_simple != null)
                 mode_simple.CheckedChanged += _data.OnModeSimple ?? null;
@@ -283,6 +287,9 @@ namespace WinPaletter
 
             if (button_palette_generate != null)
                 button_palette_generate.Click += _data.OnGeneratePaletteFromImage ?? null;
+
+            if (button_Effects != null)
+                button_Effects.Click += _data.OpenColorsEffects ?? null;
 
             if (button_CPL != null)
                 button_CPL.Click += _data.OpenInControlPanel ?? null;
@@ -356,7 +363,7 @@ namespace WinPaletter
                     button_cancel.Click -= _data.OnCancel ?? null;
 
                 if (mode_advanced != null)
-                    mode_advanced.CheckedChanged -= _data.OnModeAdvanced ?? null; ;
+                    mode_advanced.CheckedChanged -= _data.OnModeAdvanced ?? null;
 
                 if (mode_simple != null)
                     mode_simple.CheckedChanged -= _data.OnModeSimple ?? null;
@@ -372,6 +379,9 @@ namespace WinPaletter
 
                 if (button_saveas_MSTheme != null)
                     button_saveas_MSTheme.Click -= _data.OnSaveAsMSTheme ?? null;
+
+                if (button_Effects != null)
+                    button_Effects.Click -= _data.OpenColorsEffects ?? null;
 
                 if (button_CPL != null)
                     button_CPL.Click -= _data.OpenInControlPanel ?? null;
@@ -485,20 +495,6 @@ namespace WinPaletter
         /// </summary>
         public bool CanDragOver = true;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the item can be opened in the Control Panel.
-        /// </summary>
-        public bool CanOpenInControlPanel
-        {
-            get => _canOpenInControlPanel;
-            set
-            {
-                _canOpenInControlPanel = value;
-                btn_CPL.Visible = value;
-            }
-        }
-        private bool _canOpenInControlPanel = false;
-
         #endregion
 
         #region Private Methods
@@ -582,7 +578,7 @@ namespace WinPaletter
                 bool advapi_switched = false;
 
                 // Impersonate the user if a token is available using the advapi32 library
-                if (User.Token != IntPtr.Zero) { advapi_switched = advapi.ImpersonateLoggedOnUser(User.Token); }
+                if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
 
                 // Create a restore point in a separate thread to avoid UI freeze, followed by applying the aspect
                 Task.Run(() =>
@@ -600,10 +596,15 @@ namespace WinPaletter
                 });
 
                 // Revert impersonation
-                if (advapi_switched) { advapi.RevertToSelf(); }
+                if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                 wic.Undo();
             }
+        }
+
+        private void btn_colorsEffects_Click(object sender, EventArgs e)
+        {
+            Forms.ColorsEffects.Show(sender as UI.WP.Button);
         }
     }
 
@@ -631,6 +632,16 @@ namespace WinPaletter
         /// </summary>
         public Form Form = Form;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the item can be opened in the Control Panel.
+        /// </summary>
+        public bool CanOpenInControlPanel { get; set; } = false;
+     
+        /// <summary>
+        /// Gets or sets a value indicating whether the Colors Effects feature can be opened.
+        /// </summary>
+        public bool CanOpenColorsEffects { get; set; } = true;
+     
         /// <summary>
         /// EventHandler associated with clicking on 'Load into current theme' button
         /// </summary>
@@ -765,6 +776,11 @@ namespace WinPaletter
         /// Gets or sets the event handler that is triggered to open the control panel.
         /// </summary>
         public EventHandler OpenInControlPanel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handler that is triggered to open colors effects.
+        /// </summary>
+        public EventHandler OpenColorsEffects { get; set; }
 
         /// <summary>
         /// Controls if user can switch between advanced and simple modes

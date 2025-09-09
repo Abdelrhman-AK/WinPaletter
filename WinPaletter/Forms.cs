@@ -77,6 +77,13 @@ namespace WinPaletter
         /// </summary>
         public static ColorPickerDlg ColorPickerDlg => (_ColorPickerDlg == null || _ColorPickerDlg.IsDisposed) ? (_ColorPickerDlg = CreateInstance(_ColorPickerDlg)) : _ColorPickerDlg;
 
+        private static ColorsEffects _ColorsEffects;
+        /// <summary>
+        /// Gets the instance of the form <see cref="ColorsEffects"/> to pick a color.
+        /// </summary>
+        public static ColorsEffects ColorsEffects => (_ColorsEffects == null || _ColorsEffects.IsDisposed) ? (_ColorsEffects = CreateInstance(_ColorsEffects)) : _ColorsEffects;
+
+
         private static CursorsStudio _CursorsStudio;
         /// <summary>
         /// Gets the instance of the form <see cref="CursorsStudio"/> to manage Windows cursors.

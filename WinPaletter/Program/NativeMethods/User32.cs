@@ -7,75 +7,64 @@ using static WinPaletter.NativeMethods.GDI32;
 namespace WinPaletter.NativeMethods
 {
     /// <summary>
-    /// Provides partial class implementation for interacting with the User32 (User Interface) APIs.
-    /// This partial class may contain additional members related to User32 functionality.
+    /// Provides a managed interface to various Windows User32.dll functions and constants.
     /// </summary>
+    /// <remarks>The <see cref="User32"/> class contains static methods, constants, and structures that allow managed
+    /// code to interact with the Windows User32 API. These include functions for window management, cursor handling, system
+    /// metrics retrieval, and more. Many of these methods are wrappers around native Windows API functions and require
+    /// careful usage to ensure proper resource management and error handling. <para> Note that some methods in this class
+    /// are marked as <c>internal</c> and are not intended for public use. </para></remarks>
     public partial class User32
     {
         /// <summary>
-        /// Retrieves a handle to the Shell's desktop window.
-        /// </summary>
-        /// <remarks>The Shell's desktop window is typically the main window of the Windows Shell, which
-        /// provides the desktop and taskbar. This method is commonly used in scenarios where interaction with the
-        /// Shell's desktop window is required.</remarks>
-        /// <returns>A handle to the Shell's desktop window, or <see cref="IntPtr.Zero"/> if no Shell window is present.</returns>
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetShellWindow();
-
-        /// <summary>
-        /// Retrieves the identifier of the thread that created the specified window and, optionally, the identifier of
-        /// the process that created the window.
-        /// </summary>
-        /// <remarks>This method is a wrapper for the native Windows API function in the "user32.dll"
-        /// library.  The caller is responsible for ensuring that the <paramref name="hWnd"/> parameter is a valid
-        /// window handle.</remarks>
-        /// <param name="hWnd">A handle to the window whose thread and process identifiers are to be retrieved.</param>
-        /// <param name="lpdwProcessId">When this method returns, contains the process identifier of the window. This parameter is passed
-        /// uninitialized.</param>
-        /// <returns>The identifier of the thread that created the specified window.</returns>
-        [DllImport("user32.dll")]
-        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-        /// <summary>
         /// Retrieves the specified system metric or system configuration setting.
         /// </summary>
-        /// <param name="nIndex"></param>
-        /// <returns></returns>
+        /// <remarks>This method is a wrapper for the Windows API function <c>GetSystemMetrics</c> in the User32.dll
+        /// library.  It allows managed code to access system metrics and configuration settings provided by the operating
+        /// system.</remarks>
+        /// <param name="nIndex">The system metric or configuration setting to retrieve. This parameter must be a valid system metric index. For
+        /// example, use 0 to retrieve the screen width in pixels, or 1 to retrieve the screen height in pixels. Refer to the
+        /// Windows API documentation for a complete list of valid indices.</param>
+        /// <returns>The value of the specified system metric or configuration setting. The meaning of the return value depends on the
+        /// <paramref name="nIndex"/> provided.</returns>
         [DllImport("user32.dll")]
         public static extern int GetSystemMetrics(int nIndex);
 
         /// <summary>
-        /// Loads the specified cursor resource from the executable (.EXE) File associated with an application instance.
+        /// Loads the specified cursor resource from the application's executable file or a system-defined cursor.
         /// </summary>
+        /// <remarks>This method is a wrapper for the Windows API function <c>LoadCursor</c>. When using system-defined
+        /// cursors, set <paramref name="hInstance"/> to 0 and provide a predefined cursor identifier for <paramref
+        /// name="lpCursorName"/>.</remarks>
+        /// <param name="hInstance">A handle to the instance of the module containing the cursor resource. Pass 0 to load a system-defined cursor.</param>
+        /// <param name="lpCursorName">The identifier or name of the cursor resource to load. Use predefined values for system cursors (e.g., <see
+        /// langword="32512"/> for the standard arrow cursor).</param>
+        /// <returns>A handle to the loaded cursor if successful; otherwise, 0 if the operation fails.</returns>
         [DllImport("user32.dll")]
         public static extern int LoadCursor(int hInstance, int lpCursorName);
 
         /// <summary>
-        /// Sets the cursor shape.
+        /// Sets the cursor to the specified handle.
         /// </summary>
+        /// <remarks>This method is a wrapper for the native SetCursor function in the Windows API.  The caller is
+        /// responsible for ensuring that the provided cursor handle is valid.</remarks>
+        /// <param name="hCursor">The handle to the cursor to set. This value must be a valid cursor handle.</param>
+        /// <returns>An integer indicating the previous cursor handle. If the function fails, the return value is zero.</returns>
         [DllImport("user32.dll")]
         public static extern int SetCursor(int hCursor);
 
         /// <summary>
-        /// Animates the window.
+        /// Animates a window by applying a visual effect over a specified duration.
         /// </summary>
+        /// <remarks>The animation effect is determined by the combination of flags provided in the <paramref
+        /// name="flags"/> parameter. Ensure that the window handle (<paramref name="hWnd"/>) is valid and that the window is
+        /// visible or hidden as required by the specified animation flags.</remarks>
+        /// <param name="hWnd">A handle to the window to be animated. This parameter cannot be <see langword="IntPtr.Zero"/>.</param>
+        /// <param name="time">The duration of the animation, in milliseconds.</param>
+        /// <param name="flags">A combination of <see cref="AnimateWindowFlags"/> values that specify the type of animation to apply.</param>
+        /// <returns><see langword="true"/> if the animation is successfully applied; otherwise, <see langword="false"/>.</returns>
         [DllImport("user32.dll")]
         public static extern bool AnimateWindow(IntPtr hWnd, int time, AnimateWindowFlags flags);
-
-        /// <summary>
-        /// Sends the specified message to a window or windows.
-        /// </summary>
-        /// <param name="hWnd">A handle to the window whose window procedure will receive the message.</param>
-        /// <param name="Msg">The message to be sent.</param>
-        /// <param name="wParam">Additional message-specific information.</param>
-        /// <param name="lParam">Additional message-specific information.</param>
-        /// <returns>
-        /// If the function succeeds, the return value is nonzero.
-        /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
-        /// </returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool PostMessage(IntPtr hWnd, uint Msg, UIntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// Destroys an icon and frees any memory the icon occupied.
@@ -113,85 +102,9 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
-        /// <summary>
-        /// Retrieves a handle to the top-level window whose class name and window name match the specified strings.
-        /// </summary>
-        /// <param name="lpClassName">The class name or a class atom created by a previous call to the RegisterClass or RegisterClassEx function.</param>
-        /// <param name="lpWindowName">The window name (the window's title).</param>
-        /// <returns>If the function succeeds, the return value is a handle to the window that has the specified class name and window name. If the function fails, the return value is IntPtr.Zero.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        /// <summary>
-        /// Sends the specified message to a window or windows. The SendMessage function calls the window procedure for the specified window and does not return until the window procedure has processed the message.
-        /// </summary>
-        /// <param name="hWnd">A handle to the window whose window procedure will receive the message.</param>
-        /// <param name="Msg">The message to be sent.</param>
-        /// <param name="wParam">Additional message-specific information.</param>
-        /// <param name="lParam">Additional message-specific information.</param>
-        /// <returns>The result of the message processing; it depends on the message sent.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern int SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-        /// <summary>
-        /// Retrieves the device context (DC) for the entire window, including title bar, menus, and scroll bars.
-        /// </summary>
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetDC(IntPtr hWnd);
-
-        /// <summary>
-        /// Releases the device context (DC) for the specified window.
-        /// </summary>
-        [DllImport("user32.dll")]
-        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
-
-        /// <summary>
-        /// Sets the background color of the specified device context (DC) to the specified color.
-        /// </summary>
-        [DllImport("gdi32.dll")]
-        public static extern int SetBkColor(IntPtr hDC, int crColor);
-
-        /// <summary>
-        /// Sets the text color of the specified device context (DC) to the specified color.
-        /// </summary>
-        [DllImport("gdi32.dll")]
-        public static extern int SetTextColor(IntPtr hDC, int crColor);
-
         [DllImport("user32.dll")]
         private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
-
-        /// <summary>
-        /// Creates an icon or cursor from an ICONINFO structure.
-        /// </summary>
-        /// <param name="icon">
-        /// A reference to an <see cref="ICONINFO"/> structure that contains information about the icon or cursor.
-        /// </param>
-        /// <returns>
-        /// If the function succeeds, the return value is a handle to the icon or cursor.
-        /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
-        /// </returns>
-        /// <remarks>
-        /// The ICONINFO structure should be properly initialized before calling this function.
-        /// The created icon or cursor can be destroyed using <see cref="DestroyIcon"/> when it is no longer needed.
-        /// </remarks>
-        [DllImport("user32.dll")]
-        public static extern IntPtr CreateIconIndirect(ref ICONINFO icon);
-
-        /// <summary>
-        /// Loads an animated cursor from a File.
-        /// </summary>
-        /// <param name="hinst">A handle to the instance of the module that contains the image.</param>
-        /// <param name="lpszName">The name or identifier of the image resource.</param>
-        /// <param name="uType">The type of the image resource (e.g., IMAGE_CURSOR).</param>
-        /// <param name="cxDesired">The desired width of the image, in pixels.</param>
-        /// <param name="cyDesired">The desired height of the image, in pixels.</param>
-        /// <param name="fuLoad">Flags that specify how to load the image (e.g., LR_LOADFROMFILE).</param>
-        /// <returns>
-        /// If the function succeeds, the handle to the loaded image. If the function fails, it returns IntPtr.Zero.
-        /// </returns>
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr LoadImage(IntPtr hinst, string lpszName, uint uType, int cxDesired, int cyDesired, uint fuLoad);
-
+      
         /// <summary>
         /// SetWindowsHookEx function: Installs an application-defined hook procedure into a hook chain.
         /// This hook can monitor low-level mouse input events before the system processes them.
@@ -279,14 +192,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="section">The name of the setting section that has changed. Defaults to "ImmersiveColorSet".</param>
         public static void NotifySettingChanged(string section = "ImmersiveColorSet")
         {
-            SendMessageTimeout(
-                new IntPtr(HWND_BROADCAST),
-                WM_SETTINGCHANGE,
-                UIntPtr.Zero,
-                section,
-                SMTO_ABORTIFHUNG,
-                100,
-                out _);
+            SendMessageTimeout(new IntPtr(HWND_BROADCAST), WM_SETTINGCHANGE, UIntPtr.Zero, section, SMTO_ABORTIFHUNG, 100, out _);
         }
 
         /// <summary>
@@ -297,56 +203,7 @@ namespace WinPaletter.NativeMethods
         /// <returns><see langword="true"/> if the mouse capture was successfully released; otherwise, <see langword="false"/>.</returns>
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
-
-        /// <summary>
-        /// MSLLHOOKSTRUCT structure: Contains information about a low-level mouse input event.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct MSLLHOOKSTRUCT
-        {
-            /// <summary>
-            /// The x- and y-coordinates of the cursor, in screen coordinates.
-            /// </summary>
-            public POINT pt;
-
-            /// <summary>
-            /// If the message is WM_MOUSEWHEEL, the high-order word of this member is the wheel delta.
-            /// </summary>
-            public uint mouseData;
-
-            /// <summary>
-            /// The event-injected flags.
-            /// </summary>
-            public uint flags;
-
-            /// <summary>
-            /// The time stamp for this message.
-            /// </summary>
-            public uint time;
-
-            /// <summary>
-            /// Additional information associated with the message.
-            /// </summary>
-            public IntPtr dwExtraInfo;
-        }
-
-        /// <summary>
-        /// POINT structure: Defines the x- and y-coordinates of a point in a two-dimensional plane.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct POINT
-        {
-            /// <summary>
-            /// The x-coordinate of the point.
-            /// </summary>
-            public int x;
-
-            /// <summary>
-            /// The y-coordinate of the point.
-            /// </summary>
-            public int y;
-        }
-
+       
         /// <summary>
         /// LowLevelMouseProc delegate: Represents the method that will handle the low-level mouse input events.
         /// </summary>
@@ -357,67 +214,11 @@ namespace WinPaletter.NativeMethods
         /// If the function fails, the return value is IntPtr.Zero.</returns>
         public delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-
         /// <summary>
         /// Constant for LoadImage function specifying the type of image to load.
         /// </summary>
         public const uint IMAGE_CURSOR = 2;
-
-        /// <summary>
-        /// Flags for the LoadImage function specifying how to load the image.
-        /// </summary>
-        [Flags]
-        public enum LoadImageFlags : uint
-        {
-            /// <summary>
-            /// Use the default size (cxDesired and cyDesired are ignored).
-            /// </summary>
-            LR_DEFAULTSIZE = 0x00000040,
-
-            /// <summary>
-            /// Load the image from a File (lpszName is the File path).
-            /// </summary>
-            LR_LOADFROMFILE = 0x00000010,
-
-            /// <summary>
-            /// Convert the image to monochrome.
-            /// </summary>
-            LR_MONOCHROME = 0x00000001,
-
-            /// <summary>
-            /// Share the image handle (do not create a new copy).
-            /// </summary>
-            LR_SHARED = 0x00008000,
-        }
-
-        /// <summary>
-        /// Enum representing different image types for the LoadImage function.
-        /// </summary>
-        public enum ImageType : uint
-        {
-            /// <summary>
-            /// Bitmap image type.
-            /// </summary>
-            IMAGE_BITMAP = 0,
-
-            /// <summary>
-            /// Icon image type.
-            /// </summary>
-            IMAGE_ICON = 1,
-
-            /// <summary>
-            /// Cursor image type.
-            /// </summary>
-            IMAGE_CURSOR = 2,
-
-            /// <summary>
-            /// Enhanced metafile image type.
-            /// </summary>
-            IMAGE_ENHMETAFILE = 3,
-
-            // Add more image types as needed
-        }
-
+      
         /// <summary>
         /// The DrawIconEx function draws an icon or cursor into the specified device context.
         /// </summary>
@@ -450,15 +251,6 @@ namespace WinPaletter.NativeMethods
         public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
 
         /// <summary>
-        /// Retrieves information about the specified icon or cursor.
-        /// </summary>
-        /// <param name="hIcon">A handle to the icon or cursor.</param>
-        /// <param name="pIconInfo">A pointer to an ICONINFO structure. The function fills in the structure's members with information about the icon or cursor.</param>
-        /// <returns>If the function succeeds, the return value is true. If the function fails, the return value is false.</returns>
-        [DllImport("user32")]
-        public static extern bool GetIconInfo(IntPtr hIcon, out ICONINFO pIconInfo);
-
-        /// <summary>
         /// Structure that contains information about the high contrast accessibility feature.
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
@@ -476,40 +268,6 @@ namespace WinPaletter.NativeMethods
             /// Pointer to a null-terminated string
             /// </summary>
             public IntPtr lpszDefaultScheme;
-        }
-
-        /// <summary>
-        /// Contains information about an icon or a cursor.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct ICONINFO
-        {
-            /// <summary>
-            /// Specifies whether this structure defines an icon or a cursor. A value of true indicates an icon; false indicates a cursor.
-            /// </summary>
-            public bool fIcon;
-
-            /// <summary>
-            /// The x-coordinate of a cursor's hot spot. If this structure defines an icon, the hot spot is always in the center of the icon, and this member is ignored.
-            /// </summary>
-            public int xHotspot;
-
-            /// <summary>
-            /// The y-coordinate of the cursor's hot spot. If this structure defines an icon, the hot spot is always in the center of the icon, and this member is ignored.
-            /// </summary>
-            public int yHotspot;
-
-            /// <summary>
-            /// A handle to the mask bitmap. If this structure defines an icon, the mask bitmaps are XORed with the color bitmaps to produce the icon bitmaps.
-            /// If this structure defines a cursor, the mask bitmaps are applied to the destination in the screen DC.
-            /// </summary>
-            public IntPtr hbmMask;
-
-            /// <summary>
-            /// A handle to the color bitmap. This member can be optional if this structure defines a black and white icon. The color bitmap is applied to the destination
-            /// in the screen DC in a similar way to how the mask bitmaps are applied to the destination when a cursor is drawn.
-            /// </summary>
-            public IntPtr hbmColor;
         }
 
         /// <summary>
@@ -987,7 +745,6 @@ namespace WinPaletter.NativeMethods
             DI_READONLY = 0x0800
         }
 
-
         /// <summary>
         /// Enumeration representing system cursors for OCR.
         /// </summary>
@@ -1111,32 +868,5 @@ namespace WinPaletter.NativeMethods
         public const int HWND_BROADCAST = 0xFFFF;
 
         private delegate bool EnumChildProc(IntPtr hWnd, IntPtr lParam);
-
-        /// <summary>
-        /// Retrieves the handles of all child windows of the specified window.
-        /// </summary>
-        /// <param name="win32Window">The parent window.</param>
-        /// <returns>A list of handles to the child windows.</returns>
-        public static List<IntPtr> GetChildWindowHandles(IWin32Window win32Window)
-        {
-            // List to store child window handles
-            List<IntPtr> childHandles = [];
-
-            // Get the handle of the parent window
-            IntPtr hWndParent = win32Window.Handle;
-
-            // Callback function to process each child window
-            bool childProc(IntPtr hWnd, IntPtr lParam)
-            {
-                // Add the handle to the list
-                childHandles.Add(hWnd);
-                return true; // Continue enumeration
-            }
-
-            // Enumerate through all child windows of the parent window
-            EnumChildWindows(hWndParent, childProc, IntPtr.Zero);
-
-            return childHandles;
-        }
     }
 }
