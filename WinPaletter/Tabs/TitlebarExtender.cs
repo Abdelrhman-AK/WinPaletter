@@ -98,34 +98,23 @@ namespace WinPaletter.Tabs
         {
             get
             {
-                if (isCompositionEnabled)
-                {
-                    if (OS.WVista || OS.W7 || OS.W8x)
-                    {
-                        return TitlebarTypes.DWM;
-                    }
-                    else
-                    {
-                        if (AccentOnTitlebars)
-                        {
-                            return TitlebarTypes.ColorPrevalence;
-                        }
-                        else if (Transparency)
-                        {
-                            return TitlebarTypes.DWM;
-                        }
-                        else
-                        {
-                            return TitlebarTypes.AppMode;
-                        }
-                    }
-                }
-                else
-                {
-                    return Program.ClassicThemeRunning ? TitlebarTypes.Classic : TitlebarTypes.Basic;
-                }
+                if (Program.ClassicThemeRunning) return TitlebarTypes.Classic;
+
+                if (!isCompositionEnabled) return TitlebarTypes.Basic;
+
+                if (OS.WVista || OS.W7 || OS.W8x) return TitlebarTypes.DWM;
+
+                // Windows 10/11
+                if (AccentOnTitlebars && isCompositionEnabled) return TitlebarTypes.DWM_Aero;
+
+                if (AccentOnTitlebars && !isCompositionEnabled) return TitlebarTypes.ColorPrevalence;
+
+                if (Transparency) return TitlebarTypes.DWM;
+
+                return TitlebarTypes.AppMode;
             }
         }
+
 
         /// <summary>
         /// Enumeration that determines the style of the titlebar if the <see cref="Flag"/> is set to <see cref="Flags.System"/>.
@@ -138,19 +127,19 @@ namespace WinPaletter.Tabs
             DWM = 0,
 
             /// <summary>
+            /// The titlebar extender will extend the titlebar of the form using the DWM effect but forces Aero style.
+            /// </summary>
+            DWM_Aero = 1,
+
+            /// <summary>
             /// The titlebar extender will extend the titlebar of the form using a color.
             /// </summary>
-            ColorPrevalence = 1,
+            ColorPrevalence = 2,
 
             /// <summary>
             /// The titlebar extender will extend the titlebar of the form using the dark mode.
             /// </summary>
-            AppMode = 2,
-
-            /// <summary>
-            /// The titlebar extender will extend the titlebar of the form using the light mode.
-            /// </summary>
-            LightMode = 3,
+            AppMode = 3,
 
             /// <summary>
             /// The titlebar extender will extend the titlebar of the form using the basic style.
@@ -290,13 +279,13 @@ namespace WinPaletter.Tabs
         private void Form_Activated(object sender, EventArgs e)
         {
             _formFocused = true;
-            Invalidate();
+            UpdateBackDrop();
         }
 
         private void Form_Deactivate(object sender, EventArgs e)
         {
             _formFocused = false;
-            Invalidate();
+            UpdateBackDrop();
         }
 
         private Point newPoint = new();
@@ -377,6 +366,12 @@ namespace WinPaletter.Tabs
                         if (p != Padding.Empty) form?.DropEffect(p);
                     }
 
+                    else if (type == TitlebarTypes.DWM_Aero)
+                    {
+                        BackColor = Color.Black;
+                        if (p != Padding.Empty) form?.DropEffect(p, false, DWM.FormStyle.Aero);
+                    }
+
                     else if (type == TitlebarTypes.ColorPrevalence)
                     {
                         BackColor = _formFocused ? activeTtl : inactiveTtl;
@@ -416,22 +411,11 @@ namespace WinPaletter.Tabs
             if (Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic || TitlebarType == TitlebarTypes.Basic))
             {
                 Rectangle rect = new(0, 0, Width, Height);
-                using (LinearGradientBrush brush = new(rect,
-                    _formFocused ? activeTtl : inactiveTtl,
-                    _formFocused ? activeTtlG : inactiveTtlG, LinearGradientMode.Horizontal))
+                using (LinearGradientBrush brush = new(rect, _formFocused ? activeTtl : inactiveTtl, _formFocused ? activeTtlG : inactiveTtlG, LinearGradientMode.Horizontal))
                 {
                     G.FillRectangle(brush, rect);
                 }
             }
-
-            //else if (TitlebarType == TitlebarTypes.Basic)
-            //{
-            //    //if (VisualStyleRenderer.IsElementDefined(VisualStyleElement.Window.Caption.Active))
-            //    //{
-            //    //    VisualStyleRenderer renderer = new(VisualStyleElement.Window.Caption.Active);
-            //    //    renderer.DrawBackground(G, new Rectangle(0, 0, Width, Height));
-            //    //}
-            //}
         }
     }
 }

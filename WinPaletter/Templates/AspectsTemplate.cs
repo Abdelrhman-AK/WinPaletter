@@ -495,6 +495,15 @@ namespace WinPaletter
         /// </summary>
         public bool CanDragOver = true;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the Colors Effects button is visible.
+        /// </summary>
+        public bool CanOpenColorsEffects
+        {
+            get => btn_colorsEffects.Visible;
+            set => btn_colorsEffects.Visible = value;
+        }
+
         #endregion
 
         #region Private Methods

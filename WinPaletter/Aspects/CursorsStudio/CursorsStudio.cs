@@ -65,6 +65,11 @@ namespace WinPaletter
             Close();
         }
 
+        private void ImportWin12Preset(object sender, EventArgs e)
+        {
+            using (Manager TMx = Default.Get(WindowStyle.W12)) { LoadFromTM(TMx); }
+        }
+
         private void ImportWin11Preset(object sender, EventArgs e)
         {
             using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
@@ -294,12 +299,14 @@ namespace WinPaletter
                 GenerateMSTheme = false,
                 Import_preset = true,
                 CanSwitchMode = false,
+                CanOpenColorsEffects = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromWPTH = LoadFromWPTH,
                 OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromScheme_12 = ImportWin12Preset,
                 OnImportFromScheme_11 = ImportWin11Preset,
                 OnImportFromScheme_10 = ImportWin10Preset,
                 OnImportFromScheme_81 = ImportWin81Preset,
@@ -356,6 +363,7 @@ namespace WinPaletter
             CheckComptability();
             Button1.Enabled = true;
             groupBox3.Visible = true;
+            
         }
 
         private void CheckComptability()
@@ -1533,6 +1541,8 @@ namespace WinPaletter
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
+            CanOpenColorsEffects = (sender as UI.WP.RadioButton).Checked;
+
             if ((sender as UI.WP.RadioButton).Checked)
             {
                 tablessControl1.SelectedIndex = 0;

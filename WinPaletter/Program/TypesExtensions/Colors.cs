@@ -781,22 +781,6 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Get analogous colors (neighbors on the hue wheel).
-        /// Returns an array of 3 colors: [previous, original, next].
-        /// </summary>
-        public static Color[] Analogous(this Color color, float angle = 30f)
-        {
-            float hue = color.GetHue();
-            float sat = color.GetSaturation();
-            float bri = color.GetBrightness();
-
-            Color prev = FromAhsb(color.A, (hue - angle + 360f) % 360f, sat, bri);
-            Color next = FromAhsb(color.A, (hue + angle) % 360f, sat, bri);
-
-            return new[] { prev, color, next };
-        }
-
-        /// <summary>
         /// Converts the specified <see cref="Color"/> to the closest matching color in the 256-color VGA palette.
         /// </summary>
         /// <remarks>This method calculates the closest color in the VGA 256-color palette by minimizing
@@ -877,6 +861,138 @@ namespace WinPaletter.TypesExtensions
 
             return [.. palette];
         }
+
+        /// <summary>
+        /// Generates the classic Web Safe color palette (216 colors).
+        /// </summary>
+        private static Color[] GenerateWebSafePalette()
+        {
+            List<Color> palette = new();
+
+            int[] steps = { 0, 51, 102, 153, 204, 255 };
+
+            foreach (int r in steps)
+            {
+                foreach (int g in steps)
+                {
+                    foreach (int b in steps)
+                    {
+                        palette.Add(Color.FromArgb(r, g, b));
+                    }
+                }
+            }
+
+            return palette.ToArray();
+        }
+
+        private static readonly Color[] FrutigerAeroPalette =
+        [
+            // Aero Blue (default glass/taskbar accent)
+            ColorTranslator.FromHtml("#EAF4FD"),
+            ColorTranslator.FromHtml("#9CC7F0"),
+            ColorTranslator.FromHtml("#4A90D9"),
+            ColorTranslator.FromHtml("#2A4B7C"),
+
+            // Blue Accent (taskbar glow)
+            ColorTranslator.FromHtml("#C2E0FF"),
+            ColorTranslator.FromHtml("#66B2FF"),
+            ColorTranslator.FromHtml("#0080FF"),
+            ColorTranslator.FromHtml("#004C99"),
+
+            // Aero Green (explorer glass accent, success states)
+            ColorTranslator.FromHtml("#ECFBEF"),
+            ColorTranslator.FromHtml("#A9ECA2"),
+            ColorTranslator.FromHtml("#4CAF50"),
+            ColorTranslator.FromHtml("#1B5E20"),
+
+            // Green Accent (confirmation glow)
+            ColorTranslator.FromHtml("#D9FFD9"),
+            ColorTranslator.FromHtml("#66FF66"),
+            ColorTranslator.FromHtml("#00CC00"),
+            ColorTranslator.FromHtml("#006600"),
+
+            // Aero Orange (warning/attention)
+            ColorTranslator.FromHtml("#FFF2E0"),
+            ColorTranslator.FromHtml("#FFB347"),
+            ColorTranslator.FromHtml("#FF8C00"),
+            ColorTranslator.FromHtml("#E65100"),
+
+            // Orange Accent (taskbar alert)
+            ColorTranslator.FromHtml("#FFE6CC"),
+            ColorTranslator.FromHtml("#FF944D"),
+            ColorTranslator.FromHtml("#FF6600"),
+            ColorTranslator.FromHtml("#993D00"),
+
+            // Aero Red (error, close button glow)
+            ColorTranslator.FromHtml("#FFE6E6"),
+            ColorTranslator.FromHtml("#FF8C8C"),
+            ColorTranslator.FromHtml("#E53935"),
+            ColorTranslator.FromHtml("#8B0000"),
+
+            // Red Accent (critical glow)
+            ColorTranslator.FromHtml("#FFCCCC"),
+            ColorTranslator.FromHtml("#FF4D4D"),
+            ColorTranslator.FromHtml("#CC0000"),
+            ColorTranslator.FromHtml("#660000"),
+
+            // Neutrals (glass grays)
+            ColorTranslator.FromHtml("#FFFFFF"),
+            ColorTranslator.FromHtml("#F5F5F5"),
+            ColorTranslator.FromHtml("#C9D1D9"),
+            ColorTranslator.FromHtml("#616161"),
+            ColorTranslator.FromHtml("#212121"),
+        ];
+
+        private static readonly Color[] MetroPalette =
+        [
+            // Metro Blue (default system accent)
+            ColorTranslator.FromHtml("#00AFF0"), // base
+            ColorTranslator.FromHtml("#0082C9"), // darker
+            ColorTranslator.FromHtml("#005A9E"), // deep
+            ColorTranslator.FromHtml("#003A6E"), // darkest
+
+            // Metro Green
+            ColorTranslator.FromHtml("#00CC6A"),
+            ColorTranslator.FromHtml("#00A65A"),
+            ColorTranslator.FromHtml("#008547"),
+            ColorTranslator.FromHtml("#005F32"),
+
+            // Metro Purple
+            ColorTranslator.FromHtml("#A700AE"),
+            ColorTranslator.FromHtml("#7C007F"),
+            ColorTranslator.FromHtml("#550055"),
+            ColorTranslator.FromHtml("#330033"),
+
+            // Metro Orange
+            ColorTranslator.FromHtml("#FFB900"),
+            ColorTranslator.FromHtml("#E69500"),
+            ColorTranslator.FromHtml("#CC7A00"),
+            ColorTranslator.FromHtml("#8C4D00"),
+
+            // Metro Red
+            ColorTranslator.FromHtml("#E51400"),
+            ColorTranslator.FromHtml("#B50E00"),
+            ColorTranslator.FromHtml("#8B0A00"),
+            ColorTranslator.FromHtml("#5C0500"),
+
+            // Metro Yellow
+            ColorTranslator.FromHtml("#FFDD00"),
+            ColorTranslator.FromHtml("#E6C200"),
+            ColorTranslator.FromHtml("#BFA100"),
+            ColorTranslator.FromHtml("#7F6C00"),
+
+            // Neutral Light
+            ColorTranslator.FromHtml("#FFFFFF"),
+            ColorTranslator.FromHtml("#F2F2F2"),
+            ColorTranslator.FromHtml("#CCCCCC"),
+            ColorTranslator.FromHtml("#999999"),
+
+            // Neutral Dark
+            ColorTranslator.FromHtml("#666666"),
+            ColorTranslator.FromHtml("#444444"),
+            ColorTranslator.FromHtml("#2B2B2B"),
+            ColorTranslator.FromHtml("#000000"),
+        ];
 
         private static readonly (Color color, string name)[] MaterialPalette =
         [
@@ -1388,6 +1504,45 @@ namespace WinPaletter.TypesExtensions
     };
 
         /// <summary>
+        /// Converts the specified <see cref="Color"/> to the nearest web-safe color.
+        /// </summary>
+        /// <remarks>A web-safe color is one of the 216 colors that are commonly supported across web
+        /// browsers. This method calculates the closest match from the web-safe color palette based on color
+        /// distance.</remarks>
+        /// <param name="color">The <see cref="Color"/> to be converted to a web-safe color.</param>
+        /// <returns>The web-safe <see cref="Color"/> closest to the specified color.</returns>
+        public static Color ToWebSafe(this Color color)
+        {
+            return GenerateWebSafePalette().OrderBy(s => ColorDistance(color, s)).First();
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="Color"/> to the closest matching color in the Frutiger Aero palette.
+        /// </summary>
+        /// <remarks>The method determines the closest match by calculating the color distance between the
+        /// input color and each color in the Frutiger Aero palette, returning the one with the smallest
+        /// distance.</remarks>
+        /// <param name="color">The input color to be converted.</param>
+        /// <returns>The closest matching color from the Frutiger Aero palette.</returns>
+        public static Color ToFrutigerAero(this Color color)
+        {
+            return FrutigerAeroPalette.OrderBy(s => ColorDistance(color, s)).First();
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="Color"/> to the closest matching Metro color.
+        /// </summary>
+        /// <remarks>The method determines the closest Metro color by calculating the color distance
+        /// between the specified color and each color in the Metro palette, and then selecting the nearest
+        /// match.</remarks>
+        /// <param name="color">The source <see cref="Color"/> to be converted.</param>
+        /// <returns>The <see cref="Color"/> from the Metro palette that is closest to the specified color.</returns>
+        public static Color ToMetro(this Color color)
+        {
+            return MetroPalette.OrderBy(s => ColorDistance(color, s)).First();
+        }
+
+        /// <summary>
         /// Converts the specified color to the closest matching Android material color.
         /// </summary>
         /// <remarks>The method determines the closest material color by calculating the distance between
@@ -1398,6 +1553,20 @@ namespace WinPaletter.TypesExtensions
         public static Color ToMaterial(this Color c)
         {
             return MaterialPalette.OrderBy(s => ColorDistance(c, s.color)).First().color;
+        }
+
+        /// <summary>
+        /// Finds the color in the specified palette that is closest to the given color.
+        /// </summary>
+        /// <remarks>The method determines the closest color based on a distance metric, which is used to compare the
+        /// reference color with each color in the palette. The exact distance calculation is not exposed but ensures the most
+        /// similar color is selected.</remarks>
+        /// <param name="color">The reference color to compare against the palette.</param>
+        /// <param name="colors">A list of colors representing the palette to search.</param>
+        /// <returns>The color from the palette that is nearest to the specified color.</returns>
+        public static Color GetNearestColorFromPalette(this Color color, List<Color> colors)
+        {
+            return colors.OrderBy(s => ColorDistance(color, s)).First();
         }
 
         /// <summary>

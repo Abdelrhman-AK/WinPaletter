@@ -36,9 +36,11 @@ namespace WinPaletter.UI.Controllers
         ToolStripMenuItem rotateHueMinus10 = new() { Image = Assets.ColorItemContextMenu.RotateHue };
         ToolStripMenuItem desaturate = new() { Image = Assets.ColorItemContextMenu.Desaturate};
         ToolStripMenuItem monochrome = new() { Image = Assets.ColorItemContextMenu.Monochrome };
-        ToolStripMenuItem analogous_next = new() { Image = Assets.ColorItemContextMenu.Analogous };
-        ToolStripMenuItem analogous_previous = new() { Image = Assets.ColorItemContextMenu.Analogous };
+        ToolStripMenuItem imageToColor = new() { Image = Assets.ColorItemContextMenu.Image };
+        ToolStripMenuItem webSafe = new() { Image = Assets.ColorItemContextMenu.WebSafe };
         ToolStripMenuItem _256Colors = new() { Image = Assets.ColorItemContextMenu._265Colors };
+        ToolStripMenuItem frutigerAero = new() { Image = Assets.ColorItemContextMenu.FrutigerAero };
+        ToolStripMenuItem metro = new() { Image = Assets.ColorItemContextMenu.Metro };
         ToolStripMenuItem macOS = new() { Image = Assets.ColorItemContextMenu.macOS };
         ToolStripMenuItem material = new() { Image = Assets.ColorItemContextMenu.M2015 };
         ToolStripMenuItem materialExpressive3 = new() { Image = Assets.ColorItemContextMenu.ME3 };
@@ -109,15 +111,17 @@ namespace WinPaletter.UI.Controllers
             contextMenu.Items.Add(reverse);
 
             effects.DropDown = new WP.ContextMenuStrip();
+            effects.DropDownItems.Add(imageToColor);
             effects.DropDownItems.Add(grayscale);
             effects.DropDownItems.Add(sepia);
             effects.DropDownItems.Add(rotateHuePlus10);
             effects.DropDownItems.Add(rotateHueMinus10);
             effects.DropDownItems.Add(desaturate);
             effects.DropDownItems.Add(monochrome);
-            effects.DropDownItems.Add(analogous_next);
-            effects.DropDownItems.Add(analogous_previous);
+            effects.DropDownItems.Add(webSafe);
             effects.DropDownItems.Add(_256Colors);
+            effects.DropDownItems.Add(frutigerAero);
+            effects.DropDownItems.Add(metro);
             effects.DropDownItems.Add(macOS);
             effects.DropDownItems.Add(material);
             effects.DropDownItems.Add(materialExpressive3);
@@ -153,12 +157,14 @@ namespace WinPaletter.UI.Controllers
             rotateHueMinus10.Click += RotateHueMinus10_Click;
             desaturate.Click += Desaturate_Click;
             monochrome.Click += Monochrome_Click;
-            analogous_next.Click += Analogous_Next_Click;
-            analogous_previous.Click += Analogous_Previous_Click;
             _256Colors.Click += _256Colors_Click;
             macOS.Click += MacOS_Click;
             material.Click += Material_Click;
             materialExpressive3.Click += MaterialExpressive3_Click;
+            imageToColor.Click += ImageToColor_Click;
+            webSafe.Click += WebSafe_Click;
+            frutigerAero.Click += FrutigerAero_Click;
+            metro.Click += Metro_Click;
         }
 
         #region Variables
@@ -570,12 +576,14 @@ namespace WinPaletter.UI.Controllers
                 rotateHueMinus10.Text = Program.Lang.Strings.General.RotateHueMinus10;
                 desaturate.Text = Program.Lang.Strings.General.Desaturate;
                 monochrome.Text = Program.Lang.Strings.General.Monochrome;
-                analogous_next.Text = Program.Lang.Strings.General.Analogous_Next;
-                analogous_previous.Text = Program.Lang.Strings.General.Analogous_Previous;
                 _256Colors.Text = Program.Lang.Strings.General._256Colors;
                 macOS.Text = Program.Lang.Strings.General.macOS_Color;
                 material.Text = Program.Lang.Strings.General.AndroidMaterialColor;
                 materialExpressive3.Text = Program.Lang.Strings.General.AndroidMaterialExpressive3Color;
+                imageToColor.Text = Program.Lang.Strings.General.WallpaperAccentColor;
+                webSafe.Text = Program.Lang.Strings.General.WebSafe;
+                frutigerAero.Text = Program.Lang.Strings.General.FrutigerAero;
+                metro.Text = Program.Lang.Strings.General.Metro;
 
                 blend.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 blend.Image = blend.Enabled
@@ -797,32 +805,6 @@ namespace WinPaletter.UI.Controllers
             if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
-        private void Analogous_Next_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Analogous()[2];
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Analogous_Previous_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Analogous()[0];
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
         private void Monochrome_Click(object sender, EventArgs e)
         {
             BeforeDropColor = BackColor;
@@ -936,6 +918,58 @@ namespace WinPaletter.UI.Controllers
             Timer2.Enabled = true;
             Timer2.Start();
             BackColor = BackColor.ToMacSemantic();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void Metro_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.ToMetro();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void FrutigerAero_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.ToFrutigerAero();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void WebSafe_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.ToWebSafe();
+
+            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+        }
+
+        private void ImageToColor_Click(object sender, EventArgs e)
+        {
+            BeforeDropColor = BackColor;
+            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
+            Timer2_factor = 0;
+            MakeAfterDropEffect = true;
+            Timer2.Enabled = true;
+            Timer2.Start();
+            BackColor = BackColor.GetNearestColorFromPalette(Program.Wallpaper.ToPalette(100));
 
             if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }

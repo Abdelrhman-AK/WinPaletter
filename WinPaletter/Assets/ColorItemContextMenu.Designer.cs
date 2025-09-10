@@ -73,16 +73,6 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Analogous {
-            get {
-                object obj = ResourceManager.GetObject("Analogous", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Blend {
             get {
                 object obj = ResourceManager.GetObject("Blend", resourceCulture);
@@ -163,6 +153,16 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FrutigerAero {
+            get {
+                object obj = ResourceManager.GetObject("FrutigerAero", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Grayscale {
             get {
                 object obj = ResourceManager.GetObject("Grayscale", resourceCulture);
@@ -176,6 +176,16 @@ namespace WinPaletter.Assets {
         internal static System.Drawing.Bitmap icons8_32_bit_20px {
             get {
                 object obj = ResourceManager.GetObject("icons8_32_bit_20px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Image {
+            get {
+                object obj = ResourceManager.GetObject("Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -226,6 +236,16 @@ namespace WinPaletter.Assets {
         internal static System.Drawing.Bitmap ME3 {
             get {
                 object obj = ResourceManager.GetObject("ME3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Metro {
+            get {
+                object obj = ResourceManager.GetObject("Metro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -286,6 +306,16 @@ namespace WinPaletter.Assets {
         internal static System.Drawing.Bitmap Sepia {
             get {
                 object obj = ResourceManager.GetObject("Sepia", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WebSafe {
+            get {
+                object obj = ResourceManager.GetObject("WebSafe", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

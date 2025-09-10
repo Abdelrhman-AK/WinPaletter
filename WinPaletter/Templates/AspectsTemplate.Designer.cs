@@ -252,7 +252,7 @@
             this.btn_colorsEffects.ImageGlyphEnabled = false;
             this.btn_colorsEffects.Location = new System.Drawing.Point(525, 3);
             this.btn_colorsEffects.Name = "btn_colorsEffects";
-            this.btn_colorsEffects.Size = new System.Drawing.Size(200, 34);
+            this.btn_colorsEffects.Size = new System.Drawing.Size(145, 34);
             this.btn_colorsEffects.TabIndex = 126;
             this.btn_colorsEffects.Text = "0";
             this.btn_colorsEffects.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -268,7 +268,7 @@
             this.btn_saveas_MSTheme.Image = ((System.Drawing.Image)(resources.GetObject("btn_saveas_MSTheme.Image")));
             this.btn_saveas_MSTheme.ImageGlyph = null;
             this.btn_saveas_MSTheme.ImageGlyphEnabled = false;
-            this.btn_saveas_MSTheme.Location = new System.Drawing.Point(731, 3);
+            this.btn_saveas_MSTheme.Location = new System.Drawing.Point(676, 3);
             this.btn_saveas_MSTheme.Name = "btn_saveas_MSTheme";
             this.btn_saveas_MSTheme.Size = new System.Drawing.Size(200, 34);
             this.btn_saveas_MSTheme.TabIndex = 123;

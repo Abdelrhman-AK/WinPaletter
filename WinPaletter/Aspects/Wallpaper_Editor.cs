@@ -140,6 +140,7 @@ namespace WinPaletter
                 GenerateMSTheme = false,
                 Import_preset = false,
                 CanSwitchMode = false,
+                CanOpenColorsEffects = false,
 
                 OnLoadIntoCurrentTheme = LoadIntoCurrentTheme,
                 OnApply = Apply,
@@ -845,6 +846,8 @@ namespace WinPaletter
 
         private void source_color_CheckedChanged(object sender, EventArgs e)
         {
+            CanOpenColorsEffects = (sender as UI.WP.RadioImage).Checked;
+
             if (((RadioImage)sender).Checked)
             {
                 tablessControl1.SelectedIndex = 1;

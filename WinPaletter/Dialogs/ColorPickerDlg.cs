@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Theme;
 using WinPaletter.TypesExtensions;
@@ -28,6 +29,7 @@ namespace WinPaletter
         private Point newPoint = new();
         private Point xPoint = new();
         Thread thread;
+        private List<Color> imageColors = [];
 
         public ColorPickerDlg()
         {
@@ -124,6 +126,8 @@ namespace WinPaletter
             Forms_List.Clear();
             ChildControls_List.Clear();
 
+            CloseOnLostFocus = false;
+
             foreach (Control ctrl in Controls)
             {
                 if (ctrl is not ScreenColorPicker & ctrl.Visible)
@@ -152,6 +156,8 @@ namespace WinPaletter
 
             Forms_List.Clear();
             ChildControls_List.Clear();
+
+            CloseOnLostFocus = true;
 
             AllowTransparency = false;
             TransparencyKey = default;
@@ -184,15 +190,19 @@ namespace WinPaletter
                 ColorEditorManager1.Color = c;
                 ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
 
+                ImagePath.Text = GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
+
                 effect_dark.BackColor = c.Dark(trackBar1.Value / 100f);
                 effect_light.BackColor = c.Light(trackBar2.Value / 100f);
-                effect_analogus_next.BackColor = c.Analogous(trackBar3.Value)[2];
-                effect_analogus_previous.BackColor = c.Analogous(trackBar3.Value)[0];
                 effect_desaturate.BackColor = c.Desaturate(trackBar4.Value / 100f);
                 effect_rotateHue.BackColor = c.RotateHue(trackBar5.Value);
                 effect_invert.BackColor = c.Invert();
+                effect_reverse.BackColor = c.Reverse();
                 effect_sepia.BackColor = c.Sepia();
+                effect_websafe.BackColor = c.ToWebSafe();
                 effect_256.BackColor = c.To256Color();
+                effect_frutigerAero.BackColor = c.ToFrutigerAero();
+                effect_metro.BackColor = c.ToMetro();
                 effect_monochrome.BackColor = c.Monochrome();
                 effect_grayscale.BackColor = c.Grayscale();
                 effect_macOS.BackColor = c.ToMacSemantic();
@@ -644,14 +654,6 @@ namespace WinPaletter
             effect_light.DefaultBackColor = effect_light.BackColor;
         }
 
-        private void trackBar3_ValueChanged(object sender, EventArgs e)
-        {
-            effect_analogus_next.BackColor = InitColor.Analogous(trackBar3.Value)[2];
-            effect_analogus_previous.BackColor = InitColor.Analogous(trackBar3.Value)[0];
-            effect_analogus_next.DefaultBackColor = effect_analogus_next.BackColor;
-            effect_analogus_previous.DefaultBackColor = effect_analogus_previous.BackColor;
-        }
-
         private void trackBar4_ValueChanged(object sender, EventArgs e)
         {
             effect_desaturate.BackColor = InitColor.Desaturate(trackBar4.Value / 100f);
@@ -668,6 +670,43 @@ namespace WinPaletter
         {
             effect_brightness.BackColor = InitColor.CB((trackBar5.Value - 50f) / 50f);
             effect_brightness.DefaultBackColor = effect_brightness.BackColor;
+        }
+
+        private void Button16_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new() { FileName = ImagePath.Text, Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    ImagePath.Text = dlg.FileName;
+                }
+            }
+        }
+
+        private void ImagePath_TextChanged(object sender, EventArgs e)
+        {
+            Task.Run(() => 
+            {
+                if (System.IO.File.Exists(ImagePath.Text))
+                {
+                    using (Bitmap bmp = BitmapMgr.Load(ImagePath.Text))
+                    {
+                        imageColors = bmp.ToPalette(100);
+                    }
+                }
+                else
+                {
+                    imageColors.Clear();
+                }
+
+                Invoke(() => 
+                {
+                    if (imageColors.Count > 0) effect_image.BackColor = InitColor.GetNearestColorFromPalette(imageColors);
+                    else effect_image.BackColor = Color.Black;
+
+                    effect_image.DefaultBackColor = effect_image.BackColor;
+                });
+            });
         }
     }
 }
