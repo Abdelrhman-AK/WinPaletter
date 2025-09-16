@@ -67,7 +67,7 @@ namespace WinPaletter.Tabs
                 {
                     flag = value;
                     if (!DesignMode) UpdateBackDrop();
-                    Refresh();
+                    Invalidate();
                 }
             }
         }

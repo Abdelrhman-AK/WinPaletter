@@ -22,7 +22,7 @@ namespace WinPaletter.Tabs
         /// </summary>
         public TabsContainer()
         {
-            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint | ControlStyles.ContainerControl | ControlStyles.OptimizedDoubleBuffer, true);
             BackColor = Color.Transparent;
             DoubleBuffered = true;
             AllowDrop = true;
@@ -439,23 +439,30 @@ namespace WinPaletter.Tabs
         {
             if (e.Button == MouseButtons.Left)
             {
-                List<TabData> tabDatas = [.. TabDataList];
-                foreach (TabData tabData in tabDatas)
+                if (TabDataList.Count > 0) 
                 {
-                    if (!tabData.IsRemoving)
+                    List<TabData> tabDatas = [.. TabDataList];
+                    foreach (TabData tabData in tabDatas)
                     {
-                        if (IsMouseOverTab(tabData) && !IsMouseOverCloseButton(tabData, e))
+                        if (!tabData.IsRemoving)
                         {
-                            moveFrom = GetIndex(tabData);
-                            tabOldPoint = MousePosition - (Size)tabData.Rectangle.Location;
+                            if (IsMouseOverTab(tabData) && !IsMouseOverCloseButton(tabData, e))
+                            {
+                                moveFrom = GetIndex(tabData);
+                                tabOldPoint = MousePosition - (Size)tabData.Rectangle.Location;
 
-                            break;
-                        }
-                        else
-                        {
-                            locationOldPoint = MousePosition - (Size)FindForm()?.Location;
+                                break;
+                            }
+                            else
+                            {
+                                locationOldPoint = MousePosition - (Size)FindForm()?.Location;
+                            }
                         }
                     }
+                }
+                else
+                {
+                    locationOldPoint = MousePosition - (Size)FindForm()?.Location;
                 }
             }
             else if (e.Button == MouseButtons.Middle)

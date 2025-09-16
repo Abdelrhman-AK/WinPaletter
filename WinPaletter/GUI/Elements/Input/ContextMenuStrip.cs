@@ -27,8 +27,8 @@ namespace WinPaletter.UI.WP
                 Rectangle itemRectangle = e.Item.ContentRectangle;
                 itemRectangle.Height -= 1;
 
-                using (SolidBrush br = new(Color.FromArgb(96, Program.Style.Schemes.Main.Colors.Back_Checked_Hover)))
-                using (Pen P = new(Color.FromArgb(96, Program.Style.Schemes.Main.Colors.Line_Checked_Hover)))
+                using (SolidBrush br = new(Color.FromArgb(125, Program.Style.Schemes.Main.Colors.Back_Checked_Hover)))
+                using (Pen P = new(Color.FromArgb(125, Program.Style.Schemes.Main.Colors.Line_Checked_Hover)))
                 {
                     G.FillRoundedRect(br, itemRectangle);
                     G.DrawRoundedRectBeveled(P, itemRectangle);
