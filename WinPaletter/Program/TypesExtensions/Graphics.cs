@@ -529,6 +529,39 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
+        /// Returns a new <see cref="Rectangle"/> that is inflated by the specified amount in all directions.
+        /// </summary>
+        /// <remarks>The inflation is applied symmetrically to all sides of the rectangle. A positive
+        /// <paramref name="amount"/> increases the size of the rectangle, while a negative value decreases it. The
+        /// original rectangle remains unchanged.</remarks>
+        /// <param name="rect">The original <see cref="Rectangle"/> to be inflated.</param>
+        /// <param name="amount">The amount, in pixels, by which to inflate the rectangle. This value is added to both the width and height,
+        /// and subtracted from the X and Y coordinates.</param>
+        /// <returns>A new <see cref="Rectangle"/> that is larger or smaller than the original, depending on the value of
+        /// <paramref name="amount"/>.</returns>
+        public static Rectangle InflateReturn(this Rectangle rect, int amount)
+        {
+            return new Rectangle(rect.X - amount, rect.Y - amount, rect.Width + amount * 2, rect.Height + amount * 2);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="Rectangle"/> that is inflated by the specified horizontal and vertical amounts.
+        /// </summary>
+        /// <remarks>The method adjusts the position and size of the rectangle by subtracting <paramref
+        /// name="dx"/> and <paramref name="dy"/>  from the X and Y coordinates, respectively, and adding twice the
+        /// values of <paramref name="dx"/> and <paramref name="dy"/>  to the width and height. Negative values for
+        /// <paramref name="dx"/> or <paramref name="dy"/> will shrink the rectangle.</remarks>
+        /// <param name="rect">The original <see cref="Rectangle"/> to be inflated.</param>
+        /// <param name="dx">The amount to inflate the rectangle horizontally. Can be negative to deflate.</param>
+        /// <param name="dy">The amount to inflate the rectangle vertically. Can be negative to deflate.</param>
+        /// <returns>A new <see cref="Rectangle"/> that is larger or smaller than the original, depending on the specified
+        /// inflation values.</returns>
+        public static Rectangle InflateReturn(this Rectangle rect, int dx, int dy)
+        {
+            return new Rectangle(rect.X - dx, rect.Y - dy, rect.Width + dx * 2, rect.Height + dy * 2);
+        }
+
+        /// <summary>
         /// Get the rectangles for text and image in a button, based on its properties.
         /// </summary>
         /// <param name="button"></param>

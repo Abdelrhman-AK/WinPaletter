@@ -34,7 +34,7 @@ namespace WinPaletter.UI.Controllers
         ToolStripMenuItem sepia = new() { Image = Assets.ColorItemContextMenu.Sepia };
         ToolStripMenuItem rotateHuePlus10 = new() { Image = Assets.ColorItemContextMenu.RotateHue };
         ToolStripMenuItem rotateHueMinus10 = new() { Image = Assets.ColorItemContextMenu.RotateHue };
-        ToolStripMenuItem desaturate = new() { Image = Assets.ColorItemContextMenu.Desaturate};
+        ToolStripMenuItem desaturate = new() { Image = Assets.ColorItemContextMenu.Desaturate };
         ToolStripMenuItem monochrome = new() { Image = Assets.ColorItemContextMenu.Monochrome };
         ToolStripMenuItem imageToColor = new() { Image = Assets.ColorItemContextMenu.Image };
         ToolStripMenuItem webSafe = new() { Image = Assets.ColorItemContextMenu.WebSafe };
@@ -61,6 +61,8 @@ namespace WinPaletter.UI.Controllers
         ToolStripMenuItem copy_AsWin32 = new();
         ToolStripMenuItem copy_AsKnownName = new();
         ToolStripMenuItem copy_AsCSS = new();
+
+        private static Font genericMonospacedFont = new Font(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular);
 
         public ColorItem()
         {
@@ -228,6 +230,7 @@ namespace WinPaletter.UI.Controllers
             Mix
         }
 
+
         protected override async void OnMouseMove(MouseEventArgs e)
         {
             mousePosition_afterDrag = MousePosition;
@@ -235,7 +238,7 @@ namespace WinPaletter.UI.Controllers
             if (InitializeDrag && mousePosition_beforeDrag != mousePosition_afterDrag)
             {
                 DragDefaultColor = CanRaiseEventsForDefColorDot();
-                DoDragDrop(this, DragDropEffects.Copy);
+                DoDragDrop(this, DragDropEffects.Copy | DragDropEffects.Move);
             }
 
             if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
@@ -259,84 +262,19 @@ namespace WinPaletter.UI.Controllers
                 Timer2.Enabled = true;
                 Timer2.Start();
 
-                if (!SwapNotCopy)
+                if (e.Data.GetData(typeof(ColorItem)) is not ColorItem draggedColorItem) return;
+
+                if (!SwapNotCopy) // Copy
                 {
-                    e.Effect = DragDropEffects.Copy;
-                    if (!((ColorItem)e.Data.GetData(GetType().FullName)).DragDefaultColor)
-                    {
-                        BackColor = ((ColorItem)e.Data.GetData(GetType().FullName)).BackColor;
-                    }
-                    else
-                    {
-                        BackColor = ((ColorItem)e.Data.GetData(GetType().FullName)).DefaultBackColor;
-                    }
+                    BackColor = ProcessDraggedColorEffect(draggedColorItem.DragDefaultColor ? draggedColorItem.DefaultBackColor : draggedColorItem.BackColor);
                 }
-
-                else
+                else // Swap
                 {
-                    e.Effect = DragDropEffects.Link;
-                    Color Color_From = ((ColorItem)e.Data.GetData(GetType().FullName)).BackColor;
+                    BackColor = draggedColorItem.BackColor;
 
-                    Color Color_To;
-                    switch (AfterDropEffect)
-                    {
-                        case AfterDropEffects.Invert:
-                            {
-                                Color_To = base.BackColor.Invert();
-                                break;
-                            }
+                    draggedColorItem.BackColor = ProcessDraggedColorEffect(BeforeDropColor);
 
-                        case AfterDropEffects.Darker:
-                            {
-                                Color_To = base.BackColor.Dark();
-                                break;
-                            }
-
-                        case AfterDropEffects.Lighter:
-                            {
-                                Color_To = base.BackColor.Light();
-                                break;
-                            }
-
-                        default:
-                            {
-                                Color_To = BackColor;
-                                break;
-                            }
-
-                    }
-
-                    BackColor = Color_From;
-                    ((ColorItem)e.Data.GetData(GetType().FullName)).BackColor = Color_To;
-
-                }
-
-                switch (AfterDropEffect)
-                {
-                    case AfterDropEffects.Invert:
-                        {
-                            BackColor = base.BackColor.Invert();
-                            break;
-                        }
-
-                    case AfterDropEffects.Darker:
-                        {
-                            BackColor = base.BackColor.Dark();
-                            break;
-                        }
-
-                    case AfterDropEffects.Lighter:
-                        {
-                            BackColor = base.BackColor.Light();
-                            break;
-                        }
-
-                    case AfterDropEffects.Mix:
-                        {
-                            BackColor = base.BackColor.Blend(BeforeDropColor, 0.5f);
-                            break;
-                        }
-
+                    draggedColorItem.ContextMenuMadeColorChangeInvoker?.Invoke(draggedColorItem, new ContextMenuMadeColorChangeEventArgs(draggedColorItem, null));
                 }
 
                 ColorClipboard.CopiedColor = BackColor;
@@ -344,116 +282,127 @@ namespace WinPaletter.UI.Controllers
                 base.OnDragDrop(e);
             }
 
+            AfterDropEffect = AfterDropEffects.None;
             DragDropMouseHovering = false;
             Invalidate();
-
         }
 
-        protected override async void OnDragEnter(DragEventArgs e)
+        protected override void OnDragEnter(DragEventArgs e)
         {
-            if (!DesignMode)
+            if (DesignMode) { base.OnDragEnter(e); return; }
+
+            if (!AllowDrop || !Program.Settings.NerdStats.DragAndDrop)
             {
-                if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
-                {
-                    DragDropMouseHovering = true;
+                DragDropMouseHovering = false;
+                BeginInvoke((Action)Invalidate);
+                e.Effect = DragDropEffects.None;
+                base.OnDragEnter(e);
+                return;
+            }
 
-                    e.Effect = DragDropEffects.Copy;
+            DragDropMouseHovering = true;
+            UpdateDragState(e);   // evaluate keys on entry
 
-                    SwapNotCopy = false;
-                    AfterDropEffect = AfterDropEffects.None;
-
-                    if ((e.KeyState & 32) == 32)
-                    {
-                        // Alt is pressed
-                        AfterDropEffect = AfterDropEffects.Invert;
-                    }
-
-                    if ((e.KeyState & 16) == 16)
-                    {
-                        // Middle mouse button is pressed
-
-                    }
-
-                    if ((e.KeyState & 8) == 8)
-                    {
-                        // Ctrl is pressed
-                        AfterDropEffect = AfterDropEffects.Darker;
-
-                    }
-
-                    if ((e.KeyState & 4) == 4)
-                    {
-                        // Shift is pressed
-                        AfterDropEffect = AfterDropEffects.Lighter;
-
-                    }
-
-                    if ((e.KeyState & 32 + 8) == 32 + 8)
-                    {
-                        // Ctrl+Alt are pressed
-                        AfterDropEffect = AfterDropEffects.Mix;
-
-                    }
-
-                    if ((e.KeyState & 2) == 2)
-                    {
-                        // Right mouse button is pressed
-                        SwapNotCopy = true;
-                    }
-
-                    if ((e.KeyState & 1) == 1)
-                    {
-                        // Left mouse button is pressed
-
-                    }
-
-                    if (!((ColorItem)e.Data.GetData(GetType().FullName)).DragDefaultColor)
-                    {
-                        DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).BackColor;
-                    }
-                    else
-                    {
-                        DraggedColor = ((ColorItem)e.Data.GetData(GetType().FullName)).DefaultBackColor;
-                    }
-                }
-
-                else
-                {
-                    DragDropMouseHovering = false;
-
-                    await Task.Delay(10);
-                    Invalidate();
-
-                    e.Effect = DragDropEffects.None;
-                }
+            if (e.Data.GetData(typeof(ColorItem)) is ColorItem item)
+            {
+                DraggedColor = ProcessDraggedColorEffect(item.DragDefaultColor ? item.DefaultBackColor : item.BackColor);
             }
 
             base.OnDragEnter(e);
         }
 
-        protected override async void OnDragLeave(EventArgs e)
+        protected override void OnDragOver(DragEventArgs e)
         {
-            base.OnDragLeave(e);
-            DragDropMouseHovering = false;
-
-            await Task.Delay(10);
-            Invalidate();
-        }
-
-        protected override async void OnDragOver(DragEventArgs e)
-        {
-            if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
-            {
-                DragDropMouseHovering = true;
-                await Task.Delay(10);
-                Invalidate();
-                base.OnDragOver(e);
-            }
-            else
+            if (!AllowDrop || !Program.Settings.NerdStats.DragAndDrop)
             {
                 e.Effect = DragDropEffects.None;
+                return;
             }
 
+            DragDropMouseHovering = true;
+
+            if (e.Data.GetData(typeof(ColorItem)) is ColorItem item)
+            {
+                DraggedColor = ProcessDraggedColorEffect(item.DragDefaultColor ? item.DefaultBackColor : item.BackColor);
+            }
+
+            UpdateDragState(e);      // re-check modifiers every mouse-move
+
+            // Quick repaint if you need visual feedback (no async delay required)
+            Invalidate();
+
+            base.OnDragOver(e);
+        }
+
+        protected override void OnDragLeave(EventArgs e)
+        {
+            base.OnDragLeave(e);
+
+            // Stop hover visuals and request a repaint
+            DragDropMouseHovering = false;
+            AfterDropEffect = AfterDropEffects.None;
+            SwapNotCopy = false;
+            Invalidate();   // schedules repaint; no delay needed
+        }
+
+        private void UpdateDragState(DragEventArgs e)
+        {
+            const int MK_LBUTTON = 1;
+            const int MK_RBUTTON = 2;
+            const int MK_SHIFT = 4;
+            const int MK_CTRL = 8;
+            const int MK_MBUTTON = 16;
+            const int MK_ALT = 32;
+
+            // Defaults
+            SwapNotCopy = false;
+            AfterDropEffect = AfterDropEffects.None;
+
+            bool alt = (e.KeyState & MK_ALT) != 0;
+            bool ctrl = (e.KeyState & MK_CTRL) != 0;
+            bool shift = (e.KeyState & MK_SHIFT) != 0;
+            bool rbtn = (e.KeyState & MK_RBUTTON) != 0;
+
+            if (alt && ctrl) AfterDropEffect = AfterDropEffects.Mix;
+            else if (alt) AfterDropEffect = AfterDropEffects.Invert;
+            else if (ctrl) AfterDropEffect = AfterDropEffects.Darker;
+            else if (shift) AfterDropEffect = AfterDropEffects.Lighter;
+
+            if (rbtn) SwapNotCopy = true;
+
+            // Set the drag-drop cursor feedback
+            e.Effect = SwapNotCopy ? DragDropEffects.Move : DragDropEffects.Copy;
+        }
+
+        private Color ProcessDraggedColorEffect(Color c)
+        {
+            switch (AfterDropEffect)
+            {
+                case AfterDropEffects.Invert:
+                    {
+                        return c.Invert();
+                    }
+
+                case AfterDropEffects.Darker:
+                    {
+                        return c.Dark();
+                    }
+
+                case AfterDropEffects.Lighter:
+                    {
+                        return c.Light();
+                    }
+
+                case AfterDropEffects.Mix:
+                    {
+                        return c.Blend(BeforeDropColor, 0.5f);
+                    }
+
+                default:
+                    {
+                        return c;
+                    }
+            }
         }
 
         #endregion
@@ -1104,34 +1053,14 @@ namespace WinPaletter.UI.Controllers
 
             if (Enabled)
             {
-                using (Config.Colors_Collection colors = new(BackColor, BackColor, BackColor.IsDark()))
-                {
-                    switch (State)
-                    {
-                        case MouseState.None:
-                            {
-                                LineColor = Color.FromArgb(255, colors.Accent);
-                                break;
-                            }
+                byte a = State == MouseState.Down ? (byte)200 : State == MouseState.Over ? (byte)150 : (byte)100;
+                a *= (byte)(BackColor.A / 255f);
 
-                        case MouseState.Over:
-                            {
-                                LineColor = Color.FromArgb(255, colors.Line(0));
-                                break;
-                            }
-
-                        case MouseState.Down:
-                            {
-                                LineColor = Color.FromArgb(255, colors.Line_Checked);
-                                break;
-                            }
-                    }
-                }
+                LineColor = Color.FromArgb(a, BackColor.IsDark() ? BackColor.Light() : BackColor.Dark());
 
                 if (BackColor.A < 255)
                 {
                     using (TextureBrush br = new(Resources.BackgroundOpacity)) { G.FillRoundedRect(br, RectInner); }
-
                     using (Bitmap b = Resources.BackgroundOpacity.Fade(alpha / 255f))
                     using (TextureBrush br = new(b))
                     {
@@ -1222,9 +1151,9 @@ namespace WinPaletter.UI.Controllers
 
                     using (SolidBrush br = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), BackColor))) { G.FillRoundedRect(br, Rect); }
 
-                    using (Pen P = new(Color.FromArgb((int)((255f - alpha) / 255f * BackColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, RectInner); }
+                    using (Pen P = new(Color.FromArgb((int)((255f - alpha) / 255f * LineColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, RectInner); }
 
-                    using (Pen P = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, Rect); }
+                    using (Pen P = new(Color.FromArgb((int)(alpha / 255f * LineColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, Rect); }
                 }
 
                 if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
@@ -1266,14 +1195,47 @@ namespace WinPaletter.UI.Controllers
 
                     Rectangle RectX = Rect; RectX.Y += 1;
 
-                    string S = Enabled ? TargetColor.ToString(default, Program.Settings.NerdStats.ShowHexHash, true) : Program.Lang.Strings.General.Disabled;
+                    string S;
+                    if (AfterDropEffect != AfterDropEffects.None)
+                    {
+                        S = AfterDropEffect == AfterDropEffects.Invert ? Program.Lang.Strings.General.Invert :
+                            AfterDropEffect == AfterDropEffects.Darker ? Program.Lang.Strings.General.Darken :
+                            AfterDropEffect == AfterDropEffects.Lighter ? Program.Lang.Strings.General.Lighten :
+                            Program.Lang.Strings.General.Blend;
+                    }
+                    else
+                    {
+                        S = Enabled ? TargetColor.ToString(default, Program.Settings.NerdStats.ShowHexHash, true) : Program.Lang.Strings.General.Disabled;
+                    }
 
-                    Font F = Program.Settings.NerdStats.UseWindowsMonospacedFont ? new Font(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular) : Fonts.Console;
+                    Font F = Program.Settings.NerdStats.UseWindowsMonospacedFont ? genericMonospacedFont : Fonts.Console;
 
                     using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                     {
                         using (SolidBrush br = new(FC0)) { G.DrawString(S, F, br, RectX, sf); }
                         using (SolidBrush br = new(FC1)) { G.DrawString(S, F, br, RectX, sf); }
+                    }
+
+                    if (!DesignMode && DragDropMouseHovering && CanAnimate)
+                    {
+                        using (GraphicsPath path = Rect.Round(Program.Style.Radius))
+                        using (Region reg = new(path))
+                        using (GraphicsPath gp = new())
+                        {
+                            int i = Math.Max(Width, Height);
+                            Point px = PointToClient(MousePosition);
+                            Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
+                            gp.AddEllipse(MouseCircle);
+
+                            G.SetClip(gp);
+
+                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                            {
+                                using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark())) { G.DrawString(S, F, br, RectX, sf); }
+                            }
+
+                            G.ResetClip();
+                        }
                     }
 
                     using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
@@ -1285,8 +1247,6 @@ namespace WinPaletter.UI.Controllers
             }
 
             base.OnPaint(e);
-
-
         }
     }
 }

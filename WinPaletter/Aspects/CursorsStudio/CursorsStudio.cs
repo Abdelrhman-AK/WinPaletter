@@ -493,12 +493,22 @@ namespace WinPaletter
             CursorControl.Prop_Shadow_OffsetY = trackBarX8.Value;
         }
 
-        private void TaskbarFrontAndFoldersOnStart_picker_Click(object sender, EventArgs e)
+        private void PrimaryColor1_Click(object sender, EventArgs e)
         {
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_PrimaryColor1 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_PrimaryColor1 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_PrimaryColor1 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -539,11 +549,20 @@ namespace WinPaletter
 
         private void GroupBox3_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_PrimaryColor2 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_PrimaryColor2 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_PrimaryColor2 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -584,11 +603,20 @@ namespace WinPaletter
 
         private void GroupBox5_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_SecondaryColor1 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_SecondaryColor1 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_SecondaryColor1 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -631,8 +659,18 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_SecondaryColor2 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_SecondaryColor2 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_SecondaryColor2 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -673,11 +711,20 @@ namespace WinPaletter
 
         private void GroupBox10_Click(object sender, EventArgs e)
         {
-
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_LoadingCircleBack1 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_LoadingCircleBack1 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -923,8 +970,18 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_LoadingCircleBack1 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_LoadingCircleBack2 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_LoadingCircleBack2 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -967,8 +1024,18 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_LoadingCircleHot1 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_LoadingCircleHot1 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_LoadingCircleHot1 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -1011,8 +1078,18 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_LoadingCircleHot2 = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_LoadingCircleHot2 = (sender as ColorItem).BackColor;
                 _SelectedControl.Invalidate();
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_LoadingCircleHot2 = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
+
                 return;
             }
 
@@ -1278,7 +1355,16 @@ namespace WinPaletter
         {
             if (e is DragEventArgs)
             {
-                _SelectedControl.Prop_Shadow_Color = ((ColorItem)sender).BackColor;
+                _SelectedControl.Prop_Shadow_Color = (sender as ColorItem).BackColor;
+
+                if (global.Checked)
+                {
+                    foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>().Where(x => x != _SelectedControl))
+                    {
+                        i.Prop_Shadow_Color = (sender as ColorItem).BackColor;
+                        i.Invalidate();
+                    }
+                }
                 return;
             }
 

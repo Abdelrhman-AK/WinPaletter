@@ -677,8 +677,8 @@ namespace WinPaletter
             this.PrimaryColor1.Size = new System.Drawing.Size(110, 24);
             this.PrimaryColor1.TabIndex = 11;
             this.PrimaryColor1.ContextMenuMadeColorChangeInvoker += new WinPaletter.UI.Controllers.ColorItem.ContextMenuMadeColorChange(this.PrimaryColor1_ContextMenuMadeColorChangeInvoker);
-            this.PrimaryColor1.Click += new System.EventHandler(this.TaskbarFrontAndFoldersOnStart_picker_Click);
-            this.PrimaryColor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.TaskbarFrontAndFoldersOnStart_picker_Click);
+            this.PrimaryColor1.Click += new System.EventHandler(this.PrimaryColor1_Click);
+            this.PrimaryColor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.PrimaryColor1_Click);
             // 
             // ComboBox1
             // 

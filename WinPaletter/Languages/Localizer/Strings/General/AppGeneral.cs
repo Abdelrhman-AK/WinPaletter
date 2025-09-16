@@ -36,6 +36,7 @@
                 public string Darken { get; set; } = "Darken";
                 public string Lighten { get; set; } = "Lighten";
                 public string PasteByBlending { get; set; } = "Paste by blending";
+                public string Blend { get; set; } = "Blend";
                 public string Reverse { get; set; } = "Reverse (ARGB → ABGR)";
                 public string Grayscale { get; set; } = "Convert to grayscale";
                 public string Effects { get; set; } = "More effects";
