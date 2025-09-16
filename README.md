@@ -11,12 +11,12 @@ While significant new features are not anticipated, the goal is to place the pro
 
 | Area | Update Description | Progress |
 |---------------------------------|-----------------------------------------------------------|---------------------|
-| Windows 8 Support | Adding support for Windows 8 build 9200 (and builds below Windows 8.1) | ⌛ In progress |
 | Bugs fixes | Fix reported and non reported bugs and issues | ⌛ In progress |
-| Simplified UI Components | Streamlined user interface for enhanced workflow | ⌛ In progress |
 | Wiki rewrite | Wiki will be improved and rewritten to make users can understand WinPaletter more after its massive UI refresh | ⌛ In progress |
-| Logging System | New "WinPaletter Log" for sophisticated user diagnostics | ⌛ In progress |
 | Developer Support | Better in-code documentation and organized comments for developers | ⌛ In progress |
+| Simplified UI Components | Streamlined user interface for enhanced workflow | 🔴 Partially done |
+| Windows 8 Support | Adding support for Windows 8 build 9200 (and builds below Windows 8.1) | ✔️ Done |
+| Logging System | New "WinPaletter Log" for sophisticated user diagnostics | ✔️ Done |
 | System Restore Point | Automatically create a restore point before applying any theme | ✔️ Done |
 | Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ✔️ Done |
 | WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ✔️ Done |
@@ -103,10 +103,6 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 - [3D and flat degrees modification in 3D objects (Classic Colors) is inspired by Desktop Architect](https://en.wikipedia.org/wiki/Desktop_Architect)
 
 - [Colors picking controls by Cyotek](https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker)
-
-- [Image to palette conversion mechanism by ColorThief, developed by KSemenenko](https://github.com/KSemenenko/ColorThief)
-
-- [Bitmap effects powered by ImageProcessor](https://imageprocessor.org)
 
 - [Bitmaps to cursors conversion mechanism developed by Evan Olds](https://github.com/evanolds/AnimCur)
 
