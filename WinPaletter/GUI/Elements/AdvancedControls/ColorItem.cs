@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
+using WinPaletter.TypesExtensions;
 using static WinPaletter.Settings.Structures.NerdStats;
 
 namespace WinPaletter.UI.Controllers
@@ -566,6 +567,7 @@ namespace WinPaletter.UI.Controllers
         private void Copy_Click(object sender, EventArgs e)
         {
             ColorClipboard.CopiedColor = BackColor;
+            CopyColor(BackColor.ToString(Program.Settings.NerdStats.Type));
             contextMenu.Close();
         }
 
