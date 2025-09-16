@@ -135,7 +135,6 @@ namespace WinPaletter
             this.pictureBox27 = new System.Windows.Forms.PictureBox();
             this.label19 = new System.Windows.Forms.Label();
             this.separatorH5 = new WinPaletter.UI.WP.SeparatorH();
-            this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -2102,10 +2101,9 @@ namespace WinPaletter
             this.groupBox3.Controls.Add(this.pictureBox27);
             this.groupBox3.Controls.Add(this.label19);
             this.groupBox3.Controls.Add(this.separatorH5);
-            this.groupBox3.Controls.Add(this.separatorV2);
             this.groupBox3.Location = new System.Drawing.Point(7, 293);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(756, 132);
+            this.groupBox3.Size = new System.Drawing.Size(756, 141);
             this.groupBox3.TabIndex = 140;
             this.groupBox3.Text = "groupBox3";
             this.groupBox3.Visible = false;
@@ -2117,9 +2115,9 @@ namespace WinPaletter
             this.global.Checked = false;
             this.global.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.global.ForeColor = System.Drawing.Color.White;
-            this.global.Location = new System.Drawing.Point(73, 74);
+            this.global.Location = new System.Drawing.Point(47, 109);
             this.global.Name = "global";
-            this.global.Size = new System.Drawing.Size(675, 24);
+            this.global.Size = new System.Drawing.Size(701, 24);
             this.global.TabIndex = 139;
             this.global.Text = "Apply changes globally to all cursors, not just the selected cursor";
             this.global.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.global_CheckedChanged);
@@ -2131,7 +2129,7 @@ namespace WinPaletter
             this.source1.Checked = false;
             this.source1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.source1.ForeColor = System.Drawing.Color.White;
-            this.source1.Location = new System.Drawing.Point(47, 101);
+            this.source1.Location = new System.Drawing.Point(47, 72);
             this.source1.Name = "source1";
             this.source1.Size = new System.Drawing.Size(701, 24);
             this.source1.TabIndex = 138;
@@ -2145,7 +2143,7 @@ namespace WinPaletter
             this.source0.Checked = false;
             this.source0.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.source0.ForeColor = System.Drawing.Color.White;
-            this.source0.Location = new System.Drawing.Point(47, 47);
+            this.source0.Location = new System.Drawing.Point(47, 45);
             this.source0.Name = "source0";
             this.source0.Size = new System.Drawing.Size(701, 24);
             this.source0.TabIndex = 137;
@@ -2180,24 +2178,15 @@ namespace WinPaletter
             // separatorH5
             // 
             this.separatorH5.AlternativeLook = false;
+            this.separatorH5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH5.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH5.Location = new System.Drawing.Point(58, 86);
+            this.separatorH5.Location = new System.Drawing.Point(47, 102);
             this.separatorH5.Name = "separatorH5";
-            this.separatorH5.Size = new System.Drawing.Size(21, 1);
+            this.separatorH5.Size = new System.Drawing.Size(701, 1);
             this.separatorH5.TabIndex = 141;
             this.separatorH5.TabStop = false;
             this.separatorH5.Text = "separatorH5";
-            // 
-            // separatorV2
-            // 
-            this.separatorV2.AlternativeLook = false;
-            this.separatorV2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV2.Location = new System.Drawing.Point(58, 63);
-            this.separatorV2.Name = "separatorV2";
-            this.separatorV2.Size = new System.Drawing.Size(1, 24);
-            this.separatorV2.TabIndex = 140;
-            this.separatorV2.TabStop = false;
-            this.separatorV2.Text = "separatorV2";
             // 
             // groupBox4
             // 
@@ -2331,7 +2320,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tablessControl1.Controls.Add(this.tabPage6);
             this.tablessControl1.Controls.Add(this.tabPage7);
-            this.tablessControl1.Location = new System.Drawing.Point(7, 431);
+            this.tablessControl1.Location = new System.Drawing.Point(7, 440);
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
             this.tablessControl1.Size = new System.Drawing.Size(756, 48);
@@ -2405,7 +2394,7 @@ namespace WinPaletter
             this.tablessControl2.Controls.Add(this.tabPage9);
             this.tablessControl2.Controls.Add(this.tabPage1);
             this.tablessControl2.Controls.Add(this.tabPage10);
-            this.tablessControl2.Location = new System.Drawing.Point(7, 485);
+            this.tablessControl2.Location = new System.Drawing.Point(7, 494);
             this.tablessControl2.Name = "tablessControl2";
             this.tablessControl2.SelectedIndex = 0;
             this.tablessControl2.Size = new System.Drawing.Size(756, 191);
@@ -2979,6 +2968,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanOpenColorsEffects = true;
             this.ClientSize = new System.Drawing.Size(1090, 741);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.groupBox3);
@@ -3212,7 +3202,6 @@ namespace WinPaletter
         private UI.WP.SeparatorH separatorH3;
         private UI.WP.SeparatorH separatorH4;
         private UI.WP.SeparatorH separatorH5;
-        private UI.WP.SeparatorV separatorV2;
         private UI.WP.NumericUpDown numericUpDown1;
     }
 }
