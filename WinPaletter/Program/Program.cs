@@ -83,20 +83,19 @@ namespace WinPaletter
             {
                 // Initialize log
                 if (!Directory.Exists(SysPaths.Logs)) { Directory.CreateDirectory(SysPaths.Logs); }
-                string logFileName = $"{SysPaths.Logs}\\WinPaletter_Log_{DateTime.Now:yyyyMMdd_HHmmss}.json";
-                if (File.Exists(logFileName)) using (FileStream fs = new(logFileName, FileMode.Truncate)) { }
+                if (File.Exists(LogFile)) using (FileStream fs = new(LogFile, FileMode.Truncate)) { }
 
                 LoggerConfiguration log = new();
-                log.WriteTo.File(new JsonFormatter(), logFileName);
+                log.WriteTo.File(new JsonFormatter(), LogFile);
                 Log = log.CreateLogger();
                 Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter file MD5: {Program.CalculateMD5(AppFile)}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {logFileName}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
-
+                
                 // Create the data directory if it does not exist
                 if (!Directory.Exists(SysPaths.ProgramFilesData))
                 {

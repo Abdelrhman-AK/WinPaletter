@@ -1191,6 +1191,7 @@ namespace WinPaletter
             }
 
             Label38.Text = CalcStoreCache().ToStringFileSize();
+            label7.Text = CalcAppCore().ToStringFileSize();
         }
 
         /// <summary>
@@ -1213,7 +1214,8 @@ namespace WinPaletter
                 Forms.BugReport.ThrowError(ex);
             }
 
-            Label43.Text = CalcThemesResCache().ToStringFileSize();
+            Label43.Text = CalcThemesResCache().ToStringFileSize();    
+            label7.Text = CalcAppCore().ToStringFileSize();
         }
 
         /// <summary>
@@ -1290,6 +1292,7 @@ namespace WinPaletter
             }
 
             label5.Text = CalcExErrors().ToStringFileSize();
+            label7.Text = CalcAppCore().ToStringFileSize();
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -1392,7 +1395,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        if (File.Exists(file))
+                        if (file != Program.LogFile && File.Exists(file))
                         {
                             File.Delete(file);
                         }
@@ -1409,6 +1412,7 @@ namespace WinPaletter
             }
 
             label98.Text = CalcLogs().ToStringFileSize();
+            label7.Text = CalcAppCore().ToStringFileSize();
         }
 
         private void button31_Click(object sender, EventArgs e)

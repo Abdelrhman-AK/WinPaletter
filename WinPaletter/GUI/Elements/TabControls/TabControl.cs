@@ -30,26 +30,43 @@ namespace WinPaletter.UI.WP
 
         #region Events/Overrides
 
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            base.OnDragEnter(e);
+            // Set an initial effect so the cursor updates as soon as the drag enters.
+            e.Effect = e.Data.GetDataPresent(typeof(ColorItem)) ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
+            base.OnDragOver(e);
+
+            if (!e.Data.GetDataPresent(typeof(ColorItem)))
             {
                 e.Effect = DragDropEffects.None;
-                for (int i = 0, loopTo = TabCount - 1; i <= loopTo; i++)
-                {
-                    if (!(SelectedIndex == i) && GetTabRect(i).Contains(PointToClient(MousePosition)))
-                    {
-                        SelectedIndex = i;
-                        Invalidate();
-                    }
-                }
-            }
-            else
-            {
                 return;
             }
 
-            base.OnDragOver(e);
+            // Always set the allowed effect for a valid data type (so cursor updates).
+            e.Effect = DragDropEffects.Copy;
+
+            if (TabCount == 0) return;
+
+            // e.X/e.Y are screen coords — convert to client coords for GetTabRect.
+            var clientPoint = PointToClient(new Point(e.X, e.Y));
+
+            for (int i = 0; i < TabCount; i++)
+            {
+                if (i == SelectedIndex) continue;
+
+                var tabRect = GetTabRect(i); // bounding rectangle for that tab button.
+                if (tabRect.Contains(clientPoint))
+                {
+                    SelectedIndex = i;    // only change when different
+                                          // If you need immediate repaint of custom-drawn areas, call Invalidate() here.
+                    break;
+                }
+            }
         }
 
         protected override void CreateHandle()
