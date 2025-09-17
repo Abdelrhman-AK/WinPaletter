@@ -109,12 +109,11 @@ namespace WinPaletter.Tabs
 
                 if (AccentOnTitlebars && !isCompositionEnabled) return TitlebarTypes.ColorPrevalence;
 
-                if (Transparency) return TitlebarTypes.DWM;
+                if (Transparency) return OS.W10 ? TitlebarTypes.DWM_Aero : TitlebarTypes.DWM;
 
                 return TitlebarTypes.AppMode;
             }
         }
-
 
         /// <summary>
         /// Enumeration that determines the style of the titlebar if the <see cref="Flag"/> is set to <see cref="Flags.System"/>.
