@@ -27,6 +27,11 @@ namespace WinPaletter.UI.WP
         {
             SetStyle(ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
             DoubleBuffered = true;
+
+            // Prevent the built-in scroll buttons
+            Multiline = true;
+            ItemSize = new Size(0, 1); // zero height makes strip effectively invisible
+            SizeMode = TabSizeMode.Fixed;
         }
 
         /// <summary>
@@ -40,6 +45,8 @@ namespace WinPaletter.UI.WP
             set { base.BackColor = value; Invalidate(); }
         }
 
+        private static IntPtr MakeLParam(int lo, int hi) => (IntPtr)((hi << 16) | (lo & 0xFFFF));
+
         /// <summary>
         /// Processes Windows messages sent to the control.
         /// </summary>
@@ -52,11 +59,21 @@ namespace WinPaletter.UI.WP
         {
             const int WM_ERASEBKGND = 0x14;
             const int TCM_ADJUSTRECT = 0x1328;
+            const int TCM_SETPADDING = 0x132B;   // sets tab item padding
+            const int WM_PAINT = 0x0F;
 
+            // Hide the tab strip area completely
             if (!DesignMode && m.Msg == TCM_ADJUSTRECT)
             {
                 m.Result = (IntPtr)1;
                 return;
+            }
+
+            // Remove the up/down scroll buttons that Windows draws
+            // by forcing the tab strip to have zero height before it paints.
+            if (m.Msg == WM_PAINT)
+            {
+                NativeMethods.User32.SendMessage(Handle, TCM_SETPADDING, IntPtr.Zero, MakeLParam(0, 1));
             }
 
             if (m.Msg == WM_ERASEBKGND)
@@ -64,6 +81,7 @@ namespace WinPaletter.UI.WP
                 using (var g = Graphics.FromHdc(m.WParam))
                 using (var b = new SolidBrush(BackColor))
                     g.FillRectangle(b, ClientRectangle);
+
                 m.Result = (IntPtr)1;
                 return;
             }
