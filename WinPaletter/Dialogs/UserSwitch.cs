@@ -68,7 +68,7 @@ namespace WinPaletter
 
                 Scheme += "\r\n" + $"{Program.Lang.Strings.Users.Computer}: {user.Value.Split('\\').First()}";
 
-                if (user.Key.ToUpper() != "S-1-5-18" && user.Key.ToUpper() != "S-1-5-19" && user.Key.ToUpper() != "S-1-5-20")
+                if (user.Key.ToUpper() is not "S-1-5-18" and not "S-1-5-19" and not "S-1-5-20")
                 {
                     Scheme += "\r\n" + $"{(User.IsAdmin(user.Key) ? Program.Lang.Strings.Users.TypeAdministrator : Program.Lang.Strings.Users.TypeLocalUser)}";
                 }
