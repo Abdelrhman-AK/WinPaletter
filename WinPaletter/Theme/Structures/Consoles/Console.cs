@@ -149,12 +149,12 @@ namespace WinPaletter.Theme.Structures
             ColorTable15 = Color.FromArgb(255, ReadReg(RegAddress, "ColorTable15", @default.ColorTable15.Reverse()).Reverse());
 
             // Popup colors (stored as single hex value "background + foreground")
-            string popupHex = (ReadReg(RegAddress, "PopupColors", Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16))).ToString("X").PadLeft(2, '0');
+            string popupHex = ReadReg(RegAddress, "PopupColors", Convert.ToInt32($"{@default.PopupBackground:X}{@default.PopupForeground:X}", 16)).ToString("X").PadLeft(2, '0');
             PopupBackground = Convert.ToInt32(popupHex[0].ToString(), 16);
             PopupForeground = Convert.ToInt32(popupHex[1].ToString(), 16);
 
             // Screen colors (same storage format as popup)
-            string screenHex = (ReadReg(RegAddress, "ScreenColors", Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16))).ToString("X").PadLeft(2, '0');
+            string screenHex = ReadReg(RegAddress, "ScreenColors", Convert.ToInt32($"{@default.ScreenColorsBackground:X}{@default.ScreenColorsForeground:X}", 16)).ToString("X").PadLeft(2, '0');
             ScreenColorsBackground = Convert.ToInt32(screenHex[0].ToString(), 16);
             ScreenColorsForeground = Convert.ToInt32(screenHex[1].ToString(), 16);
 
@@ -162,7 +162,7 @@ namespace WinPaletter.Theme.Structures
             CursorSize = ReadReg(RegAddress, "CursorSize", 25);
 
             // Font name (must exist in Fonts list, or fallback to default)
-            string faceName = ReadReg(RegAddress, "FaceName", @default.FaceName).ToString();
+            string faceName = ReadReg(RegAddress, "FaceName", @default.FaceName);
             if (Fonts.Exists(faceName) || faceName.Equals("__DefaultTTFont__", StringComparison.OrdinalIgnoreCase)) FaceName = faceName;
             else FaceName = @default.FaceName;
 

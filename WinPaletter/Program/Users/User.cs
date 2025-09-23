@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
@@ -171,7 +172,7 @@ namespace WinPaletter
                             // Undo impersonation after finishing operations on user profile
                             wic.Undo();
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(Serilog.Events.LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`.");
+                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`.");
                         }
 
                         break;

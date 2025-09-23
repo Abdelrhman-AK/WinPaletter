@@ -151,15 +151,15 @@ namespace WinPaletter.TypesExtensions
 
                 if (roundedCorners)
                 {
-                    G.DrawRoundImage(glowImage.Fade((float)glowBalance), _rect, radius, true);
-                    G.DrawRoundImage(colorImage.Fade((float)(colorBalance * glowBalance)), _rect, radius, true);
-                    G.DrawRoundImage(whiteImage.Fade((1f - (float)alpha) * (float)glowBalance), _rect, radius, true);
+                    G.DrawRoundImage(glowImage.Fade(glowBalance), _rect, radius, true);
+                    G.DrawRoundImage(colorImage.Fade(colorBalance * glowBalance), _rect, radius, true);
+                    G.DrawRoundImage(whiteImage.Fade((1f - alpha) * glowBalance), _rect, radius, true);
                 }
                 else
                 {
-                    G.DrawImage(glowImage.Fade((float)glowBalance), _rect);
-                    G.DrawImage(colorImage.Fade((float)(colorBalance * glowBalance)), _rect);
-                    G.DrawImage(whiteImage.Fade((1f - (float)alpha) * (float)glowBalance), _rect);
+                    G.DrawImage(glowImage.Fade(glowBalance), _rect);
+                    G.DrawImage(colorImage.Fade(colorBalance * glowBalance), _rect);
+                    G.DrawImage(whiteImage.Fade((1f - alpha) * glowBalance), _rect);
                 }
 
                 glowImage?.Dispose();

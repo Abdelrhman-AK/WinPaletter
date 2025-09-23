@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.WP
 {
@@ -70,7 +71,7 @@ namespace WinPaletter.UI.WP
             // by forcing the tab strip to have zero height before it paints.
             if (m.Msg == WM_PAINT)
             {
-                NativeMethods.User32.SendMessage(Handle, TCM_SETPADDING, IntPtr.Zero, MakeLParam(0, 1));
+                User32.SendMessage(Handle, TCM_SETPADDING, IntPtr.Zero, MakeLParam(0, 1));
             }
 
             if (m.Msg == WM_ERASEBKGND)

@@ -47,7 +47,7 @@ namespace WinPaletter.Theme.Structures
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Alt+Tab switcher settings from registry");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\AltTab", string.Empty, @default.Enabled);
-            Style = (Styles)ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", @default.Style);
+            Style = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", @default.Style);
             Win10Opacity = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultitaskingView\AltTabViewHost", "Grid_backgroundPercent", @default.Win10Opacity);
             if (Win10Opacity == default)
                 Win10Opacity = @default.Win10Opacity;

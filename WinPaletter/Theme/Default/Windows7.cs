@@ -13,7 +13,7 @@ namespace WinPaletter.Theme
         {
             Manager TM = new(Manager.Source.Empty);
 
-            ref Structures.Info Info = ref TM.Info;
+            ref Info Info = ref TM.Info;
             Info.ThemeName = "Default Windows 7";
             Info.Description = "Initial, like the default look after a fresh Windows 7 setup—clean, untouched, and ready for customization.";
             Info.ThemeVersion = "1.0.0.0";
@@ -69,7 +69,7 @@ namespace WinPaletter.Theme
             PS64.FontRaster = true;
             PS64.W10_1909_ForceV2 = false;
 
-            ref Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+            ref MetricsFonts MetricsFonts = ref TM.MetricsFonts;
             MetricsFonts.Enabled = true;
             MetricsFonts.BorderWidth = 1;
             MetricsFonts.CaptionHeight = 21;
@@ -86,7 +86,7 @@ namespace WinPaletter.Theme
             MetricsFonts.DesktopIconSize = 48;
             MetricsFonts.ShellIconSize = 32;
 
-            ref Structures.WinEffects WinEffects = ref TM.WindowsEffects;
+            ref WinEffects WinEffects = ref TM.WindowsEffects;
             WinEffects.Enabled = true;
             WinEffects.ShakeToMinimize = true;
             WinEffects.BalloonNotifications = true;
@@ -99,7 +99,7 @@ namespace WinPaletter.Theme
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
             TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
-            ref Structures.Icons Icons = ref TM.Icons;
+            ref Icons Icons = ref TM.Icons;
             Icons.Enabled = true;
 
             TM.Cursors.Enabled = true;
@@ -122,7 +122,7 @@ namespace WinPaletter.Theme
             TM.Cursors.Cursor_IBeam.UseFromFile = true;
             TM.Cursors.Cursor_Cross.UseFromFile = true;
 
-            ref Structures.Sounds Sounds = ref TM.Sounds;
+            ref Sounds Sounds = ref TM.Sounds;
             Sounds.Enabled = true;
             Sounds.Snd_Imageres_SystemStart = "Default";
             Sounds.Snd_Win_Default = $@"{SysPaths.Windows}\media\Windows Ding.wav";
@@ -208,12 +208,12 @@ namespace WinPaletter.Theme
             Sounds.Snd_SpeechRec_MisrecoSound = $@"{SysPaths.Windows}\media\Speech Misrecognition.wav";
             Sounds.Snd_SpeechRec_PanelSound = $@"{SysPaths.Windows}\media\Speech Disambiguation.wav";
 
-            ref Structures.Wallpaper Wallpaper = ref TM.Wallpaper;
+            ref Wallpaper Wallpaper = ref TM.Wallpaper;
             Wallpaper.Enabled = true;
 
             TM.AppTheme.Enabled = true;
 
-            ref Structures.Accessibility Accessibility = ref TM.Accessibility;
+            ref Accessibility Accessibility = ref TM.Accessibility;
             Accessibility.Enabled = true;
 
             return TM;

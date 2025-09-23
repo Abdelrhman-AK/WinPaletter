@@ -772,11 +772,6 @@ namespace WinPaletter
             Process.Start(SysPaths.LogsDir);
         }
 
-        private void winEdition_MouseEnter(object sender, EventArgs e)
-        {
-
-        }
-
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);

@@ -10,6 +10,8 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Assets;
+using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using static WinPaletter.Settings.Structures.NerdStats;
 
@@ -19,31 +21,31 @@ namespace WinPaletter.UI.Controllers
     public class ColorItem : Panel
     {
         WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
-        ToolStripMenuItem darken = new() { Image = Assets.ColorItemContextMenu.Darken };
-        ToolStripMenuItem lighten = new() { Image = Assets.ColorItemContextMenu.Lighten };
-        ToolStripMenuItem invert = new() { Image = Assets.ColorItemContextMenu.Invert };
-        ToolStripMenuItem copy = new() { Image = Assets.ColorItemContextMenu.Copy };
+        ToolStripMenuItem darken = new() { Image = ColorItemContextMenu.Darken };
+        ToolStripMenuItem lighten = new() { Image = ColorItemContextMenu.Lighten };
+        ToolStripMenuItem invert = new() { Image = ColorItemContextMenu.Invert };
+        ToolStripMenuItem copy = new() { Image = ColorItemContextMenu.Copy };
         ToolStripMenuItem paste = new();
-        ToolStripMenuItem cut = new() { Image = Assets.ColorItemContextMenu.Cut };
-        ToolStripMenuItem delete = new() { Image = Assets.ColorItemContextMenu.Delete };
-        ToolStripMenuItem reset = new() { Image = Assets.ColorItemContextMenu.Default };
+        ToolStripMenuItem cut = new() { Image = ColorItemContextMenu.Cut };
+        ToolStripMenuItem delete = new() { Image = ColorItemContextMenu.Delete };
+        ToolStripMenuItem reset = new() { Image = ColorItemContextMenu.Default };
         ToolStripMenuItem blend = new();
-        ToolStripMenuItem reverse = new() { Image = Assets.ColorItemContextMenu.Reverse };
-        ToolStripMenuItem effects = new() { Image = Assets.ColorItemContextMenu.Effects };
-        ToolStripMenuItem grayscale = new() { Image = Assets.ColorItemContextMenu.Grayscale };
-        ToolStripMenuItem sepia = new() { Image = Assets.ColorItemContextMenu.Sepia };
-        ToolStripMenuItem rotateHuePlus10 = new() { Image = Assets.ColorItemContextMenu.RotateHue };
-        ToolStripMenuItem rotateHueMinus10 = new() { Image = Assets.ColorItemContextMenu.RotateHue };
-        ToolStripMenuItem desaturate = new() { Image = Assets.ColorItemContextMenu.Desaturate };
-        ToolStripMenuItem monochrome = new() { Image = Assets.ColorItemContextMenu.Monochrome };
-        ToolStripMenuItem imageToColor = new() { Image = Assets.ColorItemContextMenu.Image };
-        ToolStripMenuItem webSafe = new() { Image = Assets.ColorItemContextMenu.WebSafe };
-        ToolStripMenuItem _256Colors = new() { Image = Assets.ColorItemContextMenu._265Colors };
-        ToolStripMenuItem frutigerAero = new() { Image = Assets.ColorItemContextMenu.FrutigerAero };
-        ToolStripMenuItem metro = new() { Image = Assets.ColorItemContextMenu.Metro };
-        ToolStripMenuItem macOS = new() { Image = Assets.ColorItemContextMenu.macOS };
-        ToolStripMenuItem material = new() { Image = Assets.ColorItemContextMenu.M2015 };
-        ToolStripMenuItem materialExpressive3 = new() { Image = Assets.ColorItemContextMenu.ME3 };
+        ToolStripMenuItem reverse = new() { Image = ColorItemContextMenu.Reverse };
+        ToolStripMenuItem effects = new() { Image = ColorItemContextMenu.Effects };
+        ToolStripMenuItem grayscale = new() { Image = ColorItemContextMenu.Grayscale };
+        ToolStripMenuItem sepia = new() { Image = ColorItemContextMenu.Sepia };
+        ToolStripMenuItem rotateHuePlus10 = new() { Image = ColorItemContextMenu.RotateHue };
+        ToolStripMenuItem rotateHueMinus10 = new() { Image = ColorItemContextMenu.RotateHue };
+        ToolStripMenuItem desaturate = new() { Image = ColorItemContextMenu.Desaturate };
+        ToolStripMenuItem monochrome = new() { Image = ColorItemContextMenu.Monochrome };
+        ToolStripMenuItem imageToColor = new() { Image = ColorItemContextMenu.Image };
+        ToolStripMenuItem webSafe = new() { Image = ColorItemContextMenu.WebSafe };
+        ToolStripMenuItem _256Colors = new() { Image = ColorItemContextMenu._265Colors };
+        ToolStripMenuItem frutigerAero = new() { Image = ColorItemContextMenu.FrutigerAero };
+        ToolStripMenuItem metro = new() { Image = ColorItemContextMenu.Metro };
+        ToolStripMenuItem macOS = new() { Image = ColorItemContextMenu.macOS };
+        ToolStripMenuItem material = new() { Image = ColorItemContextMenu.M2015 };
+        ToolStripMenuItem materialExpressive3 = new() { Image = ColorItemContextMenu.ME3 };
 
         ToolStripMenuItem previousColor = new();
         ToolStripSeparator toolStripSeparator0 = new();
@@ -347,11 +349,9 @@ namespace WinPaletter.UI.Controllers
 
         private void UpdateDragState(DragEventArgs e)
         {
-            const int MK_LBUTTON = 1;
             const int MK_RBUTTON = 2;
             const int MK_SHIFT = 4;
             const int MK_CTRL = 8;
-            const int MK_MBUTTON = 16;
             const int MK_ALT = 32;
 
             // Defaults
@@ -536,24 +536,24 @@ namespace WinPaletter.UI.Controllers
 
                 blend.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 blend.Image = blend.Enabled
-                    ? Assets.ColorItemContextMenu.Blend
-                    : Assets.ColorItemContextMenu.Blend.Grayscale();
+                    ? ColorItemContextMenu.Blend
+                    : ColorItemContextMenu.Blend.Grayscale();
 
                 paste.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 paste.Image = paste.Enabled
-                    ? Assets.ColorItemContextMenu.Paste
-                    : Assets.ColorItemContextMenu.Paste.Grayscale();
+                    ? ColorItemContextMenu.Paste
+                    : ColorItemContextMenu.Paste.Grayscale();
 
                 previousColor.Enabled = ColorsHistory.Count > 2;
                 previousColor.Image = previousColor.Enabled
-                    ? Assets.ColorItemContextMenu.Reset
-                    : Assets.ColorItemContextMenu.Reset.Grayscale();
+                    ? ColorItemContextMenu.Reset
+                    : ColorItemContextMenu.Reset.Grayscale();
 
                 // Screen coordinates
                 Point screenPoint = new((short)(m.LParam.ToInt32() & 0xFFFF), (short)(m.LParam.ToInt32() >> 16));
 
                 // release mouse capture so the menu can take focus
-                NativeMethods.User32.ReleaseCapture();
+                User32.ReleaseCapture();
 
                 contextMenu.Show(this, screenPoint);
 
@@ -1222,22 +1222,22 @@ namespace WinPaletter.UI.Controllers
                         using (GraphicsPath path = Rect.Round(Program.Style.Radius))
                         using (Region reg = new(path))
                         using (GraphicsPath gp = new())
-                        {
-                            int i = Math.Max(Width, Height);
-                            Point px = PointToClient(MousePosition);
-                            Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
-                            gp.AddEllipse(MouseCircle);
-
-                            G.SetClip(gp);
-
-                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                             {
-                                using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark())) { G.DrawString(S, F, br, RectX, sf); }
-                            }
+                                int i = Math.Max(Width, Height);
+                                Point px = PointToClient(MousePosition);
+                                Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
+                                gp.AddEllipse(MouseCircle);
 
-                            G.ResetClip();
+                                G.SetClip(gp);
+
+                                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                                {
+                                    using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark())) { G.DrawString(S, F, br, RectX, sf); }
+                                }
+
+                                G.ResetClip();
+                            }
                         }
-                    }
 
                     using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
                     {

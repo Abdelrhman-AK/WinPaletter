@@ -535,7 +535,7 @@ namespace WinPaletter
                 public void Load()
                 {
                     Enabled = ReadReg(REG_Language, string.Empty, false);
-                    File = ReadReg(REG_Language, "File", string.Empty).ToString();
+                    File = ReadReg(REG_Language, "File", string.Empty);
                 }
 
                 /// <summary>
@@ -598,7 +598,7 @@ namespace WinPaletter
                     UseStart10 = ReadReg(REG_EP, "UseStart10", false);
                     UseTaskbar10 = ReadReg(REG_EP, "UseTaskbar10", false);
                     TaskbarButton10 = ReadReg(REG_EP, "TaskbarButton10", false);
-                    StartStyle = (ExplorerPatcher.StartStyles)ReadReg(REG_EP, "StartStyle", WinPaletter.ExplorerPatcher.StartStyles.NotRounded);
+                    StartStyle = ReadReg(REG_EP, "StartStyle", WinPaletter.ExplorerPatcher.StartStyles.NotRounded);
                 }
 
                 /// <summary>
@@ -675,7 +675,7 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    VerboseLevel = (VerboseLevels)ReadReg(REG_ThemeLog, "VerboseLevel", VerboseLevels.Basic);
+                    VerboseLevel = ReadReg(REG_ThemeLog, "VerboseLevel", VerboseLevels.Basic);
                     ShowSkippedItemsOnDetailedVerbose = ReadReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", false);
                     CountDown = ReadReg(REG_ThemeLog, "CountDown", true);
                     CountDown_Seconds = ReadReg(REG_ThemeLog, "CountDown_Seconds", 20);
@@ -1031,7 +1031,7 @@ namespace WinPaletter
                 {
                     Enabled = ReadReg(REG_NerdStats, string.Empty, true);
                     ShowHexHash = ReadReg(REG_NerdStats, "ShowHexHash", true);
-                    Type = (Formats)ReadReg(REG_NerdStats, "Type", Formats.HEX);
+                    Type = ReadReg(REG_NerdStats, "Type", Formats.HEX);
                     UseWindowsMonospacedFont = ReadReg(REG_NerdStats, "UseWindowsMonospacedFont", false);
                     MoreLabelTransparency = ReadReg(REG_NerdStats, "MoreLabelTransparency", false);
                     DotDefaultChangedIndicator = ReadReg(REG_NerdStats, "DotDefaultChangedIndicator", true);

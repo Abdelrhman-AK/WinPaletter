@@ -120,10 +120,10 @@ namespace WinPaletter.Theme.Structures
             // Necessary to remember last wallpaper that is not from slideshow and not a spotlight image
             if (ImageFile.StartsWith(slideshow_img, StringComparison.OrdinalIgnoreCase) || ImageFile.StartsWith(spotlight_img, StringComparison.OrdinalIgnoreCase) || !File.Exists(ImageFile))
             {
-                ImageFile = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", @default.ImageFile).ToString();
+                ImageFile = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", @default.ImageFile);
             }
 
-            if (ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0").ToString() == "1")
+            if (ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0") == "1")
             {
                 WallpaperStyle = WallpaperStyles.Tile;
             }

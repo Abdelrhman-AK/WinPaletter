@@ -66,7 +66,7 @@ namespace WinPaletter.Theme.Structures
             HighContrast = highContrastStr.dwFlags == 1u;
 
             ColorFilter_Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", @default.ColorFilter_Enabled);
-            ColorFilter = (ColorFilters)ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", @default.ColorFilter);
+            ColorFilter = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", @default.ColorFilter);
         }
 
         /// <summary>

@@ -65,7 +65,7 @@ namespace WinPaletter.TypesExtensions
             string s = input.Trim().ToLowerInvariant();
 
             // Normalize various wrappers and delimiters
-            s = Regex.Replace(s, @"color(\.fromargb)?|\[|\]", "", RegexOptions.IgnoreCase);
+            s = Regex.Replace(s, @"color(\.fromargb)?|\[|\]", string.Empty, RegexOptions.IgnoreCase);
             s = s.Replace("(", " ").Replace(")", " ").Replace("=", " ");
             s = Regex.Replace(s, @"[,:;/]+", " ");
             s = Regex.Replace(s, @"\s+", " ").Trim();
@@ -252,7 +252,7 @@ namespace WinPaletter.TypesExtensions
                     ? $"{c.R / 2.55:F0}% {c.G / 2.55:F0}% {c.B / 2.55:F0}% {c.A / 2.55:F0}%"
                     : $"{c.R / 2.55:F0}% {c.G / 2.55:F0}% {c.B / 2.55:F0}%")
                 : $"rgb({c.R / 2.55:F1}%, {c.G / 2.55:F1}%, {c.B / 2.55:F1}%)" +
-                  (c.A < 255 ? $" / {c.A / 2.55:F1}%" : "");
+                  (c.A < 255 ? $" / {c.A / 2.55:F1}%" : string.Empty);
 
         /// <summary>
         /// Converts the specified <see cref="Color"/> to a string representation of its ARGB components.
@@ -321,7 +321,7 @@ namespace WinPaletter.TypesExtensions
         {
             (double h, double s, double v) = c.ToHSV();
             return shortForm
-                ? $"{h:F0} {s * 100:F0} {v * 100:F0}" + (c.A < 255 ? $" {c.A}" : "")
+                ? $"{h:F0} {s * 100:F0} {v * 100:F0}" + (c.A < 255 ? $" {c.A}" : string.Empty)
                 : (c.A < 255
                     ? $"hsva({h:F0}, {s:P0}, {v:P0}, {c.A / 255.0:F2})"
                     : $"hsv({h:F0}, {s:P0}, {v:P0})");
@@ -343,7 +343,7 @@ namespace WinPaletter.TypesExtensions
         {
             (double cc, double mm, double yy, double kk) = c.ToCMYK();
             return shortForm
-                ? $"{cc * 100:F0} {mm * 100:F0} {yy * 100:F0} {kk * 100:F0}" + (c.A < 255 ? $" {c.A}" : "")
+                ? $"{cc * 100:F0} {mm * 100:F0} {yy * 100:F0} {kk * 100:F0}" + (c.A < 255 ? $" {c.A}" : string.Empty)
                 : (c.A < 255
                     ? $"cmyka({cc:P0}, {mm:P0}, {yy:P0}, {kk:P0}, {c.A / 255.0:F2})"
                     : $"cmyk({cc:P0}, {mm:P0}, {yy:P0}, {kk:P0})");
@@ -409,29 +409,6 @@ namespace WinPaletter.TypesExtensions
                 (int)Math.Round(r * 255),
                 (int)Math.Round(g * 255),
                 (int)Math.Round(b * 255));
-        }
-
-        /// <summary>
-        /// Converts a hue value to its corresponding RGB component value.
-        /// </summary>
-        /// <remarks>This method is typically used as part of the HSL-to-RGB color conversion process. The
-        /// input parameter <paramref name="t"/> is expected to be normalized to the range [0, 1]. If <paramref
-        /// name="t"/> falls outside this range, it is adjusted by wrapping around (e.g., adding or subtracting 1 as
-        /// needed).</remarks>
-        /// <param name="p">The first intermediate value used in the RGB conversion process. Typically derived from lightness and
-        /// saturation.</param>
-        /// <param name="q">The second intermediate value used in the RGB conversion process. Typically derived from lightness and
-        /// saturation.</param>
-        /// <param name="t">The hue value to be converted, represented as a fractional value in the range [0, 1].</param>
-        /// <returns>A double representing the RGB component value, in the range [0, 1].</returns>
-        private static double HueToRgb(double p, double q, double t)
-        {
-            if (t < 0) t += 1;
-            if (t > 1) t -= 1;
-            if (t < 1.0 / 6.0) return p + (q - p) * 6 * t;
-            if (t < 1.0 / 2.0) return q;
-            if (t < 2.0 / 3.0) return p + (q - p) * (2.0 / 3.0 - t) * 6;
-            return p;
         }
 
         /// <summary>

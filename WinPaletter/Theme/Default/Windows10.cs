@@ -14,7 +14,7 @@ namespace WinPaletter.Theme
         {
             Manager TM = new(Manager.Source.Empty);
 
-            ref Structures.Info Info = ref TM.Info;
+            ref Info Info = ref TM.Info;
             Info.ThemeName = "Default Windows 10";
             Info.Description = "Initial, like the default look after a fresh Windows 10 setup—clean, untouched, and ready for customization.";
             Info.ThemeVersion = "1.0.0.0";
@@ -62,7 +62,7 @@ namespace WinPaletter.Theme
             PS64.FontRaster = false;
             PS64.W10_1909_ForceV2 = OS.W10_1909;
 
-            ref Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+            ref MetricsFonts MetricsFonts = ref TM.MetricsFonts;
             MetricsFonts.Enabled = true;
             MetricsFonts.BorderWidth = 1;
             MetricsFonts.CaptionHeight = 22;
@@ -79,7 +79,7 @@ namespace WinPaletter.Theme
             MetricsFonts.DesktopIconSize = 48;
             MetricsFonts.ShellIconSize = 32;
 
-            ref Structures.WinEffects WinEffects = ref TM.WindowsEffects;
+            ref WinEffects WinEffects = ref TM.WindowsEffects;
             WinEffects.Enabled = true;
             WinEffects.ShakeToMinimize = true;
             WinEffects.BalloonNotifications = false;
@@ -88,7 +88,7 @@ namespace WinPaletter.Theme
             WinEffects.Win11ClassicContextMenu = false;
             WinEffects.SysListView32 = false;
 
-            ref Structures.Icons Icons = ref TM.Icons;
+            ref Icons Icons = ref TM.Icons;
             Icons.Enabled = true;
             Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(0).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(0).Item3);
             Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(1).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(1).Item3);
@@ -122,7 +122,7 @@ namespace WinPaletter.Theme
             TM.Cursors.Cursor_IBeam.UseFromFile = true;
             TM.Cursors.Cursor_Cross.UseFromFile = true;
 
-            ref Structures.Sounds Sounds = ref TM.Sounds;
+            ref Sounds Sounds = ref TM.Sounds;
             Sounds.Snd_Imageres_SystemStart = string.Empty;
             Sounds.Snd_Win_Default = $@"{SysPaths.Windows}\media\Windows Background.wav";
             Sounds.Snd_Win_AppGPFault = string.Empty;
@@ -207,12 +207,12 @@ namespace WinPaletter.Theme
             Sounds.Snd_SpeechRec_MisrecoSound = $@"{SysPaths.Windows}\media\Speech Misrecognition.wav";
             Sounds.Snd_SpeechRec_PanelSound = $@"{SysPaths.Windows}\media\Speech Disambiguation.wav";
 
-            ref Structures.Wallpaper Wallpaper = ref TM.Wallpaper;
+            ref Wallpaper Wallpaper = ref TM.Wallpaper;
             Wallpaper.Enabled = true;
 
             TM.AppTheme.Enabled = true;
 
-            ref Structures.Accessibility Accessibility = ref TM.Accessibility;
+            ref Accessibility Accessibility = ref TM.Accessibility;
             Accessibility.Enabled = true;
 
             return TM;

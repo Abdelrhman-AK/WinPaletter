@@ -348,7 +348,7 @@ namespace WinPaletter.Theme.Structures
                 };
             }
 
-            Win11ExplorerBar = (ExplorerBar)ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", @default.Win11ExplorerBar);
+            Win11ExplorerBar = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", @default.Win11ExplorerBar);
 
             try
             {

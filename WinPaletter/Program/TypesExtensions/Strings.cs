@@ -2,6 +2,7 @@
 using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -35,18 +36,18 @@ namespace WinPaletter.TypesExtensions
 
                 if (hex.Length == 6) // RRGGBB
                 {
-                    int r = int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-                    int g = int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
-                    int b = int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                    int r = int.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
+                    int g = int.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+                    int b = int.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
 
                     return Color.FromArgb(255, r, g, b);
                 }
                 else if (hex.Length == 8) // AARRGGBB
                 {
-                    int a = int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-                    int r = int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
-                    int g = int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
-                    int b = int.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+                    int a = int.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
+                    int r = int.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
+                    int g = int.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
+                    int b = int.Parse(hex.Substring(6, 2), NumberStyles.HexNumber);
 
                     return Color.FromArgb(a, r, g, b);
                 }

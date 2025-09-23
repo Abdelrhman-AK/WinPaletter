@@ -1,5 +1,7 @@
-﻿using Serilog.Events;
+﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
+using System.IO;
 using System.Security.Principal;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -88,9 +90,9 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", DisableLogonBackgroundImage ? 1 : 0);
                 WriteReg(treeView, @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", NoLockScreen ? 1 : 0);
 
-                if (System.IO.File.Exists(ImageFile))
+                if (File.Exists(ImageFile))
                 {
-                    WriteReg(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", ImageFile, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", ImageFile, RegistryValueKind.String);
                     WriteReg(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImageStatus", 1);
                 }
                 else

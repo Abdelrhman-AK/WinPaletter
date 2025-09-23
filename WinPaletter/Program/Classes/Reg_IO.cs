@@ -4,6 +4,7 @@ using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -919,7 +920,7 @@ namespace WinPaletter
                 }
 
                 // Color support
-                if (targetType == typeof(System.Drawing.Color))
+                if (targetType == typeof(Color))
                 {
                     return (T)(object)ConvertToColor(raw, defaultValue);
                 }
@@ -959,16 +960,16 @@ namespace WinPaletter
         /// <returns>A <see cref="System.Drawing.Color"/> instance representing the converted color.  If the conversion fails and
         /// <paramref name="defaultValue"/> is a valid <see cref="System.Drawing.Color"/>,  the default value is
         /// returned. Otherwise, <see cref="System.Drawing.Color.Empty"/> is returned.</returns>
-        private static System.Drawing.Color ConvertToColor(object raw, object defaultValue)
+        private static Color ConvertToColor(object raw, object defaultValue)
         {
             try
             {
                 switch (raw)
                 {
                     case int i:
-                        return System.Drawing.Color.FromArgb(i);
+                        return Color.FromArgb(i);
                     case long l when l <= int.MaxValue && l >= int.MinValue:
-                        return System.Drawing.Color.FromArgb((int)l);
+                        return Color.FromArgb((int)l);
                     case string s:
                         s = s.Trim();
                         // Hex with or without alpha (#RRGGBB or #AARRGGBB)
@@ -976,19 +977,19 @@ namespace WinPaletter
                         {
                             s = s.Substring(1);
                             if (s.Length == 6) // RRGGBB
-                                return System.Drawing.Color.FromArgb(255,
+                                return Color.FromArgb(255,
                                     Convert.ToInt32(s.Substring(0, 2), 16),
                                     Convert.ToInt32(s.Substring(2, 2), 16),
                                     Convert.ToInt32(s.Substring(4, 2), 16));
                             if (s.Length == 8) // AARRGGBB
-                                return System.Drawing.Color.FromArgb(
+                                return Color.FromArgb(
                                     Convert.ToInt32(s.Substring(0, 2), 16),
                                     Convert.ToInt32(s.Substring(2, 2), 16),
                                     Convert.ToInt32(s.Substring(4, 2), 16),
                                     Convert.ToInt32(s.Substring(6, 2), 16));
                         }
                         // Known color names
-                        return System.Drawing.Color.FromName(s);
+                        return Color.FromName(s);
                 }
             }
             catch
@@ -997,10 +998,10 @@ namespace WinPaletter
             }
 
             // Fallback to default color if provided and valid
-            if (defaultValue is System.Drawing.Color c)
+            if (defaultValue is Color c)
                 return c;
 
-            return System.Drawing.Color.Empty;
+            return Color.Empty;
         }
 
         /// <summary>

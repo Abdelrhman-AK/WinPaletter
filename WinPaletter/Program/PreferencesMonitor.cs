@@ -300,7 +300,7 @@ namespace WinPaletter
             // Get wallpaper type and path
             int wallpaperType = ReadReg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers", "BackgroundType", 0);
             string wallpaperPath = (wallpaperType != 1)
-                ? (ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty) ?? string.Empty).ToString()
+                ? (ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty) ?? string.Empty)
                 : null;
 
             // If the wallpaper type is valid (image), return the wallpaper from the registry

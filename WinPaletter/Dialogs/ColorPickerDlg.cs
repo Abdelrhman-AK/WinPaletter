@@ -686,7 +686,7 @@ namespace WinPaletter
         {
             Task.Run(() =>
             {
-                if (System.IO.File.Exists(ImagePath.Text))
+                if (File.Exists(ImagePath.Text))
                 {
                     using (Bitmap bmp = BitmapMgr.Load(ImagePath.Text))
                     {

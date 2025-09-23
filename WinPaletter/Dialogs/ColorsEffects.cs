@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.UI.Controllers;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter.Dialogs
 {
-    public partial class ColorsEffects : WinPaletter.BorderlessForm
+    public partial class ColorsEffects : BorderlessForm
     {
         public ColorsEffects()
         {
@@ -21,9 +23,9 @@ namespace WinPaletter.Dialogs
         /// <remarks>Each item in the collection is a tuple containing a <see
         /// cref="UI.Controllers.ColorItem"/>  and its corresponding <see cref="System.Drawing.Color"/>. This collection
         /// is used to manage  and associate color-related data.</remarks>
-        private List<(UI.Controllers.ColorItem, Color)> colorItems = [];
+        private List<(ColorItem, Color)> colorItems = [];
         private List<Color> imageColors = [];
-        private System.Windows.Forms.Form form;
+        private Form form;
 
         private void ColorsEffects_Load(object sender, EventArgs e)
         {
@@ -37,9 +39,9 @@ namespace WinPaletter.Dialogs
             form = button.FindForm();
 
             colorItems.Clear();
-            colorItems.AddRange(form.GetAllControls().OfType<UI.Controllers.ColorItem>().Select(ci => (ci, ci.BackColor)));
+            colorItems.AddRange(form.GetAllControls().OfType<ColorItem>().Select(ci => (ci, ci.BackColor)));
 
-            foreach (UI.WP.Toggle t in this.GetAllControls().OfType<UI.WP.Toggle>()) t.Checked = false;
+            foreach (Toggle t in this.GetAllControls().OfType<Toggle>()) t.Checked = false;
 
             ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty);
 
@@ -47,7 +49,7 @@ namespace WinPaletter.Dialogs
         }
 
 
-        void ApplyPreview(System.Windows.Forms.Form f)
+        void ApplyPreview(Form f)
         {
             if (f == Forms.Win12Colors) Forms.Win12Colors.UpdatePreview();
             else if (f == Forms.Win11Colors) Forms.Win11Colors.UpdatePreview();
@@ -98,11 +100,11 @@ namespace WinPaletter.Dialogs
 
         private void toggle_effects_CheckedChanged(object sender, EventArgs e)
         {
-            Cursor = System.Windows.Forms.Cursors.WaitCursor;
+            Cursor = Cursors.WaitCursor;
 
-            if ((sender as UI.WP.Toggle).Checked)
+            if ((sender as Toggle).Checked)
             {
-                foreach (UI.WP.Toggle t in this.GetAllControls().OfType<UI.WP.Toggle>().Where(x => x != sender)) t.Checked = false;
+                foreach (Toggle t in this.GetAllControls().OfType<Toggle>().Where(x => x != sender)) t.Checked = false;
                 foreach ((ColorItem, Color) item in colorItems)
                 {
                     Color resultColor;
@@ -132,14 +134,14 @@ namespace WinPaletter.Dialogs
 
                 ApplyPreview(form);
             }
-            else if (!this.GetAllControls().OfType<UI.WP.Toggle>().Any(x => x.Checked))
+            else if (!this.GetAllControls().OfType<Toggle>().Any(x => x.Checked))
             {
                 foreach ((ColorItem, Color) colorItem in colorItems) if (colorItem.Item1.BackColor != colorItem.Item2) colorItem.Item1.BackColor = colorItem.Item2;
 
                 ApplyPreview(form);
             }
 
-            Cursor = System.Windows.Forms.Cursors.Default;
+            Cursor = Cursors.Default;
         }
 
         private void trackBarX7_ValueChanged(object sender, EventArgs e)
@@ -203,13 +205,13 @@ namespace WinPaletter.Dialogs
         {
             Task.Run(() =>
             {
-                if (System.IO.File.Exists(ImagePath.Text))
+                if (File.Exists(ImagePath.Text))
                 {
                     using (Bitmap bmp = BitmapMgr.Load(ImagePath.Text))
                     {
-                        Cursor = System.Windows.Forms.Cursors.WaitCursor;
+                        Cursor = Cursors.WaitCursor;
                         imageColors = bmp.ToPalette(100);
-                        Cursor = System.Windows.Forms.Cursors.Default;
+                        Cursor = Cursors.Default;
                     }
                 }
                 else

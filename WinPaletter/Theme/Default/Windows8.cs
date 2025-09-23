@@ -13,7 +13,7 @@ namespace WinPaletter.Theme
         {
             Manager TM = new(Manager.Source.Empty);
 
-            ref Structures.Info Info = ref TM.Info;
+            ref Info Info = ref TM.Info;
             Info.ThemeName = "Default Windows 8";
             Info.Description = "Initial, like the default look after a fresh Windows 8 setup—clean, untouched, and ready for customization.";
             Info.ThemeVersion = "1.0.0.0";
@@ -70,7 +70,7 @@ namespace WinPaletter.Theme
             PS64.FontRaster = true;
             PS64.W10_1909_ForceV2 = false;
 
-            ref Structures.MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+            ref MetricsFonts MetricsFonts = ref TM.MetricsFonts;
             MetricsFonts.Enabled = true;
             MetricsFonts.BorderWidth = 1;
             MetricsFonts.CaptionHeight = 22;
@@ -89,7 +89,7 @@ namespace WinPaletter.Theme
             MetricsFonts.CaptionFont = new("Segoe UI", 11.25f, FontStyle.Regular);
             MetricsFonts.SmCaptionFont = new("Segoe UI", 11.25f, FontStyle.Regular);
 
-            ref Structures.WinEffects WinEffects = ref TM.WindowsEffects;
+            ref WinEffects WinEffects = ref TM.WindowsEffects;
             WinEffects.Enabled = true;
             WinEffects.ShakeToMinimize = true;
             WinEffects.BalloonNotifications = true;
@@ -99,7 +99,7 @@ namespace WinPaletter.Theme
             WinEffects.SysListView32 = false;
             WinEffects.EnableAeroPeek = true;
 
-            ref Structures.Icons Icons = ref TM.Icons;
+            ref Icons Icons = ref TM.Icons;
             Icons.Enabled = true;
 
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
@@ -125,7 +125,7 @@ namespace WinPaletter.Theme
             TM.Cursors.Cursor_IBeam.UseFromFile = true;
             TM.Cursors.Cursor_Cross.UseFromFile = true;
 
-            ref Structures.Sounds Sounds = ref TM.Sounds;
+            ref Sounds Sounds = ref TM.Sounds;
             Sounds.Enabled = true;
             Sounds.Snd_Imageres_SystemStart = string.Empty;
             Sounds.Snd_Win_Default = $@"{SysPaths.Windows}\media\Windows Background.wav";
@@ -211,12 +211,12 @@ namespace WinPaletter.Theme
             Sounds.Snd_SpeechRec_MisrecoSound = $@"{SysPaths.Windows}\media\Speech Misrecognition.wav";
             Sounds.Snd_SpeechRec_PanelSound = $@"{SysPaths.Windows}\media\Speech Disambiguation.wav";
 
-            ref Structures.Wallpaper Wallpaper = ref TM.Wallpaper;
+            ref Wallpaper Wallpaper = ref TM.Wallpaper;
             Wallpaper.Enabled = true;
 
             TM.AppTheme.Enabled = true;
 
-            ref Structures.Accessibility Accessibility = ref TM.Accessibility;
+            ref Accessibility Accessibility = ref TM.Accessibility;
             Accessibility.Enabled = true;
 
             return TM;

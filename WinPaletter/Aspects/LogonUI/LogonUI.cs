@@ -229,7 +229,7 @@ namespace WinPaletter
 
         Bitmap CaptureLockScreen()
         {
-            if (System.IO.File.Exists(textBox1.Text))
+            if (File.Exists(textBox1.Text))
             {
                 return BitmapMgr.Load(textBox1.Text).Resize(Program.PreviewSize);
             }

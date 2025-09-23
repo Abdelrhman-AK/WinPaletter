@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using WinPaletter.Properties;
+using WinPaletter.Theme.Structures;
 using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.UI.WP
@@ -109,7 +110,7 @@ namespace WinPaletter.UI.WP
 
     public partial class ContextMenuStrip : System.Windows.Forms.ContextMenuStrip
     {
-        AnimateWindowFlags AnimationType => Program.TM.WindowsEffects.MenuFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? AnimateWindowFlags.AW_BLEND : AnimateWindowFlags.AW_HOR_POSITIVE;
+        AnimateWindowFlags AnimationType => Program.TM.WindowsEffects.MenuFade == WinEffects.MenuAnimType.Fade ? AnimateWindowFlags.AW_BLEND : AnimateWindowFlags.AW_HOR_POSITIVE;
         public ContextMenuStrip()
         {
             AllowTransparency = true;
