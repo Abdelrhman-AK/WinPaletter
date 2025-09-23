@@ -1554,7 +1554,7 @@ namespace WinPaletter.Theme.Structures
                 // Load Windows Terminal settings from JSON File
                 case Mode.JSONFile:
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from JSON file `{File}`.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from JSON file `{File}`.");
 
                         WinTerminal result = new(string.Empty, Mode.Empty, Version);
 
@@ -1584,7 +1584,7 @@ namespace WinPaletter.Theme.Structures
                 // Load Windows Terminal settings from WinPaletter theme File
                 case Mode.WinPaletterFile:
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from WinPaletter theme file `{File}`.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from WinPaletter theme file `{File}`.");
 
                         using (Manager TMx = new(Manager.Source.File, File))
                         {
@@ -1607,7 +1607,7 @@ namespace WinPaletter.Theme.Structures
 
                 case Mode.Empty:
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"An empty instance of Windows Terminal settings has been created.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"An empty instance of Windows Terminal settings has been created.");
 
                         break;
                     }
@@ -1648,7 +1648,7 @@ namespace WinPaletter.Theme.Structures
                                         SettingsFile = SysPaths.TerminalJSON;
                                     }
 
-                                    Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal settings into JSON file `{SettingsFile}`.");
+                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal settings into JSON file `{SettingsFile}`.");
 
                                     break;
                                 }
@@ -1668,7 +1668,7 @@ namespace WinPaletter.Theme.Structures
                                         SettingsFile = SysPaths.TerminalPreviewJSON;
                                     }
 
-                                    Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal Preview settings into JSON file `{SettingsFile}`.");
+                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal Preview settings into JSON file `{SettingsFile}`.");
 
                                     break;
                                 }
@@ -1702,7 +1702,7 @@ namespace WinPaletter.Theme.Structures
 
                         // Remove default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does)
                         {
-                            Program.Log?.Write(LogEventLevel.Information, $"Removing default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does).");
+                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Removing default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does).");
 
                             // Retrieve the list of profiles and the defaults JObject
                             JArray profilesList = (JArray)existingJson["profiles"]["list"];
@@ -1746,7 +1746,7 @@ namespace WinPaletter.Theme.Structures
                             streamWriter.Write(result);
                         }
 
-                        Program.Log?.Write(LogEventLevel.Information, $"Saving `{SettingsFile}` has just been completed.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving `{SettingsFile}` has just been completed.");
 
                         return result;
                     }

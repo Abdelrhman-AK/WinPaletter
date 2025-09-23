@@ -32,7 +32,7 @@ namespace WinPaletter.Theme
             // Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(true);
             GC.SuppressFinalize(this);
-            Program.Log?.Write(LogEventLevel.Debug, "Disposing WinPaletter theme...");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Debug, "Disposing WinPaletter theme...");
         }
     }
 }

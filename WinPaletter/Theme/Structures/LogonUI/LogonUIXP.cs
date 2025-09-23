@@ -46,13 +46,13 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows XP LogonUI data structure</param>
         public void Load(LogonUIXP @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
 
             if (OS.WXP)
             {
-                Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled));
+                Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled));
 
-                switch (GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", @default.Mode))
+                switch (ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", @default.Mode))
                 {
                     case 1:
                         {
@@ -68,7 +68,7 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 {
-                    object temp = GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0");
+                    object temp = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0");
                     if (temp.ToString().Split(' ').Count() == 3)
                     {
                         BackColor = Color.FromArgb(255, Convert.ToInt32(temp.ToString().Split(' ')[0]), Convert.ToInt32(temp.ToString().Split(' ')[1]), Convert.ToInt32(temp.ToString().Split(' ')[2]));
@@ -79,7 +79,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                ShowMoreOptions = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", @default.ShowMoreOptions));
+                ShowMoreOptions = Convert.ToBoolean(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", @default.ShowMoreOptions));
             }
 
             else
@@ -96,15 +96,15 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP LogonUI screen preferences into registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP LogonUI screen preferences into registry.");
 
             SaveToggleState(treeView);
 
             if (Enabled & OS.WXP)
             {
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", Mode == Modes.Default ? 1 : 0, RegistryValueKind.DWord);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", ShowMoreOptions ? 1 : 0, RegistryValueKind.DWord);
+                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", Mode == Modes.Default ? 1 : 0, RegistryValueKind.DWord);
+                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", ShowMoreOptions ? 1 : 0, RegistryValueKind.DWord);
             }
         }
 
@@ -114,7 +114,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, Enabled);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two LogonUIXP structures are equal</summary>

@@ -249,7 +249,7 @@ namespace WinPaletter
 
             if (imageFiles.Length > 0 && File.Exists(imageFiles[0]))
             {
-                Program.Log?.Write(LogEventLevel.Information, "Fetching the first image from the slideshow folder to be used as a preview: {imageFiles[0]}", imageFiles[0]);
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Fetching the first image from the slideshow folder to be used as a preview: {imageFiles[0]}", imageFiles[0]);
 
                 return BitmapMgr.Load(imageFiles[0]);
             }
@@ -280,7 +280,7 @@ namespace WinPaletter
             // Resize the wallpaper according to the scale and preview area siz
             wallpaper = wallpaper.Resize((int)Math.Round(wallpaper.Width / scaleW), (int)Math.Round(wallpaper.Height / scaleH));
 
-            Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
 
             // Apply the wallpaper style
             return wallpaperStyle switch
@@ -298,9 +298,9 @@ namespace WinPaletter
         public static Bitmap GetWallpaperFromRegistry()
         {
             // Get wallpaper type and path
-            int wallpaperType = Convert.ToInt32(GetReg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers", "BackgroundType", 0));
+            int wallpaperType = Convert.ToInt32(ReadReg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers", "BackgroundType", 0));
             string wallpaperPath = (wallpaperType != 1)
-                ? (GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty) ?? string.Empty).ToString()
+                ? (ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty) ?? string.Empty).ToString()
                 : null;
 
             // If the wallpaper type is valid (image), return the wallpaper from the registry
@@ -328,7 +328,7 @@ namespace WinPaletter
             }
 
             // If the wallpaper type is solid color, return the solid color wallpaper
-            string backgroundColor = (GetReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.Get().Win32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)) ?? "255 255 255").ToString();
+            string backgroundColor = (ReadReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.Get().Win32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)) ?? "255 255 255").ToString();
             return backgroundColor.ToColorFromWin32().ToBitmap(Screen.PrimaryScreen.Bounds.Size);
         }
 
@@ -339,7 +339,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         public static void WallpaperType_Changed(object sender, EventArgs e)
         {
-            int wallpaperType = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
+            int wallpaperType = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", 0));
             Stopwatch stopwatch = new();
 
             // If the wallpaper type is not solid color, wait for the wallpaper to be available and update the wallpaper
@@ -348,7 +348,7 @@ namespace WinPaletter
                 stopwatch.Reset();
                 stopwatch.Start();
 
-                while (!File.Exists(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString()))
+                while (!File.Exists(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString()))
                 {
                     // Wait for the wallpaper to be available as there is a delay between the registry change and the actual wallpaper change
                     if (stopwatch.ElapsedMilliseconds > 5000L) break;
@@ -357,7 +357,7 @@ namespace WinPaletter
                 stopwatch.Stop();
             }
 
-            Program.Log?.Write(LogEventLevel.Information, "Wallpaper type changed to {wallpaperType}", wallpaperType);
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Wallpaper type changed to {wallpaperType}", wallpaperType);
 
             Wallpaper_Changed();
         }
@@ -402,7 +402,7 @@ namespace WinPaletter
         {
             try
             {
-                if (!RegValueExists($"HKEY_USERS\\{SID}\\{keyPath}", valueName))
+                if (!ValueExists($"HKEY_USERS\\{SID}\\{keyPath}", valueName))
                 {
                     Program.Log?.Debug("Registry value {valueName} does not exist in {keyPath}, skipping event registration.", valueName, keyPath);
                     return;
@@ -472,8 +472,8 @@ namespace WinPaletter
         /// <param name="e"></param>
         private static void PreferencesRelatedToTitlebarExtenderChanged(object sender, EventArgs e)
         {
-            TitlebarExtender.Transparency = (int)GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
-            TitlebarExtender.AccentOnTitlebars = (int)GetReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1) == 1;
+            TitlebarExtender.Transparency = (int)ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
+            TitlebarExtender.AccentOnTitlebars = (int)ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1) == 1;
         }
 
         /// <summary>

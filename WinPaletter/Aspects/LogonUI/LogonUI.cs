@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ookii.Dialogs.WinForms;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme;
+using WinPaletter.UI.WP;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -66,14 +69,10 @@ namespace WinPaletter
         {
             using (Manager TMx = new(Manager.Source.Registry))
             {
-                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
-                    LoadFromTM(TMx.LogonUI12);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
-                    LoadFromTM(TMx.LogonUI11);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
-                    LoadFromTM(TMx.LogonUI10);
-                else
-                    LoadFromTM(TMx.LogonUI12);
+                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12) LoadFromTM(TMx.LogonUI12);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11) LoadFromTM(TMx.LogonUI11);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10) LoadFromTM(TMx.LogonUI10);
+                else LoadFromTM(TMx.LogonUI12);
             }
         }
 
@@ -81,20 +80,16 @@ namespace WinPaletter
         {
             using (Manager TMx = Default.Get(Program.WindowStyle))
             {
-                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
-                    LoadFromTM(TMx.LogonUI12);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
-                    LoadFromTM(TMx.LogonUI11);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
-                    LoadFromTM(TMx.LogonUI10);
-                else
-                    LoadFromTM(TMx.LogonUI12);
+                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12) LoadFromTM(TMx.LogonUI12);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11) LoadFromTM(TMx.LogonUI11);
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10) LoadFromTM(TMx.LogonUI10);
+                else LoadFromTM(TMx.LogonUI12);
             }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {
-            ApplyToTM(ref LogonUI10x);
+            ApplyToTM(LogonUI10x);
             Close();
         }
 
@@ -108,6 +103,8 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
+            ApplyToTM(LogonUI10x);
+
             using (Manager TMx = new(Manager.Source.Registry))
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
@@ -115,33 +112,31 @@ namespace WinPaletter
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);
                 }
+            }
 
-                ApplyToTM(ref LogonUI10x);
-
-                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
-                {
-                    TMx.LogonUI12.Apply("12");
-                    ApplyToTM(ref Program.TM.LogonUI12);
-                    ApplyToTM(ref Program.TM_Original.LogonUI12);
-                }
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
-                {
-                    TMx.LogonUI11.Apply("11");
-                    ApplyToTM(ref Program.TM.LogonUI11);
-                    ApplyToTM(ref Program.TM_Original.LogonUI11);
-                }
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
-                {
-                    TMx.LogonUI10.Apply("10x");
-                    ApplyToTM(ref Program.TM.LogonUI10);
-                    ApplyToTM(ref Program.TM_Original.LogonUI10);
-                }
-                else
-                {
-                    TMx.LogonUI12.Apply("12");
-                    ApplyToTM(ref Program.TM.LogonUI12);
-                    ApplyToTM(ref Program.TM_Original.LogonUI12);
-                }
+            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+            {
+                LogonUI10x.Apply("12");
+                ApplyToTM(Program.TM.LogonUI12);
+                ApplyToTM(Program.TM_Original.LogonUI12);
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+            {
+                LogonUI10x.Apply("11");
+                ApplyToTM(Program.TM.LogonUI11);
+                ApplyToTM(Program.TM_Original.LogonUI11);
+            }
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+            {
+                LogonUI10x.Apply("10");
+                ApplyToTM(Program.TM.LogonUI10);
+                ApplyToTM(Program.TM_Original.LogonUI10);
+            }
+            else
+            {
+                LogonUI10x.Apply("12");
+                ApplyToTM(Program.TM.LogonUI12);
+                ApplyToTM(Program.TM_Original.LogonUI12);
             }
 
             Cursor = Cursors.Default;
@@ -184,9 +179,6 @@ namespace WinPaletter
                 label2.Font = new("Segoe UI", label2.Font.Size, label2.Font.Style);
             }
 
-            back_unblurred = CaptureLockScreen();
-            back_blurred = back_unblurred.Blur(7).Noise(BitmapExtensions.NoiseMode.Acrylic, 0.7f);
-
             LoadFromTM(LogonUI10x);
 
             // Make them all black after ApplyStyle(this);
@@ -205,19 +197,33 @@ namespace WinPaletter
             LogonUI_Acrylic_Toggle.Checked = !logonUI.DisableAcrylicBackgroundOnLogon;
             LogonUI_Background_Toggle.Checked = !logonUI.DisableLogonBackgroundImage;
             LogonUI_Lockscreen_Toggle.Checked = logonUI.NoLockScreen;
+
+            textBox1.Text = logonUI.ImageFile;
         }
 
-        public void ApplyToTM(ref Theme.Structures.LogonUI10x logonUI)
+        public void ApplyToTM(Theme.Structures.LogonUI10x logonUI)
         {
             logonUI.Enabled = AspectEnabled;
 
             logonUI.DisableAcrylicBackgroundOnLogon = !LogonUI_Acrylic_Toggle.Checked;
             logonUI.DisableLogonBackgroundImage = !LogonUI_Background_Toggle.Checked;
             logonUI.NoLockScreen = LogonUI_Lockscreen_Toggle.Checked;
+
+            logonUI.ImageFile = textBox1.Text;
         }
 
         private void UpdatePreview()
         {
+            tabs_preview_1.TabPages[0].BackgroundImage?.Dispose();
+            tabs_preview_1.TabPages[1].BackgroundImage?.Dispose();
+            tabs_preview_1.TabPages[2].BackgroundImage?.Dispose();
+
+            back_unblurred?.Dispose();
+            back_blurred?.Dispose();
+
+            back_unblurred = CaptureLockScreen();
+            back_blurred = back_unblurred.Blur(7).Noise(BitmapExtensions.NoiseMode.Acrylic, 0.7f);
+
             tabs_preview_1.TabPages[0].BackgroundImage = LogonUI_Background_Toggle.Checked ? back_unblurred : null;
             tabs_preview_1.TabPages[1].BackgroundImage = LogonUI_Background_Toggle.Checked ? back_unblurred : null;
             tabs_preview_1.TabPages[2].BackgroundImage = LogonUI_Background_Toggle.Checked ? LogonUI_Acrylic_Toggle.Checked ? back_blurred : back_unblurred : null;
@@ -225,36 +231,43 @@ namespace WinPaletter
 
         Bitmap CaptureLockScreen()
         {
-            string mostRecentFile = null;
-
-            string defaultLockScreen = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg") as string;
-
-            // Get the path to the current user's lock screen image
-            string lockScreenPath = Path.Combine(SysPaths.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
-
-            if (Directory.Exists(lockScreenPath))
+            if (System.IO.File.Exists(textBox1.Text))
             {
-                // Get the list of files in the lock screen folder
-                string[] files = Directory.GetFiles(lockScreenPath);
-
-                if (files.Count() > 0)
-                {
-                    // Find the most recently accessed File (assuming it's the lock screen image)
-                    mostRecentFile = files.OrderByDescending(File.GetLastAccessTime).FirstOrDefault();
-                }
-            }
-
-            if (mostRecentFile != null && File.Exists(mostRecentFile))
-            {
-                return BitmapMgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
-            }
-            else if (File.Exists(defaultLockScreen))
-            {
-                return BitmapMgr.Load(defaultLockScreen).Resize(tabs_preview_1.Size);
+                return BitmapMgr.Load(textBox1.Text).Resize(Program.PreviewSize);
             }
             else
             {
-                return Program.Wallpaper;
+                string mostRecentFile = null;
+
+                string defaultLockScreen = ReadReg<string>("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg");
+
+                // Get the path to the current user's lock screen image
+                string lockScreenPath = Path.Combine(SysPaths.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
+
+                if (Directory.Exists(lockScreenPath))
+                {
+                    // Get the list of files in the lock screen folder
+                    string[] files = Directory.GetFiles(lockScreenPath);
+
+                    if (files.Count() > 0)
+                    {
+                        // Find the most recently accessed File (assuming it's the lock screen image)
+                        mostRecentFile = files.OrderByDescending(File.GetLastAccessTime).FirstOrDefault();
+                    }
+                }
+
+                if (mostRecentFile != null && File.Exists(mostRecentFile))
+                {
+                    return BitmapMgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
+                }
+                else if (File.Exists(defaultLockScreen))
+                {
+                    return BitmapMgr.Load(defaultLockScreen).Resize(tabs_preview_1.Size);
+                }
+                else
+                {
+                    return Program.Wallpaper;
+                }
             }
         }
 
@@ -291,6 +304,50 @@ namespace WinPaletter
         private void LogonUI_Lockscreen_Toggle_CheckedChanged(object sender, EventArgs e)
         {
             if (LogonUI_Lockscreen_Toggle.Checked && tabs_preview_1.SelectedIndex != tabs_preview_1.TabCount - 1) { tabs_preview_1.SelectedIndex = tabs_preview_1.TabCount - 1; }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = textBox1.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    textBox1.Text = dlg.FileName;
+                }
+            }
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            if (Program.WindowStyle == WindowStyle.WXP)
+            {
+                textBox1.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
+            }
+            else
+            {
+                textBox1.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
+            }
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = ReadReg<string>("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = string.Empty;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            UpdatePreview();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string defaultLockScreen = ReadReg<string>("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg");
+            textBox1.Text = defaultLockScreen;
         }
     }
 }

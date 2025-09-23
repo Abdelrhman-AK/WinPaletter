@@ -88,7 +88,7 @@ namespace WinPaletter.Theme
 
             //if (TerminalPreview != TMx.TerminalPreview) _Equals = false;
 
-            Program.Log?.Write(LogEventLevel.Debug, $"Comparing WinPaletter themes: {Info.ThemeName} == {TMx.Info.ThemeName} => {_Equals}");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Debug, $"Comparing WinPaletter themes: {Info.ThemeName} == {TMx.Info.ThemeName} => {_Equals}");
 
             return _Equals;
         }

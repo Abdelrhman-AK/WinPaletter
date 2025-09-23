@@ -248,7 +248,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0)) == 3)
+                    if (ReadReg<int>(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", 0) == 3)
                     {
                         WinElement1.Style = WinElement.Styles.AltTab10;
                         WinElement1.DarkMode = !Program.TM.Windows11.WinMode_Light;

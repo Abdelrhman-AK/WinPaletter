@@ -105,14 +105,14 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Wallpaper data structure</param>
         public void Load(Wallpaper @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Wallpaper settings from registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Wallpaper settings from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, @default.Enabled));
-            SlideShow_Folder_or_ImagesList = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", @default.SlideShow_Folder_or_ImagesList));
-            Wallpaper_Slideshow_ImagesRootPath = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", @default.Wallpaper_Slideshow_ImagesRootPath).ToString();
-            Wallpaper_Slideshow_Images = (string[])GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", @default.Wallpaper_Slideshow_Images);
+            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, @default.Enabled));
+            SlideShow_Folder_or_ImagesList = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", @default.SlideShow_Folder_or_ImagesList));
+            Wallpaper_Slideshow_ImagesRootPath = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", @default.Wallpaper_Slideshow_ImagesRootPath).ToString();
+            Wallpaper_Slideshow_Images = (string[])ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", @default.Wallpaper_Slideshow_Images);
 
-            ImageFile = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", @default.ImageFile).ToString();
+            ImageFile = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", @default.ImageFile).ToString();
 
             string slideshow_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper";
             string spotlight_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets";
@@ -120,22 +120,22 @@ namespace WinPaletter.Theme.Structures
             // Necessary to remember last wallpaper that is not from slideshow and not a spotlight image
             if (ImageFile.StartsWith(slideshow_img, StringComparison.OrdinalIgnoreCase) || ImageFile.StartsWith(spotlight_img, StringComparison.OrdinalIgnoreCase) || !File.Exists(ImageFile))
             {
-                ImageFile = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", @default.ImageFile).ToString();
+                ImageFile = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", @default.ImageFile).ToString();
             }
 
-            if (GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0").ToString() == "1")
+            if (ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0").ToString() == "1")
             {
                 WallpaperStyle = WallpaperStyles.Tile;
             }
             else
             {
-                WallpaperStyle = (WallpaperStyles)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", @default.WallpaperStyle));
+                WallpaperStyle = (WallpaperStyles)Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", @default.WallpaperStyle));
             }
 
-            WallpaperType = (WallpaperTypes)Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", @default.WallpaperType));
+            WallpaperType = (WallpaperTypes)Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", @default.WallpaperType));
 
-            Wallpaper_Slideshow_Interval = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", @default.Wallpaper_Slideshow_Interval));
-            Wallpaper_Slideshow_Shuffle = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", @default.Wallpaper_Slideshow_Shuffle));
+            Wallpaper_Slideshow_Interval = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", @default.Wallpaper_Slideshow_Interval));
+            Wallpaper_Slideshow_Shuffle = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", @default.Wallpaper_Slideshow_Shuffle));
 
         }
 
@@ -149,13 +149,13 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(bool SkipSettingWallpaper = false, TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Wallpaper settings into registry and by using User32.SystemParametersInfo");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Wallpaper settings into registry and by using User32.SystemParametersInfo");
 
             SaveToggleState(treeView);
 
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", SlideShow_Folder_or_ImagesList);
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath, RegistryValueKind.String);
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", Wallpaper_Slideshow_Images, RegistryValueKind.MultiString);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", SlideShow_Folder_or_ImagesList);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_ImagesRootPath", Wallpaper_Slideshow_ImagesRootPath, RegistryValueKind.String);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", Wallpaper_Slideshow_Images, RegistryValueKind.MultiString);
 
             if (Enabled)
             {
@@ -173,12 +173,12 @@ namespace WinPaletter.Theme.Structures
                 // Setting WallpaperStyle must be before setting wallpaper itself
                 if (WallpaperStyle == WallpaperStyles.Tile)
                 {
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "1", RegistryValueKind.String);
                 }
                 else
                 {
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", (int)WallpaperStyle, RegistryValueKind.String);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", (int)WallpaperStyle, RegistryValueKind.String);
                 }
 
                 // Wallpaper application is not skipped, process it
@@ -189,7 +189,7 @@ namespace WinPaletter.Theme.Structures
                     if (WallpaperType == WallpaperTypes.SolidColor)
                     {
                         SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, string.Empty, SPIF.SPIF_UPDATEINIFILE);
-                        EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty, RegistryValueKind.String);
                     }
 
                     else if (WallpaperType == WallpaperTypes.Picture)
@@ -209,20 +209,20 @@ namespace WinPaletter.Theme.Structures
                         }
 
                         SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, ImageFile, SPIF.SPIF_UPDATEINIFILE);
-                        EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", ImageFile, RegistryValueKind.String);
 
                         // Necessary to make both WinPaletter and Windows remember last wallpaper that is not from slideshow and not a spotlight image
-                        EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", ImageFile, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", ImageFile, RegistryValueKind.String);
                     }
 
                     else if (WallpaperType == WallpaperTypes.SlideShow)
                     {
                         SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, slideshow_img, SPIF.SPIF_UPDATEINIFILE);
-                        EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", slideshow_img, RegistryValueKind.String);
                     }
                 }
 
-                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType);
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType);
 
                 // Windows XP and Vista don't support slideshow
                 if (!OS.WXP && !OS.WVista)
@@ -255,8 +255,8 @@ namespace WinPaletter.Theme.Structures
                         }
                     }
 
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", Wallpaper_Slideshow_Interval);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", Wallpaper_Slideshow_Interval);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", Wallpaper_Slideshow_Shuffle);
                 }
             }
         }
@@ -267,7 +267,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, Enabled);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two Wallpaper structures are equal</summary>

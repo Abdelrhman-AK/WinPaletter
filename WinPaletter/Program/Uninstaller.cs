@@ -25,21 +25,21 @@ namespace WinPaletter
             // Write uninstaller icon to application data folder if it doesn't exist or changed
             WriteIfChangedOrNotExists($"{SysPaths.appData}\\uninstall.ico", Resources.Icon_Uninstall.ToBytes());
 
-            EditReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);
-            EditReg(RegPath, "ApplicationVersion", Version, RegistryValueKind.String);
-            EditReg(RegPath, "DisplayVersion", Version, RegistryValueKind.String);
-            EditReg(RegPath, "Publisher", Application.CompanyName, RegistryValueKind.String);
-            EditReg(RegPath, "DisplayIcon", $"{SysPaths.appData}\\uninstall.ico", RegistryValueKind.String);
-            EditReg(RegPath, "URLInfoAbout", Links.RepositoryURL, RegistryValueKind.String);
-            EditReg(RegPath, "Contact", Links.RepositoryURL, RegistryValueKind.String);
-            EditReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
-            EditReg(RegPath, "Comments", Lang.Strings.General.Uninstall_Comment, RegistryValueKind.String);
-            EditReg(RegPath, "UninstallString", $"{AppFile} -u", RegistryValueKind.String);
-            EditReg(RegPath, "QuietUninstallString", $"{AppFile} -q", RegistryValueKind.String);
-            EditReg(RegPath, "InstallLocation", new FileInfo(Application.ExecutablePath).DirectoryName, RegistryValueKind.String);
-            EditReg(RegPath, "NoModify", 1, RegistryValueKind.DWord);
-            EditReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);
-            EditReg(RegPath, "EstimatedSize", Length / 1024, RegistryValueKind.DWord);
+            WriteReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);
+            WriteReg(RegPath, "ApplicationVersion", Version, RegistryValueKind.String);
+            WriteReg(RegPath, "DisplayVersion", Version, RegistryValueKind.String);
+            WriteReg(RegPath, "Publisher", Application.CompanyName, RegistryValueKind.String);
+            WriteReg(RegPath, "DisplayIcon", $"{SysPaths.appData}\\uninstall.ico", RegistryValueKind.String);
+            WriteReg(RegPath, "URLInfoAbout", Links.RepositoryURL, RegistryValueKind.String);
+            WriteReg(RegPath, "Contact", Links.RepositoryURL, RegistryValueKind.String);
+            WriteReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
+            WriteReg(RegPath, "Comments", Lang.Strings.General.Uninstall_Comment, RegistryValueKind.String);
+            WriteReg(RegPath, "UninstallString", $"{AppFile} -u", RegistryValueKind.String);
+            WriteReg(RegPath, "QuietUninstallString", $"{AppFile} -q", RegistryValueKind.String);
+            WriteReg(RegPath, "InstallLocation", new FileInfo(Application.ExecutablePath).DirectoryName, RegistryValueKind.String);
+            WriteReg(RegPath, "NoModify", 1, RegistryValueKind.DWord);
+            WriteReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);
+            WriteReg(RegPath, "EstimatedSize", Length / 1024, RegistryValueKind.DWord);
 
             Program.Log.Information($"Uninstaller entry has been updated.");
         }
@@ -108,11 +108,11 @@ namespace WinPaletter
             }
 
             // Restore system restore frequency
-            DelValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "SystemRestorePointCreationFrequency");
+            DeleteValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "SystemRestorePointCreationFrequency");
 
             string guidText = Application.ProductName;
 
-            DelKey($"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{guidText}");
+            DeleteKey($"HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{guidText}");
 
             Program.UninstallDone = true;
 

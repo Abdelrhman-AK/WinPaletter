@@ -22,7 +22,7 @@ namespace WinPaletter.UI.Style
         public static void SetRoundedCorners()
         {
             Program.Style.RoundedCorners = GetRoundedCorners();
-            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be with {(Program.Style.RoundedCorners ? "rounded" : "sharp")} corners");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be with {(Program.Style.RoundedCorners ? "rounded" : "sharp")} corners");
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace WinPaletter.UI.Style
                         {
                             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
                             {
-                                Program.Style.DarkMode = !(Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0)) == 1);
+                                Program.Style.DarkMode = !(Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0)) == 1);
                             }
                             else
                             {
@@ -114,7 +114,7 @@ namespace WinPaletter.UI.Style
                 Program.Style.DarkMode = true;
             }
 
-            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be {(Program.Style.DarkMode ? "dark" : "light")} mode");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be {(Program.Style.DarkMode ? "dark" : "light")} mode");
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace WinPaletter.UI.Style
         /// <param name="IgnoreTitleBar">Flag indicating whether to ignore the title bar when applying the style.</param>
         public static void ApplyStyle(Form Form = null, bool IgnoreTitleBar = false)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
 
             bool DarkMode;
             bool RoundedCorners;

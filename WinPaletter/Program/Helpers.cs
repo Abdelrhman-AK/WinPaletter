@@ -42,14 +42,14 @@ namespace WinPaletter
                     string result = BitConverter.ToString(hash).Replace("-", string.Empty);
                     MD5_str = result.ToUpper();
 
-                    Program.Log?.Write(LogEventLevel.Information, $"MD5 hash of the file `{path}` is: {MD5_str}");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"MD5 hash of the file `{path}` is: {MD5_str}");
                 }
             }
             else
             {
                 MD5_str = "0";
 
-                Program.Log?.Write(LogEventLevel.Warning, $"File `{path}` does not exist, MD5 hash cannot be calculated. Returning 0.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Warning, $"File `{path}` does not exist, MD5 hash cannot be calculated. Returning 0.");
             }
 
             return MD5_str;
@@ -67,7 +67,7 @@ namespace WinPaletter
 
             if (!File.Exists(fullFilePath))
             {
-                Program.Log?.Write(LogEventLevel.Information, $"File `{fullFilePath}` does not exist, returning it as unique file name.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File `{fullFilePath}` does not exist, returning it as unique file name.");
 
                 // The File with the given name does not exist, so it is already unique
                 return fullFilePath;
@@ -86,7 +86,7 @@ namespace WinPaletter
             }
             while (File.Exists(fullFilePath));
 
-            Program.Log?.Write(LogEventLevel.Information, $"File `{fullFilePath}` already exists, returning a unique file name: {fullFilePath}.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File `{fullFilePath}` already exists, returning a unique file name: {fullFilePath}.");
 
             return fullFilePath;
         }
@@ -116,10 +116,10 @@ namespace WinPaletter
                         }
                     })
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Sending command to Command Prompt as Administrator: {command}");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Executing command in Command Prompt as Administrator: {command}");
                         process.Start();
                         if (Wait) process.WaitForExit();
-                        Program.Log?.Write(LogEventLevel.Information, $"Command executed successfully: {command}");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Command executed successfully: {command}");
                     }
 
                     wic.Undo();
@@ -173,11 +173,11 @@ namespace WinPaletter
 
             if (processes.Count > 0)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Found {processes.Count} running processes with the FullPath: {FullPath}");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Found {processes.Count} running processes with the FullPath: {FullPath}");
             }
             else
             {
-                Program.Log?.Write(LogEventLevel.Information, $"No running processes found with the FullPath: {FullPath}");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"No running processes found with the FullPath: {FullPath}");
             }
 
             return processes;
@@ -188,7 +188,7 @@ namespace WinPaletter
         /// </summary>
         private static void LoadThemeManager()
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager and setting Window Style for the preview.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager and setting Window Style for the preview.");
 
             if (OS.W12)
                 WindowStyle = PreviewHelpers.WindowStyle.W12;
@@ -220,14 +220,14 @@ namespace WinPaletter
             // Load Manager
             if (!ExternalLink)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager from selected user preferences and registry.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager from selected user preferences and registry.");
 
                 if (TM is null) TM = new(Source.Registry);
                 Forms.Home.Text = Application.ProductName;
             }
             else
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager from File: {ExternalLink_File}");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager from File: {ExternalLink_File}");
 
                 TM = new(Source.File, ExternalLink_File);
                 Forms.Home.File = ExternalLink_File;
@@ -257,12 +257,12 @@ namespace WinPaletter
             {
                 if (File.Exists("oldWinpaletter.trash"))
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter.trash");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter.trash");
                     File.Delete("oldWinpaletter.trash");
                 }
                 if (File.Exists("oldWinpaletter_2.trash"))
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter_2.trash");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter_2.trash");
                     File.Delete("oldWinpaletter_2.trash");
                 }
 
@@ -277,7 +277,7 @@ namespace WinPaletter
         {
             try
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
 
                 using (MemoryStream ms = new(Resources.JetBrainsMono))
                 using (ZipArchive zip = new(ms))
@@ -294,7 +294,7 @@ namespace WinPaletter
             }
             catch
             {
-                Program.Log?.Write(LogEventLevel.Warning, $"Failed to load JetBrains Mono font from memory, falling back to Lucida Console.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Warning, $"Failed to load JetBrains Mono font from memory, falling back to Lucida Console.");
 
                 Fonts.Console = new("Lucida Console", 7.5f);
                 Fonts.ConsoleMedium = new("Lucida Console", 9f);
@@ -311,12 +311,12 @@ namespace WinPaletter
             {
                 try
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Loading language file: {Settings.Language.File}");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading language file: {Settings.Language.File}");
                     Lang.Load(Settings.Language.File);
                 }
                 catch (Exception ex)
                 {
-                    Program.Log?.Write(LogEventLevel.Error, ex, $"Failed to load language file: {Settings.Language.File}. Using default language instead.");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, ex, $"Failed to load language file: {Settings.Language.File}. Using default language instead.");
                     Forms.BugReport.ThrowError(ex);
                 }
             }
@@ -361,7 +361,7 @@ namespace WinPaletter
         /// </summary>
         private static void InitializeImageLists()
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Initializing Image Lists for Theme Log and Language TreeView.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Initializing Image Lists for Theme Log and Language TreeView.");
 
             ImageLists.ThemeLog.Images.Add("info", Notifications.Info);
             ImageLists.ThemeLog.Images.Add("apply", Notifications.Applying);
@@ -548,7 +548,7 @@ namespace WinPaletter
         {
             if (!Settings.General.WhatsNewRecord.Contains(Version))
             {
-                Program.Log?.Write(LogEventLevel.Information, $"This application version is running for the first time: {Version}");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"This application version is running for the first time: {Version}");
 
                 // Display the What'archiveStream New pop-up
                 ShowWhatsNew = true;
@@ -577,7 +577,7 @@ namespace WinPaletter
             {
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Refreshing DWM colorization parameters from the given Theme Manager for user `{User.Domain}\\{User.Name}`.");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Refreshing DWM colorization parameters from the given Theme Manager for user `{User.Domain}\\{User.Name}`.");
 
                     if (DWMAPI.IsCompositionEnabled())
                     {
@@ -642,7 +642,7 @@ namespace WinPaletter
         /// <param name="treeView"></param>
         public static void RestartExplorer(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}` as non-administrator account.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}` as non-administrator account.");
 
             Program.ExplorerKiller?.Start();
             Program.ExplorerKiller?.WaitForExit();
@@ -713,7 +713,7 @@ namespace WinPaletter
         {
             try
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Pinging URL: {url}");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Pinging URL: {url}");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Timeout = Timeout;
                 request.AllowAutoRedirect = false;
@@ -721,13 +721,13 @@ namespace WinPaletter
 
                 using (request.GetResponse())
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Ping to URL `{url}` was successful.");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Ping to URL `{url}` was successful.");
                     return true;
                 }
             }
             catch
             {
-                Program.Log?.Write(LogEventLevel.Warning, $"Ping to URL `{url}` failed.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Warning, $"Ping to URL `{url}` failed.");
                 return false;
             }
         }
@@ -741,7 +741,7 @@ namespace WinPaletter
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Getting Windows Screen Scaling Factor. Returning as percentage: {percentage}");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Getting Windows Screen Scaling Factor. Returning as percentage: {percentage}");
 
                 Graphics GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
                 IntPtr DeviceContextHandle = GraphicsObject.GetHdc();
@@ -757,7 +757,7 @@ namespace WinPaletter
 
                 wic.Undo();
 
-                Program.Log?.Write(LogEventLevel.Information, $"Windows Screen Scaling Factor: {ScreenScalingFactor} (as percentage: {percentage})");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Windows Screen Scaling Factor: {ScreenScalingFactor} (as percentage: {percentage})");
                 return ScreenScalingFactor;
             }
         }
@@ -767,7 +767,7 @@ namespace WinPaletter
         /// </summary>
         public static void ForceExit()
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Exiting WinPaletter by force.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Exiting WinPaletter by force.");
 
             using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
             using (Process process = Process.GetCurrentProcess())

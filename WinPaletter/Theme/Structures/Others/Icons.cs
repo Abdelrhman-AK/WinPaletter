@@ -182,16 +182,16 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Icons data structure</param>
         public void Load(Icons @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows icons from registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows icons from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled));
 
             Shell32Wrapper = [];
             Shell32Wrapper.Clear();
 
             foreach (string value in GetValueNames("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons"))
             {
-                object result = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\explorer\\Shell Icons", value, null);
+                object result = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\explorer\\Shell Icons", value, null);
                 if (result != null)
                 {
                     Shell32Wrapper.Add(value, result.ToString());
@@ -203,9 +203,9 @@ namespace WinPaletter.Theme.Structures
 
             foreach (Tuple<string, string, string> item in ControlPanelCLSIDs)
             {
-                if (RegKeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
+                if (KeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
                 {
-                    ControlPanelWrapper.Add(item.Item1, GetReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty).ToString());
+                    ControlPanelWrapper.Add(item.Item1, ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty).ToString());
                 }
             }
 
@@ -214,26 +214,26 @@ namespace WinPaletter.Theme.Structures
 
             foreach (Tuple<string, string, string> item in ExplorerCLSIDs)
             {
-                if (RegKeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
+                if (KeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
                 {
-                    ExplorerWrapper.Add(item.Item1, GetReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty).ToString());
+                    ExplorerWrapper.Add(item.Item1, ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty).ToString());
                 }
             }
 
-            Computer = GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(0).Item1}\DefaultIcon", string.Empty, @default.Computer).ToString();
-            ControlPanel = GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(1).Item1}\DefaultIcon", string.Empty, @default.ControlPanel).ToString();
-            Network = GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(2).Item1}\DefaultIcon", string.Empty, @default.Network).ToString();
-            User = GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(3).Item1}\DefaultIcon", string.Empty, @default.User).ToString();
-            RecycleBinEmpty = GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "empty", @default.RecycleBinEmpty).ToString();
-            RecycleBinFull = GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "full", @default.RecycleBinFull).ToString();
+            Computer = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(0).Item1}\DefaultIcon", string.Empty, @default.Computer).ToString();
+            ControlPanel = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(1).Item1}\DefaultIcon", string.Empty, @default.ControlPanel).ToString();
+            Network = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(2).Item1}\DefaultIcon", string.Empty, @default.Network).ToString();
+            User = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(3).Item1}\DefaultIcon", string.Empty, @default.User).ToString();
+            RecycleBinEmpty = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "empty", @default.RecycleBinEmpty).ToString();
+            RecycleBinFull = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "full", @default.RecycleBinFull).ToString();
 
-            Computer_HideInDesktop = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(0).Item1, @default.Computer_HideInDesktop));
-            ControlPanel_HideInDesktop = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(1).Item1, @default.ControlPanel_HideInDesktop));
-            Network_HideInDesktop = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(2).Item1, @default.Network_HideInDesktop));
-            User_HideInDesktop = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(3).Item1, @default.User_HideInDesktop));
-            RecycleBin_HideInDesktop = Convert.ToBoolean(GetReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, @default.RecycleBin_HideInDesktop));
+            Computer_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(0).Item1, @default.Computer_HideInDesktop));
+            ControlPanel_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(1).Item1, @default.ControlPanel_HideInDesktop));
+            Network_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(2).Item1, @default.Network_HideInDesktop));
+            User_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(3).Item1, @default.User_HideInDesktop));
+            RecycleBin_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, @default.RecycleBin_HideInDesktop));
 
-            SystemDriveIcon = GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", @default.SystemDriveIcon).ToString();
+            SystemDriveIcon = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", @default.SystemDriveIcon).ToString();
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows icons into registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows icons into registry.");
 
             SaveToggleState(treeView);
 
@@ -250,64 +250,64 @@ namespace WinPaletter.Theme.Structures
             {
                 foreach (string value in GetValueNames("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons"))
                 {
-                    DelValue(treeView, "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons", value);
+                    DeleteValue(treeView, "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons", value);
                 }
 
                 foreach (KeyValuePair<string, string> item in Shell32Wrapper)
                 {
-                    EditReg(treeView, "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons", item.Key, item.Value, RegistryValueKind.String);
+                    WriteReg(treeView, "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons", item.Key, item.Value, RegistryValueKind.String);
                 }
 
                 foreach (Tuple<string, string, string> item in ControlPanelCLSIDs)
                 {
-                    if (RegKeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
+                    if (KeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
                     {
-                        DelKey(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon");
+                        DeleteKey(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon");
                     }
                 }
 
                 foreach (KeyValuePair<string, string> item in ControlPanelWrapper)
                 {
-                    EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, RegistryValueKind.String);
+                    WriteReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, RegistryValueKind.String);
                 }
 
                 foreach (Tuple<string, string, string> item in ExplorerCLSIDs)
                 {
-                    if (RegKeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
+                    if (KeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
                     {
-                        DelKey(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon");
+                        DeleteKey(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon");
                     }
                 }
 
                 foreach (KeyValuePair<string, string> item in ExplorerWrapper)
                 {
-                    EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, RegistryValueKind.String);
+                    WriteReg(treeView, $"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Key}\\DefaultIcon", string.Empty, item.Value, RegistryValueKind.String);
                 }
 
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(0).Item1}\DefaultIcon", string.Empty, Computer, RegistryValueKind.String);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(1).Item1}\DefaultIcon", string.Empty, ControlPanel, RegistryValueKind.String);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(2).Item1}\DefaultIcon", string.Empty, Network, RegistryValueKind.String);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(3).Item1}\DefaultIcon", string.Empty, User, RegistryValueKind.String);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "empty", RecycleBinEmpty, RegistryValueKind.String);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", string.Empty, RecycleBinFull, RegistryValueKind.String);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "full", RecycleBinFull, RegistryValueKind.String);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(0).Item1}\DefaultIcon", string.Empty, Computer, RegistryValueKind.String);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(1).Item1}\DefaultIcon", string.Empty, ControlPanel, RegistryValueKind.String);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(2).Item1}\DefaultIcon", string.Empty, Network, RegistryValueKind.String);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(3).Item1}\DefaultIcon", string.Empty, User, RegistryValueKind.String);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "empty", RecycleBinEmpty, RegistryValueKind.String);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", string.Empty, RecycleBinFull, RegistryValueKind.String);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "full", RecycleBinFull, RegistryValueKind.String);
 
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(0).Item1, Computer_HideInDesktop);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(1).Item1, ControlPanel_HideInDesktop);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(2).Item1, Network_HideInDesktop);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(3).Item1, User_HideInDesktop);
-                EditReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, RecycleBin_HideInDesktop);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(0).Item1, Computer_HideInDesktop);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(1).Item1, ControlPanel_HideInDesktop);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(2).Item1, Network_HideInDesktop);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(3).Item1, User_HideInDesktop);
+                WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, RecycleBin_HideInDesktop);
 
-                EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", SystemDriveIcon, RegistryValueKind.String);
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", SystemDriveIcon, RegistryValueKind.String);
                 string sysDrive = Environment.GetFolderPath(Environment.SpecialFolder.System).Substring(0, 1);
 
                 if (!string.IsNullOrWhiteSpace(SystemDriveIcon))
                 {
-                    EditReg($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\DriveIcons\\{sysDrive}\\DefaultIcon", string.Empty, SystemDriveIcon, RegistryValueKind.String);
+                    WriteReg($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\DriveIcons\\{sysDrive}\\DefaultIcon", string.Empty, SystemDriveIcon, RegistryValueKind.String);
                 }
                 else
                 {
-                    DelKey($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\DriveIcons\\{sysDrive}\\DefaultIcon");
+                    DeleteKey($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\DriveIcons\\{sysDrive}\\DefaultIcon");
                 }
             }
         }
@@ -318,7 +318,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, Enabled);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two Icons structures are equal</summary>

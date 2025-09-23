@@ -475,7 +475,7 @@ namespace WinPaletter
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            TextBox1.Text = GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
+            TextBox1.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -898,7 +898,7 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            string WallpaperPath = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString();
+            string WallpaperPath = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty).ToString();
 
             if (!File.Exists(WallpaperPath))
             {
@@ -929,7 +929,7 @@ namespace WinPaletter
 
             if (!File.Exists(TextBox1.Text))
             {
-                TextBox3.Text = Reg_IO.GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.WindowStyle == WindowStyle.WXP ? $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp" : $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg").ToString();
+                TextBox3.Text = Reg_IO.ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", Program.WindowStyle == WindowStyle.WXP ? $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp" : $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg").ToString();
             }
             ApplyHSLPreview();
         }

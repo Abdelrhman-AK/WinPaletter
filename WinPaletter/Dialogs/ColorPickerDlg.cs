@@ -190,7 +190,7 @@ namespace WinPaletter
                 ColorEditorManager1.Color = c;
                 ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
 
-                ImagePath.Text = GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
+                ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
 
                 effect_dark.BackColor = c.Dark(trackBar1.Value / 100f);
                 effect_light.BackColor = c.Light(trackBar2.Value / 100f);

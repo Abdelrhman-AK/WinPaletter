@@ -42,7 +42,7 @@ namespace WinPaletter.Dialogs
 
             foreach (UI.WP.Toggle t in this.GetAllControls().OfType<UI.WP.Toggle>()) t.Checked = false;
 
-            ImagePath.Text = GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
+            ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
 
             ShowDialog();
         }
@@ -63,7 +63,7 @@ namespace WinPaletter.Dialogs
             else if (f == Forms.LogonUI81) Forms.LogonUI81.ApplyPreview();
             else if (f == Forms.LogonUI7) Forms.LogonUI7.ApplyPreview();
             else if (f == Forms.LogonUIXP) Forms.LogonUIXP.UpdateWin2000Preview(Forms.LogonUIXP.color_pick.BackColor);
-            else if (f == Forms.CursorsStudio) Forms.CursorsStudio.ApplyColorsToPreview();
+            else if (f == Forms.CursorsStudio) Forms.CursorsStudio.ApplyColorsToPreview(true);
             else if (f == Forms.Wallpaper_Editor) Forms.Wallpaper_Editor.pnl_preview.BackColor = Forms.Wallpaper_Editor.color_pick.BackColor;
             else if (f == Forms.ApplicationThemer) Forms.ApplicationThemer.AdjustPreview();
             else if (f == Forms.EditInfo)

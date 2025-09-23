@@ -109,13 +109,6 @@ namespace WinPaletter
         public static ThemeLog ThemeLog => (_ThemeLog == null || _ThemeLog.IsDisposed) ? (_ThemeLog = CreateInstance(_ThemeLog)) : _ThemeLog;
 
 
-        private static Logs _logs;
-        /// <summary>
-        /// Gets the instance of the form <see cref="ThemeLog"/> to show the theme log.
-        /// </summary>
-        public static Logs Logs => (_logs == null || _logs.IsDisposed) ? (_logs = CreateInstance(_logs)) : _logs;
-
-
         private static SOS _SOS;
         /// <summary>
         /// Gets the instance of the form <see cref="SOS"/> to utilize Windows rescue tools.

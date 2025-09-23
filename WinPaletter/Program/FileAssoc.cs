@@ -25,28 +25,28 @@ namespace WinPaletter
 
             exeProgram = $"\"{exeProgram}\"";
 
-            bool isInstalledBefore = GetReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, null) != null;
+            bool isInstalledBefore = ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, null) != null;
 
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, className, RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", string.Empty, description, RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Open", "Icon", $"{exeProgram.Replace("\"", string.Empty)}, 0", RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Open\\Command", string.Empty, $"{exeProgram} \"%1\"", RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, className, RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", string.Empty, description, RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Open", "Icon", $"{exeProgram.Replace("\"", string.Empty)}, 0", RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Open\\Command", string.Empty, $"{exeProgram} \"%1\"", RegistryValueKind.String);
 
             if ((className.ToLower() ?? string.Empty) == ("WinPaletter.ThemeFile".ToLower() ?? string.Empty))
             {
-                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Edit In WinPaletter\\Command", string.Empty, $"{exeProgram}  -e \"%1\"", RegistryValueKind.String);
-                EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Apply by WinPaletter\\Command", string.Empty, $"{exeProgram}  -a \"%1\"", RegistryValueKind.String);
+                WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Edit In WinPaletter\\Command", string.Empty, $"{exeProgram}  -e \"%1\"", RegistryValueKind.String);
+                WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\Shell\\Apply by WinPaletter\\Command", string.Empty, $"{exeProgram}  -a \"%1\"", RegistryValueKind.String);
             }
 
-            EditReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\DefaultIcon", string.Empty, iconPath, RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}\\DefaultIcon", string.Empty, iconPath, RegistryValueKind.String);
 
-            EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName", Application.ProductName, RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher", Application.CompanyName, RegistryValueKind.String);
-            EditReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Version", Version, RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName", Application.ProductName, RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher", Application.CompanyName, RegistryValueKind.String);
+            WriteReg($"HKEY_CURRENT_USER\\Software\\WinPaletter", "Version", Version, RegistryValueKind.String);
 
             if (!isInstalledBefore)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"File Association for {extension} with class name {className} has been created");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File Association for {extension} with class name {className} has been created");
             }
 
             return isInstalledBefore;
@@ -61,23 +61,23 @@ namespace WinPaletter
         {
             if (string.IsNullOrEmpty(extension) || string.IsNullOrEmpty(className))
             {
-                Program.Log?.Write(LogEventLevel.Error, "DeleteFileAssociation called with null or empty parameters.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, "DeleteFileAssociation called with null or empty parameters.");
                 return;
             }
 
             if (extension.Substring(0, 1) != ".") extension = $".{extension}";
 
-            Program.Log?.Write(LogEventLevel.Information, $"Deleting File Association for {extension} with class name {className}");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Deleting File Association for {extension} with class name {className}");
 
-            DelKey($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}");
-            DelKey($"HKEY_CURRENT_USER\\Software\\Classes\\{className}");
-            DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName");
-            DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher");
-            DelValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Version");
+            DeleteKey($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}");
+            DeleteKey($"HKEY_CURRENT_USER\\Software\\Classes\\{className}");
+            DeleteValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "DisplayName");
+            DeleteValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Publisher");
+            DeleteValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Version");
 
             // Notify Windows that File associations have changed
-            Program.Log?.Write(LogEventLevel.Information, $"A NativeMethods.Shell32.SHChangeNotify request has been sent to notify Windows that File associations have changed.");
-            Program.Log?.Write(LogEventLevel.Information, $"Command is: NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0)");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"A NativeMethods.Shell32.SHChangeNotify request has been sent to notify Windows that File associations have changed.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Command is: NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0)");
 
             Shell32.SHChangeNotify(Shell32.ShellConstants.SHCNE_ASSOCCHANGED, Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
         }

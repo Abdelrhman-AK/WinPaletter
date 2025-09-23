@@ -1,6 +1,8 @@
 ﻿using Serilog.Events;
 using System;
+using System.Security.Principal;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Theme.Structures
 {
@@ -20,6 +22,13 @@ namespace WinPaletter.Theme.Structures
 
         /// <summary>If true, it will disable lock screen</summary>
         public bool NoLockScreen = false;
+
+        /// <summary>
+        /// Represents the file path of an image.
+        /// </summary>
+        /// <remarks>This field is initialized to an empty string by default.  It is expected to hold the
+        /// path to an image file as a string.</remarks>
+        public string ImageFile = string.Empty;
 
         /// <summary>
         /// Creates a new Windows 10/11 LogonUI data structure with default values
@@ -51,23 +60,15 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
         public void Load(string edition, LogonUI10x @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, @default.Enabled));
 
-            if (OS.W12 || OS.W11 || OS.W10)
-            {
-                DisableAcrylicBackgroundOnLogon = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", @default.DisableAcrylicBackgroundOnLogon));
-                DisableLogonBackgroundImage = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", @default.DisableLogonBackgroundImage));
-                NoLockScreen = Convert.ToBoolean(GetReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", @default.NoLockScreen));
-            }
+            DisableAcrylicBackgroundOnLogon = Convert.ToBoolean(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", @default.DisableAcrylicBackgroundOnLogon));
+            DisableLogonBackgroundImage = Convert.ToBoolean(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", @default.DisableLogonBackgroundImage));
+            NoLockScreen = Convert.ToBoolean(ReadReg(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", @default.NoLockScreen));
 
-            else
-            {
-                DisableAcrylicBackgroundOnLogon = @default.DisableAcrylicBackgroundOnLogon;
-                DisableLogonBackgroundImage = @default.DisableLogonBackgroundImage;
-                NoLockScreen = @default.NoLockScreen;
-            }
+            ImageFile = Convert.ToString(ReadReg($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", @default.ImageFile));
         }
 
         /// <summary>
@@ -77,15 +78,35 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
         public void Apply(string edition, TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
 
             SaveToggleState(edition, treeView);
 
             if (Enabled)
             {
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", DisableAcrylicBackgroundOnLogon ? 1 : 0);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", DisableLogonBackgroundImage ? 1 : 0);
-                EditReg(treeView, @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", NoLockScreen ? 1 : 0);
+                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", DisableAcrylicBackgroundOnLogon ? 1 : 0);
+                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", DisableLogonBackgroundImage ? 1 : 0);
+                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", NoLockScreen ? 1 : 0);
+
+                if (System.IO.File.Exists(ImageFile))
+                {
+                    WriteReg(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath", ImageFile, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImageStatus", 1);
+                }
+                else
+                {
+                    DeleteValue(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImagePath");
+                    DeleteValue(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImageStatus");
+                }
+
+                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                {
+                    // Broadcast the system message to notify about the setting change
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
+                    User32.UpdatePerUserSystemParameters(1, true);
+
+                    wic.Undo();
+                }
             }
         }
 
@@ -96,7 +117,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition"></param>
         public void SaveToggleState(string edition, TreeView treeView = null)
         {
-            EditReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, Enabled);
+            WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, Enabled);
         }
 
         /// <summary>

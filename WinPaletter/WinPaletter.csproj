@@ -378,12 +378,6 @@
     <Compile Include="Dialogs\ColorsEffects.Designer.cs">
       <DependentUpon>ColorsEffects.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\Logs.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\Logs.Designer.cs">
-      <DependentUpon>Logs.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\Welcome.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -421,6 +415,7 @@
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
+    <Compile Include="Program\LogInitializer.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
     <Compile Include="Program\TypesExtensions\Images.cs" />
@@ -1283,9 +1278,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ColorsEffects.resx">
       <DependentUpon>ColorsEffects.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\Logs.resx">
-      <DependentUpon>Logs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Welcome.resx">
       <DependentUpon>Welcome.cs</DependentUpon>

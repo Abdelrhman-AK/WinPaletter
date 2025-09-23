@@ -39,6 +39,7 @@ namespace WinPaletter
             static readonly string REG_Language = $"{REG}\\Language";
             static readonly string REG_EP = $"{REG}\\ExplorerPatcher";
             static readonly string REG_ThemeLog = $"{REG}\\ThemeLog";
+            static readonly string REG_AppLog = $"{REG}\\AppLog";
             static readonly string REG_WindowsTerminals = $"{REG}\\WindowsTerminals";
             static readonly string REG_Store = $"{REG}\\Store";
             static readonly string REG_NerdStats = $"{REG}\\NerdStats";
@@ -93,12 +94,12 @@ namespace WinPaletter
                 public void Load()
                 {
                     // Renamed: LicenseAccepted_0, to avoid conflicts with the old version, as new license is MIT/LGPL Dual License
-                    SetupCompleted = Conversions.ToBoolean(GetReg(REG_General, "SetupCompleted", false));
-                    WhatsNewRecord = (string[])GetReg(REG_General, "WhatsNewRecord", new[] { string.Empty });
-                    MainFormWidth = GetReg(REG_General_MainForm, "MainFormWidth", 1110);
-                    MainFormHeight = GetReg(REG_General_MainForm, "MainFormHeight", 725);
-                    MainFormStatus = GetReg(REG_General_MainForm, "MainFormStatus", FormWindowState.Normal);
-                    CompactAspects = Conversions.ToBoolean(GetReg(REG_General, "CompactAspects", false));
+                    SetupCompleted = Conversions.ToBoolean(ReadReg(REG_General, "SetupCompleted", false));
+                    WhatsNewRecord = (string[])ReadReg(REG_General, "WhatsNewRecord", new[] { string.Empty });
+                    MainFormWidth = ReadReg(REG_General_MainForm, "MainFormWidth", 1110);
+                    MainFormHeight = ReadReg(REG_General_MainForm, "MainFormHeight", 725);
+                    MainFormStatus = ReadReg(REG_General_MainForm, "MainFormStatus", FormWindowState.Normal);
+                    CompactAspects = Conversions.ToBoolean(ReadReg(REG_General, "CompactAspects", false));
                 }
 
                 /// <summary>
@@ -106,12 +107,12 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_General, "SetupCompleted", SetupCompleted, RegistryValueKind.DWord);
-                    EditReg(REG_General, "WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString);
-                    EditReg(REG_General_MainForm, "MainFormWidth", MainFormWidth, RegistryValueKind.DWord);
-                    EditReg(REG_General_MainForm, "MainFormHeight", MainFormHeight, RegistryValueKind.DWord);
-                    EditReg(REG_General_MainForm, "MainFormStatus", MainFormStatus, RegistryValueKind.DWord);
-                    EditReg(REG_General, "CompactAspects", CompactAspects, RegistryValueKind.DWord);
+                    WriteReg(REG_General, "SetupCompleted", SetupCompleted, RegistryValueKind.DWord);
+                    WriteReg(REG_General, "WhatsNewRecord", WhatsNewRecord, RegistryValueKind.MultiString);
+                    WriteReg(REG_General_MainForm, "MainFormWidth", MainFormWidth, RegistryValueKind.DWord);
+                    WriteReg(REG_General_MainForm, "MainFormHeight", MainFormHeight, RegistryValueKind.DWord);
+                    WriteReg(REG_General_MainForm, "MainFormStatus", MainFormStatus, RegistryValueKind.DWord);
+                    WriteReg(REG_General, "CompactAspects", CompactAspects, RegistryValueKind.DWord);
                 }
             }
 
@@ -155,8 +156,8 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    AutoCheck = Conversions.ToBoolean(GetReg(REG_Updates, "AutoCheck", true));
-                    Channel = (Channels)GetReg(REG_Updates, "Channel", Channels.Stable) == Channels.Stable ? Channels.Stable : Channels.Beta;
+                    AutoCheck = Conversions.ToBoolean(ReadReg(REG_Updates, "AutoCheck", true));
+                    Channel = (Channels)ReadReg(REG_Updates, "Channel", Channels.Stable) == Channels.Stable ? Channels.Stable : Channels.Beta;
                 }
 
                 /// <summary>
@@ -164,8 +165,8 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_Updates, "AutoCheck", AutoCheck, RegistryValueKind.DWord);
-                    EditReg(REG_Updates, "Channel", Channel == Channels.Stable ? 0 : 1);
+                    WriteReg(REG_Updates, "AutoCheck", AutoCheck, RegistryValueKind.DWord);
+                    WriteReg(REG_Updates, "Channel", Channel == Channels.Stable ? 0 : 1);
                 }
             }
 
@@ -201,9 +202,9 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    AutoAddExt = Conversions.ToBoolean(GetReg(REG_FileTypeManagement, "AutoAddExt", true));
-                    OpeningPreviewInApp_or_AppliesIt = Conversions.ToBoolean(GetReg(REG_FileTypeManagement, "OpeningPreviewInApp_or_AppliesIt", true));
-                    CompressThemeFile = Conversions.ToBoolean(GetReg(REG_FileTypeManagement, "CompressThemeFile", true));
+                    AutoAddExt = Conversions.ToBoolean(ReadReg(REG_FileTypeManagement, "AutoAddExt", true));
+                    OpeningPreviewInApp_or_AppliesIt = Conversions.ToBoolean(ReadReg(REG_FileTypeManagement, "OpeningPreviewInApp_or_AppliesIt", true));
+                    CompressThemeFile = Conversions.ToBoolean(ReadReg(REG_FileTypeManagement, "CompressThemeFile", true));
                 }
 
                 /// <summary>
@@ -211,9 +212,9 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_FileTypeManagement, "AutoAddExt", AutoAddExt, RegistryValueKind.DWord);
-                    EditReg(REG_FileTypeManagement, "OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord);
-                    EditReg(REG_FileTypeManagement, "CompressThemeFile", CompressThemeFile, RegistryValueKind.DWord);
+                    WriteReg(REG_FileTypeManagement, "AutoAddExt", AutoAddExt, RegistryValueKind.DWord);
+                    WriteReg(REG_FileTypeManagement, "OpeningPreviewInApp_or_AppliesIt", OpeningPreviewInApp_or_AppliesIt, RegistryValueKind.DWord);
+                    WriteReg(REG_FileTypeManagement, "CompressThemeFile", CompressThemeFile, RegistryValueKind.DWord);
                 }
             }
 
@@ -347,24 +348,24 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    CreateSystemRestore = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", true));
-                    AutoRestartExplorer = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", true));
-                    ShowSaveConfirmation = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", true));
-                    ClassicColors_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite));
-                    ClassicColors_HKLM_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", OverwriteOptions.Erase));
-                    UPM_HKU_DEFAULT = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", false));
-                    Metrics_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    Cursors_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    CMD_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "CMD_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    PS86_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    PS64_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
-                    Desktop_HKU_DEFAULT = (OverwriteOptions)Convert.ToInt32(GetReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange));
-                    CMD_OverrideUserPreferences = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true));
-                    ResetCursorsToAero = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP));
-                    SFC_on_restoring_StartupSound = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false));
-                    Ignore_PE_Modify_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false));
-                    Show_WinEffects_Alert = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", true));
-                    PE_ModifyByDefault = Conversions.ToBoolean(GetReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", true));
+                    CreateSystemRestore = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", true));
+                    AutoRestartExplorer = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", true));
+                    ShowSaveConfirmation = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", true));
+                    ClassicColors_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite));
+                    ClassicColors_HKLM_Prefs = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", OverwriteOptions.Erase));
+                    UPM_HKU_DEFAULT = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", false));
+                    Metrics_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    Cursors_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    CMD_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "CMD_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    PS86_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    PS64_HKU_DEFAULT_Prefs = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange));
+                    Desktop_HKU_DEFAULT = (OverwriteOptions)Convert.ToInt32(ReadReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange));
+                    CMD_OverrideUserPreferences = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true));
+                    ResetCursorsToAero = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP));
+                    SFC_on_restoring_StartupSound = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false));
+                    Ignore_PE_Modify_Alert = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false));
+                    Show_WinEffects_Alert = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", true));
+                    PE_ModifyByDefault = Conversions.ToBoolean(ReadReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", true));
                 }
 
                 /// <summary>
@@ -372,24 +373,24 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", CreateSystemRestore, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", ShowSaveConfirmation, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", ClassicColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", ClassicColors_HKLM_Prefs, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", UPM_HKU_DEFAULT, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", Metrics_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", Cursors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "CMD_HKU_DEFAULT_Prefs", CMD_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", PS86_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", PS64_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", Desktop_HKU_DEFAULT, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", SFC_on_restoring_StartupSound, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", Ignore_PE_Modify_Alert, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", Show_WinEffects_Alert, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", PE_ModifyByDefault, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", CreateSystemRestore, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", ShowSaveConfirmation, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", ClassicColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", ClassicColors_HKLM_Prefs, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", UPM_HKU_DEFAULT, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", Metrics_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", Cursors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "CMD_HKU_DEFAULT_Prefs", CMD_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", PS86_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", PS64_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", Desktop_HKU_DEFAULT, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", SFC_on_restoring_StartupSound, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", Ignore_PE_Modify_Alert, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", Show_WinEffects_Alert, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", PE_ModifyByDefault, RegistryValueKind.DWord);
                 }
             }
 
@@ -473,19 +474,19 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    DarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "DarkMode", true));
-                    Animations = Conversions.ToBoolean(GetReg(REG_Appearance, "Animations", true));
-                    AutoDarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "AutoDarkMode", true));
-                    CustomColors = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomColors", false));
-                    CustomTheme_DarkMode = Conversions.ToBoolean(GetReg(REG_Appearance, "CustomTheme", true));
-                    AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "AccentColor", DefaultColors.PrimaryColor_Dark.ToArgb())));
-                    BackColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "BackColor", DefaultColors.BackColor_Dark.ToArgb())));
-                    SecondaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "SecondaryColor", DefaultColors.SecondaryColor_Dark.ToArgb())));
-                    TertiaryColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "TertiaryColor", DefaultColors.TertiaryColor_Dark.ToArgb())));
-                    DisabledColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledColor", DefaultColors.DisabledColor_Dark.ToArgb())));
-                    DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor_Dark.ToArgb())));
-                    RoundedCorners = Conversions.ToBoolean(GetReg(REG_Appearance, "RoundedCorners", true));
-                    ManagedByTheme = Conversions.ToBoolean(GetReg(REG_Appearance, "ManagedByTheme", true));
+                    DarkMode = Conversions.ToBoolean(ReadReg(REG_Appearance, "DarkMode", true));
+                    Animations = Conversions.ToBoolean(ReadReg(REG_Appearance, "Animations", true));
+                    AutoDarkMode = Conversions.ToBoolean(ReadReg(REG_Appearance, "AutoDarkMode", true));
+                    CustomColors = Conversions.ToBoolean(ReadReg(REG_Appearance, "CustomColors", false));
+                    CustomTheme_DarkMode = Conversions.ToBoolean(ReadReg(REG_Appearance, "CustomTheme", true));
+                    AccentColor = Color.FromArgb(Convert.ToInt32(ReadReg(REG_Appearance, "AccentColor", DefaultColors.PrimaryColor_Dark.ToArgb())));
+                    BackColor = Color.FromArgb(Convert.ToInt32(ReadReg(REG_Appearance, "BackColor", DefaultColors.BackColor_Dark.ToArgb())));
+                    SecondaryColor = Color.FromArgb(Convert.ToInt32(ReadReg(REG_Appearance, "SecondaryColor", DefaultColors.SecondaryColor_Dark.ToArgb())));
+                    TertiaryColor = Color.FromArgb(Convert.ToInt32(ReadReg(REG_Appearance, "TertiaryColor", DefaultColors.TertiaryColor_Dark.ToArgb())));
+                    DisabledColor = Color.FromArgb(Convert.ToInt32(ReadReg(REG_Appearance, "DisabledColor", DefaultColors.DisabledColor_Dark.ToArgb())));
+                    DisabledBackColor = Color.FromArgb(Convert.ToInt32(ReadReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor_Dark.ToArgb())));
+                    RoundedCorners = Conversions.ToBoolean(ReadReg(REG_Appearance, "RoundedCorners", true));
+                    ManagedByTheme = Conversions.ToBoolean(ReadReg(REG_Appearance, "ManagedByTheme", true));
                 }
 
                 /// <summary>
@@ -493,19 +494,19 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_Appearance, "DarkMode", DarkMode, RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "Animations", Animations, RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "AutoDarkMode", AutoDarkMode, RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "CustomColors", CustomColors, RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "CustomTheme", CustomTheme_DarkMode, RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "AccentColor", AccentColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "BackColor", BackColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "DisabledColor", DisabledColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "RoundedCorners", RoundedCorners, RegistryValueKind.DWord);
-                    EditReg(REG_Appearance, "ManagedByTheme", ManagedByTheme, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "DarkMode", DarkMode, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "Animations", Animations, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "AutoDarkMode", AutoDarkMode, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "CustomColors", CustomColors, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "CustomTheme", CustomTheme_DarkMode, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "AccentColor", AccentColor.ToArgb(), RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "BackColor", BackColor.ToArgb(), RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb(), RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb(), RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "DisabledColor", DisabledColor.ToArgb(), RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "RoundedCorners", RoundedCorners, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, "ManagedByTheme", ManagedByTheme, RegistryValueKind.DWord);
                 }
             }
 
@@ -534,8 +535,8 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_Language, string.Empty, false));
-                    File = GetReg(REG_Language, "File", string.Empty).ToString();
+                    Enabled = Conversions.ToBoolean(ReadReg(REG_Language, string.Empty, false));
+                    File = ReadReg(REG_Language, "File", string.Empty).ToString();
                 }
 
                 /// <summary>
@@ -543,8 +544,8 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_Language, string.Empty, Enabled, RegistryValueKind.DWord);
-                    EditReg(REG_Language, "File", File, RegistryValueKind.String);
+                    WriteReg(REG_Language, string.Empty, Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_Language, "File", File, RegistryValueKind.String);
                 }
             }
 
@@ -593,12 +594,12 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_EP, string.Empty, true));
-                    Enabled_Force = Conversions.ToBoolean(GetReg(REG_EP, "Enabled_Force", false));
-                    UseStart10 = Conversions.ToBoolean(GetReg(REG_EP, "UseStart10", false));
-                    UseTaskbar10 = Conversions.ToBoolean(GetReg(REG_EP, "UseTaskbar10", false));
-                    TaskbarButton10 = Conversions.ToBoolean(GetReg(REG_EP, "TaskbarButton10", false));
-                    StartStyle = (ExplorerPatcher.StartStyles)Convert.ToInt32(GetReg(REG_EP, "StartStyle", WinPaletter.ExplorerPatcher.StartStyles.NotRounded));
+                    Enabled = Conversions.ToBoolean(ReadReg(REG_EP, string.Empty, true));
+                    Enabled_Force = Conversions.ToBoolean(ReadReg(REG_EP, "Enabled_Force", false));
+                    UseStart10 = Conversions.ToBoolean(ReadReg(REG_EP, "UseStart10", false));
+                    UseTaskbar10 = Conversions.ToBoolean(ReadReg(REG_EP, "UseTaskbar10", false));
+                    TaskbarButton10 = Conversions.ToBoolean(ReadReg(REG_EP, "TaskbarButton10", false));
+                    StartStyle = (ExplorerPatcher.StartStyles)Convert.ToInt32(ReadReg(REG_EP, "StartStyle", WinPaletter.ExplorerPatcher.StartStyles.NotRounded));
                 }
 
                 /// <summary>
@@ -606,12 +607,12 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_EP, string.Empty, Enabled, RegistryValueKind.DWord);
-                    EditReg(REG_EP, "Enabled_Force", Enabled_Force, RegistryValueKind.DWord);
-                    EditReg(REG_EP, "UseStart10", UseStart10, RegistryValueKind.DWord);
-                    EditReg(REG_EP, "UseTaskbar10", UseTaskbar10, RegistryValueKind.DWord);
-                    EditReg(REG_EP, "TaskbarButton10", TaskbarButton10, RegistryValueKind.DWord);
-                    EditReg(REG_EP, "StartStyle", StartStyle, RegistryValueKind.DWord);
+                    WriteReg(REG_EP, string.Empty, Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_EP, "Enabled_Force", Enabled_Force, RegistryValueKind.DWord);
+                    WriteReg(REG_EP, "UseStart10", UseStart10, RegistryValueKind.DWord);
+                    WriteReg(REG_EP, "UseTaskbar10", UseTaskbar10, RegistryValueKind.DWord);
+                    WriteReg(REG_EP, "TaskbarButton10", TaskbarButton10, RegistryValueKind.DWord);
+                    WriteReg(REG_EP, "StartStyle", StartStyle, RegistryValueKind.DWord);
                 }
             }
 
@@ -675,10 +676,10 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    VerboseLevel = (VerboseLevels)Convert.ToInt32(GetReg(REG_ThemeLog, "VerboseLevel", VerboseLevels.Basic));
-                    ShowSkippedItemsOnDetailedVerbose = Conversions.ToBoolean(GetReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", false));
-                    CountDown = Conversions.ToBoolean(GetReg(REG_ThemeLog, "CountDown", true));
-                    CountDown_Seconds = Convert.ToInt32(GetReg(REG_ThemeLog, "CountDown_Seconds", 20));
+                    VerboseLevel = (VerboseLevels)Convert.ToInt32(ReadReg(REG_ThemeLog, "VerboseLevel", VerboseLevels.Basic));
+                    ShowSkippedItemsOnDetailedVerbose = Conversions.ToBoolean(ReadReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", false));
+                    CountDown = Conversions.ToBoolean(ReadReg(REG_ThemeLog, "CountDown", true));
+                    CountDown_Seconds = Convert.ToInt32(ReadReg(REG_ThemeLog, "CountDown_Seconds", 20));
                 }
 
                 /// <summary>
@@ -686,10 +687,58 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_ThemeLog, "VerboseLevel", VerboseLevel, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", ShowSkippedItemsOnDetailedVerbose, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeLog, "CountDown", CountDown, RegistryValueKind.DWord);
-                    EditReg(REG_ThemeLog, "CountDown_Seconds", CountDown_Seconds, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeLog, "VerboseLevel", VerboseLevel, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeLog, "ShowSkippedItemsOnDetailedVerbose", ShowSkippedItemsOnDetailedVerbose, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeLog, "CountDown", CountDown, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeLog, "CountDown_Seconds", CountDown_Seconds, RegistryValueKind.DWord);
+                }
+            }
+
+            public class AppLog
+            {
+                public AppLog() { }
+
+                /// <summary>
+                /// Indicates whether the feature is enabled.
+                /// </summary>
+                public bool Enabled = true;
+
+                /// <summary>
+                /// Indicates whether logging registry operations are enabled.
+                /// </summary>
+                public bool Reg = true;
+
+                /// <summary>
+                /// Indicates whether logging registry reading operations are enabled.
+                /// </summary>
+                public bool RegRead = true;
+
+                /// <summary>
+                /// Indicates whether logging registry write operations are enabled.
+                /// </summary>
+                public bool RegWrite = true;
+
+                /// <summary>
+                /// Indicates whether logging registry deletion operations are enabled.
+                /// </summary>
+                public bool RegDelete = true;
+
+                public void Load()
+                {
+                    Enabled = Conversions.ToBoolean(ReadReg(REG_AppLog, string.Empty, true));
+                    Reg = Conversions.ToBoolean(ReadReg(REG_AppLog, "Reg", true));
+                    RegRead = Conversions.ToBoolean(ReadReg(REG_AppLog, "RegRead", true));
+                    RegWrite = Conversions.ToBoolean(ReadReg(REG_AppLog, "RegWrite", true));
+                    RegDelete = Conversions.ToBoolean(ReadReg(REG_AppLog, "RegDelete", true));
+                }
+
+                public void Save()
+                {
+                    WriteReg(REG_AppLog, string.Empty, Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, "Reg", Reg, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, "RegRead", RegRead, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, "RegWrite", RegWrite, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, "RegDelete", RegDelete, RegistryValueKind.DWord);
                 }
             }
 
@@ -733,11 +782,11 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Bypass = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Bypass", false));
-                    ListAllFonts = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "ListAllFonts", false));
-                    Path_Deflection = Conversions.ToBoolean(GetReg(REG_WindowsTerminals, "Path_Deflection", false));
-                    Terminal_Stable_Path = GetReg(REG_WindowsTerminals, "Terminal_Stable_Path", SysPaths.TerminalJSON).ToString();
-                    Terminal_Preview_Path = GetReg(REG_WindowsTerminals, "Terminal_Preview_Path", SysPaths.TerminalPreviewJSON).ToString();
+                    Bypass = Conversions.ToBoolean(ReadReg(REG_WindowsTerminals, "Bypass", false));
+                    ListAllFonts = Conversions.ToBoolean(ReadReg(REG_WindowsTerminals, "ListAllFonts", false));
+                    Path_Deflection = Conversions.ToBoolean(ReadReg(REG_WindowsTerminals, "Path_Deflection", false));
+                    Terminal_Stable_Path = ReadReg(REG_WindowsTerminals, "Terminal_Stable_Path", SysPaths.TerminalJSON).ToString();
+                    Terminal_Preview_Path = ReadReg(REG_WindowsTerminals, "Terminal_Preview_Path", SysPaths.TerminalPreviewJSON).ToString();
                 }
 
                 /// <summary>
@@ -745,11 +794,11 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_WindowsTerminals, "Bypass", Bypass, RegistryValueKind.DWord);
-                    EditReg(REG_WindowsTerminals, "ListAllFonts", ListAllFonts, RegistryValueKind.DWord);
-                    EditReg(REG_WindowsTerminals, "Path_Deflection", Path_Deflection, RegistryValueKind.DWord);
-                    EditReg(REG_WindowsTerminals, "Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String);
-                    EditReg(REG_WindowsTerminals, "Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String);
+                    WriteReg(REG_WindowsTerminals, "Bypass", Bypass, RegistryValueKind.DWord);
+                    WriteReg(REG_WindowsTerminals, "ListAllFonts", ListAllFonts, RegistryValueKind.DWord);
+                    WriteReg(REG_WindowsTerminals, "Path_Deflection", Path_Deflection, RegistryValueKind.DWord);
+                    WriteReg(REG_WindowsTerminals, "Terminal_Stable_Path", Terminal_Stable_Path, RegistryValueKind.String);
+                    WriteReg(REG_WindowsTerminals, "Terminal_Preview_Path", Terminal_Preview_Path, RegistryValueKind.String);
                 }
             }
 
@@ -810,14 +859,14 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Online_or_Offline = Conversions.ToBoolean(GetReg(REG_Store, "Online_or_Offline", true));
-                    Online_Repositories = (string[])GetReg(REG_Store, "Online_Repositories", new[] { Links.Store_MainDB, Links.Store_2ndDB });
-                    Offline_Directories = (string[])GetReg(REG_Store, "Offline_Directories", new[] { string.Empty });
-                    Offline_SubFolders = Conversions.ToBoolean(GetReg(REG_Store, "Offline_SubFolders", true));
-                    Search_ThemeNames = Conversions.ToBoolean(GetReg(REG_Store, "Search_ThemeNames", true));
-                    Search_AuthorsNames = Conversions.ToBoolean(GetReg(REG_Store, "Search_AuthorsNames", true));
-                    Search_Descriptions = Conversions.ToBoolean(GetReg(REG_Store, "Search_Descriptions", true));
-                    ShowTips = Conversions.ToBoolean(GetReg(REG_Store, "ShowTips", true));
+                    Online_or_Offline = Conversions.ToBoolean(ReadReg(REG_Store, "Online_or_Offline", true));
+                    Online_Repositories = (string[])ReadReg(REG_Store, "Online_Repositories", new[] { Links.Store_MainDB, Links.Store_2ndDB });
+                    Offline_Directories = (string[])ReadReg(REG_Store, "Offline_Directories", new[] { string.Empty });
+                    Offline_SubFolders = Conversions.ToBoolean(ReadReg(REG_Store, "Offline_SubFolders", true));
+                    Search_ThemeNames = Conversions.ToBoolean(ReadReg(REG_Store, "Search_ThemeNames", true));
+                    Search_AuthorsNames = Conversions.ToBoolean(ReadReg(REG_Store, "Search_AuthorsNames", true));
+                    Search_Descriptions = Conversions.ToBoolean(ReadReg(REG_Store, "Search_Descriptions", true));
+                    ShowTips = Conversions.ToBoolean(ReadReg(REG_Store, "ShowTips", true));
 
                     if (!Online_Repositories.Contains(Links.Store_MainDB))
                     {
@@ -849,14 +898,14 @@ namespace WinPaletter
                         Online_Repositories[Online_Repositories.Length - 1] = Links.Store_2ndDB;
                     }
 
-                    EditReg(REG_Store, "Search_ThemeNames", Search_ThemeNames, RegistryValueKind.DWord);
-                    EditReg(REG_Store, "Search_AuthorsNames", Search_AuthorsNames, RegistryValueKind.DWord);
-                    EditReg(REG_Store, "Search_Descriptions", Search_Descriptions, RegistryValueKind.DWord);
-                    EditReg(REG_Store, "Online_or_Offline", Online_or_Offline, RegistryValueKind.DWord);
-                    EditReg(REG_Store, "Online_Repositories", Online_Repositories, RegistryValueKind.MultiString);
-                    EditReg(REG_Store, "Offline_Directories", Offline_Directories, RegistryValueKind.MultiString);
-                    EditReg(REG_Store, "Offline_SubFolders", Offline_SubFolders, RegistryValueKind.DWord);
-                    EditReg(REG_Store, "ShowTips", ShowTips, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, "Search_ThemeNames", Search_ThemeNames, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, "Search_AuthorsNames", Search_AuthorsNames, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, "Search_Descriptions", Search_Descriptions, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, "Online_or_Offline", Online_or_Offline, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, "Online_Repositories", Online_Repositories, RegistryValueKind.MultiString);
+                    WriteReg(REG_Store, "Offline_Directories", Offline_Directories, RegistryValueKind.MultiString);
+                    WriteReg(REG_Store, "Offline_SubFolders", Offline_SubFolders, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, "ShowTips", ShowTips, RegistryValueKind.DWord);
                 }
             }
 
@@ -981,14 +1030,14 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_NerdStats, string.Empty, true));
-                    ShowHexHash = Conversions.ToBoolean(GetReg(REG_NerdStats, "ShowHexHash", true));
-                    Type = (Formats)Convert.ToInt32(GetReg(REG_NerdStats, "Type", Formats.HEX));
-                    UseWindowsMonospacedFont = Conversions.ToBoolean(GetReg(REG_NerdStats, "UseWindowsMonospacedFont", false));
-                    MoreLabelTransparency = Conversions.ToBoolean(GetReg(REG_NerdStats, "MoreLabelTransparency", false));
-                    DotDefaultChangedIndicator = Conversions.ToBoolean(GetReg(REG_NerdStats, "DotDefaultChangedIndicator", true));
-                    DragAndDrop = Conversions.ToBoolean(GetReg(REG_NerdStats, "DragAndDrop", true));
-                    Classic_Color_Picker = Conversions.ToBoolean(GetReg(REG_NerdStats, "Classic_Color_Picker", false));
+                    Enabled = Conversions.ToBoolean(ReadReg(REG_NerdStats, string.Empty, true));
+                    ShowHexHash = Conversions.ToBoolean(ReadReg(REG_NerdStats, "ShowHexHash", true));
+                    Type = (Formats)Convert.ToInt32(ReadReg(REG_NerdStats, "Type", Formats.HEX));
+                    UseWindowsMonospacedFont = Conversions.ToBoolean(ReadReg(REG_NerdStats, "UseWindowsMonospacedFont", false));
+                    MoreLabelTransparency = Conversions.ToBoolean(ReadReg(REG_NerdStats, "MoreLabelTransparency", false));
+                    DotDefaultChangedIndicator = Conversions.ToBoolean(ReadReg(REG_NerdStats, "DotDefaultChangedIndicator", true));
+                    DragAndDrop = Conversions.ToBoolean(ReadReg(REG_NerdStats, "DragAndDrop", true));
+                    Classic_Color_Picker = Conversions.ToBoolean(ReadReg(REG_NerdStats, "Classic_Color_Picker", false));
                 }
 
                 /// <summary>
@@ -996,14 +1045,14 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_NerdStats, string.Empty, Enabled, RegistryValueKind.DWord);
-                    EditReg(REG_NerdStats, "ShowHexHash", ShowHexHash, RegistryValueKind.DWord);
-                    EditReg(REG_NerdStats, "Type", (int)Type);
-                    EditReg(REG_NerdStats, "UseWindowsMonospacedFont", UseWindowsMonospacedFont);
-                    EditReg(REG_NerdStats, "MoreLabelTransparency", MoreLabelTransparency);
-                    EditReg(REG_NerdStats, "DotDefaultChangedIndicator", DotDefaultChangedIndicator);
-                    EditReg(REG_NerdStats, "DragAndDrop", DragAndDrop);
-                    EditReg(REG_NerdStats, "Classic_Color_Picker", Classic_Color_Picker, RegistryValueKind.DWord);
+                    WriteReg(REG_NerdStats, string.Empty, Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_NerdStats, "ShowHexHash", ShowHexHash, RegistryValueKind.DWord);
+                    WriteReg(REG_NerdStats, "Type", (int)Type);
+                    WriteReg(REG_NerdStats, "UseWindowsMonospacedFont", UseWindowsMonospacedFont);
+                    WriteReg(REG_NerdStats, "MoreLabelTransparency", MoreLabelTransparency);
+                    WriteReg(REG_NerdStats, "DotDefaultChangedIndicator", DotDefaultChangedIndicator);
+                    WriteReg(REG_NerdStats, "DragAndDrop", DragAndDrop);
+                    WriteReg(REG_NerdStats, "Classic_Color_Picker", Classic_Color_Picker, RegistryValueKind.DWord);
 
                 }
             }
@@ -1060,8 +1109,8 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Win7LivePreview = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "Win7LivePreview", true));
-                    ShowWelcomeDialog = Conversions.ToBoolean(GetReg(REG_Miscellaneous, "ShowWelcomeDialog", true));
+                    Win7LivePreview = Conversions.ToBoolean(ReadReg(REG_Miscellaneous, "Win7LivePreview", true));
+                    ShowWelcomeDialog = Conversions.ToBoolean(ReadReg(REG_Miscellaneous, "ShowWelcomeDialog", true));
                 }
 
                 /// <summary>
@@ -1069,8 +1118,8 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_Miscellaneous, "Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord);
-                    EditReg(REG_Miscellaneous, "ShowWelcomeDialog", ShowWelcomeDialog, RegistryValueKind.DWord);
+                    WriteReg(REG_Miscellaneous, "Win7LivePreview", Win7LivePreview, RegistryValueKind.DWord);
+                    WriteReg(REG_Miscellaneous, "ShowWelcomeDialog", ShowWelcomeDialog, RegistryValueKind.DWord);
                 }
             }
 
@@ -1124,13 +1173,13 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_Backup, "Enabled", true));
-                    AutoBackupOnAppOpen = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnAppOpen", false));
-                    AutoBackupOnApply = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApply", true));
-                    AutoBackupOnApplySingleAspect = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnApplySingleAspect", true));
-                    AutoBackupOnThemeLoad = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnThemeLoad", false));
-                    AutoBackupOnExError = Conversions.ToBoolean(GetReg(REG_Backup, "AutoBackupOnExError", true));
-                    BackupPath = GetReg(REG_Backup, "BackupPath", $"{SysPaths.appData}\\Backup\\Themes").ToString();
+                    Enabled = Conversions.ToBoolean(ReadReg(REG_Backup, "Enabled", true));
+                    AutoBackupOnAppOpen = Conversions.ToBoolean(ReadReg(REG_Backup, "AutoBackupOnAppOpen", false));
+                    AutoBackupOnApply = Conversions.ToBoolean(ReadReg(REG_Backup, "AutoBackupOnApply", true));
+                    AutoBackupOnApplySingleAspect = Conversions.ToBoolean(ReadReg(REG_Backup, "AutoBackupOnApplySingleAspect", true));
+                    AutoBackupOnThemeLoad = Conversions.ToBoolean(ReadReg(REG_Backup, "AutoBackupOnThemeLoad", false));
+                    AutoBackupOnExError = Conversions.ToBoolean(ReadReg(REG_Backup, "AutoBackupOnExError", true));
+                    BackupPath = ReadReg(REG_Backup, "BackupPath", $"{SysPaths.appData}\\Backup\\Themes").ToString();
                 }
 
                 /// <summary>
@@ -1138,13 +1187,13 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_Backup, "Enabled", Enabled, RegistryValueKind.DWord);
-                    EditReg(REG_Backup, "AutoBackupOnAppOpen", AutoBackupOnAppOpen, RegistryValueKind.DWord);
-                    EditReg(REG_Backup, "AutoBackupOnApply", AutoBackupOnApply, RegistryValueKind.DWord);
-                    EditReg(REG_Backup, "AutoBackupOnApplySingleAspect", AutoBackupOnApplySingleAspect, RegistryValueKind.DWord);
-                    EditReg(REG_Backup, "AutoBackupOnThemeLoad", AutoBackupOnThemeLoad, RegistryValueKind.DWord);
-                    EditReg(REG_Backup, "AutoBackupOnExError", AutoBackupOnExError, RegistryValueKind.DWord);
-                    EditReg(REG_Backup, "BackupPath", BackupPath, RegistryValueKind.String);
+                    WriteReg(REG_Backup, "Enabled", Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_Backup, "AutoBackupOnAppOpen", AutoBackupOnAppOpen, RegistryValueKind.DWord);
+                    WriteReg(REG_Backup, "AutoBackupOnApply", AutoBackupOnApply, RegistryValueKind.DWord);
+                    WriteReg(REG_Backup, "AutoBackupOnApplySingleAspect", AutoBackupOnApplySingleAspect, RegistryValueKind.DWord);
+                    WriteReg(REG_Backup, "AutoBackupOnThemeLoad", AutoBackupOnThemeLoad, RegistryValueKind.DWord);
+                    WriteReg(REG_Backup, "AutoBackupOnExError", AutoBackupOnExError, RegistryValueKind.DWord);
+                    WriteReg(REG_Backup, "BackupPath", BackupPath, RegistryValueKind.String);
                 }
             }
 
@@ -1252,23 +1301,23 @@ namespace WinPaletter
                 /// </summary>
                 public void Load()
                 {
-                    Enabled = Conversions.ToBoolean(GetReg(REG_AspectsControl, string.Empty, false));
-                    WinColors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinColors", true));
-                    LogonUI = Conversions.ToBoolean(GetReg(REG_AspectsControl, "LogonUI", true));
-                    ClassicColors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors", true));
-                    ClassicColors_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ClassicColors_Advanced", true));
-                    Accessibility = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Accessibility", true));
-                    MetricsFonts = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts", true));
-                    MetricsFonts_Advanced = Conversions.ToBoolean(GetReg(REG_AspectsControl, "MetricsFonts_Advanced", true));
-                    Cursors = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Cursors", true));
-                    Consoles = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Consoles", true));
-                    WinTerminals = Conversions.ToBoolean(GetReg(REG_AspectsControl, "WinTerminals", true));
-                    Wallpaper = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Wallpaper", true));
-                    Effects = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Effects", true));
-                    Sounds = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Sounds", true));
-                    ScreenSaver = Conversions.ToBoolean(GetReg(REG_AspectsControl, "ScreenSaver", true));
-                    AltTab = Conversions.ToBoolean(GetReg(REG_AspectsControl, "AltTab", true));
-                    Icons = Conversions.ToBoolean(GetReg(REG_AspectsControl, "Icons", true));
+                    Enabled = Conversions.ToBoolean(ReadReg(REG_AspectsControl, string.Empty, false));
+                    WinColors = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "WinColors", true));
+                    LogonUI = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "LogonUI", true));
+                    ClassicColors = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "ClassicColors", true));
+                    ClassicColors_Advanced = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "ClassicColors_Advanced", true));
+                    Accessibility = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "Accessibility", true));
+                    MetricsFonts = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "MetricsFonts", true));
+                    MetricsFonts_Advanced = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "MetricsFonts_Advanced", true));
+                    Cursors = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "Cursors", true));
+                    Consoles = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "Consoles", true));
+                    WinTerminals = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "WinTerminals", true));
+                    Wallpaper = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "Wallpaper", true));
+                    Effects = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "Effects", true));
+                    Sounds = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "Sounds", true));
+                    ScreenSaver = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "ScreenSaver", true));
+                    AltTab = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "AltTab", true));
+                    Icons = Conversions.ToBoolean(ReadReg(REG_AspectsControl, "Icons", true));
                 }
 
                 /// <summary>
@@ -1276,23 +1325,23 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    EditReg(REG_AspectsControl, string.Empty, Enabled, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "WinColors", WinColors, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "LogonUI", LogonUI, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "ClassicColors", ClassicColors, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "ClassicColors_Advanced", ClassicColors_Advanced, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Accessibility", Accessibility, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "MetricsFonts", MetricsFonts, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "MetricsFonts_Advanced", MetricsFonts_Advanced, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Cursors", Cursors, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Consoles", Consoles, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "WinTerminals", WinTerminals, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Wallpaper", Wallpaper, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Effects", Effects, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Sounds", Sounds, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "ScreenSaver", ScreenSaver, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "AltTab", AltTab, RegistryValueKind.DWord);
-                    EditReg(REG_AspectsControl, "Icons", Icons, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, string.Empty, Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "WinColors", WinColors, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "LogonUI", LogonUI, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "ClassicColors", ClassicColors, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "ClassicColors_Advanced", ClassicColors_Advanced, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "Accessibility", Accessibility, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "MetricsFonts", MetricsFonts, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "MetricsFonts_Advanced", MetricsFonts_Advanced, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "Cursors", Cursors, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "Consoles", Consoles, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "WinTerminals", WinTerminals, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "Wallpaper", Wallpaper, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "Effects", Effects, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "Sounds", Sounds, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "ScreenSaver", ScreenSaver, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "AltTab", AltTab, RegistryValueKind.DWord);
+                    WriteReg(REG_AspectsControl, "Icons", Icons, RegistryValueKind.DWord);
                 }
             }
         }
@@ -1336,6 +1385,13 @@ namespace WinPaletter
         /// WinTheme verbose log settings
         /// </summary>
         public Structures.ThemeLog ThemeLog = new();
+
+        /// <summary>
+        /// Represents the application log used for recording and managing log entries.
+        /// </summary>
+        /// <remarks>This field provides access to the application's logging functionality.  Use it to log
+        /// messages, warnings, errors, or other information relevant to the application's operation.</remarks>
+        public Structures.AppLog AppLog = new();
 
         /// <summary>
         /// Settings related to Windows Terminals, such as json files path, etc.
@@ -1409,6 +1465,7 @@ namespace WinPaletter
                     Language.Load();
                     ExplorerPatcher.Load();
                     ThemeLog.Load();
+                    AppLog.Load();
                     WindowsTerminals.Load();
                     Store.Load();
                     NerdStats.Load();
@@ -1491,6 +1548,7 @@ namespace WinPaletter
                     Language.Save();
                     ExplorerPatcher.Save();
                     ThemeLog.Save();
+                    AppLog.Save();
                     WindowsTerminals.Save();
                     Store.Save();
                     NerdStats.Save();

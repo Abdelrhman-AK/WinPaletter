@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using Serilog.Events;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -13,18 +14,33 @@ using WinPaletter.NativeMethods;
 namespace WinPaletter
 {
     /// <summary>
-    /// Class contains custom Registry and IO functions
+    /// Provides utility methods for interacting with the Windows Registry, including reading, writing,  deleting, and
+    /// managing registry keys and values. This class also includes methods for logging  registry operations and
+    /// handling security or access issues.
     /// </summary>
+    /// <remarks>The <see cref="Reg_IO"/> class is designed to simplify common registry operations while
+    /// providing  detailed logging and error handling. It supports operations such as creating, editing, and deleting 
+    /// registry keys and values, as well as checking for their existence. The class also includes methods  for handling
+    /// elevated permissions and alternative approaches (e.g., using command-line tools) to  address access
+    /// restrictions.  This class is particularly useful in scenarios where registry modifications are required as part
+    /// of  application configuration or system management tasks. It includes support for verbose logging to  assist
+    /// with debugging and auditing registry changes.  Note: Many methods in this class require appropriate permissions
+    /// to access or modify the registry.  Ensure that the application is running with sufficient privileges when
+    /// performing operations on  protected registry keys.</remarks>
     public class Reg_IO
     {
         /// <summary>
-        /// Registry view to be used in the class
+        /// Specifies the registry view to be used based on the operating system's architecture.
         /// </summary>
+        /// <remarks>If the operating system is 64-bit, the registry view is set to <see
+        /// cref="RegistryView.Registry64"/>. Otherwise, it defaults to <see cref="RegistryView.Default"/>.</remarks>
         private static readonly RegistryView regView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default;
 
         /// <summary>
-        /// Registry scopes
+        /// Specifies the scope of a Windows Registry key.
         /// </summary>
+        /// <remarks>This enumeration defines the root keys in the Windows Registry that can be used to access  specific
+        /// sections of the registry. Each value corresponds to a predefined root key.</remarks>
         private enum RegScope
         {
             HKEY_CURRENT_USER,
@@ -35,12 +51,19 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Return registry scope and key without scope
+        /// Processes a registry key string and determines its associated registry scope.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="scope"></param>
-        /// <returns></returns>
-        private static (string, RegScope) ProcessKey(string Key, RegScope scope = RegScope.HKEY_CURRENT_USER)
+        /// <remarks>If the <paramref name="Key"/> string starts with "Computer\", this prefix will be removed before
+        /// further processing. The method identifies the registry hive based on the prefix of the key string (e.g.,
+        /// "HKEY_CURRENT_USER", "HKEY_LOCAL_MACHINE"). If no recognized hive is found, the default scope remains
+        /// unchanged.</remarks>
+        /// <param name="Key">The registry key string to process. This can include a full or partial path starting with a registry hive (e.g.,
+        /// "HKEY_CURRENT_USER\Software\Example") or a path prefixed with "Computer\".</param>
+        /// <param name="scope">The initial registry scope to use. Defaults to <see cref="RegScope.HKEY_CURRENT_USER"/>.  This value will be updated
+        /// to reflect the registry hive identified in the <paramref name="Key"/> string.</param>
+        /// <returns>A tuple containing the processed registry key string and the determined <see cref="RegScope"/> value. The key string
+        /// will have the registry hive prefix removed, and the scope will indicate the corresponding registry hive.</returns>
+        private static (string, RegScope) FormatKey(string Key, RegScope scope = RegScope.HKEY_CURRENT_USER)
         {
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
 
@@ -78,11 +101,21 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Return registry scope and key without scope for Command Prompt
+        /// Converts a registry key path from its full form to a shorthand notation commonly used in command-line tools.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <returns></returns>
-        private static string ProcessKey_CMD(string Key)
+        /// <remarks>The method handles several common registry key prefixes, including: <list type="bullet">
+        /// <item><description><c>HKEY_LOCAL_MACHINE</c> is converted to <c>HKLM</c>.</description></item>
+        /// <item><description><c>HKEY_CURRENT_USER</c> is converted to <c>HKCU</c> or <c>HKU\{User.SID}</c> depending on the
+        /// user's context.</description></item> <item><description><c>HKEY_USERS</c> is converted to
+        /// <c>HKU</c>.</description></item> <item><description><c>HKEY_CLASSES_ROOT</c> is converted to
+        /// <c>HKCR</c>.</description></item> <item><description><c>HKEY_CURRENT_CONFIG</c> is converted to
+        /// <c>HKCC</c>.</description></item> </list> If the input key starts with "Computer\", this prefix is removed before
+        /// further processing.</remarks>
+        /// <param name="Key">The full registry key path to process. This value is case-insensitive and may include prefixes such as
+        /// "HKEY_LOCAL_MACHINE" or "Computer\".</param>
+        /// <returns>A string containing the processed registry key path in shorthand notation. For example, "HKEY_LOCAL_MACHINE" is
+        /// converted to "HKLM".</returns>
+        private static string FormatKey_CMD(string Key)
         {
             string key = Key;
 
@@ -107,10 +140,16 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Open root registry key, and if it is HKEY_CURRENT_USER, HKEY_USERS\{SID} will be used instead. {SID} is the SID of the selected user.
+        /// Opens a base registry key corresponding to the specified scope.
         /// </summary>
-        /// <param name="scope"></param>
-        /// <returns></returns>
+        /// <remarks>The method maps the provided <paramref name="scope"/> to the appropriate registry hive and opens it 
+        /// using the current registry view. For <see cref="RegScope.HKEY_CURRENT_USER"/>, the method attempts to  open the
+        /// registry key for the current user's SID if applicable; otherwise, it defaults to the  <see
+        /// cref="RegistryHive.CurrentUser"/> hive. If an error occurs while resolving the user's SID, the  method falls back to
+        /// opening the <see cref="RegistryHive.CurrentUser"/> hive.</remarks>
+        /// <param name="scope">The registry scope to open. This determines which base registry hive is accessed, such as  <see
+        /// cref="RegScope.HKEY_CURRENT_USER"/> or <see cref="RegScope.HKEY_LOCAL_MACHINE"/>.</param>
+        /// <returns>A <see cref="RegistryKey"/> object representing the opened base registry key for the specified scope.</returns>
         private static RegistryKey OpenBaseKey(RegScope scope)
         {
             switch (scope)
@@ -167,45 +206,39 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Determine if the registry value can be skipped when the values are the same to avoid unnecessary registry writes and save time.
+        /// Determines whether the specified registry value can be skipped from being updated based on its current value and the
+        /// target value.
         /// </summary>
-        /// <param name="existingValue"></param>
-        /// <param name="targetValue"></param>
-        /// <param name="regType"></param>
-        /// <returns></returns>
-        private static bool CanSkip(object existingValue, object targetValue, RegistryValueKind regType = RegistryValueKind.DWord)
+        /// <remarks>This method compares the current and target values for various registry value types, including 
+        /// strings, binary data, and numeric types, to determine if an update is necessary. If the values  are equivalent, the
+        /// method avoids unnecessary registry writes, improving performance.</remarks>
+        /// <param name="existingValue">The current value of the registry key.</param>
+        /// <param name="targetValue">The target value to be set for the registry key.</param>
+        /// <param name="RegType">The type of the registry value. If <see cref="RegistryValueKind.Unknown"/> is provided,  the type will be inferred
+        /// from <paramref name="targetValue"/>.</param>
+        /// <returns><see langword="true"/> if the current value matches the target value and the update can be skipped;  otherwise, <see
+        /// langword="false"/>.</returns>
+        private static bool CanSkip(object existingValue, object targetValue, RegistryValueKind RegType = RegistryValueKind.Unknown)
         {
             bool skip = existingValue is null && targetValue is null;
 
             // Trying to convert and compare the values to avoid unnecessary registry writes and save time.
             if (existingValue is not null)
             {
-                switch (regType)
+                RegType = RegType == RegistryValueKind.Unknown ? GetRegistryValueKind(targetValue) : RegType;
+
+                switch (RegType)
                 {
                     case RegistryValueKind.MultiString:
                         {
-                            if (existingValue.GetType().IsArray)
-                            {
-                                try
-                                {
-                                    skip = Enumerable.SequenceEqual((string[])existingValue, (string[])targetValue);
-                                }
-                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
-                            }
-                            break;
+                            var a = (string[])existingValue;
+                            var b = (string[])targetValue;
+                            return a.Length == b.Length && a.Zip(b, (x, y) => string.Equals(x, y, StringComparison.Ordinal)).All(eq => eq);
                         }
 
                     case RegistryValueKind.Binary:
                         {
-                            if (existingValue.GetType().IsArray)
-                            {
-                                try
-                                {
-                                    skip = Enumerable.SequenceEqual((byte[])existingValue, (byte[])targetValue);
-                                }
-                                catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
-                            }
-                            break;
+                            return existingValue is byte[] eb && targetValue is byte[] tb && eb.Length == tb.Length && eb.AsSpan().SequenceEqual(tb);
                         }
 
                     case RegistryValueKind.DWord: // int
@@ -294,14 +327,21 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Add verbose item to theme log if the verbose level is set to detailed, to show what is being added to the registry.
+        /// Adds a detailed log entry to the specified <see cref="TreeView"/> control, representing a registry operation.
         /// </summary>
-        /// <param name="treeView"></param>
-        /// <param name="skipped"></param>
-        /// <param name="Key"></param>
-        /// <param name="valueName"></param>
-        /// <param name="Value"></param>
-        /// <param name="RegType"></param>
+        /// <remarks>This method logs detailed information about a registry operation, including the key, value name,
+        /// value, and type, if the verbose logging level is set to <see
+        /// cref="Settings.Structures.ThemeLog.VerboseLevels.Detailed"/>. If the operation is skipped and <see
+        /// cref="Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose"/> is <see langword="false"/>, no log entry is
+        /// added.</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control to which the log entry will be added. If null, the method does nothing.</param>
+        /// <param name="skipped">A value indicating whether the registry operation was skipped. If <see langword="true"/>, the log entry will
+        /// indicate a skipped operation.</param>
+        /// <param name="Key">The registry key associated with the operation.</param>
+        /// <param name="valueName">The name of the registry value being logged. If empty or null, it is treated as the default value.</param>
+        /// <param name="Value">The value associated with the registry operation. This can be a <see cref="bool"/>, a <see cref="byte"/> array, or
+        /// another object.</param>
+        /// <param name="RegType">The type of the registry value, represented as a <see cref="RegistryValueKind"/>.</param>
         private static void AddVerboseItem(TreeView treeView, bool skipped, string Key, string valueName, object Value, RegistryValueKind RegType)
         {
             if (treeView is null)
@@ -348,11 +388,15 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Add verbose item to theme log if the verbose level is set to detailed, to show which value being deleted from the registry.
+        /// Adds a detailed log entry to the specified <see cref="TreeView"/> when a registry value is deleted, if the
+        /// verbose logging level is set to detailed.
         /// </summary>
-        /// <param name="treeView"></param>
-        /// <param name="Key"></param>
-        /// <param name="ValueName"></param>
+        /// <remarks>This method only adds a log entry if the verbose logging level is set to <see
+        /// cref="Settings.Structures.ThemeLog.VerboseLevels.Detailed"/>. The log entry includes the registry key and
+        /// value name, formatted for display.</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control to which the log entry will be added. If null, no action is taken.</param>
+        /// <param name="Key">The registry key associated with the deleted value.</param>
+        /// <param name="ValueName">The name of the registry value being deleted. If null or whitespace, it is treated as the default value.</param>
         private static void AddVerboseItem_DelValue(TreeView treeView, string Key, string ValueName)
         {
             if (treeView is null)
@@ -370,10 +414,13 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Add verbose item to theme log if the verbose level is set to detailed, to show which key being deleted from the registry.
+        /// Adds a verbose log entry to the specified <see cref="TreeView"/> when a registry key is deleted.
         /// </summary>
-        /// <param name="treeView"></param>
-        /// <param name="Key"></param>
+        /// <remarks>A log entry is added only if the verbose level is set to <see
+        /// cref="Settings.Structures.ThemeLog.VerboseLevels.Detailed"/>. The log entry includes the key name and is categorized
+        /// as "reg_delete".</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control to which the log entry will be added. If null, no action is taken.</param>
+        /// <param name="Key">The name of the registry key being deleted. This value is included in the log entry.</param>
         private static void AddVerboseItem_DelKey(TreeView treeView, string Key)
         {
             if (treeView is null)
@@ -386,14 +433,20 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Add an exception to the theme log if an exception occurs while doing a registry process.
+        /// Logs detailed information about a registry-related exception and updates the provided <see cref="TreeView"/> with
+        /// the error details.
         /// </summary>
-        /// <param name="treeView"></param>
-        /// <param name="ex"></param>
-        /// <param name="Key"></param>
-        /// <param name="ValueName"></param>
-        /// <param name="Value"></param>
-        /// <param name="RegType"></param>
+        /// <remarks>This method logs detailed error information if the verbose logging level is set to <see
+        /// cref="Settings.Structures.ThemeLog.VerboseLevels.Detailed"/>. Otherwise, it logs a simplified error message. The
+        /// error details are also added to the global exception list for theme application errors.</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control to which the error details will be added. Can be <see langword="null"/> if no UI
+        /// update is required.</param>
+        /// <param name="ex">The <see cref="Exception"/> instance representing the error to be logged.</param>
+        /// <param name="Key">The registry key associated with the operation that caused the exception.</param>
+        /// <param name="ValueName">The name of the registry value associated with the operation. Can be <see langword="null"/> or empty to indicate the
+        /// default value.</param>
+        /// <param name="Value">The value being written to the registry when the exception occurred. Can be of any type supported by the registry.</param>
+        /// <param name="RegType">The <see cref="RegistryValueKind"/> indicating the type of the registry value being written.</param>
         private static void AddVerboseException(TreeView treeView, Exception ex, string Key, string ValueName, object Value, RegistryValueKind RegType)
         {
             if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
@@ -428,44 +481,126 @@ namespace WinPaletter
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
 
-            Program.Log?.Write(LogEventLevel.Error, ex, $"Exception: {ex}");
+            if (Program.Settings.AppLog.Reg) Program.Log?.Write(LogEventLevel.Error, ex, $"Registry exception error: {ex}");
         }
 
         /// <summary>
-        /// Edit registry, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
+        /// Infers the most appropriate RegistryValueKind for a given .NET object.
         /// </summary>
-        /// <param name="treeView">TreeView used as a theme log</param>
-        /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        /// <param name="Value">Value</param>
-        /// <param name="RegType">Kind of value to be edited to avoid errors exceptions</param>
-        public static void EditReg(TreeView treeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord)
+        /// <param name="value">The managed object that will be written to the registry.</param>
+        /// <param name="preferQWord">
+        /// If true, integers larger than 32-bit default to QWord (REG_QWORD); 
+        /// otherwise Int32 is treated as DWord (REG_DWORD).
+        /// </param>
+        /// <returns>The corresponding RegistryValueKind.</returns>
+        /// <exception cref="ArgumentException">Thrown when the type is not supported.</exception>
+        public static RegistryValueKind GetRegistryValueKind(object value, bool preferQWord = false)
         {
-            EditReg(Key, ValueName, Value, RegType, treeView);
+            if (value is null) return RegistryValueKind.String; // null -> empty string value
+
+            switch (value)
+            {
+                case int:
+                case uint:
+                    return RegistryValueKind.DWord;
+
+                case long:
+                case ulong:
+                    return RegistryValueKind.QWord;
+
+                case bool:
+                    // booleans are usually stored as 0/1 DWord
+                    return RegistryValueKind.DWord;
+
+                case string:
+                    return RegistryValueKind.String;
+
+                case string[]:
+                    return RegistryValueKind.MultiString;
+
+                case byte[]:
+                    return RegistryValueKind.Binary;
+
+                default:
+                    // Allow numeric conversions when preferQWord is specified
+                    if (preferQWord && value is IConvertible conv)
+                    {
+                        try
+                        {
+                            long _ = conv.ToInt64(System.Globalization.CultureInfo.InvariantCulture);
+                            return RegistryValueKind.QWord;
+                        }
+                        catch { /* fall through */ }
+                    }
+
+                    throw new ArgumentException(
+                        $"Cannot infer RegistryValueKind for type '{value.GetType().FullName}'.",
+                        nameof(value));
+            }
         }
 
         /// <summary>
-        /// Edit registry, show it in theme log with using elevated Command Prompt to try to solve security access issues or administrator issues.
+        /// Modifies or creates a registry value in the Windows Registry.
         /// </summary>
-        /// <param name="treeView">TreeView used as a theme log</param>
-        /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        /// <param name="Value">Value</param>
-        /// <param name="RegType">Kind of value to be edited to avoid errors</param>
-        public static void EditReg_CMD(TreeView treeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord)
+        /// <remarks>This method ensures that the specified registry key exists before attempting to set the value. If the
+        /// key does not exist, it will be created.  If the program is running with elevated privileges, the method will attempt
+        /// to write directly to the registry. If access is denied or insufficient permissions are detected, the method will
+        /// attempt to use an alternative approach to modify the registry value.  The method logs detailed information about the
+        /// operation if logging is enabled in the application settings. It also skips writing to the registry if the existing
+        /// value matches the new value.</remarks>
+        /// <param name="Key">The full path of the registry key to modify. The path may include the "Computer\" prefix, which will be removed
+        /// automatically.</param>
+        /// <param name="ValueName">The name of the registry value to modify. Use <see langword="null"/> or an empty string to modify the default value
+        /// of the key.</param>
+        /// <param name="Value">The value to set for the specified registry value. If <paramref name="Value"/> is <see langword="null"/> and the
+        /// value type is <see cref="RegistryValueKind.String"/>, it will be replaced with an empty string.</param>
+        /// <param name="RegType">The type of the registry value. If <see cref="RegistryValueKind.Unknown"/> is specified, the type will be inferred
+        /// from the <paramref name="Value"/>.</param>
+        /// <param name="treeView">An optional <see cref="TreeView"/> control to log verbose information about the operation. Can be <see
+        /// langword="null"/>.</param>
+        public static void WriteReg(TreeView treeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.Unknown)
         {
-            EditReg_CMD(Key, ValueName, Value, RegType, treeView);
+            WriteReg(Key, ValueName, Value, RegType, treeView);
         }
 
         /// <summary>
-        /// Edit registry, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
+        /// Updates a registry value with the specified key, value name, and data, and optionally updates the associated
+        /// TreeView control.
         /// </summary>
-        /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        /// <param name="Value">Value</param>
-        /// <param name="RegType">Kind of value to be edited to avoid errors exceptions</param>
-        /// <param name="treeView">TreeView used as a theme log</param>
-        public static void EditReg(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView treeView = null)
+        /// <remarks>This method modifies a registry value and optionally updates the provided <see
+        /// cref="TreeView"/> control to reflect the changes. If <paramref name="treeView"/> is <see langword="null"/>,
+        /// no UI updates will be performed.</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control to update after modifying the registry. Can be <see langword="null"/> if
+        /// no UI update is required.</param>
+        /// <param name="Key">The registry key path where the value resides. Cannot be <see langword="null"/> or empty.</param>
+        /// <param name="ValueName">The name of the registry value to modify. Cannot be <see langword="null"/> or empty.</param>
+        /// <param name="Value">The new data to set for the registry value. Must match the type specified by <paramref name="RegType"/>.</param>
+        /// <param name="RegType">The type of the registry value. Defaults to <see cref="RegistryValueKind.Unknown"/> if not specified.</param>
+        public static void WriteReg_CMD(TreeView treeView, string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.Unknown)
+        {
+            WriteReg_CMD(Key, ValueName, Value, RegType, treeView);
+        }
+
+        /// <summary>
+        /// Modifies or creates a registry value in the Windows Registry.
+        /// </summary>
+        /// <remarks>This method ensures that the specified registry key exists before attempting to set the value. If the
+        /// key does not exist, it will be created.  If the program is running with elevated privileges, the method will attempt
+        /// to write directly to the registry. If access is denied or insufficient permissions are detected, the method will
+        /// attempt to use an alternative approach to modify the registry value.  The method logs detailed information about the
+        /// operation if logging is enabled in the application settings. It also skips writing to the registry if the existing
+        /// value matches the new value.</remarks>
+        /// <param name="Key">The full path of the registry key to modify. The path may include the "Computer\" prefix, which will be removed
+        /// automatically.</param>
+        /// <param name="ValueName">The name of the registry value to modify. Use <see langword="null"/> or an empty string to modify the default value
+        /// of the key.</param>
+        /// <param name="Value">The value to set for the specified registry value. If <paramref name="Value"/> is <see langword="null"/> and the
+        /// value type is <see cref="RegistryValueKind.String"/>, it will be replaced with an empty string.</param>
+        /// <param name="RegType">The type of the registry value. If <see cref="RegistryValueKind.Unknown"/> is specified, the type will be inferred
+        /// from the <paramref name="Value"/>.</param>
+        /// <param name="treeView">An optional <see cref="TreeView"/> control to log verbose information about the operation. Can be <see
+        /// langword="null"/>.</param>
+        public static void WriteReg(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.Unknown, TreeView treeView = null)
         {
             // Removes "Computer\" from the beginning of the key if it exists.
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
@@ -474,7 +609,7 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
 
             // Process the key to get the scope and key without the scope.
-            (string, RegScope) item = ProcessKey(Key_BeforeModification);
+            (string, RegScope) item = FormatKey(Key_BeforeModification);
 
             // Key without the scope.
             Key = item.Item1;
@@ -484,6 +619,8 @@ namespace WinPaletter
 
             // Open the processed key
             RegistryKey R = OpenBaseKey(scope);
+
+            RegType = RegType == RegistryValueKind.Unknown ? GetRegistryValueKind(Value) : RegType;
 
             // If the value is null, set it to string.Empty to avoid errors.
             if (RegType == RegistryValueKind.String & Value is null) Value = string.Empty;
@@ -500,15 +637,15 @@ namespace WinPaletter
             catch { } // Couldn't create the key, but we will try to set the value anyway.
 
             // Skips setting to registry if the values are the same
-            object existingValue = GetReg(Key_BeforeModification, ValueName, null);
+            object existingValue = ReadReg(Key_BeforeModification, ValueName, null);
             if (existingValue is not null && CanSkip(existingValue, Value, RegType))
             {
-                Program.Log?.Write(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
                 AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
                 return;
             }
 
-            Program.Log?.Write(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`");
+            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`");
 
             // Set the value to the registry
             try
@@ -519,37 +656,44 @@ namespace WinPaletter
                 {
                     using (RegistryKey subKey = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree))
                     {
-                        subKey.SetValue(ValueName, Value, RegType);
+                        if (RegType == RegistryValueKind.DWord && bool.TryParse(Value.ToString(), out bool boolVal))
+                        {
+                            subKey.SetValue(ValueName, boolVal ? 1 : 0, RegistryValueKind.DWord);
+                        }
+                        else
+                        {
+                            subKey.SetValue(ValueName, Value, RegType);
+                        }
                     }
                     AddVerboseItem(treeView, false, Key_BeforeModification, ValueName, Value, RegType);
                 }
-                else if (scope == RegScope.HKEY_LOCAL_MACHINE) { EditReg_CMD(treeView, $@"HKEY_LOCAL_MACHINE\{Key}", ValueName, Value, RegType); }
+                else if (scope == RegScope.HKEY_LOCAL_MACHINE) { WriteReg_CMD(treeView, $@"HKEY_LOCAL_MACHINE\{Key}", ValueName, Value, RegType); }
 
-                else if (scope == RegScope.HKEY_USERS) { EditReg_CMD(treeView, $@"HKEY_USERS\{Key}", ValueName, Value, RegType); }
+                else if (scope == RegScope.HKEY_USERS) { WriteReg_CMD(treeView, $@"HKEY_USERS\{Key}", ValueName, Value, RegType); }
             }
             catch (SecurityException @PermissionEx)
             {
                 // A security exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
 
-                Program.Log?.Write(LogEventLevel.Error, $"Security exception: {@PermissionEx.Message}");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Security exception: {@PermissionEx.Message}");
 
-                try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
+                try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(treeView, @PermissionEx, Key, ValueName, Value, RegType); }
             }
             catch (UnauthorizedAccessException @UnauthorizedAccessEx)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Unauthorized access exception: {@UnauthorizedAccessEx.Message}");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Unauthorized access exception: {@UnauthorizedAccessEx.Message}");
 
                 // An unauthorized access exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
-                try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
+                try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(treeView, @UnauthorizedAccessEx, Key, ValueName, Value, RegType); }
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Exception: {ex.Message}");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Registry write exception error: {ex.Message}");
 
                 // An exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
-                try { EditReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
+                try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(treeView, ex, Key, ValueName, Value, RegType); }
             }
 
@@ -564,14 +708,19 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Edit registry, show it in theme log with using elevated Command Prompt to try to solve security access issues or administrator issues.
+        /// Updates a registry value with the specified key, value name, and data, and optionally updates the associated
+        /// TreeView control.
         /// </summary>
-        /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        /// <param name="Value">Value</param>
-        /// <param name="RegType">Kind of value to be edited to avoid errors</param>
-        /// <param name="treeView">TreeView used as a theme log</param>
-        public static void EditReg_CMD(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.DWord, TreeView treeView = null)
+        /// <remarks>This method modifies a registry value and optionally updates the provided <see
+        /// cref="TreeView"/> control to reflect the changes. If <paramref name="treeView"/> is <see langword="null"/>,
+        /// no UI updates will be performed.</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control to update after modifying the registry. Can be <see langword="null"/> if
+        /// no UI update is required.</param>
+        /// <param name="Key">The registry key path where the value resides. Cannot be <see langword="null"/> or empty.</param>
+        /// <param name="ValueName">The name of the registry value to modify. Cannot be <see langword="null"/> or empty.</param>
+        /// <param name="Value">The new data to set for the registry value. Must match the type specified by <paramref name="RegType"/>.</param>
+        /// <param name="RegType">The type of the registry value. Defaults to <see cref="RegistryValueKind.Unknown"/> if not specified.</param>
+        public static void WriteReg_CMD(string Key, string ValueName, object Value, RegistryValueKind RegType = RegistryValueKind.Unknown, TreeView treeView = null)
         {
             string regTemplate;
 
@@ -581,9 +730,9 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
 
             // Process the key to be valid for Command Prompt.
-            Key = ProcessKey_CMD(Key);
+            Key = FormatKey_CMD(Key);
 
-            Program.Log?.Write(LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` by using REG.EXE instead of native .NET Framework methods.");
+            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` by using REG.EXE instead of native .NET Framework methods.");
 
             string _Value;
 
@@ -593,6 +742,8 @@ namespace WinPaletter
             // /f = Disable prompt
             if (Value is not null)
             {
+                RegType = RegType == RegistryValueKind.Unknown ? GetRegistryValueKind(Value) : RegType;
+
                 switch (RegType)
                 {
                     case RegistryValueKind.String:
@@ -668,14 +819,12 @@ namespace WinPaletter
 
             try
             {
-                Program.Log?.Write(LogEventLevel.Information, $"The sent command is `reg {string.Format(regTemplate, Key, ValueName, _Value)}`");
-
                 Program.SendCommand($"reg {string.Format(regTemplate, Key, ValueName, _Value)}");
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Exception: {ex.Message}");
-                Program.Log?.Write(LogEventLevel.Error, $"Registry edit couldn't be done by the two methods; .NET Framework methods and REG.EXE");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Executing command exception error: {ex.Message}");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Registry edit couldn't be done by the two methods; .NET Framework methods and REG.EXE");
 
                 AddVerboseException(treeView, ex, Key, ValueName, Value, RegType);
             }
@@ -686,15 +835,69 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get registry, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
+        /// Retrieves a value from the registry and attempts to convert it to the specified type.
         /// </summary>
-        /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        /// <param name="DefaultValue">Default value that is predicted to be returned</param>
-        /// <param name="RaiseExceptions">Hide execption error dialog if something wrong happened</param>
-        /// <param name="IfNullReturnDefaultValue">Return 'DefaultValue' if nothing found (null) in 'Key\ValueName'</param>
-        /// <returns></returns>
-        public static object GetReg(string Key, string ValueName, object DefaultValue, bool RaiseExceptions = false, bool IfNullReturnDefaultValue = true)
+        /// <remarks>This method supports conversion to common types and enums. If the registry value is already of the
+        /// target type,  it is returned directly. For enums, the method attempts to parse the string representation of the
+        /// value.</remarks>
+        /// <typeparam name="T">The type to which the registry value should be converted.</typeparam>
+        /// <param name="key">The registry key path from which to retrieve the value.</param>
+        /// <param name="valueName">The name of the registry value to retrieve.</param>
+        /// <param name="defaultValue">The default value to return if the registry value is not found or cannot be converted.</param>
+        /// <param name="raiseExceptions">A value indicating whether exceptions should be raised if an error occurs during retrieval or conversion. If <see
+        /// langword="false"/>, the method will return <paramref name="defaultValue"/> in case of an error.</param>
+        /// <param name="ifNullReturnDefaultValue">A value indicating whether to return <paramref name="defaultValue"/> if the retrieved registry value is <see
+        /// langword="null"/>.</param>
+        /// <returns>The value retrieved from the registry, converted to type <typeparamref name="T"/>.  If the value is not found,
+        /// cannot be converted, or an error occurs, <paramref name="defaultValue"/> is returned.</returns>
+        public static T ReadReg<T>(string key, string valueName, T defaultValue = default!, bool raiseExceptions = false, bool ifNullReturnDefaultValue = true)
+        {
+            object raw = ReadReg(key, valueName, defaultValue!, raiseExceptions, ifNullReturnDefaultValue);
+
+            // Handle null early
+            if (raw is null) return defaultValue;
+
+            try
+            {
+                // Direct cast if already correct type
+                if (raw is T tVal) return tVal;
+
+                // Special handling for enums
+                if (typeof(T).IsEnum) return (T)Enum.Parse(typeof(T), raw.ToString()!, ignoreCase: true);
+
+                // Attempt common type conversion
+                return (T)Convert.ChangeType(raw, typeof(T), CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                // If anything fails, fall back to default
+                return defaultValue;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a value from the Windows Registry based on the specified key and value name.
+        /// </summary>
+        /// <remarks>This method supports special handling for certain registry key prefixes: - "HKEY_REAL_CURRENT_USER":
+        /// Redirects to the actual current user's registry hive. - "Computer\": Removes this prefix for compatibility. - Other
+        /// standard hives (e.g., "HKEY_LOCAL_MACHINE") are handled appropriately based on the system architecture.  If the
+        /// retrieved value starts with "#USR:", the method will recursively resolve the value using the
+        /// "HKEY_REAL_CURRENT_USER" hive. Logging is performed if application logging is enabled, and errors are logged or
+        /// raised based on the <paramref name="RaiseExceptions"/> parameter.</remarks>
+        /// <param name="Key">The full registry key path, including the hive (e.g., "HKEY_LOCAL_MACHINE\Software\Example"). Special prefixes such
+        /// as "HKEY_REAL_CURRENT_USER" or "Computer\" are supported for specific redirections.</param>
+        /// <param name="ValueName">The name of the registry value to retrieve. Use an empty string or <see langword="null"/> to retrieve the default
+        /// value of the key.</param>
+        /// <param name="DefaultValue">The value to return if the specified registry value does not exist or cannot be retrieved.</param>
+        /// <param name="RaiseExceptions">A boolean value indicating whether exceptions should be raised if an error occurs during the registry operation. If
+        /// <see langword="true"/>, exceptions will be raised; otherwise, errors will be logged and <paramref
+        /// name="DefaultValue"/> will be returned.</param>
+        /// <param name="IfNullReturnDefaultValue">A boolean value indicating whether to return <paramref name="DefaultValue"/> if the retrieved registry value is <see
+        /// langword="null"/>. If <see langword="true"/>, <paramref name="DefaultValue"/> will be returned when the registry
+        /// value is <see langword="null"/>.</param>
+        /// <returns>The value retrieved from the registry, or <paramref name="DefaultValue"/> if the value does not exist, is <see
+        /// langword="null"/>,  or an error occurs (depending on the value of <paramref name="IfNullReturnDefaultValue"/>).</returns>
+        public static object ReadReg(string Key, string ValueName, object DefaultValue, bool RaiseExceptions = false, bool IfNullReturnDefaultValue = true)
         {
             object Result = null;
             RegistryKey R = null;
@@ -771,16 +974,18 @@ namespace WinPaletter
 
                 if (Result != null && Result.ToString().StartsWith("#USR:", StringComparison.OrdinalIgnoreCase))
                 {
-                    Result = GetReg($"HKEY_REAL_CURRENT_USER\\{Result.ToString().Replace("#USR:", string.Empty)}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
+                    Result = ReadReg($"HKEY_REAL_CURRENT_USER\\{Result.ToString().Replace("#USR:", string.Empty)}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
                 }
 
-                Program.Log?.Write(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && Result is null ? DefaultValue : Result)}`");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead)
+                    Program.Log?.Write(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && Result is null ? DefaultValue : Result)}`");
 
                 return IfNullReturnDefaultValue && Result is null ? DefaultValue : Result;
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, ex, $"Exception: {ex.Message}");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead)
+                    Program.Log?.Write(LogEventLevel.Error, ex, $"Registry read exception error: {ex.Message}");
 
                 Exceptions.ThemeLoad.Add(new Tuple<string, Exception>($"{Key} : {ValueName}", ex));
                 if (RaiseExceptions) Forms.BugReport.ThrowError(ex);
@@ -796,10 +1001,15 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get value names of registry key
+        /// Retrieves the names of all values under the specified registry key.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <returns></returns>
+        /// <remarks>The method supports redirection for certain registry hives, such as "HKEY_CURRENT_USER" and
+        /// "HKEY_LOCAL_MACHINE",  to ensure compatibility with different user contexts and system architectures.  If the key
+        /// path starts with "Computer\", it will be removed before processing.</remarks>
+        /// <param name="Key">The full path of the registry key from which to retrieve value names.  The path can include standard registry hives
+        /// such as "HKEY_CURRENT_USER", "HKEY_LOCAL_MACHINE", etc.</param>
+        /// <returns>An array of strings containing the names of all values under the specified registry key.  Returns an empty array if
+        /// the key does not exist or no values are present.</returns>
         public static string[] GetValueNames(string Key)
         {
             string[] Result = [];
@@ -867,7 +1077,7 @@ namespace WinPaletter
                     if (subKey is not null)
                     {
                         Result = subKey?.GetValueNames();
-                        Program.Log?.Write(LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", Result)}`");
+                        if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead) Program.Log?.Write(LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", Result)}`");
                     }
                     subKey?.Close();
                 }
@@ -886,10 +1096,16 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get value names of registry key
+        /// Retrieves the names of all subkeys within the specified registry key.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <returns></returns>
+        /// <remarks>This method supports redirection for certain registry root keys, such as "HKEY_CURRENT_USER" and
+        /// "HKEY_LOCAL_MACHINE",  to ensure compatibility with different user contexts and system architectures.  The method
+        /// also handles special cases like "HKEY_REAL_CURRENT_USER", which is used internally to distinguish the real current
+        /// user.</remarks>
+        /// <param name="Key">The full path of the registry key from which to retrieve subkey names.  The path can include standard registry root
+        /// keys such as "HKEY_CURRENT_USER" or "HKEY_LOCAL_MACHINE".</param>
+        /// <returns>An array of strings containing the names of all subkeys within the specified registry key.  Returns an empty array
+        /// if the key does not exist or contains no subkeys.</returns>
         public static string[] GetSubKeys(string Key)
         {
             string[] Result = [];
@@ -957,7 +1173,7 @@ namespace WinPaletter
                     if (subKey is not null)
                     {
                         Result = subKey?.GetSubKeyNames();
-                        Program.Log?.Write(LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", Result)}`");
+                        if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead) Program.Log?.Write(LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", Result)}`");
                     }
                     subKey?.Close();
                 }
@@ -976,12 +1192,19 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
+        /// Deletes a specified registry key and optionally retains the key while removing its subkeys and values.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="treeView"></param>
-        /// <param name="deleteSubKeysAndValuesOnly">Delete only subkeys and values</param>
-        public static void DelKey(string Key, bool deleteSubKeysAndValuesOnly = false, TreeView treeView = null)
+        /// <remarks>This method attempts to delete the specified registry key using .NET Framework methods. If the
+        /// deletion fails due to security or access issues, the method will fall back to using an alternative approach via the
+        /// `REG.EXE` utility.</remarks>
+        /// <param name="Key">The full path of the registry key to delete. The path may include a "Computer\" prefix, which will be removed
+        /// automatically.</param>
+        /// <param name="deleteSubKeysAndValuesOnly">A boolean value indicating whether to delete only the subkeys and values of the specified key, leaving the key
+        /// itself intact. If <see langword="true"/>, the key will be recreated as an empty key after its subkeys and values are
+        /// deleted.</param>
+        /// <param name="treeView">An optional <see cref="TreeView"/> control used to display verbose information about the deletion process. If <see
+        /// langword="null"/>, no verbose information will be displayed.</param>
+        public static void DeleteKey(string Key, bool deleteSubKeysAndValuesOnly = false, TreeView treeView = null)
         {
             // Removes "Computer\" from the beginning of the key if it exists.
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
@@ -990,7 +1213,7 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
 
             // Process the key to get the scope and key without the scope.
-            (string, RegScope) item = ProcessKey(Key_BeforeModification);
+            (string, RegScope) item = FormatKey(Key_BeforeModification);
 
             // Key without the scope.
             Key = item.Item1;
@@ -1003,20 +1226,20 @@ namespace WinPaletter
 
             try
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}");
                 R.DeleteSubKeyTree(Key, true);
                 if (deleteSubKeysAndValuesOnly)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Keeping the key intact and empty without subkeys and values.");
+                    if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Keeping the key intact and empty without subkeys and values.");
                     R.CreateSubKey(Key, true);
                 }
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
             catch
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete key using .NET Framework methods. WinPaletter will use REG.EXE");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete key `{Key_BeforeModification}` using .NET Framework methods. WinPaletter will use REG.EXE");
                 // An exception occurred while trying to delete the key. Try to use the DelKey_AdministratorDeflector function to solve the security access issues.
-                DelKey_AdministratorDeflector(Key);
+                DeleteKeyAsAdministrator(Key);
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
             finally
@@ -1032,23 +1255,32 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
+        /// Deletes a registry key and optionally its subkeys and values, using the specified <see cref="TreeView"/> for
+        /// context.
         /// </summary>
-        /// <param name="treeView"></param>
-        /// <param name="Key"></param>
-        /// <param name="deleteSubKeysAndValuesOnly">Delete only subkeys and values</param>
-        public static void DelKey(TreeView treeView, string Key, bool deleteSubKeysAndValuesOnly = false)
+        /// <remarks>This method delegates the deletion operation to an internal implementation, using the
+        /// provided  <paramref name="treeView"/> for additional context. Ensure the caller has the necessary
+        /// permissions  to modify the specified registry key.</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control used to provide context for the operation.</param>
+        /// <param name="Key">The path of the registry key to delete. Cannot be null or empty.</param>
+        /// <param name="deleteSubKeysAndValuesOnly">A boolean value indicating whether to delete only the subkeys and values of the specified key,  leaving the
+        /// key itself intact. If <see langword="false"/>, the key and all its contents are deleted.</param>
+        public static void DeleteKey(TreeView treeView, string Key, bool deleteSubKeysAndValuesOnly = false)
         {
-            DelKey(Key, deleteSubKeysAndValuesOnly, treeView);
+            DeleteKey(Key, deleteSubKeysAndValuesOnly, treeView);
         }
 
         /// <summary>
-        /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
+        /// Deletes a specified value from a registry key.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="treeView"></param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        public static void DelValue(string Key, string ValueName, TreeView treeView = null)
+        /// <remarks>This method attempts to delete the specified value from the registry key. If the operation fails due
+        /// to insufficient permissions, it will attempt to use an elevated process to perform the deletion.</remarks>
+        /// <param name="Key">The full path of the registry key from which the value will be deleted. The path may include a scope prefix such as
+        /// "Computer\".</param>
+        /// <param name="ValueName">The name of the value to delete. If null or empty, the default value of the key will be deleted.</param>
+        /// <param name="treeView">An optional <see cref="TreeView"/> control to which verbose logging information will be added. If null, no verbose
+        /// logging is performed.</param>
+        public static void DeleteValue(string Key, string ValueName, TreeView treeView = null)
         {
             // Removes "Computer\" from the beginning of the key if it exists.
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
@@ -1057,7 +1289,7 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
 
             // Process the key to get the scope and key without the scope.
-            (string, RegScope) item = ProcessKey(Key_BeforeModification);
+            (string, RegScope) item = FormatKey(Key_BeforeModification);
 
             // Key without the scope.
             Key = item.Item1;
@@ -1072,7 +1304,7 @@ namespace WinPaletter
             {
                 using (RegistryKey subR = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree))
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.");
+                    if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.");
                     subR?.DeleteValue(ValueName, true);
                     subR?.Close();
                     AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
@@ -1080,10 +1312,10 @@ namespace WinPaletter
             }
             catch
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete value using .NET Framework methods. WinPaletter will use REG.EXE");
+                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete value using .NET Framework methods. WinPaletter will use REG.EXE");
 
                 // An exception occurred while trying to delete the value. Try to use the DelValue_AdministratorDeflector function to solve the security access issues.
-                DelValue_AdministratorDeflector(Key, ValueName);
+                DeleteValueAsAdministrator(Key, ValueName);
                 AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
             }
             finally
@@ -1099,22 +1331,29 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Delete registry key, show it in theme log, handles execptions and finally dispose the used Microsoft.Win32.RegistryKey to free up memory.
+        /// Deletes a specific value from a key in the provided <see cref="TreeView"/>.
         /// </summary>
-        /// <param name="treeView"></param>
-        /// <param name="Key"></param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        public static void DelValue(TreeView treeView, string Key, string ValueName)
+        /// <remarks>This method removes the specified value from the given key in the context of the provided <see
+        /// cref="TreeView"/>. Ensure that both <paramref name="Key"/> and <paramref name="ValueName"/> are valid and exist in
+        /// the context of the operation.</remarks>
+        /// <param name="treeView">The <see cref="TreeView"/> control associated with the operation.</param>
+        /// <param name="Key">The key from which the value will be deleted. Cannot be null or empty.</param>
+        /// <param name="ValueName">The name of the value to delete. Cannot be null or empty.</param>
+        public static void DeleteValue(TreeView treeView, string Key, string ValueName)
         {
-            DelValue(Key, ValueName, treeView);
+            DeleteValue(Key, ValueName, treeView);
         }
 
         /// <summary>
-        /// Check if registry key exists
+        /// Determines whether a specified registry key exists.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <returns></returns>
-        public static bool RegKeyExists(string Key)
+        /// <remarks>The method processes the provided registry key path to determine its scope and checks for the 
+        /// existence of the key within the appropriate registry hive. If the key does not exist or an  error occurs during the
+        /// check, the method returns <see langword="false"/>.</remarks>
+        /// <param name="Key">The full path of the registry key to check. The path may optionally start with "Computer\",  which will be removed
+        /// automatically during processing.</param>
+        /// <returns><see langword="true"/> if the specified registry key exists; otherwise, <see langword="false"/>.</returns>
+        public static bool KeyExists(string Key)
         {
             // Removes "Computer\" from the beginning of the key if it exists.
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Count());
@@ -1123,7 +1362,7 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
 
             // Process the key to get the scope and key without the scope.
-            (string, RegScope) item = ProcessKey(Key_BeforeModification);
+            (string, RegScope) item = FormatKey(Key_BeforeModification);
 
             // Key without the scope.
             Key = item.Item1;
@@ -1163,12 +1402,17 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Check if registry value exists
+        /// Determines whether a specified registry value exists within a given registry key.
         /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="ValueName"></param>
-        /// <returns></returns>
-        public static bool RegValueExists(string Key, string ValueName)
+        /// <remarks>The method processes the provided registry key path to determine its scope and opens the
+        /// corresponding registry key for reading. If the key exists, it checks for the presence of the specified value. If the
+        /// value exists and is not null or empty, the method returns <see langword="true"/>; otherwise, it returns <see
+        /// langword="false"/>.</remarks>
+        /// <param name="Key">The full path of the registry key to check. This may include a scope prefix such as "Computer\".</param>
+        /// <param name="ValueName">The name of the registry value to check for existence.</param>
+        /// <returns><see langword="true"/> if the specified registry value exists and contains a non-empty value; otherwise, <see
+        /// langword="false"/>.</returns>
+        public static bool ValueExists(string Key, string ValueName)
         {
             // Removes "Computer\" from the beginning of the key if it exists.
             if (Key.StartsWith(@"Computer\", StringComparison.OrdinalIgnoreCase)) Key = Key.Remove(0, @"Computer\".Length);
@@ -1177,7 +1421,7 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
 
             // Process the key to get the scope and key without the scope.
-            (string, RegScope) item = ProcessKey(Key_BeforeModification);
+            (string, RegScope) item = FormatKey(Key_BeforeModification);
 
             // Key without the scope.
             Key = item.Item1;
@@ -1230,36 +1474,49 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Delete registry value using elevated Command Prompt to try to solve security access issues or administrator issues.
+        /// Deletes a specified registry value using administrative privileges.
         /// </summary>
-        /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
-        /// <param name="ValueName">Name of value to be edited</param>
-        public static void DelValue_AdministratorDeflector(string Key, string ValueName)
+        /// <remarks>This method uses the REG.EXE command-line utility to delete the specified registry value.  It
+        /// requires administrative privileges to execute successfully. Ensure the caller has the necessary
+        /// permissions.</remarks>
+        /// <param name="Key">The registry key path containing the value to delete. This must be a valid registry key path.</param>
+        /// <param name="ValueName">The name of the registry value to delete. This must not be null or empty.</param>
+        public static void DeleteValueAsAdministrator(string Key, string ValueName)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Deleting registry value using REG.EXE: reg {$@"delete ""{ProcessKey_CMD(Key)}\{ValueName}"" /f"}");
+            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Deleting registry value using REG.EXE: reg {$@"delete ""{FormatKey_CMD(Key)}\{ValueName}"" /f"}");
 
             // /f = Disable prompt
-            Program.SendCommand($"reg {$@"delete ""{ProcessKey_CMD(Key)}\{ValueName}"" /f"}");
+            Program.SendCommand($"reg {$@"delete ""{FormatKey_CMD(Key)}\{ValueName}"" /f"}");
         }
 
         /// <summary>
-        /// Delete registry key using elevated Command Prompt to try to solve security access issues or administrator issues.
+        /// Deletes a specified registry key using administrative privileges.
         /// </summary>
-        /// <param name="Key">Full path of registry key. It must start by HKEY_xxxx_xxxx</param>
-        public static void DelKey_AdministratorDeflector(string Key)
+        /// <remarks>This method uses the REG.EXE command-line utility to delete the specified registry key. 
+        /// Administrative privileges are required to execute this operation successfully.  If logging is enabled in the
+        /// application settings, a log entry will be created for this action.</remarks>
+        /// <param name="Key">The full path of the registry key to delete. This must be a valid registry key path.</param>
+        public static void DeleteKeyAsAdministrator(string Key)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key using REG.EXE: reg {$@"delete ""{ProcessKey_CMD(Key)}"" /f"}");
+            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key using REG.EXE: reg {$@"delete ""{FormatKey_CMD(Key)}"" /f"}");
 
             // /f = Disable prompt
-            Program.SendCommand($"reg {$@"delete ""{ProcessKey_CMD(Key)}"" /f"}");
+            Program.SendCommand($"reg {$@"delete ""{FormatKey_CMD(Key)}"" /f"}");
         }
 
         /// <summary>
-        /// System File Checker (Windows tool that fixes system files)
+        /// Executes the System File Checker (SFC) utility to scan and repair system files.
         /// </summary>
-        /// <param name="File">Target system File (it can be left "" if you want a full system scan with setting 'IfNotExist_DoScannow = true;'</param>
-        /// <param name="IfNotExist_DoScannow">If 'File' doesn't exist, do a full system scan.</param>
-        /// <param name="Hide">Hide console output</param>
+        /// <remarks>This method uses the SFC utility to verify the integrity of system files. If a specific file is
+        /// provided and exists,  the method will scan that file. If the file does not exist and <paramref
+        /// name="IfNotExist_DoScannow"/> is set to  <see langword="true"/>, a full system scan will be performed instead. The
+        /// method requires administrative privileges  to execute successfully.</remarks>
+        /// <param name="File">The path to the specific file to scan using SFC. If the file does not exist and  <paramref
+        /// name="IfNotExist_DoScannow"/> is set to <see langword="true"/>, a full system scan will be performed.</param>
+        /// <param name="IfNotExist_DoScannow">A value indicating whether to perform a full system scan if the specified <paramref name="File"/> does not exist. If
+        /// <see langword="false"/>, the method will exit without performing any action if the file is not found.</param>
+        /// <param name="Hide">A value indicating whether to hide the command prompt window during the execution of the SFC utility. If <see
+        /// langword="true"/>, the window will be hidden; otherwise, it will be visible.</param>
         public static void SFC(string File = "", bool IfNotExist_DoScannow = false, bool Hide = true)
         {
             if (System.IO.File.Exists($"{SysPaths.System32}\\cmd.exe"))
@@ -1315,10 +1572,14 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Take ownership of a File (to current user) using an elevated Command Prompt (Takeown) to try to solve security access issues or administrator issues.
+        /// Takes ownership of the specified file and optionally sets the ownership as an administrator.
         /// </summary>
-        /// <param name="File">Target File</param>
-        /// <param name="AsAdministrator">Take ownership to administrator instead of current user</param>
+        /// <remarks>This method attempts to take ownership of the specified file using system commands.  If the file
+        /// exists, it also tries to set access control to the current user using .NET methods.  If the file does not exist, an
+        /// error is logged, and no action is taken.</remarks>
+        /// <param name="File">The full path of the file for which ownership is to be taken. The file must exist.</param>
+        /// <param name="AsAdministrator">A value indicating whether the ownership should be taken as an administrator.  true to take ownership as an
+        /// administrator; otherwise, false.</param>
         public static void TakeOwn_File(string File, bool AsAdministrator = false)
         {
             if (System.IO.File.Exists(File))
@@ -1352,10 +1613,18 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Take ownership of a File (to current user) using elevated Command Prompt (ICACLS) to try to solve security access issues or administrator issues.
+        /// Grants full control permissions to the specified file for the current user or administrators group.
         /// </summary>
-        /// <param name="File">Target File</param>
-        /// <param name="AsAdministrator">Take ownership to administrator instead of current user</param>
+        /// <remarks>This method uses the ICACLS command-line tool to modify file permissions. If <paramref
+        /// name="AsAdministrator"/>  is <see langword="true"/>, the permissions are granted to the administrators group.
+        /// Otherwise, permissions  are granted to the current user. Additionally, the method attempts to set access control
+        /// using .NET Framework  methods for the current user. <para> Ensure that the file specified by <paramref name="File"/>
+        /// exists before calling this method. If the file does  not exist, no action will be taken. </para> <para> This method
+        /// may require elevated privileges to execute successfully, depending on the file's current permissions  and the value
+        /// of <paramref name="AsAdministrator"/>. </para></remarks>
+        /// <param name="File">The path to the file for which permissions will be modified. The file must exist.</param>
+        /// <param name="AsAdministrator">A boolean value indicating whether to grant permissions to the administrators group  (<see langword="true"/>) or the
+        /// current user (<see langword="false"/>).</param>
         public static void ICACLS(string File, bool AsAdministrator = false)
         {
             if (System.IO.File.Exists(File))
@@ -1380,10 +1649,13 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Move a File using elevated Command Prompt to try to solve security access issues or administrator issues.
+        /// Moves a file from the specified source path to the specified destination path.
         /// </summary>
-        /// <param name="source">Target File</param>
-        /// <param name="destination">Destination File</param>
+        /// <remarks>This method uses a command prompt operation to move the file, which may help resolve security or
+        /// administrator access issues. Ensure that the source file exists and that the application has the necessary
+        /// permissions to access both the source and destination paths.</remarks>
+        /// <param name="source">The full path of the file to be moved. This must be a valid file path and the file must exist.</param>
+        /// <param name="destination">The full path where the file should be moved. This must be a valid destination path.</param>
         public static void Move_File(string source, string destination)
         {
             if (File.Exists(source))

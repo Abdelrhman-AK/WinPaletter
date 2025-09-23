@@ -240,9 +240,9 @@ namespace WinPaletter
 
             File.WriteAllText(exLogPath, GetDetails());
 
-            Program.Log?.Write(LogEventLevel.Error, $"{ex}:\r\n{GetDetails().Trim()}");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"{ex}:\r\n{GetDetails().Trim()}");
 
-            Program.Log?.Write(LogEventLevel.Information, $"Exception error full details text file is saved as {exLogPath}");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Exception error full details text file is saved as {exLogPath}");
 
             ShowDialog();
 

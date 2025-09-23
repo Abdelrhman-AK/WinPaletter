@@ -137,9 +137,9 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Cursors data structure</param>
         public void Load(Cursors @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows cursors settings from registry and User32.SystemParametersInfo");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows cursors settings from registry and User32.SystemParametersInfo");
 
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled));
 
             if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref Shadow, SPIF.SPIF_NONE))
                 Shadow = @default.Shadow;
@@ -150,7 +150,7 @@ namespace WinPaletter.Theme.Structures
             if (!SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref Sonar, SPIF.SPIF_NONE))
                 Sonar = @default.Sonar;
 
-            Size = Convert.ToInt32(GetReg(@"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", @default.Size));
+            Size = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", @default.Size));
 
             Cursor_Arrow.Load("Arrow");
             Cursor_Help.Load("Help");
@@ -177,7 +177,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows cursors settings into registry, rendering custom cursors and by using User32.SystemParametersInfo");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows cursors settings into registry, rendering custom cursors and by using User32.SystemParametersInfo");
 
             SaveToggleState(treeView);
 
@@ -215,7 +215,7 @@ namespace WinPaletter.Theme.Structures
                 SystemParametersInfo(tv, SPI.SPI_SETCURSORSHADOW, 0, Shadow, SPIF.SPIF_UPDATEINIFILE);
                 SystemParametersInfo(tv, SPI.SPI_SETMOUSESONAR, 0, Sonar, SPIF.SPIF_UPDATEINIFILE);
                 SystemParametersInfo(tv, SPI.SPI_SETMOUSETRAILS, Trails, 0, SPIF.SPIF_UPDATEINIFILE);
-                EditReg(tv, @"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", Size);
+                WriteReg(tv, @"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", Size);
 
                 if (!Cursor_Arrow.UseFromFile || (Cursor_Arrow.UseFromFile && !File.Exists(Cursor_Arrow.File))) RenderCursor(Paths.CursorType.Arrow, this, tv);
                 if (!Cursor_AppLoading.UseFromFile || (Cursor_AppLoading.UseFromFile && !File.Exists(Cursor_AppLoading.File))) RenderCursor(Paths.CursorType.AppLoading, this, tv);
@@ -240,7 +240,7 @@ namespace WinPaletter.Theme.Structures
 
                 if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
-                    EditReg(@"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Trails);
+                    WriteReg(@"HKEY_USERS\.DEFAULT\Control Panel\Mouse", "MouseTrails", Trails);
                     SetCursorsToSystem(this, @"HKEY_USERS\.DEFAULT", ReportProgress_Detailed ? treeView : null);
                 }
             }
@@ -269,7 +269,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, Enabled);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, Enabled);
         }
 
         /// <summary>
@@ -303,14 +303,14 @@ namespace WinPaletter.Theme.Structures
 
             string CurName = cursorTypeMap.TryGetValue(Type, out string name) ? name : string.Empty;
 
-            Program.Log?.Write(LogEventLevel.Information, $"Rendering cursor `{CurName}`.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering cursor `{CurName}`.");
 
             if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.RenderingCursor, CurName), "pe_patch");
 
             if (!Directory.Exists(SysPaths.CursorsWP))
             {
                 Directory.CreateDirectory(SysPaths.CursorsWP);
-                Program.Log?.Write(LogEventLevel.Information, $"Created directory for WinPaletter cursors: `{SysPaths.CursorsWP}`.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Created directory for WinPaletter cursors: `{SysPaths.CursorsWP}`.");
             }
 
             if (Type != Paths.CursorType.Busy & Type != Paths.CursorType.AppLoading)
@@ -318,7 +318,7 @@ namespace WinPaletter.Theme.Structures
                 // Save cursor to file path inside WinPaletter cursors folder
                 string Path = $"{SysPaths.CursorsWP}\\{CurName}.cur";
 
-                Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{Path}` with size `{Size}x{Size}`.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{Path}` with size `{Size}x{Size}`.");
 
                 // Create cursor file stream
                 using (FileStream FS = new(Path, FileMode.Create))
@@ -333,7 +333,7 @@ namespace WinPaletter.Theme.Structures
                     // Loop to create different cursors sizes (scales)
                     foreach (int scale in scales)
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}`.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}`.");
 
                         float i = scale / 32f;
                         Bitmap bmp = new(scale, scale, PixelFormat.Format32bppPArgb);
@@ -468,7 +468,7 @@ namespace WinPaletter.Theme.Structures
                         EO.WriteBitmap(bmp, null, HotPoint);
 
                         // Log the rendering of the frame
-                        Program.Log?.Write(LogEventLevel.Information, $"This frame has been rendered`.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"This frame has been rendered`.");
 
                         bmp.Dispose();
                     }
@@ -478,13 +478,13 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, Path), "info");
-                Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{Path}`.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{Path}`.");
             }
 
             // Render animated cursors
             else
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}`.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}`.");
 
                 Point HotPoint = new(1, 1);
                 int increment = Math.Max(5, Math.Min(25, Type == Paths.CursorType.AppLoading ? Cursor_AppLoading.LoadingCircleHot_AnimationSpeed : Cursor_Busy.LoadingCircleHot_AnimationSpeed));
@@ -502,7 +502,7 @@ namespace WinPaletter.Theme.Structures
                 //Loop to create different cursors sizes (scales)
                 foreach (int scale in scales)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}` with size `{scale}x{scale}`.");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}` with size `{scale}x{scale}`.");
 
                     List<Bitmap> BMPList = [];
                     BMPList.Clear();
@@ -510,7 +510,7 @@ namespace WinPaletter.Theme.Structures
 
                     foreach (int angle in angles)
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}` and angle `{angle}`.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}` and angle `{angle}`.");
 
                         Bitmap bm = null;
 
@@ -547,7 +547,7 @@ namespace WinPaletter.Theme.Structures
                     // Save cursor to file path inside WinPaletter cursors folder
                     string OutputFile = $@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani";
 
-                    Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{OutputFile}` with size `{scale}x{scale}` and speed `{Speed}`.");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{OutputFile}` with size `{scale}x{scale}` and speed `{Speed}`.");
 
                     // Create cursor file stream
                     using (FileStream fs = new(OutputFile, FileMode.Create))
@@ -568,7 +568,7 @@ namespace WinPaletter.Theme.Structures
 
                     if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, OutputFile), "info");
 
-                    Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{OutputFile}`.");
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{OutputFile}`.");
                 }
             }
         }
@@ -581,7 +581,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used to show applying log</param>
         public void SetCursorsToSystem(Cursors cursors, string scopeReg = "HKEY_CURRENT_USER", TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter cursors to system from `{scopeReg}` registry scope.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter cursors to system from `{scopeReg}` registry scope.");
 
             // WinPaletter saves rendered cursors to the following path
             string Path = SysPaths.CursorsWP;
@@ -621,110 +621,110 @@ namespace WinPaletter.Theme.Structures
             RegValue += $@",{Path}\{"Pin.cur"}";
             RegValue += $@",{Path}\{"Person.cur"}";
 
-            EditReg($@"{scopeReg}\Control Panel\Cursors\Schemes", "WinPaletter", RegValue, RegistryValueKind.String);
-            EditReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "WinPaletter", RegistryValueKind.String);
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Scheme Source", 1, RegistryValueKind.DWord);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors\Schemes", "WinPaletter", RegValue, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "WinPaletter", RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Scheme Source", 1, RegistryValueKind.DWord);
 
             string x = System.IO.Path.Combine(Path, "Arrow.cur");
             if (cursors.Cursor_Arrow.UseFromFile && (File.Exists(cursors.Cursor_Arrow.File) || OS.WXP))
                 x = cursors.Cursor_Arrow.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
 
             x = System.IO.Path.Combine(Path, $"AppLoading{DPI_Fixer}.ani");
             if (cursors.Cursor_AppLoading.UseFromFile && (File.Exists(cursors.Cursor_AppLoading.File) || OS.WXP))
                 x = cursors.Cursor_AppLoading.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
 
             x = System.IO.Path.Combine(Path, $"Busy{DPI_Fixer}.ani");
             if (cursors.Cursor_Busy.UseFromFile && (File.Exists(cursors.Cursor_Busy.File) || OS.WXP))
                 x = cursors.Cursor_Busy.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
             x = System.IO.Path.Combine(Path, "Cross.cur");
             if (cursors.Cursor_Cross.UseFromFile && (File.Exists(cursors.Cursor_Cross.File) || OS.WXP))
                 x = cursors.Cursor_Cross.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_CROSS);
 
             x = System.IO.Path.Combine(Path, "Link.cur");
             if (cursors.Cursor_Link.UseFromFile && (File.Exists(cursors.Cursor_Link.File) || OS.WXP))
                 x = cursors.Cursor_Link.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_HAND);
 
             x = System.IO.Path.Combine(Path, "Help.cur");
             if (cursors.Cursor_Help.UseFromFile && (File.Exists(cursors.Cursor_Help.File) || OS.WXP))
                 x = cursors.Cursor_Help.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
 
             x = System.IO.Path.Combine(Path, "IBeam.cur");
             if (cursors.Cursor_IBeam.UseFromFile && (File.Exists(cursors.Cursor_IBeam.File) || OS.WXP))
                 x = cursors.Cursor_IBeam.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_IBEAM);
 
             x = System.IO.Path.Combine(Path, "None.cur");
             if (cursors.Cursor_None.UseFromFile && (File.Exists(cursors.Cursor_None.File) || OS.WXP))
                 x = cursors.Cursor_None.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "No", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "No", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_NO);
 
             x = System.IO.Path.Combine(Path, "Pen.cur");
             if (cursors.Cursor_Pen.UseFromFile && (File.Exists(cursors.Cursor_Pen.File) || OS.WXP))
                 x = cursors.Cursor_Pen.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String);
             // SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
             x = System.IO.Path.Combine(Path, "Person.cur");
             if (cursors.Cursor_Person.UseFromFile && (File.Exists(cursors.Cursor_Person.File) || OS.WXP))
                 x = cursors.Cursor_Person.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
             // SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
             x = System.IO.Path.Combine(Path, "Pin.cur");
             if (cursors.Cursor_Pin.UseFromFile && (File.Exists(cursors.Cursor_Pin.File) || OS.WXP))
                 x = cursors.Cursor_Pin.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
             // SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_
 
             x = System.IO.Path.Combine(Path, "Move.cur");
             if (cursors.Cursor_Move.UseFromFile && (File.Exists(cursors.Cursor_Move.File) || OS.WXP))
                 x = cursors.Cursor_Move.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEALL);
 
             x = System.IO.Path.Combine(Path, "NESW.cur");
             if (cursors.Cursor_NESW.UseFromFile && (File.Exists(cursors.Cursor_NESW.File) || OS.WXP))
                 x = cursors.Cursor_NESW.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENESW);
 
             x = System.IO.Path.Combine(Path, "NS.cur");
             if (cursors.Cursor_NS.UseFromFile && (File.Exists(cursors.Cursor_NS.File) || OS.WXP))
                 x = cursors.Cursor_NS.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENS);
 
             x = System.IO.Path.Combine(Path, "NWSE.cur");
             if (cursors.Cursor_NWSE.UseFromFile && (File.Exists(cursors.Cursor_NWSE.File) || OS.WXP))
                 x = cursors.Cursor_NWSE.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
 
             x = System.IO.Path.Combine(Path, "EW.cur");
             if (cursors.Cursor_EW.UseFromFile && (File.Exists(cursors.Cursor_EW.File) || OS.WXP))
                 x = cursors.Cursor_EW.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEWE);
 
             x = System.IO.Path.Combine(Path, "Up.cur");
             if (cursors.Cursor_Up.UseFromFile && (File.Exists(cursors.Cursor_Up.File) || OS.WXP))
                 x = cursors.Cursor_Up.File;
-            EditReg($@"{scopeReg}\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
+            WriteReg($@"{scopeReg}\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
             SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
 
             // Broadcast registry change to system
@@ -739,7 +739,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used to show applying log</param>
         public static void ResetCursorsToAero(string scopeReg = "HKEY_CURRENT_USER", TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Aero scheme from `{scopeReg}` registry scope.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Aero scheme from `{scopeReg}` registry scope.");
 
             try
             {
@@ -747,118 +747,118 @@ namespace WinPaletter.Theme.Structures
 
                 if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
                 {
-                    DelValue(treeView, "HKEY_CURRENT_USER\\Control Panel\\Cursors\\Schemes", "WinPaletter");
+                    DeleteValue(treeView, "HKEY_CURRENT_USER\\Control Panel\\Cursors\\Schemes", "WinPaletter");
                 }
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Scheme Source", 2, RegistryValueKind.DWord);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Scheme Source", 2, RegistryValueKind.DWord);
 
                 string x = $@"{path}\{"aero_working.ani"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
                 }
 
                 x = $@"{path}\{"aero_arrow.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
                 }
 
                 x = string.Format(string.Empty);
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_CROSS);
                 }
 
                 x = $@"{path}\{"aero_link.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_HAND);
                 }
 
                 x = $@"{path}\{"aero_helpsel.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
                 }
 
                 x = string.Format(string.Empty);
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_IBEAM);
                 }
 
                 x = $@"{path}\{"aero_unavail.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "No", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "No", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_NO);
                 }
 
                 x = $@"{path}\{"aero_pen.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "NWPen", x, RegistryValueKind.String);
                 // If IO.System.IO.File.Exists(X) then SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_)
 
                 x = $@"{path}\{"aero_person.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Person", x, RegistryValueKind.String);
                 // If IO.System.IO.File.Exists(X) then SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
                 x = $@"{path}\{"aero_pin.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Pin", x, RegistryValueKind.String);
                 // If IO.System.IO.File.Exists(X) then SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING)
 
                 x = $@"{path}\{"aero_move.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEALL);
                 }
 
                 x = $@"{path}\{"aero_nesw.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENESW);
                 }
 
                 x = $@"{path}\{"aero_ns.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENS);
                 }
 
                 x = $@"{path}\{"aero_nwse.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
                 }
 
                 x = $@"{path}\{"aero_ew.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEWE);
                 }
 
                 x = $@"{path}\{"aero_up.cur"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
                 }
 
                 x = $@"{path}\{"aero_busy.ani"}";
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
                 if (File.Exists(x))
                 {
                     SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
@@ -884,60 +884,60 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used to show applying log</param>
         public static void ResetCursorsToNone_XP(string scopeReg = "HKEY_CURRENT_USER", TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Windows XP scheme from `{scopeReg}` registry scope.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Windows XP scheme from `{scopeReg}` registry scope.");
 
             try
             {
                 if (scopeReg.ToUpper() == "HKEY_CURRENT_USER")
                 {
-                    DelValue(treeView, "HKEY_CURRENT_USER\\Control Panel\\Cursors\\Schemes", "WinPaletter");
+                    DeleteValue(treeView, "HKEY_CURRENT_USER\\Control Panel\\Cursors\\Schemes", "WinPaletter");
                 }
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Scheme Source", 2, RegistryValueKind.DWord);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", string.Empty, "Windows Default", RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "CursorBaseSize", 32, RegistryValueKind.DWord);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Scheme Source", 2, RegistryValueKind.DWord);
 
                 string x = string.Empty;
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "AppStarting", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_APPSTARTING);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Arrow", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_NORMAL);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Crosshair", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_CROSS);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Hand", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_HAND);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Help", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_HELP);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "IBeam", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_IBEAM);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "No", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "No", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_NO);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeAll", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEALL);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNESW", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENESW);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNS", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENS);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeNWSE", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZENWSE);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "SizeWE", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_SIZEWE);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "UpArrow", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_UP);
 
-                EditReg($@"{scopeReg}\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
+                WriteReg($@"{scopeReg}\Control Panel\Cursors", "Wait", x, RegistryValueKind.String);
                 SetSystemCursor(treeView, x, OCR_SYSTEM_CURSORS.OCR_WAIT);
 
                 // Broadcast registry change to system

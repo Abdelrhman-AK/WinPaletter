@@ -94,9 +94,9 @@ namespace WinPaletter
             bool result = false;
 
             // Reset frequency to 0 instead of 24 hours
-            EditReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "SystemRestorePointCreationFrequency", 0);
+            WriteReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "SystemRestorePointCreationFrequency", 0);
 
-            Program.Log?.Write(LogEventLevel.Information, "Creating system restore point with description: {description}", description);
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Creating system restore point with description: {description}", description);
 
             // Start actions
             var mScope = new ManagementScope("\\\\localhost\\root\\default");
@@ -119,14 +119,14 @@ namespace WinPaletter
         /// <summary>
         /// Detect if system restore is enabled or not.
         /// </summary>
-        public static bool Enabled => (int)GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "RPSessionInterval", 0) == 1;
+        public static bool Enabled => (int)ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "RPSessionInterval", 0) == 1;
 
         /// <summary>
         /// Sets the system restore status for a given drive.
         /// </summary>
         public static void SetSystemRestoreStatus(char driveLetter, bool enable)
         {
-            Program.Log?.Write(LogEventLevel.Information, "Setting system restore status for drive {driveLetter} to {enable}", driveLetter, enable);
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Setting system restore status for drive {driveLetter} to {enable}", driveLetter, enable);
 
             if (enable) { SrClient.EnableSR(driveLetter + ":"); } else { SrClient.DisableSR(driveLetter + ":"); }
         }

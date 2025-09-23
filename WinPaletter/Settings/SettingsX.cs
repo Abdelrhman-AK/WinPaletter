@@ -134,6 +134,12 @@ namespace WinPaletter
             trackBarX1.Value = Sets.ThemeLog.CountDown_Seconds;
             toggle18.Checked = Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose;
 
+            toggle40.Checked = Sets.AppLog.Enabled;
+            toggle41.Checked = Sets.AppLog.Reg;
+            checkBox15.Checked = Sets.AppLog.RegRead;
+            checkBox17.Checked = Sets.AppLog.RegWrite;
+            checkBox18.Checked = Sets.AppLog.RegDelete;
+
             toggle23.Checked = Sets.ExplorerPatcher.Enabled;
             toggle24.Checked = Sets.ExplorerPatcher.Enabled_Force;
             EP_Start_10.Checked = Sets.ExplorerPatcher.UseStart10;
@@ -454,6 +460,12 @@ namespace WinPaletter
             Sets.ThemeLog.CountDown_Seconds = trackBarX1.Value;
             Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose = toggle18.Checked;
 
+            Sets.AppLog.Enabled = toggle40.Checked;
+            Sets.AppLog.Reg = toggle41.Checked;
+            Sets.AppLog.RegRead = checkBox15.Checked;
+            Sets.AppLog.RegWrite = checkBox17.Checked;
+            Sets.AppLog.RegDelete = checkBox18.Checked;
+
             Sets.ExplorerPatcher.Enabled = toggle23.Checked;
             Sets.ExplorerPatcher.Enabled_Force = toggle24.Checked;
             Sets.ExplorerPatcher.UseStart10 = EP_Start_10.Checked;
@@ -646,6 +658,17 @@ namespace WinPaletter
                 if (Settings.ThemeLog.CountDown_Seconds != trackBarX1.Value)
                     Changed = true;
                 if (Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose != toggle18.Checked)
+                    Changed = true;
+
+                if (Settings.AppLog.Enabled != toggle40.Checked)
+                    Changed = true;
+                if (Settings.AppLog.Reg != toggle41.Checked)
+                    Changed = true;
+                if (Settings.AppLog.RegRead != checkBox15.Checked)
+                    Changed = true;
+                if (Settings.AppLog.RegWrite != checkBox17.Checked)
+                    Changed = true;
+                if (Settings.AppLog.RegDelete != checkBox18.Checked)
                     Changed = true;
 
                 if (Settings.ExplorerPatcher.Enabled != toggle23.Checked)
@@ -933,9 +956,9 @@ namespace WinPaletter
         /// <returns></returns>
         private int CalcLogs()
         {
-            if (Directory.Exists($"{SysPaths.Logs}"))
+            if (Directory.Exists($"{SysPaths.LogsDir}"))
             {
-                return (int)Directory.EnumerateFiles($"{SysPaths.Logs}", "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
+                return (int)Directory.EnumerateFiles($"{SysPaths.LogsDir}", "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
             }
             else
             {
@@ -1214,7 +1237,7 @@ namespace WinPaletter
                 Forms.BugReport.ThrowError(ex);
             }
 
-            Label43.Text = CalcThemesResCache().ToStringFileSize();    
+            Label43.Text = CalcThemesResCache().ToStringFileSize();
             label7.Text = CalcAppCore().ToStringFileSize();
         }
 
@@ -1389,9 +1412,9 @@ namespace WinPaletter
 
         private void button32_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(SysPaths.Logs))
+            if (Directory.Exists(SysPaths.LogsDir))
             {
-                foreach (string file in Directory.GetFiles(SysPaths.Logs))
+                foreach (string file in Directory.GetFiles(SysPaths.LogsDir))
                 {
                     try
                     {
@@ -1417,7 +1440,25 @@ namespace WinPaletter
 
         private void button31_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Logs);
+            Process.Start(SysPaths.LogsDir);
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            Process.Start(SysPaths.LogsDir);
+        }
+
+        private void toggle40_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox57.Enabled = (sender as Toggle).Checked;
+            groupBox59.Enabled = (sender as Toggle).Checked;
+        }
+
+        private void toggle41_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBox15.Enabled = (sender as Toggle).Checked;
+            checkBox17.Enabled = (sender as Toggle).Checked;
+            checkBox18.Enabled = (sender as Toggle).Checked;
         }
     }
 }

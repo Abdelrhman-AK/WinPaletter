@@ -438,19 +438,19 @@ namespace WinPaletter
             trackBarX8.Value = CursorControl.Prop_Shadow_OffsetY;
         }
 
-        public void ApplyColorsToPreview()
+        public void ApplyColorsToPreview(bool ignoreSettingFile = false)
         {
             foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
             {
-                ApplyColorsToPreview(i);
+                ApplyColorsToPreview(i, ignoreSettingFile);
                 i.Invalidate();
             }
         }
 
-        public void ApplyColorsToPreview(CursorControl CursorControl)
+        public void ApplyColorsToPreview(CursorControl CursorControl, bool ignoreSettingFile = false)
         {
             CursorControl.Prop_UseFromFile = source1.Checked;
-            CursorControl.Prop_File = textBox1.Text;
+            if (!ignoreSettingFile) CursorControl.Prop_File = textBox1.Text;
 
             CursorControl.Prop_ArrowStyle = (Paths.ArrowStyle)ComboBox5.SelectedIndex;
             CursorControl.Prop_CircleStyle = (Paths.CircleStyle)ComboBox6.SelectedIndex;

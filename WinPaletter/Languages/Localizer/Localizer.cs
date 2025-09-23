@@ -77,7 +77,7 @@ namespace WinPaletter
         {
             if (System.IO.File.Exists(File))
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Loading language from file `{File}`.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading language from file `{File}`.");
 
                 JObject JObj;
 
@@ -96,17 +96,17 @@ namespace WinPaletter
                 if (!isValid) return;
 
                 Information = JObj[nameof(Information)].ToObject<Information_Cls>();
-                Program.Log?.Write(LogEventLevel.Information, $"Information of language file have been loaded.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Information of language file have been loaded.");
 
                 Strings = JObj["Global Strings"].ToObject<Strings_Cls>();
-                Program.Log?.Write(LogEventLevel.Information, $"Global strings inside language file have been loaded.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Global strings inside language file have been loaded.");
 
                 Forms = (JObject)JObj["Forms Strings"];
 
                 _tree = DeserializeFormsJSONIntoList(Forms);
 
                 LoadFromStrings(form);
-                Program.Log?.Write(LogEventLevel.Information, $"Forms strings inside language file have been loaded.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Forms strings inside language file have been loaded.");
             }
         }
 
@@ -366,7 +366,7 @@ namespace WinPaletter
         /// <param name="form"></param>
         private void SetFormValues(List<Tuple<string, string, string, string>> PopCtrlList, Form form)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Setting strings for form `{form.Name}`.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Setting strings for form `{form.Name}`.");
 
             if (PopCtrlList is null) return;
 

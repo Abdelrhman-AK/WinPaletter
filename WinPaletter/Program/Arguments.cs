@@ -150,7 +150,7 @@ namespace WinPaletter
             bool shouldExit = false;
             bool displayHelp = false;
 
-            Program.Log?.Write(LogEventLevel.Information, $"Command line arguments: {string.Join(" ", args ?? Environment.GetCommandLineArgs().Skip(1))}");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Command line arguments: {string.Join(" ", args ?? Environment.GetCommandLineArgs().Skip(1))}");
 
             using (Parser parser = new(config => config.HelpWriter = null))
             {

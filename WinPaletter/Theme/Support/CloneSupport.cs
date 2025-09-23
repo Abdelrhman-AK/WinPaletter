@@ -11,7 +11,7 @@ namespace WinPaletter.Theme
         /// <returns><see cref="Manager"/></returns>
         public object Clone()
         {
-            Program.Log?.Write(LogEventLevel.Debug, "Cloning WinPaletter theme...");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Debug, "Cloning WinPaletter theme...");
             return MemberwiseClone();
         }
     }

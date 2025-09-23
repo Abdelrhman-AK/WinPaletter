@@ -22,7 +22,7 @@
                     public string PE_PatchingPE { get; set; } = "Patching '{0}' resources";
                     public string PE_RestoringPermissions { get; set; } = "Restoring '{0}' permissions from backup";
                     public string DeletingHighContrastThemes { get; set; } = "Deleting high contrast themes in '{0}'";
-                    public string UxTheme_SettingVS { get; set; } = "Setting visual styles: {0}.{1}({2}, {3}, {4}) returned {5}";
+                    public string UxTheme_SettingVS { get; set; } = "Setting visual styles: {0}({1}, {2}, {3}, {4}) returned {5}";
                     public string UxTheme_EnableTheme { get; set; } = "Enabling theming: {0}.{1}({2}) returned {3}";
                     public string User32_SPI { get; set; } = "Calling {0}.{1}({2}, {3}, {4}, {5}) returned {6}";
                     public string User32_SSC { get; set; } = "Calling {0}.{1}({2}, {3}) returned {4}";

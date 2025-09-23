@@ -47,17 +47,17 @@ namespace WinPaletter.Theme.Structures
         /// </param>
         public void Load(string SubKey)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter Wallpaper Tone from registry, targeting {SubKey}");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter Wallpaper Tone from registry, targeting {SubKey}");
 
             string wallpaper = SubKey.ToLower() != "winxp" ? $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
 
-            if (!File.Exists(wallpaper)) wallpaper = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper).ToString();
+            if (!File.Exists(wallpaper)) wallpaper = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper).ToString();
 
-            Enabled = Convert.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", false));
-            Image = GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", wallpaper).ToString();
-            H = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", 0));
-            S = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", 50));
-            L = Convert.ToInt32(GetReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", 50));
+            Enabled = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", false));
+            Image = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", wallpaper).ToString();
+            H = Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", 0));
+            S = Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", 50));
+            L = Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", 50));
         }
 
         /// <summary>
@@ -73,10 +73,10 @@ namespace WinPaletter.Theme.Structures
         {
             SaveToggleState(WT, SubKey, treeView);
 
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", WT.Image, RegistryValueKind.String);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", WT.H);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", WT.S);
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", WT.L);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", WT.Image, RegistryValueKind.String);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", WT.H);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", WT.S);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", WT.L);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public static void SaveToggleState(WallpaperTone WT, string SubKey, TreeView treeView = null)
         {
-            EditReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", WT.Enabled);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", WT.Enabled);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (!File.Exists(Image))
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Couldn't find base image file: `{Image}`.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't find base image file: `{Image}`.");
                 return;
             }
 
@@ -113,12 +113,12 @@ namespace WinPaletter.Theme.Structures
                 path = Path.Combine(SysPaths.Windows, @"Web\Wallpaper\TintedWallpaper.bmp");
             }
 
-            Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter Wallpaper Tone into registry and by rendering a custom image.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter Wallpaper Tone into registry and by rendering a custom image.");
 
             if (treeView is not null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.SettingHSLImage, path), "pe_patch");
 
-            Program.Log?.Write(LogEventLevel.Information, $"Rendering a custom image with HSL values: H={H}, S={S}, L={L}.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering a custom image with HSL values: H={H}, S={S}, L={L}.");
 
             using (Bitmap wall_source = BitmapMgr.Load(Image))
             using (Bitmap wall = wall_source.AdjustHSL(H, S / 100f, L / 100f))
@@ -128,8 +128,8 @@ namespace WinPaletter.Theme.Structures
 
             // Apply the processed image
             SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
-            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
         }
 
         /// <summary>Operator to check if two WallpaperTone structures are equal</summary>

@@ -59,7 +59,7 @@ namespace WinPaletter
         {
             try
             {
-                IsInstalled = RegKeyExists("HKEY_CURRENT_USER\\Software\\ExplorerPatcher");
+                IsInstalled = KeyExists("HKEY_CURRENT_USER\\Software\\ExplorerPatcher");
             }
             catch
             {
@@ -70,12 +70,12 @@ namespace WinPaletter
             {
                 if (IsInstalled && (OS.W12 || OS.W11))
                 {
-                    UseStart10 = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
+                    UseStart10 = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
                     try
                     {
-                        UseTaskbar10 = Convert.ToBoolean(GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OldTaskbar", true));
-                        TaskbarButton10 = (int)GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OrbStyle", 0) == 0;
-                        StartStyle = (StartStyles)Convert.ToInt32(GetReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "StartUI_EnableRoundedCorners", StartStyles.NotRounded));
+                        UseTaskbar10 = Convert.ToBoolean(ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OldTaskbar", true));
+                        TaskbarButton10 = (int)ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OrbStyle", 0) == 0;
+                        StartStyle = (StartStyles)Convert.ToInt32(ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "StartUI_EnableRoundedCorners", StartStyles.NotRounded));
                     }
                     catch { }
                 }

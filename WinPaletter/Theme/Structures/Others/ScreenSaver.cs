@@ -34,12 +34,12 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default ScreenSaver data structure</param>
         public void Load(ScreenSaver @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Screen Saver settings from registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Screen Saver settings from registry.");
 
-            Enabled = Convert.ToBoolean(Conversion.Val(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", @default.Enabled ? 1 : 0)));
-            IsSecure = Convert.ToBoolean(Conversion.Val(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", @default.IsSecure ? 1 : 0)));
-            TimeOut = (int)Math.Round(Conversion.Val(GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", @default.TimeOut)));
-            File = GetReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", @default.File).ToString();
+            Enabled = Convert.ToBoolean(Conversion.Val(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", @default.Enabled ? 1 : 0)));
+            IsSecure = Convert.ToBoolean(Conversion.Val(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", @default.IsSecure ? 1 : 0)));
+            TimeOut = (int)Math.Round(Conversion.Val(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", @default.TimeOut)));
+            File = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", @default.File).ToString();
         }
 
         /// <summary>
@@ -48,13 +48,13 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Screen Saver settings into registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Screen Saver settings into registry.");
 
             SaveToggleState(treeView);
 
-            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", IsSecure ? 1 : 0, RegistryValueKind.String);
-            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", TimeOut, RegistryValueKind.String);
-            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", File, RegistryValueKind.String);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", IsSecure ? 1 : 0, RegistryValueKind.String);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", TimeOut, RegistryValueKind.String);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", File, RegistryValueKind.String);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled ? 1 : 0, RegistryValueKind.String);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled ? 1 : 0, RegistryValueKind.String);
         }
 
         /// <summary>Operator to check if two ScreenSaver structures are equal</summary>

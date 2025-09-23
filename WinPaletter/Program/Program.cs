@@ -60,7 +60,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private static void OnExit(object sender, EventArgs e)
         {
-            Program.Log?.Write(LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
+            if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
 
             DeleteUpdateResiduals();
 
@@ -70,7 +70,7 @@ namespace WinPaletter
             User.UserSwitch -= User.OnUserSwitch;
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
 
-            Program.Log?.Write(LogEventLevel.Information, "WinPaletter has exited successfully.");
+            if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, "WinPaletter has exited successfully.");
         }
 
         /// <summary>
@@ -81,30 +81,24 @@ namespace WinPaletter
             // Impersonate the selected user to access the user's data
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                // Initialize log
-                if (!Directory.Exists(SysPaths.Logs)) { Directory.CreateDirectory(SysPaths.Logs); }
-                if (File.Exists(LogFile)) using (FileStream fs = new(LogFile, FileMode.Truncate)) { }
-
-                LoggerConfiguration log = new();
-                log.WriteTo.File(new JsonFormatter(), LogFile);
-                Log = log.CreateLogger();
-                Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter file MD5: {Program.CalculateMD5(AppFile)}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
+                LoggerInitializer.Initialize();
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"Calculating MD5... {Program.CalculateMD5(AppFile)}");
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
                 
                 // Create the data directory if it does not exist
                 if (!Directory.Exists(SysPaths.ProgramFilesData))
                 {
                     Directory.CreateDirectory(SysPaths.ProgramFilesData);
-                    Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.ProgramFilesData}");
+                    if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.ProgramFilesData}");
                 }
 
                 // Important to load proper style and language before showing login dialog
-                Log?.Write(LogEventLevel.Information, $"Loading application style.");
+                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"Loading application style.");
                 SetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle();

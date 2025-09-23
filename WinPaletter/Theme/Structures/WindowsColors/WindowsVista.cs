@@ -40,13 +40,13 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WindowsVista data structure</param>
         public void Load(WindowsVista @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Vista colors and appearance preferences from registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Vista colors and appearance preferences from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, @default.Enabled));
 
             object y;
 
-            y = GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
+            y = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
             ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
             Alpha = Color.FromArgb(Convert.ToInt32(y)).A;
 
@@ -59,7 +59,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Vista colors and appearance preferences into registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Vista colors and appearance preferences into registry.");
 
             SaveToggleState(treeView);
 
@@ -67,7 +67,7 @@ namespace WinPaletter.Theme.Structures
             {
                 VisualStyles.Apply("Vista", treeView);
 
-                EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb(Alpha, ColorizationColor).ToArgb(), RegistryValueKind.DWord);
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb(Alpha, ColorizationColor).ToArgb(), RegistryValueKind.DWord);
 
                 // Broadcast the system message to notify about the setting change
                 User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
@@ -80,7 +80,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, Enabled);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two WindowsVista structures are equal</summary>

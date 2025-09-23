@@ -42,7 +42,7 @@ namespace WinPaletter
                     treeView.SelectedNode = treeView.Nodes[treeView.Nodes.Count - 1];
                 });
 
-                Program.Log?.Write(LogEventLevel.Information, $"An item is added to themes log: `{Text}` with image key `{ImageKey}`");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"An item is added to themes log: `{Text}` with image key `{ImageKey}`");
             }
         }
 

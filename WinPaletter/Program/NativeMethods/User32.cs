@@ -97,6 +97,20 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
+        /// Updates the system parameters for the current user.
+        /// </summary>
+        /// <remarks>This method is a wrapper for the native <c>UpdatePerUserSystemParameters</c> function
+        /// in the Windows API. It is typically used to apply changes to system settings that are specific to the
+        /// current user.</remarks>
+        /// <param name="flags">1 to force update.</param>
+        /// <param name="force">A value indicating whether to force the update of system parameters.  <see langword="true"/> forces the
+        /// update; <see langword="false"/> performs the update only if necessary.</param>
+        /// <returns><see langword="true"/> if the system parameters were successfully updated; otherwise, <see
+        /// langword="false"/>.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool UpdatePerUserSystemParameters(uint flags, bool force);
+
+        /// <summary>
         /// Sends the specified message to a window or windows.
         /// </summary>
         [DllImport("user32.dll", SetLastError = true)]

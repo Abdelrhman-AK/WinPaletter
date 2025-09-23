@@ -14,7 +14,7 @@ namespace WinPaletter.UI.WP
     /// UI is desired. <para> The control overrides certain behaviors of <see cref="TabControl"/> to achieve the tabless
     /// appearance, such as handling the <see cref="WndProc"/> method to suppress the rendering of tab headers.
     /// </para></remarks>
-    public class TablessControl : TabControl
+    public class TablessControl : System.Windows.Forms.TabControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TablessControl"/> class,  a custom control that supports double
@@ -25,13 +25,11 @@ namespace WinPaletter.UI.WP
         /// required.</remarks>
         public TablessControl()
         {
-            SetStyle(ControlStyles.ResizeRedraw | ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.ResizeRedraw, true);
             DoubleBuffered = true;
 
             // Prevent the built-in scroll buttons
-            Multiline = true;
-            ItemSize = new Size(0, 1); // zero height makes strip effectively invisible
-            SizeMode = TabSizeMode.Fixed;
+            if (!DesignMode) Multiline = true;
         }
 
         /// <summary>

@@ -24,7 +24,7 @@ public class SingleInstanceApplication : WindowsFormsApplicationBase
     /// <param name="startupHandler"></param>
     public static void Run(Form form, StartupNextInstanceEventHandler startupHandler)
     {
-        Program.Log?.Write(LogEventLevel.Information, "Starting WinPaletter in single-instance mode");
+        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Starting WinPaletter in single-instance mode");
 
         SingleInstanceApplication app = new()
         {

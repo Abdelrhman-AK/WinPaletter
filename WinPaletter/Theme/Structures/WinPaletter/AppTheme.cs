@@ -51,18 +51,18 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default AppTheme data structure</param>
         public void Load(AppTheme @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter application theme (appearance) from registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter application theme (appearance) from registry.");
 
-            Enabled = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "CustomColors", @default.Enabled));
-            Animations = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "Animations", @default.Animations));
-            BackColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "BackColor", @default.BackColor.ToArgb())));
-            AccentColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "AccentColor", @default.AccentColor.ToArgb())));
-            SecondaryColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "SecondaryColor", @default.SecondaryColor.ToArgb())));
-            TertiaryColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "TertiaryColor", @default.TertiaryColor.ToArgb())));
-            DisabledColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "DisabledColor", @default.DisabledColor.ToArgb())));
-            DisabledBackColor = Color.FromArgb(Convert.ToInt32(GetReg(Settings.Structures.REG_Appearance, "DisabledBackColor", @default.DisabledBackColor.ToArgb())));
-            DarkMode = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "CustomTheme", @default.DarkMode));
-            RoundCorners = Convert.ToBoolean(GetReg(Settings.Structures.REG_Appearance, "RoundedCorners", @default.RoundCorners));
+            Enabled = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "CustomColors", @default.Enabled));
+            Animations = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "Animations", @default.Animations));
+            BackColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "BackColor", @default.BackColor.ToArgb())));
+            AccentColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "AccentColor", @default.AccentColor.ToArgb())));
+            SecondaryColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "SecondaryColor", @default.SecondaryColor.ToArgb())));
+            TertiaryColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "TertiaryColor", @default.TertiaryColor.ToArgb())));
+            DisabledColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "DisabledColor", @default.DisabledColor.ToArgb())));
+            DisabledBackColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "DisabledBackColor", @default.DisabledBackColor.ToArgb())));
+            DarkMode = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "CustomTheme", @default.DarkMode));
+            RoundCorners = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "RoundedCorners", @default.RoundCorners));
         }
 
         /// <summary>
@@ -71,23 +71,23 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter application theme (appearance) into registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter application theme (appearance) into registry.");
 
             SaveToggleState(treeView);
 
-            EditReg(treeView, Settings.Structures.REG_Appearance, "BackColor", BackColor.ToArgb());
-            EditReg(treeView, Settings.Structures.REG_Appearance, "AccentColor", AccentColor.ToArgb());
-            EditReg(treeView, Settings.Structures.REG_Appearance, "CustomTheme", DarkMode);
-            EditReg(treeView, Settings.Structures.REG_Appearance, "RoundedCorners", RoundCorners);
-            EditReg(treeView, Settings.Structures.REG_Appearance, "Animations", Animations);
-            EditReg(treeView, Settings.Structures.REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb());
-            EditReg(treeView, Settings.Structures.REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb());
-            EditReg(treeView, Settings.Structures.REG_Appearance, "DisabledColor", DisabledColor.ToArgb());
-            EditReg(treeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "BackColor", BackColor.ToArgb());
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "AccentColor", AccentColor.ToArgb());
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "CustomTheme", DarkMode);
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "RoundedCorners", RoundCorners);
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "Animations", Animations);
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "SecondaryColor", SecondaryColor.ToArgb());
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "TertiaryColor", TertiaryColor.ToArgb());
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "DisabledColor", DisabledColor.ToArgb());
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
 
             // Apply settings to program settings
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
 
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = Enabled;
@@ -110,7 +110,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, Settings.Structures.REG_Appearance, "CustomColors", Enabled);
+            WriteReg(treeView, Settings.Structures.REG_Appearance, "CustomColors", Enabled);
         }
 
         /// <summary>Operator to check if two AppTheme structures are equal</summary>

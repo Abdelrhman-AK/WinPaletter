@@ -411,40 +411,40 @@ namespace WinPaletter
 
             using (Manager @default = Default.Get(Program.WindowStyle))
             {
-                ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", @default.CommandPrompt.ColorTable00.Reverse().ToArgb()))).Reverse());
-                ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", @default.CommandPrompt.ColorTable01.Reverse().ToArgb()))).Reverse());
-                ColorTable02.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable02", @default.CommandPrompt.ColorTable02.Reverse().ToArgb()))).Reverse());
-                ColorTable03.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable03", @default.CommandPrompt.ColorTable03.Reverse().ToArgb()))).Reverse());
-                ColorTable04.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable04", @default.CommandPrompt.ColorTable04.Reverse().ToArgb()))).Reverse());
-                ColorTable05.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable05", @default.CommandPrompt.ColorTable05.Reverse().ToArgb()))).Reverse());
-                ColorTable06.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable06", @default.CommandPrompt.ColorTable06.Reverse().ToArgb()))).Reverse());
-                ColorTable07.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable07", @default.CommandPrompt.ColorTable07.Reverse().ToArgb()))).Reverse());
-                ColorTable08.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable08", @default.CommandPrompt.ColorTable08.Reverse().ToArgb()))).Reverse());
-                ColorTable09.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable09", @default.CommandPrompt.ColorTable09.Reverse().ToArgb()))).Reverse());
-                ColorTable10.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable10", @default.CommandPrompt.ColorTable10.Reverse().ToArgb()))).Reverse());
-                ColorTable11.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable11", @default.CommandPrompt.ColorTable11.Reverse().ToArgb()))).Reverse());
-                ColorTable12.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable12", @default.CommandPrompt.ColorTable12.Reverse().ToArgb()))).Reverse());
-                ColorTable13.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable13", @default.CommandPrompt.ColorTable13.Reverse().ToArgb()))).Reverse());
-                ColorTable14.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable14", @default.CommandPrompt.ColorTable14.Reverse().ToArgb()))).Reverse());
-                ColorTable15.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable15", @default.CommandPrompt.ColorTable15.Reverse().ToArgb()))).Reverse());
+                ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", @default.CommandPrompt.ColorTable00.Reverse().ToArgb()))).Reverse());
+                ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", @default.CommandPrompt.ColorTable01.Reverse().ToArgb()))).Reverse());
+                ColorTable02.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable02", @default.CommandPrompt.ColorTable02.Reverse().ToArgb()))).Reverse());
+                ColorTable03.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable03", @default.CommandPrompt.ColorTable03.Reverse().ToArgb()))).Reverse());
+                ColorTable04.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable04", @default.CommandPrompt.ColorTable04.Reverse().ToArgb()))).Reverse());
+                ColorTable05.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable05", @default.CommandPrompt.ColorTable05.Reverse().ToArgb()))).Reverse());
+                ColorTable06.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable06", @default.CommandPrompt.ColorTable06.Reverse().ToArgb()))).Reverse());
+                ColorTable07.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable07", @default.CommandPrompt.ColorTable07.Reverse().ToArgb()))).Reverse());
+                ColorTable08.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable08", @default.CommandPrompt.ColorTable08.Reverse().ToArgb()))).Reverse());
+                ColorTable09.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable09", @default.CommandPrompt.ColorTable09.Reverse().ToArgb()))).Reverse());
+                ColorTable10.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable10", @default.CommandPrompt.ColorTable10.Reverse().ToArgb()))).Reverse());
+                ColorTable11.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable11", @default.CommandPrompt.ColorTable11.Reverse().ToArgb()))).Reverse());
+                ColorTable12.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable12", @default.CommandPrompt.ColorTable12.Reverse().ToArgb()))).Reverse());
+                ColorTable13.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable13", @default.CommandPrompt.ColorTable13.Reverse().ToArgb()))).Reverse());
+                ColorTable14.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable14", @default.CommandPrompt.ColorTable14.Reverse().ToArgb()))).Reverse());
+                ColorTable15.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable15", @default.CommandPrompt.ColorTable15.Reverse().ToArgb()))).Reverse());
 
-                temp = GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "PopupColors", Convert.ToInt32($"{@default.CommandPrompt.PopupBackground:X}{@default.CommandPrompt.PopupForeground:X}", 16));
+                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "PopupColors", Convert.ToInt32($"{@default.CommandPrompt.PopupBackground:X}{@default.CommandPrompt.PopupForeground:X}", 16));
                 string d = Conversions.ToInteger(temp).ToString("X");
                 if (d.Count() == 1)
                     d = $"{0}{d}";
                 CMD_PopupBackgroundBar.Value = Convert.ToInt32(d[0].ToString(), 16);
                 CMD_PopupForegroundBar.Value = Convert.ToInt32(d[1].ToString(), 16);
 
-                temp = GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ScreenColors", Convert.ToInt32($"{@default.CommandPrompt.ScreenColorsBackground:X}{@default.CommandPrompt.ScreenColorsForeground:X}", 16));
+                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ScreenColors", Convert.ToInt32($"{@default.CommandPrompt.ScreenColorsBackground:X}{@default.CommandPrompt.ScreenColorsForeground:X}", 16));
                 string dx = Conversions.ToInteger(temp).ToString("X");
                 if (dx.Count() == 1)
                     dx = $"{0}{dx}";
                 CMD_AccentBackgroundBar.Value = Convert.ToInt32(dx[0].ToString(), 16);
                 CMD_AccentForegroundBar.Value = Convert.ToInt32(dx[1].ToString(), 16);
 
-                CMD_CursorSizeBar.Value = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorSize", 25));
+                CMD_CursorSizeBar.Value = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorSize", 25));
 
-                int fw = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", 400));
+                int fw = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", 400));
                 switch (fw)
                 {
                     case 0:
@@ -515,7 +515,7 @@ namespace WinPaletter
                 }
 
                 string FaceName;
-                temp = GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", @default.CommandPrompt.FaceName);
+                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", @default.CommandPrompt.FaceName);
                 if (Fonts.Exists(temp.ToString()))
                 {
                     FaceName = temp.ToString();
@@ -525,7 +525,7 @@ namespace WinPaletter
                     FaceName = @default.CommandPrompt.FaceName;
                 }
 
-                temp = GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", !@default.CommandPrompt.FontRaster ? 54 : 1);
+                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", !@default.CommandPrompt.FontRaster ? 54 : 1);
                 int fontFamily = (int)temp; // registry value
                 const int TMPF_TRUETYPE = 0x04;
 
@@ -534,7 +534,7 @@ namespace WinPaletter
                 // Optional: always treat "Terminal" as raster bitmap
                 if (FaceName.Equals("Terminal", StringComparison.OrdinalIgnoreCase)) CMD_RasterToggle.Checked = true;
 
-                temp = GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", (@default.CommandPrompt.PixelHeight << 16) | (0 & 0xFFFF));
+                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", (@default.CommandPrompt.PixelHeight << 16) | (0 & 0xFFFF));
 
                 int PixelHeight, PixelWidth;
 
@@ -579,13 +579,13 @@ namespace WinPaletter
                 else if (PixelWidth == 10 && PixelHeight == 18) RasterList.SelectedItem = "10x18";
                 else RasterList.SelectedItem = "8x12"; // default fallback
 
-                CMD_CursorColor.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorColor", @default.CommandPrompt.W10_1909_CursorColor.Reverse().ToArgb()))).Reverse());
+                CMD_CursorColor.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorColor", @default.CommandPrompt.W10_1909_CursorColor.Reverse().ToArgb()))).Reverse());
                 CMD_PreviewCUR2.BackColor = CMD_CursorColor.BackColor;
-                CMD_CursorStyle.SelectedIndex = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorType", @default.CommandPrompt.W10_1909_CursorType));
-                CMD_EnhancedTerminal.Checked = Conversions.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ForceV2", @default.CommandPrompt.W10_1909_ForceV2));
-                CMD_LineSelection.Checked = Conversions.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "LineSelection", @default.CommandPrompt.W10_1909_LineSelection));
-                CMD_TerminalScrolling.Checked = Conversions.ToBoolean(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "TerminalScrolling", @default.CommandPrompt.W10_1909_TerminalScrolling));
-                CMD_OpacityBar.Value = Conversions.ToInteger(GetReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", 255));
+                CMD_CursorStyle.SelectedIndex = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorType", @default.CommandPrompt.W10_1909_CursorType));
+                CMD_EnhancedTerminal.Checked = Conversions.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ForceV2", @default.CommandPrompt.W10_1909_ForceV2));
+                CMD_LineSelection.Checked = Conversions.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "LineSelection", @default.CommandPrompt.W10_1909_LineSelection));
+                CMD_TerminalScrolling.Checked = Conversions.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "TerminalScrolling", @default.CommandPrompt.W10_1909_TerminalScrolling));
+                CMD_OpacityBar.Value = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", 255));
 
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);
@@ -599,40 +599,40 @@ namespace WinPaletter
         {
             try
             {
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "EnableColorSelection", 1);
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", Color.FromArgb(0, ColorTable00.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", Color.FromArgb(0, ColorTable01.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable02", Color.FromArgb(0, ColorTable02.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable03", Color.FromArgb(0, ColorTable03.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable04", Color.FromArgb(0, ColorTable04.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable05", Color.FromArgb(0, ColorTable05.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable06", Color.FromArgb(0, ColorTable06.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable07", Color.FromArgb(0, ColorTable07.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable08", Color.FromArgb(0, ColorTable08.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable09", Color.FromArgb(0, ColorTable09.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable10", Color.FromArgb(0, ColorTable10.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable11", Color.FromArgb(0, ColorTable11.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable12", Color.FromArgb(0, ColorTable12.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable13", Color.FromArgb(0, ColorTable13.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable14", Color.FromArgb(0, ColorTable14.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable15", Color.FromArgb(0, ColorTable15.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "EnableColorSelection", 1);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", Color.FromArgb(0, ColorTable00.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", Color.FromArgb(0, ColorTable01.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable02", Color.FromArgb(0, ColorTable02.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable03", Color.FromArgb(0, ColorTable03.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable04", Color.FromArgb(0, ColorTable04.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable05", Color.FromArgb(0, ColorTable05.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable06", Color.FromArgb(0, ColorTable06.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable07", Color.FromArgb(0, ColorTable07.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable08", Color.FromArgb(0, ColorTable08.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable09", Color.FromArgb(0, ColorTable09.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable10", Color.FromArgb(0, ColorTable10.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable11", Color.FromArgb(0, ColorTable11.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable12", Color.FromArgb(0, ColorTable12.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable13", Color.FromArgb(0, ColorTable13.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable14", Color.FromArgb(0, ColorTable14.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable15", Color.FromArgb(0, ColorTable15.BackColor.Reverse()).ToArgb());
 
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "PopupColors", Convert.ToInt32($"{CMD_PopupBackgroundBar.Value:X}{CMD_PopupForegroundBar.Value:X}", 16));
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ScreenColors", Convert.ToInt32($"{CMD_AccentBackgroundBar.Value:X}{CMD_AccentForegroundBar.Value:X}", 16));
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorSize", CMD_CursorSizeBar.Value);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "PopupColors", Convert.ToInt32($"{CMD_PopupBackgroundBar.Value:X}{CMD_PopupForegroundBar.Value:X}", 16));
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ScreenColors", Convert.ToInt32($"{CMD_AccentBackgroundBar.Value:X}{CMD_AccentForegroundBar.Value:X}", 16));
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorSize", CMD_CursorSizeBar.Value);
 
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorColor", Color.FromArgb(0, CMD_CursorColor.BackColor.Reverse()).ToArgb());
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorType", CMD_CursorStyle.SelectedIndex);
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", CMD_OpacityBar.Value);
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ForceV2", CMD_EnhancedTerminal.Checked ? 1 : 0);
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "LineSelection", CMD_LineSelection.Checked ? 1 : 0);
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "TerminalScrolling", CMD_TerminalScrolling.Checked ? 1 : 0);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorColor", Color.FromArgb(0, CMD_CursorColor.BackColor.Reverse()).ToArgb());
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorType", CMD_CursorStyle.SelectedIndex);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", CMD_OpacityBar.Value);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ForceV2", CMD_EnhancedTerminal.Checked ? 1 : 0);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "LineSelection", CMD_LineSelection.Checked ? 1 : 0);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "TerminalScrolling", CMD_TerminalScrolling.Checked ? 1 : 0);
 
-                EditReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", FontName.Font.Name, RegistryValueKind.String);
+                WriteReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", FontName.Font.Name, RegistryValueKind.String);
 
                 if (!CMD_RasterToggle.Checked)
                 {
-                    EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", (CMD_FontPxHeight.Value << 16) | (0 & 0xFFFF));
+                    WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", (CMD_FontPxHeight.Value << 16) | (0 & 0xFFFF));
                 }
                 else
                 {
@@ -640,79 +640,79 @@ namespace WinPaletter
                     {
                         case "4x6":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 393220);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 393220);
                                 break;
                             }
 
                         case "6x8":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524294);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524294);
                                 break;
                             }
 
                         case "6x9":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524294);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524294);
                                 break;
                             }
 
                         case "8x8":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524296);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524296);
                                 break;
                             }
 
                         case "8x9":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524296);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524296);
                                 break;
                             }
 
                         case "16x8":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524304);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 524304);
                                 break;
                             }
 
                         case "5x12":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 786437);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 786437);
                                 break;
                             }
 
                         case "7x12":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 786439);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 786439);
                                 break;
                             }
 
                         case "8x12":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 0);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 0);
                                 break;
                             }
 
                         case "16x12":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 786448);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 786448);
                                 break;
                             }
 
                         case "12x16":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 1048588);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 1048588);
                                 break;
                             }
 
                         case "10x18":
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 1179658);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 1179658);
                                 break;
                             }
 
                         default:
                             {
-                                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 0);
+                                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", 0);
                                 break;
                             }
 
@@ -721,16 +721,16 @@ namespace WinPaletter
 
                 if (CMD_RasterToggle.Checked)
                 {
-                    EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", 48);
-                    EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", "Terminal", RegistryValueKind.String);
+                    WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", 48);
+                    WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", "Terminal", RegistryValueKind.String);
                 }
                 else
                 {
-                    EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", CMD_RasterToggle.Checked ? 1 : 54);
-                    EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", FontName.Font.Name, RegistryValueKind.String);
+                    WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", CMD_RasterToggle.Checked ? 1 : 54);
+                    WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", FontName.Font.Name, RegistryValueKind.String);
                 }
 
-                EditReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", CMD_FontWeightBox.SelectedIndex * 100);
+                WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", CMD_FontWeightBox.SelectedIndex * 100);
 
                 MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

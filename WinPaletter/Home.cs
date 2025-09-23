@@ -770,7 +770,7 @@ namespace WinPaletter
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Logs);
+            Process.Start(SysPaths.LogsDir);
         }
 
         private void winEdition_MouseEnter(object sender, EventArgs e)

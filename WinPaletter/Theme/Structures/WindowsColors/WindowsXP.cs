@@ -31,9 +31,9 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WindowsXP data structure</param>
         public void Load(WindowsXP @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP appearance preferences from registry and UxTheme.GetCurrentVS()");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP appearance preferences from registry and UxTheme.GetCurrentVS()");
 
-            Enabled = Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, @default.Enabled));
 
             VisualStyles.Load("XP", @default.VisualStyles);
         }
@@ -44,7 +44,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP appearance preferences into registry and by using UxTheme.EnableTheming and UxTheme.SetSystemVisualStyle");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP appearance preferences into registry and by using UxTheme.EnableTheming and UxTheme.SetSystemVisualStyle");
 
             SaveToggleState(treeView);
 
@@ -60,7 +60,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(TreeView treeView = null)
         {
-            EditReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, Enabled);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two WindowsXP structures are equal</summary>

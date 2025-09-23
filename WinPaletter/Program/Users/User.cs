@@ -170,7 +170,10 @@ namespace WinPaletter
 
                             // Undo impersonation after finishing operations on user profile
                             wic.Undo();
+
+                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(Serilog.Events.LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`." );
                         }
+
                         break;
                     }
             }
@@ -288,8 +291,8 @@ namespace WinPaletter
             bool SystemProfile = Domain.ToUpper() == "NT AUTHORITY";
 
             // Disable LimitBlankPasswordUse to allow login without password
-            bool OldValue = Convert.ToBoolean(GetReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", true));
-            EditReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", false);
+            bool OldValue = Convert.ToBoolean(ReadReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", true));
+            WriteReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", false);
 
             bool result;
             if (!SystemProfile)
@@ -312,7 +315,7 @@ namespace WinPaletter
                 Identity = new(Token);
 
                 // Restore LimitBlankPasswordUse to its original value
-                EditReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", OldValue);
+                WriteReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", OldValue);
                 return true;
             }
             else
@@ -322,7 +325,7 @@ namespace WinPaletter
                 Identity = WindowsIdentity.GetCurrent();
 
                 // Restore LimitBlankPasswordUse to its original value
-                EditReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", OldValue);
+                WriteReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", OldValue);
 
                 // Check if error should be ignored or not
                 if (!ignoreError)
@@ -670,11 +673,11 @@ namespace WinPaletter
             {
                 if (!OS.WXP && !OS.WVista && !OS.W7)
                 {
-                    result = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUserSID", result).ToString();
+                    result = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUserSID", result).ToString();
                 }
                 else
                 {
-                    string username = GetReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUser", string.Empty).ToString();
+                    string username = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUser", string.Empty).ToString();
                     username = username.Split('\\').Last();
                     result = GetUsers().Where(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).FirstOrDefault().Key;
                 }

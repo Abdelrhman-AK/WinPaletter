@@ -314,6 +314,12 @@ namespace WinPaletter.NativeMethods
         /// canceled the credentials dialog; otherwise, <see langword="false"/>.</description></item> </list></returns>
         public static (string domain, string username, string password, bool isPasswordCorrect, bool canceled) Login(IntPtr parent, string caption, string submessage, string domain, string userName)
         {
+            // First, try to update the token with existing credentials without password
+            if (User.UpdateToken(domain, userName, null, true))
+            {
+                return (domain, userName, null, true, false);
+            }
+
             (string domain, string username, string password, bool success) result = ShowCredentialDialog(parent, caption, submessage, domain, userName);
 
             // If the credentials dialog was canceled, return early

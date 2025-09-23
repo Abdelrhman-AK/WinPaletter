@@ -118,9 +118,9 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default VisualStyles data structure</param>
         public void Load(string edition, VisualStyles @default)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {edition} Visual Styles using UxTheme.GetCurrentVS");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {edition} Visual Styles using UxTheme.GetCurrentVS");
 
-            Enabled = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, @default.Enabled));
+            Enabled = Convert.ToBoolean(ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, @default.Enabled));
 
             Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
             string vsFile = ThemeTuple.Item1;
@@ -131,8 +131,8 @@ namespace WinPaletter.Theme.Structures
             ColorScheme = colorName.ToString();
             SizeScheme = sizeName.ToString();
 
-            OverrideColors = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", @default.OverrideColors));
-            OverrideSizes = Convert.ToBoolean(GetReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", @default.OverrideSizes));
+            OverrideColors = Convert.ToBoolean(ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", @default.OverrideColors));
+            OverrideSizes = Convert.ToBoolean(ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", @default.OverrideSizes));
 
             if (ThemeFile.ToLower() == SysPaths.MSSTYLES_Luna_Win.ToLower())
             {
@@ -161,7 +161,7 @@ namespace WinPaletter.Theme.Structures
             {
                 if (DWMAPI.IsCompositionEnabled())
                 {
-                    VisualStylesType = !Convert.ToBoolean(GetReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false)) ? DefaultVisualStyles.Aero : DefaultVisualStyles.AeroOpaque;
+                    VisualStylesType = !Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false)) ? DefaultVisualStyles.Aero : DefaultVisualStyles.AeroOpaque;
                 }
                 else
                 {
@@ -189,7 +189,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(string edition, TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows {edition} Visual Styles using UxTheme.SetSystemVisualStyle and writing into registry.");
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows {edition} Visual Styles using UxTheme.SetSystemVisualStyle and writing into registry.");
 
             SaveToggleState(edition, treeView);
 
@@ -207,10 +207,10 @@ namespace WinPaletter.Theme.Structures
 
                         // Don't use ThemeFile as it may be a .theme File
                         // Visual styles File is already set by UxTheme.SetSystemVisualStyle, get it again by using GetCurrentVS method to get correct msstyles File
-                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", UxTheme.GetCurrentVS().Item1, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "DllName", UxTheme.GetCurrentVS().Item1, RegistryValueKind.String);
 
-                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ColorScheme, RegistryValueKind.String);
-                        EditReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "SizeName", SizeScheme, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "ColorName", ColorScheme, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "SizeName", SizeScheme, RegistryValueKind.String);
                     }
                 }
 
@@ -227,9 +227,9 @@ namespace WinPaletter.Theme.Structures
                         _ => (0, 0, 0) // fallback, shouldn't occur
                     };
 
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", policy);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", composition);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", opaqueBlend);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "CompositionPolicy", policy);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "Composition", composition);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", opaqueBlend);
                 }
 
                 else if (VisualStylesType is DefaultVisualStyles.AeroLite)
@@ -237,10 +237,10 @@ namespace WinPaletter.Theme.Structures
                     UxTheme.EnableTheming(1);
                     UxTheme.SetSystemVisualStyle(SysPaths.MSSTYLES_AeroLite_Win, "NormalColor", "NormalSize", 0);
 
-                    DelKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
+                    DeleteKey(treeView, "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\HighContrast\\Pre-High Contrast Scheme");
 
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
-                    EditReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty, RegistryValueKind.String);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "LastHighContrastTheme", string.Empty, RegistryValueKind.String);
                 }
 
                 else if (VisualStylesType is DefaultVisualStyles.Classic)
@@ -267,8 +267,8 @@ namespace WinPaletter.Theme.Structures
                 }
 
 
-                EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", OverrideColors);
-                EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", OverrideSizes);
+                WriteReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", OverrideColors);
+                WriteReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", OverrideSizes);
             }
         }
 
@@ -410,7 +410,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView"></param>
         public void SaveToggleState(string edition, TreeView treeView = null)
         {
-            EditReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, Enabled);
+            WriteReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, Enabled);
         }
 
         /// <summary>Operator to check if two VisualStyles structures are equal</summary>

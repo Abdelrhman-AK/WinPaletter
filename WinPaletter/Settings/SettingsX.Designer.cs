@@ -319,6 +319,25 @@ namespace WinPaletter
             this.label45 = new System.Windows.Forms.Label();
             this.toggle18 = new WinPaletter.UI.WP.Toggle();
             this.PictureBox71 = new System.Windows.Forms.PictureBox();
+            this.tabPage24 = new System.Windows.Forms.TabPage();
+            this.groupBox59 = new WinPaletter.UI.WP.GroupBox();
+            this.button28 = new WinPaletter.UI.WP.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.pictureBox38 = new System.Windows.Forms.PictureBox();
+            this.groupBox57 = new WinPaletter.UI.WP.GroupBox();
+            this.checkBox18 = new WinPaletter.UI.WP.CheckBox();
+            this.checkBox17 = new WinPaletter.UI.WP.CheckBox();
+            this.checkBox15 = new WinPaletter.UI.WP.CheckBox();
+            this.pictureBox17 = new System.Windows.Forms.PictureBox();
+            this.alertBox24 = new WinPaletter.UI.WP.AlertBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.toggle41 = new WinPaletter.UI.WP.Toggle();
+            this.banner16 = new WinPaletter.UI.WP.Banner();
+            this.groupBox20 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.alertBox13 = new WinPaletter.UI.WP.AlertBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.toggle40 = new WinPaletter.UI.WP.Toggle();
             this.TabPage2 = new System.Windows.Forms.TabPage();
             this.banner8 = new WinPaletter.UI.WP.Banner();
             this.groupBox39 = new WinPaletter.UI.WP.GroupBox();
@@ -595,6 +614,13 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox39)).BeginInit();
             this.groupBox33.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox71)).BeginInit();
+            this.tabPage24.SuspendLayout();
+            this.groupBox59.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).BeginInit();
+            this.groupBox57.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
+            this.groupBox20.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
             this.TabPage2.SuspendLayout();
             this.groupBox39.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).BeginInit();
@@ -676,13 +702,14 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(5, "Control");
             this.ImageList1.Images.SetKeyName(6, "Store");
             this.ImageList1.Images.SetKeyName(7, "Log");
-            this.ImageList1.Images.SetKeyName(8, "Terminals");
-            this.ImageList1.Images.SetKeyName(9, "EP");
-            this.ImageList1.Images.SetKeyName(10, "ColorItemInfo");
-            this.ImageList1.Images.SetKeyName(11, "Storage");
-            this.ImageList1.Images.SetKeyName(12, "Users");
-            this.ImageList1.Images.SetKeyName(13, "Backup");
-            this.ImageList1.Images.SetKeyName(14, "Miscellaneous");
+            this.ImageList1.Images.SetKeyName(8, "AppLog");
+            this.ImageList1.Images.SetKeyName(9, "Terminals");
+            this.ImageList1.Images.SetKeyName(10, "EP");
+            this.ImageList1.Images.SetKeyName(11, "ColorItemInfo");
+            this.ImageList1.Images.SetKeyName(12, "Storage");
+            this.ImageList1.Images.SetKeyName(13, "Users");
+            this.ImageList1.Images.SetKeyName(14, "Backup");
+            this.ImageList1.Images.SetKeyName(15, "Miscellaneous");
             // 
             // titlebarExtender1
             // 
@@ -856,6 +883,7 @@ namespace WinPaletter
             this.TabControl1.Controls.Add(this.tabPage17);
             this.TabControl1.Controls.Add(this.TabPage15);
             this.TabControl1.Controls.Add(this.TabPage8);
+            this.TabControl1.Controls.Add(this.tabPage24);
             this.TabControl1.Controls.Add(this.TabPage2);
             this.TabControl1.Controls.Add(this.TabPage9);
             this.TabControl1.Controls.Add(this.TabPage19);
@@ -4370,6 +4398,258 @@ namespace WinPaletter
             this.PictureBox71.TabIndex = 54;
             this.PictureBox71.TabStop = false;
             // 
+            // tabPage24
+            // 
+            this.tabPage24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage24.Controls.Add(this.groupBox59);
+            this.tabPage24.Controls.Add(this.groupBox57);
+            this.tabPage24.Controls.Add(this.banner16);
+            this.tabPage24.Controls.Add(this.groupBox20);
+            this.tabPage24.Location = new System.Drawing.Point(199, 4);
+            this.tabPage24.Name = "tabPage24";
+            this.tabPage24.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage24.Size = new System.Drawing.Size(823, 591);
+            this.tabPage24.TabIndex = 17;
+            this.tabPage24.Text = "Application logging";
+            // 
+            // groupBox59
+            // 
+            this.groupBox59.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox59.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox59.Controls.Add(this.button28);
+            this.groupBox59.Controls.Add(this.label28);
+            this.groupBox59.Controls.Add(this.pictureBox38);
+            this.groupBox59.Location = new System.Drawing.Point(3, 257);
+            this.groupBox59.Name = "groupBox59";
+            this.groupBox59.Size = new System.Drawing.Size(817, 48);
+            this.groupBox59.TabIndex = 78;
+            // 
+            // button28
+            // 
+            this.button28.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button28.CustomColor = System.Drawing.Color.Empty;
+            this.button28.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button28.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button28.ForeColor = System.Drawing.Color.White;
+            this.button28.Image = null;
+            this.button28.ImageGlyph = null;
+            this.button28.ImageGlyphEnabled = false;
+            this.button28.Location = new System.Drawing.Point(674, 10);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(132, 28);
+            this.button28.TabIndex = 58;
+            this.button28.Text = "Show logs folder";
+            this.button28.UseVisualStyleBackColor = false;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
+            // 
+            // label28
+            // 
+            this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label28.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(41, 7);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(627, 34);
+            this.label28.TabIndex = 18;
+            this.label28.Text = "WinPaletter logs";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox38
+            // 
+            this.pictureBox38.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox38.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox38.Image")));
+            this.pictureBox38.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox38.Name = "pictureBox38";
+            this.pictureBox38.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox38.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox38.TabIndex = 54;
+            this.pictureBox38.TabStop = false;
+            // 
+            // groupBox57
+            // 
+            this.groupBox57.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox57.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox57.Controls.Add(this.checkBox18);
+            this.groupBox57.Controls.Add(this.checkBox17);
+            this.groupBox57.Controls.Add(this.checkBox15);
+            this.groupBox57.Controls.Add(this.pictureBox17);
+            this.groupBox57.Controls.Add(this.alertBox24);
+            this.groupBox57.Controls.Add(this.label21);
+            this.groupBox57.Controls.Add(this.toggle41);
+            this.groupBox57.Location = new System.Drawing.Point(3, 111);
+            this.groupBox57.Name = "groupBox57";
+            this.groupBox57.Size = new System.Drawing.Size(817, 140);
+            this.groupBox57.TabIndex = 77;
+            // 
+            // checkBox18
+            // 
+            this.checkBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox18.Checked = false;
+            this.checkBox18.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox18.ForeColor = System.Drawing.Color.White;
+            this.checkBox18.Location = new System.Drawing.Point(44, 104);
+            this.checkBox18.Name = "checkBox18";
+            this.checkBox18.Size = new System.Drawing.Size(762, 24);
+            this.checkBox18.TabIndex = 59;
+            this.checkBox18.Text = "Log registry deletion operations";
+            // 
+            // checkBox17
+            // 
+            this.checkBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox17.Checked = false;
+            this.checkBox17.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox17.ForeColor = System.Drawing.Color.White;
+            this.checkBox17.Location = new System.Drawing.Point(44, 74);
+            this.checkBox17.Name = "checkBox17";
+            this.checkBox17.Size = new System.Drawing.Size(762, 24);
+            this.checkBox17.TabIndex = 58;
+            this.checkBox17.Text = "Log registry write operations";
+            // 
+            // checkBox15
+            // 
+            this.checkBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox15.Checked = false;
+            this.checkBox15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox15.ForeColor = System.Drawing.Color.White;
+            this.checkBox15.Location = new System.Drawing.Point(44, 44);
+            this.checkBox15.Name = "checkBox15";
+            this.checkBox15.Size = new System.Drawing.Size(762, 24);
+            this.checkBox15.TabIndex = 57;
+            this.checkBox15.Text = "Log registry read operations";
+            // 
+            // pictureBox17
+            // 
+            this.pictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox17.Image")));
+            this.pictureBox17.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox17.Name = "pictureBox17";
+            this.pictureBox17.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox17.TabIndex = 56;
+            this.pictureBox17.TabStop = false;
+            // 
+            // alertBox24
+            // 
+            this.alertBox24.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Information;
+            this.alertBox24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox24.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox24.CenterText = true;
+            this.alertBox24.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox24.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox24.Image = null;
+            this.alertBox24.Location = new System.Drawing.Point(316, 14);
+            this.alertBox24.Name = "alertBox24";
+            this.alertBox24.Size = new System.Drawing.Size(444, 20);
+            this.alertBox24.TabIndex = 55;
+            this.alertBox24.TabStop = false;
+            this.alertBox24.Text = "It enlarges the log file, but this is recommended for more accurate diagnosis";
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(41, 7);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(269, 34);
+            this.label21.TabIndex = 18;
+            this.label21.Text = "Enable logging registry operations";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toggle41
+            // 
+            this.toggle41.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.toggle41.Checked = false;
+            this.toggle41.DarkLight_Toggler = false;
+            this.toggle41.Location = new System.Drawing.Point(766, 14);
+            this.toggle41.Name = "toggle41";
+            this.toggle41.Size = new System.Drawing.Size(40, 20);
+            this.toggle41.TabIndex = 0;
+            this.toggle41.CheckedChanged += new System.EventHandler(this.toggle41_CheckedChanged);
+            // 
+            // banner16
+            // 
+            this.banner16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.banner16.BackColor = System.Drawing.Color.Transparent;
+            this.banner16.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner16.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner16.Image")));
+            this.banner16.Location = new System.Drawing.Point(3, 3);
+            this.banner16.Name = "banner16";
+            this.banner16.Size = new System.Drawing.Size(817, 48);
+            this.banner16.TabIndex = 76;
+            this.banner16.TabStop = false;
+            this.banner16.Text = "Application logging";
+            // 
+            // groupBox20
+            // 
+            this.groupBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox20.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox20.Controls.Add(this.pictureBox13);
+            this.groupBox20.Controls.Add(this.alertBox13);
+            this.groupBox20.Controls.Add(this.label8);
+            this.groupBox20.Controls.Add(this.toggle40);
+            this.groupBox20.Location = new System.Drawing.Point(3, 57);
+            this.groupBox20.Name = "groupBox20";
+            this.groupBox20.Size = new System.Drawing.Size(817, 48);
+            this.groupBox20.TabIndex = 75;
+            // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox13.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox13.Image")));
+            this.pictureBox13.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox13.TabIndex = 56;
+            this.pictureBox13.TabStop = false;
+            // 
+            // alertBox13
+            // 
+            this.alertBox13.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Success;
+            this.alertBox13.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.alertBox13.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox13.CenterText = true;
+            this.alertBox13.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox13.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox13.Image = null;
+            this.alertBox13.Location = new System.Drawing.Point(443, 14);
+            this.alertBox13.Name = "alertBox13";
+            this.alertBox13.Size = new System.Drawing.Size(317, 20);
+            this.alertBox13.TabIndex = 55;
+            this.alertBox13.TabStop = false;
+            this.alertBox13.Text = "Recommended, change requires application restart";
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(41, 7);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(603, 34);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Enable application logging";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toggle40
+            // 
+            this.toggle40.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.toggle40.Checked = false;
+            this.toggle40.DarkLight_Toggler = false;
+            this.toggle40.Location = new System.Drawing.Point(766, 14);
+            this.toggle40.Name = "toggle40";
+            this.toggle40.Size = new System.Drawing.Size(40, 20);
+            this.toggle40.TabIndex = 0;
+            this.toggle40.CheckedChanged += new System.EventHandler(this.toggle40_CheckedChanged);
+            // 
             // TabPage2
             // 
             this.TabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
@@ -5459,11 +5739,11 @@ namespace WinPaletter
             this.button31.Image = null;
             this.button31.ImageGlyph = null;
             this.button31.ImageGlyphEnabled = false;
-            this.button31.Location = new System.Drawing.Point(597, 41);
+            this.button31.Location = new System.Drawing.Point(624, 41);
             this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(123, 28);
+            this.button31.Size = new System.Drawing.Size(96, 28);
             this.button31.TabIndex = 58;
-            this.button31.Text = "Show logs form";
+            this.button31.Text = "Show logs";
             this.button31.UseVisualStyleBackColor = false;
             this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
@@ -5912,7 +6192,7 @@ namespace WinPaletter
             this.banner11.Size = new System.Drawing.Size(817, 48);
             this.banner11.TabIndex = 205;
             this.banner11.TabStop = false;
-            this.banner11.Text = "Color item info";
+            this.banner11.Text = "Users and services";
             // 
             // groupBox48
             // 
@@ -6737,6 +7017,13 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox39)).EndInit();
             this.groupBox33.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox71)).EndInit();
+            this.tabPage24.ResumeLayout(false);
+            this.groupBox59.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).EndInit();
+            this.groupBox57.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
+            this.groupBox20.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
             this.TabPage2.ResumeLayout(false);
             this.groupBox39.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox31)).EndInit();
@@ -7258,5 +7545,24 @@ namespace WinPaletter
         internal PictureBox pictureBox70;
         internal UI.WP.Button button32;
         internal Label label98;
+        private TabPage tabPage24;
+        private UI.WP.GroupBox groupBox57;
+        internal PictureBox pictureBox17;
+        internal UI.WP.AlertBox alertBox24;
+        internal Label label21;
+        private UI.WP.Toggle toggle41;
+        private UI.WP.Banner banner16;
+        private UI.WP.GroupBox groupBox20;
+        internal PictureBox pictureBox13;
+        internal UI.WP.AlertBox alertBox13;
+        internal Label label8;
+        private UI.WP.Toggle toggle40;
+        private UI.WP.GroupBox groupBox59;
+        internal UI.WP.Button button28;
+        internal Label label28;
+        internal PictureBox pictureBox38;
+        private UI.WP.CheckBox checkBox18;
+        private UI.WP.CheckBox checkBox17;
+        private UI.WP.CheckBox checkBox15;
     }
 }

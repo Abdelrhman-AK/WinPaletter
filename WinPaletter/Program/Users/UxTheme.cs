@@ -80,7 +80,7 @@ namespace WinPaletter.NativeMethods
                     if (treeView != null)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"));
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"));
 
                     // Add the error message to the Exceptions.ThemeApply list
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), ex));
@@ -94,7 +94,7 @@ namespace WinPaletter.NativeMethods
             if (treeView != null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()), "dll");
 
-            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()));
+            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()));
         }
 
         /// <summary>
