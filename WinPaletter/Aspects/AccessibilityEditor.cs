@@ -226,7 +226,7 @@ namespace WinPaletter
 
         private void RadioImage1_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((RadioImage)sender).Checked))
+            if ((sender as RadioImage).Checked)
             {
                 PictureBox33.Image = Accessibility_Vision.CF_Img_Normal;
                 PictureBox32.Image = Accessibility_Vision.CF_Pie_Normal;
@@ -259,7 +259,7 @@ namespace WinPaletter
 
         private void RadioImage7_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((RadioImage)sender).Checked))
+            if ((sender as RadioImage).Checked)
             {
                 PictureBox33.Image = Accessibility_Vision.CF_Img_Normal.Invert();
                 PictureBox32.Image = Accessibility_Vision.CF_Pie_Normal.Invert();
@@ -292,7 +292,7 @@ namespace WinPaletter
 
         private void RadioImage5_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((RadioImage)sender).Checked))
+            if ((sender as RadioImage).Checked)
             {
                 PictureBox33.Image = Accessibility_Vision.CF_Img_Grayscale;
                 PictureBox32.Image = Accessibility_Vision.CF_Pie_Grayscale;
@@ -325,7 +325,7 @@ namespace WinPaletter
 
         private void RadioImage6_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((RadioImage)sender).Checked))
+            if ((sender as RadioImage).Checked)
             {
                 PictureBox33.Image = Accessibility_Vision.CF_Img_Grayscale.Invert();
                 PictureBox32.Image = Accessibility_Vision.CF_Pie_Grayscale.Invert();
@@ -358,7 +358,7 @@ namespace WinPaletter
 
         private void RadioImage2_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((RadioImage)sender).Checked))
+            if ((sender as RadioImage).Checked)
             {
                 PictureBox33.Image = Accessibility_Vision.CF_Img_Red_green_green_weak_deuteranopia;
                 PictureBox32.Image = Accessibility_Vision.CF_Pie_Red_green_green_weak_deuteranopia;
@@ -391,7 +391,7 @@ namespace WinPaletter
 
         private void RadioImage3_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((RadioImage)sender).Checked))
+            if ((sender as RadioImage).Checked)
             {
                 PictureBox33.Image = Accessibility_Vision.CF_Img_Red_green_red_weak_protanopia;
                 PictureBox32.Image = Accessibility_Vision.CF_Pie_Red_green_red_weak_protanopia;
@@ -424,7 +424,7 @@ namespace WinPaletter
 
         private void RadioImage4_CheckedChanged(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(((RadioImage)sender).Checked))
+            if ((sender as RadioImage).Checked)
             {
                 PictureBox33.Image = Accessibility_Vision.CF_Img_Blue_yellow_tritanopia;
                 PictureBox32.Image = Accessibility_Vision.CF_Pie_Blue_yellow__tritanopia;

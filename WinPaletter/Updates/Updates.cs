@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +31,7 @@ namespace WinPaletter
         /// <summary>
         /// The size of the update executable.
         /// </summary>
-        public decimal UpdateSize;
+        public float UpdateSize;
 
         /// <summary>
         /// The release date of the update.
@@ -108,8 +107,8 @@ namespace WinPaletter
                         {
                             // Get the URL of the update executable, the size of the update executable and the release date of the update.
                             url = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[4];
-                            UpdateSize = Conversions.ToDecimal(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
-                            ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
+                            UpdateSize = float.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
+                            ReleaseDate = DateTime.FromBinary(long.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
 
                             // Hide the update information.
                             Label7.Text = $"{UpdateSize} {Program.Lang.Strings.General.MBSizeUnit}";
@@ -259,8 +258,8 @@ namespace WinPaletter
                 if (new Version(ver) > new Version(Program.Version))
                 {
                     url = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[4];
-                    UpdateSize = Conversions.ToDecimal(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
-                    ReleaseDate = DateTime.FromBinary(Conversions.ToLong(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
+                    UpdateSize = float.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
+                    ReleaseDate = DateTime.FromBinary(long.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
 
                     Label7.Text = $"{UpdateSize} {Program.Lang.Strings.General.MBSizeUnit}";
                     Label9.Text = $"{ReleaseDate.ToLongDateString()} {ReleaseDate.ToLongTimeString()}";

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -273,17 +272,17 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            ButtonR1.FocusRectWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
+            ButtonR1.FocusRectWidth = (sender as TrackBarX).Value;
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            ButtonR1.FocusRectHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
+            ButtonR1.FocusRectHeight = (sender as TrackBarX).Value;
         }
 
         private void trackBarX1_ValueChanged_1(object sender, EventArgs e)
         {
-            Panel2.Width = Conversions.ToInteger(((TrackBarX)sender).Value);
+            Panel2.Width = (sender as TrackBarX).Value;
         }
 
         private void button21_Click(object sender, EventArgs e)

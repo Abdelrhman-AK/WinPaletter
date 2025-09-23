@@ -48,7 +48,6 @@ namespace WinPaletter.Dialogs
             ShowDialog();
         }
 
-
         void ApplyPreview(Form f)
         {
             if (f == Forms.Win12Colors) Forms.Win12Colors.UpdatePreview();

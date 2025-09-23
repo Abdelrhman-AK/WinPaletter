@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -227,7 +226,7 @@ namespace WinPaletter
                     {
                         // If there is a dot in JObj node value, then there is a specific mentioned property,
                         // if not, then it is a "Text" property only.
-                        if (Conversions.ToBoolean(ctrl.Key.Contains(".")))
+                        if (ctrl.Key.Contains("."))
                         {
                             ControlName = ctrl.Key.Split('.')[0];
                             Prop = ctrl.Key.Split('.')[1] ?? "Text";
@@ -290,7 +289,7 @@ namespace WinPaletter
                     {
                         // If there is a dot in JObj node value, then there is a specific mentioned property,
                         // if not, then it is a "Text" property only.
-                        if (Conversions.ToBoolean(ctrl.Key.Contains(".")))
+                        if (ctrl.Key.Contains("."))
                         {
                             ControlName = ctrl.Key.Split('.')[0];
                             Prop = ctrl.Key.Split('.')[1] ?? "Text";

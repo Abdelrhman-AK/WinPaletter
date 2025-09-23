@@ -1,6 +1,5 @@
 ﻿using Devcorp.Controls.VisualStyles;
 using libmsstyle;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -821,32 +820,32 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.CaptionHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.CaptionHeight = (sender as TrackBarX).Value;
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.CaptionWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.CaptionWidth = (sender as TrackBarX).Value;
         }
 
         private void trackBarX3_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.BorderWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.BorderWidth = (sender as TrackBarX).Value;
         }
 
         private void trackBarX4_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.PaddedBorderWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.PaddedBorderWidth = (sender as TrackBarX).Value;
         }
 
         private void trackBarX5_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.SmCaptionHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.SmCaptionHeight = (sender as TrackBarX).Value;
         }
 
         private void trackBarX6_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.SmCaptionWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.SmCaptionWidth = (sender as TrackBarX).Value;
         }
 
         private void trackBarX7_ValueChanged(object sender, EventArgs e)
@@ -866,17 +865,17 @@ namespace WinPaletter
 
         private void trackBarX12_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.MenuHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.MenuHeight = (sender as TrackBarX).Value;
         }
 
         private void trackBarX14_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.ScrollHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.ScrollHeight = (sender as TrackBarX).Value;
         }
 
         private void trackBarX15_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.ScrollWidth = Conversions.ToInteger(((TrackBarX)sender).Value);
+            windowMetrics1.ScrollWidth = (sender as TrackBarX).Value;
         }
 
         private void undo_Click(object sender, EventArgs e)

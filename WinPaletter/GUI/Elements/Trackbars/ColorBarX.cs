@@ -156,11 +156,11 @@ namespace WinPaletter.UI.WP
 
                         if (_animateChanges)
                         {
-                            Transition.With(this, nameof(Value), Convert.ToInt32(value)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                            Transition.With(this, nameof(Value), (int)value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                         }
                         else
                         {
-                            Value = Convert.ToInt32(value);
+                            Value = (int)value;
                         }
                     }
                 }

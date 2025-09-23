@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -249,8 +248,8 @@ namespace WinPaletter
                             {
                                 try
                                 {
-                                    int conversion_0 = Convert.ToInt32(existingValue);
-                                    int conversion_1 = Convert.ToInt32(targetValue);
+                                    int conversion_0 = (int)existingValue;
+                                    int conversion_1 = (int)targetValue;
                                     skip = conversion_0.Equals(conversion_1);
                                 }
                                 catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
@@ -259,8 +258,8 @@ namespace WinPaletter
                             {
                                 try
                                 {
-                                    int conversion_0 = Convert.ToInt32(existingValue);
-                                    int conversion_1 = Convert.ToBoolean(targetValue) ? 1 : 0;
+                                    int conversion_0 = (int)existingValue;
+                                    int conversion_1 = (bool)targetValue ? 1 : 0;
                                     skip = conversion_0.Equals(conversion_1);
                                 }
                                 catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
@@ -275,8 +274,8 @@ namespace WinPaletter
                             {
                                 try
                                 {
-                                    ulong conversion_0 = Convert.ToUInt64(existingValue);
-                                    ulong conversion_1 = Convert.ToUInt64(targetValue);
+                                    ulong conversion_0 = (ulong)existingValue;
+                                    ulong conversion_1 = (ulong)targetValue;
                                     skip = conversion_0.Equals(conversion_1);
                                 }
                                 catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
@@ -285,8 +284,8 @@ namespace WinPaletter
                             {
                                 try
                                 {
-                                    ulong conversion_0 = Convert.ToUInt64(existingValue);
-                                    ulong conversion_1 = Convert.ToBoolean(targetValue) ? 1u : 0u;
+                                    ulong conversion_0 = (ulong)existingValue;
+                                    ulong conversion_1 = (bool)targetValue ? 1u : 0u;
                                     skip = conversion_0.Equals(conversion_1);
                                 }
                                 catch { } // Conversion and comparison failed. Anyway, we won't skip setting registry.
@@ -359,7 +358,7 @@ namespace WinPaletter
                 // Processing log text format
                 if (Value is bool)
                 {
-                    valueLog = (Conversions.ToBoolean(Value) ? 1 : 0).ToString();
+                    valueLog = ((bool)Value ? 1 : 0).ToString();
                 }
                 else if (Value is byte[] v)
                 {
@@ -457,7 +456,7 @@ namespace WinPaletter
                 string valueLog;
                 if (Value is bool)
                 {
-                    valueLog = (Conversions.ToBoolean(Value) ? 1 : 0).ToString();
+                    valueLog = ((bool)Value ? 1 : 0).ToString();
                 }
                 else if (Value is byte[] v)
                 {
@@ -465,7 +464,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    valueLog = Convert.ToString(Value);
+                    valueLog = Value.ToString();
                 }
 
                 if (string.IsNullOrWhiteSpace(valueNameLog)) valueNameLog = "(default)";
@@ -799,14 +798,14 @@ namespace WinPaletter
                     case RegistryValueKind.DWord:
                         {
                             regTemplate = "add \"{0}\" /v \"{1}\" /t REG_DWORD /d {2} /f";
-                            _Value = Conversions.ToInteger(Value).ToStringDWord();
+                            _Value = ((int)Value).ToStringDWord();
                             break;
                         }
 
                     case RegistryValueKind.QWord:
                         {
                             regTemplate = "add \"{0}\" /v \"{1}\" /t REG_QWORD /d {2} /f";
-                            _Value = Conversions.ToInteger(Value).ToStringQWord();
+                            _Value = ((int)Value).ToStringQWord();
                             break;
                         }
 

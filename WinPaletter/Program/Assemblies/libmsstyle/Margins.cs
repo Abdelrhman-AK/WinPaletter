@@ -65,7 +65,7 @@ namespace libmsstyle
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string[] c = (value as string).Split(new char[] { ';' });
+            string[] c = (value as string).Split([';']);
             if (c.Length != 4)
             {
                 throw new FormatException("Missing component! Margins require 'left', 'top', 'right' and 'bottom'.");

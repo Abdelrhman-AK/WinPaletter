@@ -60,17 +60,17 @@ namespace WinPaletter
                 /// <summary>
                 /// Width of main form (int)
                 /// </summary>
-                public object MainFormWidth = 1110;
+                public int MainFormWidth = 1110;
 
                 /// <summary>
                 /// Height of main form (int)
                 /// </summary>
-                public object MainFormHeight = 725;
+                public int MainFormHeight = 725;
 
                 /// <summary>
                 /// Status of main form, to be remembered at WinPaletter startup
                 /// </summary>
-                public object MainFormStatus = FormWindowState.Normal;
+                public FormWindowState MainFormStatus = FormWindowState.Normal;
 
                 /// <summary>
                 /// Display aspects cards in the main form in compact mode

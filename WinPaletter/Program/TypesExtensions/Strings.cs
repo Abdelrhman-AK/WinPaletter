@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -145,7 +144,7 @@ namespace WinPaletter.TypesExtensions
             for (int i = 0, loopTo = numChars.Length - 1; i <= loopTo; i++)
             {
                 if (!string.IsNullOrWhiteSpace(numChars[i]))
-                    result[i] = Conversions.ToByte(numChars[i]);
+                    result[i] = byte.Parse(numChars[i]);
                 else
                     result[i] = 0;
             }

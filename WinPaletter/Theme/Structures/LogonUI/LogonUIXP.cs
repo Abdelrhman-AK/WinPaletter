@@ -77,7 +77,7 @@ namespace WinPaletter.Theme.Structures
                     object temp = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0");
                     if (temp.ToString().Split(' ').Count() == 3)
                     {
-                        BackColor = Color.FromArgb(255, Convert.ToInt32(temp.ToString().Split(' ')[0]), Convert.ToInt32(temp.ToString().Split(' ')[1]), Convert.ToInt32(temp.ToString().Split(' ')[2]));
+                        BackColor = Color.FromArgb(255, int.Parse(temp.ToString().Split(' ')[0]), int.Parse(temp.ToString().Split(' ')[1]), int.Parse(temp.ToString().Split(' ')[2]));
                     }
                     else
                     {

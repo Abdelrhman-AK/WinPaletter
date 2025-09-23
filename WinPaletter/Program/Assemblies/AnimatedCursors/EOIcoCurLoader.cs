@@ -206,7 +206,7 @@ public class EOIcoCurLoader
         // Make sure that the "ImageIndex" parameter is ok
         if (ImageIndex >= hdr.Count)
         {
-            ErrorMsg = $"Invalid image index of {Convert.ToString(ImageIndex)} was passed to GetImage";
+            ErrorMsg = $"Invalid image index of {ImageIndex} was passed to GetImage";
             return null;
         }
 
@@ -320,7 +320,7 @@ public class EOIcoCurLoader
         // Make sure that the "ImageIndex" parameter is ok
         if (ImageIndex >= hdr.Count)
         {
-            ErrorMsg = $"Invalid image index passed to GetImageDimensions.\r\nImage index: {Convert.ToString(ImageIndex)}\r\nAvailable image count: {Convert.ToString(hdr.Count)}";
+            ErrorMsg = $"Invalid image index passed to GetImageDimensions.\r\nImage index: {ImageIndex}\r\nAvailable image count: {Convert.ToString(hdr.Count)}";
             return false;
         }
 
@@ -339,7 +339,7 @@ public class EOIcoCurLoader
         }
         catch (Exception)
         {
-            ErrorMsg = $"Could not seek to appropriate position in icon stream data.\r\nThe file data may be truncated, inaccessible or invalid.\r\nAttempted seek position: {Convert.ToString(SeekPos)}";
+            ErrorMsg = $"Could not seek to appropriate position in icon stream data.\r\nThe file data may be truncated, inaccessible or invalid.\r\nAttempted seek position: {SeekPos}";
             // Seek back to original stream position
             m_reader.BaseStream.Seek(oldPos, SeekOrigin.Begin);
             return false;

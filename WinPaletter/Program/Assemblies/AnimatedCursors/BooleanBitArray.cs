@@ -32,7 +32,7 @@ namespace EOFC
             if (null == m_data)
             {
                 throw new OutOfMemoryException(
-                    $"Could not allocate {Convert.ToString(byteSize)} bytes of memory for boolean bit array");
+                    $"Could not allocate {byteSize} bytes of memory for boolean bit array");
             }
             Array.Clear(m_data, 0, m_data.Length);
         }

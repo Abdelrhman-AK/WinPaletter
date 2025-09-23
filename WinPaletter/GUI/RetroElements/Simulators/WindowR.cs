@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
@@ -863,7 +862,7 @@ namespace WinPaletter.UI.Retro
 
         private void AdjustButtonSizes()
         {
-            BtnHeight = Conversions.ToInteger(Math.Max(_Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5));
+            BtnHeight = Math.Max(_Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5);
             BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5);
 
             if (_CloseBtn != null) _CloseBtn.Size = new(BtnWidth, BtnHeight);

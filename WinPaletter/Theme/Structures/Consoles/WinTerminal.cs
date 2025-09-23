@@ -724,7 +724,7 @@ namespace WinPaletter.Theme.Structures
                 {
                     if (reader.TokenType == JsonToken.Integer)
                     {
-                        int intValue = Convert.ToInt32(reader.Value);
+                        int intValue = (int)reader.Value;
 
                         // Check specific ranges and map them to suitable enum values
                         if (intValue >= 100 && intValue <= 200)

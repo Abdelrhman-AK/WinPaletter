@@ -1,5 +1,4 @@
 ﻿using Serilog.Events;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -94,7 +93,7 @@ namespace WinPaletter.Theme
                     {
                         if (!u.All(char.IsDigit)) inx = false;
                     }
-                    if (inx) ls.Add(Color.FromArgb(255, Convert.ToInt32(c.Split(' ')[0]), Convert.ToInt32(c.Split(' ')[1]), Convert.ToInt32(c.Split(' ')[2])));
+                    if (inx) ls.Add(Color.FromArgb(255, int.Parse(c.Split(' ')[0]), int.Parse(c.Split(' ')[1]), int.Parse(c.Split(' ')[2])));
                 }
             }
 

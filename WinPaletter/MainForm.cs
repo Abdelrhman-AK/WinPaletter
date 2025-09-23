@@ -36,9 +36,9 @@ namespace WinPaletter
             closeSignalReceivedFromHomePage = false;
 
             // Set form properties.
-            Size = new(Convert.ToInt32(Program.Settings.General.MainFormWidth), Convert.ToInt32(Program.Settings.General.MainFormHeight));
+            Size = new(Program.Settings.General.MainFormWidth, Program.Settings.General.MainFormHeight);
             CenterToScreen();
-            WindowState = (FormWindowState)Convert.ToInt32(Program.Settings.General.MainFormStatus);
+            WindowState = Program.Settings.General.MainFormStatus;
 
             // Start showing home page tab.
             tabControl1.Visible = false;

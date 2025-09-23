@@ -15,6 +15,7 @@ namespace WinPaletter
     {
         Bitmap back_unblurred = null;
         Bitmap back_blurred = null;
+        float previewWidthFactor, previewHeightFactor;
 
         /// <summary>
         /// Represents the LogonUI structure for version 10.x of the theme.
@@ -177,6 +178,9 @@ namespace WinPaletter
                 label2.Font = new("Segoe UI", label2.Font.Size, label2.Font.Style);
             }
 
+            previewWidthFactor = tabs_preview_1.Width / 1920f;
+            previewHeightFactor = tabs_preview_1.Height / 1080f;
+
             LoadFromTM(LogonUI10x);
 
             // Make them all black after ApplyStyle(this);
@@ -256,11 +260,19 @@ namespace WinPaletter
 
                 if (mostRecentFile != null && File.Exists(mostRecentFile))
                 {
-                    return BitmapMgr.Load(mostRecentFile).Resize(tabs_preview_1.Size);
+                    using (Bitmap b = BitmapMgr.Load(mostRecentFile))
+                    using (Bitmap b0 = b.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor)))
+                    {
+                        return b0.FillInSize(tabs_preview_1.Size);
+                    }
                 }
                 else if (File.Exists(defaultLockScreen))
                 {
-                    return BitmapMgr.Load(defaultLockScreen).Resize(tabs_preview_1.Size);
+                    using (Bitmap b = BitmapMgr.Load(defaultLockScreen))
+                    using (Bitmap b0 = b.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor)))
+                    {
+                        return b0.FillInSize(tabs_preview_1.Size);
+                    }
                 }
                 else
                 {

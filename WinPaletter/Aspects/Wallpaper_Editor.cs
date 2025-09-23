@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using Ookii.Dialogs.WinForms;
+﻿using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -881,7 +880,7 @@ namespace WinPaletter
         {
             ColorsExtensions.HSL HSL_ = new();
             HSL_ = Color.FromArgb(0, 255, 240).ToHSL();
-            HSL_.H = Conversions.ToInteger(((ColorBarX)sender).Value);
+            HSL_.H = (sender as ColorBarX).Value;
             HSL_.S = 1f;
             HSL_.L = 0.5f;
 

@@ -1222,22 +1222,22 @@ namespace WinPaletter.UI.Controllers
                         using (GraphicsPath path = Rect.Round(Program.Style.Radius))
                         using (Region reg = new(path))
                         using (GraphicsPath gp = new())
+                        {
+                            int i = Math.Max(Width, Height);
+                            Point px = PointToClient(MousePosition);
+                            Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
+                            gp.AddEllipse(MouseCircle);
+
+                            G.SetClip(gp);
+
+                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                             {
-                                int i = Math.Max(Width, Height);
-                                Point px = PointToClient(MousePosition);
-                                Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
-                                gp.AddEllipse(MouseCircle);
-
-                                G.SetClip(gp);
-
-                                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                                {
-                                    using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark())) { G.DrawString(S, F, br, RectX, sf); }
-                                }
-
-                                G.ResetClip();
+                                using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark())) { G.DrawString(S, F, br, RectX, sf); }
                             }
+
+                            G.ResetClip();
                         }
+                    }
 
                     using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
                     {

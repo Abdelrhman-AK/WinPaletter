@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1834,12 +1833,12 @@ namespace WinPaletter
 
         private void TerCursorHeightBar_ValueChanged(object sender, EventArgs e)
         {
-            Terminal1.CursorHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
+            Terminal1.CursorHeight = (sender as TrackBarX).Value;
 
             if (!IsShown) return;
 
             WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.CursorHeight = Conversions.ToInteger(((TrackBarX)sender).Value);
+            temp.CursorHeight = (sender as TrackBarX).Value;
         }
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)

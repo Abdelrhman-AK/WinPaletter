@@ -2795,7 +2795,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -2840,7 +2840,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -2885,7 +2885,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -2930,7 +2930,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -2975,7 +2975,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -3020,7 +3020,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -3065,7 +3065,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -3113,7 +3113,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -3161,7 +3161,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {
@@ -3209,7 +3209,7 @@ namespace WinPaletter.Theme
                             string tempFile = $"{SysPaths.appData}\\Temp\\{iconName}";
 
                             string iconFile = TargetProperty.Split(',')[0];
-                            int iconIndex = TargetProperty.Contains(",") ? Convert.ToInt32(TargetProperty.Split(',')[1]) : 0;
+                            int iconIndex = TargetProperty.Contains(",") ? int.Parse(TargetProperty.Split(',')[1]) : 0;
 
                             if (File.Exists(iconFile))
                             {

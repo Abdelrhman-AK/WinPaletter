@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -407,8 +406,6 @@ namespace WinPaletter
                 return;
             }
 
-            object temp;
-
             using (Manager @default = Default.Get(Program.WindowStyle))
             {
                 ColorTable00.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", @default.CommandPrompt.ColorTable00.Reverse()).Reverse());
@@ -428,17 +425,15 @@ namespace WinPaletter
                 ColorTable14.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable14", @default.CommandPrompt.ColorTable14.Reverse()).Reverse());
                 ColorTable15.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable15", @default.CommandPrompt.ColorTable15.Reverse()).Reverse());
 
-                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "PopupColors", Convert.ToInt32($"{@default.CommandPrompt.PopupBackground:X}{@default.CommandPrompt.PopupForeground:X}", 16));
-                string d = Conversions.ToInteger(temp).ToString("X");
+                string d = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "PopupColors", Convert.ToInt32($"{@default.CommandPrompt.PopupBackground:X}{@default.CommandPrompt.PopupForeground:X}", 16)).ToString("X");
                 if (d.Count() == 1) d = $"{0}{d}";
 
                 CMD_PopupBackgroundBar.Value = Convert.ToInt32(d[0].ToString(), 16);
                 CMD_PopupForegroundBar.Value = Convert.ToInt32(d[1].ToString(), 16);
 
-                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ScreenColors", Convert.ToInt32($"{@default.CommandPrompt.ScreenColorsBackground:X}{@default.CommandPrompt.ScreenColorsForeground:X}", 16));
-                string dx = Conversions.ToInteger(temp).ToString("X");
-                if (dx.Count() == 1)
-                    dx = $"{0}{dx}";
+                string dx = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ScreenColors", Convert.ToInt32($"{@default.CommandPrompt.ScreenColorsBackground:X}{@default.CommandPrompt.ScreenColorsForeground:X}", 16)).ToString("X");
+                if (dx.Count() == 1) dx = $"{0}{dx}";
+
                 CMD_AccentBackgroundBar.Value = Convert.ToInt32(dx[0].ToString(), 16);
                 CMD_AccentForegroundBar.Value = Convert.ToInt32(dx[1].ToString(), 16);
 
@@ -514,19 +509,11 @@ namespace WinPaletter
                         }
                 }
 
-                string FaceName;
-                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", @default.CommandPrompt.FaceName);
-                if (Fonts.Exists(temp.ToString()))
-                {
-                    FaceName = temp.ToString();
-                }
-                else
-                {
-                    FaceName = @default.CommandPrompt.FaceName;
-                }
+                string FaceName = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FaceName", @default.CommandPrompt.FaceName);
 
-                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", !@default.CommandPrompt.FontRaster ? 54 : 1);
-                int fontFamily = (int)temp; // registry value
+                FaceName = !Fonts.Exists(FaceName) ? @default.CommandPrompt.FaceName : FaceName;
+
+                int fontFamily = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontFamily", !@default.CommandPrompt.FontRaster ? 54 : 1);
                 const int TMPF_TRUETYPE = 0x04;
 
                 CMD_RasterToggle.Checked = (fontFamily & TMPF_TRUETYPE) == 0;
@@ -534,19 +521,19 @@ namespace WinPaletter
                 // Optional: always treat "Terminal" as raster bitmap
                 if (FaceName.Equals("Terminal", StringComparison.OrdinalIgnoreCase)) CMD_RasterToggle.Checked = true;
 
-                temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", (@default.CommandPrompt.PixelHeight << 16) | (0 & 0xFFFF));
+                int fontSize = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", (@default.CommandPrompt.PixelHeight << 16) | (0 & 0xFFFF));
 
                 int PixelHeight, PixelWidth;
 
-                if ((int)temp == 0 & !CMD_RasterToggle.Checked)
+                if (fontSize == 0 & !CMD_RasterToggle.Checked)
                 {
                     PixelHeight = @default.CommandPrompt.PixelHeight;
                     PixelWidth = @default.CommandPrompt.PixelWidth;
                 }
                 else
                 {
-                    PixelHeight = ((int)temp >> 16) & 0xFFFF;
-                    PixelWidth = (int)temp & 0xFFFF;
+                    PixelHeight = (fontSize >> 16) & 0xFFFF;
+                    PixelWidth = fontSize & 0xFFFF;
                 }
 
                 if (!CMD_RasterToggle.Checked)
