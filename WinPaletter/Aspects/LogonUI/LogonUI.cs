@@ -1,5 +1,4 @@
-﻿using Ookii.Dialogs.WinForms;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,7 +7,6 @@ using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme;
-using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -239,7 +237,7 @@ namespace WinPaletter
             {
                 string mostRecentFile = null;
 
-                string defaultLockScreen = ReadReg<string>("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg");
+                string defaultLockScreen = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg");
 
                 // Get the path to the current user's lock screen image
                 string lockScreenPath = Path.Combine(SysPaths.LocalAppData, "Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets");
@@ -331,7 +329,7 @@ namespace WinPaletter
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            textBox1.Text = ReadReg<string>("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty);
+            textBox1.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -346,7 +344,7 @@ namespace WinPaletter
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string defaultLockScreen = ReadReg<string>("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg");
+            string defaultLockScreen = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization", "LockScreenImage", $"{SysPaths.Windows}\\Web\\Screen\\img100.jpg");
             textBox1.Text = defaultLockScreen;
         }
     }

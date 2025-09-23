@@ -221,7 +221,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Effects settings from registry and User32.SystemParametersInfo");
 
-            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, true));
+            Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, true);
 
             if (!SystemParametersInfo(SPI.SPI_GETDROPSHADOW, 0, ref WindowShadow, SPIF.SPIF_NONE))
                 WindowShadow = @default.WindowShadow;
@@ -302,17 +302,17 @@ namespace WinPaletter.Theme.Structures
                 TooltipFade = @default.TooltipFade;
             }
 
-            IconsShadow = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", @default.IconsShadow));
-            IconsDesktopTranslSel = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", @default.IconsDesktopTranslSel));
-            NotificationDuration = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", @default.NotificationDuration));
-            ShowSecondsInSystemClock = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", @default.ShowSecondsInSystemClock));
-            BalloonNotifications = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", @default.BalloonNotifications));
-            PaintDesktopVersion = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", @default.PaintDesktopVersion));
-            ClassicVolMixer = !Convert.ToBoolean(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", !@default.ClassicVolMixer));
-            EnableAeroPeek = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", @default.EnableAeroPeek));
-            AlwaysHibernateThumbnails = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", @default.AlwaysHibernateThumbnails));
+            IconsShadow = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewShadow", @default.IconsShadow);
+            IconsDesktopTranslSel = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ListviewAlphaSelect", @default.IconsDesktopTranslSel);
+            NotificationDuration = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "MessageDuration", @default.NotificationDuration);
+            ShowSecondsInSystemClock = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowSecondsInSystemClock", @default.ShowSecondsInSystemClock);
+            BalloonNotifications = ReadReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "EnableLegacyBalloonNotifications", @default.BalloonNotifications);
+            PaintDesktopVersion = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "PaintDesktopVersion", @default.PaintDesktopVersion);
+            ClassicVolMixer = !ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC", "EnableMtcUvc", !@default.ClassicVolMixer);
+            EnableAeroPeek = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableAeroPeek", @default.EnableAeroPeek);
+            AlwaysHibernateThumbnails = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AlwaysHibernateThumbnails", @default.AlwaysHibernateThumbnails);
 
-            bool temp = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", !@default.ShakeToMinimize));
+            bool temp = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DisallowShaking", !@default.ShakeToMinimize);
             ShakeToMinimize = !temp;
 
             try
@@ -333,7 +333,7 @@ namespace WinPaletter.Theme.Structures
                 SysListView32 = @default.SysListView32;
             }
 
-            if (ReadReg(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", null) is null)
+            if (ReadReg<object>(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BootControl", "BootProgressAnimation", null) is null)
             {
                 Win11BootDots = !OS.W12 && !OS.W11;
             }
@@ -348,7 +348,7 @@ namespace WinPaletter.Theme.Structures
                 };
             }
 
-            Win11ExplorerBar = (ExplorerBar)Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", @default.Win11ExplorerBar));
+            Win11ExplorerBar = (ExplorerBar)ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", "Win11ExplorerBar", @default.Win11ExplorerBar);
 
             try
             {
@@ -359,8 +359,8 @@ namespace WinPaletter.Theme.Structures
                 DisableNavBar = @default.DisableNavBar;
             }
 
-            AutoHideScrollBars = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", @default.AutoHideScrollBars));
-            FullScreenStartMenu = Convert.ToBoolean(Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", @default.FullScreenStartMenu ? 2 : 0)) == 2) ? true : false;
+            AutoHideScrollBars = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Accessibility", "DynamicScrollbars", @default.AutoHideScrollBars);
+            FullScreenStartMenu = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer", "ForceStartSize", @default.FullScreenStartMenu ? 2 : 0) == 2 ? true : false;
         }
 
         /// <summary>

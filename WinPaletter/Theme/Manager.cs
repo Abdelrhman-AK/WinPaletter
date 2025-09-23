@@ -101,8 +101,8 @@ namespace WinPaletter.Theme
                                 else { PowerShellx64 = @default.PowerShellx64; }
 
                                 #region Windows Terminal
-                                Terminal.Enabled = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0)) == 1;
-                                TerminalPreview.Enabled = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0)) == 1;
+                                Terminal.Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", 0) == 1;
+                                TerminalPreview.Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", 0) == 1;
 
                                 // Only load Terminal and TerminalPreview if the OS is Windows 10 or higher
                                 if (OS.W12 || OS.W11 || OS.W10)

@@ -53,16 +53,16 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter application theme (appearance) from registry.");
 
-            Enabled = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "CustomColors", @default.Enabled));
-            Animations = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "Animations", @default.Animations));
-            BackColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "BackColor", @default.BackColor.ToArgb())));
-            AccentColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "AccentColor", @default.AccentColor.ToArgb())));
-            SecondaryColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "SecondaryColor", @default.SecondaryColor.ToArgb())));
-            TertiaryColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "TertiaryColor", @default.TertiaryColor.ToArgb())));
-            DisabledColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "DisabledColor", @default.DisabledColor.ToArgb())));
-            DisabledBackColor = Color.FromArgb(Convert.ToInt32(ReadReg(Settings.Structures.REG_Appearance, "DisabledBackColor", @default.DisabledBackColor.ToArgb())));
-            DarkMode = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "CustomTheme", @default.DarkMode));
-            RoundCorners = Convert.ToBoolean(ReadReg(Settings.Structures.REG_Appearance, "RoundedCorners", @default.RoundCorners));
+            Enabled = ReadReg(Settings.Structures.REG_Appearance, "CustomColors", @default.Enabled);
+            Animations = ReadReg(Settings.Structures.REG_Appearance, "Animations", @default.Animations);
+            BackColor = ReadReg(Settings.Structures.REG_Appearance, "BackColor", @default.BackColor);
+            AccentColor = ReadReg(Settings.Structures.REG_Appearance, "AccentColor", @default.AccentColor);
+            SecondaryColor = ReadReg(Settings.Structures.REG_Appearance, "SecondaryColor", @default.SecondaryColor);
+            TertiaryColor = ReadReg(Settings.Structures.REG_Appearance, "TertiaryColor", @default.TertiaryColor);
+            DisabledColor = ReadReg(Settings.Structures.REG_Appearance, "DisabledColor", @default.DisabledColor);
+            DisabledBackColor = ReadReg(Settings.Structures.REG_Appearance, "DisabledBackColor", @default.DisabledBackColor);
+            DarkMode = ReadReg(Settings.Structures.REG_Appearance, "CustomTheme", @default.DarkMode);
+            RoundCorners = ReadReg(Settings.Structures.REG_Appearance, "RoundedCorners", @default.RoundCorners);
         }
 
         /// <summary>

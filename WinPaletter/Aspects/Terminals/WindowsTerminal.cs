@@ -908,7 +908,7 @@ namespace WinPaletter
                 ApplyPreview(_Terminal);
                 return;
             }
-         
+
             ColorItem colorItem = (ColorItem)sender;
             Dictionary<Control, string[]> CList = new()
             {

@@ -59,32 +59,20 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 8.1 colors and appearance preferences from registry.");
 
-            Enabled = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8.1", string.Empty, @default.Enabled));
+            Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8.1", string.Empty, @default.Enabled);
 
             VisualStyles.Load("8.1", @default.VisualStyles);
 
-            object y;
-            y = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor.ToArgb());
-            ColorizationColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y)));
+            ColorizationColor = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", @default.ColorizationColor);
+            ColorizationColorBalance = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", @default.ColorizationColorBalance);
 
-            y = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColorBalance", @default.ColorizationColorBalance);
-            ColorizationColorBalance = Convert.ToInt32(y);
+            StartColor = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", @default.StartColor.Reverse()).Reverse();
+            AccentColor = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", @default.AccentColor.Reverse()).Reverse();
 
-            y = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColor", Color.FromArgb(84, 0, 30).ToArgb());
-            StartColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y))).Reverse();
+            PersonalColors_Background = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.ToString(Settings.Structures.NerdStats.Formats.HEX, false)).ToColorFromHex();
+            PersonalColors_Accent = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.ToString(Settings.Structures.NerdStats.Formats.HEX, false)).ToColorFromHex();
 
-            y = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColor", Color.FromArgb(178, 29, 72).ToArgb());
-            AccentColor = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(y))).Reverse();
-
-            string S;
-
-            S = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Background", @default.PersonalColors_Background.ToString(Settings.Structures.NerdStats.Formats.HEX, false)).ToString();
-            PersonalColors_Background = S.ToColorFromHex();
-
-            S = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "PersonalColors_Accent", @default.PersonalColors_Accent.ToString(Settings.Structures.NerdStats.Formats.HEX, false)).ToString();
-            PersonalColors_Accent = S.ToColorFromHex();
-
-            Start = Convert.ToInt32(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0));
+            Start = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "ForceStartBackground", 0);
         }
 
         /// <summary>

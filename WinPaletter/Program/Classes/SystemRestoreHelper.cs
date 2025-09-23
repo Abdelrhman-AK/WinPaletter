@@ -119,7 +119,7 @@ namespace WinPaletter
         /// <summary>
         /// Detect if system restore is enabled or not.
         /// </summary>
-        public static bool Enabled => (int)ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "RPSessionInterval", 0) == 1;
+        public static bool Enabled => ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "RPSessionInterval", 0) == 1;
 
         /// <summary>
         /// Sets the system restore status for a given drive.

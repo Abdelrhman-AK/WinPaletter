@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WinPaletter
+﻿namespace WinPaletter
 {
     /// <summary>
     /// ExplorerPatcher helper class
@@ -70,12 +68,12 @@ namespace WinPaletter
             {
                 if (IsInstalled && (OS.W12 || OS.W11))
                 {
-                    UseStart10 = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", 0));
+                    UseStart10 = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_ShowClassicMode", false);
                     try
                     {
-                        UseTaskbar10 = Convert.ToBoolean(ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OldTaskbar", true));
-                        TaskbarButton10 = (int)ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OrbStyle", 0) == 0;
-                        StartStyle = (StartStyles)Convert.ToInt32(ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "StartUI_EnableRoundedCorners", StartStyles.NotRounded));
+                        UseTaskbar10 = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OldTaskbar", true);
+                        TaskbarButton10 = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OrbStyle", 0) == 0;
+                        StartStyle = ReadReg<StartStyles>("HKEY_CURRENT_USER\\Control Panel\\Desktop", "StartUI_EnableRoundedCorners", StartStyles.NotRounded);
                     }
                     catch { }
                 }

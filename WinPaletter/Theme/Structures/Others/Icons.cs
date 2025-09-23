@@ -184,14 +184,14 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows icons from registry.");
 
-            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled));
+            Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled);
 
             Shell32Wrapper = [];
             Shell32Wrapper.Clear();
 
             foreach (string value in GetValueNames("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons"))
             {
-                object result = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\explorer\\Shell Icons", value, null);
+                object result = ReadReg<object>("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\explorer\\Shell Icons", value, null);
                 if (result != null)
                 {
                     Shell32Wrapper.Add(value, result.ToString());
@@ -205,7 +205,7 @@ namespace WinPaletter.Theme.Structures
             {
                 if (KeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
                 {
-                    ControlPanelWrapper.Add(item.Item1, ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty).ToString());
+                    ControlPanelWrapper.Add(item.Item1, ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty));
                 }
             }
 
@@ -216,24 +216,24 @@ namespace WinPaletter.Theme.Structures
             {
                 if (KeyExists($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon"))
                 {
-                    ExplorerWrapper.Add(item.Item1, ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty).ToString());
+                    ExplorerWrapper.Add(item.Item1, ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\CLSID\\{item.Item1}\\DefaultIcon", string.Empty, string.Empty));
                 }
             }
 
-            Computer = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(0).Item1}\DefaultIcon", string.Empty, @default.Computer).ToString();
-            ControlPanel = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(1).Item1}\DefaultIcon", string.Empty, @default.ControlPanel).ToString();
-            Network = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(2).Item1}\DefaultIcon", string.Empty, @default.Network).ToString();
-            User = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(3).Item1}\DefaultIcon", string.Empty, @default.User).ToString();
-            RecycleBinEmpty = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "empty", @default.RecycleBinEmpty).ToString();
-            RecycleBinFull = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "full", @default.RecycleBinFull).ToString();
+            Computer = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(0).Item1}\DefaultIcon", string.Empty, @default.Computer);
+            ControlPanel = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(1).Item1}\DefaultIcon", string.Empty, @default.ControlPanel);
+            Network = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(2).Item1}\DefaultIcon", string.Empty, @default.Network);
+            User = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(3).Item1}\DefaultIcon", string.Empty, @default.User);
+            RecycleBinEmpty = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "empty", @default.RecycleBinEmpty);
+            RecycleBinFull = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CLSID\{DesktopCLSIDs.ElementAt(4).Item1}\DefaultIcon", "full", @default.RecycleBinFull);
 
-            Computer_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(0).Item1, @default.Computer_HideInDesktop));
-            ControlPanel_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(1).Item1, @default.ControlPanel_HideInDesktop));
-            Network_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(2).Item1, @default.Network_HideInDesktop));
-            User_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(3).Item1, @default.User_HideInDesktop));
-            RecycleBin_HideInDesktop = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, @default.RecycleBin_HideInDesktop));
+            Computer_HideInDesktop = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(0).Item1, @default.Computer_HideInDesktop);
+            ControlPanel_HideInDesktop = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(1).Item1, @default.ControlPanel_HideInDesktop);
+            Network_HideInDesktop = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(2).Item1, @default.Network_HideInDesktop);
+            User_HideInDesktop = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(3).Item1, @default.User_HideInDesktop);
+            RecycleBin_HideInDesktop = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, @default.RecycleBin_HideInDesktop);
 
-            SystemDriveIcon = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", @default.SystemDriveIcon).ToString();
+            SystemDriveIcon = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", @default.SystemDriveIcon);
         }
 
         /// <summary>

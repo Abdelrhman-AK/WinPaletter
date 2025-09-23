@@ -11,7 +11,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
-using WinPaletter.TypesExtensions;
 using static WinPaletter.Settings.Structures.NerdStats;
 
 namespace WinPaletter.UI.Controllers

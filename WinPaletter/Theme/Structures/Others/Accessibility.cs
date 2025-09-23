@@ -58,14 +58,14 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Accessibility settings from registry and User32.SystemParametersInfo");
 
-            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Accessibility", string.Empty, @default.Enabled));
+            Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Accessibility", string.Empty, @default.Enabled);
 
             // Get high contrast settings using SystemParametersInfo from User32.dll
             HIGHCONTRAST highContrastStr = new() { cbSize = Marshal.SizeOf(typeof(HIGHCONTRAST)) };
             SystemParametersInfo(SPI.SPI_GETHIGHCONTRAST, 0, ref highContrastStr, SPIF.SPIF_NONE);
             HighContrast = highContrastStr.dwFlags == 1u;
 
-            ColorFilter_Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", @default.ColorFilter_Enabled));
+            ColorFilter_Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", @default.ColorFilter_Enabled);
             ColorFilter = (ColorFilters)ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", @default.ColorFilter);
         }
 

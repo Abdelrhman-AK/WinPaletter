@@ -120,7 +120,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {edition} Visual Styles using UxTheme.GetCurrentVS");
 
-            Enabled = Convert.ToBoolean(ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, @default.Enabled));
+            Enabled = ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, @default.Enabled);
 
             Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
             string vsFile = ThemeTuple.Item1;
@@ -131,8 +131,8 @@ namespace WinPaletter.Theme.Structures
             ColorScheme = colorName.ToString();
             SizeScheme = sizeName.ToString();
 
-            OverrideColors = Convert.ToBoolean(ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", @default.OverrideColors));
-            OverrideSizes = Convert.ToBoolean(ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", @default.OverrideSizes));
+            OverrideColors = ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideColors", @default.OverrideColors);
+            OverrideSizes = ReadReg($"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", "OverrideSizes", @default.OverrideSizes);
 
             if (ThemeFile.ToLower() == SysPaths.MSSTYLES_Luna_Win.ToLower())
             {
@@ -161,7 +161,7 @@ namespace WinPaletter.Theme.Structures
             {
                 if (DWMAPI.IsCompositionEnabled())
                 {
-                    VisualStylesType = !Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false)) ? DefaultVisualStyles.Aero : DefaultVisualStyles.AeroOpaque;
+                    VisualStylesType = !ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationOpaqueBlend", false) ? DefaultVisualStyles.Aero : DefaultVisualStyles.AeroOpaque;
                 }
                 else
                 {

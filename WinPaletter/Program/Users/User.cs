@@ -171,7 +171,7 @@ namespace WinPaletter
                             // Undo impersonation after finishing operations on user profile
                             wic.Undo();
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(Serilog.Events.LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`." );
+                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(Serilog.Events.LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`.");
                         }
 
                         break;
@@ -291,7 +291,7 @@ namespace WinPaletter
             bool SystemProfile = Domain.ToUpper() == "NT AUTHORITY";
 
             // Disable LimitBlankPasswordUse to allow login without password
-            bool OldValue = Convert.ToBoolean(ReadReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", true));
+            bool OldValue = ReadReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", true);
             WriteReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", false);
 
             bool result;
@@ -673,11 +673,11 @@ namespace WinPaletter
             {
                 if (!OS.WXP && !OS.WVista && !OS.W7)
                 {
-                    result = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUserSID", result).ToString();
+                    result = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUserSID", result);
                 }
                 else
                 {
-                    string username = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUser", string.Empty).ToString();
+                    string username = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUser", string.Empty);
                     username = username.Split('\\').Last();
                     result = GetUsers().Where(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).FirstOrDefault().Key;
                 }

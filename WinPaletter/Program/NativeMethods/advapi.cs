@@ -175,7 +175,7 @@ namespace WinPaletter.NativeMethods
                     Kernel32.CloseHandle(hToken);  // Close the token handle to prevent resource leaks
             }
         }
-      
+
         #endregion
     }
 }

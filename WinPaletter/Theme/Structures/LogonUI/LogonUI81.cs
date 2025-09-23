@@ -93,20 +93,20 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 8.1 lock screen preferences from registry.");
 
-            Enabled = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", string.Empty, @default.Enabled));
-            ImagePath = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "ImagePath", string.Empty).ToString();
-            Color = Color.FromArgb(Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Color", Color.Black.ToArgb())));
-            Blur = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Blur", false));
-            Blur_Intensity = Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Blur_Intensity", 0));
-            Grayscale = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Grayscale", false));
-            Noise = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Noise", false));
-            Noise_Mode = (BitmapExtensions.NoiseMode)Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Noise_Mode", BitmapExtensions.NoiseMode.Acrylic));
-            Noise_Intensity = Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Noise_Intensity", 0));
-            Mode = (Sources)Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Mode", Sources.Default));
+            Enabled = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", string.Empty, @default.Enabled);
+            ImagePath = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "ImagePath", string.Empty);
+            Color = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Color", Color.Black);
+            Blur = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Blur", false);
+            Blur_Intensity = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Blur_Intensity", 0);
+            Grayscale = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Grayscale", false);
+            Noise = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Noise", false);
+            Noise_Mode = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Noise_Mode", BitmapExtensions.NoiseMode.Acrylic);
+            Noise_Intensity = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Noise_Intensity", 0);
+            Mode = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "Mode", Sources.Default);
 
-            LockScreenSystemID = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", 0));
-            NoLockScreen = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", false));
-            LogonUI_ID = Convert.ToInt32(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0));
+            LockScreenSystemID = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI", "Metro_LockScreenSystemID", 0);
+            NoLockScreen = ReadReg(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Personalization", "NoLockScreen", false);
+            LogonUI_ID = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "DefaultColorSet", 0);
         }
 
         /// <summary>

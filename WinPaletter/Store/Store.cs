@@ -1067,34 +1067,45 @@ namespace WinPaletter
         /// </summary>
         private void PerformSearch()
         {
-            string search_text = search_box.Text.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper();
+            // Normalize the search text: trim, remove all whitespace, upper-case
+            string searchText = string.IsNullOrWhiteSpace(search_box.Text)
+                ? string.Empty
+                : new string(search_box.Text.Trim().Where(c => !char.IsWhiteSpace(c)).ToArray())
+                    .ToUpperInvariant();
 
-            if (string.IsNullOrWhiteSpace(search_text))
+            if (string.IsNullOrEmpty(searchText))
                 return;
 
-            Dictionary<string, StoreItem> lst = [];
-            lst.Clear();
-
-            foreach (StoreItem st_itm in store_container.Controls.OfType<StoreItem>())
-                lst.Add(st_itm.FileName, st_itm);
-
+            // Clear previous results
             RemoveAllStoreItems(search_results);
 
-            int found_sum = 0;
+            int foundCount = 0;
 
-            foreach (KeyValuePair<string, StoreItem> st_item in lst)
+            foreach (var item in store_container.Controls.OfType<StoreItem>())
             {
-                if ((Program.Settings.Store.Search_ThemeNames && st_item.Value.TM.Info.ThemeName.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_AuthorsNames && st_item.Value.TM.Info.Author.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)) | (Program.Settings.Store.Search_Descriptions && st_item.Value.TM.Info.Description.TrimStart().TrimEnd().Trim().Replace(" ", string.Empty).ToUpper().Contains(search_text)))
-                    found_sum += 1;
+                // Normalize fields once per item
+                string themeName = new string([.. item.TM.Info.ThemeName.Trim().Where(c => !char.IsWhiteSpace(c))]).ToUpperInvariant();
+                string author = new string([.. item.TM.Info.Author.Trim().Where(c => !char.IsWhiteSpace(c))]).ToUpperInvariant();
+                string desc = new string([.. item.TM.Info.Description.Trim().Where(c => !char.IsWhiteSpace(c))]).ToUpperInvariant();
 
-                StoreItem ctrl = new()
+                bool match =
+                    (Program.Settings.Store.Search_ThemeNames && themeName.Contains(searchText)) ||
+                    (Program.Settings.Store.Search_AuthorsNames && author.Contains(searchText)) ||
+                    (Program.Settings.Store.Search_Descriptions && desc.Contains(searchText));
+
+                if (!match) continue;
+
+                foundCount++;
+
+                // Create result control
+                var ctrl = new StoreItem
                 {
-                    FileName = st_item.Key,
-                    TM = st_item.Value.TM,
-                    MD5_ThemeFile = Program.CalculateMD5(st_item.Key),
-                    DoneByWinPaletter = st_item.Value.DoneByWinPaletter,
-                    Size = new(w, h),
-                    URL_ThemeFile = st_item.Value.URL_ThemeFile
+                    FileName = item.FileName,
+                    TM = item.TM,
+                    MD5_ThemeFile = Program.CalculateMD5(item.FileName),
+                    DoneByWinPaletter = item.DoneByWinPaletter,
+                    Size = new Size(w, h),
+                    URL_ThemeFile = item.URL_ThemeFile
                 };
 
                 if (ctrl.DoneByWinPaletter)
@@ -1106,12 +1117,10 @@ namespace WinPaletter
                 BeginInvoke(new Action(() => search_results.Controls.Add(ctrl)));
             }
 
-            Titlebar_lbl.Text = $"Search results ({found_sum})";
-
-            Tabs.SelectedIndex = 2;
-
-            lst.Clear();
+            Titlebar_lbl.Text = string.Format(Program.Lang.Strings.Store.SearchCount, foundCount);
+            Tabs.SelectTab(2);
         }
+
         #endregion
 
         #region    Helpers

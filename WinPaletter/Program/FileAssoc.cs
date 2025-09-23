@@ -25,7 +25,7 @@ namespace WinPaletter
 
             exeProgram = $"\"{exeProgram}\"";
 
-            bool isInstalledBefore = ReadReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, null) != null;
+            bool isInstalledBefore = ReadReg<object>($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, null) != null;
 
             WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}", string.Empty, className, RegistryValueKind.String);
             WriteReg($"HKEY_CURRENT_USER\\Software\\Classes\\{className}", string.Empty, description, RegistryValueKind.String);

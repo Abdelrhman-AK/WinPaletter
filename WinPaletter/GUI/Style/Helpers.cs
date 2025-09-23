@@ -95,7 +95,7 @@ namespace WinPaletter.UI.Style
                         {
                             if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
                             {
-                                Program.Style.DarkMode = !(Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0)) == 1);
+                                Program.Style.DarkMode = !(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0) == 1);
                             }
                             else
                             {

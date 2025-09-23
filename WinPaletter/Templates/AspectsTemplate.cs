@@ -645,12 +645,12 @@ namespace WinPaletter
         /// Gets or sets a value indicating whether the item can be opened in the Control Panel.
         /// </summary>
         public bool CanOpenInControlPanel { get; set; } = false;
-     
+
         /// <summary>
         /// Gets or sets a value indicating whether the Colors Effects feature can be opened.
         /// </summary>
         public bool CanOpenColorsEffects { get; set; } = true;
-     
+
         /// <summary>
         /// EventHandler associated with clicking on 'Load into current theme' button
         /// </summary>

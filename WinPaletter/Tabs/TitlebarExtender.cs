@@ -38,7 +38,7 @@ namespace WinPaletter.Tabs
                 }
             }
         }
-        private static bool _transparency = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1)) == 1;
+        private static bool _transparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
 
         public static bool AccentOnTitlebars
         {
@@ -51,7 +51,7 @@ namespace WinPaletter.Tabs
                 }
             }
         }
-        private static bool accentOnTitlebars = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1)) == 1;
+        private static bool accentOnTitlebars = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1) == 1;
 
         Config.Scheme scheme => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
@@ -220,8 +220,8 @@ namespace WinPaletter.Tabs
         {
             if (TitlebarType == TitlebarTypes.ColorPrevalence)
             {
-                activeTtl = Color.FromArgb(Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse().ToArgb()))).Reverse();
-                inactiveTtl = Color.FromArgb(Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse().ToArgb()))).Reverse();
+                activeTtl = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse()).Reverse();
+                inactiveTtl = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse()).Reverse();
                 activeTtlG = activeTtl;
                 inactiveTtlG = inactiveTtl;
             }

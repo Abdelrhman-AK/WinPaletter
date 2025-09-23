@@ -155,12 +155,12 @@ namespace WinPaletter.UI.WP
             UpdateBackdrop();
         }
 
-        protected override void OnVisibleChanged(EventArgs e) 
-        { 
+        protected override void OnVisibleChanged(EventArgs e)
+        {
             if (this.Handle != IntPtr.Zero && Program.Style.Animations)
             {
                 AnimateWindow(this.Handle, 80, AnimationType | (Visible ? AnimateWindowFlags.AW_ACTIVATE : AnimateWindowFlags.AW_HIDE));
-            } 
+            }
 
             base.OnVisibleChanged(e);
         }

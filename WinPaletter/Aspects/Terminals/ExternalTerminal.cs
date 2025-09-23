@@ -411,27 +411,27 @@ namespace WinPaletter
 
             using (Manager @default = Default.Get(Program.WindowStyle))
             {
-                ColorTable00.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", @default.CommandPrompt.ColorTable00.Reverse().ToArgb()))).Reverse());
-                ColorTable01.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", @default.CommandPrompt.ColorTable01.Reverse().ToArgb()))).Reverse());
-                ColorTable02.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable02", @default.CommandPrompt.ColorTable02.Reverse().ToArgb()))).Reverse());
-                ColorTable03.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable03", @default.CommandPrompt.ColorTable03.Reverse().ToArgb()))).Reverse());
-                ColorTable04.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable04", @default.CommandPrompt.ColorTable04.Reverse().ToArgb()))).Reverse());
-                ColorTable05.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable05", @default.CommandPrompt.ColorTable05.Reverse().ToArgb()))).Reverse());
-                ColorTable06.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable06", @default.CommandPrompt.ColorTable06.Reverse().ToArgb()))).Reverse());
-                ColorTable07.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable07", @default.CommandPrompt.ColorTable07.Reverse().ToArgb()))).Reverse());
-                ColorTable08.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable08", @default.CommandPrompt.ColorTable08.Reverse().ToArgb()))).Reverse());
-                ColorTable09.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable09", @default.CommandPrompt.ColorTable09.Reverse().ToArgb()))).Reverse());
-                ColorTable10.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable10", @default.CommandPrompt.ColorTable10.Reverse().ToArgb()))).Reverse());
-                ColorTable11.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable11", @default.CommandPrompt.ColorTable11.Reverse().ToArgb()))).Reverse());
-                ColorTable12.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable12", @default.CommandPrompt.ColorTable12.Reverse().ToArgb()))).Reverse());
-                ColorTable13.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable13", @default.CommandPrompt.ColorTable13.Reverse().ToArgb()))).Reverse());
-                ColorTable14.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable14", @default.CommandPrompt.ColorTable14.Reverse().ToArgb()))).Reverse());
-                ColorTable15.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable15", @default.CommandPrompt.ColorTable15.Reverse().ToArgb()))).Reverse());
+                ColorTable00.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", @default.CommandPrompt.ColorTable00.Reverse()).Reverse());
+                ColorTable01.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", @default.CommandPrompt.ColorTable01.Reverse()).Reverse());
+                ColorTable02.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable02", @default.CommandPrompt.ColorTable02.Reverse()).Reverse());
+                ColorTable03.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable03", @default.CommandPrompt.ColorTable03.Reverse()).Reverse());
+                ColorTable04.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable04", @default.CommandPrompt.ColorTable04.Reverse()).Reverse());
+                ColorTable05.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable05", @default.CommandPrompt.ColorTable05.Reverse()).Reverse());
+                ColorTable06.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable06", @default.CommandPrompt.ColorTable06.Reverse()).Reverse());
+                ColorTable07.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable07", @default.CommandPrompt.ColorTable07.Reverse()).Reverse());
+                ColorTable08.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable08", @default.CommandPrompt.ColorTable08.Reverse()).Reverse());
+                ColorTable09.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable09", @default.CommandPrompt.ColorTable09.Reverse()).Reverse());
+                ColorTable10.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable10", @default.CommandPrompt.ColorTable10.Reverse()).Reverse());
+                ColorTable11.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable11", @default.CommandPrompt.ColorTable11.Reverse()).Reverse());
+                ColorTable12.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable12", @default.CommandPrompt.ColorTable12.Reverse()).Reverse());
+                ColorTable13.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable13", @default.CommandPrompt.ColorTable13.Reverse()).Reverse());
+                ColorTable14.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable14", @default.CommandPrompt.ColorTable14.Reverse()).Reverse());
+                ColorTable15.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable15", @default.CommandPrompt.ColorTable15.Reverse()).Reverse());
 
                 temp = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "PopupColors", Convert.ToInt32($"{@default.CommandPrompt.PopupBackground:X}{@default.CommandPrompt.PopupForeground:X}", 16));
                 string d = Conversions.ToInteger(temp).ToString("X");
-                if (d.Count() == 1)
-                    d = $"{0}{d}";
+                if (d.Count() == 1) d = $"{0}{d}";
+
                 CMD_PopupBackgroundBar.Value = Convert.ToInt32(d[0].ToString(), 16);
                 CMD_PopupForegroundBar.Value = Convert.ToInt32(d[1].ToString(), 16);
 
@@ -442,9 +442,9 @@ namespace WinPaletter
                 CMD_AccentBackgroundBar.Value = Convert.ToInt32(dx[0].ToString(), 16);
                 CMD_AccentForegroundBar.Value = Convert.ToInt32(dx[1].ToString(), 16);
 
-                CMD_CursorSizeBar.Value = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorSize", 25));
+                CMD_CursorSizeBar.Value = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorSize", 25);
 
-                int fw = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", 400));
+                int fw = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", 400);
                 switch (fw)
                 {
                     case 0:
@@ -579,13 +579,13 @@ namespace WinPaletter
                 else if (PixelWidth == 10 && PixelHeight == 18) RasterList.SelectedItem = "10x18";
                 else RasterList.SelectedItem = "8x12"; // default fallback
 
-                CMD_CursorColor.BackColor = Color.FromArgb(255, Color.FromArgb(Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorColor", @default.CommandPrompt.W10_1909_CursorColor.Reverse().ToArgb()))).Reverse());
+                CMD_CursorColor.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorColor", @default.CommandPrompt.W10_1909_CursorColor.Reverse()).Reverse());
                 CMD_PreviewCUR2.BackColor = CMD_CursorColor.BackColor;
-                CMD_CursorStyle.SelectedIndex = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorType", @default.CommandPrompt.W10_1909_CursorType));
-                CMD_EnhancedTerminal.Checked = Conversions.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ForceV2", @default.CommandPrompt.W10_1909_ForceV2));
-                CMD_LineSelection.Checked = Conversions.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "LineSelection", @default.CommandPrompt.W10_1909_LineSelection));
-                CMD_TerminalScrolling.Checked = Conversions.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "TerminalScrolling", @default.CommandPrompt.W10_1909_TerminalScrolling));
-                CMD_OpacityBar.Value = Conversions.ToInteger(ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", 255));
+                CMD_CursorStyle.SelectedIndex = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "CursorType", @default.CommandPrompt.W10_1909_CursorType);
+                CMD_EnhancedTerminal.Checked = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ForceV2", @default.CommandPrompt.W10_1909_ForceV2);
+                CMD_LineSelection.Checked = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "LineSelection", @default.CommandPrompt.W10_1909_LineSelection);
+                CMD_TerminalScrolling.Checked = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "TerminalScrolling", @default.CommandPrompt.W10_1909_TerminalScrolling);
+                CMD_OpacityBar.Value = ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "WindowAlpha", 255);
 
                 UpdateFromTrack(1);
                 UpdateFromTrack(2);

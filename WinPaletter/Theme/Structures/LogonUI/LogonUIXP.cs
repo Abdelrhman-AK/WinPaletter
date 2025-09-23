@@ -50,19 +50,25 @@ namespace WinPaletter.Theme.Structures
 
             if (OS.WXP)
             {
-                Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled));
+                Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled);
 
                 switch (ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", @default.Mode))
                 {
-                    case 1:
+                    case Modes.Default:
                         {
                             Mode = Modes.Default;
                             break;
                         }
 
-                    default:
+                    case Modes.Win2000:
                         {
                             Mode = Modes.Win2000;
+                            break;
+                        }
+
+                    default:
+                        {
+                            Mode = Modes.Default;
                             break;
                         }
                 }
@@ -79,7 +85,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                ShowMoreOptions = Convert.ToBoolean(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", @default.ShowMoreOptions));
+                ShowMoreOptions = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", @default.ShowMoreOptions);
             }
 
             else

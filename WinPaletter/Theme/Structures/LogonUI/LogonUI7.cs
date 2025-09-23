@@ -88,16 +88,16 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 7 LogonUI screen preferences from registry.");
 
-            Enabled = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", string.Empty, @default.Enabled));
-            ImagePath = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "ImagePath", string.Empty).ToString();
-            Color = Color.FromArgb(Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Color", Color.Black.ToArgb())));
-            Blur = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur", false));
-            Blur_Intensity = Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur_Intensity", 0));
-            Grayscale = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Grayscale", false));
-            Noise = Convert.ToBoolean(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise", false));
-            Noise_Mode = (BitmapExtensions.NoiseMode)Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Mode", BitmapExtensions.NoiseMode.Acrylic));
-            Noise_Intensity = Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Intensity", 0));
-            Mode = (Sources)Convert.ToInt32(ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Mode", Sources.Default));
+            Enabled = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", string.Empty, @default.Enabled);
+            ImagePath = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "ImagePath", string.Empty);
+            Color = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Color", Color.Black);
+            Blur = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur", false);
+            Blur_Intensity = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Blur_Intensity", 0);
+            Grayscale = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Grayscale", false);
+            Noise = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise", false);
+            Noise_Mode = (BitmapExtensions.NoiseMode)ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Mode", BitmapExtensions.NoiseMode.Acrylic);
+            Noise_Intensity = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Noise_Intensity", 0);
+            Mode = (Sources)ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", "Mode", Sources.Default);
         }
 
         /// <summary>

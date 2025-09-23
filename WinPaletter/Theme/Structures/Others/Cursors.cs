@@ -139,7 +139,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows cursors settings from registry and User32.SystemParametersInfo");
 
-            Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled));
+            Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled);
 
             if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref Shadow, SPIF.SPIF_NONE))
                 Shadow = @default.Shadow;
@@ -150,7 +150,7 @@ namespace WinPaletter.Theme.Structures
             if (!SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref Sonar, SPIF.SPIF_NONE))
                 Sonar = @default.Sonar;
 
-            Size = Convert.ToInt32(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", @default.Size));
+            Size = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", @default.Size);
 
             Cursor_Arrow.Load("Arrow");
             Cursor_Help.Load("Help");

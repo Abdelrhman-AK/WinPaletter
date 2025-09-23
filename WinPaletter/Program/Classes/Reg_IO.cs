@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using Serilog.Events;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -494,9 +495,10 @@ namespace WinPaletter
         /// </param>
         /// <returns>The corresponding RegistryValueKind.</returns>
         /// <exception cref="ArgumentException">Thrown when the type is not supported.</exception>
-        public static RegistryValueKind GetRegistryValueKind(object value, bool preferQWord = false)
+        public static RegistryValueKind GetRegistryValueKind(object? value, bool preferQWord = false)
         {
-            if (value is null) return RegistryValueKind.String; // null -> empty string value
+            if (value is null)
+                return RegistryValueKind.String; // null => treat as empty string
 
             switch (value)
             {
@@ -509,8 +511,16 @@ namespace WinPaletter
                     return RegistryValueKind.QWord;
 
                 case bool:
-                    // booleans are usually stored as 0/1 DWord
                     return RegistryValueKind.DWord;
+
+                case float f:
+                    return FloatKind(f, preferQWord);
+
+                case double d:
+                    return FloatKind(d, preferQWord);
+
+                case decimal m:
+                    return FloatKind((double)m, preferQWord);
 
                 case string:
                     return RegistryValueKind.String;
@@ -522,21 +532,53 @@ namespace WinPaletter
                     return RegistryValueKind.Binary;
 
                 default:
-                    // Allow numeric conversions when preferQWord is specified
+                    // Attempt generic numeric coercion if requested
                     if (preferQWord && value is IConvertible conv)
                     {
                         try
                         {
-                            long _ = conv.ToInt64(System.Globalization.CultureInfo.InvariantCulture);
+                            long _ = conv.ToInt64(CultureInfo.InvariantCulture);
                             return RegistryValueKind.QWord;
                         }
-                        catch { /* fall through */ }
+                        catch { }
                     }
 
                     throw new ArgumentException(
                         $"Cannot infer RegistryValueKind for type '{value.GetType().FullName}'.",
                         nameof(value));
             }
+        }
+
+        /// <summary>
+        /// Determines the appropriate registry value kind (DWORD or QWORD) for a given floating-point number.
+        /// </summary>
+        /// <param name="number">The floating-point number to evaluate. Must be a whole number within the range of valid DWORD or QWORD
+        /// values.</param>
+        /// <param name="preferQWord">A boolean value indicating whether to prefer QWORD if the number is within the range of both DWORD and
+        /// QWORD.</param>
+        /// <returns><see cref="RegistryValueKind.DWord"/> if the number is within the range of a DWORD;  <see
+        /// cref="RegistryValueKind.QWord"/> if <paramref name="preferQWord"/> is <see langword="true"/> and the number
+        /// is within the range of a QWORD.</returns>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="number"/> is not a whole number.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="number"/> is outside the range of both DWORD and QWORD.</exception>
+        private static RegistryValueKind FloatKind(double number, bool preferQWord)
+        {
+            // Check for whole numbers only, because registry DWORD/QWORD are integers.
+            if (Math.Floor(number) != number)
+                throw new ArgumentException(
+                    $"Floating-point value {number} cannot be stored losslessly as a DWORD/QWORD.",
+                    nameof(number));
+
+            if (number >= int.MinValue && number <= int.MaxValue)
+                return RegistryValueKind.DWord;
+
+            if (preferQWord && number >= long.MinValue && number <= long.MaxValue)
+                return RegistryValueKind.QWord;
+
+            throw new ArgumentOutOfRangeException(
+                nameof(number),
+                number,
+                "Value is outside the range of DWORD/QWORD.");
         }
 
         /// <summary>
@@ -637,7 +679,7 @@ namespace WinPaletter
             catch { } // Couldn't create the key, but we will try to set the value anyway.
 
             // Skips setting to registry if the values are the same
-            object existingValue = ReadReg(Key_BeforeModification, ValueName, null);
+            object existingValue = ReadRegRaw(Key_BeforeModification, ValueName, null);
             if (existingValue is not null && CanSkip(existingValue, Value, RegType))
             {
                 if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
@@ -835,44 +877,130 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Retrieves a value from the registry and attempts to convert it to the specified type.
+        /// Reads a value from the Windows Registry and attempts to convert it to the specified type.
         /// </summary>
-        /// <remarks>This method supports conversion to common types and enums. If the registry value is already of the
-        /// target type,  it is returned directly. For enums, the method attempts to parse the string representation of the
-        /// value.</remarks>
+        /// <remarks>This method supports conversion to common types, including enums, colors, and arrays of strings.  For
+        /// enums, both numeric values and string names are supported. For colors, the value is converted using a custom
+        /// conversion logic. If <paramref name="raiseExceptions"/> is <see langword="false"/>, any errors during the read or
+        /// conversion process will result in the <paramref name="defaultValue"/> being returned.</remarks>
         /// <typeparam name="T">The type to which the registry value should be converted.</typeparam>
-        /// <param name="key">The registry key path from which to retrieve the value.</param>
-        /// <param name="valueName">The name of the registry value to retrieve.</param>
-        /// <param name="defaultValue">The default value to return if the registry value is not found or cannot be converted.</param>
-        /// <param name="raiseExceptions">A value indicating whether exceptions should be raised if an error occurs during retrieval or conversion. If <see
-        /// langword="false"/>, the method will return <paramref name="defaultValue"/> in case of an error.</param>
-        /// <param name="ifNullReturnDefaultValue">A value indicating whether to return <paramref name="defaultValue"/> if the retrieved registry value is <see
-        /// langword="null"/>.</param>
-        /// <returns>The value retrieved from the registry, converted to type <typeparamref name="T"/>.  If the value is not found,
-        /// cannot be converted, or an error occurs, <paramref name="defaultValue"/> is returned.</returns>
+        /// <param name="key">The registry key path from which to read the value. This must be a valid registry key path.</param>
+        /// <param name="valueName">The name of the registry value to read. If the value does not exist, the <paramref name="defaultValue"/> will be
+        /// returned.</param>
+        /// <param name="defaultValue">The default value to return if the registry value is not found or cannot be converted to the specified type.</param>
+        /// <param name="raiseExceptions">A boolean value indicating whether exceptions should be raised if an error occurs during the read operation.  If
+        /// <see langword="true"/>, exceptions will be thrown; otherwise, errors will be silently handled, and the <paramref
+        /// name="defaultValue"/> will be returned.</param>
+        /// <param name="ifNullReturnDefaultValue">A boolean value indicating whether the <paramref name="defaultValue"/> should be returned if the registry value is
+        /// <see langword="null"/>. If <see langword="true"/>, <paramref name="defaultValue"/> will be returned for <see
+        /// langword="null"/> values; otherwise, <see langword="null"/> will be returned.</param>
+        /// <returns>The value read from the registry, converted to the specified type <typeparamref name="T"/>.  If the value does not
+        /// exist, cannot be converted, or an error occurs, the <paramref name="defaultValue"/> is returned.</returns>
         public static T ReadReg<T>(string key, string valueName, T defaultValue = default!, bool raiseExceptions = false, bool ifNullReturnDefaultValue = true)
         {
-            object raw = ReadReg(key, valueName, defaultValue!, raiseExceptions, ifNullReturnDefaultValue);
+            object raw = ReadRegRaw(key, valueName, defaultValue!, raiseExceptions, ifNullReturnDefaultValue);
 
-            // Handle null early
             if (raw is null) return defaultValue;
 
             try
             {
                 // Direct cast if already correct type
-                if (raw is T tVal) return tVal;
+                if (raw is T tVal)
+                    return tVal;
 
-                // Special handling for enums
-                if (typeof(T).IsEnum) return (T)Enum.Parse(typeof(T), raw.ToString()!, ignoreCase: true);
+                Type targetType = typeof(T);
+
+                // Enum support: handles numeric or string names
+                if (targetType.IsEnum)
+                {
+                    if (raw is int || raw is long)
+                        return (T)Enum.ToObject(targetType, raw);
+                    return (T)Enum.Parse(targetType, raw.ToString()!, ignoreCase: true);
+                }
+
+                // Color support
+                if (targetType == typeof(System.Drawing.Color))
+                {
+                    return (T)(object)ConvertToColor(raw, defaultValue);
+                }
+
+                // Array of strings (MultiString registry type)
+                if (targetType == typeof(string[]) && raw is IEnumerable<string> enumerable)
+                {
+                    return (T)(object)enumerable.ToArray();
+                }
 
                 // Attempt common type conversion
-                return (T)Convert.ChangeType(raw, typeof(T), CultureInfo.InvariantCulture);
+                return (T)Convert.ChangeType(raw, targetType, CultureInfo.InvariantCulture);
             }
             catch
             {
-                // If anything fails, fall back to default
                 return defaultValue;
             }
+        }
+
+        /// <summary>
+        /// Converts the specified object to a <see cref="System.Drawing.Color"/> instance.
+        /// </summary>
+        /// <remarks>This method attempts to convert the input object to a color using the following
+        /// rules: <list type="number"> <item><description>If the input is an <see cref="int"/>, it is treated as an
+        /// ARGB value.</description></item> <item><description>If the input is a <see cref="long"/> within the range of
+        /// a 32-bit integer, it is treated as an ARGB value.</description></item> <item><description>If the input is a
+        /// <see cref="string"/>, it is interpreted as either a hexadecimal color code (e.g., "#RRGGBB" or "#AARRGGBB")
+        /// or a known color name.</description></item> </list> If the input cannot be converted, the method falls back
+        /// to the <paramref name="defaultValue"/> if it is a valid <see cref="System.Drawing.Color"/>.  If no valid
+        /// fallback is provided, <see cref="System.Drawing.Color.Empty"/> is returned.</remarks>
+        /// <param name="raw">The input object to convert. Supported types include: <list type="bullet"> <item><description><see
+        /// cref="int"/>: Interpreted as an ARGB value.</description></item> <item><description><see cref="long"/>:
+        /// Interpreted as an ARGB value if within the range of a 32-bit integer.</description></item>
+        /// <item><description><see cref="string"/>: Interpreted as a hexadecimal color code (e.g., "#RRGGBB" or
+        /// "#AARRGGBB") or a known color name.</description></item> </list></param>
+        /// <param name="defaultValue">The fallback value to return if the conversion fails. Must be a <see cref="System.Drawing.Color"/> instance.</param>
+        /// <returns>A <see cref="System.Drawing.Color"/> instance representing the converted color.  If the conversion fails and
+        /// <paramref name="defaultValue"/> is a valid <see cref="System.Drawing.Color"/>,  the default value is
+        /// returned. Otherwise, <see cref="System.Drawing.Color.Empty"/> is returned.</returns>
+        private static System.Drawing.Color ConvertToColor(object raw, object defaultValue)
+        {
+            try
+            {
+                switch (raw)
+                {
+                    case int i:
+                        return System.Drawing.Color.FromArgb(i);
+                    case long l when l <= int.MaxValue && l >= int.MinValue:
+                        return System.Drawing.Color.FromArgb((int)l);
+                    case string s:
+                        s = s.Trim();
+                        // Hex with or without alpha (#RRGGBB or #AARRGGBB)
+                        if (s.StartsWith("#", StringComparison.Ordinal))
+                        {
+                            s = s.Substring(1);
+                            if (s.Length == 6) // RRGGBB
+                                return System.Drawing.Color.FromArgb(255,
+                                    Convert.ToInt32(s.Substring(0, 2), 16),
+                                    Convert.ToInt32(s.Substring(2, 2), 16),
+                                    Convert.ToInt32(s.Substring(4, 2), 16));
+                            if (s.Length == 8) // AARRGGBB
+                                return System.Drawing.Color.FromArgb(
+                                    Convert.ToInt32(s.Substring(0, 2), 16),
+                                    Convert.ToInt32(s.Substring(2, 2), 16),
+                                    Convert.ToInt32(s.Substring(4, 2), 16),
+                                    Convert.ToInt32(s.Substring(6, 2), 16));
+                        }
+                        // Known color names
+                        return System.Drawing.Color.FromName(s);
+                }
+            }
+            catch
+            {
+                // fall through
+            }
+
+            // Fallback to default color if provided and valid
+            if (defaultValue is System.Drawing.Color c)
+                return c;
+
+            return System.Drawing.Color.Empty;
         }
 
         /// <summary>
@@ -897,7 +1025,7 @@ namespace WinPaletter
         /// value is <see langword="null"/>.</param>
         /// <returns>The value retrieved from the registry, or <paramref name="DefaultValue"/> if the value does not exist, is <see
         /// langword="null"/>,  or an error occurs (depending on the value of <paramref name="IfNullReturnDefaultValue"/>).</returns>
-        public static object ReadReg(string Key, string ValueName, object DefaultValue, bool RaiseExceptions = false, bool IfNullReturnDefaultValue = true)
+        private static object? ReadRegRaw(string Key, string ValueName, object? DefaultValue, bool RaiseExceptions = false, bool IfNullReturnDefaultValue = true)
         {
             object Result = null;
             RegistryKey R = null;

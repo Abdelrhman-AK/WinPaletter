@@ -12,7 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Theme;
-using WinPaletter.TypesExtensions;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -190,7 +189,7 @@ namespace WinPaletter
                 ColorEditorManager1.Color = c;
                 ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
 
-                ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
+                ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty);
 
                 effect_dark.BackColor = c.Dark(trackBar1.Value / 100f);
                 effect_light.BackColor = c.Light(trackBar2.Value / 100f);
@@ -685,7 +684,7 @@ namespace WinPaletter
 
         private void ImagePath_TextChanged(object sender, EventArgs e)
         {
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 if (System.IO.File.Exists(ImagePath.Text))
                 {
@@ -699,7 +698,7 @@ namespace WinPaletter
                     imageColors.Clear();
                 }
 
-                Invoke(() => 
+                Invoke(() =>
                 {
                     if (imageColors.Count > 0) effect_image.BackColor = InitColor.GetNearestColorFromPalette(imageColors);
                     else effect_image.BackColor = Color.Black;

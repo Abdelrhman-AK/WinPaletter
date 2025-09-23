@@ -363,7 +363,7 @@ namespace WinPaletter
             CheckComptability();
             Button1.Enabled = true;
             groupBox3.Visible = true;
-            
+
         }
 
         private void CheckComptability()

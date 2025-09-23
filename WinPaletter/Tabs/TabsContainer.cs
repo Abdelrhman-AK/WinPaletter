@@ -439,7 +439,7 @@ namespace WinPaletter.Tabs
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (TabDataList.Count > 0) 
+                if (TabDataList.Count > 0)
                 {
                     List<TabData> tabDatas = [.. TabDataList];
                     foreach (TabData tabData in tabDatas)

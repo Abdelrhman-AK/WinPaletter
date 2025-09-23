@@ -112,12 +112,11 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {edition} colors and appearance preferences from registry.");
 
-            Enabled = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled));
+            Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, @default.Enabled);
 
             VisualStyles.Load(edition, @default.VisualStyles);
 
             byte[] x;
-            object y;
 
             byte[] DefColorsBytes =
                 [
@@ -131,7 +130,7 @@ namespace WinPaletter.Theme.Structures
                         @default.Color_Index7.R, @default.Color_Index7.G, @default.Color_Index7.B, 255
                 ];
 
-            x = (byte[])ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);
+            x = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", DefColorsBytes);
 
             // Use 255 as alpha value for all colors as it is not used in Windows 10/11
             Color_Index0 = Color.FromArgb(/*x[3]*/ 255, x[0], x[1], x[2]);
@@ -144,50 +143,21 @@ namespace WinPaletter.Theme.Structures
             Color_Index7 = Color.FromArgb(/*x[31]*/ 255, x[28], x[29], x[30]);
 
             // Some colors are saved reversed in registry
-            y = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse().ToArgb());
-            StartMenu_Accent = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            StartMenu_Accent = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse()).Reverse();
 
-            y = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", @default.Titlebar_Active.Reverse().ToArgb());
-            Titlebar_Active = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            Titlebar_Active = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", @default.Titlebar_Active.Reverse()).Reverse();
+            Titlebar_Active = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", @default.Titlebar_Active.Reverse()).Reverse();
+            Titlebar_Inactive = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", @default.Titlebar_Inactive.Reverse()).Reverse();
 
-            y = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", @default.Titlebar_Active.Reverse().ToArgb());
-            Titlebar_Active = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            WinMode_Light = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", @default.WinMode_Light);
+            AppMode_Light = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", @default.AppMode_Light);
+            Transparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", @default.Transparency);
+            IncreaseTBTransparency = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", @default.IncreaseTBTransparency);
 
-            y = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", @default.Titlebar_Inactive.Reverse().ToArgb());
-            Titlebar_Inactive = Color.FromArgb(Convert.ToInt32(y)).Reverse();
+            ApplyAccentOnTaskbar = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", @default.ApplyAccentOnTaskbar);
+            ApplyAccentOnTitlebars = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", @default.ApplyAccentOnTitlebars);
 
-            WinMode_Light = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", @default.WinMode_Light));
-            AppMode_Light = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", @default.AppMode_Light));
-            Transparency = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", @default.Transparency));
-            IncreaseTBTransparency = Convert.ToBoolean(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseOLEDTaskbarTransparency", @default.IncreaseTBTransparency));
-
-            switch (ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", @default.ApplyAccentOnTaskbar))
-            {
-                case 0:
-                    {
-                        ApplyAccentOnTaskbar = AccentTaskbarLevels.None;
-                        break;
-                    }
-                case 1:
-                    {
-                        ApplyAccentOnTaskbar = AccentTaskbarLevels.Taskbar_Start_AC;
-                        break;
-                    }
-                case 2:
-                    {
-                        ApplyAccentOnTaskbar = AccentTaskbarLevels.Taskbar;
-                        break;
-                    }
-
-                default:
-                    {
-                        ApplyAccentOnTaskbar = AccentTaskbarLevels.None;
-                        break;
-                    }
-            }
-
-            ApplyAccentOnTitlebars = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", @default.ApplyAccentOnTitlebars));
-            TB_Blur = !(Convert.ToInt32(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (!@default.TB_Blur) ? 1 : 0)) == 1);
+            TB_Blur = !(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\DWM", "ForceEffectMode", (!@default.TB_Blur) ? 1 : 0) == 1);
         }
 
         /// <summary>

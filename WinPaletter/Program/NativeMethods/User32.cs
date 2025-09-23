@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.NativeMethods
@@ -118,7 +117,7 @@ namespace WinPaletter.NativeMethods
 
         [DllImport("user32.dll")]
         private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
-      
+
         /// <summary>
         /// SetWindowsHookEx function: Installs an application-defined hook procedure into a hook chain.
         /// This hook can monitor low-level mouse input events before the system processes them.
@@ -217,7 +216,7 @@ namespace WinPaletter.NativeMethods
         /// <returns><see langword="true"/> if the mouse capture was successfully released; otherwise, <see langword="false"/>.</returns>
         [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
-       
+
         /// <summary>
         /// LowLevelMouseProc delegate: Represents the method that will handle the low-level mouse input events.
         /// </summary>
@@ -232,7 +231,7 @@ namespace WinPaletter.NativeMethods
         /// Constant for LoadImage function specifying the type of image to load.
         /// </summary>
         public const uint IMAGE_CURSOR = 2;
-      
+
         /// <summary>
         /// The DrawIconEx function draws an icon or cursor into the specified device context.
         /// </summary>

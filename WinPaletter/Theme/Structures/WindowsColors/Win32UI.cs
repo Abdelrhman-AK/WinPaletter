@@ -153,7 +153,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="targetColor"></param>
         private void setColorFromRegistry(string registryKey, string valueName, string defaultValue, ref Color targetColor)
         {
-            string result = ReadReg(registryKey, valueName, defaultValue) as string;
+            string result = ReadReg(registryKey, valueName, defaultValue);
             if (result.Contains(' ') && result.Split(' ').Count() == 3) targetColor = Color.FromArgb(255, result.ToColorFromWin32());
         }
 
@@ -171,7 +171,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows classic colors (Win32) from registry.");
 
-                        Enabled = Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, true));
+                        Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, true);
 
                         // Set some flags like EnableTheming and EnableGradient
                         SystemParametersInfo(SPI.SPI_GETFLATMENU, 0, ref EnableTheming, SPIF.SPIF_NONE);
@@ -787,7 +787,7 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT)
             {
-                object source = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", null);
+                object source = ReadReg<object>(@"HKEY_CURRENT_USER\Control Panel\Desktop", "UserPreferencesMask", null);
 
                 if (source is not null)
                 {

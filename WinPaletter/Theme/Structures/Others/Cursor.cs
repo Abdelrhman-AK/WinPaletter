@@ -188,49 +188,49 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor to be loaded: `{subKey}`");
 
-            UseFromFile = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", false));
-            File = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", string.Empty).ToString();
+            UseFromFile = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", false);
+            File = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", string.Empty);
 
-            ArrowStyle = (Paths.ArrowStyle)Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "ArrowStyle", Paths.ArrowStyle.Aero));
-            CircleStyle = (Paths.CircleStyle)Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "CircleStyle", Paths.CircleStyle.Aero));
+            ArrowStyle = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "ArrowStyle", Paths.ArrowStyle.Aero);
+            CircleStyle = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "CircleStyle", Paths.CircleStyle.Aero);
 
-            PrimaryColor1 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor1", Color.White.ToArgb())));
-            PrimaryColor2 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor2", Color.White.ToArgb())));
-            SecondaryColor1 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor1", (subKey.ToLower() != "none" ? Color.Black : Color.Red).ToArgb())));
-            SecondaryColor2 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor2", (subKey.ToLower() != "none" ? Color.FromArgb(64, 65, 75) : Color.Red).ToArgb())));
-            LoadingCircleBack1 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack1", Color.FromArgb(42, 151, 243).ToArgb())));
-            LoadingCircleBack2 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack2", Color.FromArgb(42, 151, 243).ToArgb())));
-            LoadingCircleHot1 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot1", Color.FromArgb(37, 204, 255).ToArgb())));
-            LoadingCircleHot2 = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot2", Color.FromArgb(37, 204, 255).ToArgb())));
+            PrimaryColor1 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor1", Color.White);
+            PrimaryColor2 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColor2", Color.White);
+            SecondaryColor1 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor1", subKey.ToLower() != "none" ? Color.Black : Color.Red);
+            SecondaryColor2 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColor2", subKey.ToLower() != "none" ? Color.FromArgb(64, 65, 75) : Color.Red);
+            LoadingCircleBack1 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack1", Color.FromArgb(42, 151, 243));
+            LoadingCircleBack2 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBack2", Color.FromArgb(42, 151, 243));
+            LoadingCircleHot1 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot1", Color.FromArgb(37, 204, 255));
+            LoadingCircleHot2 = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot2", Color.FromArgb(37, 204, 255));
 
-            PrimaryColorGradient = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradient", false));
-            SecondaryColorGradient = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradient", true));
-            LoadingCircleBackGradient = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradient", false));
-            LoadingCircleHotGradient = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradient", false));
+            PrimaryColorGradient = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradient", false);
+            SecondaryColorGradient = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradient", true);
+            LoadingCircleBackGradient = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradient", false);
+            LoadingCircleHotGradient = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradient", false);
 
-            PrimaryColorNoise = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoise", false));
-            SecondaryColorNoise = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoise", false));
-            LoadingCircleBackNoise = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoise", false));
-            LoadingCircleHotNoise = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoise", false));
+            PrimaryColorNoise = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoise", false);
+            SecondaryColorNoise = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoise", false);
+            LoadingCircleBackNoise = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoise", false);
+            LoadingCircleHotNoise = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoise", false);
 
-            PrimaryColorGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradientMode", "circle").ToString());
-            SecondaryColorGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradientMode", "vertical").ToString());
-            LoadingCircleBackGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradientMode", "circle").ToString());
-            LoadingCircleHotGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradientMode", "circle").ToString());
-            LoadingCircleHot_AnimationSpeed = Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot_AnimationSpeed", 10));
+            PrimaryColorGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorGradientMode", "circle"));
+            SecondaryColorGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorGradientMode", "vertical"));
+            LoadingCircleBackGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackGradientMode", "circle"));
+            LoadingCircleHotGradientMode = Paths.ReturnGradientModeFromString(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotGradientMode", "circle"));
+            LoadingCircleHot_AnimationSpeed = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHot_AnimationSpeed", 10);
 
-            PrimaryColorNoiseOpacity = float.Parse(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoiseOpacity", 25).ToString()) / 100;
-            SecondaryColorNoiseOpacity = float.Parse(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", 25).ToString()) / 100;
-            LoadingCircleBackNoiseOpacity = float.Parse(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoiseOpacity", 25).ToString()) / 100;
-            LoadingCircleHotNoiseOpacity = float.Parse(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoiseOpacity", 25).ToString()) / 100;
-            BorderThickness = float.Parse(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", 1000f).ToString()) / 1000f;
+            PrimaryColorNoiseOpacity = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "PrimaryColorNoiseOpacity", 25f) / 100f;
+            SecondaryColorNoiseOpacity = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "SecondaryColorNoiseOpacity", 25f) / 100f;
+            LoadingCircleBackNoiseOpacity = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleBackNoiseOpacity", 25f) / 100f;
+            LoadingCircleHotNoiseOpacity = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "LoadingCircleHotNoiseOpacity", 25f) / 100f;
+            BorderThickness = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "BorderThickness", 1000f) / 1000f;
 
-            Shadow_Enabled = Convert.ToBoolean(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", false));
-            Shadow_Color = Color.FromArgb(Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Color.Black.ToArgb())));
-            Shadow_Blur = Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Blur", 5));
-            Shadow_Opacity = float.Parse(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Opacity", 30).ToString()) / 100;
-            Shadow_OffsetX = Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetX", 2));
-            Shadow_OffsetY = Convert.ToInt32(ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetY", 2));
+            Shadow_Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", false);
+            Shadow_Color = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Color.Black);
+            Shadow_Blur = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Blur", 5);
+            Shadow_Opacity = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Opacity", 30f) / 100f;
+            Shadow_OffsetX = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetX", 2);
+            Shadow_OffsetY = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetY", 2);
         }
 
         /// <summary>

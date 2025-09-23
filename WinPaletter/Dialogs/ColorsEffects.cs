@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.TypesExtensions;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter.Dialogs
@@ -42,7 +41,7 @@ namespace WinPaletter.Dialogs
 
             foreach (UI.WP.Toggle t in this.GetAllControls().OfType<UI.WP.Toggle>()) t.Checked = false;
 
-            ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty).ToString();
+            ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty);
 
             ShowDialog();
         }
@@ -202,7 +201,7 @@ namespace WinPaletter.Dialogs
 
         private void ImagePath_TextChanged(object sender, EventArgs e)
         {
-            Task.Run(() => 
+            Task.Run(() =>
             {
                 if (System.IO.File.Exists(ImagePath.Text))
                 {
@@ -218,7 +217,7 @@ namespace WinPaletter.Dialogs
                     imageColors.Clear();
                 }
 
-                Invoke(() => 
+                Invoke(() =>
                 {
                     if (toggle_image.Checked && imageColors.Count > 0)
                     {

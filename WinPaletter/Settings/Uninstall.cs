@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualBasic;
 using Microsoft.Win32;
-using Ookii.Dialogs.WinForms;
 using System;
 using System.Diagnostics;
 using System.IO;

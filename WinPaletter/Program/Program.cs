@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.Win32;
-using Serilog;
 using Serilog.Events;
-using Serilog.Formatting.Json;
 using System;
 using System.Globalization;
 using System.IO;
@@ -89,7 +87,7 @@ namespace WinPaletter
                 if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"Calculating MD5... {Program.CalculateMD5(AppFile)}");
                 if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
                 if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
-                
+
                 // Create the data directory if it does not exist
                 if (!Directory.Exists(SysPaths.ProgramFilesData))
                 {

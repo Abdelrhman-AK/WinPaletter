@@ -59,7 +59,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// A boolean that determines if OS is Windows 10 (19H2 = 1909) or higher or not
         /// </summary>
-        public static bool W10_1909 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10) || W11 && Convert.ToInt32(ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0).ToString()) >= 1909;
+        public static bool W10_1909 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10) || W11 && ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0) >= 1909;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 10 (20H2 = 2004 = 19041) or higher or not

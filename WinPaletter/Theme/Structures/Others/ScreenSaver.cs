@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Serilog.Events;
 using System;
 using System.Windows.Forms;
@@ -36,10 +35,10 @@ namespace WinPaletter.Theme.Structures
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Screen Saver settings from registry.");
 
-            Enabled = Convert.ToBoolean(Conversion.Val(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", @default.Enabled ? 1 : 0)));
-            IsSecure = Convert.ToBoolean(Conversion.Val(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", @default.IsSecure ? 1 : 0)));
-            TimeOut = (int)Math.Round(Conversion.Val(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", @default.TimeOut)));
-            File = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", @default.File).ToString();
+            Enabled = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", @default.Enabled);
+            IsSecure = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", @default.IsSecure);
+            TimeOut = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveTimeOut", @default.TimeOut);
+            File = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "SCRNSAVE.EXE", @default.File);
         }
 
         /// <summary>

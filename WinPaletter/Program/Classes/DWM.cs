@@ -22,7 +22,7 @@ namespace WinPaletter
             }
 
             bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
-            bool Transparency_W10x = (OS.W10 || OS.W11 || OS.W12) && Convert.ToBoolean(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true));
+            bool Transparency_W10x = (OS.W10 || OS.W11 || OS.W12) && ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true);
 
             if ((OS.W12 || OS.W11) && Transparency_W10x)
             {

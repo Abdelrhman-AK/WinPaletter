@@ -792,7 +792,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns></returns>
         public static Bitmap CaptureFromScreen(Rectangle screenRect)
         {
-            Bitmap bmp = new (screenRect.Width, screenRect.Height);
+            Bitmap bmp = new(screenRect.Width, screenRect.Height);
             using (Graphics G = Graphics.FromImage(bmp))
             {
                 // copy from screen coordinates -> bitmap (destination origin 0,0)
