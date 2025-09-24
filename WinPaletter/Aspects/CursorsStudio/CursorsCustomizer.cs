@@ -743,11 +743,12 @@ namespace WinPaletter
                                 else if (CursorOptions.CircleStyle == CircleStyle.Aero7)
                                 {
                                     // Fixer to get a near-correct Windows 7 sizes.
-                                    int fixer = -1;
+                                    int fixer = -2;
                                     int maxSide = (int)Math.Max((_LoadRect.Width - fixer) * CursorOptions.Scale, (_LoadRect.Height - fixer) * CursorOptions.Scale);
                                     _LoadRect.Width -= fixer;
                                     _LoadRect.Height -= fixer;
-                                    _LoadRect.Y += 2;
+                                    _LoadRect.X += 1;
+                                    _LoadRect.Y += 1;
 
                                     // CursorOptions.Angle - 180f → shift starting angle to 180°.
                                     // +360f % 360f → ensures the result is in [0, 360) even if angle < 180.
