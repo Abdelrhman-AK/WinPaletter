@@ -1187,9 +1187,10 @@ namespace WinPaletter
             this.tablessControl1.Controls.Add(this.tabPage6);
             this.tablessControl1.Controls.Add(this.tabPage7);
             this.tablessControl1.Location = new System.Drawing.Point(7, 350);
+            this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(608, 357);
+            this.tablessControl1.Size = new System.Drawing.Size(608, 295);
             this.tablessControl1.TabIndex = 222;
             // 
             // tabPage1
@@ -1198,7 +1199,7 @@ namespace WinPaletter
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(600, 329);
+            this.tabPage1.Size = new System.Drawing.Size(600, 267);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "0";
             // 
@@ -1208,7 +1209,7 @@ namespace WinPaletter
             this.tabPage4.Controls.Add(this.groupBox4);
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(600, 329);
+            this.tabPage4.Size = new System.Drawing.Size(600, 267);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "1";
             // 
@@ -1258,7 +1259,7 @@ namespace WinPaletter
             this.tabPage6.Controls.Add(this.groupBox5);
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(600, 329);
+            this.tabPage6.Size = new System.Drawing.Size(600, 267);
             this.tabPage6.TabIndex = 2;
             this.tabPage6.Text = "2";
             // 
@@ -1322,7 +1323,7 @@ namespace WinPaletter
             this.tabPage7.Controls.Add(this.groupBox6);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(600, 329);
+            this.tabPage7.Size = new System.Drawing.Size(600, 267);
             this.tabPage7.TabIndex = 3;
             this.tabPage7.Text = "3";
             // 
@@ -1386,6 +1387,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanOpenColorsEffects = true;
             this.ClientSize = new System.Drawing.Size(1169, 761);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.groupBox2);

@@ -26,6 +26,8 @@ namespace WinPaletter.Theme
 
             if (Windows81 != TMx.Windows81) _Equals = false;
 
+            if (Windows8 != TMx.Windows8) _Equals = false;
+
             if (Windows7 != TMx.Windows7) _Equals = false;
 
             if (WindowsVista != TMx.WindowsVista) _Equals = false;

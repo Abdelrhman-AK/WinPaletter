@@ -229,238 +229,245 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public async void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Metrics and Fonts settings into registry and by using User32.SystemParametersInfo");
-
-            SaveToggleState(treeView);
-
-            if (Enabled)
+            try
             {
-                #region Metrics/Fonts override by msstyles
+                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Metrics and Fonts settings into registry and by using User32.SystemParametersInfo");
 
-                // Get visual styles data from ThemeManager, used to override Metrics/Fonts
-                VisualStyles _vs = new();
+                SaveToggleState(treeView);
 
-                if (Program.TM is not null)
+                if (Enabled)
                 {
-                    switch (Program.WindowStyle)
-                    {
-                        case WindowStyle.W12:
-                            _vs = Program.TM.Windows12.VisualStyles;
-                            break;
-                        case WindowStyle.W11:
-                            _vs = Program.TM.Windows11.VisualStyles;
-                            break;
-                        case WindowStyle.W10:
-                            _vs = Program.TM.Windows10.VisualStyles;
-                            break;
-                        case WindowStyle.W81:
-                            _vs = Program.TM.Windows81.VisualStyles;
-                            break;
-                        case WindowStyle.W7:
-                            _vs = Program.TM.Windows7.VisualStyles;
-                            break;
-                        case WindowStyle.WVista:
-                            _vs = Program.TM.WindowsVista.VisualStyles;
-                            break;
-                        case WindowStyle.WXP:
-                            _vs = Program.TM.WindowsXP.VisualStyles;
-                            break;
-                    }
-                }
+                    #region Metrics/Fonts override by msstyles
 
-                // Override Metrics/Fonts by visual styles
-                if (_vs.Enabled && _vs.OverrideSizes)
-                {
-                    if (File.Exists(_vs.ThemeFile))
+                    // Get visual styles data from ThemeManager, used to override Metrics/Fonts
+                    VisualStyles _vs = new();
+
+                    if (Program.TM is not null)
                     {
-                        try
+                        switch (Program.WindowStyle)
                         {
-                            using (VisualStyle vs = new(_vs.ThemeFile))
-                            {
-                                this.CopyFrom(vs.MetricsFonts());
-                                Enabled = true;
-                            }
+                            case WindowStyle.W12:
+                                _vs = Program.TM.Windows12.VisualStyles;
+                                break;
+                            case WindowStyle.W11:
+                                _vs = Program.TM.Windows11.VisualStyles;
+                                break;
+                            case WindowStyle.W10:
+                                _vs = Program.TM.Windows10.VisualStyles;
+                                break;
+                            case WindowStyle.W81:
+                                _vs = Program.TM.Windows81.VisualStyles;
+                                break;
+                            case WindowStyle.W7:
+                                _vs = Program.TM.Windows7.VisualStyles;
+                                break;
+                            case WindowStyle.WVista:
+                                _vs = Program.TM.WindowsVista.VisualStyles;
+                                break;
+                            case WindowStyle.WXP:
+                                _vs = Program.TM.WindowsXP.VisualStyles;
+                                break;
                         }
-                        catch
-                        {
-                            string theme = _vs.ThemeFile;
-                            if (Path.GetExtension(theme).ToLower() == ".msstyles")
-                            {
-                                File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
-                                theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
-                            }
+                    }
 
-                            if (File.Exists(theme))
+                    // Override Metrics/Fonts by visual styles
+                    if (_vs.Enabled && _vs.OverrideSizes)
+                    {
+                        if (File.Exists(_vs.ThemeFile))
+                        {
+                            try
                             {
-                                using (VisualStyleFile vs = new(theme))
+                                using (VisualStyle vs = new(_vs.ThemeFile))
                                 {
-                                    try
+                                    this.CopyFrom(vs.MetricsFonts());
+                                    Enabled = true;
+                                }
+                            }
+                            catch
+                            {
+                                string theme = _vs.ThemeFile;
+                                if (Path.GetExtension(theme).ToLower() == ".msstyles")
+                                {
+                                    File.WriteAllText($@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme", $"[VisualStyles]{"\r\n"}Path={theme}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                                    theme = $@"{SysPaths.appData}\VisualStyles\Luna\win32uischeme.theme";
+                                }
+
+                                if (File.Exists(theme))
+                                {
+                                    using (VisualStyleFile vs = new(theme))
                                     {
-                                        Overwrite_Metrics(vs.Metrics);
-                                        Overwrite_Fonts(vs.Metrics);
+                                        try
+                                        {
+                                            Overwrite_Metrics(vs.Metrics);
+                                            Overwrite_Fonts(vs.Metrics);
+                                        }
+                                        catch { } // Couldn't load visual styles File.
                                     }
-                                    catch { } // Couldn't load visual styles File.
                                 }
                             }
                         }
                     }
+
+                    #endregion
+
+                    // Get current DPI and set it to 100% to avoid DPI scaling issues
+                    double OldDPI = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor());
+                    WriteReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
+
+                    // Convert fonts to LogFont
+                    GDI32.LogFont lfCaptionFont = new();
+                    CaptionFont.ToLogFont(lfCaptionFont);
+
+                    GDI32.LogFont lfIconFont = new();
+                    IconFont.ToLogFont(lfIconFont);
+
+                    GDI32.LogFont lfMenuFont = new();
+                    MenuFont.ToLogFont(lfMenuFont);
+
+                    GDI32.LogFont lfMessageFont = new();
+                    MessageFont.ToLogFont(lfMessageFont);
+
+                    GDI32.LogFont lfSMCaptionFont = new();
+                    SmCaptionFont.ToLogFont(lfSMCaptionFont);
+
+                    GDI32.LogFont lfStatusFont = new();
+                    StatusFont.ToLogFont(lfStatusFont);
+
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
+
+                    SystemParametersInfo(treeView, SPI.SPI_SETFONTSMOOTHING, !Fonts_SingleBitPP, default, SPIF.SPIF_UPDATEINIFILE);
+
+                    MetricsFonts MF = (MetricsFonts)Clone();
+
+                    // Apply Metrics/Fonts in a new thread to avoid UI freeze when applying changes
+                    await Task.Run(() =>
+                    {
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Metrics and Fonts settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
+
+                        NONCLIENTMETRICS NCM = new();
+                        NCM.cbSize = (uint)Marshal.SizeOf(NCM);
+                        ICONMETRICS ICO = new();
+                        ICO.cbSize = (uint)Marshal.SizeOf(ICO);
+
+                        SystemParametersInfo(treeView, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);
+
+                        NCM.lfCaptionFont = lfCaptionFont;
+                        NCM.lfSMCaptionFont = lfSMCaptionFont;
+                        NCM.lfStatusFont = lfStatusFont;
+                        NCM.lfMenuFont = lfMenuFont;
+                        NCM.lfMessageFont = lfMessageFont;
+
+                        NCM.iBorderWidth = MF.BorderWidth;
+                        NCM.iScrollWidth = MF.ScrollWidth;
+                        NCM.iScrollHeight = MF.ScrollHeight;
+                        NCM.iCaptionWidth = MF.CaptionWidth;
+                        NCM.iCaptionHeight = MF.CaptionHeight;
+                        NCM.iSMCaptionWidth = MF.SmCaptionWidth;
+                        NCM.iSMCaptionHeight = MF.SmCaptionHeight;
+                        NCM.iMenuWidth = MF.MenuWidth;
+                        NCM.iMenuHeight = MF.MenuHeight;
+                        NCM.iPaddedBorderWidth = MF.PaddedBorderWidth;
+
+                        ICO.iHorzSpacing = MF.IconSpacing;
+                        ICO.iVertSpacing = MF.IconVerticalSpacing;
+                        ICO.lfFont = lfIconFont;
+
+                        // Broadcast changes to all windows
+                        SystemParametersInfo(treeView, SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.SPIF_WRITEANDNOTIFY);
+                        SystemParametersInfo(treeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_WRITEANDNOTIFY);
+                    }).ConfigureAwait(false);
+
+                    // Apply Shell Icon Size and Shell Small Icon Size only on Windows XP
+                    if (OS.WXP)
+                    {
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
+                    }
+
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String);
+
+                    // Apply metrics on HKEY_USERS\.DEFAULT (New users and default user) if it is set to overwrite in WinPaletter settings
+                    if (Program.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                    {
+                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying Metrics and Fonts settings to HKEY_USERS\\.DEFAULT registry key.");
+
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToBytes(), RegistryValueKind.Binary);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToBytes(), RegistryValueKind.Binary);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToBytes(), RegistryValueKind.Binary);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToBytes(), RegistryValueKind.Binary);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToBytes(), RegistryValueKind.Binary);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToBytes(), RegistryValueKind.Binary);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
+                    }
+
+                    // Apply font substitutes
+
+                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying font substitutes to HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes registry key.");
+
+                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String);
+                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String);
+
+                    if (string.IsNullOrWhiteSpace(FontSubstitute_SegoeUI))
+                    {
+                        // Restore Segoe UI fonts
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "seguibl.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "seguibli.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "segoeuii.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "segoeuil.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "seguili.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "seguisb.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "seguisbi.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "segoeuisl.ttf", RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "seguisli.ttf", RegistryValueKind.String);
+                    }
+                    else
+                    {
+                        // Remove Segoe UI fonts to use font substitute correctly
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", string.Empty, RegistryValueKind.String);
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", string.Empty, RegistryValueKind.String);
+                    }
+
+                    // Apply SegoeUI font substitutes
+                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String);
+
+                    // Restore DPI
+                    WriteReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", OldDPI);
                 }
-
-                #endregion
-
-                // Get current DPI and set it to 100% to avoid DPI scaling issues
-                double OldDPI = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor());
-                WriteReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
-
-                // Convert fonts to LogFont
-                GDI32.LogFont lfCaptionFont = new();
-                CaptionFont.ToLogFont(lfCaptionFont);
-
-                GDI32.LogFont lfIconFont = new();
-                IconFont.ToLogFont(lfIconFont);
-
-                GDI32.LogFont lfMenuFont = new();
-                MenuFont.ToLogFont(lfMenuFont);
-
-                GDI32.LogFont lfMessageFont = new();
-                MessageFont.ToLogFont(lfMessageFont);
-
-                GDI32.LogFont lfSMCaptionFont = new();
-                SmCaptionFont.ToLogFont(lfSMCaptionFont);
-
-                GDI32.LogFont lfStatusFont = new();
-                StatusFont.ToLogFont(lfStatusFont);
-
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
-
-                SystemParametersInfo(treeView, SPI.SPI_SETFONTSMOOTHING, !Fonts_SingleBitPP, default, SPIF.SPIF_UPDATEINIFILE);
-
-                MetricsFonts MF = (MetricsFonts)Clone();
-
-                // Apply Metrics/Fonts in a new thread to avoid UI freeze when applying changes
-                await Task.Run(() =>
-                {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Metrics and Fonts settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
-
-                    NONCLIENTMETRICS NCM = new();
-                    NCM.cbSize = (uint)Marshal.SizeOf(NCM);
-                    ICONMETRICS ICO = new();
-                    ICO.cbSize = (uint)Marshal.SizeOf(ICO);
-
-                    SystemParametersInfo(treeView, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);
-
-                    NCM.lfCaptionFont = lfCaptionFont;
-                    NCM.lfSMCaptionFont = lfSMCaptionFont;
-                    NCM.lfStatusFont = lfStatusFont;
-                    NCM.lfMenuFont = lfMenuFont;
-                    NCM.lfMessageFont = lfMessageFont;
-
-                    NCM.iBorderWidth = MF.BorderWidth;
-                    NCM.iScrollWidth = MF.ScrollWidth;
-                    NCM.iScrollHeight = MF.ScrollHeight;
-                    NCM.iCaptionWidth = MF.CaptionWidth;
-                    NCM.iCaptionHeight = MF.CaptionHeight;
-                    NCM.iSMCaptionWidth = MF.SmCaptionWidth;
-                    NCM.iSMCaptionHeight = MF.SmCaptionHeight;
-                    NCM.iMenuWidth = MF.MenuWidth;
-                    NCM.iMenuHeight = MF.MenuHeight;
-                    NCM.iPaddedBorderWidth = MF.PaddedBorderWidth;
-
-                    ICO.iHorzSpacing = MF.IconSpacing;
-                    ICO.iVertSpacing = MF.IconVerticalSpacing;
-                    ICO.lfFont = lfIconFont;
-
-                    // Broadcast changes to all windows
-                    SystemParametersInfo(treeView, SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.SPIF_WRITEANDNOTIFY);
-                    SystemParametersInfo(treeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_WRITEANDNOTIFY);
-                });
-
-                // Apply Shell Icon Size and Shell Small Icon Size only on Windows XP
-                if (OS.WXP)
-                {
-                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
-                }
-
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String);
-
-                // Apply metrics on HKEY_USERS\.DEFAULT (New users and default user) if it is set to overwrite in WinPaletter settings
-                if (Program.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
-                {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying Metrics and Fonts settings to HKEY_USERS\\.DEFAULT registry key.");
-
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionFont", lfCaptionFont.ToBytes(), RegistryValueKind.Binary);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconFont", lfIconFont.ToBytes(), RegistryValueKind.Binary);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuFont", lfMenuFont.ToBytes(), RegistryValueKind.Binary);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MessageFont", lfMessageFont.ToBytes(), RegistryValueKind.Binary);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionFont", lfSMCaptionFont.ToBytes(), RegistryValueKind.Binary);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "StatusFont", lfStatusFont.ToBytes(), RegistryValueKind.Binary);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "BorderWidth", BorderWidth * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconSpacing", IconSpacing * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuHeight", MenuHeight * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "MenuWidth", MenuWidth * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
-                }
-
-                // Apply font substitutes
-
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying font substitutes to HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes registry key.");
-
-                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg", FontSubstitute_MSShellDlg, RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", FontSubstitute_MSShellDlg2, RegistryValueKind.String);
-
-                if (string.IsNullOrWhiteSpace(FontSubstitute_SegoeUI))
-                {
-                    // Restore Segoe UI fonts
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", "segoeui.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", "segoeuib.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", "segoeuiz.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", "seguibl.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", "seguibli.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", "segoeuii.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", "segoeuil.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", "seguili.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", "seguisb.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "seguisbi.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "segoeuisl.ttf", RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "seguisli.ttf", RegistryValueKind.String);
-                }
-                else
-                {
-                    // Remove Segoe UI fonts to use font substitute correctly
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Bold Italic (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Black Italic (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Italic (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Light Italic (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", string.Empty, RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", string.Empty, RegistryValueKind.String);
-                }
-
-                // Apply SegoeUI font substitutes
-                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String);
-
-                // Restore DPI
-                WriteReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", OldDPI);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

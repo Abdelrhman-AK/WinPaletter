@@ -3,8 +3,15 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
+using System.Resources;
 using System.Windows.Forms;
 using WinPaletter.Properties;
+using WinPaletter.TypesExtensions;
+using static WinPaletter.NativeMethods.User32;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter
 {
@@ -462,6 +469,33 @@ namespace WinPaletter
                                     G.SmoothingMode = smoothingMode;
                                 }
 
+                                else if (CursorOptions.CircleStyle == CircleStyle.Aero7)
+                                {                                    
+                                    // Fixer to get a near-correct Windows 7 sizes.
+                                    int fixer = 2;
+                                    int maxSide = (int)Math.Max((_Busy.Width - fixer) * CursorOptions.Scale, (_Busy.Height - fixer) * CursorOptions.Scale);
+                                    _Busy.Width -= fixer;
+                                    _Busy.Height -= fixer;
+
+                                    // CursorOptions.Angle - 180f → shift starting angle to 180°.
+                                    // +360f % 360f → ensures the result is in [0, 360) even if angle < 180.
+                                    // /360f * 18 → scales to 18 frames.
+                                    // (int) → floors to integer frame index.CursorOptions.Angle - 180f → shift starting angle to 180°.
+                                    // +360f % 360f → ensures the result is in [0, 360) even if angle < 180.
+                                    // /360f * 18 → scales to 18 frames.
+                                    int frameNO = (int)(((CursorOptions.Angle - 180f + 360f) % 360f) / 360f * 18);
+                                    int[] sizes = [12, 16, 20, 22, 25, 28, 34, 42];
+                                    int correctSize = sizes.FirstOrDefault(s => maxSide <= s) == 0 ? sizes.Last() : sizes.First(s => maxSide <= s);
+
+                                    ResourceManager rm = new($"{nameof(WinPaletter)}.{nameof(Assets)}.{nameof(Assets.AeroLoadingCircles)}", Assembly.GetExecutingAssembly());
+                                    
+                                    using (Bitmap frame = rm.GetObject($"_{correctSize}_{frameNO}") as Bitmap)
+                                    using (Bitmap b_colorized = frame.Tint(CursorOptions.LoadingCircleBack1))
+                                    {
+                                        G.DrawImage(b_colorized, _Busy);
+                                    }
+                                }
+
                                 BC.Dispose();
                                 BH.Dispose();
                             }
@@ -704,6 +738,34 @@ namespace WinPaletter
                                     }
 
                                     G.SmoothingMode = smoothingMode;
+                                }
+
+                                else if (CursorOptions.CircleStyle == CircleStyle.Aero7)
+                                {
+                                    // Fixer to get a near-correct Windows 7 sizes.
+                                    int fixer = -1;
+                                    int maxSide = (int)Math.Max((_LoadRect.Width - fixer) * CursorOptions.Scale, (_LoadRect.Height - fixer) * CursorOptions.Scale);
+                                    _LoadRect.Width -= fixer;
+                                    _LoadRect.Height -= fixer;
+                                    _LoadRect.Y += 2;
+
+                                    // CursorOptions.Angle - 180f → shift starting angle to 180°.
+                                    // +360f % 360f → ensures the result is in [0, 360) even if angle < 180.
+                                    // /360f * 18 → scales to 18 frames.
+                                    // (int) → floors to integer frame index.CursorOptions.Angle - 180f → shift starting angle to 180°.
+                                    // +360f % 360f → ensures the result is in [0, 360) even if angle < 180.
+                                    // /360f * 18 → scales to 18 frames.
+                                    int frameNO = (int)(((CursorOptions.Angle - 180f + 360f) % 360f) / 360f * 18);
+                                    int[] sizes = [12, 16, 20, 22, 25, 28, 34, 42];
+                                    int correctSize = sizes.FirstOrDefault(s => maxSide <= s) == 0 ? sizes.Last() : sizes.First(s => maxSide <= s);
+
+                                    ResourceManager rm = new($"{nameof(WinPaletter)}.{nameof(Assets)}.{nameof(Assets.AeroLoadingCircles)}", Assembly.GetExecutingAssembly());
+
+                                    using (Bitmap frame = rm.GetObject($"_{correctSize}_{frameNO}") as Bitmap)
+                                    using (Bitmap b_colorized = frame.Tint(CursorOptions.LoadingCircleBack1))
+                                    {
+                                        G.DrawImage(b_colorized, _LoadRect);
+                                    }
                                 }
                             }
 
@@ -1558,7 +1620,8 @@ namespace WinPaletter
             Aero,
             Modern,
             Classic,
-            Fluid
+            Fluid,
+            Aero7
         }
 
         public static GraphicsPath Arrow(RectangleF Rectangle, ArrowStyle Style, float Scale = 1f)

@@ -289,10 +289,11 @@ namespace WinPaletter
             this.ComboBox6.FormattingEnabled = true;
             this.ComboBox6.ItemHeight = 20;
             this.ComboBox6.Items.AddRange(new object[] {
-            "Aero",
+            "Metro",
             "Modern",
             "Classic",
-            "Fluid"});
+            "Fluid",
+            "Aero"});
             this.ComboBox6.Location = new System.Drawing.Point(369, 140);
             this.ComboBox6.Name = "ComboBox6";
             this.ComboBox6.Size = new System.Drawing.Size(372, 26);
@@ -1120,7 +1121,7 @@ namespace WinPaletter
             // 
             this.numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.numericUpDown1.BackColor = System.Drawing.Color.Transparent;
-            this.numericUpDown1.Location = new System.Drawing.Point(257, 580);
+            this.numericUpDown1.Location = new System.Drawing.Point(257, 573);
             this.numericUpDown1.Maximum = 20;
             this.numericUpDown1.Minimum = 3;
             this.numericUpDown1.Name = "numericUpDown1";
@@ -1139,7 +1140,7 @@ namespace WinPaletter
             this.Button5.Image = null;
             this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageGlyph")));
             this.Button5.ImageGlyphEnabled = true;
-            this.Button5.Location = new System.Drawing.Point(150, 579);
+            this.Button5.Location = new System.Drawing.Point(150, 572);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(101, 28);
             this.Button5.TabIndex = 66;
@@ -1185,7 +1186,7 @@ namespace WinPaletter
             this.cursorsConatiner.Location = new System.Drawing.Point(3, 41);
             this.cursorsConatiner.Name = "cursorsConatiner";
             this.cursorsConatiner.Padding = new System.Windows.Forms.Padding(4, 4, 0, 4);
-            this.cursorsConatiner.Size = new System.Drawing.Size(300, 532);
+            this.cursorsConatiner.Size = new System.Drawing.Size(300, 525);
             this.cursorsConatiner.TabIndex = 6;
             // 
             // Arrow
@@ -1964,7 +1965,7 @@ namespace WinPaletter
             this.Button6.Image = null;
             this.Button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste;
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.Location = new System.Drawing.Point(74, 579);
+            this.Button6.Location = new System.Drawing.Point(74, 572);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(70, 28);
             this.Button6.TabIndex = 67;
@@ -1984,7 +1985,7 @@ namespace WinPaletter
             this.Button2.Image = null;
             this.Button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste;
             this.Button2.ImageGlyphEnabled = true;
-            this.Button2.Location = new System.Drawing.Point(41, 579);
+            this.Button2.Location = new System.Drawing.Point(41, 572);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(27, 28);
             this.Button2.TabIndex = 11;
@@ -2002,7 +2003,7 @@ namespace WinPaletter
             this.Button1.Image = null;
             this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
             this.Button1.ImageGlyphEnabled = true;
-            this.Button1.Location = new System.Drawing.Point(8, 579);
+            this.Button1.Location = new System.Drawing.Point(8, 572);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(27, 28);
             this.Button1.TabIndex = 10;
@@ -2021,11 +2022,11 @@ namespace WinPaletter
             this.alertBox2.Image = null;
             this.alertBox2.Location = new System.Drawing.Point(13, 167);
             this.alertBox2.Name = "alertBox2";
-            this.alertBox2.Size = new System.Drawing.Size(735, 48);
+            this.alertBox2.Size = new System.Drawing.Size(735, 28);
             this.alertBox2.TabIndex = 69;
             this.alertBox2.TabStop = false;
-            this.alertBox2.Text = "- The cursor size can be changed in Windows 10 and later versions, but not in ear" +
-    "lier ones.\r\n- If cursors are blurry, use sizes 32, 48, 64, or 96.";
+            this.alertBox2.Text = "The cursor size can be changed in Windows 10 and later versions, but not in earli" +
+    "er ones.";
             // 
             // trackBarX10
             // 
@@ -2086,7 +2087,7 @@ namespace WinPaletter
             this.groupBox2.Controls.Add(this.PictureBox21);
             this.groupBox2.Location = new System.Drawing.Point(7, 62);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(756, 225);
+            this.groupBox2.Size = new System.Drawing.Size(756, 205);
             this.groupBox2.TabIndex = 139;
             this.groupBox2.Text = "groupBox2";
             // 
@@ -2101,9 +2102,9 @@ namespace WinPaletter
             this.groupBox3.Controls.Add(this.pictureBox27);
             this.groupBox3.Controls.Add(this.label19);
             this.groupBox3.Controls.Add(this.separatorH5);
-            this.groupBox3.Location = new System.Drawing.Point(7, 293);
+            this.groupBox3.Location = new System.Drawing.Point(7, 273);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(756, 141);
+            this.groupBox3.Size = new System.Drawing.Size(756, 137);
             this.groupBox3.TabIndex = 140;
             this.groupBox3.Text = "groupBox3";
             this.groupBox3.Visible = false;
@@ -2115,7 +2116,7 @@ namespace WinPaletter
             this.global.Checked = false;
             this.global.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.global.ForeColor = System.Drawing.Color.White;
-            this.global.Location = new System.Drawing.Point(47, 109);
+            this.global.Location = new System.Drawing.Point(47, 105);
             this.global.Name = "global";
             this.global.Size = new System.Drawing.Size(701, 24);
             this.global.TabIndex = 139;
@@ -2129,7 +2130,7 @@ namespace WinPaletter
             this.source1.Checked = false;
             this.source1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.source1.ForeColor = System.Drawing.Color.White;
-            this.source1.Location = new System.Drawing.Point(47, 72);
+            this.source1.Location = new System.Drawing.Point(47, 68);
             this.source1.Name = "source1";
             this.source1.Size = new System.Drawing.Size(701, 24);
             this.source1.TabIndex = 138;
@@ -2143,7 +2144,7 @@ namespace WinPaletter
             this.source0.Checked = false;
             this.source0.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.source0.ForeColor = System.Drawing.Color.White;
-            this.source0.Location = new System.Drawing.Point(47, 45);
+            this.source0.Location = new System.Drawing.Point(47, 41);
             this.source0.Name = "source0";
             this.source0.Size = new System.Drawing.Size(701, 24);
             this.source0.TabIndex = 137;
@@ -2181,7 +2182,7 @@ namespace WinPaletter
             this.separatorH5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH5.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH5.Location = new System.Drawing.Point(47, 102);
+            this.separatorH5.Location = new System.Drawing.Point(47, 98);
             this.separatorH5.Name = "separatorH5";
             this.separatorH5.Size = new System.Drawing.Size(701, 1);
             this.separatorH5.TabIndex = 141;
@@ -2320,7 +2321,8 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tablessControl1.Controls.Add(this.tabPage6);
             this.tablessControl1.Controls.Add(this.tabPage7);
-            this.tablessControl1.Location = new System.Drawing.Point(7, 440);
+            this.tablessControl1.Location = new System.Drawing.Point(7, 416);
+            this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
             this.tablessControl1.Size = new System.Drawing.Size(756, 48);
@@ -2394,10 +2396,11 @@ namespace WinPaletter
             this.tablessControl2.Controls.Add(this.tabPage9);
             this.tablessControl2.Controls.Add(this.tabPage1);
             this.tablessControl2.Controls.Add(this.tabPage10);
-            this.tablessControl2.Location = new System.Drawing.Point(7, 494);
+            this.tablessControl2.Location = new System.Drawing.Point(7, 470);
+            this.tablessControl2.Multiline = true;
             this.tablessControl2.Name = "tablessControl2";
             this.tablessControl2.SelectedIndex = 0;
-            this.tablessControl2.Size = new System.Drawing.Size(756, 191);
+            this.tablessControl2.Size = new System.Drawing.Size(756, 195);
             this.tablessControl2.TabIndex = 224;
             this.tablessControl2.Visible = false;
             // 
@@ -2407,7 +2410,7 @@ namespace WinPaletter
             this.tabPage5.Controls.Add(this.groupBox7);
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(748, 163);
+            this.tabPage5.Size = new System.Drawing.Size(748, 167);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "0";
             // 
@@ -2480,7 +2483,7 @@ namespace WinPaletter
             this.tabPage8.Controls.Add(this.groupBox8);
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(748, 163);
+            this.tabPage8.Size = new System.Drawing.Size(748, 167);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "1";
             // 
@@ -2632,7 +2635,7 @@ namespace WinPaletter
             this.tabPage9.Controls.Add(this.groupBox9);
             this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(748, 163);
+            this.tabPage9.Size = new System.Drawing.Size(748, 167);
             this.tabPage9.TabIndex = 3;
             this.tabPage9.Text = "2";
             // 
@@ -2745,7 +2748,7 @@ namespace WinPaletter
             this.tabPage1.Controls.Add(this.groupBox10);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(748, 163);
+            this.tabPage1.Size = new System.Drawing.Size(748, 167);
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Text = "3";
             // 
@@ -2896,7 +2899,7 @@ namespace WinPaletter
             this.tabPage10.Controls.Add(this.groupBox11);
             this.tabPage10.Location = new System.Drawing.Point(4, 24);
             this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(748, 163);
+            this.tabPage10.Size = new System.Drawing.Size(748, 167);
             this.tabPage10.TabIndex = 5;
             this.tabPage10.Text = "4";
             // 

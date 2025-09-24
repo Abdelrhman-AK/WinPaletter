@@ -291,6 +291,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Accessibility_Vision.resx</DependentUpon>
     </Compile>
+    <Compile Include="Assets\AeroLoadingCircles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AeroLoadingCircles.resx</DependentUpon>
+    </Compile>
     <Compile Include="Assets\ColorItemContextMenu.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1212,6 +1217,10 @@
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AeroLoadingCircles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AeroLoadingCircles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\ColorItemContextMenu.resx">
       <Generator>ResXFileCodeGenerator</Generator>

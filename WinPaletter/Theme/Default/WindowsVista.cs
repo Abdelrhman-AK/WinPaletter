@@ -157,6 +157,22 @@ namespace WinPaletter.Theme
             TM.Cursors.Cursor_Person.UseFromFile = true;
             TM.Cursors.Cursor_IBeam.UseFromFile = true;
             TM.Cursors.Cursor_Cross.UseFromFile = true;
+            TM.Cursors.Cursor_AppLoading.CircleStyle = Paths.CircleStyle.Aero7;
+            TM.Cursors.Cursor_AppLoading.LoadingCircleBack1 = Color.FromArgb(112, 255, 250);
+            TM.Cursors.Cursor_AppLoading.LoadingCircleBack2 = Color.FromArgb(112, 255, 250);
+            TM.Cursors.Cursor_AppLoading.LoadingCircleHot_AnimationSpeed = 20;
+            TM.Cursors.Cursor_AppLoading.PrimaryColor1 = Color.FromArgb(255, 255, 255);
+            TM.Cursors.Cursor_AppLoading.PrimaryColor2 = Color.FromArgb(137, 255, 249);
+            TM.Cursors.Cursor_AppLoading.PrimaryColorGradient = true;
+            TM.Cursors.Cursor_AppLoading.PrimaryColorGradientMode = Paths.GradientMode.Circle;
+            TM.Cursors.Cursor_AppLoading.SecondaryColor1 = Color.FromArgb(66, 67, 77);
+            TM.Cursors.Cursor_AppLoading.SecondaryColor2 = Color.FromArgb(0, 81, 77);
+            TM.Cursors.Cursor_AppLoading.SecondaryColorGradient = true;
+            TM.Cursors.Cursor_AppLoading.SecondaryColorGradientMode = Paths.GradientMode.Circle;
+            TM.Cursors.Cursor_Busy.CircleStyle = Paths.CircleStyle.Aero7;
+            TM.Cursors.Cursor_Busy.LoadingCircleBack1 = Color.FromArgb(112, 255, 250);
+            TM.Cursors.Cursor_Busy.LoadingCircleBack2 = Color.FromArgb(112, 255, 250);
+            TM.Cursors.Cursor_Busy.LoadingCircleHot_AnimationSpeed = 20;
 
             ref Sounds Sounds = ref TM.Sounds;
             Sounds.Enabled = true;

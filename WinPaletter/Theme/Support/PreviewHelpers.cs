@@ -199,7 +199,7 @@ namespace WinPaletter
                                     pic2.Image = Win10xLegends.ACHover_Links;
                                     pic3.Image = Win10xLegends.TaskbarApp;
                                     pic5.Image = Win10xLegends.Settings_Icons;
-                                    pic6.Image = WinLogos.Win10;
+                                    pic6.Image = Win10xLegends.Win10Logo;
                                     pic7.Image = Win10xLegends.UWPDlg;
 
                                     if (TM.Windows10.Transparency)
@@ -253,7 +253,7 @@ namespace WinPaletter
                                         pic1.Image = Win10xLegends.Hamburger;
                                         pic4.Image = Win10xLegends.StartMenu_Taskbar_AC;
                                         pic5.Image = Win10xLegends.Settings_Icons;
-                                        pic6.Image = WinLogos.Win10;
+                                        pic6.Image = Win10xLegends.Win10Logo;
                                         pic7.Image = Win10xLegends.UWPDlg;
                                         pic8.Image = Win10xLegends.Taskbar;
 

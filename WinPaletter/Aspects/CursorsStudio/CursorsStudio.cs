@@ -440,10 +440,18 @@ namespace WinPaletter
 
         public void ApplyColorsToPreview(bool ignoreSettingFile = false)
         {
-            foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
+            if (global.Checked)
             {
-                ApplyColorsToPreview(i, ignoreSettingFile);
-                i.Invalidate();
+                foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
+                {
+                    ApplyColorsToPreview(i, ignoreSettingFile);
+                    i.Invalidate();
+                }
+            }
+            else
+            {
+                ApplyColorsToPreview(_SelectedControl, ignoreSettingFile);
+                _SelectedControl.Invalidate();
             }
         }
 

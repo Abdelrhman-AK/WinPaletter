@@ -303,31 +303,24 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Replaces all occurrences of a specified color in the input image with a new color.
+        /// Replace occurrences of a color in an image while preserving anti-aliased edges (alpha).
         /// </summary>
-        /// <remarks>This method creates a new <see cref="Bitmap"/> to avoid modifying the original image.  The
-        /// replacement is performed on a per-pixel basis, and only the RGB components of the <paramref name="oldColor"/> are
-        /// matched. The alpha channel of the <paramref name="oldColor"/> is ignored during the comparison.</remarks>
-        /// <param name="inputImage">The input <see cref="Bitmap"/> to process. Must not be null or empty.</param>
-        /// <param name="oldColor">The <see cref="Color"/> to be replaced in the image.</param>
-        /// <param name="newColor">The <see cref="Color"/> to replace the old color with.</param>
-        /// <returns>A new <see cref="Bitmap"/> with the specified color replaced, or <see langword="null"/> if the input image is null
-        /// or empty.</returns>
-        public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color newColor)
+        /// <param name="inputImage">Input bitmap (not null/empty).</param>
+        /// <param name="oldColor">Color to replace (RGB used for matching).</param>
+        /// <param name="newColor">Replacement color (RGB used for new color; alpha of destination preserved).</param>
+        /// <param name="tolerance">Max per-channel difference to still consider a "match" (0 = exact). Recommended 8-20.</param>
+        public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color newColor, int tolerance = 16)
         {
             if (inputImage == null || inputImage.Width == 0 || inputImage.Height == 0)
                 return null;
 
-            // Always clone the original to avoid locking the object being used elsewhere
             using (Bitmap src = inputImage.Clone(new Rectangle(0, 0, inputImage.Width, inputImage.Height), PixelFormat.Format32bppArgb))
             {
                 int w = src.Width;
                 int h = src.Height;
-
-                Bitmap dest = new(w, h, PixelFormat.Format32bppArgb);
+                Bitmap dest = new Bitmap(w, h, PixelFormat.Format32bppArgb);
 
                 BitmapData srcData = null, dstData = null;
-
                 try
                 {
                     srcData = src.LockBits(new Rectangle(0, 0, w, h), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
@@ -337,29 +330,90 @@ namespace WinPaletter.TypesExtensions
                     int dstStride = dstData.Stride;
                     int srcStrideAbs = Math.Abs(srcStride);
 
-                    // Precompute packed colors
-                    uint oldBGR24 = (uint)(oldColor.B | (oldColor.G << 8) | (oldColor.R << 16));
-                    uint newBGRA = (uint)(newColor.B | (newColor.G << 8) | (newColor.R << 16) | (newColor.A << 24));
+                    int oldR = oldColor.R, oldG = oldColor.G, oldB = oldColor.B;
+                    int newR = newColor.R, newG = newColor.G, newB = newColor.B;
 
                     unsafe
                     {
                         byte* srcBase = (byte*)srcData.Scan0;
                         byte* dstBase = (byte*)dstData.Scan0;
-
                         byte* srcStart = srcStride >= 0 ? srcBase : srcBase + (h - 1) * srcStrideAbs;
 
                         Parallel.For(0, h, y =>
                         {
                             byte* sRow = srcStart + (srcStride >= 0 ? y * srcStride : -y * srcStride);
                             byte* dRow = dstBase + y * dstStride;
-
                             uint* sPx = (uint*)sRow;
                             uint* dPx = (uint*)dRow;
 
                             for (int x = 0; x < w; x++)
                             {
-                                uint v = sPx[x]; // BGRA layout
-                                dPx[x] = (v & 0x00FFFFFFu) == oldBGR24 ? newBGRA : v;
+                                uint v = sPx[x];
+                                byte b = (byte)(v & 0xFF);
+                                byte g = (byte)((v >> 8) & 0xFF);
+                                byte r = (byte)((v >> 16) & 0xFF);
+                                byte a = (byte)((v >> 24) & 0xFF);
+
+                                if (a == 0)
+                                {
+                                    // fully transparent: keep as-is
+                                    dPx[x] = v;
+                                    continue;
+                                }
+
+                                if (a == 255)
+                                {
+                                    // opaque: compare directly to oldColor (cheap)
+                                    if (Math.Abs(r - oldR) <= tolerance &&
+                                        Math.Abs(g - oldG) <= tolerance &&
+                                        Math.Abs(b - oldB) <= tolerance)
+                                    {
+                                        uint outR = (uint)newR;
+                                        uint outG = (uint)newG;
+                                        uint outB = (uint)newB;
+                                        dPx[x] = ((uint)255 << 24) | (outR << 16) | (outG << 8) | outB;
+                                    }
+                                    else
+                                        dPx[x] = v;
+
+                                    continue;
+                                }
+
+                                // semi-transparent: first try premultiplied expectation (fast, integer)
+                                int expR = (oldR * a + 127) / 255;
+                                int expG = (oldG * a + 127) / 255;
+                                int expB = (oldB * a + 127) / 255;
+
+                                if (Math.Abs(r - expR) <= tolerance &&
+                                    Math.Abs(g - expG) <= tolerance &&
+                                    Math.Abs(b - expB) <= tolerance)
+                                {
+                                    // set new color premultiplied by original alpha so edges remain smooth
+                                    uint outR = (uint)((newR * a) / 255);
+                                    uint outG = (uint)((newG * a) / 255);
+                                    uint outB = (uint)((newB * a) / 255);
+                                    dPx[x] = ((uint)a << 24) | (outR << 16) | (outG << 8) | outB;
+                                    continue;
+                                }
+
+                                // fallback: try un-premultiplying the stored channels and comparing to oldColor (slower)
+                                int unR = (r * 255 + a / 2) / a;
+                                int unG = (g * 255 + a / 2) / a;
+                                int unB = (b * 255 + a / 2) / a;
+
+                                if (Math.Abs(unR - oldR) <= tolerance &&
+                                    Math.Abs(unG - oldG) <= tolerance &&
+                                    Math.Abs(unB - oldB) <= tolerance)
+                                {
+                                    uint outR = (uint)((newR * a) / 255);
+                                    uint outG = (uint)((newG * a) / 255);
+                                    uint outB = (uint)((newB * a) / 255);
+                                    dPx[x] = ((uint)a << 24) | (outR << 16) | (outG << 8) | outB;
+                                    continue;
+                                }
+
+                                // not a match: copy as-is
+                                dPx[x] = v;
                             }
                         });
                     }
@@ -465,70 +519,70 @@ namespace WinPaletter.TypesExtensions
 
         /// <summary>
         /// Applies a tint to the specified bitmap using the provided color.
+        /// The tint multiplies the red, green, and blue components by the
+        /// corresponding components of <paramref name="tintColor"/>, while
+        /// preserving the original alpha channel to keep smooth edges intact.
         /// </summary>
-        /// <remarks>This method creates a new bitmap with the same dimensions as the original and applies the tint by
-        /// multiplying each pixel's color components by the corresponding components of the <paramref name="tintColor"/>. The
-        /// original bitmap is not modified. The method ensures thread safety by cloning the original bitmap before
-        /// processing.</remarks>
-        /// <param name="originalBitmap">The original <see cref="Bitmap"/> to which the tint will be applied. Cannot be null.</param>
-        /// <param name="tintColor">The <see cref="Color"/> used to tint the bitmap. The red, green, blue, and alpha components of this color are used
-        /// as multipliers for the corresponding components of each pixel in the bitmap.</param>
-        /// <returns>A new <see cref="Bitmap"/> instance with the tint applied. Returns <see langword="null"/> if <paramref
-        /// name="originalBitmap"/> is <see langword="null"/>.</returns>
+        /// <param name="originalBitmap">The source bitmap. Cannot be null.</param>
+        /// <param name="tintColor">The color whose R, G, and B values are used as multipliers (0–255).</param>
+        /// <returns>A new <see cref="Bitmap"/> with the tint applied, or <c>null</c> if <paramref name="originalBitmap"/> is null.</returns>
         public static Bitmap Tint(this Bitmap originalBitmap, Color tintColor)
         {
             if (originalBitmap == null) return null;
 
-            // Clone the source to avoid locking an in-use bitmap
-            using (Bitmap clone = originalBitmap.Clone(new Rectangle(0, 0, originalBitmap.Width, originalBitmap.Height), PixelFormat.Format32bppArgb))
+            // Clone to ensure we can safely read the pixels
+            using Bitmap clone = originalBitmap.Clone(new Rectangle(0, 0, originalBitmap.Width, originalBitmap.Height), PixelFormat.Format32bppArgb);
+
+            Bitmap tintedBitmap = new(clone.Width, clone.Height, PixelFormat.Format32bppArgb);
+            Rectangle rect = new(0, 0, clone.Width, clone.Height);
+
+            BitmapData srcData = clone.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData dstData = tintedBitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+            try
             {
-                Bitmap tintedBitmap = new(clone.Width, clone.Height, PixelFormat.Format32bppArgb);
-                Rectangle rect = new(0, 0, clone.Width, clone.Height);
+                int width = srcData.Width;
+                int height = srcData.Height;
+                int strideSrc = srcData.Stride;
+                int strideDst = dstData.Stride;
 
-                BitmapData srcData = clone.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-                BitmapData dstData = tintedBitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                // Normalized multipliers for R, G, B only (leave alpha alone)
+                float rMul = tintColor.R / 255f;
+                float gMul = tintColor.G / 255f;
+                float bMul = tintColor.B / 255f;
 
-                try
+                unsafe
                 {
-                    int height = srcData.Height;
-                    int width = srcData.Width;
-                    int strideSrc = srcData.Stride;
-                    int strideDst = dstData.Stride;
+                    byte* srcBase = (byte*)srcData.Scan0;
+                    byte* dstBase = (byte*)dstData.Scan0;
 
-                    float rMul = tintColor.R / 255f;
-                    float gMul = tintColor.G / 255f;
-                    float bMul = tintColor.B / 255f;
-                    float aMul = tintColor.A / 255f;
-
-                    unsafe
+                    Parallel.For(0, height, y =>
                     {
-                        byte* srcPtr = (byte*)srcData.Scan0;
-                        byte* dstPtr = (byte*)dstData.Scan0;
+                        byte* srcRow = srcBase + y * strideSrc;
+                        byte* dstRow = dstBase + y * strideDst;
 
-                        Parallel.For(0, height, y =>
+                        for (int x = 0; x < width; x++)
                         {
-                            byte* srcRow = srcPtr + (y * strideSrc);
-                            byte* dstRow = dstPtr + (y * strideDst);
+                            int idx = x * 4;
 
-                            for (int x = 0; x < width; x++)
-                            {
-                                int idx = x * 4;
-                                dstRow[idx] = (byte)(srcRow[idx] * bMul); // B
-                                dstRow[idx + 1] = (byte)(srcRow[idx + 1] * gMul); // G
-                                dstRow[idx + 2] = (byte)(srcRow[idx + 2] * rMul); // R
-                                dstRow[idx + 3] = (byte)(srcRow[idx + 3] * aMul); // A
-                            }
-                        });
-                    }
-                }
-                finally
-                {
-                    clone.UnlockBits(srcData);
-                    tintedBitmap.UnlockBits(dstData);
-                }
+                            // Multiply R, G, B and round, clamp to 255
+                            dstRow[idx] = (byte)Math.Min(255, Math.Round(srcRow[idx] * bMul)); // B
+                            dstRow[idx + 1] = (byte)Math.Min(255, Math.Round(srcRow[idx + 1] * gMul)); // G
+                            dstRow[idx + 2] = (byte)Math.Min(255, Math.Round(srcRow[idx + 2] * rMul)); // R
 
-                return tintedBitmap;
+                            // Preserve original alpha to keep anti-aliased edges
+                            dstRow[idx + 3] = srcRow[idx + 3];
+                        }
+                    });
+                }
             }
+            finally
+            {
+                clone.UnlockBits(srcData);
+                tintedBitmap.UnlockBits(dstData);
+            }
+
+            return tintedBitmap;
         }
 
         /// <summary>
