@@ -29,13 +29,13 @@ namespace WinPaletter
             this.LoadLanguage();
             ApplyStyle(this);
 
-            PopulateScreenSaverList();
-
             // Set up columns for the ListView
             listView1.View = View.Details;
             listView1.Columns.Clear();
-            listView1.Columns.Add("Name", 150);
-            listView1.Columns.Add("File Path", 300);
+            listView1.Columns.Add("Name");
+            listView1.Columns.Add("File Path");
+
+            PopulateScreenSaverList();
         }
 
         private void PopulateScreenSaverList()
@@ -71,7 +71,7 @@ namespace WinPaletter
             }
 
             // Resize the columns
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void Button1_Click(object sender, EventArgs e)

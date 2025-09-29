@@ -73,7 +73,7 @@
                     {
                         UseTaskbar10 = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OldTaskbar", true);
                         TaskbarButton10 = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "OrbStyle", 0) == 0;
-                        StartStyle = ReadReg<StartStyles>("HKEY_CURRENT_USER\\Control Panel\\Desktop", "StartUI_EnableRoundedCorners", StartStyles.NotRounded);
+                        StartStyle = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "StartUI_EnableRoundedCorners", StartStyles.NotRounded);
                     }
                     catch { }
                 }

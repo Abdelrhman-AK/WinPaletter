@@ -532,7 +532,19 @@ namespace WinPaletter
                     return RegistryValueKind.Binary;
 
                 default:
-                    // Attempt generic numeric coercion if requested
+                    // Handle any enum by its underlying integral type
+                    var type = value.GetType();
+                    if (type.IsEnum)
+                    {
+                        // Use the enum’s underlying type to decide DWord vs QWord
+                        var underlying = Enum.GetUnderlyingType(type);
+                        if (underlying == typeof(long) || underlying == typeof(ulong))
+                            return RegistryValueKind.QWord;
+
+                        return RegistryValueKind.DWord;
+                    }
+
+                    // Optional generic numeric coercion
                     if (preferQWord && value is IConvertible conv)
                     {
                         try
@@ -544,8 +556,7 @@ namespace WinPaletter
                     }
 
                     throw new ArgumentException(
-                        $"Cannot infer RegistryValueKind for type '{value.GetType().FullName}'.",
-                        nameof(value));
+                        $"Cannot infer RegistryValueKind for type '{type.FullName}'.", nameof(value));
             }
         }
 
@@ -905,17 +916,21 @@ namespace WinPaletter
             try
             {
                 // Direct cast if already correct type
-                if (raw is T tVal)
-                    return tVal;
+                if (raw is T tVal) return tVal;
 
                 Type targetType = typeof(T);
 
-                // Enum support: handles numeric or string names
+                // Enums: expect numeric value in registry (DWORD/Int32)
                 if (targetType.IsEnum)
                 {
-                    if (raw is int || raw is long)
-                        return (T)Enum.ToObject(targetType, raw);
-                    return (T)Enum.Parse(targetType, raw.ToString()!, ignoreCase: true);
+                    // Convert any numeric to int first
+                    if (raw is IConvertible)
+                    {
+                        var intVal = Convert.ToInt32(raw, CultureInfo.InvariantCulture);
+                        return (T)Enum.ToObject(targetType, intVal);
+                    }
+                    // Fallback if string was stored
+                    return (T)Enum.Parse(targetType, raw.ToString()!, true);
                 }
 
                 // Color support

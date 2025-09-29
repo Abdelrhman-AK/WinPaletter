@@ -148,10 +148,9 @@ namespace WinPaletter
         /// </summary>
         public static void DrawAcrylic(IntPtr Handle, bool Border = true)
         {
-            User32.AccentPolicy accent = new() { AccentState = User32.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND };
+            User32.AccentPolicy accent = new() { AccentState = OS.W10 ? User32.AccentState.ACCENT_ENABLE_BLURBEHIND : User32.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND };
 
-            if (Border)
-                accent.AccentFlags = 0x20 | 0x40 | 0x80 | 0x100;
+            if (Border) accent.AccentFlags = 0x20 | 0x40 | 0x80 | 0x100;
 
             int accentStructSize = Marshal.SizeOf(accent);
             IntPtr accentPtr = Marshal.AllocHGlobal(accentStructSize);
