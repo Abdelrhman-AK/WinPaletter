@@ -5,13 +5,9 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
 using System.Resources;
 using System.Windows.Forms;
 using WinPaletter.Properties;
-using WinPaletter.TypesExtensions;
-using static WinPaletter.NativeMethods.User32;
-using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter
 {
@@ -470,7 +466,7 @@ namespace WinPaletter
                                 }
 
                                 else if (CursorOptions.CircleStyle == CircleStyle.Aero7)
-                                {                                    
+                                {
                                     // Fixer to get a near-correct Windows 7 sizes.
                                     int fixer = 2;
                                     int maxSide = (int)Math.Max((_Busy.Width - fixer) * CursorOptions.Scale, (_Busy.Height - fixer) * CursorOptions.Scale);
@@ -488,7 +484,7 @@ namespace WinPaletter
                                     int correctSize = sizes.FirstOrDefault(s => maxSide <= s) == 0 ? sizes.Last() : sizes.First(s => maxSide <= s);
 
                                     ResourceManager rm = new($"{nameof(WinPaletter)}.{nameof(Assets)}.{nameof(Assets.AeroLoadingCircles)}", Assembly.GetExecutingAssembly());
-                                    
+
                                     using (Bitmap frame = rm.GetObject($"_{correctSize}_{frameNO}") as Bitmap)
                                     using (Bitmap b_colorized = frame.Tint(CursorOptions.LoadingCircleBack1))
                                     {
