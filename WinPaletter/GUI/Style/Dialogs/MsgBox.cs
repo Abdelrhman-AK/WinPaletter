@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Media;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -259,8 +260,10 @@ namespace WinPaletter.UI.Style
                     return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Buttons, Icon);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                throw ex;
+
                 // If an error occurred, use the classic message box dialog.
                 return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Buttons, Icon);
             }
@@ -549,13 +552,32 @@ namespace WinPaletter.UI.Style
             // Get the handle of the dialog
             IntPtr hWnd = (sender as IWin32Window).Handle;
 
-            // Apply the modern style to the dialog: including titlebar dark/light mode, and rounded/sharp corners
-            //ApplyStyle(hWnd, true);
+            // Determine if custom styling is applicable based on program settings and operating system
+            bool CustomR = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
+
+            // Make the title bar dark if application mode is dark
+            DLLFunc.DarkTitlebar(hWnd, Program.Style.DarkMode);
+
+            // Make the form have rounded corners if the operating system is Windows 11 or 12
+            // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
+            if (OS.W12 || OS.W11)
+            {
+                int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
+                DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+            }
+
+            // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+            // Make both start by 'If' statement, not 'Else If'
+            if (CustomR && !Program.Settings.Appearance.RoundedCorners)
+            {
+                int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
+                DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+            }
 
             //// Apply the modern style to the child controls of the dialog
-            //foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(sender as IWin32Window))
+            //foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(hWnd))
             //{
-            //    ApplyStyle(ChildHwnd, false);
+            //    ApplyStyle(ChildHwnd);
             //}
         }
 

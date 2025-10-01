@@ -18,7 +18,7 @@ using static WinPaletter.Settings.Structures.NerdStats;
 namespace WinPaletter.UI.Controllers
 {
     [DefaultEvent("Click")]
-    public class ColorItem : Panel
+    public class ColorItem : Control
     {
         WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
         ToolStripMenuItem darken = new() { Image = ColorItemContextMenu.Darken };

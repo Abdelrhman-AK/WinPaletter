@@ -9,7 +9,7 @@ using WinPaletter.Properties;
 namespace WinPaletter.UI.WP
 {
     [Description("Banner for WinPaletter UI")]
-    public class Banner : ContainerControl
+    public class Banner : Control
     {
         public Banner()
         {

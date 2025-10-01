@@ -102,12 +102,17 @@ namespace WinPaletter.NativeMethods
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
 
             int attributeValue = darkMode ? 1 : 0;
+            int backdropType = darkMode ? 2 /* Mica */ : 0 /* Default */;
 
             // Set the dark mode attribute for the titlebar
             DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref attributeValue, Marshal.SizeOf<int>());
+            if (OS.W10_1909_AndBelow) DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref attributeValue, Marshal.SizeOf<int>());
 
             // Set the dark mode attribute for the border
             DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref attributeValue, Marshal.SizeOf<int>());
+
+            // Mica titlebar (Windows 11 22H2+)
+            if (!OS.W10) DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf<int>());
         }
         #endregion
 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Tabs;
@@ -292,40 +293,32 @@ namespace WinPaletter.UI.Style
         /// <summary>
         /// Applies a specific style to a window identified by its handle.
         /// </summary>
-        /// <param name="Handle">The handle of the window to apply the style to.</param>
-        /// <param name="isWindow">Specify if the handle is a window or child window (controls)</param>
-        public static void ApplyStyle(IntPtr Handle, bool isWindow = true)
+        /// <param name="hWnd">The handle of the window to apply the style to.</param>
+        public static void ApplyStyle(IntPtr hWnd)
         {
             // Determine if custom styling is applicable based on program settings and operating system
             bool CustomR = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
 
-            if (isWindow)
+            // Make the title bar dark if application mode is dark
+            DLLFunc.DarkTitlebar(hWnd, Program.Style.DarkMode);
+
+            // Make the form have rounded corners if the operating system is Windows 11 or 12
+            // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
+            if (OS.W12 || OS.W11)
             {
-                // Make the title bar dark if application mode is dark
-                if (isWindow) DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
-
-                // Make the form have rounded corners if the operating system is Windows 11 or 12
-                // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
-                if (OS.W12 || OS.W11)
-                {
-                    int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
-                    DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-                }
-
-                // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
-                // Make both start by 'If' statement, not 'Else If'
-                if (CustomR && !Program.Settings.Appearance.RoundedCorners)
-                {
-                    int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                    DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
-                }
+                int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
+                DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
             }
 
-            SetControlTheme(Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
-            //IntPtr hDC = User32.GetDC(Handle);
-            //User32.SetBkColor(hDC, Program.Style.Schemes.Main.Colors.BackColor.ToArgb() & 0x00FFFFFF);
-            //User32.SetTextColor(hDC, (Program.Style.DarkMode ? Color.White : Color.Black).ToArgb() & 0x00FFFFFF);
-            //User32.ReleaseDC(Handle, hDC);
+            // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+            // Make both start by 'If' statement, not 'Else If'
+            if (CustomR && !Program.Settings.Appearance.RoundedCorners)
+            {
+                int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
+                DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+            }
+
+            SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
         }
 
         /// <summary>

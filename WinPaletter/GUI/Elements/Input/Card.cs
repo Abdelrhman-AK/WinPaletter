@@ -12,7 +12,7 @@ using WinPaletter.Properties;
 namespace WinPaletter.UI.WP
 {
     [DefaultEvent("Click")]
-    public class Card : ContainerControl
+    public class Card : Control
     {
         public Card()
         {

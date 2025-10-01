@@ -13,7 +13,7 @@ using WinPaletter.UI.Retro;
 namespace WinPaletter.UI.Simulation
 {
     [Description("Simulated Windows desktop icons")]
-    public class WinIcon : Panel
+    public class WinIcon : Control
     {
         public WinIcon()
         {

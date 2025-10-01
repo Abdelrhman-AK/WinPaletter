@@ -15,7 +15,7 @@ namespace WinPaletter.UI.Controllers
 {
     [ToolboxItem(false)]
     [DefaultEvent("Click")]
-    public class StoreItem : Panel
+    public class StoreItem : UserControl
     {
         public StoreItem()
         {

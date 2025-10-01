@@ -13,7 +13,7 @@ namespace WinPaletter.UI.Simulation
 
     [Description("Simulated Windows Terminals")]
     [DefaultEvent("Click")]
-    public class WinTerminal : ContainerControl
+    public class WinTerminal : Control
     {
         public WinTerminal()
         {

@@ -1708,7 +1708,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="s"></param>
         /// <param name="l"></param>
         /// <param name="a"></param>
-        public struct HSL(int h, float s, float l, float a = 1f)
+        public struct HSL(float h, float s, float l, float a = 1f)
         {
             /// <summary>
             /// Hue (0–360)
@@ -1914,6 +1914,30 @@ namespace WinPaletter.TypesExtensions
 
                 return new() { H = h, S = s, L = l, A = hsl.A };
             }
+
+            /// <summary>
+            /// Creates a new <see cref="HSL"/> instance with the specified hue value, while preserving the current
+            /// saturation and lightness.
+            /// </summary>
+            /// <param name="h">The hue value to set, typically in the range of 0 to 360.</param>
+            /// <returns>A new <see cref="HSL"/> instance with the updated hue value.</returns>
+            public HSL WithH(float h) => new(h, this.S, this.L);
+
+            /// <summary>
+            /// Creates a new <see cref="HSL"/> instance with the specified saturation value,  while retaining the
+            /// current hue and lightness values.
+            /// </summary>
+            /// <param name="s">The saturation value to set. Must be in the range [0, 1].</param>
+            /// <returns>A new <see cref="HSL"/> instance with the updated saturation value.</returns>
+            public HSL WithS(float s) => new(this.H, s, this.L);
+
+            /// <summary>
+            /// Creates a new <see cref="HSL"/> instance with the specified lightness value,  while retaining the
+            /// current hue and saturation values.
+            /// </summary>
+            /// <param name="l">The lightness value to set for the new <see cref="HSL"/> instance. Must be in the range 0 to 1.</param>
+            /// <returns>A new <see cref="HSL"/> instance with the specified lightness value.</returns>
+            public HSL WithL(float l) => new(this.H, this.S, l);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.NativeMethods
@@ -115,8 +116,126 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
+        /// <summary>
+        /// Represents a callback method used to process each window enumerated by the <see cref="EnumWindows"/>
+        /// function.
+        /// </summary>
+        /// <param name="hWnd">A handle to the window being enumerated.</param>
+        /// <param name="lParam">An application-defined value passed to the <see cref="EnumWindows"/> function.</param>
+        /// <returns><see langword="true"/> to continue enumerating windows; <see langword="false"/> to stop enumeration.</returns>
+        public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+        /// <summary>
+        /// Enumerates the child windows of a specified parent window by passing them to a callback function.
+        /// </summary>
+        /// <remarks>This method is a P/Invoke wrapper for the native `EnumChildWindows` function in the
+        /// Windows API. Ensure that the callback function specified by <paramref name="lpEnumFunc"/> is implemented
+        /// correctly to handle the enumeration process.</remarks>
+        /// <param name="hwndParent">A handle to the parent window whose child windows are to be enumerated. Pass <see langword="IntPtr.Zero"/>
+        /// to enumerate all top-level windows.</param>
+        /// <param name="lpEnumFunc">A callback function that is called for each child window. The function must match the <see
+        /// cref="EnumWindowsProc"/> delegate signature. Returning <see langword="true"/> from the callback continues
+        /// enumeration; returning <see langword="false"/> stops it.</param>
+        /// <param name="lParam">An application-defined value to be passed to the callback function. This can be used to pass custom data to
+        /// the callback.</param>
+        /// <returns><see langword="true"/> if the enumeration succeeds; otherwise, <see langword="false"/>. If the function
+        /// fails, call <see cref="Marshal.GetLastWin32Error"/> to retrieve the error code.</returns>
         [DllImport("user32.dll")]
-        private static extern bool EnumChildWindows(IntPtr hWndParent, EnumChildProc lpEnumFunc, IntPtr lParam);
+        public static extern bool EnumChildWindows(IntPtr hwndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+        /// <summary>
+        /// Retrieves a list of handles for all child windows of the specified parent window, including nested child
+        /// windows.
+        /// </summary>
+        /// <remarks>This method performs a recursive enumeration of all child windows, including nested
+        /// child windows, starting from the specified parent window.</remarks>
+        /// <param name="parent">The handle of the parent window whose child window handles are to be retrieved.</param>
+        /// <returns>A list of <see cref="IntPtr"/> objects representing the handles of all child windows of the specified parent
+        /// window. The list will be empty if no child windows are found.</returns>
+        public static List<IntPtr> GetChildWindowHandles(IntPtr parent)
+        {
+            List<IntPtr> handles = [];
+
+            void EnumRecursive(IntPtr hWnd)
+            {
+                EnumChildWindows(hWnd, (child, lParam) =>
+                {
+                    handles.Add(child);
+                    EnumRecursive(child); // recurse into this child's children
+                    return true;
+                }, IntPtr.Zero);
+            }
+
+            EnumRecursive(parent);
+            return handles;
+        }
+
+        /// <summary>
+        /// Retrieves a handle to a device context (DC) for the client area of a specified window or for the entire
+        /// screen.
+        /// </summary>
+        /// <remarks>The device context handle retrieved by this method must be released after use by
+        /// calling the <c>ReleaseDC</c> function. Failure to release the device context can result in resource
+        /// leaks.</remarks>
+        /// <param name="hWnd">A handle to the window whose device context is to be retrieved. If this parameter is <see
+        /// langword="IntPtr.Zero"/>,  the device context for the entire screen is retrieved.</param>
+        /// <returns>A handle to the device context for the specified window or screen. If the function fails, the return value
+        /// is <see langword="IntPtr.Zero"/>.</returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDC(IntPtr hWnd);
+
+        /// <summary>
+        /// Releases a device context (DC) for a specified window, freeing it for use by other applications.
+        /// </summary>
+        /// <remarks>This method is used to release a device context obtained by calling <c>GetDC</c> or
+        /// <c>GetWindowDC</c>.  Failing to release a DC can result in resource leaks.</remarks>
+        /// <param name="hWnd">A handle to the window whose DC is to be released. This parameter can be <see cref="IntPtr.Zero"/> if the DC was
+        /// obtained for the entire screen.</param>
+        /// <param name="hDC">A handle to the device context to be released.</param>
+        /// <returns>A value indicating whether the device context was successfully released.  Returns 1 if the DC was released
+        /// successfully; otherwise, returns 0.</returns>
+        [DllImport("user32.dll")]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+        /// <summary>
+        /// Sets the background color for a specified device context.
+        /// </summary>
+        /// <remarks>The background color is used to fill gaps in styled lines, the gaps between hatched lines in brushes,
+        /// and the background in text operations.</remarks>
+        /// <param name="hdc">A handle to the device context for which the background color is set.</param>
+        /// <param name="crColor">The new background color, specified as a COLORREF value. The COLORREF value is a 32-bit integer that specifies the
+        /// RGB color.</param>
+        /// <returns>The previous background color as a COLORREF value if successful; otherwise, returns CLR_INVALID (0xFFFFFFFF).</returns>
+        [DllImport("user32.dll")]
+        public static extern uint SetBkColor(IntPtr hdc, int crColor);
+
+        /// <summary>
+        /// Sets the text color for the specified device context.
+        /// </summary>
+        /// <remarks>The <see cref="SetTextColor"/> function changes the text color used by the specified
+        /// device context. The new color is used for text-drawing operations until the text color is changed
+        /// again.</remarks>
+        /// <param name="hdc">A handle to the device context.</param>
+        /// <param name="crColor">The color value to set, specified as a COLORREF value. The COLORREF value is a 32-bit integer where the
+        /// low-order byte specifies the intensity of red, the second byte specifies the intensity of green, and the
+        /// third byte specifies the intensity of blue.</param>
+        /// <returns>The previous text color as a COLORREF value, or 0xFFFFFFFF if an error occurs.</returns>
+        [DllImport("user32.dll")]
+        public static extern uint SetTextColor(IntPtr hdc, int crColor);
+ 
+        /// <summary>
+        /// Retrieves the class name of the specified window.
+        /// </summary>
+        /// <remarks>To retrieve extended error information when the function fails, call <see
+        /// cref="Marshal.GetLastWin32Error"/>.</remarks>
+        /// <param name="hWnd">A handle to the window whose class name is to be retrieved.</param>
+        /// <param name="lpClassName">A <see cref="StringBuilder"/> that receives the class name string.</param>
+        /// <param name="nMaxCount">The maximum number of characters to copy to <paramref name="lpClassName"/>, including the null-terminating
+        /// character.</param>
+        /// <returns>The length of the class name string, in characters, not including the null-terminating character, if
+        /// successful; otherwise, 0 if the function fails.</returns>
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         /// <summary>
         /// SetWindowsHookEx function: Installs an application-defined hook procedure into a hook chain.
@@ -880,6 +999,6 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public const int HWND_BROADCAST = 0xFFFF;
 
-        private delegate bool EnumChildProc(IntPtr hWnd, IntPtr lParam);
+        public delegate bool EnumChildProc(IntPtr hWnd, IntPtr lParam);
     }
 }

@@ -398,6 +398,9 @@
     <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Elements\Others\SkeletonOverlay.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
@@ -832,7 +835,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Checkers\Toggle.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\TabControls\TablessControl.cs">
       <SubType>Component</SubType>
@@ -902,7 +905,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Simulation\Window.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Simulation\WinElement.cs">
       <SubType>Component</SubType>
@@ -1024,7 +1027,7 @@
       <DependentUpon>StoreItem.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Elements\AdvancedControls\StoreItem.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Store\Store_CPToggles.Designer.cs">
       <DependentUpon>Store_CPToggles.cs</DependentUpon>

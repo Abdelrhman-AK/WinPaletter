@@ -151,9 +151,24 @@ namespace WinPaletter.Tabs
 
             TP.Text = form.Text;
 
+            if (!DesignMode && !TabControl.IsInUse()) Program.Animator.HideSync(TabControl);
+
             TP.Controls.Add(form);
 
-            if (!DesignMode && !TabControl.IsInUse()) Program.Animator.HideSync(TabControl);
+            //UI.WP.SkeletonOverlay skeleton = new() { AnimationSpeed = 16, TickInterval = 26 };
+
+            //form.Load += (s, e) =>
+            //{
+            //    skeleton?.AttachTo(form);
+            //    skeleton?.Start();
+            //};
+
+            //form.Shown += (s, e) =>
+            //{
+            //    skeleton?.Stop();
+            //    skeleton?.Dispose();
+            //    skeleton = null;
+            //};
 
             form.Show();
 
@@ -590,20 +605,18 @@ namespace WinPaletter.Tabs
                 {
                     tabData.Hovered = true;
                     hoveredRectangle = tabData.Rectangle;
-                    Refresh();
-
                     hoveredTab = tabData;
-
                 }
                 else
                 {
                     tabData.Hovered = false;
                     hoveredRectangle = Rectangle.Empty;
-                    Refresh();
                 }
             }
 
             if (hoveredTab is not null) overCloseButton = closeRectangle(hoveredTab.Rectangle).Contains(e.Location); else overCloseButton = false;
+
+            if (hoveredRectangle != Rectangle.Empty) Invalidate(hoveredRectangle);
         }
 
         private void SetTabMoveProperties(int moveToIndex, bool moveTab, bool moveToFirst, bool moveToLast)

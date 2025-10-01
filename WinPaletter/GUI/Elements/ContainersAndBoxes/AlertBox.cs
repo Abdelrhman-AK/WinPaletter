@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace WinPaletter.UI.WP
 {
     [Description("AlertBox for WinPaletter UI")]
-    public class AlertBox : ContainerControl
+    public class AlertBox : Control
     {
         public AlertBox()
         {

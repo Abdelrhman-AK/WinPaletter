@@ -10,7 +10,7 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Controllers
 {
-    public class CursorControl : ContainerControl
+    public class CursorControl : Control
     {
         public CursorControl()
         {

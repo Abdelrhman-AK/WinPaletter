@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace WinPaletter.UI.Controllers
 {
     [ToolboxItem(false)]
-    public class TextTranslationItem : ContainerControl
+    public class TextTranslationItem : Control
     {
         public TextTranslationItem()
         {

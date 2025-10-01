@@ -15,7 +15,7 @@ using WinPaletter.UI.Retro;
 namespace WinPaletter.UI.Simulation
 {
     [Description("Simulated Windows elements")]
-    public partial class WinElement : ContainerControl
+    public partial class WinElement : Control
     {
         public WinElement()
         {

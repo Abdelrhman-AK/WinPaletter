@@ -16,7 +16,7 @@ using WinPaletter.UI.Retro;
 namespace WinPaletter.UI.Simulation
 {
     [Description("A simulated window")]
-    public class Window : Panel
+    public class Window : UserControl
     {
         public Window()
         {

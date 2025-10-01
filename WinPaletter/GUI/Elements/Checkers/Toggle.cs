@@ -13,7 +13,7 @@ namespace WinPaletter.UI.WP
 {
     [Description("Themed toggle for WinPaletter UI")]
     [DefaultEvent("CheckedChanged")]
-    public class Toggle : UserControl
+    public class Toggle : Control
     {
         public Toggle()
         {

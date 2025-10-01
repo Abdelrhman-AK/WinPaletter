@@ -396,6 +396,15 @@ namespace WinPaletter.NativeMethods
             WINDOW_CORNER_PREFERENCE = 33,
 
             /// <summary>
+            /// Represents the system backdrop type attribute for a window, used to specify the visual style of the
+            /// window's background.
+            /// </summary>
+            /// <remarks>This value corresponds to the DWM (Desktop Window Manager) attribute for
+            /// setting the system backdrop type. It is typically used with the <see cref="DwmSetWindowAttribute"/>
+            /// function to configure the appearance of a window's background.</remarks>
+            DWMWA_SYSTEMBACKDROP_TYPE = 38,
+
+            /// <summary>
             /// Sets the border color.
             /// </summary>
             BORDER_COLOR,

@@ -12,7 +12,7 @@ namespace WinPaletter.UI.Simulation
 {
     [Description("A simulated Windows Command Prompt/PS")]
     [DefaultEvent("Click")]
-    public class WinCMD : ContainerControl
+    public class WinCMD : Control
     {
         public WinCMD()
         {
