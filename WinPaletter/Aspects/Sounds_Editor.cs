@@ -138,7 +138,7 @@ namespace WinPaletter
                         string tmp = Path.GetTempFileName();
                         File.WriteAllBytes(tmp, SoundBytes);
                         AltPlayingMethod = true;
-                        DLLFunc.PlayAudio(tmp);
+                        NativeMethods.Helpers.PlayAudio(tmp);
                         if (File.Exists(tmp))
                             FileSystem.Kill(tmp);
                     }
@@ -162,7 +162,7 @@ namespace WinPaletter
                     catch // Use method #2
                     {
                         AltPlayingMethod = true;
-                        DLLFunc.PlayAudio($@"{SysPaths.appData}\WindowsStartup_Backup.wav");
+                        NativeMethods.Helpers.PlayAudio($@"{SysPaths.appData}\WindowsStartup_Backup.wav");
                     }
 
                 }
@@ -189,13 +189,13 @@ namespace WinPaletter
                     catch // Use method #2
                     {
                         AltPlayingMethod = true;
-                        DLLFunc.PlayAudio(snd);
+                        NativeMethods.Helpers.PlayAudio(snd);
                     }
                 }
 
                 else
                 {
-                    if (AltPlayingMethod) DLLFunc.StopAudio();
+                    if (AltPlayingMethod) NativeMethods.Helpers.StopAudio();
 
                     if (SP is not null)
                     {
@@ -236,14 +236,14 @@ namespace WinPaletter
                 catch // Use method #2
                 {
                     AltPlayingMethod = true;
-                    DLLFunc.PlayAudio(snd);
+                    NativeMethods.Helpers.PlayAudio(snd);
                 }
             }
 
             else
             {
                 if (AltPlayingMethod)
-                    DLLFunc.StopAudio();
+                    NativeMethods.Helpers.StopAudio();
 
                 if (SP is not null)
                 {
@@ -255,7 +255,7 @@ namespace WinPaletter
 
         public void StopPlayer(object sender, EventArgs e)
         {
-            if (AltPlayingMethod) DLLFunc.StopAudio();
+            if (AltPlayingMethod) NativeMethods.Helpers.StopAudio();
 
             if (SP is not null)
             {
@@ -292,7 +292,7 @@ namespace WinPaletter
                     catch // Use method #2
                     {
                         AltPlayingMethod = true;
-                        DLLFunc.PlayAudio(snd);
+                        NativeMethods.Helpers.PlayAudio(snd);
                     }
                 }
             }

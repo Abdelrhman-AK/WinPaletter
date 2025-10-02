@@ -1,84 +1,97 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter.GlobalVariables
 {
     /// <summary>
-    /// Class contains booleans representing if the current OS is the same as variable name or not.
+    /// Provides utility methods and properties for identifying and retrieving information about the current operating
+    /// system.
     /// </summary>
+    /// <remarks>The <see cref="OS"/> class includes properties to determine the version, architecture, and
+    /// specific characteristics of the operating system, as well as methods to retrieve the operating system name based
+    /// on various criteria. It is particularly useful for applications that need to adapt their behavior based on the
+    /// operating system version or architecture.</remarks>
     public static class OS
     {
         /// <summary>
-        /// A boolean that determines if OS is Windows XP
+        /// Gets the version of the operating system.
         /// </summary>
-        public static bool WXP { get; } = Environment.OSVersion.Version.Major == 5;
+        public static Version Version { get; } = NativeMethods.NTDLL.GetOSVersion();
 
         /// <summary>
-        /// A boolean that determines if OS is Windows Vista
+        /// Gets a value indicating whether the current operating system is Windows XP.
         /// </summary>
-        public static bool WVista { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 0;
+        public static bool WXP { get; } = Version.Major == 5;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 7 or not
+        /// Gets a value indicating whether the current operating system is Windows Vista.
         /// </summary>
-        public static bool W7 { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 1;
+        public static bool WVista { get; } = Version.Major == 6 && Version.Minor == 0;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 8 or not
+        /// Gets a value indicating whether the current operating system is Windows 7.
         /// </summary>
-        public static bool W8 { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 2;
+        public static bool W7 { get; } = Version.Major == 6 && Version.Minor == 1;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 8.1 or not
+        /// Gets a value indicating whether the current operating system is Windows 8.
         /// </summary>
-        public static bool W81 { get; } = Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 3;
+        public static bool W8 { get; } = Version.Major == 6 && Version.Minor == 2;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 8 or Windows 8.1 or not
+        /// Gets a value indicating whether the current operating system is Windows 8.1.
         /// </summary>
-        public static bool W8x => W8 || W81;
+        public static bool W81 { get; } = Version.Major == 6 && Version.Minor == 3;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 10 or not
+        /// Gets a value indicating whether the current operating system is Windows 8 or 8.1.
         /// </summary>
-        public static bool W10 { get; } = Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor == 0 && Environment.OSVersion.Version.Build < 22000;
+        public static bool W8x { get; } = Version.Major == 6 && Version.Minor >= 2;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 11 or not
+        /// Gets a value indicating whether the current operating system is Windows 10.
         /// </summary>
-        public static bool W11 { get; } = Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor == 0 && Environment.OSVersion.Version.Build >= 22000;
+        public static bool W10 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build < 22000;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 12 or not (For near future! :))
+        /// Gets a value indicating whether the current operating system is Windows 11.
+        /// </summary>
+        public static bool W11 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 22000;
+
+        /// <summary>
+        /// A boolean that determines if OS is Windows 12 or not (prediction only).
         /// <br></br>
-        /// <br>Value is got from OS name, or NT version. Nothing is known until Windows 12 releases are dropped</br>
+        /// <br>Currently, Windows 10 and 11 both report NT 10.0.
+        /// If Microsoft releases a Windows 12, detection could rely on either:
+        /// - NT version being greater than 10, or
+        /// - OS description string containing "12".
+        /// </br>
         /// </summary>
-        public static bool W12 { get; } = RuntimeInformation.OSDescription.Contains("12") || Environment.OSVersion.Version.Major > 10 || (Environment.OSVersion.Version.Major == 10 && Environment.OSVersion.Version.Minor > 0);
+        public static bool W12 { get; } = RuntimeInformation.OSDescription.Contains("12") || Version.Major > 10;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 10 (19H2 = 1909) or higher or not
+        /// Gets a value indicating whether the current operating system is Windows 10, version 1909 (19H2 - build 18363) or later.
         /// </summary>
-        public static bool W10_1909 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10) || W11 || W12 || ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0) >= 1909;
+        public static bool W10_1909 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 18363;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 10 (19H2 = 1909) or higher or not
+        /// Gets a value indicating whether the current operating system is Windows 10, version 1909 (19H2 - build 18363) or below.
         /// </summary>
-        public static bool W10_1909_AndBelow { get; } = (!WXP && !WVista && !W7 && !W8x && !W10) || W11 || W12 || ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", 0) <= 1909;
+        public static bool W10_1909_AndBelow { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build <= 18363;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 10 (20H2 = 2004 = 19041) or higher or not
+        /// Gets a value indicating whether the current operating system is Windows 11 (build 22523) or later.
         /// </summary>
-        public static bool W10_2004 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10) || W11 || W12 || Environment.OSVersion.Version.Build >= 19041;
+        public static bool W11_22523 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 22523;
 
         /// <summary>
-        /// A boolean that determines if OS is Windows 11 build 22523 or higher or not
+        /// Gets the name of the Windows operating system version based on the current environment.
         /// </summary>
-        public static bool W11_22523 { get; } = (!WXP && !WVista && !W7 && !W8x && !W10 && !W11) || W11 || W12 || Environment.OSVersion.Version.Build >= 22523;
-
-        /// <summary>
-        /// Get proper Windows name, returned as string differs according to current WinPaletter language.
-        /// </summary>
+        /// <remarks>The property evaluates the current environment to determine the Windows version and
+        /// returns a corresponding name. This property is static and does not require an instance of the
+        /// class.</remarks>
         public static string Name
         {
             get
@@ -121,7 +134,7 @@ namespace WinPaletter.GlobalVariables
         }
 
         /// <summary>
-        /// Get proper Windows name in English.
+        /// Gets the name of the Windows operating system in English based on the detected version.
         /// </summary>
         public static string Name_English
         {
@@ -140,31 +153,18 @@ namespace WinPaletter.GlobalVariables
         }
 
         /// <summary>
-        /// Get current Windows build
+        /// Gets the build version of the application as a formatted string.
         /// </summary>
-        public static string Build
-        {
-            get
-            {
-                string X0 = RuntimeInformation.OSDescription.Replace("Microsoft Windows ", string.Empty);
-                X0 = X0.Replace("S", string.Empty).Trim();
-
-                string X1 = $".{ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", 0)}";
-                if (X1 == ".0") { X1 = string.Empty; }
-
-                return $"{X0}{X1}";
-            }
-        }
+        public static string Build => $"{Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}";
 
         /// <summary>
-        /// Get if current Windows edition is 32-bit or 64-bit, returned as string differs according to current WinPaletter language.
+        /// Gets the architecture of the operating system as a string.
         /// </summary>
         public static string Architecture => Environment.Is64BitOperatingSystem ? Program.Lang.Strings.Windows.Arc_64Bit : Program.Lang.Strings.Windows.Arc_32Bit;
 
         /// <summary>
-        /// Get if current Windows edition is 32-bit or 64-bit, in English.
+        /// Gets a string representation of the system's architecture in English.
         /// </summary>
         public static string Architecture_English => Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
-
     }
 }

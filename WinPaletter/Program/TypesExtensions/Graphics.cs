@@ -385,6 +385,8 @@ namespace WinPaletter.TypesExtensions
                 }
                 finally
                 {
+                    G.ResetClip();
+
                     // Always restore state and quality settings
                     G.Restore(state);
                     G.SmoothingMode = oldSmoothing;
@@ -435,8 +437,6 @@ namespace WinPaletter.TypesExtensions
             if (G is null || !pen.IsValid() || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
 
             if (radius == -1) radius = Program.Style.Radius;
-
-            radius *= 2;
 
             if ((Program.Style.RoundedCorners | forcedRoundCorner) & radius > 0)
             {

@@ -107,7 +107,7 @@ namespace WinPaletter
         /// <summary>
         /// Global variables to manage WinPaletter theme
         /// </summary>
-        public static Manager TM, TM_Original, TM_FirstTime;
+        public static Manager TM = new(Manager.Source.Empty), TM_Original, TM_FirstTime;
 
         /// <summary>
         /// Process that kills (stops by force) Windows Explorer

@@ -535,7 +535,7 @@ namespace WinPaletter
 
                 if (File.Exists(path))
                 {
-                    Terminal1.TabIcon = ((Icon)DLLFunc.ExtractSmallIcon(path)).ToBitmap();
+                    Terminal1.TabIcon = ((Icon)NativeMethods.Helpers.ExtractSmallIcon(path)).ToBitmap();
                 }
                 else
                 {
@@ -1666,7 +1666,7 @@ namespace WinPaletter
 
                             if (File.Exists(path))
                             {
-                                Terminal1.TabIcon = ((Icon)DLLFunc.ExtractSmallIcon(path)).ToBitmap();
+                                Terminal1.TabIcon = ((Icon)NativeMethods.Helpers.ExtractSmallIcon(path)).ToBitmap();
                             }
                             else
                             {

@@ -425,6 +425,7 @@
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\LogInitializer.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
+    <Compile Include="Program\NativeMethods\NTDLL.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
     <Compile Include="Program\TypesExtensions\Images.cs" />
     <Compile Include="Program\TypesExtensions\Types.cs" />

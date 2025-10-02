@@ -18,7 +18,7 @@ namespace WinPaletter
     /// <summary>
     /// Class for handling multiple users for WinPaletter
     /// </summary>
-    public class User
+    public static class User
     {
         #region Events/Overrides
         /// <summary>
@@ -429,6 +429,7 @@ namespace WinPaletter
         /// User's SID who opened WinPaletter before granting UAC dialog
         /// </summary>
         public readonly static string UserSID_OpenedWP = GetActiveSessionSID();
+
         #endregion
 
         #region Properties
@@ -663,7 +664,7 @@ namespace WinPaletter
                     {
                         // Extract the username from domain\username format
                         string username = currentUser.Split('\\').Last();
-                        result = GetUsers().Where(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).FirstOrDefault().Key;
+                        result = GetUsers().FirstOrDefault(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).Key;
                         break;
                     }
                 }
@@ -680,7 +681,7 @@ namespace WinPaletter
                 {
                     string username = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUser", string.Empty);
                     username = username.Split('\\').Last();
-                    result = GetUsers().Where(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).FirstOrDefault().Key;
+                    result = GetUsers().FirstOrDefault(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).Key;
                 }
             }
 
@@ -701,7 +702,6 @@ namespace WinPaletter
             }
         }
 
-
         /// <summary>
         /// Get path of user profile
         /// <br>- For example: C:\Users\...</br>
@@ -710,19 +710,15 @@ namespace WinPaletter
         {
             try
             {
-                // Get user profile path from registry
-                string keyPath = $@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\{SID}";
+                string result = ReadReg($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList\\{SID}", "ProfileImagePath", string.Empty);
 
-                // Check if there is a user profile path in the registry or not
-                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(keyPath))
+                if (!string.IsNullOrWhiteSpace(result))
                 {
-                    if (key == null)
-                    {
-                        //handle error
-                        return null;
-                    }
-
-                    return Environment.ExpandEnvironmentVariables(key.GetValue("ProfileImagePath").ToString());
+                    return Environment.ExpandEnvironmentVariables(result);
+                }
+                else
+                {
+                    return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 }
             }
             catch // Couldn't get user profile path, return generic path
@@ -809,16 +805,16 @@ namespace WinPaletter
                 // Check if user is system profile or not. System profiles are always administrators
                 if (User is null)
                 {
-                    return SID.ToUpper() == "S-1-5-18" || SID.ToUpper() == "S-1-5-19" || SID.ToUpper() == "S-1-5-20";
+                    return SID.ToUpper() is "S-1-5-18" or "S-1-5-19" or "S-1-5-20";
                 }
 
                 // Check if user is an administrator or not
                 bool IsAdmin = (from Group in User.GetGroups() where Group.Sid == AdminGroupSID select Group).Any();
 
                 // Dispose objects
-                pContext.Dispose();
-                pSearcher.Dispose();
-                pUser.Dispose();
+                pContext?.Dispose();
+                pSearcher?.Dispose();
+                pUser?.Dispose();
 
                 return IsAdmin;
             }

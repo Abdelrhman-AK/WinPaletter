@@ -18,7 +18,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
-            DLLFunc.RemoveFormTitlebarTextAndIcon(Handle);
+            NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
 
             labelAlt1.Text = Text;

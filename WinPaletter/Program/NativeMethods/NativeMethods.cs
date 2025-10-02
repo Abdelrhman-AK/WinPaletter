@@ -6,9 +6,13 @@ using System.Runtime.InteropServices;
 namespace WinPaletter.NativeMethods
 {
     /// <summary>
-    /// Functions not found internally in system DLLs, but uses the functions in DLLs to do something DLLs Functions cannot do alone.
+    /// Provides utility methods for interacting with system resources, window appearance, and audio playback.
     /// </summary>
-    public class DLLFunc
+    /// <remarks>The <see cref="Helpers"/> class contains static methods for performing various tasks, such as
+    /// extracting icons, modifying window appearance, and controlling audio playback. These methods leverage
+    /// platform-specific APIs (e.g., User32, Shell32, DWMAPI) and are primarily designed for use on Windows operating
+    /// systems.</remarks>
+    public class Helpers
     {
         #region User32\Shell32
 
@@ -91,29 +95,57 @@ namespace WinPaletter.NativeMethods
         #endregion
 
         #region DWMAPI
+
         /// <summary>
-        /// Applies or removes dark mode for the titlebar of a specified window.
+        /// Configures the title bar of a window to use dark mode or light mode, depending on the specified setting.
         /// </summary>
-        /// <param name="hWnd">The handle of the window.</param>
-        /// <param name="darkMode">True to apply dark mode, false to remove dark mode.</param>
-        public static void DarkTitlebar(IntPtr hWnd, bool darkMode)
+        /// <remarks>This method adjusts the appearance of the title bar and, on supported systems, the
+        /// window border and backdrop type. It is only effective on Windows 10 and later versions. On earlier versions
+        /// of Windows, the method has no effect.</remarks>
+        /// <param name="hWnd">A handle to the window whose title bar appearance is being modified.</param>
+        /// <param name="darkMode">A boolean value indicating whether to enable dark mode.  <see langword="true"/> enables dark mode; <seelangword="false"/> enables light mode.</param>
+        /// <param name="wholeWindow">A boolean value indicating whether to apply the dark mode setting to the entire window. Default is <see langword="true"/>.</param>
+        public static void SetHWNDDarkMode(IntPtr hWnd, bool darkMode, bool wholeWindow = true)
         {
             // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
 
+            // Determine if custom styling is applicable based on program settings and operating system
+            bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
             int attributeValue = darkMode ? 1 : 0;
-            int backdropType = darkMode ? 2 /* Mica */ : 0 /* Default */;
+            int backdropType = OS.W10 ? 3 : 2;
+
+            // Make the form have rounded corners if the operating system is Windows 11 or 12
+            // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
+            if (OS.W12 || OS.W11)
+            {
+                int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
+                DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+
+                // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+                // Make both start by 'If' statement, not 'Else If'
+                if (useRoundedCorners && !Program.Settings.Appearance.RoundedCorners)
+                {
+                    int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
+                    DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                }
+            }
 
             // Set the dark mode attribute for the titlebar
             DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref attributeValue, Marshal.SizeOf<int>());
             if (OS.W10_1909_AndBelow) DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref attributeValue, Marshal.SizeOf<int>());
 
-            // Set the dark mode attribute for the border
-            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref attributeValue, Marshal.SizeOf<int>());
+            if (!OS.W10)
+            {
+                // Set the dark mode attribute for the border
+                DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref attributeValue, Marshal.SizeOf<int>());
+            }
 
-            // Mica titlebar (Windows 11 22H2+)
-            if (!OS.W10) DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf<int>());
+            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf<int>());
+
+            if (wholeWindow) SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
         }
+
         #endregion
 
         #region UxTheme

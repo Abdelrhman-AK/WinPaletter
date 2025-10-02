@@ -204,7 +204,7 @@ namespace WinPaletter.UI.Style
                         form.BackColor = BackColor;
 
                         // Make the title bar dark if application mode is dark
-                        if (!IgnoreTitleBar) DLLFunc.DarkTitlebar(form.Handle, DarkMode);
+                        if (!IgnoreTitleBar) NativeMethods.Helpers.SetHWNDDarkMode(form.Handle, DarkMode);
 
                         //// Check if the font "Segoe UI" is available, if not, use "Tahoma" as a fallback
                         //// This part is commented as it caused issues with the DPI scaling on some systems
@@ -217,22 +217,6 @@ namespace WinPaletter.UI.Style
 
                         // Loop through all controls and apply the style to them
                         ApplyStyleToSubControls(form, DarkMode);
-
-                        // Make the form have rounded corners if the operating system is Windows 11 or 12
-                        // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
-                        if (OS.W12 || OS.W11)
-                        {
-                            int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
-                            DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-                        }
-
-                        // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
-                        // Make both start by 'If' statement, not 'Else If'
-                        if (CustomR && !Program.Settings.Appearance.RoundedCorners)
-                        {
-                            int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                            DWMAPI.DwmSetWindowAttribute(form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
-                        }
 
                         // Refresh the main groupbox to avoid bugged UI after switching dark mode
                         if (form is Home home) home.panel1.BackColor = home.BackColor;
@@ -253,7 +237,7 @@ namespace WinPaletter.UI.Style
                 Form.BackColor = BackColor;
 
                 // Make the title bar dark if application mode is dark
-                if (!IgnoreTitleBar) DLLFunc.DarkTitlebar(Form.Handle, DarkMode);
+                if (!IgnoreTitleBar) NativeMethods.Helpers.SetHWNDDarkMode(Form.Handle, DarkMode);
 
                 //// Check if the font "Segoe UI" is available, if not, use "Tahoma" as a fallback
                 //// This part is commented as it caused issues with the DPI scaling on some systems
@@ -267,58 +251,11 @@ namespace WinPaletter.UI.Style
                 // Loop through all controls and apply the style to them
                 ApplyStyleToSubControls(Form, DarkMode);
 
-                // Make the form have rounded corners if the operating system is Windows 11 or 12
-                // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
-                if (OS.W12 || OS.W11)
-                {
-                    int argpvAttribute2 = (int)DWMAPI.FormCornersType.Default;
-                    DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute2, Marshal.SizeOf(typeof(int)));
-                }
-
-                // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
-                // Make both start by 'If' statement, not 'Else If'
-                if (CustomR && !Program.Settings.Appearance.RoundedCorners)
-                {
-                    int argpvAttribute3 = (int)DWMAPI.FormCornersType.Rectangular;
-                    DWMAPI.DwmSetWindowAttribute(Form.Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute3, Marshal.SizeOf(typeof(int)));
-                }
-
                 // Refresh the main groupbox to avoid bugged UI after switching dark mode
                 if (Form is Home home) home.panel1.BackColor = home.BackColor;
 
                 if (Form.Visible) Form.Invalidate();
             }
-        }
-
-        /// <summary>
-        /// Applies a specific style to a window identified by its handle.
-        /// </summary>
-        /// <param name="hWnd">The handle of the window to apply the style to.</param>
-        public static void ApplyStyle(IntPtr hWnd)
-        {
-            // Determine if custom styling is applicable based on program settings and operating system
-            bool CustomR = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
-
-            // Make the title bar dark if application mode is dark
-            DLLFunc.DarkTitlebar(hWnd, Program.Style.DarkMode);
-
-            // Make the form have rounded corners if the operating system is Windows 11 or 12
-            // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
-            if (OS.W12 || OS.W11)
-            {
-                int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
-                DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-            }
-
-            // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
-            // Make both start by 'If' statement, not 'Else If'
-            if (CustomR && !Program.Settings.Appearance.RoundedCorners)
-            {
-                int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
-            }
-
-            SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
         }
 
         /// <summary>

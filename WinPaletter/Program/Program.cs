@@ -22,7 +22,8 @@ namespace WinPaletter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            CultureInfo.DefaultThreadCurrentUICulture = Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
             // Assigning some event handlers to the application including a modified version of the default exception handler and the user switch event handler
             AppDomain.CurrentDomain.AssemblyResolve += DomainCheck;
@@ -31,8 +32,8 @@ namespace WinPaletter
             Application.ApplicationExit += OnExit;
             User.UserSwitch += User.OnUserSwitch;
 
-            // Change security protocol to TLS 1.2 if the OS is Windows 7, Vista or WXP
-            if (OS.W7 | OS.WVista | OS.WXP) ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            // Change security protocol to TLS 1.2 if the OS is Windows 7, Vista or XP
+            if (OS.W7 || OS.WVista || OS.WXP) ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
             // Delete the update residuals
             DeleteUpdateResiduals();

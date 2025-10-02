@@ -54,7 +54,7 @@ namespace WinPaletter.Templates
                 }
                 else
                 {
-                    Icon ico = DLLFunc.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON);
+                    Icon ico = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON);
                     if (ico is not null)
                     {
                         pic.Image = ico.ToBitmap();

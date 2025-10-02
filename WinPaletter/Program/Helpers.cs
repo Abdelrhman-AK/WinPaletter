@@ -190,39 +190,31 @@ namespace WinPaletter
         {
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager and setting Window Style for the preview.");
 
-            if (OS.W12)
-                WindowStyle = PreviewHelpers.WindowStyle.W12;
+            if (OS.W12) WindowStyle = PreviewHelpers.WindowStyle.W12;
 
-            if (OS.W11)
-                WindowStyle = PreviewHelpers.WindowStyle.W11;
+            if (OS.W11) WindowStyle = PreviewHelpers.WindowStyle.W11;
 
-            else if (OS.W10)
-                WindowStyle = PreviewHelpers.WindowStyle.W10;
+            else if (OS.W10) WindowStyle = PreviewHelpers.WindowStyle.W10;
 
-            else if (OS.W81)
-                WindowStyle = PreviewHelpers.WindowStyle.W81;
+            else if (OS.W81) WindowStyle = PreviewHelpers.WindowStyle.W81;
 
-            else if (OS.W8)
-                WindowStyle = PreviewHelpers.WindowStyle.W8;
+            else if (OS.W8) WindowStyle = PreviewHelpers.WindowStyle.W8;
 
-            else if (OS.W7)
-                WindowStyle = PreviewHelpers.WindowStyle.W7;
+            else if (OS.W7) WindowStyle = PreviewHelpers.WindowStyle.W7;
 
-            else if (OS.WVista)
-                WindowStyle = PreviewHelpers.WindowStyle.WVista;
+            else if (OS.WVista) WindowStyle = PreviewHelpers.WindowStyle.WVista;
 
-            else if (OS.WXP)
-                WindowStyle = PreviewHelpers.WindowStyle.WXP;
+            else if (OS.WXP) WindowStyle = PreviewHelpers.WindowStyle.WXP;
 
-            else
-                WindowStyle = PreviewHelpers.WindowStyle.W12;
+            else WindowStyle = PreviewHelpers.WindowStyle.W12;
 
             // Load Manager
             if (!ExternalLink)
             {
                 if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Theme Manager from selected user preferences and registry.");
 
-                if (TM is null) TM = new(Source.Registry);
+                // TM is not null, but TM_Original is so during startup.
+                if (TM_Original is null) TM = new(Source.Registry);
                 Forms.Home.Text = Application.ProductName;
             }
             else
@@ -249,7 +241,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Delete the old Winpaletter executable files
+        /// Delete the old WinPaletter executable files
         /// </summary>
         private static void DeleteUpdateResiduals()
         {

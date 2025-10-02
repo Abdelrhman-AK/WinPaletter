@@ -138,7 +138,7 @@ namespace WinPaletter
             DWMAPI.MARGINS DWM_Margins = new() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
             int argpvAttribute = (int)FS;
 
-            DLLFunc.DarkTitlebar(Handle, Program.Style.DarkMode);
+            NativeMethods.Helpers.SetHWNDDarkMode(Handle, Program.Style.DarkMode);
             DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
             DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
         }
