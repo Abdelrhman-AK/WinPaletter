@@ -25,7 +25,8 @@ namespace WinPaletter.UI.WP
         /// required.</remarks>
         public TablessControl()
         {
-            SetStyle(ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
+            
             DoubleBuffered = true;
 
             // Prevent the built-in scroll buttons
@@ -86,5 +87,16 @@ namespace WinPaletter.UI.WP
 
             base.WndProc(ref m);
         }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            e.Graphics.Clear(Parent.BackColor);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.Clear(Parent.BackColor);
+        }
+
     }
 }

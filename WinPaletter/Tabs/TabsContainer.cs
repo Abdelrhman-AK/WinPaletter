@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
@@ -141,20 +142,6 @@ namespace WinPaletter.Tabs
 
             TabPage TP = new() { BackColor = BackColor };
 
-            form.TopLevel = false;
-            form.Parent = TP;
-
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.Dock = DockStyle.Fill;
-            form.AllowDrop = true;
-            form.WindowState = FormWindowState.Normal;
-
-            TP.Text = form.Text;
-
-            if (!DesignMode && !TabControl.IsInUse()) Program.Animator.HideSync(TabControl);
-
-            TP.Controls.Add(form);
-
             //UI.WP.SkeletonOverlay skeleton = new() { AnimationSpeed = 16, TickInterval = 26 };
 
             //form.Load += (s, e) =>
@@ -170,7 +157,23 @@ namespace WinPaletter.Tabs
             //    skeleton = null;
             //};
 
+            form.TopLevel = false;
+            form.Parent = TP;
+
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;
+            form.AllowDrop = true;
+            form.WindowState = FormWindowState.Normal;
+            form.Opacity = 0;
+            form.Visible = false;
             form.Show();
+
+            TP.Text = form.Text;
+
+            if (!DesignMode && !TabControl.IsInUse()) Program.Animator.HideSync(TabControl);
+
+            TP.Controls.Add(form);
+            form.Opacity = 1;
 
             forceChangeSelectedIndex = true;
             TabControl.TabPages.Add(TP);
@@ -907,7 +910,7 @@ namespace WinPaletter.Tabs
             FormClosed?.Invoke(sender, e);
         }
 
-        private async void _tabControl_ControlAdded(object sender, ControlEventArgs e)
+        private void _tabControl_ControlAdded(object sender, ControlEventArgs e)
         {
             if (_tabControl != null && e.Control is TabPage)
             {
@@ -919,7 +922,7 @@ namespace WinPaletter.Tabs
 
                 SelectedIndex = TabDataList.Count - 1;
 
-                await TabDataList[TabDataList.Count - 1].Show(() => UpdateTabPositions(TabDataList));
+                Task.Run(() => TabDataList[TabDataList.Count - 1].Show(() => UpdateTabPositions(TabDataList)));
             }
         }
 
@@ -944,6 +947,8 @@ namespace WinPaletter.Tabs
             int SI = SelectedIndex;
 
             await tabData.Hide(animate, () => AfterRemovingTab(tabData, animate, SI));
+
+            FindForm().BackgroundImage = null;
         }
 
         private void AfterRemovingTab(TabData tabData, bool animate, int SI)
@@ -956,6 +961,8 @@ namespace WinPaletter.Tabs
             SelectedIndex = SI;
 
             _tabControl.TabPages.Remove(tabData.TabPage);
+
+            FindForm().Visible = _tabControl.TabPages.Count > 0;
 
             tabData.Dispose();
 
