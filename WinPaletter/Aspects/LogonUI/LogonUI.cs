@@ -190,6 +190,8 @@ namespace WinPaletter
 
             label1.ForeColor = Color.White;
             label2.ForeColor = Color.White;
+            label3.ForeColor = Color.White;
+            label4.ForeColor = Color.White;
         }
 
         public void LoadFromTM(Theme.Structures.LogonUI10x logonUI)
