@@ -114,6 +114,7 @@ namespace WinPaletter.NativeMethods
             bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
             int attributeValue = darkMode ? 1 : 0;
             int backdropType = OS.W10 ? 3 : 2;
+            int mica = darkMode ? 2 : 4;
 
             // Make the form have rounded corners if the operating system is Windows 11 or 12
             // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
@@ -137,11 +138,10 @@ namespace WinPaletter.NativeMethods
 
             if (!OS.W10)
             {
-                // Set the dark mode attribute for the border
-                DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref attributeValue, Marshal.SizeOf<int>());
+                DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref mica, Marshal.SizeOf<int>());
             }
 
-            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, Marshal.SizeOf<int>());
+            DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref mica, Marshal.SizeOf<int>());
 
             if (wholeWindow) SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
         }
