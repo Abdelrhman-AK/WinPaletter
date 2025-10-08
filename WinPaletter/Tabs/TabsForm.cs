@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 
 namespace WinPaletter.Tabs
 {
@@ -19,13 +18,13 @@ namespace WinPaletter.Tabs
         //        if (m.WParam.ToInt32() == 1 /*TRUE*/)
         //        {
         //            // Get the current non-client area rectangle
-        //            DWMAPI.RECT rect = (DWMAPI.RECT)m.GetLParam(typeof(DWMAPI.RECT));
+        //            DWMAPI.MARGINS rect = (DWMAPI.MARGINS)m.GetLParam(typeof(DWMAPI.MARGINS));
 
         //            // Adjust the rectangle to make room for the custom control in the title bar
-        //            rect.top -= titlebarExtender1.Height - 6;
+        //            rect.topHeight -= titlebarExtender1.Height - 6;
 
         //            // Update the non-client area rectangle
-        //            Marshal.StructureToPtr(rect, m.LParam, true);
+        //            System.Runtime.InteropServices.Marshal.StructureToPtr(rect, m.LParam, true);
         //        }
         //    }
         //}

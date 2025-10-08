@@ -1,6 +1,7 @@
 ﻿using FluentTransitions;
 using System;
 using System.Drawing;
+using System.IO.Ports;
 using System.Windows.Forms;
 using static WinPaletter.PreviewHelpers;
 
@@ -68,14 +69,13 @@ namespace WinPaletter
             Size targetSize = Size;
             Point targetLocation = Forms.Home.winEdition.PointToScreen(Point.Empty) - new Size(Width - Forms.Home.winEdition.Width, 0);
 
-            Size = Forms.Home.winEdition.Size;
+            Size = new(Width, 1);
             Location = Forms.Home.winEdition.PointToScreen(Point.Empty);
+            Left -= Width - Forms.Home.winEdition.Width;
 
             // Animate the form.
             Transition
-                .With(this, nameof(Width), targetSize.Width)
                 .With(this, nameof(Height), targetSize.Height)
-                .With(this, nameof(Left), targetLocation.X)
                 .With(this, nameof(Top), targetLocation.Y)
                 .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
 
