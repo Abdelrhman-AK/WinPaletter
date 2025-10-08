@@ -19,10 +19,10 @@ namespace WinPaletter.Tabs
         /// </summary>
         public TitlebarExtender()
         {
-            BackColor = Color.Black;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
             DoubleBuffered = true;
-            UpdateColors();
-            UpdateBackDrop();
+
+            BackColor = Color.Black;
         }
 
         Color activeTtl, inactiveTtl, activeTtlG, inactiveTtlG;
@@ -180,10 +180,8 @@ namespace WinPaletter.Tabs
                 {
                     FindForm().Activated += Form_Activated;
                     FindForm().Deactivate += Form_Deactivate;
-                    SystemEvents.UserPreferenceChanged += (s, e) => { OnSystemColorsUpdated(s, e); };
+                    SystemEvents.UserPreferenceChanged += OnSystemSettingsUpdated;
                 }
-
-                UpdateBackDrop();
             }
 
             base.OnHandleCreated(e);
@@ -199,20 +197,24 @@ namespace WinPaletter.Tabs
             {
                 FindForm().Activated -= Form_Activated;
                 FindForm().Deactivate -= Form_Deactivate;
-                SystemEvents.UserPreferenceChanged -= (s, e) => { OnSystemColorsUpdated(s, e); };
+                SystemEvents.UserPreferenceChanged -= OnSystemSettingsUpdated;
             }
 
             base.OnHandleDestroyed(e);
         }
 
-        private void OnSystemColorsUpdated(object sender, UserPreferenceChangedEventArgs e)
+        private void OnSystemSettingsUpdated(object sender, UserPreferenceChangedEventArgs e)
         {
             isCompositionEnabled = DWMAPI.IsCompositionEnabled();
 
-            if (e.Category == UserPreferenceCategory.Color || e.Category == UserPreferenceCategory.VisualStyle)
+            if (e.Category == UserPreferenceCategory.General)
             {
                 UpdateColors();
-                if (!DesignMode) UpdateBackDrop();
+                if (!DesignMode)
+                {
+                    FindForm()?.ResetEffect();
+                    UpdateBackDrop();
+                }
             }
         }
 
@@ -351,9 +353,9 @@ namespace WinPaletter.Tabs
                 }
 
                 Form form = FindForm();
-                if (form is not null && form.Parent is not null) form = form.Parent.FindForm();
 
-                form?.ResetEffect();
+                // Fixer for tabbed forms
+                if (form is not null && form.Parent is not null) form = form.Parent.FindForm();
 
                 if (Flag == Flags.System)
                 {
@@ -368,7 +370,7 @@ namespace WinPaletter.Tabs
                     else if (type == TitlebarTypes.DWM_Aero)
                     {
                         BackColor = Color.Black;
-                        if (p != Padding.Empty) form?.DropEffect(p, false, DWM.FormStyle.Aero);
+                        if (p != Padding.Empty) form?.DropEffect(p, false, DWM.BackdropStyles.Aero);
                     }
 
                     else if (type == TitlebarTypes.ColorPrevalence)

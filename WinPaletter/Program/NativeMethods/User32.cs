@@ -85,6 +85,56 @@ namespace WinPaletter.NativeMethods
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
         /// <summary>
+        /// Retrieves information about the specified window. The function retrieves a value at the specified offset in the
+        /// window's extra memory or other window-related information.
+        /// </summary>
+        /// <remarks>Common values for <paramref name="nIndex"/> include constants like <c>GWL_STYLE</c>,
+        /// <c>GWL_EXSTYLE</c>, and <c>GWL_WNDPROC</c>. Refer to the Windows API documentation for a full list of valid
+        /// constants.</remarks>
+        /// <param name="hWnd">A handle to the window whose information is to be retrieved.</param>
+        /// <param name="nIndex">The zero-based offset to the value to be retrieved. This can be a predefined constant that specifies the type of
+        /// information to retrieve, such as window styles or extended styles.</param>
+        /// <returns>The requested value if the function succeeds, or 0 if it fails. To get extended error information, call <see
+        /// cref="Marshal.GetLastWin32Error"/>.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        /// <summary>
+        /// Changes an attribute of the specified window.
+        /// </summary>
+        /// <remarks>This method is a wrapper for the native <c>SetWindowLong</c> function in the Windows
+        /// API.  Use this method with caution, as modifying certain attributes can affect the behavior and appearance
+        /// of the window.</remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be changed.</param>
+        /// <param name="nIndex">The zero-based offset to the value to be set. This parameter specifies the attribute to modify, such as 
+        /// window styles or extended window styles. Common values include <see langword="GWL_STYLE"/> and <see
+        /// langword="GWL_EXSTYLE"/>.</param>
+        /// <param name="dwNewLong">The new value to set for the specified attribute.</param>
+        /// <returns>The previous value of the specified attribute if the function succeeds; otherwise, returns zero.  To get
+        /// extended error information, call <see cref="Marshal.GetLastWin32Error"/>.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        /// <summary>
+        /// Sets the opacity and transparency color key of a layered window.
+        /// </summary>
+        /// <remarks>This function is used to modify the appearance of a layered window. The window must
+        /// have the <see langword="WS_EX_LAYERED"/> extended style set  using <see cref="SetWindowLong"/> before
+        /// calling this function. The <paramref name="dwFlags"/> parameter determines whether the function modifies 
+        /// the transparency color key, the alpha value, or both.</remarks>
+        /// <param name="hwnd">A handle to the layered window. This window must have the <see langword="WS_EX_LAYERED"/> style set.</param>
+        /// <param name="crKey">The color key to be used for transparency. Pixels in the window with this color will be transparent. Set to
+        /// 0 to disable the color key.</param>
+        /// <param name="bAlpha">The alpha value (0 to 255) that specifies the opacity of the layered window. A value of 0 is fully
+        /// transparent, and 255 is fully opaque.</param>
+        /// <param name="dwFlags">Flags that specify the options for the layered window. This can be a combination of <see
+        /// langword="LWA_COLORKEY"/> and <see langword="LWA_ALPHA"/>.</param>
+        /// <returns><see langword="true"/> if the function succeeds; otherwise, <see langword="false"/>.  Call <see
+        /// cref="Marshal.GetLastWin32Error"/> to retrieve extended error information if the function fails.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
+
+        /// <summary>
         /// Loads the specified cursor resource from a File.
         /// </summary>
         [DllImport("user32.dll", EntryPoint = "LoadCursorFromFileA")]
@@ -222,7 +272,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>The previous text color as a COLORREF value, or 0xFFFFFFFF if an error occurs.</returns>
         [DllImport("user32.dll")]
         public static extern uint SetTextColor(IntPtr hdc, int crColor);
- 
+
         /// <summary>
         /// Retrieves the class name of the specified window.
         /// </summary>

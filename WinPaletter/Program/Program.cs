@@ -30,7 +30,6 @@ namespace WinPaletter
             AppDomain.CurrentDomain.UnhandledException += Domain_UnhandledException;
             Application.ThreadException += ThreadExceptionHandler;
             Application.ApplicationExit += OnExit;
-            User.UserSwitch += User.OnUserSwitch;
 
             // Change security protocol to TLS 1.2 if the OS is Windows 7, Vista or XP
             if (OS.W7 || OS.WVista || OS.WXP) ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
@@ -42,7 +41,7 @@ namespace WinPaletter
             GetMemoryFonts();
 
             // Initialize the image lists to be used for logs and other purposes
-            InitializeImageLists();
+           InitializeImageLists();
 
             // Initialize the application
             InitializeApplication();
@@ -80,6 +79,10 @@ namespace WinPaletter
             // Impersonate the selected user to access the user's data
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
+                // Placing user switching event here fixed CLR20R3 error on Windows 7
+                User.UserSwitch -= User.OnUserSwitch;
+                User.UserSwitch += User.OnUserSwitch;
+
                 LoggerInitializer.Initialize();
                 if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
                 if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");

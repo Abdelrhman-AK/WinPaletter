@@ -28,7 +28,7 @@ namespace WinPaletter
             Location = Forms.Home.card4.PointToScreen(Point.Empty);
 
             BackColor = Color.Black;
-            this.DropEffect(Padding.Empty, true, DWM.FormStyle.Acrylic);
+            this.DropEffect(Padding.Empty, true, DWM.BackdropStyles.Acrylic);
 
             //FluentTransitions.Transition
             //.With(this, nameof(Width), targetSize.Width)

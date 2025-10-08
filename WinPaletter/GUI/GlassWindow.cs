@@ -24,16 +24,13 @@ namespace WinPaletter
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
-            TransparencyKey = Color.Black;
             WindowState = FormWindowState.Maximized;
-
-            Load += new EventHandler(GlassWindow_Load);
         }
 
-        /// <summary>
-        /// Raises the <see cref="E:System.Windows.Forms.Form.Load" /> event.
-        /// </summary>
-        private void GlassWindow_Load(object sender, EventArgs e)
+        const int LWA_COLORKEY = 0x1;
+        const int LWA_ALPHA = 0x2;
+
+        protected override void OnLoad(EventArgs e)
         {
             if ((OS.W7 || OS.WVista) && DWMAPI.IsCompositionEnabled())
             {
@@ -41,16 +38,35 @@ namespace WinPaletter
                 DWMAPI.DWM_BLURBEHIND blurBehind = new(true);
                 DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
             }
-            else if (!OS.WXP && !OS.W8 && !OS.W81)
+            else if (!OS.WXP && !OS.W8x)
             {
                 // If the OS is not Windows XP, 8 or 8.1 or even DWM composition is disabled, use Acrylic effect.
-                this.DropEffect(Padding.Empty, false, DWM.FormStyle.Acrylic);
+                this.DropEffect(Padding.Empty, false, DWM.BackdropStyles.Acrylic, true);
             }
             else
             {
                 // If the OS is Windows XP, 8 or 8.1, use transparent gray effect.
-                this.DrawTransparentGray();
+                this.DropEffect(Padding.Empty, false, DWM.BackdropStyles.None);
             }
+
+            base.OnLoad(e);
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            const int GWL_EXSTYLE = -20;
+            const int WS_EX_LAYERED = 0x80000;
+            const int WS_EX_TRANSPARENT = 0x20;
+            const int WS_EX_NOACTIVATE = 0x08000000;
+
+            int exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
+            exStyle |= WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE;
+            User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
+
+            // 50% transparent gray
+            User32.SetLayeredWindowAttributes(Handle, 0, 128, LWA_ALPHA);
         }
     }
 }

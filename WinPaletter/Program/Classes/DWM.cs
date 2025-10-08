@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -12,9 +14,22 @@ namespace WinPaletter
     public static class DWM
     {
         /// <summary>
-        /// Draw effect on form depending on both user choice (Tabbed\Mica\Acrylic\Aero) and current OS
+        /// Applies a visual effect to a window, such as Mica, Acrylic, or Aero, based on the specified parameters and
+        /// the operating system's capabilities.
         /// </summary>
-        public static void DropEffect(IntPtr Handle, Padding Margins = default, bool Border = true, FormStyle FormStyle = FormStyle.Mica)
+        /// <remarks>The method determines the appropriate effect to apply based on the specified
+        /// parameters and the operating system's version and settings. For example, Mica and Tabbed effects are
+        /// available on Windows 11 and later, while Acrylic and Aero effects are supported on earlier versions. The
+        /// method also respects the user's system transparency settings.</remarks>
+        /// <param name="hwnd">The handle to the window to which the effect will be applied.</param>
+        /// <param name="Margins">The margins defining the area of the window where the effect is applied. If not specified or set to default,
+        /// the entire window is affected.</param>
+        /// <param name="Border">A value indicating whether the window's border should be included in the effect. Defaults to <see
+        /// langword="true"/>.</param>
+        /// <param name="Style">The style of the backdrop effect to apply. Supported styles include Mica, Tabbed, Acrylic, and Aero.</param>
+        /// <param name="useOldAcrylicMethod">A value indicating whether to use an older method for applying the Acrylic effect. This is relevant for
+        /// compatibility with certain systems.</param>
+        public static void DropEffect(IntPtr hwnd, Padding Margins = default, bool Border = true, BackdropStyles Style = BackdropStyles.Mica, bool useOldAcrylicMethod = false)
         {
             if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
             {
@@ -26,41 +41,41 @@ namespace WinPaletter
 
             if ((OS.W12 || OS.W11) && Transparency_W10x)
             {
-                switch (FormStyle)
+                switch (Style)
                 {
-                    case FormStyle.Mica:
+                    case BackdropStyles.Mica:
                         {
-                            DrawMica(Handle, Margins, MicaStyle.Mica);
+                            DrawMica(hwnd, Margins, BackdropStyles.Mica);
                             return;
                         }
 
-                    case FormStyle.Tabbed:
+                    case BackdropStyles.Tabbed:
                         {
-                            DrawMica(Handle, Margins, MicaStyle.Tabbed);
+                            DrawMica(hwnd, Margins, BackdropStyles.Tabbed);
                             return;
                         }
 
-                    case FormStyle.Acrylic:
+                    case BackdropStyles.Acrylic:
                         {
-                            DrawAcrylic(Handle, Border);
+                            DrawAcrylic(hwnd, Margins, Border, useOldAcrylicMethod);
                             return;
                         }
 
-                    case FormStyle.Aero:
+                    case BackdropStyles.Aero:
                         {
-                            DrawAero(Handle, Margins);
+                            DrawAero(hwnd, Margins);
                             return;
                         }
 
-                    //case FormStyle.Transparent:
-                    //    {
-                    //        DrawTransparentGray((Form)Control.FromHandle(Handle), Margins);
-                    //        return;
-                    //    }
+                    case BackdropStyles.None:
+                        {
+                            DrawTransparentGray(hwnd);
+                            return;
+                        }
 
                     default:
                         {
-                            DrawMica(Handle, Margins, MicaStyle.Mica);
+                            DrawMica(hwnd, Margins, BackdropStyles.Mica);
                             return;
                         }
                 }
@@ -68,203 +83,313 @@ namespace WinPaletter
 
             else if (OS.W10 && Transparency_W10x)
             {
-                switch (FormStyle)
+                switch (Style)
                 {
-                    case FormStyle.Acrylic:
+                    case BackdropStyles.Acrylic:
                         {
-                            DrawAcrylic(Handle, Border);
+                            DrawAcrylic(hwnd, Margins, Border, useOldAcrylicMethod);
                             return;
                         }
 
-                    case FormStyle.Aero:
+                    case BackdropStyles.Aero:
                         {
-                            DrawAero(Handle, Margins);
+                            DrawAero(hwnd, Margins);
                             return;
                         }
 
-                    //case FormStyle.Transparent:
-                    //    {
-                    //        DrawTransparentGray((Form)Control.FromHandle(Handle), Margins);
-                    //        return;
-                    //    }
+                    case BackdropStyles.None:
+                        {
+                            DrawTransparentGray(hwnd);
+                            return;
+                        }
 
                     default:
                         {
-                            DrawAcrylic(Handle, Border);
+                            DrawAcrylic(hwnd, Margins, Border, useOldAcrylicMethod);
                             return;
                         }
                 }
             }
 
-            else if ((OS.W81 || OS.W8 || OS.W7 || OS.WVista) && CompositionEnabled)
+            else if ((OS.W8x || OS.W7 || OS.WVista) && CompositionEnabled)
             {
-                DrawAero(Handle, Margins);
+                DrawAero(hwnd, Margins);
+                return;
+            }
+
+            else if (Style == BackdropStyles.None)
+            {
+                DrawTransparentGray(hwnd);
                 return;
             }
         }
 
         /// <summary>
-        /// Draw effect on form depending on both user choice (Tabbed\Mica\Acrylic\Aero) and current OS
+        /// Applies a visual drop effect to the specified <see cref="Form"/> using the provided settings.
         /// </summary>
-        public static void DropEffect(this Form Form, Padding Margins = default, bool Border = true, FormStyle FormStyle = FormStyle.Mica)
+        /// <remarks>This method customizes the appearance of a form by applying a drop effect, such as Mica or Acrylic,
+        /// based on the specified style. Ensure that the form's handle is valid before calling this method.</remarks>
+        /// <param name="Form">The <see cref="Form"/> to which the drop effect will be applied. Cannot be <see langword="null"/>.</param>
+        /// <param name="Margins">The <see cref="Padding"/> that defines the margins for the drop effect. Defaults to <see cref="Padding.Empty"/> if
+        /// not specified.</param>
+        /// <param name="Border">A value indicating whether the form's border should be visible. Defaults to <see langword="true"/>.</param>
+        /// <param name="FormStyle">The <see cref="BackdropStyles"/> that specifies the visual style of the drop effect. Defaults to <see
+        /// cref="BackdropStyles.Mica"/>.</param>
+        /// <param name="useOldAcrylicMethod">A value indicating whether to use the legacy acrylic method for the drop effect. Defaults to <see
+        /// langword="false"/>.</param>
+        public static void DropEffect(this Form Form, Padding Margins = default, bool Border = true, BackdropStyles FormStyle = BackdropStyles.Mica, bool useOldAcrylicMethod = false)
         {
-            DropEffect(Form.Handle, Margins, Border, FormStyle);
+            DropEffect(Form.Handle, Margins, Border, FormStyle, useOldAcrylicMethod);
         }
 
         /// <summary>
-        /// Reset a DWM effect applied on a form
+        /// Resets any visual effects applied to the specified <see cref="Form"/>.
         /// </summary>
-        public static void ResetEffect(this Form Form)
+        /// <remarks>This method performs the following actions to reset the visual effects of the form:
+        /// <list type="bullet"> <item><description>Sets the system backdrop type to "None".</description></item>
+        /// <item><description>Disables immersive dark mode if it was previously enabled.</description></item>
+        /// <item><description>Clears any extended frame margins applied to the form.</description></item> </list> If
+        /// the <paramref name="form"/> is null or disposed, the method does nothing.</remarks>
+        /// <param name="form">The <see cref="Form"/> instance to reset. Must not be null or disposed.</param>
+        public static void ResetEffect(this Form form)
         {
-            DWMAPI.MARGINS DWM_Margins = new();
-            DWMAPI.DwmExtendFrameIntoClientArea(Form.Handle, ref DWM_Margins);
+            if (form == null || form.IsDisposed) return;
+            ResetEffect(form.Handle);
         }
 
         /// <summary>
-        /// Draws mica/tabbed effect (Windows 11 and later - Tabbed Style is for Windows 11 Build 22523 and Higher, if not, Mica will be used instead)
+        /// Resets the visual effects applied to a window, including backdrop styles, dark mode, and frame extensions.
         /// </summary>
-        public static void DrawMica(IntPtr Handle, Padding Margins, MicaStyle Style = MicaStyle.Mica)
+        /// <remarks>This method restores the window to its default appearance by performing the following
+        /// actions: <list type="bullet"> <item><description>Sets the backdrop style to "None".</description></item>
+        /// <item><description>Disables immersive dark mode if it was previously enabled.</description></item>
+        /// <item><description>Clears any extended frame margins applied to the window.</description></item> </list> If
+        /// <paramref name="hwnd"/> is <see cref="IntPtr.Zero"/>, the method does nothing.</remarks>
+        /// <param name="hwnd">A handle to the window whose effects are to be reset. Must not be <see cref="IntPtr.Zero"/>.</param>
+        public static void ResetEffect(IntPtr hwnd)
         {
+            if (OS.WXP) return; // Unsupported OS
+
+            if (hwnd == IntPtr.Zero) return;
+
+            // 1. Reset backdrop type to "None"
+            int backdropNone = (int)BackdropStyles.None;
+            DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref backdropNone, Marshal.SizeOf<int>());
+
+            // 2. Disable dark mode if previously applied
+            int useDarkMode = 0;
+            DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref useDarkMode, Marshal.SizeOf<int>());
+
+            // 3. Clear any frame extension
+            DWMAPI.MARGINS margins = new(); // all zeroes
+            DWMAPI.DwmExtendFrameIntoClientArea(hwnd, ref margins);
+        }
+
+        /// <summary>
+        /// Applies the Mica or Tabbed backdrop effect to a window on supported versions of Windows.
+        /// </summary>
+        /// <remarks>This method is only supported on Windows 11 and later. On earlier versions of
+        /// Windows, the method will return without making any changes. The backdrop effect enhances the appearance of
+        /// the window by applying a translucent material effect.</remarks>
+        /// <param name="hwnd">A handle to the window to which the backdrop effect will be applied.</param>
+        /// <param name="margins">The margins of the window where the backdrop effect should be applied.  Use <see cref="Padding.Empty"/> to
+        /// apply the effect to the entire window.</param>
+        /// <param name="style">The desired backdrop style to apply. Defaults to <see cref="BackdropStyles.Mica"/>.  If <see
+        /// cref="BackdropStyles.Tabbed"/> is specified but not supported, the Mica style will be used instead.</param>
+        public static void DrawMica(IntPtr hwnd, Padding margins, BackdropStyles style = BackdropStyles.Mica)
+        {
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x || OS.W10) return; // Mica and Tabbed are only supported on Windows 11 and later
+
+            if (margins == Padding.Empty) margins = new Padding(-1);
+
+            DrawAero(hwnd, margins, false); // Extend frame into client area
+
+            // Determine which style to apply
+            int backdrop = (int)style;
+            if (style == BackdropStyles.Tabbed && !OS.W11_22523) backdrop = (int)BackdropStyles.Mica;
+
+            int darkMode = Program.Style.DarkMode ? 1 : 0;
+
+            // Set the dark mode attribute for the titlebar
+            DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref darkMode, Marshal.SizeOf<int>());
+            if (OS.W10_1909_AndBelow) DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref darkMode, Marshal.SizeOf<int>());
+
+            DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref backdrop, Marshal.SizeOf<int>());
+
+            DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdrop, Marshal.SizeOf<int>());
+
+            DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref backdrop, Marshal.SizeOf<int>());
+        }
+
+        /// <summary>
+        /// Applies an acrylic effect to the specified window, optionally including a border and using an alternative
+        /// method if specified.
+        /// </summary>
+        /// <remarks>This method applies an acrylic blur effect to the specified window. On Windows 10,
+        /// the effect defaults to a blur behind the window,  while on Windows 11, the effect uses the acrylic backdrop
+        /// style. If the operating system does not support these effects  (e.g., Windows 8.1 or earlier), the method
+        /// will return without making any changes.</remarks>
+        /// <param name="hwnd">A handle to the window to which the acrylic effect will be applied.</param>
+        /// <param name="margins">The padding margins to define the area of the window where the effect is applied.</param>
+        /// <param name="border">A boolean value indicating whether to include a border around the window.  <see langword="true"/> to include
+        /// a border; otherwise, <see langword="false"/>. The default is <see langword="true"/>.</param>
+        /// <param name="useOldMethod">A boolean value indicating whether to use an alternative method for applying the acrylic effect.  <see
+        /// langword="true"/> to use the alternative method; otherwise, <see langword="false"/>. The default is <see
+        /// langword="false"/>.</param>
+        public static void DrawAcrylic(IntPtr hwnd, Padding margins, bool border = true, bool useOldMethod = false)
+        {
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return; // Unsupported OS
+
+            if (OS.W10 || useOldMethod)
+            {
+                if (hwnd == IntPtr.Zero) return;
+
+                var accent = new User32.AccentPolicy
+                {
+                    AccentState = OS.W10 ? User32.AccentState.ACCENT_ENABLE_BLURBEHIND : User32.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND,
+                    AccentFlags = border ? 0x20 | 0x40 | 0x80 | 0x100 : 0,
+                    GradientColor = 0,
+                    AnimationId = 0
+                };
+
+                int size = Marshal.SizeOf(accent);
+                IntPtr ptr = IntPtr.Zero;
+
+                try
+                {
+                    ptr = Marshal.AllocHGlobal(size);
+                    Marshal.StructureToPtr(accent, ptr, false);
+
+                    User32.WindowCompositionAttributeData data = new()
+                    {
+                        Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                        SizeOfData = size,
+                        Data = ptr
+                    };
+
+                    User32.SetWindowCompositionAttribute(hwnd, ref data);
+                }
+                finally
+                {
+                    if (ptr != IntPtr.Zero) Marshal.FreeHGlobal(ptr);
+                }
+            }
+            else
+            {
+                DrawMica(hwnd, margins, BackdropStyles.Acrylic);
+            }
+        }
+
+        /// <summary>
+        /// Extends the window frame into the client area, enabling the Aero Glass effect or similar visual styles.
+        /// </summary>
+        /// <remarks>This method uses the Desktop Window Manager (DWM) API to extend the window frame into
+        /// the client area, creating a visually seamless effect. On operating systems prior to Windows 10, any existing
+        /// backdrops are removed if <paramref name="eraseOldBackdrops"/> is set to <see langword="true"/>.</remarks>
+        /// <param name="hwnd">A handle to the window for which the frame is to be extended.</param>
+        /// <param name="Margins">The <see cref="Padding"/> structure specifying the margins for the extended frame. If the value is <see
+        /// langword="null"/>, <see cref="Padding.Empty"/>, or a padding of all zeros, default margins of -1 are applied
+        /// to extend the frame fully.</param>
+        /// <param name="eraseOldBackdrops">A <see langword="bool"/> value indicating whether to erase any previously applied backdrops (e.g., Mica,
+        /// Acrylic, or Tabbed effects) before extending the frame. This parameter is ignored on Windows 10 and later.</param>
+        public static void DrawAero(IntPtr hwnd, Padding Margins, bool eraseOldBackdrops = true)
+        {
+            if (OS.WXP) return; // Unsupported OS
+
             if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
             {
                 Margins = new(-1, -1, -1, -1);
             }
 
-            FormStyle FS = FormStyle.Mica;
-
-            if (Style == MicaStyle.Tabbed && (OS.W11_22523 || OS.W12))
-                FS = FormStyle.Tabbed;
-
-            DWMAPI.MARGINS DWM_Margins = new() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
-            int argpvAttribute = (int)FS;
-
-            NativeMethods.Helpers.SetHWNDDarkMode(Handle, Program.Style.DarkMode);
-            DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
-        }
-
-        /// <summary>
-        /// Draws acrylic effect (Windows 10 and later)
-        /// </summary>
-        public static void DrawAcrylic(IntPtr Handle, bool Border = true)
-        {
-            User32.AccentPolicy accent = new() { AccentState = OS.W10 ? User32.AccentState.ACCENT_ENABLE_BLURBEHIND : User32.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND };
-
-            if (Border) accent.AccentFlags = 0x20 | 0x40 | 0x80 | 0x100;
-
-            int accentStructSize = Marshal.SizeOf(accent);
-            IntPtr accentPtr = Marshal.AllocHGlobal(accentStructSize);
-            Marshal.StructureToPtr(accent, accentPtr, false);
-
-            User32.WindowCompositionAttributeData Data = new()
+            if (!OS.WVista && !OS.W7 && !OS.W8x && !OS.W10 && eraseOldBackdrops)
             {
-                Attribute = User32.WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                SizeOfData = accentStructSize,
-                Data = accentPtr
-            };
-
-            User32.SetWindowCompositionAttribute(Handle, ref Data);
-            Marshal.FreeHGlobal(accentPtr);
-        }
-
-        /// <summary>
-        /// Draws aero effect (Windows Vista and later)
-        /// </summary>
-        public static void DrawAero(IntPtr Handle, Padding Margins)
-        {
-            if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
-            {
-                Margins = new(-1, -1, -1, -1);
+                int backdropType = 0; // 1 = Mica, 2 = Acrylic, 3 = Tabbed, 0 = None
+                DWMAPI.DwmSetWindowAttribute(hwnd, 38, ref backdropType, sizeof(int));
             }
 
             DWMAPI.MARGINS DWM_Margins = new() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
-            DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref DWM_Margins);
+            DWMAPI.DwmExtendFrameIntoClientArea(hwnd, ref DWM_Margins);
         }
 
         /// <summary>
-        /// Draws mica/tabbed effect (Windows 11 and later - Tabbed Style is for Windows 11 Build 22523 and Higher, if not, Mica will be used instead)
+        /// Applies a semi-transparent gray overlay to the specified window handle.
         /// </summary>
-        public static void DrawMica(this Form Form, Padding Margins, MicaStyle Style = MicaStyle.Mica)
+        /// <param name="hWnd">Handle to the window.</param>
+        /// <param name="noWindowBorders">
+        /// If true, removes the standard window border and caption (makes the window borderless).
+        /// </param>
+        /// <param name="opacity">Opacity value from 0.0 (fully transparent) to 1.0 (fully opaque).</param>
+        public static void DrawTransparentGray(IntPtr hWnd, bool noWindowBorders = true, double opacity = 0.5)
         {
-            DrawMica(Form.Handle, Margins, Style);
+            if (hWnd == IntPtr.Zero) return;
+
+            const int GWL_STYLE = -16;
+            const int WS_BORDER = 0x00800000;
+            const int WS_CAPTION = 0x00C00000;
+            const int LWA_ALPHA = 0x2;
+            const int WS_EX_LAYERED = 0x00080000;
+            const int GWL_EXSTYLE = -20;
+
+            // Remove borders if requested
+            if (noWindowBorders)
+            {
+                int style = User32.GetWindowLong(hWnd, GWL_STYLE);
+                style &= ~WS_BORDER & ~WS_CAPTION;
+                User32.SetWindowLong(hWnd, GWL_STYLE, style);
+            }
+
+            // Enable layered window style
+            int exStyle = User32.GetWindowLong(hWnd, GWL_EXSTYLE);
+            exStyle |= WS_EX_LAYERED;
+            User32.SetWindowLong(hWnd, GWL_EXSTYLE, exStyle);
+
+            // Set gray color and opacity
+            byte alpha = (byte)(opacity * 255);
+            var color = Color.FromArgb(5, 5, 5);
+            uint colorRef = (uint)((color.R) | (color.G << 8) | (color.B << 16));
+
+            // Apply transparency
+            User32.SetLayeredWindowAttributes(hWnd, colorRef, alpha, LWA_ALPHA);
         }
 
         /// <summary>
-        /// Draws acrylic effect (Windows 10 and later)
+        /// Specifies the available backdrop styles for a window's background effect.
         /// </summary>
-        public static void DrawAcrylic(this Form Form, bool Border = true)
+        /// <remarks>Backdrop styles define the visual appearance of a window's background, such as transparency, blur,
+        /// and noise effects. These styles are typically used to enhance the user interface by providing a modern and visually
+        /// appealing background. The availability of certain styles may depend on the operating system version.</remarks>
+        public enum BackdropStyles
         {
-            DrawAcrylic(Form.Handle, Border);
-        }
+            /// <summary>
+            /// No backdrop effect.
+            /// </summary>
+            None = 0,
 
-        /// <summary>
-        /// Draws aero effect (Windows Vista and later)
-        /// </summary>
-        public static void DrawAero(this Form Form, Padding Margins)
-        {
-            DrawAero(Form.Handle, Margins);
-        }
+            /// <summary>
+            /// Mica effect: Windows desktop image is highly blurred, noised, and shown through the window background.
+            /// </summary>
+            Mica = 2,  // DWMSBT_MAINWINDOW
 
-        /// <summary>
-        /// Make a form with transparent gray effect
-        /// </summary>
-        public static void DrawTransparentGray(this Form Form, bool NoWindowBorders = true)
-        {
-            if (NoWindowBorders)
-                Form.FormBorderStyle = FormBorderStyle.None;
-            Form.BackColor = Color.FromArgb(5, 5, 5);
-            Form.Opacity = 0.5d;
-        }
+            /// <summary>
+            /// Acrylic effect: More transparent and dynamic than Mica.
+            /// </summary>
+            Acrylic = 3,
 
-        /// <summary>
-        /// Enumeration of effects that can be applied to a form using DWM
-        /// </summary>
-        public enum FormStyle
-        {
             /// <summary>
-            /// Automatically choose the best effect depending on the OS
+            /// Tabbed Mica effect: Similar to Mica, but with stronger color saturation.
+            /// Available on Windows 11 build 22523 and higher.
             /// </summary>
-            Auto,
-            /// <summary>
-            /// Default effect according to the OS
-            /// </summary>
-            Default,
-            /// <summary>
-            /// Mica effect (Windows 11 and later)
-            /// </summary>
-            Mica,
-            /// <summary>
-            /// Acrylic effect (Windows 10 and later)
-            /// </summary>
-            Acrylic,
-            /// <summary>
-            /// Tabbed effect (Windows 11 and later)
-            /// </summary>
-            Tabbed,
+            Tabbed = 4,  // DWMSBT_TABBEDWINDOW
+
             /// <summary>
             /// Aero effect (Windows Vista and later)
             /// </summary>
             Aero,
-            /// <summary>
-            /// Transparent gray effect
-            /// </summary>
-            Transparent
-        }
 
-        /// <summary>
-        /// Enumeration of mica styles that can be applied to a form using DWM (Windows 11 and later)
-        /// </summary>
-        public enum MicaStyle
-        {
             /// <summary>
-            /// Mica effect: Windows desktop image is highly blurred, noised and shown through the window as a background.
+            /// Automatically choose the best effect depending on the OS
             /// </summary>
-            Mica,
-            /// <summary>
-            /// Tabbed effect: Similar to Mica, but colors are highly saturated.
-            /// </summary>
-            Tabbed
+            Auto,
         }
-
     }
 }

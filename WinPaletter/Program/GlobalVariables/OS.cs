@@ -87,6 +87,11 @@ namespace WinPaletter.GlobalVariables
         public static bool W11_22523 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 22523;
 
         /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows 11 24H2 (build 26100) or later.
+        /// </summary>
+        public static bool W11_24H2 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 26100;
+
+        /// <summary>
         /// Gets the name of the Windows operating system version based on the current environment.
         /// </summary>
         /// <remarks>The property evaluates the current environment to determine the Windows version and

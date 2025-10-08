@@ -237,7 +237,7 @@ namespace WinPaletter
 
             this.LoadLanguage();
             ApplyStyle(this, true);
-            this.DropEffect(default, true, DWM.FormStyle.Acrylic);
+            this.DropEffect(default, true, DWM.BackdropStyles.Acrylic);
 
             ThemesFetcher.RunWorkerAsync();
 
