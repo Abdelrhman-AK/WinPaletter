@@ -1,10 +1,19 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -61,43 +70,68 @@ namespace WinPaletter.TypesExtensions
             if (Forms.IExclude.Contains(form.GetType())) return null;
 
             JObject j_ctrl = [], j_child = [];
-            j_ctrl.RemoveAll();
-            j_child.RemoveAll();
             j_ctrl.Add("Text", form.Text);
 
-            foreach (Control ctrl in form.GetAllControls())
+            List<Control> allControls = form.GetAllControls().ToList();
+            HashSet<Control> tablessChildren = [.. allControls.OfType<TablessControl>().SelectMany(tc => tc.TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()))];
+
+            foreach (Control ctrl in allControls)
             {
-                if (!string.IsNullOrWhiteSpace(ctrl.Text) && !ctrl.Text.All(char.IsDigit) && !(ctrl.Text.Count() == 1) && !((ctrl.Text ?? string.Empty) == (ctrl.Name ?? string.Empty)))
+                string ctrlTag = ctrl.Tag?.ToString();
+
+                bool notTabPage = ctrl is not TabPage;
+                bool textExists = j_child.ContainsKey($"{ctrl.Name}.Text");
+                bool tagExists = j_child.ContainsKey($"{ctrl.Name}.Tag");
+
+                if (notTabPage && !textExists && !tablessChildren.Contains(ctrl) && IsTranslatable(ctrl.Text, ctrl.Name))
                 {
-                    try
-                    {
-                        if (!form.Controls.OfType<TablessControl>().ElementAt(0).TabPages.Cast<TabPage>().SelectMany(tp => tp.Controls.OfType<Control>()).Contains(ctrl) & ctrl is not TabPage
-                            && !j_child.ContainsKey($"{ctrl.Name}.Text"))
-                        {
-                            j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
-                        }
-                    }
-                    catch { if (!j_child.ContainsKey($"{ctrl.Name}.Text")) j_child.Add($"{ctrl.Name}.Text", ctrl.Text); }
+                    j_child.Add($"{ctrl.Name}.Text", ctrl.Text);
                 }
-                if (ctrl is Card card)
+
+                if (!tagExists && IsTranslatable(ctrlTag, ctrl.Name))
                 {
-                    if (card.Tag is not null && !string.IsNullOrWhiteSpace(card.Tag) && !card.Tag.All(char.IsDigit) && !j_child.ContainsKey($"{card.Name}.Tag"))
-                    {
-                        j_child.Add($"{card.Name}.Tag", card.Tag);
-                    }
-                }
-                else
-                {
-                    if (ctrl.Tag is not null && !string.IsNullOrWhiteSpace(ctrl.Tag.ToString()) && !ctrl.Tag.ToString().All(char.IsDigit) && !j_child.ContainsKey($"{ctrl.Name}.Tag"))
-                    {
-                        j_child.Add($"{ctrl.Name}.Tag", ctrl.Tag.ToString());
-                    }
+                    j_child.Add($"{ctrl.Name}.Tag", ctrlTag);
                 }
             }
 
             if (j_ctrl.Count != 0) j_ctrl.Add("Controls", j_child);
 
             return j_ctrl;
+        }
+
+        private static readonly Regex SingleLetterWithPunctuationRegex = new(@"^[\p{P}]*[A-Za-z][\p{P}]*$", RegexOptions.Compiled);
+
+        private static bool IsTranslatable(string text, string ctrlName)
+        {
+            // Reject empty or whitespace-only strings
+            if (string.IsNullOrWhiteSpace(text)) return false;
+
+            // Reject strings shorter than 2 characters or strings that are purely numeric
+            if (text.Length < 2 || text.All(char.IsDigit)) return false;
+
+            // Reject single letters with surrounding punctuation, e.g., "H:", "(A)"
+            if (SingleLetterWithPunctuationRegex.IsMatch(text) && text.Count(char.IsLetter) == 1) return false;
+
+            // Reject strings composed entirely of punctuation or symbols, e.g., "---", "©"
+            if (text.All(char.IsPunctuation) || text.All(char.IsSymbol)) return false;
+
+            // Reject GUIDs, e.g., "3F2504E0-4F89-11D3-9A0C-0305E82C3301"
+            if (Guid.TryParse(text, out _)) return false;
+
+            // Reject dates and times, e.g., "2025-10-08", "10:45 AM"
+            if (DateTime.TryParse(text, out _)) return false;
+
+            // Reject version-like strings, e.g., "1.0", "3.2.1.15"
+            if (Regex.IsMatch(text, @"^\d+(\.\d+){1,3}$")) return false;
+
+            // Reject URLs, e.g., "http://example.com", "https://example.com"
+            if (text.StartsWith("http://") || text.StartsWith("https://")) return false;
+
+            // Reject strings that are identical to the control name
+            if (text == ctrlName) return false;
+
+            // If none of the above conditions matched, the string is likely translatable
+            return true;
         }
     }
 }

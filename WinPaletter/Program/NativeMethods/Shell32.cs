@@ -136,7 +136,7 @@ namespace WinPaletter.NativeMethods
             }
             else
             {
-                return Color.Black.ToBitmap(new Size(128, 128));
+                return Properties.Resources.User;
             }
         }
 

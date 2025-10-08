@@ -21,7 +21,7 @@ namespace WinPaletter
         /// <summary>
         /// List of forms in current project and not in the exclude list.
         /// </summary>
-        public static IEnumerable<Type> ITypes = Assembly.GetCallingAssembly().GetTypes().Where(t => !IExclude.Contains(t) && typeof(Form).IsAssignableFrom(t));
+        public static IEnumerable<Type> ITypes => Assembly.GetCallingAssembly().GetTypes().Where(t => !IExclude.Contains(t) && typeof(Form).IsAssignableFrom(t) && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null);
 
         private static Win12Colors _Win12Colors;
         /// <summary>
@@ -442,49 +442,40 @@ namespace WinPaletter
 
         #region Engine
 
-        private static Dictionary<Type, Form> formBeingCreated;
+        private static Dictionary<Type, Form> formBeingCreated = new();
 
+        /// <summary>
+        /// Creates a new instance of the specified form type or returns the existing instance if it is already created and not disposed.
+        /// </summary>
         private static T CreateInstance<T>(T instance) where T : Form, new()
         {
-            if (instance is null || instance.IsDisposed)
+            if (instance != null && !instance.IsDisposed) return instance;
+
+            lock (formBeingCreated)
             {
-                formBeingCreated ??= [];
+                Type formType = typeof(T);
 
-                // Check if the form is already being created
-                if (formBeingCreated.ContainsKey(typeof(T)))
-                {
-                    // Return the existing instance to handle recursive creation
-                    return instance;
-                }
-
-                formBeingCreated[typeof(T)] = null;
+                // If the form is already being created, return the ongoing instance or null
+                if (formBeingCreated.TryGetValue(formType, out Form existing) && existing != null && !existing.IsDisposed) return existing as T;
 
                 try
                 {
-                    instance = new T();
-                    return instance;
+                    T newInstance = new();
+                    formBeingCreated[formType] = newInstance;
+                    return newInstance;
                 }
-                catch (TargetInvocationException ex) when (ex.InnerException is not null)
+                catch (TargetInvocationException ex) when (ex.InnerException != null)
                 {
-                    string betterMessage = $"Error creating form: {ex.InnerException.Message}";
+                    string betterMessage = $"Error creating form {typeof(T).Name}: {ex.InnerException.Message}";
                     throw new InvalidOperationException(betterMessage, ex.InnerException);
                 }
                 finally
                 {
-                    formBeingCreated.Remove(typeof(T));
+                    // Clean up dictionary after creation
+                    formBeingCreated.Remove(formType);
                 }
             }
-            else
-            {
-                return instance;
-            }
         }
-
-        //private static void DisposeInstance<T>(ref T instance) where T : Form
-        //{
-        //    instance?.Dispose();
-        //    instance = null;
-        //}
 
         #endregion
     }

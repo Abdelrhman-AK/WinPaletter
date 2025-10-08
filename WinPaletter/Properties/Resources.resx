@@ -5924,7 +5924,7 @@
   <data name="Login_Admin" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAABh0RVh0U29mdHdhcmUAUGFpbnQuTkVUIDUuMS44G2nqqAAAAw5JREFUOE+9011I
+        vQAADr0BR/uQrQAAABh0RVh0U29mdHdhcmUAUGFpbnQuTkVUIDUuMS44G2nqqAAAAw5JREFUOE+9011I
         U2EYB/Dj3HJbkc5MXaKZZSGZuUkRpMvd1YVGQQQWpmZl2ZcI0k0gRAiiF1ZmLqqhttCZ2tS25pxpUytb
         ZohQ+XU2t7ammxQIQpx/nE1nntbXRf3hvTm8z4/D8zwvQfzXFIOV8MQZv13jkG5tc0jj2pzx9Dfmtd9m
         27NZgUjnKkvUztgT1DOIb5/GVpUDcS2fsKXJbo9ttJdGN08EMet8RtTpkoh1Lnui1gkfGGKVNmyq/4gY
@@ -12547,6 +12547,44 @@
         s6dMmXKD+RYikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFI
         JBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSMR13XX/BWVeIIMR
         X6UWAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="User" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        AABJRU5ErkJggg==
 </value>
   </data>
   <data name="WinPaletter_SysEventsSounds" type="System.Resources.ResXFileRef, System.Windows.Forms">

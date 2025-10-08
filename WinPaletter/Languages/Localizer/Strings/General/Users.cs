@@ -22,7 +22,7 @@
                 public string SYSTEM_Alert1 { get; set; } = "Do you want to continue with this user?";
                 public string ERROR_UNKNOWN { get; set; } = "WinPaletter failed to log in to the selected user due to an unknown reason. Try continuing without a password.";
                 public string ERROR_LOGON_FAILURE { get; set; } = "The credentials provided for logging in (username and password) do not match a valid user account on the system or are incorrect.";
-                public string ERROR_LOGON_ACCESS_DENIED { get; set; } = "Access denied to the system account. Try continuing without a password.";
+                public string ERROR_LOGON_ACCESS_DENIED { get; set; } = "System account access was denied. To proceed, use an advanced process elevation tool (e.g., Nirsoft's AdvancedRun).";
                 public string ERROR_INVALID_PARAMETER { get; set; } = "Invalid or incorrect username, domain name, logon type, or logon provider specified, or problems with the password or other credentials, or incorrect values for any of the parameters passed to the function.";
                 public string ERROR_NO_TOKEN { get; set; } = "Can't get a token to call functions on the system account. Try continuing without a password.";
                 public string ERROR_LOGON_TYPE_NOT_GRANTED { get; set; } = "Logon type requested is not granted for the user.";
