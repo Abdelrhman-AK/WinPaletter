@@ -78,6 +78,16 @@ namespace WinPaletter
                 .With(this, nameof(Left), targetLocation.X)
                 .With(this, nameof(Top), targetLocation.Y)
                 .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
+
+            BackColor = Color.Black;
+
+            DWM.BackdropStyles style;
+
+            if (OS.WXP || OS.W8x) style = DWM.BackdropStyles.None;
+            else if (OS.WVista || OS.W7) style = DWM.BackdropStyles.Aero;
+            else style = DWM.BackdropStyles.Acrylic;
+
+            this.DropEffect(Padding.Empty, true, style, true);
         }
 
         private void button7_Click(object sender, EventArgs e)

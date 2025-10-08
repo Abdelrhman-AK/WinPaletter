@@ -25,7 +25,14 @@ namespace WinPaletter
             Icon = FormsExtensions.Icon<CMD>();
 
             BackColor = Color.Black;
-            this.DropEffect(Padding.Empty, true, DWM.BackdropStyles.Acrylic, true);
+
+            DWM.BackdropStyles style;
+
+            if (OS.WXP || OS.W8x) style = DWM.BackdropStyles.None;
+            else if (OS.WVista || OS.W7) style = DWM.BackdropStyles.Aero;
+            else style = DWM.BackdropStyles.Acrylic;
+
+            this.DropEffect(Padding.Empty, true, style, true);
         }
 
         private void Button6_Click(object sender, EventArgs e)
