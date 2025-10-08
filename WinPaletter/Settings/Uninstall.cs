@@ -354,7 +354,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button19_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
             {
                 Program.SendCommand($"{SysPaths.Explorer} ms-settings:display");
             }

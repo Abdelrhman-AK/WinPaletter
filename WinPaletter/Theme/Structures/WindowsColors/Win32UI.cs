@@ -144,19 +144,14 @@ namespace WinPaletter.Theme.Structures
             VisualStyles
         }
 
-        /// <summary>
-        /// Get color from registry and set it to targetColor after converting it to a <see cref="Color"/> 
-        /// </summary>
-        /// <param name="registryKey"></param>
-        /// <param name="valueName"></param>
-        /// <param name="defaultValue"></param>
-        /// <param name="targetColor"></param>
-        private void setColorFromRegistry(string registryKey, string valueName, string defaultValue, ref Color targetColor)
+        public static Color GetColor(SysColorIndex index)
         {
-            string result = ReadReg(registryKey, valueName, defaultValue);
-            if (result.Contains(' ') && result.Split(' ').Count() == 3) targetColor = Color.FromArgb(255, result.ToColorFromWin32());
+            int colorRef = GetSysColor((int)index);
+            byte r = (byte)(colorRef & 0xFF);
+            byte g = (byte)((colorRef >> 8) & 0xFF);
+            byte b = (byte)((colorRef >> 16) & 0xFF);
+            return Color.FromArgb(r, g, b);
         }
-
 
         /// <summary>
         /// Loads Win32UI data from registry
@@ -177,42 +172,40 @@ namespace WinPaletter.Theme.Structures
                         SystemParametersInfo(SPI.SPI_GETFLATMENU, 0, ref EnableTheming, SPIF.SPIF_NONE);
                         SystemParametersInfo(SPI.SPI_GETGRADIENTCAPTIONS, 0, ref EnableGradient, SPIF.SPIF_NONE);
 
-                        // Load colors from registry and use @default to help WinPaletter know default colors if they are not found in registry
-                        using (Manager @default = Default.Get())
-                        {
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", @default.Win32.ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ActiveTitle);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", @default.Win32.AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref AppWorkspace);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", @default.Win32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref Background);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", @default.Win32.ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ButtonAlternateFace);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", @default.Win32.ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ButtonDkShadow);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", @default.Win32.ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ButtonFace);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", @default.Win32.ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ButtonHilight);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", @default.Win32.ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ButtonLight);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", @default.Win32.ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ButtonShadow);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", @default.Win32.ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ButtonText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", @default.Win32.GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref GradientActiveTitle);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", @default.Win32.GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref GradientInactiveTitle);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", @default.Win32.GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref GrayText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", @default.Win32.HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref HilightText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", @default.Win32.HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref HotTrackingColor);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", @default.Win32.ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref ActiveBorder);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", @default.Win32.InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref InactiveBorder);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", @default.Win32.InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref InactiveTitle);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", @default.Win32.InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref InactiveTitleText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", @default.Win32.InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref InfoText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", @default.Win32.InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref InfoWindow);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "Menu", @default.Win32.Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref Menu);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", @default.Win32.MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref MenuBar);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", @default.Win32.MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref MenuText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", @default.Win32.Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref Scrollbar);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", @default.Win32.TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref TitleText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "Window", @default.Win32.Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref Window);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", @default.Win32.WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref WindowFrame);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", @default.Win32.WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref WindowText);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", @default.Win32.Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref Hilight);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", @default.Win32.MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref MenuHilight);
-                            setColorFromRegistry(@"HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", @default.Win32.Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), ref Desktop);
-                        }
+                        ActiveTitle = GetColor(SysColorIndex.ActiveCaption);
+                        AppWorkspace = GetColor(SysColorIndex.AppWorkspace);
+                        Background = GetColor(SysColorIndex.Background);
+                        ButtonDkShadow = GetColor(SysColorIndex.ButtonDkShadow);
+                        ButtonFace = GetColor(SysColorIndex.ButtonFace);
+                        ButtonHilight = GetColor(SysColorIndex.ButtonHilight);
+                        ButtonLight = GetColor(SysColorIndex.ButtonLight);
+                        ButtonShadow = GetColor(SysColorIndex.ButtonShadow);
+                        ButtonText = GetColor(SysColorIndex.ButtonText);
+                        GradientActiveTitle = GetColor(SysColorIndex.GradientActiveTitle);
+                        GradientInactiveTitle = GetColor(SysColorIndex.GradientInactiveTitle);
+                        GrayText = GetColor(SysColorIndex.GrayText);
+                        Hilight = GetColor(SysColorIndex.Hilight);
+                        HilightText = GetColor(SysColorIndex.HilightText);
+                        HotTrackingColor = GetColor(SysColorIndex.HotTrackingColor);
+                        ActiveBorder = GetColor(SysColorIndex.ActiveBorder);
+                        InactiveBorder = GetColor(SysColorIndex.InactiveBorder);
+                        InactiveTitle = GetColor(SysColorIndex.InactiveCaption);
+                        InactiveTitleText = GetColor(SysColorIndex.InactiveCaptionText);
+                        InfoText = GetColor(SysColorIndex.InfoText);
+                        InfoWindow = GetColor(SysColorIndex.InfoWindow);
+                        Menu = GetColor(SysColorIndex.Menu);
+                        MenuBar = GetColor(SysColorIndex.MenuBar);
+                        MenuText = GetColor(SysColorIndex.MenuText);
+                        Scrollbar = GetColor(SysColorIndex.Scrollbar);
+                        TitleText = GetColor(SysColorIndex.CaptionText);
+                        Window = GetColor(SysColorIndex.Window);
+                        WindowFrame = GetColor(SysColorIndex.WindowFrame);
+                        WindowText = GetColor(SysColorIndex.WindowText);
+                        MenuHilight = GetColor(SysColorIndex.MenuHilight);
+                        Desktop = GetColor(SysColorIndex.Background);
+
+                        ButtonAlternateFace = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+
                         break;
                     }
 
@@ -262,103 +255,46 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Enumeration in order of classic Windows items. Used in User32.SetSysColors()
-        /// <br><b><i>(!) Never change their orders</i></b></br>
+        /// Represents system color indices used to retrieve system-defined colors.
         /// </summary>
-        public enum ColorsNumbers
+        /// <remarks>The <see cref="SysColorIndex"/> enumeration defines indices corresponding to various
+        /// system-defined colors. These indices can be used with methods such as <see
+        /// cref="System.Drawing.SystemColors"/> or platform-specific APIs to retrieve the actual color values. The
+        /// colors represented by these indices are typically used for rendering user interface elements and may vary
+        /// depending on the system theme or user settings.</remarks>
+        public enum SysColorIndex
         {
-            /// <summary>Obsolete: Was used in Windows 9x</summary>
-            Scrollbar,
-
-            /// 
-            Background,
-
-            /// <summary>Active titlebar main color</summary>
-            ActiveTitle,
-
-            /// <summary>Inactive titlebar main color</summary>
-            InactiveTitle,
-
-            /// <summary>Color of cascaded menu</summary>
-            Menu,
-
-            /// 
-            Window,
-
-            /// <summary>Color of rectangle surrounding a pressed button</summary>
-            WindowFrame,
-
-            /// 
-            MenuText,
-
-            /// 
-            WindowText,
-
-            /// <summary>Active titlebar text</summary>
-            TitleText,
-
-            /// <summary>Color of active window border</summary>
-            ActiveBorder,
-
-            /// <summary>Color of inactive window border</summary>
-            InactiveBorder,
-
-            /// 
-            AppWorkspace,
-
-            /// 
-            Hilight,
-
-            /// 
-            HilightText,
-
-            /// 
-            ButtonFace,
-
-            /// 
-            ButtonShadow,
-
-            /// <summary>Used in disabled items</summary>
-            GrayText,
-
-            /// 
-            ButtonText,
-
-            /// <summary>Inactive titlebar text</summary>
-            InactiveTitleText,
-
-            /// 
-            ButtonHilight,
-
-            /// 
-            ButtonDkShadow,
-
-            /// 
-            ButtonLight,
-
-            /// 
-            InfoText,
-
-            /// 
-            InfoWindow,
-
-            /// 
-            ButtonAlternateFace,
-
-            /// <summary>Color of selection rectangles and hyperlinks</summary>
-            HotTrackingColor,
-
-            /// <summary>Second color for gradience in active titlebar</summary>
-            GradientActiveTitle,
-
-            /// <summary>Second color for gradience in inactive titlebar</summary>
-            GradientInactiveTitle,
-
-            /// 
-            MenuHilight,
-
-            /// <summary>Color of menu bar</summary>
-            MenuBar
+            Scrollbar = 0,
+            Background = 1,
+            ActiveCaption = 2,
+            InactiveCaption = 3,
+            Menu = 4,
+            Window = 5,
+            WindowFrame = 6,
+            MenuText = 7,
+            WindowText = 8,
+            CaptionText = 9,
+            ActiveBorder = 10,
+            InactiveBorder = 11,
+            AppWorkspace = 12,
+            Hilight = 13,
+            HilightText = 14,
+            ButtonFace = 15,
+            ButtonShadow = 16,
+            GrayText = 17,
+            ButtonText = 18,
+            InactiveCaptionText = 19,
+            ButtonHilight = 20,
+            ButtonDkShadow = 21,
+            ButtonLight = 22,
+            InfoText = 23,
+            InfoWindow = 24,
+            HotTrackingColor = 26,
+            GradientActiveTitle = 27,
+            GradientInactiveTitle = 28,
+            MenuHilight = 29,
+            MenuBar = 30,
+            ButtonAlternateFace = 100,
         }
 
         /// <summary>
@@ -465,97 +401,97 @@ namespace WinPaletter.Theme.Structures
                     C1.Clear();
                     C2.Clear();
 
-                    C1.Add((int)ColorsNumbers.Hilight);
+                    C1.Add((int)SysColorIndex.Hilight);
                     C2.Add((uint)ColorTranslator.ToWin32(Hilight));
 
-                    C1.Add((int)ColorsNumbers.HilightText);
+                    C1.Add((int)SysColorIndex.HilightText);
                     C2.Add((uint)ColorTranslator.ToWin32(HilightText));
 
-                    C1.Add((int)ColorsNumbers.TitleText);
+                    C1.Add((int)SysColorIndex.CaptionText);
                     C2.Add((uint)ColorTranslator.ToWin32(TitleText));
 
-                    C1.Add((int)ColorsNumbers.GrayText);
+                    C1.Add((int)SysColorIndex.GrayText);
                     C2.Add((uint)ColorTranslator.ToWin32(GrayText));
 
-                    C1.Add((int)ColorsNumbers.InactiveBorder);
+                    C1.Add((int)SysColorIndex.InactiveBorder);
                     C2.Add((uint)ColorTranslator.ToWin32(InactiveBorder));
 
-                    C1.Add((int)ColorsNumbers.InactiveTitle);
+                    C1.Add((int)SysColorIndex.InactiveCaption);
                     C2.Add((uint)ColorTranslator.ToWin32(InactiveTitle));
 
-                    C1.Add((int)ColorsNumbers.ActiveTitle);
+                    C1.Add((int)SysColorIndex.ActiveCaption);
                     C2.Add((uint)ColorTranslator.ToWin32(ActiveTitle));
 
-                    C1.Add((int)ColorsNumbers.ActiveBorder);
+                    C1.Add((int)SysColorIndex.ActiveBorder);
                     C2.Add((uint)ColorTranslator.ToWin32(ActiveBorder));
 
-                    C1.Add((int)ColorsNumbers.AppWorkspace);
+                    C1.Add((int)SysColorIndex.AppWorkspace);
                     C2.Add((uint)ColorTranslator.ToWin32(AppWorkspace));
 
-                    C1.Add((int)ColorsNumbers.Background);
+                    C1.Add((int)SysColorIndex.Background);
                     C2.Add((uint)ColorTranslator.ToWin32(Background));
 
-                    C1.Add((int)ColorsNumbers.GradientActiveTitle);
+                    C1.Add((int)SysColorIndex.GradientActiveTitle);
                     C2.Add((uint)ColorTranslator.ToWin32(GradientActiveTitle));
 
-                    C1.Add((int)ColorsNumbers.GradientInactiveTitle);
+                    C1.Add((int)SysColorIndex.GradientInactiveTitle);
                     C2.Add((uint)ColorTranslator.ToWin32(GradientInactiveTitle));
 
-                    C1.Add((int)ColorsNumbers.InactiveTitleText);
+                    C1.Add((int)SysColorIndex.InactiveCaptionText);
                     C2.Add((uint)ColorTranslator.ToWin32(InactiveTitleText));
 
-                    C1.Add((int)ColorsNumbers.InfoWindow);
+                    C1.Add((int)SysColorIndex.InfoWindow);
                     C2.Add((uint)ColorTranslator.ToWin32(InfoWindow));
 
-                    C1.Add((int)ColorsNumbers.InfoText);
+                    C1.Add((int)SysColorIndex.InfoText);
                     C2.Add((uint)ColorTranslator.ToWin32(InfoText));
 
-                    C1.Add((int)ColorsNumbers.Menu);
+                    C1.Add((int)SysColorIndex.Menu);
                     C2.Add((uint)ColorTranslator.ToWin32(Menu));
 
-                    C1.Add((int)ColorsNumbers.MenuText);
+                    C1.Add((int)SysColorIndex.MenuText);
                     C2.Add((uint)ColorTranslator.ToWin32(MenuText));
 
-                    C1.Add((int)ColorsNumbers.Scrollbar);
+                    C1.Add((int)SysColorIndex.Scrollbar);
                     C2.Add((uint)ColorTranslator.ToWin32(Scrollbar));
 
-                    C1.Add((int)ColorsNumbers.Window);
+                    C1.Add((int)SysColorIndex.Window);
                     C2.Add((uint)ColorTranslator.ToWin32(Window));
 
-                    C1.Add((int)ColorsNumbers.WindowFrame);
+                    C1.Add((int)SysColorIndex.WindowFrame);
                     C2.Add((uint)ColorTranslator.ToWin32(WindowFrame));
 
-                    C1.Add((int)ColorsNumbers.WindowText);
+                    C1.Add((int)SysColorIndex.WindowText);
                     C2.Add((uint)ColorTranslator.ToWin32(WindowText));
 
-                    C1.Add((int)ColorsNumbers.HotTrackingColor);
+                    C1.Add((int)SysColorIndex.HotTrackingColor);
                     C2.Add((uint)ColorTranslator.ToWin32(HotTrackingColor));
 
-                    C1.Add((int)ColorsNumbers.MenuHilight);
+                    C1.Add((int)SysColorIndex.MenuHilight);
                     C2.Add((uint)ColorTranslator.ToWin32(MenuHilight));
 
-                    C1.Add((int)ColorsNumbers.MenuBar);
+                    C1.Add((int)SysColorIndex.MenuBar);
                     C2.Add((uint)ColorTranslator.ToWin32(MenuBar));
 
-                    C1.Add((int)ColorsNumbers.ButtonFace);
+                    C1.Add((int)SysColorIndex.ButtonFace);
                     C2.Add((uint)ColorTranslator.ToWin32(ButtonFace));
 
-                    C1.Add((int)ColorsNumbers.ButtonHilight);
+                    C1.Add((int)SysColorIndex.ButtonHilight);
                     C2.Add((uint)ColorTranslator.ToWin32(ButtonHilight));
 
-                    C1.Add((int)ColorsNumbers.ButtonShadow);
+                    C1.Add((int)SysColorIndex.ButtonShadow);
                     C2.Add((uint)ColorTranslator.ToWin32(ButtonShadow));
 
-                    C1.Add((int)ColorsNumbers.ButtonText);
+                    C1.Add((int)SysColorIndex.ButtonText);
                     C2.Add((uint)ColorTranslator.ToWin32(ButtonText));
 
-                    C1.Add((int)ColorsNumbers.ButtonDkShadow);
+                    C1.Add((int)SysColorIndex.ButtonDkShadow);
                     C2.Add((uint)ColorTranslator.ToWin32(ButtonDkShadow));
 
-                    C1.Add((int)ColorsNumbers.ButtonAlternateFace);
+                    C1.Add((int)SysColorIndex.ButtonAlternateFace);
                     C2.Add((uint)ColorTranslator.ToWin32(ButtonAlternateFace));
 
-                    C1.Add((int)ColorsNumbers.ButtonLight);
+                    C1.Add((int)SysColorIndex.ButtonLight);
                     C2.Add((uint)ColorTranslator.ToWin32(ButtonLight));
 
                     // Broadcast the colors to all windows

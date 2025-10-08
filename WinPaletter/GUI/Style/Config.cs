@@ -65,7 +65,7 @@ namespace WinPaletter.UI.Style
         /// Gets or sets the current theme of the application; true for rounded corners, false for square corners
         /// </summary>
 
-        public bool RoundedCorners { get; set; } = true;
+        public bool RoundedCorners { get; set; } = GetRoundedCorners();
 
         /// <summary>
         /// Gets or sets the radius of the rounded corners if <see cref="RoundedCorners"/> is set to true

@@ -209,7 +209,7 @@ namespace WinPaletter.Dialogs
 
         private void button14_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
             {
                 Process.Start($"{SysPaths.Explorer}", "ms-settings:windowsupdate");
             }

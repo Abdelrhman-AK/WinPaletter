@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using Serilog.Events;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -101,7 +102,7 @@ namespace WinPaletter
 
                 // Important to load proper style and language before showing login dialog
                 if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"Loading application style.");
-                SetRoundedCorners();
+
                 GetDarkMode();
                 ApplyStyle();
                 LoadLanguage();

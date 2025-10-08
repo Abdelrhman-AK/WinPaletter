@@ -307,7 +307,7 @@ namespace WinPaletter
 
             if (ch_appearance)
             {
-                SetRoundedCorners();
+                Program.Style.RoundedCorners = GetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle();
             }

@@ -1541,6 +1541,40 @@ namespace WinPaletter.Theme.Structures
 
         #endregion
 
+        private static class JsonHelper
+        {
+            // Cached settings (no reflection rebuild per call)
+            private static readonly JsonSerializerSettings cachedSettings = new()
+            {
+                MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.None,
+                MissingMemberHandling = MissingMemberHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore,
+                DateParseHandling = DateParseHandling.None,
+                Formatting = Formatting.None,
+                ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()
+            };
+
+            // Reusable serializer (no per-call allocations)
+            private static readonly JsonSerializer serializer = JsonSerializer.Create(cachedSettings);
+
+            // The optimized deserializer method
+            public static T DeserializeFast<T>(string json)
+            {
+                if (string.IsNullOrEmpty(json))
+                    return default;
+
+                using var stringReader = new StringReader(json);
+                using var reader = new JsonTextReader(stringReader)
+                {
+                    CloseInput = true,
+                    SupportMultipleContent = false
+                };
+
+                return serializer.Deserialize<T>(reader);
+            }
+        }
+
         /// <summary>
         /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
         /// </summary>
@@ -1567,7 +1601,7 @@ namespace WinPaletter.Theme.Structures
                                 St.Close();
                             }
 
-                            if (!string.IsNullOrEmpty(JSON_String)) result = JsonConvert.DeserializeObject<WinTerminal>(JSON_String);
+                            if (!string.IsNullOrEmpty(JSON_String)) result = JsonHelper.DeserializeFast<WinTerminal>(JSON_String);
                         }
 
                         Enabled = result.Enabled;

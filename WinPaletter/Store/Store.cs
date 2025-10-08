@@ -267,7 +267,7 @@ namespace WinPaletter
             Program.Settings.Appearance.Load();
 
             // Reapply style to forms to prevent conflict with an open store theme
-            SetRoundedCorners();
+            Program.Style.RoundedCorners = GetRoundedCorners();
             GetDarkMode();
             ApplyStyle(this, true);
             Program.Settings.Appearance.CustomColors = oldAppearance.CustomColors;
@@ -1177,7 +1177,7 @@ namespace WinPaletter
                 Program.Settings.Appearance = new();
                 Program.Settings.Appearance.Load();
 
-                SetRoundedCorners();
+                Program.Style.RoundedCorners = GetRoundedCorners();
                 GetDarkMode();
                 ApplyStyle(this, true);
             }

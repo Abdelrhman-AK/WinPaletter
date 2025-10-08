@@ -124,7 +124,13 @@ namespace WinPaletter
         /// </summary>
         private static Bitmap ThumbnailWallpaper
         {
-            get => GetWallpaperFromRegistry();
+            get
+            {
+                using (Bitmap bmp = GetWallpaperFromRegistry())
+                {
+                    return bmp.Resize(PreviewSize.Width * 2, PreviewSize.Height * 2);
+                }
+            }
         }
 
         /// <summary>
@@ -164,7 +170,7 @@ namespace WinPaletter
                 // If the wallpaper is not null, apply the wallpaper style (fill/fit/stretch/tile/...).
                 if (wallpaper != null)
                 {
-                    wallpaper = GetWallpaperWithStyle(wallpaper, picbox.Size, TM.Wallpaper.WallpaperStyle);
+                    wallpaper = ApplyStyleToWallpaper(wallpaper, picbox.Size, TM.Wallpaper.WallpaperStyle);
                 }
 
                 picbox.Image = wallpaper;
@@ -265,7 +271,7 @@ namespace WinPaletter
         /// <param name="targetSize"></param>
         /// <param name="wallpaperStyle"></param>
         /// <returns></returns>
-        private static Bitmap GetWallpaperWithStyle(Bitmap wallpaper, Size targetSize, Wallpaper.WallpaperStyles wallpaperStyle)
+        private static Bitmap ApplyStyleToWallpaper(Bitmap wallpaper, Size targetSize, Wallpaper.WallpaperStyles wallpaperStyle)
         {
             double scaleW = 1;
             double scaleH = 1;
@@ -306,25 +312,7 @@ namespace WinPaletter
             // If the wallpaper type is valid (image), return the wallpaper from the registry
             if (wallpaperType != 1 && !string.IsNullOrEmpty(wallpaperPath) && File.Exists(wallpaperPath))
             {
-                using (Bitmap bmp = BitmapMgr.Load(wallpaperPath))
-                {
-                    if (bmp == null)
-                    {
-                        return null;
-                    }
-
-                    using (Bitmap thumb = bmp.GetThumbnailImage(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, null, IntPtr.Zero) as Bitmap)
-                    {
-                        if (thumb == null)
-                        {
-                            return null;
-                        }
-                        else
-                        {
-                            return thumb.Clone() as Bitmap;
-                        }
-                    }
-                }
+                return BitmapMgr.Load(wallpaperPath);
             }
 
             // If the wallpaper type is solid color, return the solid color wallpaper
@@ -363,65 +351,88 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Monitor the Windows preferences changes (wallpaper and dark mode)
+        /// Monitor Windows preference changes (wallpaper, dark mode, and personalization).
         /// </summary>
         public static void Monitor()
         {
+            // Skip initialization if already monitoring
+            if (Watchers.Count > 0) return;
+
+            string sid = User.Identity.User.Value;
+
+            // Impersonate only once
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                RegisterRegistryChangeEvent(User.Identity.User.Value, @"Control Panel\Desktop", "Wallpaper", Wallpaper_Changed_EventHandler);
-                RegisterRegistryChangeEvent(User.Identity.User.Value, @"Control Panel\Colors", "Background", Wallpaper_Changed_EventHandler);
-
-                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+                try
                 {
-                    RegisterRegistryChangeEvent(User.Identity.User.Value, @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType_Changed);
-                    RegisterRegistryChangeEvent(User.Identity.User.Value, @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", DarkMode_Changed_EventHandler);
+                    // Predefine key paths
+                    const string Desktop = @"Control Panel\Desktop";
+                    const string Colors = @"Control Panel\Colors";
+                    const string Explorer = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers";
+                    const string Personalize = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+                    const string DWM = @"SOFTWARE\Microsoft\Windows\DWM";
+
+                    // Register essential events first
+                    RegisterRegistryChangeEvent(sid, Desktop, "Wallpaper", Wallpaper_Changed_EventHandler);
+                    RegisterRegistryChangeEvent(sid, Colors, "Background", Wallpaper_Changed_EventHandler);
+
+                    // Register modern Windows-specific events only if supported
+                    if (OS.W10 || OS.W11)
+                    {
+                        RegisterRegistryChangeEvent(sid, Explorer, "BackgroundType", WallpaperType_Changed);
+                        RegisterRegistryChangeEvent(sid, Personalize, "AppsUseLightTheme", DarkMode_Changed_EventHandler);
+                    }
+                    else
+                    {
+                        // Use legacy fallback for old systems
+                        SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
+                    }
+
+                    // Register DWM/Transparency events (titlebar, effects, etc.)
+                    RegisterRegistryChangeEvent(sid, Personalize, "EnableTransparency", PreferencesRelatedToTitlebarExtenderChanged);
+                    RegisterRegistryChangeEvent(sid, DWM, "ColorPrevalence", PreferencesRelatedToTitlebarExtenderChanged);
+
+                    // Automatically clean up on exit
+                    Application.ApplicationExit += (_, _) => StopWatchers();
                 }
-                else
+                finally
                 {
-                    SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
+                    wic.Undo();
                 }
-
-                RegisterRegistryChangeEvent(User.Identity.User.Value, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", PreferencesRelatedToTitlebarExtenderChanged);
-                RegisterRegistryChangeEvent(User.Identity.User.Value, @"SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", PreferencesRelatedToTitlebarExtenderChanged);
-
-                Application.ApplicationExit += (sender, e) => StopWatchers();
-
-                wic.Undo();
             }
         }
 
         /// <summary>
-        /// Register a registry change event to monitor the specified registry key and value
+        /// Register a registry watcher if the value exists.
         /// </summary>
-        /// <param name="SID"></param>
-        /// <param name="keyPath"></param>
-        /// <param name="valueName"></param>
-        /// <param name="eventHandler"></param>
-        private static void RegisterRegistryChangeEvent(string SID, string keyPath, string valueName, EventArrivedEventHandler eventHandler)
+        private static void RegisterRegistryChangeEvent(string sid, string keyPath, string valueName, EventArrivedEventHandler handler)
         {
+            string fullKey = $@"HKEY_USERS\{sid}\{keyPath}";
+
+            // Skip if value doesn't exist (avoid expensive WMI setup)
+            if (!ValueExists(fullKey, valueName))
+            {
+                Program.Log?.Debug($"Skipped watcher: {fullKey}\\{valueName} does not exist.");
+                return;
+            }
+
             try
             {
-                if (!ValueExists($"HKEY_USERS\\{SID}\\{keyPath}", valueName))
-                {
-                    Program.Log?.Debug("Registry value {valueName} does not exist in {keyPath}, skipping event registration.", valueName, keyPath);
-                    return;
-                }
+                string escapedKey = keyPath.Replace(@"\", @"\\");
+                string query = $"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{sid}\\{escapedKey}' AND ValueName='{valueName}'";
 
-                string query = $@"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{SID}\\{keyPath.Replace(@"\", @"\\")}' AND ValueName='{valueName}'";
-                WqlEventQuery eventQuery = new(query);
-                ManagementEventWatcher watcher = new(eventQuery);
-                watcher.EventArrived += eventHandler;
+                // Reuse query object directly to avoid multiple allocations
+                ManagementEventWatcher watcher = new(new WqlEventQuery(query));
+                watcher.EventArrived += handler;
                 watcher.Start();
 
-                // Store the watcher for later cleanup
-                Watchers.Add(new Tuple<ManagementEventWatcher, EventArrivedEventHandler>(watcher, eventHandler));
+                Watchers.Add(new Tuple<ManagementEventWatcher, EventArrivedEventHandler>(watcher, handler));
 
-                Program.Log?.Debug($"Registered registry change event for HKEY_USERS\\{SID}\\{keyPath}\\{valueName}");
+                Program.Log?.Debug($"Registered watcher: {fullKey}\\{valueName}");
             }
             catch (Exception ex)
             {
-                Program.Log?.Error(ex, $"Failed to register registry change event for HKEY_USERS\\{SID}\\{keyPath}\\{valueName}");
+                Program.Log?.Error(ex, $"Failed watcher registration for {fullKey}\\{valueName}");
             }
         }
 

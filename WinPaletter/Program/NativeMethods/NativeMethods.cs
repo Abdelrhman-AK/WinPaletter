@@ -111,7 +111,7 @@ namespace WinPaletter.NativeMethods
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
 
             // Determine if custom styling is applicable based on program settings and operating system
-            bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
+            bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
             int attributeValue = darkMode ? 1 : 0;
             int backdropType = OS.W10 ? 3 : 2;
             int mica = darkMode ? 2 : 4;

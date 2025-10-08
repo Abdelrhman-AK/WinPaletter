@@ -17,26 +17,15 @@ namespace WinPaletter
 
         private void TerminalsDashboard_Load(object sender, EventArgs e)
         {
+            Size = Forms.Home.card4.Size;
+            Location = Forms.Home.card4.PointToScreen(Point.Empty);
+
             this.LoadLanguage();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<CMD>();
 
-            //Size targetSize = Size;
-            //Point targetLocation = Forms.Home.card4.PointToScreen(Point.Empty) - new Size((Width - Forms.Home.card4.Width) / 2, (Height - Forms.Home.card4.Height) / 2);
-
-            Size = Forms.Home.card4.Size;
-            Location = Forms.Home.card4.PointToScreen(Point.Empty);
-
             BackColor = Color.Black;
-            this.DropEffect(Padding.Empty, true, DWM.BackdropStyles.Acrylic);
-
-            //FluentTransitions.Transition
-            //.With(this, nameof(Width), targetSize.Width)
-            //.With(this, nameof(Height), targetSize.Height)
-            //.With(this, nameof(Left), targetLocation.X)
-            //.With(this, nameof(Top), targetLocation.Y)
-            //.HookOnCompletion(() => Program.Animator.ShowSync(panel1))
-            //.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
+            this.DropEffect(Padding.Empty, true, DWM.BackdropStyles.Acrylic, true);
         }
 
         private void Button6_Click(object sender, EventArgs e)

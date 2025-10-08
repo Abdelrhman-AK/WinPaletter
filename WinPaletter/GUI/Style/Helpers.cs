@@ -18,15 +18,6 @@ namespace WinPaletter.UI.Style
     public partial class Helpers
     {
         /// <summary>
-        /// Determines whether rounded corners should be applied to the program's style.
-        /// </summary>
-        public static void SetRoundedCorners()
-        {
-            Program.Style.RoundedCorners = GetRoundedCorners();
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be with {(Program.Style.RoundedCorners ? "rounded" : "sharp")} corners");
-        }
-
-        /// <summary>
         /// Returns if rounded corners should be applied to the program's style.
         /// </summary>
         public static bool GetRoundedCorners()
@@ -94,7 +85,7 @@ namespace WinPaletter.UI.Style
                         // Attempt to determine dark mode based on settings and operating system
                         if (Program.Settings.Appearance.AutoDarkMode)
                         {
-                            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+                            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
                             {
                                 Program.Style.DarkMode = !(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0) == 1);
                             }
@@ -154,7 +145,7 @@ namespace WinPaletter.UI.Style
                 Disabled = Program.Settings.Appearance.DisabledColor;
                 Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
 
-                CustomR = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81 && !OS.W10;
+                CustomR = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
             }
             else
             {
@@ -180,7 +171,7 @@ namespace WinPaletter.UI.Style
                 TextRenderingHint = textRenderingHint
             };
 
-            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81)
+            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
             {
                 // try is used as a fallback for Windows 10 1809 and below
                 try
@@ -273,7 +264,7 @@ namespace WinPaletter.UI.Style
             if (!b)
             {
                 // This will make all control have a consistent dark\light mode.
-                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8 && !OS.W81) SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x) SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
 
                 switch (DarkMode)
                 {

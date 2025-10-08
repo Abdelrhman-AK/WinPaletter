@@ -382,114 +382,177 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Associate the WinPaletter file types with the application
+        /// Associate the WinPaletter file types with the application.
         /// </summary>
         private static void AssociateFiles()
         {
-            if (Settings.FileTypeManagement.AutoAddExt)
+            if (!Settings.FileTypeManagement.AutoAddExt) return;
+
+            if (!Directory.Exists(SysPaths.appData))
             {
-                if (!Directory.Exists(SysPaths.appData))
-                {
-                    Directory.CreateDirectory(SysPaths.appData);
-                    Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.appData}");
-                }
+                Directory.CreateDirectory(SysPaths.appData);
+                Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.appData}");
+            }
 
-                WriteIfChangedOrNotExists($"{SysPaths.appData}\\fileextension.ico", Resources.fileextension.ToBytes());
-                WriteIfChangedOrNotExists($"{SysPaths.appData}\\settingsfile.ico", Resources.settingsfile.ToBytes());
-                WriteIfChangedOrNotExists($"{SysPaths.appData}\\themerespack.ico", Resources.ThemesResIcon.ToBytes());
+            // Prepare resources once
+            var resources = new (string fileName, byte[] data)[]
+            {
+                ($"{SysPaths.appData}\\fileextension.ico", Resources.fileextension.ToBytes()),
+                ($"{SysPaths.appData}\\settingsfile.ico", Resources.settingsfile.ToBytes()),
+                ($"{SysPaths.appData}\\themerespack.ico", Resources.ThemesResIcon.ToBytes())
+            };
 
-                bool assoc0 = CreateFileAssociation(".wpth", "WinPaletter.ThemeFile", Lang.Strings.Extensions.WinPaletterTheme, $@"{SysPaths.appData}\fileextension.ico", Assembly.GetExecutingAssembly().Location);
-                bool assoc1 = CreateFileAssociation(".wpsf", "WinPaletter.SettingsFile", Lang.Strings.Extensions.WinPaletterSettings, $@"{SysPaths.appData}\settingsfile.ico", Assembly.GetExecutingAssembly().Location);
-                bool assoc2 = CreateFileAssociation(".wptp", "WinPaletter.ThemeResourcesPack", Lang.Strings.Extensions.WinPaletterResourcesPack, $@"{SysPaths.appData}\themerespack.ico", Assembly.GetExecutingAssembly().Location);
+            // Write or update icons only if needed
+            foreach (var (file, data) in resources)
+                WriteIfChangedOrNotExists(file, data);
 
-                if (!assoc0 || !assoc1 || !assoc2)
-                {
-                    // Notify Windows that File associations have changed
-                    Shell32.SHChangeNotify(Shell32.ShellConstants.SHCNE_ASSOCCHANGED, Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
-                    Log?.Write(LogEventLevel.Information, $"File associations have been updated.");
-                }
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string exeQuoted = $"\"{exePath}\"";
+
+            // Use spans and caching for faster string ops
+            var associations = new (string ext, string cls, string desc, string icon)[]
+            {
+                (".wpth", "WinPaletter.ThemeFile", Lang.Strings.Extensions.WinPaletterTheme, $"{SysPaths.appData}\\fileextension.ico"),
+                (".wpsf", "WinPaletter.SettingsFile", Lang.Strings.Extensions.WinPaletterSettings, $"{SysPaths.appData}\\settingsfile.ico"),
+                (".wptp", "WinPaletter.ThemeResourcesPack", Lang.Strings.Extensions.WinPaletterResourcesPack, $"{SysPaths.appData}\\themerespack.ico")
+            };
+
+            bool anyChanged = false;
+
+            foreach (var (ext, cls, desc, icon) in associations)
+            {
+                if (!CreateFileAssociation(ext, cls, desc, icon, exePath)) anyChanged = true;
+            }
+
+            if (anyChanged)
+            {
+                // Notify Windows that file associations changed
+                Shell32.SHChangeNotify(Shell32.ShellConstants.SHCNE_ASSOCCHANGED, Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
+                Log?.Write(LogEventLevel.Information, "File associations have been updated.");
             }
         }
 
         /// <summary>
-        /// Write the given data to the file if the file does not exist or the data is different (To avoid unnecessary writes, disk usage, and SSD wear)
+        /// Writes the specified data to a file if the file does not exist or if the file's contents differ from the
+        /// provided data.
         /// </summary>
-        /// <param name="file"></param>
-        /// <param name="data"></param>
+        /// <remarks>If the file does not exist, it will be created and the data will be written to it. 
+        /// If the file exists but its contents differ from the provided data, the file will be overwritten with the new
+        /// data. The method performs a byte-by-byte comparison to determine if the file's contents match the provided
+        /// data.</remarks>
+        /// <param name="file">The path of the file to write to. This must be a valid file path.</param>
+        /// <param name="data">The data to write to the file, represented as a byte array.</param>
         private static void WriteIfChangedOrNotExists(string file, byte[] data)
         {
             if (!File.Exists(file))
             {
                 Log?.Write(LogEventLevel.Information, $"A new file has been created: {file}");
                 File.WriteAllBytes(file, data);
+                return;
             }
-            else if (!File.ReadAllBytes(file).Equals_Method2(data))
+
+            using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                Log?.Write(LogEventLevel.Information, $"A file has been updated: {file}");
-                File.WriteAllBytes(file, data);
+                if (fs.Length != data.Length)
+                {
+                    Log?.Write(LogEventLevel.Information, $"A file has been updated: {file}");
+                    File.WriteAllBytes(file, data);
+                    return;
+                }
+
+                byte[] buffer = new byte[8192];
+                int offset = 0;
+                while (offset < data.Length)
+                {
+                    int read = fs.Read(buffer, 0, Math.Min(buffer.Length, data.Length - offset));
+                    for (int i = 0; i < read; i++)
+                    {
+                        if (buffer[i] != data[offset + i])
+                        {
+                            Log?.Write(LogEventLevel.Information, $"A file has been updated: {file}");
+                            File.WriteAllBytes(file, data);
+                            return;
+                        }
+                    }
+                    offset += read;
+                }
             }
         }
 
         /// <summary>
-        /// Extract the Luna theme from the resources to the Themes directory to be used for Windows XP preview
+        /// Extracts the Luna theme files from a ZIP archive and ensures they are written to the appropriate directory.
+        /// If the files already exist and are identical, extraction is skipped.
         /// </summary>
+        /// <remarks>This method performs the following operations: <list type="bullet">
+        /// <item><description>Ensures the theme directory exists.</description></item> <item><description>Extracts
+        /// files from the ZIP archive to the theme directory, skipping files that are unchanged.</description></item>
+        /// <item><description>Logs the creation or update of directories and files.</description></item>
+        /// <item><description>Writes a Luna.theme configuration file to the theme directory.</description></item>
+        /// </list> If an error occurs during the extraction process, the exception is logged and reported.</remarks>
         private static void ExtractLuna()
         {
             try
             {
-                if (!Directory.Exists(SysPaths.Theme_Dir_WP))
-                {
-                    Directory.CreateDirectory(SysPaths.Theme_Dir_WP);
-                    Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.Theme_Dir_WP}");
-                }
+                // Ensure the theme directory exists
+                Directory.CreateDirectory(SysPaths.Theme_Dir_WP);
 
+                // Write ZIP file only if changed
                 WriteIfChangedOrNotExists(SysPaths.Theme_ZIP_WP, Resources.luna);
 
-                using (FileStream archiveStream = new(SysPaths.Theme_ZIP_WP, FileMode.Open, FileAccess.Read))
-                using (ZipArchive zip = new(archiveStream, ZipArchiveMode.Read))
+                using (FileStream archiveStream = File.OpenRead(SysPaths.Theme_ZIP_WP))
+                using (ZipArchive zip = new(archiveStream, ZipArchiveMode.Read, false))
                 {
+                    // Use a reusable buffer to reduce allocations
+                    byte[] buffer = new byte[4096 * 32];
+
                     foreach (ZipArchiveEntry entry in zip.Entries)
                     {
                         string destinationPath = Path.Combine(SysPaths.Theme_Dir_WP, entry.FullName);
 
-                        if (entry.FullName.Contains("\\"))
+                        // Ensure directory exists
+                        string? destDir = Path.GetDirectoryName(destinationPath);
+                        if (!string.IsNullOrEmpty(destDir) && !Directory.Exists(destDir))
                         {
-                            string destDir = destinationPath.Replace($"\\{destinationPath.Split('\\').Last()}", string.Empty);
-                            if (!Directory.Exists(destDir))
-                            {
-                                Directory.CreateDirectory(destDir);
-                                Log?.Write(LogEventLevel.Information, $"A new directory has been created: {destDir}");
-                            }
+                            Directory.CreateDirectory(destDir);
+                            Log?.Write(LogEventLevel.Information, $"A new directory has been created: {destDir}");
                         }
 
-                        using (Stream entryStream = entry.Open())
-                        using (MemoryStream ms = new())
+                        // Skip extraction if file is same size and contents
+                        if (File.Exists(destinationPath))
                         {
-                            entryStream.CopyTo(ms, 4096 * 32);
-                            byte[] entryBytes = ms.ToArray();
-
-                            if (File.Exists(destinationPath))
+                            var existingInfo = new FileInfo(destinationPath);
+                            if (existingInfo.Length == entry.Length)
                             {
-                                byte[] existingBytes = File.ReadAllBytes(destinationPath);
-
-                                if (!existingBytes.Equals_Method2(entryBytes))
+                                using (var entryStream = entry.Open())
+                                using (var fs = File.OpenRead(destinationPath))
                                 {
-                                    File.WriteAllBytes(destinationPath, entryBytes);
-                                    Log?.Write(LogEventLevel.Information, $"A file has been updated: {destinationPath}");
+                                    if (fs.Equals(entryStream, buffer)) continue; // identical, skip writing
                                 }
                             }
-                            else
-                            {
-                                File.WriteAllBytes(destinationPath, entryBytes);
-                                Log?.Write(LogEventLevel.Information, $"A file has been extracted: {destinationPath}");
-                            }
                         }
-                    }
 
-                    archiveStream.Close();
+                        // Write new or changed file
+                        using (var entryStream = entry.Open())
+                        using (var fs = File.Create(destinationPath))
+                        {
+                            int bytesRead;
+                            while ((bytesRead = entryStream.Read(buffer, 0, buffer.Length)) > 0)
+                                fs.Write(buffer, 0, bytesRead);
+                        }
+
+                        Log?.Write(LogEventLevel.Information,
+                            File.Exists(destinationPath)
+                                ? $"A file has been updated: {destinationPath}"
+                                : $"A file has been extracted: {destinationPath}");
+                    }
                 }
 
-                File.WriteAllText(SysPaths.Theme_Luna_WP, $"[VisualStyles]{"\r\n"}Path={$@"{SysPaths.MSSTYLES_Luna_WP}"}{"\r\n"}ColorStyle=NormalColor{"\r\n"}Size=NormalSize");
+                // Write Luna.theme file
+                File.WriteAllText(SysPaths.Theme_Luna_WP,
+                    "[VisualStyles]\r\n" +
+                    $"Path={SysPaths.MSSTYLES_Luna_WP}\r\n" +
+                    "ColorStyle=NormalColor\r\n" +
+                    "Size=NormalSize");
             }
             catch (Exception ex)
             {
@@ -497,24 +560,24 @@ namespace WinPaletter
             }
         }
 
+        private static byte[]? cachedSound;
+
         /// <summary>
-        /// Backup the Windows Startup Sound from imageres.dll to the AppData directory
+        /// Creates a backup of the Windows startup sound if it does not already exist.
         /// </summary>
+        /// <remarks>This method checks the operating system version and skips execution on Windows XP. 
+        /// If a backup file named "WindowsStartup_Backup.wav" does not exist in the application data directory,  the
+        /// method retrieves the default Windows startup sound from system resources and writes it to the backup
+        /// file.</remarks>
         private static void BackupWindowsStartupSound()
         {
-            try
-            {
-                if (!OS.WXP && !File.Exists($@"{SysPaths.appData}\WindowsStartup_Backup.wav"))
-                {
-                    byte[] SoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
-                    File.WriteAllBytes($@"{SysPaths.appData}\WindowsStartup_Backup.wav", SoundBytes);
-                    Program.Log.Information($"Windows startup sound has been backed-up: {SysPaths.appData}\\WindowsStartup_Backup.wav");
-                }
-            }
-            catch (Exception ex)
-            {
-                Forms.BugReport.ThrowError(ex);
-            }
+            if (OS.WXP) return;
+
+            string backupPath = Path.Combine(SysPaths.appData, "WindowsStartup_Backup.wav");
+            if (File.Exists(backupPath)) return;
+
+            cachedSound ??= PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
+            File.WriteAllBytes(backupPath, cachedSound);
         }
 
         /// <summary>

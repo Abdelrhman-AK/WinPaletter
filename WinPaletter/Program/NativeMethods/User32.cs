@@ -79,6 +79,20 @@ namespace WinPaletter.NativeMethods
         public static extern bool SetSysColors(int cElements, int[] lpaElements, uint[] lpaRgbValues);
 
         /// <summary>
+        /// Retrieves the current color of a specified display element.
+        /// </summary>
+        /// <remarks>This method is a wrapper for the Windows API function in user32.dll.  The color
+        /// returned is based on the current system theme and user settings.</remarks>
+        /// <param name="nIndex">A system color index that specifies the display element whose color is to be retrieved.  For example, use 1
+        /// for the active window border or 2 for the background color.  Refer to the Windows API documentation for a
+        /// complete list of valid system color indices.</param>
+        /// <returns>The red, green, and blue (RGB) color value of the specified display element.  The value is a 32-bit integer
+        /// where the least significant byte represents the blue component,  the next byte represents the green
+        /// component, and the third byte represents the red component.</returns>
+        [DllImport("user32.dll")]
+        public static extern int GetSysColor(int nIndex);
+
+        /// <summary>
         /// Sets the window composition attribute.
         /// </summary>
         [DllImport("user32.dll")]

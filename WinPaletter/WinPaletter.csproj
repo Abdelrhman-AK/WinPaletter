@@ -428,6 +428,7 @@
     <Compile Include="Program\NativeMethods\NTDLL.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
     <Compile Include="Program\TypesExtensions\Images.cs" />
+    <Compile Include="Program\TypesExtensions\Stream.cs" />
     <Compile Include="Program\TypesExtensions\Types.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />

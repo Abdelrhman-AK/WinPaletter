@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -36,8 +37,11 @@ namespace WinPaletter.Theme
                             // Get the theme data from the registry and use @default to help WinPaletter know the default values
                             using (Manager @default = Default.Get(Program.WindowStyle))
                             {
-                                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "A request to load all Windows aspects into WinPaletter theme is made.");
-                                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"This request is targeting user: {User.Domain}\\{User.Name}");
+                                if (Program.Settings.AppLog.Enabled)
+                                {
+                                    Program.Log?.Write(LogEventLevel.Information, "A request to load all Windows aspects into WinPaletter theme is made.");
+                                    Program.Log?.Write(LogEventLevel.Information, $"This request is targeting user: {User.Domain}\\{User.Name}");
+                                }
 
                                 // Clear the exception list that has theme load exceptions
                                 Exceptions.ThemeLoad.Clear();
