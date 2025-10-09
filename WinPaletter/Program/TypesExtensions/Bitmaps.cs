@@ -113,7 +113,7 @@ namespace WinPaletter.TypesExtensions
                 int width = src.Width;
                 int height = src.Height;
 
-                using (Bitmap blurred = new Bitmap(width, height, PixelFormat.Format32bppArgb))
+                using (Bitmap blurred = new(width, height, PixelFormat.Format32bppArgb))
                 {
                     // Gaussian kernel
                     float sigma = Math.Max(0.1f, blurPower);
@@ -249,7 +249,7 @@ namespace WinPaletter.TypesExtensions
             // Clone the original bitmap to avoid locking issues
             using (Bitmap source = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), PixelFormat.Format32bppArgb))
             {
-                Bitmap result = new Bitmap(source.Width, source.Height, source.PixelFormat);
+                Bitmap result = new(source.Width, source.Height, source.PixelFormat);
                 result.SetResolution(source.HorizontalResolution, source.VerticalResolution);
 
                 using (Graphics g = Graphics.FromImage(result))
@@ -318,7 +318,7 @@ namespace WinPaletter.TypesExtensions
             {
                 int w = src.Width;
                 int h = src.Height;
-                Bitmap dest = new Bitmap(w, h, PixelFormat.Format32bppArgb);
+                Bitmap dest = new(w, h, PixelFormat.Format32bppArgb);
 
                 BitmapData srcData = null, dstData = null;
                 try
@@ -453,14 +453,14 @@ namespace WinPaletter.TypesExtensions
                 decimal scaleH = (decimal)targetSize.Height / src.Height;
                 decimal scale = Math.Max(scaleW, scaleH);
 
-                int destWidth = (int)Math.Round(src.Width * scale);
-                int destHeight = (int)Math.Round(src.Height * scale);
+                int destWidth = (int)(src.Width * scale);
+                int destHeight = (int)(src.Height * scale);
 
                 // Center position
                 int offsetX = (targetSize.Width - destWidth) / 2;
                 int offsetY = (targetSize.Height - destHeight) / 2;
 
-                Bitmap result = new Bitmap(targetSize.Width, targetSize.Height, PixelFormat.Format32bppArgb);
+                Bitmap result = new(targetSize.Width, targetSize.Height, PixelFormat.Format32bppArgb);
                 result.SetResolution(src.HorizontalResolution, src.VerticalResolution);
 
                 using (Graphics g = Graphics.FromImage(result))
@@ -566,9 +566,9 @@ namespace WinPaletter.TypesExtensions
                             int idx = x * 4;
 
                             // Multiply R, G, B and round, clamp to 255
-                            dstRow[idx] = (byte)Math.Min(255, Math.Round(srcRow[idx] * bMul)); // B
-                            dstRow[idx + 1] = (byte)Math.Min(255, Math.Round(srcRow[idx + 1] * gMul)); // G
-                            dstRow[idx + 2] = (byte)Math.Min(255, Math.Round(srcRow[idx + 2] * rMul)); // R
+                            dstRow[idx] = (byte)Math.Min(255, srcRow[idx] * bMul); // B
+                            dstRow[idx + 1] = (byte)Math.Min(255, srcRow[idx + 1] * gMul); // G
+                            dstRow[idx + 2] = (byte)Math.Min(255, srcRow[idx + 2] * rMul); // R
 
                             // Preserve original alpha to keep anti-aliased edges
                             dstRow[idx + 3] = srcRow[idx + 3];
@@ -613,7 +613,7 @@ namespace WinPaletter.TypesExtensions
             }
 
             // Convert opacity to 8.8 fixed-point to avoid per-pixel float multiply.
-            int opQ = Math.Min(255, Math.Max(1, (int)Math.Round(opacity * 256.0)));
+            int opQ = Math.Min(255, Math.Max(1, (int)(opacity * 256f)));
 
             // Always clone the source to avoid locking a bitmap in use elsewhere
             Bitmap src32 = source.PixelFormat == PixelFormat.Format32bppArgb
@@ -629,8 +629,8 @@ namespace WinPaletter.TypesExtensions
                 }
             }
 
-            Bitmap dest = new Bitmap(src32.Width, src32.Height, PixelFormat.Format32bppArgb);
-            Rectangle rect = new Rectangle(0, 0, src32.Width, src32.Height);
+            Bitmap dest = new(src32.Width, src32.Height, PixelFormat.Format32bppArgb);
+            Rectangle rect = new(0, 0, src32.Width, src32.Height);
 
             BitmapData srcData = null, dstData = null;
 
@@ -708,9 +708,9 @@ namespace WinPaletter.TypesExtensions
                 }
             }
 
-            Bitmap newBitmap = new Bitmap(src32.Width, src32.Height, PixelFormat.Format32bppArgb);
+            Bitmap newBitmap = new(src32.Width, src32.Height, PixelFormat.Format32bppArgb);
 
-            Rectangle rect = new Rectangle(0, 0, src32.Width, src32.Height);
+            Rectangle rect = new(0, 0, src32.Width, src32.Height);
             BitmapData srcData = null, dstData = null;
 
             try
@@ -791,7 +791,7 @@ namespace WinPaletter.TypesExtensions
                 }
             }
 
-            Rectangle rect = new Rectangle(0, 0, clone.Width, clone.Height);
+            Rectangle rect = new(0, 0, clone.Width, clone.Height);
             BitmapData data = null;
 
             try
@@ -852,7 +852,7 @@ namespace WinPaletter.TypesExtensions
                 ? source
                 : source.Clone(new Rectangle(0, 0, srcWidth, srcHeight), PixelFormat.Format32bppArgb);
 
-            Bitmap dest = new Bitmap(destWidth, destHeight, PixelFormat.Format32bppArgb);
+            Bitmap dest = new(destWidth, destHeight, PixelFormat.Format32bppArgb);
 
             BitmapData srcData = null;
             BitmapData destData = null;
@@ -939,8 +939,8 @@ namespace WinPaletter.TypesExtensions
         {
             if (bmp == null) throw new ArgumentNullException(nameof(bmp));
 
-            Bitmap result = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
-            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            Bitmap result = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+            Rectangle rect = new(0, 0, bmp.Width, bmp.Height);
 
             BitmapData srcData = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             BitmapData dstData = result.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
@@ -1021,7 +1021,7 @@ namespace WinPaletter.TypesExtensions
         {
             if (bmp == null) throw new ArgumentNullException(nameof(bmp));
 
-            Bitmap result = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+            Bitmap result = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
 
             BitmapData srcData = bmp.LockBits(
                 new Rectangle(0, 0, bmp.Width, bmp.Height),
@@ -1082,7 +1082,7 @@ namespace WinPaletter.TypesExtensions
         {
             if (bmp == null) throw new ArgumentNullException(nameof(bmp));
 
-            Bitmap result = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+            Bitmap result = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
 
             BitmapData srcData = bmp.LockBits(
                 new Rectangle(0, 0, bmp.Width, bmp.Height),
@@ -1138,7 +1138,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="width">The desired width of the resized bitmap, in pixels. Must be greater than 0.</param>
         /// <param name="height">The desired height of the resized bitmap, in pixels. Must be greater than 0.</param>
         /// <returns>A new <see cref="Bitmap"/> instance with the specified dimensions.</returns>
-        public static Bitmap Resize(this Bitmap bitmap, Size size) => Resize(bitmap, size.Width, size.Height);
+        public static Bitmap Resize(this Bitmap bitmap, Size size)
+        {
+            return Resize(bitmap, size.Width, size.Height);
+        }
 
         /// <summary>
         /// Resizes the specified bitmap to the given dimensions, maintaining the aspect ratio by filling in the remaining
@@ -1149,7 +1152,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="height">The target height of the resized bitmap, in pixels. Must be greater than 0.</param>
         /// <returns>A new <see cref="Bitmap"/> resized to the specified dimensions, with the original content scaled and centered to
         /// fit.</returns>
-        public static Bitmap FillInSize(this Bitmap bitmap, int width, int height) => FillInSize(bitmap, new Size(width, height));
+        public static Bitmap FillInSize(this Bitmap bitmap, int width, int height)
+        {
+            return FillInSize(bitmap, new Size(width, height));
+        }
 
         /// <summary>
         /// Creates a tiled version of the specified bitmap with the given dimensions.
@@ -1158,7 +1164,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="width">The width of the resulting tiled image, in pixels. Must be greater than 0.</param>
         /// <param name="height">The height of the resulting tiled image, in pixels. Must be greater than 0.</param>
         /// <returns>A new <see cref="Bitmap"/> containing the tiled version of the source image.</returns>
-        public static Bitmap Tile(this Bitmap bitmap, int width, int height) => Tile(bitmap, new Size(width, height));
+        public static Bitmap Tile(this Bitmap bitmap, int width, int height)
+        {
+            return Tile(bitmap, new Size(width, height));
+        }
 
         /// <summary>
         /// Extracts a palette of dominant colors from the specified bitmap image.
@@ -1191,7 +1200,7 @@ namespace WinPaletter.TypesExtensions
             if (colorCount < 1) throw new ArgumentOutOfRangeException(nameof(colorCount));
             if (colorQuality < 1) colorQuality = 1;
 
-            using (Bitmap clone = new Bitmap(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb))
+            using (Bitmap clone = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb))
             {
                 using (Graphics g = Graphics.FromImage(clone))
                     g.DrawImage(bmp, new Rectangle(0, 0, clone.Width, clone.Height));
@@ -1204,7 +1213,7 @@ namespace WinPaletter.TypesExtensions
                 int width = data.Width;
                 int height = data.Height;
                 int stride = data.Stride;
-                List<Color> pixels = new List<Color>(width * height / (colorQuality * colorQuality));
+                List<Color> pixels = new(width * height / (colorQuality * colorQuality));
 
                 unsafe
                 {
@@ -1214,7 +1223,7 @@ namespace WinPaletter.TypesExtensions
                     {
                         if (y % colorQuality != 0) return;
 
-                        List<Color> localPixels = new List<Color>();
+                        List<Color> localPixels = new();
 
                         for (int x = 0; x < width; x += colorQuality)
                         {
@@ -1251,11 +1260,11 @@ namespace WinPaletter.TypesExtensions
                 foreach (var pixel in pixels)
                 {
                     int nearestIndex = 0;
-                    double nearestDistance = double.MaxValue;
+                    float nearestDistance = float.MaxValue;
 
                     for (int i = 0; i < centroids.Count; i++)
                     {
-                        double distance = ColorDistance(pixel, centroids[i]);
+                        float distance = ColorDistance(pixel, centroids[i]);
                         if (distance < nearestDistance)
                         {
                             nearestDistance = distance;
@@ -1287,7 +1296,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns>A list of <see cref="Color"/> objects representing the identified centroids.</returns>
         private static List<Color> LockFreeKMeans(List<Color> pixels, int colorCount, int maxIterations)
         {
-            Random rnd = new Random();
+            Random rnd = new();
             List<Color> centroids = pixels.OrderBy(p => rnd.Next()).Take(colorCount).ToList();
             bool changed = true;
             int iteration = 0;
@@ -1308,11 +1317,11 @@ namespace WinPaletter.TypesExtensions
                 Parallel.ForEach(pixels, pixel =>
                 {
                     int nearestIndex = 0;
-                    double nearestDistance = double.MaxValue;
+                    float nearestDistance = float.MaxValue;
 
                     for (int i = 0; i < centroids.Count; i++)
                     {
-                        double distance = ColorDistance(pixel, centroids[i]);
+                        float distance = ColorDistance(pixel, centroids[i]);
                         if (distance < nearestDistance)
                         {
                             nearestDistance = distance;
@@ -1360,7 +1369,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="c1">The first color to compare.</param>
         /// <param name="c2">The second color to compare.</param>
         /// <returns>The squared distance between the two colors. A smaller value indicates greater similarity.</returns>
-        private static double ColorDistance(Color c1, Color c2)
+        private static float ColorDistance(Color c1, Color c2)
         {
             int rDiff = c1.R - c2.R;
             int gDiff = c1.G - c2.G;

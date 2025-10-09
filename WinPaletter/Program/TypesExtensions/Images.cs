@@ -16,7 +16,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="original">The original <see cref="Bitmap"/> to be converted. Must not be <see langword="null"/>.</param>
         /// <returns>A new <see cref="Bitmap"/> instance representing the grayscale version of the original image. Returns <see
         /// langword="null"/> if the <paramref name="original"/> is <see langword="null"/>.</returns>
-        public static Bitmap Grayscale(this Image image) => image is Bitmap bitmap ? bitmap.Grayscale() : null;
+        public static Bitmap Grayscale(this Image image)
+        {
+            return image is Bitmap bitmap ? bitmap.Grayscale() : null;
+        }
 
         /// <summary>
         /// Applies a noise effect to the specified <see cref="Bitmap"/> based on the given noise mode and opacity.
@@ -31,7 +34,10 @@ namespace WinPaletter.TypesExtensions
         /// (completely opaque).</param>
         /// <returns>A new <see cref="Bitmap"/> instance with the applied noise effect, or <see langword="null"/> if the input
         /// <paramref name="bitmap"/> is <see langword="null"/>.</returns>
-        public static Bitmap Noise(this Image image, NoiseMode noiseMode, float opacity) => image is Bitmap bitmap ? bitmap.Noise(noiseMode, opacity) : null;
+        public static Bitmap Noise(this Image image, NoiseMode noiseMode, float opacity)
+        {
+            return image is Bitmap bitmap ? bitmap.Noise(noiseMode, opacity) : null;
+        }
 
         /// <summary>
         /// Creates a new <see cref="Bitmap"/> where the colors of the source image are inverted.
@@ -42,7 +48,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="source">The source <see cref="Bitmap"/> to invert. Must not be null.</param>
         /// <returns>A new <see cref="Bitmap"/> with inverted colors, or <see langword="null"/> if <paramref name="source"/> is
         /// <see langword="null"/>.</returns>
-        public static Bitmap Invert(this Image image) => image is Bitmap bitmap ? bitmap.Invert() : null;
+        public static Bitmap Invert(this Image image)
+        {
+            return image is Bitmap bitmap ? bitmap.Invert() : null;
+        }
 
         /// <summary>
         /// Creates a tiled version of the source bitmap that fills the specified target size.
@@ -54,7 +63,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="targetSize">The dimensions of the resulting tiled bitmap.</param>
         /// <returns>A new <see cref="Bitmap"/> of the specified size, filled by repeating the source bitmap. Returns <see
         /// langword="null"/> if <paramref name="source"/> is <see langword="null"/>.</returns>
-        public static Bitmap Tile(this Image image, Size targetSize) => image is Bitmap bitmap ? bitmap.Tile(targetSize) : null;
+        public static Bitmap Tile(this Image image, Size targetSize)
+        {
+            return image is Bitmap bitmap ? bitmap.Tile(targetSize) : null;
+        }
 
         /// <summary>
         /// Adjusts the brightness of the specified bitmap and returns a new bitmap with the applied adjustment.
@@ -67,7 +79,10 @@ namespace WinPaletter.TypesExtensions
         /// brightness,  while negative values decrease it. The value is clamped to the range [-1, 1].</param>
         /// <returns>A new <see cref="Bitmap"/> with the brightness adjustment applied. The original bitmap remains unchanged.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="bmp"/> is <see langword="null"/>.</exception>
-        public static Bitmap Brighten(this Image image, float brightness = 0f) => image is Bitmap bitmap ? bitmap.Brighten(brightness) : null;
+        public static Bitmap Brighten(this Image image, float brightness = 0f)
+        {
+            return image is Bitmap bitmap ? bitmap.Brighten(brightness) : null;
+        }
 
         /// <summary>
         /// Adjusts the contrast of the specified <see cref="Bitmap"/> image.
@@ -80,7 +95,10 @@ namespace WinPaletter.TypesExtensions
         /// contrast, and negative values decrease contrast. The value is relative and does not have a fixed range.</param>
         /// <returns>A new <see cref="Bitmap"/> with the adjusted contrast. The original <paramref name="bmp"/> is not modified.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="bmp"/> is <see langword="null"/>.</exception>
-        public static Bitmap Contrast(this Image image, float contrast = 0f) => image is Bitmap bitmap ? bitmap.Contrast(contrast) : null;
+        public static Bitmap Contrast(this Image image, float contrast = 0f)
+        {
+            return image is Bitmap bitmap ? bitmap.Contrast(contrast) : null;
+        }
 
         /// <summary>
         /// Applies a tint to the specified bitmap using the provided color.
@@ -94,7 +112,10 @@ namespace WinPaletter.TypesExtensions
         /// as multipliers for the corresponding components of each pixel in the bitmap.</param>
         /// <returns>A new <see cref="Bitmap"/> instance with the tint applied. Returns <see langword="null"/> if <paramref
         /// name="originalBitmap"/> is <see langword="null"/>.</returns>
-        public static Bitmap Tint(this Image image, Color color) => image is Bitmap bitmap ? bitmap.Tint(color) : null;
+        public static Bitmap Tint(this Image image, Color color)
+        {
+            return image is Bitmap bitmap ? bitmap.Tint(color) : null;
+        }
 
         /// <summary>
         /// Fast opacity fade using unsafe LockBits (returns a new bitmap).
@@ -105,7 +126,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="source">Input bitmap (not modified)</param>
         /// <param name="opacity">0..1</param>
         /// <param name="useParallel">Parallelize across rows for large images</param>
-        public static Bitmap Fade(this Image image, float opacity = 0.5f) => image is Bitmap bitmap ? bitmap.Fade(opacity) : null;
+        public static Bitmap Fade(this Image image, float opacity = 0.5f)
+        {
+            return image is Bitmap bitmap ? bitmap.Fade(opacity) : null;
+        }
 
         /// <summary>
         /// Applies a Gaussian blur effect to the specified bitmap image, with cancellation support.
@@ -122,7 +146,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="cancellationToken">The token that can be used to request cancellation of the operation.</param>
         /// <returns>A new <see cref="Bitmap"/> instance with the Gaussian blur applied. Returns <see langword="null"/> if the input <paramref name="bitmap"/> is <see langword="null"/> or has zero width or height.</returns>
         /// <exception cref="OperationCanceledException">Thrown if the operation is canceled via <paramref name="cancellationToken"/>.</exception>
-        public static Bitmap Blur(this Image image, float radius = 1f) => image is Bitmap bitmap ? bitmap.Blur(radius) : null;
+        public static Bitmap Blur(this Image image, float radius = 1f)
+        {
+            return image is Bitmap bitmap ? bitmap.Blur(radius) : null;
+        }
 
         /// <summary>
         /// Calculates the average color of the pixels in the specified bitmap.
@@ -137,7 +164,10 @@ namespace WinPaletter.TypesExtensions
         /// <returns>A <see cref="Color"/> representing the average color of the sampled pixels in the bitmap. Returns <see
         /// cref="Color.Empty"/> if the bitmap is null, has zero width or height, or if an error occurs during
         /// processing.</returns>
-        public static Color AverageColor(this Image image, int step = 1) => image is Bitmap bitmap ? bitmap.AverageColor(step) : Color.Empty;
+        public static Color AverageColor(this Image image, int step = 1)
+        {
+            return image is Bitmap bitmap ? bitmap.AverageColor(step) : Color.Empty;
+        }
 
         /// <summary>
         /// Resizes the specified image to the given width and height.
@@ -147,7 +177,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="height">The desired height of the resized image, in pixels. Must be greater than 0.</param>
         /// <returns>A <see cref="Bitmap"/> object representing the resized image if the source image is a <see cref="Bitmap"/>; 
         /// otherwise, <see langword="null"/>.</returns>
-        public static Bitmap Resize(this Image image, int width, int height) => image is Bitmap bitmap ? BitmapExtensions.Resize(bitmap, width, height) : null;
+        public static Bitmap Resize(this Image image, int width, int height)
+        {
+            return image is Bitmap bitmap ? BitmapExtensions.Resize(bitmap, width, height) : null;
+        }
 
         /// <summary>
         /// Resizes the specified image to fill the target size while maintaining the aspect ratio.
@@ -158,7 +191,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="targetSize">The desired dimensions for the output image.</param>
         /// <returns>A <see cref="Bitmap"/> that fills the target size while preserving the aspect ratio of the original image,
         /// or <see langword="null"/> if the input image is not a <see cref="Bitmap"/>.</returns>
-        public static Bitmap FillInSize(this Image image, Size targetSize) => image is Bitmap bitmap ? BitmapExtensions.FillInSize(bitmap, targetSize) : null;
+        public static Bitmap FillInSize(this Image image, Size targetSize)
+        {
+            return image is Bitmap bitmap ? BitmapExtensions.FillInSize(bitmap, targetSize) : null;
+        }
 
         /// <summary>
         /// Resizes the image to fit the specified dimensions while maintaining its aspect ratio.
@@ -171,7 +207,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="height">The target height of the resized image, in pixels.</param>
         /// <returns>A <see cref="Bitmap"/> object representing the resized image with the specified dimensions,  or <see
         /// langword="null"/> if the source image is not a <see cref="Bitmap"/>.</returns>
-        public static Bitmap FillInSize(this Image image, int width, int height) => image is Bitmap bitmap ? BitmapExtensions.FillInSize(bitmap, new Size(width, height)) : null;
+        public static Bitmap FillInSize(this Image image, int width, int height)
+        {
+            return image is Bitmap bitmap ? BitmapExtensions.FillInSize(bitmap, new Size(width, height)) : null;
+        }
 
         /// <summary>
         /// Replaces all occurrences of a specified color in the image with a new color.
@@ -184,7 +223,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="newColor">The color to replace <paramref name="oldColor"/> with.</param>
         /// <returns>A new <see cref="Bitmap"/> with the specified color replaced, or <see langword="null"/> if the input image
         /// is not a <see cref="Bitmap"/>.</returns>
-        public static Bitmap ReplaceColor(this Image image, Color oldColor, Color newColor) => image is Bitmap bitmap ? BitmapExtensions.ReplaceColor(bitmap, oldColor, newColor) : null;
+        public static Bitmap ReplaceColor(this Image image, Color oldColor, Color newColor)
+        {
+            return image is Bitmap bitmap ? BitmapExtensions.ReplaceColor(bitmap, oldColor, newColor) : null;
+        }
 
         /// <summary>
         /// Creates a tiled bitmap by repeating the specified image to fill the given dimensions.
@@ -196,7 +238,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="height">The height of the resulting tiled bitmap, in pixels. Must be greater than 0.</param>
         /// <returns>A <see cref="Bitmap"/> containing the tiled image with the specified dimensions,  or <see langword="null"/>
         /// if the input <paramref name="image"/> is not a <see cref="Bitmap"/>.</returns>
-        public static Bitmap Tile(this Image image, int width, int height) => image is Bitmap bitmap ? BitmapExtensions.Tile(bitmap, new Size(width, height)) : null;
+        public static Bitmap Tile(this Image image, int width, int height)
+        {
+            return image is Bitmap bitmap ? BitmapExtensions.Tile(bitmap, new Size(width, height)) : null;
+        }
 
         /// <summary>
         /// Extracts a palette of dominant colors from the specified image.
@@ -214,7 +259,9 @@ namespace WinPaletter.TypesExtensions
         /// <returns>A list of <see cref="Color"/> objects representing the extracted color palette. The list may contain fewer
         /// than <paramref name="colorCount"/> colors if the image has limited color diversity.</returns>
         public static List<Color> ToPalette(this Image image, int colorCount = 10, int colorQuality = 10, bool ignoreWhiteColors = true, byte whiteThreshold = 240, bool sortByDominance = true)
-            => image is Bitmap bitmap ? BitmapExtensions.ToPalette(bitmap, colorCount, colorQuality, ignoreWhiteColors, whiteThreshold, sortByDominance) : [];
+        {
+            return image is Bitmap bitmap ? BitmapExtensions.ToPalette(bitmap, colorCount, colorQuality, ignoreWhiteColors, whiteThreshold, sortByDominance) : [];
+        }
     }
 
 }

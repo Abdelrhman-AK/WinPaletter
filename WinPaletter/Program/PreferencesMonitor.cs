@@ -273,8 +273,8 @@ namespace WinPaletter
         /// <returns></returns>
         private static Bitmap ApplyStyleToWallpaper(Bitmap wallpaper, Size targetSize, Wallpaper.WallpaperStyles wallpaperStyle)
         {
-            double scaleW = 1;
-            double scaleH = 1;
+            float scaleW = 1;
+            float scaleH = 1;
 
             // Rescale the wallpaper according to the screen size
             if (wallpaper.Width > Screen.PrimaryScreen.Bounds.Size.Width || wallpaper.Height > Screen.PrimaryScreen.Bounds.Size.Height)
@@ -284,7 +284,7 @@ namespace WinPaletter
             }
 
             // Resize the wallpaper according to the scale and preview area siz
-            wallpaper = wallpaper.Resize((int)Math.Round(wallpaper.Width / scaleW), (int)Math.Round(wallpaper.Height / scaleH));
+            wallpaper = wallpaper.Resize((int)(wallpaper.Width / scaleW), (int)(wallpaper.Height / scaleH));
 
             if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
 

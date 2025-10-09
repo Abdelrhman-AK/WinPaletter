@@ -17,9 +17,9 @@ namespace libmsstyle
 
         public static Signature ReadSignature(FileStream fs)
         {
-            using (BinaryReader br = new BinaryReader(fs, Encoding.UTF8, true))
+            using (BinaryReader br = new(fs, Encoding.UTF8, true))
             {
-                Signature sig = new Signature();
+                Signature sig = new();
 
                 long size = fs.Length;
                 fs.Seek(size - HEADER_SIZE, SeekOrigin.Begin);
@@ -46,7 +46,7 @@ namespace libmsstyle
         public static bool AppendSignature(string file, byte[] signature)
         {
             using (FileStream fs = File.Open(file, FileMode.Open))
-            using (BinaryWriter bw = new BinaryWriter(fs))
+            using (BinaryWriter bw = new(fs))
             {
                 Signature sig = ReadSignature(fs);
                 int offset = sig == null ? 0 : -(int)sig.sigSize;

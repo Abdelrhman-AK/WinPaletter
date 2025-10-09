@@ -95,10 +95,7 @@ namespace WinPaletter.UI.Retro
         private TextBox TB
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
-            get
-            {
-                return _TB;
-            }
+            get => _TB;
 
             [MethodImpl(MethodImplOptions.Synchronized)]
             set
@@ -136,10 +133,7 @@ namespace WinPaletter.UI.Retro
         [Category("Options")]
         public HorizontalAlignment TextAlign
         {
-            get
-            {
-                return _TextAlign;
-            }
+            get => _TextAlign;
             set
             {
                 _TextAlign = value;
@@ -158,10 +152,7 @@ namespace WinPaletter.UI.Retro
         [Category("Options")]
         public int MaxLength
         {
-            get
-            {
-                return _MaxLength;
-            }
+            get => _MaxLength;
             set
             {
                 _MaxLength = value;
@@ -180,10 +171,7 @@ namespace WinPaletter.UI.Retro
         [Category("Options")]
         public bool ReadOnly
         {
-            get
-            {
-                return _ReadOnly;
-            }
+            get => _ReadOnly;
             set
             {
                 _ReadOnly = value;
@@ -202,10 +190,7 @@ namespace WinPaletter.UI.Retro
         [Category("Options")]
         public bool UseSystemPasswordChar
         {
-            get
-            {
-                return _UseSystemPasswordChar;
-            }
+            get => _UseSystemPasswordChar;
             set
             {
                 _UseSystemPasswordChar = value;
@@ -224,10 +209,7 @@ namespace WinPaletter.UI.Retro
         [Category("Options")]
         public bool Multiline
         {
-            get
-            {
-                return _Multiline;
-            }
+            get => _Multiline;
             set
             {
                 _Multiline = value;
@@ -255,10 +237,7 @@ namespace WinPaletter.UI.Retro
         [Category("Options")]
         public override string Text
         {
-            get
-            {
-                return base.Text;
-            }
+            get => base.Text;
             set
             {
                 base.Text = value;
@@ -275,10 +254,7 @@ namespace WinPaletter.UI.Retro
         [Category("Options")]
         public override Font Font
         {
-            get
-            {
-                return base.Font;
-            }
+            get => base.Font;
             set
             {
                 base.Font = value;
@@ -307,7 +283,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonShadow
         {
-            get { return buttonShadow; }
+            get => buttonShadow;
             set
             {
                 if (buttonShadow != value)
@@ -323,7 +299,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonDkShadow
         {
-            get { return buttonDkShadow; }
+            get => buttonDkShadow;
             set
             {
                 if (buttonDkShadow != value)
@@ -339,7 +315,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get { return buttonHilight; }
+            get => buttonHilight;
             set
             {
                 if (buttonHilight != value)
@@ -355,7 +331,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonLight
         {
-            get { return buttonLight; }
+            get => buttonLight;
             set
             {
                 if (buttonLight != value)

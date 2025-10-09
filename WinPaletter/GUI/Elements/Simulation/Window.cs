@@ -51,15 +51,15 @@ namespace WinPaletter.UI.Simulation
         }
 
         readonly int GripSize = 6;
-        Rectangle editingRect;
-        Rectangle Grip_topLeft;
-        Rectangle Grip_topRight;
-        Rectangle Grip_bottomLeft;
-        Rectangle Grip_bottomRight;
-        Rectangle Grip_topCenter;
-        Rectangle Grip_bottomCenter;
-        Rectangle Grip_leftCenter;
-        Rectangle Grip_rightCenter;
+        RectangleF editingRect;
+        RectangleF Grip_topLeft;
+        RectangleF Grip_topRight;
+        RectangleF Grip_bottomLeft;
+        RectangleF Grip_bottomRight;
+        RectangleF Grip_topCenter;
+        RectangleF Grip_bottomCenter;
+        RectangleF Grip_leftCenter;
+        RectangleF Grip_rightCenter;
 
         bool isMoving_Grip_topCenter = false;
         bool isMoving_Grip_padding_left = false;
@@ -427,8 +427,8 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnFontChanged(EventArgs e)
         {
-            Title_x_Height = (int)Math.Round(TitleScheme.Measure(Font).Height);
-            Title_9_Height = (int)Math.Round(TitleScheme.Measure(new Font(Font.Name, 9f, Font.Style)).Height);
+            Title_x_Height = TitleScheme.Measure(Font).Height;
+            Title_9_Height = TitleScheme.Measure(new Font(Font.Name, 9f, Font.Style)).Height;
 
             AdjustPadding();
 
@@ -501,7 +501,7 @@ namespace WinPaletter.UI.Simulation
 
         public void AdjustPadding()
         {
-            Padding = new(ClientRect.Left + 1, ClientRect.Top + 1, ClientRect.Left + 1, ClientRect.Left + 1);
+            Padding = new((int)(ClientRect.Left + 1f), (int)(ClientRect.Top + 1f), (int)(ClientRect.Left + 1f), (int)(ClientRect.Left + 1f));
 
             editingRect = new(Padding.Left, Padding.Top, Width - Padding.Left * 2 - 1, Height - Padding.Bottom - Padding.Top - 1);
 
@@ -515,7 +515,7 @@ namespace WinPaletter.UI.Simulation
             Grip_rightCenter = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
         }
 
-        public void FillSemiRect(Graphics G, Brush Brush, Rectangle Rectangle, int Radius = -1)
+        public void FillSemiRect(Graphics G, Brush Brush, RectangleF Rectangle, int Radius = -1)
         {
             if (Radius == -1) Radius = 6;
 
@@ -529,20 +529,20 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        public GraphicsPath RoundedSemiRectangle(Rectangle r, int radius)
+        public GraphicsPath RoundedSemiRectangle(RectangleF r, int radius)
         {
             GraphicsPath path = new();
-            int d = radius * 2;
+            float d = radius * 2;
 
             path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
-            path.AddArc(Rectangle.FromLTRB(r.Right - d, r.Top, r.Right, r.Top + d), -90, 90f);
+            path.AddArc(Rectangle.FromLTRB((int)(r.Right - d), (int)r.Top, (int)r.Right, (int)(r.Top + d)), -90, 90f);
 
             path.AddLine(r.Right, r.Top, r.Right, r.Bottom);
 
             path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom);
 
             path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d);
-            path.AddArc(Rectangle.FromLTRB(r.Left, r.Top, r.Left + d, r.Top + d), 180f, 90f);
+            path.AddArc(Rectangle.FromLTRB((int)r.Left, (int)r.Top, (int)(r.Left + d), (int)(r.Top + d)), 180f, 90f);
 
             path.CloseFigure();
             return path;
@@ -553,7 +553,7 @@ namespace WinPaletter.UI.Simulation
         #region Geometry/Design
         private string TitleScheme => "ABCabc0123xYz.#";
 
-        private int Title_x_Height, Title_9_Height;
+        private float Title_x_Height, Title_9_Height;
         private int SideSize
         {
             get
@@ -575,31 +575,31 @@ namespace WinPaletter.UI.Simulation
             }
         }
         private int IconSize => _Metrics_CaptionHeight <= 17 ? 12 : 14;
-        private int TitleHeight => Math.Max(0, Title_x_Height - Title_9_Height - 5);
-        private int CloseBtn_W => TitleHeight + _Metrics_CaptionHeight - 4;
+        private float TitleHeight => Math.Max(0, Title_x_Height - Title_9_Height - 5);
+        private float CloseBtn_W => TitleHeight + _Metrics_CaptionHeight - 4;
 
-        private Rectangle CloseButtonRect;
-        private Rectangle RectAll => new(0, 0, Width - 1, Height - 1);
-        private Rectangle Rect => new(RectAll.X + FreeMargin, RectAll.Y + FreeMargin, RectAll.Width - (FreeMargin * 2), RectAll.Height - (FreeMargin * 2));
-        private Rectangle RectBorder => new(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
-        private Rectangle TitlebarRect => new(Rect.X, Rect.Y, Rect.Width, TitleHeight + _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3);
-        private Rectangle IconRect
+        private RectangleF CloseButtonRect;
+        private RectangleF RectAll => new(0, 0, Width - 1, Height - 1);
+        private RectangleF Rect => new(RectAll.X + FreeMargin, RectAll.Y + FreeMargin, RectAll.Width - (FreeMargin * 2), RectAll.Height - (FreeMargin * 2));
+        private RectangleF RectBorder => new(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
+        private RectangleF TitlebarRect => new(Rect.X, Rect.Y, Rect.Width, TitleHeight + _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3);
+        private RectangleF IconRect
         {
             get
             {
                 if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W10Lite)
                 {
-                    return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, (int)Math.Round(Rect.Y + (TitlebarRect.Height - IconSize) / 2d), IconSize, IconSize);
+                    return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2f, IconSize, IconSize);
                 }
 
                 else if (Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite)
                 {
-                    return new(TitlebarRect.X + 6 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, (int)Math.Round(Rect.Y + (TitlebarRect.Height - IconSize) / 2d), IconSize, IconSize);
+                    return new(TitlebarRect.X + 6 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2f, IconSize, IconSize);
                 }
 
                 else if (Preview == Preview_Enum.W7Basic)
                 {
-                    return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, (int)Math.Round(CloseButtonRect.Y + (CloseButtonRect.Height - IconSize) / 2d), IconSize, IconSize);
+                    return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, CloseButtonRect.Y + (CloseButtonRect.Height - IconSize) / 2f, IconSize, IconSize);
                 }
 
                 else if (Preview == Preview_Enum.WXP)
@@ -609,15 +609,15 @@ namespace WinPaletter.UI.Simulation
 
                 else
                 {
-                    return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, (int)Math.Round(Rect.Y + (TitlebarRect.Height - IconSize) / 2d), IconSize, IconSize);
+                    return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2f, IconSize, IconSize);
                 }
             }
         }
-        private Rectangle LabelRect
+        private RectangleF LabelRect
         {
             get
             {
-                Rectangle resultRect;
+                RectangleF resultRect;
 
                 if (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite)
                 {
@@ -625,35 +625,35 @@ namespace WinPaletter.UI.Simulation
                 }
                 else if (Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque)
                 {
-                    int offsetX = !ToolWindow ? IconRect.Right + 2 : IconRect.X - 2;
+                    float offsetX = !ToolWindow ? IconRect.Right + 2 : IconRect.X - 2;
                     resultRect = new(offsetX, TitlebarRect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height);
                 }
                 else if (Preview == Preview_Enum.W7Basic)
                 {
-                    int offsetX = !ToolWindow ? IconRect.Right + 3 : IconRect.X;
+                    float offsetX = !ToolWindow ? IconRect.Right + 3 : IconRect.X;
                     resultRect = new(offsetX, CloseButtonRect.Y, TitlebarRect.Width - (IconRect.Right + 4), CloseButtonRect.Height);
                 }
                 else if (Preview == Preview_Enum.WXP)
                 {
-                    int offsetX = Rect.X + SideSize + (ToolWindow ? 3 : 21);
+                    float offsetX = Rect.X + SideSize + (ToolWindow ? 3 : 21);
                     resultRect = new(offsetX, TitlebarRect.Bottom - 2 - CloseBtn_W, Rect.Width - CloseBtn_W - SideSize * 2, CloseBtn_W);
                 }
                 else
                 {
-                    int offsetX = !ToolWindow ? IconRect.Right + 4 : IconRect.X;
+                    float offsetX = !ToolWindow ? IconRect.Right + 4 : IconRect.X;
                     resultRect = new(offsetX, TitlebarRect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height);
                 }
 
                 return resultRect;
             }
         }
-        private Rectangle ClientRect => new(Rect.X + SideSize + 1, Rect.Y + TitlebarRect.Height + 1, Rect.Width - SideSize * 2 - 2, Rect.Height - (SideSize + TitlebarRect.Height) - 2);
-        private Rectangle ClientBorderRect => new(ClientRect.X - 1, ClientRect.Y - 1, ClientRect.Width + 2, ClientRect.Height + 2);
-        private Rectangle GlassSide1 => new(Rect.X + 1, ClientBorderRect.Y, SideSize, (int)Math.Round(ClientBorderRect.Height * 0.5d));
-        private Rectangle GlassSide2 => new(ClientBorderRect.Right - 1, GlassSide1.Y, GlassSide1.Width + 1, GlassSide1.Height);
-        private Rectangle LeftEdge_XP => new(ClientRect.Left - SideSize, ClientRect.Y, SideSize, ClientRect.Height + SideSize);
-        private Rectangle RightEdge_XP => new(ClientRect.Right + 1, ClientRect.Y, SideSize, ClientRect.Height + SideSize);
-        private Rectangle ButtomEdge_XP => new(LeftEdge_XP.Left, LeftEdge_XP.Bottom - SideSize + 1, RightEdge_XP.Right - LeftEdge_XP.Left, SideSize + 1);
+        private RectangleF ClientRect => new(Rect.X + SideSize + 1, Rect.Y + TitlebarRect.Height + 1, Rect.Width - SideSize * 2 - 2, Rect.Height - (SideSize + TitlebarRect.Height) - 2);
+        private RectangleF ClientBorderRect => new(ClientRect.X - 1, ClientRect.Y - 1, ClientRect.Width + 2, ClientRect.Height + 2);
+        private RectangleF GlassSide1 => new(Rect.X + 1, ClientBorderRect.Y, SideSize, ClientBorderRect.Height * 0.5f);
+        private RectangleF GlassSide2 => new(ClientBorderRect.Right - 1, GlassSide1.Y, GlassSide1.Width + 1, GlassSide1.Height);
+        private RectangleF LeftEdge_XP => new(ClientRect.Left - SideSize, ClientRect.Y, SideSize, ClientRect.Height + SideSize);
+        private RectangleF RightEdge_XP => new(ClientRect.Right + 1, ClientRect.Y, SideSize, ClientRect.Height + SideSize);
+        private RectangleF ButtomEdge_XP => new(LeftEdge_XP.Left, LeftEdge_XP.Bottom - SideSize + 1, RightEdge_XP.Right - LeftEdge_XP.Left, SideSize + 1);
 
         Color Titlebar_Backcolor1 => Active ? Color.FromArgb(152, 180, 208) : Color.FromArgb(191, 205, 219);
         Color Titlebar_Backcolor2 => Active ? Color.FromArgb(186, 210, 234) : Color.FromArgb(215, 228, 242);
@@ -667,8 +667,8 @@ namespace WinPaletter.UI.Simulation
         Color CloseLowerAccent2 => Active ? Color.FromArgb(210, 127, 110) : Color.FromArgb(205, 219, 234);
         Color CloseOuterBorder => Active ? Color.FromArgb(67, 20, 34) : Color.FromArgb(131, 142, 168);
         Color CloseInnerBorder => Active ? Color.FromArgb(100, 255, 255, 255) : Color.FromArgb(209, 219, 229);
-        Color InactiveWindows8 => !(Preview == Preview_Enum.W8Lite) ? Color.FromArgb(235, 235, 235) : Color.FromArgb((int)Math.Round(Win7ColorBal / 100d * 255d), AccentColor_Active.CB(0.8f));
-        Color Windows8Color => Active ? Color.FromArgb((int)Math.Round(Win7ColorBal / 100d * 255d), AccentColor_Active) : InactiveWindows8;
+        Color InactiveWindows8 => !(Preview == Preview_Enum.W8Lite) ? Color.FromArgb(235, 235, 235) : Color.FromArgb((int)(Win7ColorBal / 100f * 255f), AccentColor_Active.CB(0.8f));
+        Color Windows8Color => Active ? Color.FromArgb((int)(Win7ColorBal / 100d * 255d), AccentColor_Active) : InactiveWindows8;
         Color WindowsXPColor => Program.TM.Win32.ButtonFace;
         Color ClientAreaColor => !DesignMode ? Program.TM.Win32.ButtonFace : Color.White;
         Color CaptionColor
@@ -772,7 +772,7 @@ namespace WinPaletter.UI.Simulation
                 await Task.Delay(10);
                 /* Don't make it controlled by conditions, they may be false and graphics won't be updated.
                    For high performance, we need to update graphics only in specified rectangle. */
-                Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
+                Invalidate(new Rectangle((int)TitlebarRect.X, (int)TitlebarRect.Y, (int)(TitlebarRect.Width + 1f), (int)(TitlebarRect.Height + 1f)));
             }
 
             if (EnableEditingMetrics)
@@ -837,7 +837,7 @@ namespace WinPaletter.UI.Simulation
                 CursorOverWindowAccent = false;
 
                 await Task.Delay(10);
-                Invalidate(new Rectangle(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width + 1, TitlebarRect.Height + 1));
+                Invalidate(new Rectangle((int)TitlebarRect.X, (int)TitlebarRect.Y, (int)(TitlebarRect.Width + 1f), (int)(TitlebarRect.Height + 1f)));
             }
             else if (!DesignMode && EnableEditingMetrics)
             {
@@ -1018,7 +1018,7 @@ namespace WinPaletter.UI.Simulation
                     G.ResetClip();
                 }
 
-                G.ExcludeClip(TitlebarRect);
+                G.ExcludeClip(new Rectangle((int)TitlebarRect.X, (int)TitlebarRect.Y, (int)TitlebarRect.Width, (int)TitlebarRect.Height));
 
                 if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(20, 20, 20))) { G.FillRoundedRect(br, Rect, Radius, true); } }
 
@@ -1045,7 +1045,7 @@ namespace WinPaletter.UI.Simulation
 
                         using (Pen P = new(Color.FromArgb(255, AccentColor_Active)))
                         {
-                            G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
+                            G.DrawLine(P, new PointF(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new PointF(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
                         }
                     }
                     else
@@ -1054,7 +1054,7 @@ namespace WinPaletter.UI.Simulation
 
                         using (Pen P = new(Color.FromArgb(255, AccentColor_Inactive)))
                         {
-                            G.DrawLine(P, new Point(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new Point(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
+                            G.DrawLine(P, new PointF(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new PointF(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
                         }
                     }
                 }
@@ -1093,7 +1093,7 @@ namespace WinPaletter.UI.Simulation
 
                         using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
                         {
-                            Rectangle close_Lite = new(TitlebarRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
+                            RectangleF close_Lite = new(TitlebarRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
                             if (Active) G.FillRectangle(br, close_Lite);
 
                             using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
@@ -1106,7 +1106,7 @@ namespace WinPaletter.UI.Simulation
                             {
                                 using (SolidBrush br_close = new(Color.Black))
                                 {
-                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new Rectangle(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
+                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new RectangleF(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
                                 }
                             }
                         }
@@ -1117,7 +1117,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         using (Bitmap closeImg = new(CloseButtonImage))
                         {
-                            CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2, closeImg.Width, closeImg.Height);
+                            CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2f, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2f, closeImg.Width, closeImg.Height);
 
                             G.DrawImage(closeImg, CloseButtonRect);
                         }
@@ -1150,7 +1150,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         using (SolidBrush br = new(Preview == Preview_Enum.W11Lite ? Color.Black : Color.White))
                         {
-                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
+                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
                         }
                     }
                 }
@@ -1195,21 +1195,21 @@ namespace WinPaletter.UI.Simulation
                 }
                 else
                 {
-                    G.ExcludeClip(ClientRect);
+                    G.ExcludeClip(new Rectangle((int)ClientRect.X, (int)ClientRect.Y, (int)ClientRect.Width, (int)ClientRect.Height));
                     using (SolidBrush br = new(AccentColor_Active)) { G.FillRectangle(br, Rect); }
                     G.ResetClip();
                 }
 
                 if (AccentColor_Enabled)
                 {
-                    if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRectangle(P, Rect); } }
+                    if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
 
-                    else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRectangle(P, Rect); } }
+                    else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
                 }
 
-                else if (DarkMode) { using (Pen P = new(Color.FromArgb(125, 100, 100, 100))) { G.DrawRectangle(P, Rect); } }
+                else if (DarkMode) { using (Pen P = new(Color.FromArgb(125, 100, 100, 100))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
 
-                else { using (Pen P = new(Color.FromArgb(125, 220, 220, 220))) { G.DrawRectangle(P, Rect); } }
+                else { using (Pen P = new(Color.FromArgb(125, 220, 220, 220))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
 
                 #region Editor
 
@@ -1221,7 +1221,7 @@ namespace WinPaletter.UI.Simulation
                     using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
                     {
                         G.FillRectangle(hb, TitlebarRect);
-                        G.DrawRectangle(P, TitlebarRect);
+                        G.DrawRectangle(P, TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width, TitlebarRect.Height);
                     }
                 }
 
@@ -1234,7 +1234,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
                         {
-                            Rectangle close_Lite = new(ClientRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
+                            RectangleF close_Lite = new(ClientRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
                             if (Active) G.FillRectangle(br, close_Lite);
 
                             using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
@@ -1247,7 +1247,7 @@ namespace WinPaletter.UI.Simulation
                             {
                                 using (SolidBrush br_close = new(Color.Black))
                                 {
-                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new Rectangle(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
+                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new RectangleF(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
                                 }
                             }
                         }
@@ -1289,7 +1289,7 @@ namespace WinPaletter.UI.Simulation
                     {
                         using (SolidBrush br = new(Preview == Preview_Enum.W10Lite ? Color.Black : Color.White))
                         {
-                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
+                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new RectangleF(CloseButtonRect.X + 1f, CloseButtonRect.Y + 1f, CloseButtonRect.Width, CloseButtonRect.Height), sf);
                         }
                     }
                 }
@@ -1307,9 +1307,9 @@ namespace WinPaletter.UI.Simulation
             else if (Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite)
             {
                 {
-                    int CloseRectH = Metrics_CaptionHeight + TitleHeight - 2 + (Preview == Preview_Enum.W8Lite ? 1 : 0);
+                    float CloseRectH = Metrics_CaptionHeight + TitleHeight - 2 + (Preview == Preview_Enum.W8Lite ? 1 : 0);
 
-                    int CloseRectW = (int)Math.Round((!ToolWindow ? CloseRectH * 3 / 2d : CloseRectH) + (Preview == Preview_Enum.W8Lite ? 2 : 0));
+                    float CloseRectW = (!ToolWindow ? CloseRectH * 3 / 2f : CloseRectH) + (Preview == Preview_Enum.W8Lite ? 2 : 0);
 
                     if (!ToolWindow)
                     {
@@ -1335,7 +1335,7 @@ namespace WinPaletter.UI.Simulation
                         using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
                         {
                             G.FillRectangle(hb, Rect);
-                            G.DrawRectangle(P, Rect);
+                            G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
                         }
                     }
 
@@ -1360,19 +1360,19 @@ namespace WinPaletter.UI.Simulation
 
                     if (!(Preview == Preview_Enum.W8Lite))
                     {
-                        using (Pen P = new(Color.FromArgb(170, BorderColor.CB((float)-0.2d)))) { G.DrawRectangle(P, ClientRect); }
+                        using (Pen P = new(Color.FromArgb(170, BorderColor.CB(-0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
 
-                        using (Pen P = new(Color.FromArgb((int)Math.Round(Win7ColorBal / 100d * 255d), Windows8Color.CB((float)-0.2d)))) { G.DrawRectangle(P, ClientRect); }
+                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color.CB(-0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
 
                         G.SmoothingMode = SmoothingMode.HighSpeed;
                         using (SolidBrush br = new(Active ? Color.FromArgb(199, 80, 80) : Color.FromArgb(188, 188, 188))) { G.FillRectangle(br, CloseButtonRect); }
                         G.SmoothingMode = SmoothingMode.AntiAlias;
 
-                        G.DrawImage(CloseBtn, new Rectangle((int)Math.Round(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2d), (int)Math.Round(CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2d), CloseBtn.Width, CloseBtn.Height));
+                        G.DrawImage(CloseBtn, new Rectangle((int)(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f), (int)(CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f), CloseBtn.Width, CloseBtn.Height));
 
-                        using (Pen P = new(Color.FromArgb(200, BorderColor.CB((float)-0.3d)))) { G.DrawRectangle(P, Rect); }
+                        using (Pen P = new(Color.FromArgb(200, BorderColor.CB(-0.3f)))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
 
-                        using (Pen P = new(Color.FromArgb((int)Math.Round(Win7ColorBal / 100d * 255d), Windows8Color.CB((float)-0.3d)))) { G.DrawRectangle(P, Rect); }
+                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color.CB(-0.3f)))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
 
                         //Window title
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
@@ -1388,25 +1388,25 @@ namespace WinPaletter.UI.Simulation
                     {
                         CloseBtn = CloseBtn.ReplaceColor(Color.FromArgb(255, 255, 255), Color.Black);
 
-                        using (Pen P = new(Color.FromArgb((int)Math.Round(Win7ColorBal / 100d * 255d), Windows8Color).LightLight()))
+                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color).LightLight()))
                         {
-                            G.DrawLine(P, new Point(ClientRect.X, ClientRect.Y), new Point(ClientRect.X + ClientRect.Width, ClientRect.Y));
+                            G.DrawLine(P, new PointF(ClientRect.X, ClientRect.Y), new PointF(ClientRect.X + ClientRect.Width, ClientRect.Y));
                         }
 
-                        using (Pen P = new(Color.FromArgb((int)Math.Round(Win7ColorBal / 100d * 255d), Windows8Color).LightLight()))
+                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color).LightLight()))
                         {
-                            G.DrawLine(P, new Point(ClientRect.X, ClientRect.Y + ClientRect.Height), new Point(ClientRect.X + ClientRect.Width, ClientRect.Y + ClientRect.Height));
+                            G.DrawLine(P, new PointF(ClientRect.X, ClientRect.Y + ClientRect.Height), new PointF(ClientRect.X + ClientRect.Width, ClientRect.Y + ClientRect.Height));
                         }
 
                         using (SolidBrush br = new(Active ? Color.FromArgb(195, 90, 80) : Color.Transparent)) { G.FillRectangle(br, CloseButtonRect); }
 
                         G.SmoothingMode = SmoothingMode.HighSpeed;
-                        using (Pen P = new(Active ? Color.FromArgb(92, 58, 55) : Color.FromArgb(93, 96, 102))) { G.DrawRectangle(P, CloseButtonRect); }
+                        using (Pen P = new(Active ? Color.FromArgb(92, 58, 55) : Color.FromArgb(93, 96, 102))) { G.DrawRectangle(P, CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, CloseButtonRect.Height); }
                         G.SmoothingMode = SmoothingMode.AntiAlias;
 
-                        G.DrawImage(CloseBtn, new Rectangle((int)Math.Round(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2d), (int)Math.Round(CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2d), CloseBtn.Width, CloseBtn.Height));
+                        G.DrawImage(CloseBtn, new RectangleF(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f, CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f, CloseBtn.Width, CloseBtn.Height));
 
-                        using (Pen P = new(Color.FromArgb(47, 48, 51))) { G.DrawRectangle(P, Rect); }
+                        using (Pen P = new(Color.FromArgb(47, 48, 51))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
 
                         //Window title
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
@@ -1441,7 +1441,7 @@ namespace WinPaletter.UI.Simulation
 
                             Color Color1 = Active ? AccentColor_Active : Color.FromArgb(128, AccentColor_Inactive);
                             Color Color2 = Active ? AccentColor2_Active : Color.Transparent;
-                            G.ExcludeClip(ClientBorderRect);
+                            G.ExcludeClip(new Rectangle((int)ClientBorderRect.X, (int)ClientBorderRect.Y, (int)ClientBorderRect.Width, (int)ClientBorderRect.Height));
                             G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, !ToolWindow);
                             G.ResetClip();
                         }
@@ -1450,7 +1450,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             using (SolidBrush br = new(Color.White)) { G.FillRoundedRect(br, Rect, Radius, true); }
 
-                            using (SolidBrush br = new(Color.FromArgb((int)Math.Round(255 * Win7ColorBal / 100d), Active ? AccentColor_Active : AccentColor_Active.Light())))
+                            using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
                             {
                                 G.FillRoundedRect(br, Rect, Radius, true);
                             }
@@ -1460,7 +1460,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             using (SolidBrush br = new(Color.White)) { G.FillRectangle(br, Rect); }
 
-                            using (SolidBrush br = new(Color.FromArgb((int)Math.Round(255 * Win7ColorBal / 100d), Active ? AccentColor_Active : AccentColor_Active.Light())))
+                            using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
                             {
                                 G.FillRectangle(br, Rect);
                             }
@@ -1472,12 +1472,12 @@ namespace WinPaletter.UI.Simulation
                             G.DrawImage(Win7Preview.WindowSides, GlassSide1);
                             G.DrawImage(Win7Preview.WindowSides, GlassSide2);
 
-                            int TitleTopW = (int)Math.Round(Rect.Width * 0.6d);
-                            int TitleTopH = (int)Math.Round(Rect.Height * 0.6d);
+                            float TitleTopW = Rect.Width * 0.6f;
+                            float TitleTopH = Rect.Height * 0.6f;
 
                             G.SetClip(RectBorder);
-                            G.DrawImage(Win7Preview.TitleTopL, new Rectangle(Rect.X + (ToolWindow ? -1 : 1), Rect.Y, TitleTopW, TitleTopH));
-                            G.DrawImage(Win7Preview.TitleTopR, new Rectangle(Rect.X + Rect.Width - TitleTopW + 1, Rect.Y, TitleTopW, TitleTopH));
+                            G.DrawImage(Win7Preview.TitleTopL, new RectangleF(Rect.X + (ToolWindow ? -1 : 1), Rect.Y, TitleTopW, TitleTopH));
+                            G.DrawImage(Win7Preview.TitleTopR, new RectangleF(Rect.X + Rect.Width - TitleTopW + 1, Rect.Y, TitleTopW, TitleTopH));
                             G.ResetClip();
                         }
 
@@ -1491,7 +1491,7 @@ namespace WinPaletter.UI.Simulation
 
                             using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRoundedRect(P, RectBorder, Radius, true); }
 
-                            using (Pen P = new(Color.FromArgb((int)Math.Round(255d - 255 * Win7Alpha / 300d), base.BackColor.Light(0.2f)))) { G.DrawRoundedRect(P, ClientBorderRect, 1, true); }
+                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRoundedRect(P, ClientBorderRect, 1, true); }
 
                             #region Editor
 
@@ -1511,7 +1511,7 @@ namespace WinPaletter.UI.Simulation
 
                             using (SolidBrush br = new(ClientAreaColor)) { G.FillRoundedRect(br, ClientBorderRect, 1, true); }
 
-                            using (Pen P = new(Color.FromArgb((int)Math.Round(255d - 255 * Win7Alpha / 300d), base.BackColor.Dark(0.2f)))) { G.DrawRoundedRect(P, ClientRect, 1, true); }
+                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRoundedRect(P, ClientRect, 1, true); }
                         }
 
                         else
@@ -1519,11 +1519,11 @@ namespace WinPaletter.UI.Simulation
                             if (Noise7 != null)
                                 G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect);
 
-                            using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRectangle(P, Rect); }
+                            using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
 
-                            using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRectangle(P, RectBorder); }
+                            using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRectangle(P, RectBorder.X, RectBorder.Y, RectBorder.Width, RectBorder.Height); }
 
-                            using (Pen P = new(Color.FromArgb((int)Math.Round(255d - 255 * Win7Alpha / 300d), base.BackColor.Light(0.2f)))) { G.DrawRectangle(P, ClientBorderRect); }
+                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
 
                             #region Editor
 
@@ -1543,7 +1543,7 @@ namespace WinPaletter.UI.Simulation
 
                             using (SolidBrush br = new(ClientAreaColor)) { G.FillRectangle(br, ClientBorderRect); }
 
-                            using (Pen P = new(Color.FromArgb((int)Math.Round(255d - 255 * Win7Alpha / 300d), base.BackColor.Dark(0.2f)))) { G.DrawRectangle(P, ClientRect); }
+                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
                         }
 
                         //Close button
@@ -1571,7 +1571,7 @@ namespace WinPaletter.UI.Simulation
                             int Btn_Height = Math.Max(10, _Metrics_CaptionHeight - 5);
                             int Btn_Width = Btn_Height;
 
-                            CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, (int)Math.Round(Rect.Y + (TitlebarRect.Height - Btn_Height) / 2d), Btn_Width, Btn_Height);
+                            CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, Rect.Y + (TitlebarRect.Height - Btn_Height) / 2f, Btn_Width, Btn_Height);
 
                             if (Active)
                             {
@@ -1581,10 +1581,10 @@ namespace WinPaletter.UI.Simulation
                                 float LH = CloseButtonRect.Height - UH;
                                 float Interlapping = UH / CloseButtonRect.Height * 10f;
 
-                                Rectangle CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, (int)Math.Round(UH + Interlapping));
+                                RectangleF CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, UH + Interlapping);
                                 LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, Color.FromArgb(50, CloseUpperAccent1), CloseUpperAccent2, LinearGradientMode.Vertical);
 
-                                Rectangle CloseRectLowerHalf = new(CloseButtonRect.X, (int)Math.Round(CloseRectUpperHalf.Bottom - Interlapping), CloseButtonRect.Width, (int)Math.Round(LH));
+                                RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
                                 LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical);
 
                                 G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, true);
@@ -1603,13 +1603,13 @@ namespace WinPaletter.UI.Simulation
                             int xW = CloseButtonRect.Width % 2 == 0 ? CloseBtn.Width + 1 : CloseBtn.Width;
                             int xH = CloseButtonRect.Height % 2 == 0 ? CloseBtn.Height + 1 : CloseBtn.Height;
 
-                            Rectangle closerenderrect = new((int)Math.Round(CloseButtonRect.X + (CloseButtonRect.Width - xW) / 2d), (int)Math.Round(CloseButtonRect.Y + (CloseButtonRect.Height - xH) / 2d), xW, xH);
+                            RectangleF closerenderrect = new(CloseButtonRect.X + (CloseButtonRect.Width - xW) / 2f, CloseButtonRect.Y + (CloseButtonRect.Height - xH) / 2f, xW, xH);
 
                             G.DrawImage(CloseBtn, closerenderrect);
 
                             using (Pen P = new(CloseOuterBorder)) { G.DrawRoundedRect(P, CloseButtonRect, 1, true); }
 
-                            using (Pen P = new(Color.FromArgb(50, CloseInnerBorder))) { G.DrawRectangle(P, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2)); }
+                            using (Pen P = new(Color.FromArgb(50, CloseInnerBorder))) { G.DrawRectangle(P, CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2); }
 
                         }
 
@@ -1625,8 +1625,8 @@ namespace WinPaletter.UI.Simulation
                     else
                     {
                         #region Basic
-                        Rectangle UpperPart = new(Rect.X, Rect.Y, Rect.Width + 1, TitlebarRect.Height + 4);
-                        Rectangle UpperPart_Modified = new((int)Math.Round(UpperPart.X + UpperPart.Width * 0.75d), UpperPart.Y, (int)Math.Round(UpperPart.Width * 0.75d), UpperPart.Height);
+                        RectangleF UpperPart = new(Rect.X, Rect.Y, Rect.Width + 1, TitlebarRect.Height + 4);
+                        RectangleF UpperPart_Modified = new(UpperPart.X + UpperPart.Width * 0.75f, UpperPart.Y, UpperPart.Width * 0.75f, UpperPart.Height);
 
                         G.SetClip(UpperPart);
 
@@ -1638,26 +1638,26 @@ namespace WinPaletter.UI.Simulation
                         {
                             G.FillRoundedRect(pth_back, Rect, Radius, true);
                             using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRoundedRect(P, Rect, Radius, true); }
-                            using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRoundedRect(P, new Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
+                            using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
                             G.SetClip(UpperPart_Modified);
-                            using (Pen P = new(pth_line)) { G.DrawRoundedRect(P, new Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
+                            using (Pen P = new(pth_line)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
                         }
                         else
                         {
                             G.FillRectangle(pth_back, Rect);
-                            using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRectangle(P, Rect); }
-                            using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRectangle(P, new Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)); }
+                            using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
+                            using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
                             G.SetClip(UpperPart_Modified);
-                            using (Pen P = new(pth_line)) { G.DrawRectangle(P, new Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)); }
+                            using (Pen P = new(pth_line)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
                         }
 
                         G.ResetClip();
-                        G.ExcludeClip(UpperPart);
+                        G.ExcludeClip(new Rectangle((int)UpperPart.X, (int)UpperPart.Y, (int)UpperPart.Width, (int)UpperPart.Height));
 
                         using (SolidBrush br = new(Titlebar_Backcolor2)) { G.FillRectangle(br, Rect); }
-                        using (Pen P = new(Titlebar_Turquoise)) { G.DrawRectangle(P, new Rectangle(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2)); }
-                        using (Pen P = new(OuterBorder)) { G.DrawRectangle(P, Rect); }
-                        using (Pen P = new(Titlebar_InnerBorder)) { G.DrawLine(P, new Point(Rect.X + 1, Rect.Y), new Point(Rect.X + 1, Rect.Y + Rect.Height - 2)); }
+                        using (Pen P = new(Titlebar_Turquoise)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
+                        using (Pen P = new(OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
+                        using (Pen P = new(Titlebar_InnerBorder)) { G.DrawLine(P, new PointF(Rect.X + 1, Rect.Y), new PointF(Rect.X + 1, Rect.Y + Rect.Height - 2)); }
 
                         if (Active)
                         {
@@ -1668,13 +1668,13 @@ namespace WinPaletter.UI.Simulation
                         G.ResetClip();
 
                         G.FillRectangle(Brushes.White, ClientBorderRect);
-                        using (Pen P = new(Color.FromArgb(186, 210, 234))) { G.DrawRectangle(P, ClientBorderRect); }
-                        if (!WinVista) { using (Pen P = new(Color.FromArgb(130, 135, 144))) { G.DrawRectangle(P, ClientRect); } }
+                        using (Pen P = new(Color.FromArgb(186, 210, 234))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
+                        if (!WinVista) { using (Pen P = new(Color.FromArgb(130, 135, 144))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); } }
 
                         //Render close button
                         int Btn_Height = Math.Max(10, _Metrics_CaptionHeight - 5);
-                        int Btn_Width;
-                        Btn_Width = !ToolWindow ? (int)Math.Round(31d / 17d * Btn_Height) : Btn_Height;
+                        float Btn_Width;
+                        Btn_Width = !ToolWindow ? 31f / 17f * Btn_Height : Btn_Height;
                         CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, ClientBorderRect.Top - Btn_Height - 3, Btn_Width, Btn_Height);
 
                         if (Active)
@@ -1687,8 +1687,8 @@ namespace WinPaletter.UI.Simulation
                             float LH = CloseButtonRect.Height - UH;
                             float Interlapping = UH / CloseButtonRect.Height * 10f;
 
-                            Rectangle CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, (int)Math.Round(UH + Interlapping));
-                            Rectangle CloseRectLowerHalf = new(CloseButtonRect.X, (int)Math.Round(CloseRectUpperHalf.Bottom - Interlapping), CloseButtonRect.Width, (int)Math.Round(LH));
+                            RectangleF CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, UH + Interlapping);
+                            RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
 
                             LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical);
                             LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical);
@@ -1714,11 +1714,11 @@ namespace WinPaletter.UI.Simulation
 
                         else { CloseBtn = Win7Preview.Close_Basic_ToolWindow; }
 
-                        G.DrawImage(CloseBtn, new Point((int)Math.Round(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2d + 1d), (int)Math.Round(CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2d)));
+                        G.DrawImage(CloseBtn, new PointF(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f + 1f, CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f));
 
                         using (Pen P = new(CloseOuterBorder)) { G.DrawRoundedRect(P, CloseButtonRect, 1, true); }
 
-                        using (Pen P = new(CloseInnerBorder)) { G.DrawRoundedRect(P, new Rectangle(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2), 1, true); }
+                        using (Pen P = new(CloseInnerBorder)) { G.DrawRoundedRect(P, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2), 1, true); }
 
                         //Window title
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
@@ -1756,7 +1756,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     using (SolidBrush br = new(Color.Black))
                     {
-                        G.DrawString(Text, Font, br, new Rectangle(LabelRect.X + 1, LabelRect.Y, LabelRect.Width, LabelRect.Height), sf);
+                        G.DrawString(Text, Font, br, new RectangleF(LabelRect.X + 1, LabelRect.Y, LabelRect.Width, LabelRect.Height), sf);
                     }
 
                     using (SolidBrush br = new(CaptionColor)) { G.DrawString(Text, Font, br, LabelRect, sf); }
@@ -1772,7 +1772,7 @@ namespace WinPaletter.UI.Simulation
             {
                 using (Pen P = new(Color.Gray) { DashStyle = DashStyle.Dot })
                 {
-                    G.DrawRectangle(P, editingRect);
+                    G.DrawRectangle(P, editingRect.X, editingRect.Y, editingRect.Width, editingRect.Height);
                 }
 
                 using (Pen P = new(Color.Gray) { DashStyle = DashStyle.Solid })

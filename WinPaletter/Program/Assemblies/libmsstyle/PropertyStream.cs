@@ -18,7 +18,7 @@ namespace libmsstyle
         public static StyleProperty ReadNextProperty(byte[] data, ref int start)
         {
             int cursor = start;
-            PropertyHeader header = new PropertyHeader(data, cursor);
+            PropertyHeader header = new(data, cursor);
             while (!header.IsValid())
             {
                 cursor++;
@@ -34,7 +34,7 @@ namespace libmsstyle
             cursor += 32; // sizeof PropertyHeader
 
 
-            StyleProperty prop = new StyleProperty(
+            StyleProperty prop = new(
                 (PropertyHeader)header.Clone()
             );
 
@@ -43,7 +43,7 @@ namespace libmsstyle
                 case IDENTIFIER.INTLIST:
                     {
                         int numInts = 0;
-                        List<int> list = new List<Int32>();
+                        List<int> list = new();
                         if (header.sizeInBytes != 0)
                         {
                             numInts = BitConverter.ToInt32(data, cursor);
@@ -62,7 +62,7 @@ namespace libmsstyle
                 case IDENTIFIER.COLORLIST:
                     {
                         int numColors = header.sizeInBytes / 4;
-                        List<Color> list = new List<Color>(numColors);
+                        List<Color> list = new(numColors);
 
                         for (int i = 0; i < numColors; ++i)
                         {

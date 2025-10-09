@@ -299,12 +299,12 @@ namespace WinPaletter.UI.Simulation
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
             G.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            Rectangle IconRect = new(0, 0, Width - 1, Height - 30);
+            RectangleF IconRect = new(0, 0, Width - 1, Height - 30);
 
-            Rectangle LabelRectX = new(0, Height - 35, Width - 1, 30);
-            Rectangle LabelRectShadow = new(1, Height - 34, Width - 1, 30);
+            RectangleF LabelRectX = new(0, Height - 35, Width - 1, 30);
+            RectangleF LabelRectShadow = new(1, Height - 34, Width - 1, 30);
 
-            Rectangle IconRectX = new((int)Math.Round(IconRect.X + (IconRect.Width - _IconSize) / 2d), (int)Math.Round(IconRect.Y + (IconRect.Height - _IconSize) / 2d), _IconSize, _IconSize);
+            RectangleF IconRectX = new(IconRect.X + (IconRect.Width - _IconSize) / 2f, IconRect.Y + (IconRect.Height - _IconSize) / 2f, _IconSize, _IconSize);
 
             if (_icon is not null)
             {
@@ -339,10 +339,10 @@ namespace WinPaletter.UI.Simulation
                 {
                     //Draw a separate bitmap that has string in glow color and blurred
 
-                    using (Bitmap bmpShadow = new(LabelRectX.Width, LabelRectX.Height))
+                    using (Bitmap bmpShadow = new((int)LabelRectX.Width, (int)LabelRectX.Height))
                     using (Graphics gShadow = Graphics.FromImage(bmpShadow))
                     {
-                        gShadow.DrawString(Text, Font, brShadow, new Rectangle(0, 1, LabelRectX.Width, LabelRectX.Height), sf);
+                        gShadow.DrawString(Text, Font, brShadow, new RectangleF(0, 1, LabelRectX.Width, LabelRectX.Height), sf);
                         G.DrawImage(bmpShadow.Blur(1.1f).Fade(0.6f), LabelRectX);
                     }
                 }

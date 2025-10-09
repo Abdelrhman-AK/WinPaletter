@@ -186,17 +186,17 @@ namespace WinPaletter
         /// <summary>
         /// Security Identifier for the Builtin Administrators group.
         /// </summary>
-        private readonly static SecurityIdentifier identifier = new(WellKnownSidType.BuiltinAdministratorsSid, null);
+        private static readonly SecurityIdentifier identifier = new(WellKnownSidType.BuiltinAdministratorsSid, null);
 
         /// <summary>
         /// NT Account for the Builtin Administrators group.
         /// </summary>
-        private readonly static NTAccount AdminAccount = (NTAccount)identifier.Translate(typeof(NTAccount));
+        private static readonly NTAccount AdminAccount = (NTAccount)identifier.Translate(typeof(NTAccount));
 
         /// <summary>
         /// Access rule for the Builtin Administrators group.
         /// </summary>
-        private readonly static FileSystemAccessRule AccessRule = new(AdminAccount, FileSystemRights.FullControl, AccessControlType.Allow);
+        private static readonly FileSystemAccessRule AccessRule = new(AdminAccount, FileSystemRights.FullControl, AccessControlType.Allow);
 
         /// <summary>
         /// Get a resource from a Portable Executable (PE) File as a byte array.

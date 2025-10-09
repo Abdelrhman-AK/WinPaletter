@@ -109,7 +109,7 @@ namespace WinPaletter
             if (_shown)
             {
                 Transition
-                    .With(this, nameof(Opacity), (double)0)
+                    .With(this, nameof(Opacity), 0.0)
                     .HookOnCompletionInUiThread(this, () => { if (close) Close(); })
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick * 0.6f));
 
@@ -128,7 +128,7 @@ namespace WinPaletter
             {
                 Opacity = 0;
                 Transition
-                    .With(this, nameof(Opacity), (double)1)
+                    .With(this, nameof(Opacity), 1.0)
                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6f));
             }
         }

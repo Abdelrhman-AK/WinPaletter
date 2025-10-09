@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Serilog.Events;
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
@@ -42,7 +40,7 @@ namespace WinPaletter
             GetMemoryFonts();
 
             // Initialize the image lists to be used for logs and other purposes
-           InitializeImageLists();
+            InitializeImageLists();
 
             // Initialize the application
             InitializeApplication();
@@ -133,7 +131,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void StartupNextInstanceEventHandler(object sender, StartupNextInstanceEventArgs e)
+        public static void StartupNextInstanceEventHandler(object sender, Microsoft.VisualBasic.ApplicationServices.StartupNextInstanceEventArgs e)
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {

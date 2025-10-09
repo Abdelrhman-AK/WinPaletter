@@ -39,27 +39,27 @@ namespace WinPaletter
         /// <summary>
         /// WinPaletter version, instead of using long statement 'System.Windows.Forms.Application.ProductVersion'
         /// </summary>
-        public readonly static string Version = Application.ProductVersion;
+        public static readonly string Version = Application.ProductVersion;
 
         /// <summary>
         /// WinPaletter elements animation interval in ms.
         /// </summary>
-        public readonly static int AnimationDuration = 1000;
+        public static readonly int AnimationDuration = 1000;
 
         /// <summary>
         /// WinPaletter elements quick animation interval in ms.
         /// </summary>
-        public readonly static int AnimationDuration_Quick = 200;
+        public static readonly int AnimationDuration_Quick = 200;
 
         /// <summary>
         /// WinPaletter executable File path
         /// </summary>
-        public readonly static string AppFile = Assembly.GetExecutingAssembly().Location;
+        public static readonly string AppFile = Assembly.GetExecutingAssembly().Location;
 
         /// <summary>
         /// WinPaletter executable File size in bytes
         /// </summary>
-        public readonly static long Length = new FileInfo(AppFile).Length;
+        public static readonly long Length = new FileInfo(AppFile).Length;
 
         /// <summary>
         /// Get if Application is started as administrator or not
@@ -70,7 +70,7 @@ namespace WinPaletter
         /// Gets if WinPaletter's current version is designed as beta or not
         /// <br>Don't forget to make it <b>true</b> when you design a beta one</br>
         /// </summary>
-        public readonly static bool IsBeta = false;
+        public static readonly bool IsBeta = false;
 
         /// <summary>
         /// A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
@@ -219,6 +219,6 @@ namespace WinPaletter
         /// <summary>
         /// Represents the size of the preview area.
         /// </summary>
-        public static Size PreviewSize = new Size(528, 297);
+        public static Size PreviewSize = new(528, 297);
     }
 }

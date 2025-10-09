@@ -1,12 +1,10 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Media;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using WinPaletter.Theme;
 
@@ -139,8 +137,7 @@ namespace WinPaletter
                         File.WriteAllBytes(tmp, SoundBytes);
                         AltPlayingMethod = true;
                         NativeMethods.Helpers.PlayAudio(tmp);
-                        if (File.Exists(tmp))
-                            FileSystem.Kill(tmp);
+                        if (File.Exists(tmp)) System.IO.File.Delete(tmp);
                     }
 
                 }

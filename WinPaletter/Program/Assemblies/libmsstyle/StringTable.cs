@@ -8,7 +8,7 @@ namespace libmsstyle
         // Find entries that look like a font. That is, they are of format: "Name, Size, [Style], [Quality]"
         public static Dictionary<int, string> FilterFonts(Dictionary<int, string> table)
         {
-            Dictionary<int, string> fonts = new Dictionary<int, string>();
+            Dictionary<int, string> fonts = new();
             foreach (KeyValuePair<int, string> entry in table)
             {
                 // Need at least "Name, Size"

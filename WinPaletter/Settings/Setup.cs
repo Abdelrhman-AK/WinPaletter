@@ -2,7 +2,6 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 
 namespace WinPaletter

@@ -203,15 +203,15 @@ namespace WinPaletter.UI.WP
             }
 
             #region Check sign x, y coordinates
-            int x1_Left = InnerRect.X + 4;
-            int y1_Left = (int)Math.Round(0.8d * InnerRect.Height);
-            int x2_Left = x1_Left;
-            int y2_Left = InnerRect.Y + InnerRect.Height - 3;
+            float x1_Left = InnerRect.X + 4;
+            float y1_Left = 0.8f * InnerRect.Height;
+            float x2_Left = x1_Left;
+            float y2_Left = InnerRect.Y + InnerRect.Height - 3;
 
-            int x1_Right = x2_Left;
-            int y1_Right = y2_Left;
-            int x2_Right = InnerRect.Right - 2;
-            int y2_Right = y1_Left - 3;
+            float x1_Right = x2_Left;
+            float y1_Right = y2_Left;
+            float x2_Right = InnerRect.Right - 2;
+            float y2_Right = y1_Left - 3;
             #endregion
 
             // #################################################################################
@@ -238,8 +238,8 @@ namespace WinPaletter.UI.WP
 
                 using (Pen CheckSignPen = new(Color.FromArgb(alpha2, scheme.Colors.Back(parentLevel)), 1.9f))
                 {
-                    Point[] leftCheckPoints = [new(x1_Left, y1_Left), new(x2_Left, y2_Left)];
-                    Point[] rightCheckPoints = [new(x1_Right, y1_Right), new(x2_Right, y2_Right)];
+                    PointF[] leftCheckPoints = [new(x1_Left, y1_Left), new(x2_Left, y2_Left)];
+                    PointF[] rightCheckPoints = [new(x1_Right, y1_Right), new(x2_Right, y2_Right)];
 
                     G.DrawCurve(CheckSignPen, leftCheckPoints);
                     G.DrawCurve(CheckSignPen, rightCheckPoints);
@@ -248,9 +248,17 @@ namespace WinPaletter.UI.WP
 
             #region Strings
 
-            using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
+            if (Enabled)
+            {
+                using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
 
-            using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.ForeColor_Accent))) { G.DrawString(Text, Font, br, TextRect, format); }
+                using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.ForeColor_Accent))) { G.DrawString(Text, Font, br, TextRect, format); }
+            }
+            else
+            {
+                TextRect.X--; TextRect.Y--;
+                ControlPaint.DrawStringDisabled(G, Text, Font, ForeColor, TextRect, TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter);
+            }
 
             #endregion
 

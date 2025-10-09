@@ -20,8 +20,8 @@ namespace WinPaletter
             Icon = FormsExtensions.Icon<WindowsTerminal>();
 
             Color c = PictureBox1.Image.AverageColor();
-            Color c1 = c.CB((float)(Program.Style.DarkMode ? -0.35d : 0.35d));
-            Color c2 = c.CB((float)(Program.Style.DarkMode ? -0.75d : 0.75d));
+            Color c1 = c.CB(Program.Style.DarkMode ? -0.35f : 0.35f);
+            Color c2 = c.CB(Program.Style.DarkMode ? -0.75f : 0.75f);
             Panel1.BackColor = c1;
             BackColor = c2;
             SystemSounds.Exclamation.Play();

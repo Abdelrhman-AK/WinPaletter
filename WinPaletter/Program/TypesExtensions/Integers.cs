@@ -64,30 +64,30 @@ namespace WinPaletter.TypesExtensions
             long MB = KB * 1024L;
             long GB = MB * 1024L;
             long TB = GB * 1024L;
-            double size = length;
+            float size = length;
             string suffix = Program.Lang.Strings.General.ByteSizeUnit;
 
             if (length >= TB)
             {
-                size = Math.Round(length / (double)TB, 2);
+                size = (float)Math.Round(length / (float)TB, 2);
                 suffix = Program.Lang.Strings.General.TBSizeUnit;
             }
 
             else if (length >= GB)
             {
-                size = Math.Round(length / (double)GB, 2);
+                size = (float)Math.Round(length / (float)GB, 2);
                 suffix = Program.Lang.Strings.General.GBSizeUnit;
             }
 
             else if (length >= MB)
             {
-                size = Math.Round(length / (double)MB, 2);
+                size = (float)Math.Round(length / (float)MB, 2);
                 suffix = Program.Lang.Strings.General.MBSizeUnit;
             }
 
             else if (length >= KB)
             {
-                size = Math.Round(length / (double)KB, 2);
+                size = (float)Math.Round(length / (float)KB, 2);
                 suffix = Program.Lang.Strings.General.KBSizeUnit;
 
             }

@@ -453,11 +453,11 @@ namespace WinPaletter
                                         using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
-                                            G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
+                                            G.DrawArc(pen, CircleRect, CursorOptions.Angle, (float)(_percent * 360f));
 
                                             if (CursorOptions.LoadingCircleHotNoise)
                                             {
-                                                G.DrawArc(noisePen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
+                                                G.DrawArc(noisePen, CircleRect, CursorOptions.Angle, (float)(_percent * 360f));
                                             }
                                         }
                                     }
@@ -721,11 +721,11 @@ namespace WinPaletter
                                         using (TextureBrush noise = new(bx))
                                         using (Pen noisePen = new(noise, PenWidth))
                                         {
-                                            G.DrawArc(pen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
+                                            G.DrawArc(pen, CircleRect, CursorOptions.Angle, (float)(_percent * 360f));
 
                                             if (CursorOptions.LoadingCircleHotNoise)
                                             {
-                                                G.DrawArc(noisePen, CircleRect, CursorOptions.Angle, (int)Math.Round((double)(_percent * 360)));
+                                                G.DrawArc(noisePen, CircleRect, CursorOptions.Angle, (float)(_percent * 360f));
                                             }
                                         }
 
@@ -2880,8 +2880,8 @@ namespace WinPaletter
 
                 RectangleF o = new(Rectangle.X, Rectangle.Y, 12, 12);
                 RectangleF o1 = new(Rectangle.X, Rectangle.Y, 6, 6);
-                o1.X = (int)Math.Round(Rectangle.X + (o.Width - o1.Width) / 2d);
-                o1.Y = (int)Math.Round(Rectangle.Y + (o.Height - o1.Height) / 2d);
+                o1.X = Rectangle.X + (o.Width - o1.Width) / 2f;
+                o1.Y = Rectangle.Y + (o.Height - o1.Height) / 2f;
                 path.AddEllipse(o1);
 
                 using (Matrix m = new())

@@ -101,7 +101,10 @@ namespace WinPaletter.Theme
         /// <param name="TM1">WinTheme manager #1</param>
         /// <param name="TM2">WinTheme manager #2</param>
         /// <returns></returns>
-        public static bool operator ==(Manager TM1, Manager TM2) => TM1.Equals(TM2);
+        public static bool operator ==(Manager TM1, Manager TM2)
+        {
+            return TM1.Equals(TM2);
+        }
 
         /// <summary>
         /// Checks if two theme managers are not equal
@@ -109,7 +112,10 @@ namespace WinPaletter.Theme
         /// <param name="TM1">WinTheme manager #1</param>
         /// <param name="TM2">WinTheme manager #2</param>
         /// <returns></returns>
-        public static bool operator !=(Manager TM1, Manager TM2) => !(TM1 == TM2);
+        public static bool operator !=(Manager TM1, Manager TM2)
+        {
+            return !(TM1 == TM2);
+        }
 
         /// <summary>
         /// WinPaletter theme hash code

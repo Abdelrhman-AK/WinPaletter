@@ -19,7 +19,7 @@ namespace WinPaletter.UI.Controllers
 
         #region Helpers
 
-        double DPI = Program.GetWindowsScreenScalingFactor(false);
+        float DPI = Program.GetWindowsScreenScalingFactor(false);
 
         private Bitmap GetScreen()
         {
@@ -77,7 +77,7 @@ namespace WinPaletter.UI.Controllers
         private int _zoom = 3;
         public int Zoom
         {
-            get { return _zoom; }
+            get => _zoom;
             set
             {
                 if (value > 0)

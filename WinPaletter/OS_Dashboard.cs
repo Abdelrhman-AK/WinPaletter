@@ -1,7 +1,6 @@
 ﻿using FluentTransitions;
 using System;
 using System.Drawing;
-using System.IO.Ports;
 using System.Windows.Forms;
 using static WinPaletter.PreviewHelpers;
 

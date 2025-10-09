@@ -160,7 +160,7 @@ namespace WinPaletter
             foreach (CursorControl i in Cursors_Container.Controls)
             {
                 i.Prop_Scale = TM.Cursors.Size / 32f;
-                i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
+                i.Width = (int)(32f * i.Prop_Scale + 32f);
                 i.Height = i.Width;
                 i.Refresh();
             }
@@ -413,7 +413,7 @@ namespace WinPaletter
 
                 // Update progress bar
                 i++;
-                if (totalProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)totalProgress * 100d));
+                if (totalProgress > 0) ThemesFetcher.ReportProgress((int)(i / (float)totalProgress * 100f));
             }
 
             // Hide progress bar when done
@@ -451,7 +451,7 @@ namespace WinPaletter
             /// </summary>
             public string URL_ThemeFile
             {
-                get { return url_themeFile; }
+                get => url_themeFile;
                 set
                 {
                     if (value != url_themeFile)
@@ -474,7 +474,7 @@ namespace WinPaletter
             /// </summary>
             public string ReposName
             {
-                get { return reposName; }
+                get => reposName;
                 set
                 {
                     if (value != reposName)
@@ -640,7 +640,7 @@ namespace WinPaletter
                         i += 1;
 
                         if (allProgress > 0)
-                            ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                            ThemesFetcher.ReportProgress((int)(i / (float)allProgress * 100f));
                     }
                 }
             }
@@ -669,7 +669,7 @@ namespace WinPaletter
 
                 i += 1;
 
-                if (allProgress > 0) ThemesFetcher.ReportProgress((int)Math.Round(i / (double)allProgress * 100d));
+                if (allProgress > 0) ThemesFetcher.ReportProgress((int)(i / (float)allProgress * 100f));
             }
 
             BeginInvoke(() =>
@@ -802,11 +802,11 @@ namespace WinPaletter
 
                     if (selectedItem.TM.AppTheme.Enabled)
                     {
-                        Label14.ForeColor = selectedItem.TM.AppTheme.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
+                        Label14.ForeColor = selectedItem.TM.AppTheme.DarkMode ? Color.White.CB(-0.3f) : Color.Black.CB(0.3f);
                     }
                     else
                     {
-                        Label14.ForeColor = Program.Style.DarkMode ? Color.White.CB((float)-0.3d) : Color.Black.CB(0.3f);
+                        Label14.ForeColor = Program.Style.DarkMode ? Color.White.CB(-0.3f) : Color.Black.CB(0.3f);
                     }
 
                     back_btn.CustomColor = selectedItem.TM.Info.Color2;

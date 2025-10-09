@@ -30,7 +30,7 @@ namespace WinPaletter.UI.Controllers
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.65f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.65f));
         private TextureBrush pattern;
         private readonly List<Bitmap> DesignedFor_Badges = [];
 

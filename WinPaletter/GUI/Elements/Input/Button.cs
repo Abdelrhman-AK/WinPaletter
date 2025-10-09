@@ -45,12 +45,12 @@ namespace WinPaletter.UI.WP
         Rectangle MenuSplitterRectangle;
         bool isMouseOverMenuSplitter = false;
 
-        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
         private Color imageColor;
 
         public MouseState State = MouseState.None;
         private Point hoverPosition;
-        private Rectangle hoverRect;
+        private RectangleF hoverRect;
 
         public enum MouseState
         {
@@ -547,7 +547,7 @@ namespace WinPaletter.UI.WP
             State = MouseState.None;
 
             _hoverSize = Math.Max(Width, Height);
-            hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize);
+            hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
 
             if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
@@ -605,8 +605,8 @@ namespace WinPaletter.UI.WP
             if (CanAnimate && _ripple && State != MouseState.None)
             {
                 hoverPosition = e.Location;
-                hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
-                hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
+                hoverRect.X = hoverPosition.X - 0.5f * _hoverSize;
+                hoverRect.Y = hoverPosition.Y - 0.5f * _hoverSize;
 
                 Invalidate();
             }
@@ -697,7 +697,7 @@ namespace WinPaletter.UI.WP
         {
             if (CanAnimate)
             {
-                if (State != MouseState.None) { hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize); }
+                if (State != MouseState.None) { hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize); }
 
                 Transition.With(this, nameof(Color), Colorize()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
@@ -725,7 +725,7 @@ namespace WinPaletter.UI.WP
             set
             {
                 _hoverSize = value;
-                hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize);
+                hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
             }
         }
         #endregion

@@ -113,7 +113,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ColorBorder
         {
-            get { return _colorBorder; }
+            get => _colorBorder;
             set
             {
                 if (_colorBorder != value)
@@ -132,7 +132,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool Flat
         {
-            get { return _flat; }
+            get => _flat;
             set
             {
                 if (_flat != value)
@@ -151,10 +151,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonShadow
         {
-            get
-            {
-                return _ButtonShadow;
-            }
+            get => _ButtonShadow;
             set
             {
                 _ButtonShadow = value;
@@ -170,10 +167,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonDkShadow
         {
-            get
-            {
-                return _ButtonDkShadow;
-            }
+            get => _ButtonDkShadow;
             set
             {
                 _ButtonDkShadow = value;
@@ -189,10 +183,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get
-            {
-                return _ButtonHilight;
-            }
+            get => _ButtonHilight;
             set
             {
                 _ButtonHilight = value;
@@ -208,10 +199,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonLight
         {
-            get
-            {
-                return _ButtonLight;
-            }
+            get => _ButtonLight;
             set
             {
                 _ButtonLight = value;
@@ -227,7 +215,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color Hilight
         {
-            get { return _hilight; }
+            get => _hilight;
             set
             {
                 if (_hilight != value)
@@ -246,7 +234,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color HilightText
         {
-            get { return _hilightText; }
+            get => _hilightText;
             set
             {
                 if (_hilightText != value)
@@ -265,7 +253,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color MenuHilight
         {
-            get { return _menuHilight; }
+            get => _menuHilight;
             set
             {
                 if (_menuHilight != value)
@@ -284,7 +272,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color GrayText
         {
-            get { return _grayText; }
+            get => _grayText;
             set
             {
                 if (_grayText != value)

@@ -95,7 +95,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool Flat
         {
-            get { return _flat; }
+            get => _flat;
             set
             {
                 if (_flat != value)
@@ -112,7 +112,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color MenuBar
         {
-            get { return _menuBar; }
+            get => _menuBar;
             set
             {
                 if (_menuBar != value)
@@ -129,7 +129,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get { return buttonHilight; }
+            get => buttonHilight;
             set
             {
                 if (buttonHilight != value)
@@ -146,7 +146,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonShadow
         {
-            get { return buttonShadow; }
+            get => buttonShadow;
             set
             {
                 if (buttonShadow != value)
@@ -163,7 +163,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color Hilight
         {
-            get { return _hilight; }
+            get => _hilight;
             set
             {
                 if (_hilight != value)
@@ -180,7 +180,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color HilightText
         {
-            get { return _hilightText; }
+            get => _hilightText;
             set
             {
                 if (_hilightText != value)
@@ -197,7 +197,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color MenuHilight
         {
-            get { return _menuHilight; }
+            get => _menuHilight;
             set
             {
                 if (_menuHilight != value)
@@ -214,7 +214,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color GrayText
         {
-            get { return _grayText; }
+            get => _grayText;
             set
             {
                 if (_grayText != value)
@@ -231,7 +231,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public int MenuHeight
         {
-            get { return _MenuHeight; }
+            get => _MenuHeight;
             set
             {
                 if (value < 15) value = 15;
@@ -254,7 +254,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool PreviewSelectionItem
         {
-            get { return _previewSelectionItem; }
+            get => _previewSelectionItem;
             set
             {
                 if (_previewSelectionItem != value)

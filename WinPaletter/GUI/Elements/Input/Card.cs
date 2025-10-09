@@ -44,13 +44,13 @@ namespace WinPaletter.UI.WP
         Rectangle rect { get { UpdateRects(); return _rect; } }
         Rectangle rect_margin { get { UpdateRects(); return _rect_margin; } }
 
-        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.45f));
-        private readonly static TextureBrush NoiseHover = new(Resources.Noise.Fade(0.9f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.45f));
+        private static readonly TextureBrush NoiseHover = new(Resources.Noise.Fade(0.9f));
 
         public MouseState State = MouseState.None;
 
         private Point hoverPosition;
-        private Rectangle hoverRect;
+        private RectangleF hoverRect;
         private readonly int radius = 8;
 
         public enum MouseState
@@ -203,8 +203,8 @@ namespace WinPaletter.UI.WP
             if (CanAnimate && State != MouseState.None)
             {
                 hoverPosition = PointToClient(MousePosition);
-                hoverRect.X = (int)(hoverPosition.X - 0.5d * _hoverSize);
-                hoverRect.Y = (int)(hoverPosition.Y - 0.5d * _hoverSize);
+                hoverRect.X = hoverPosition.X - 0.5f * _hoverSize;
+                hoverRect.Y = hoverPosition.Y - 0.5f * _hoverSize;
 
                 Invalidate();
             }
@@ -269,7 +269,7 @@ namespace WinPaletter.UI.WP
         {
             if (CanAnimate)
             {
-                if (State != MouseState.None) { hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize); }
+                if (State != MouseState.None) { hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize); }
             }
         }
 
@@ -291,7 +291,7 @@ namespace WinPaletter.UI.WP
             set
             {
                 _hoverSize = value;
-                hoverRect = new((int)(hoverPosition.X - 0.5d * _hoverSize), (int)(hoverPosition.Y - 0.5d * _hoverSize), _hoverSize, _hoverSize);
+                hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
             }
         }
         #endregion

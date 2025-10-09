@@ -29,7 +29,7 @@ namespace WinPaletter.UI.WP
         private Color C1, C2;
         private float _Angle = 0f;
         private bool _Focused = true;
-        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.9f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.9f));
         public enum Styles
         {
             SwapColors,

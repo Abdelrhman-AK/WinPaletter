@@ -16,18 +16,18 @@ namespace libmsstyle
 
     public class VisualStyleStates
     {
-        public static readonly List<VisualStyleStateEntry> STATES_COMMON_DEFAULT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_COMMON_DEFAULT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_AEROWIZARD_HEADERAREA = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_AEROWIZARD_HEADERAREA = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NOMARGIN"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_PUSHBUTTON = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_PUSHBUTTON = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -38,7 +38,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "DEFAULTED_ANIMATING")
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_RADIOBUTTON = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_RADIOBUTTON = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "UNCHECKEDNORMAL"),
@@ -51,7 +51,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(8, "CHECKEDDISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CHARTVIEW_LINE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CHARTVIEW_LINE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "ACTIVE"),
@@ -59,7 +59,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "ERROR"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CHECKBOX = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CHECKBOX = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "UNCHECKEDNORMAL"),
@@ -84,14 +84,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(20, "EXCLUDEDDISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_GROUPBOX = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_GROUPBOX = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_COMMANDLINK = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_COMMANDLINK = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -102,7 +102,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "DEFAULTED_ANIMATING")
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_COMMANDLINKGLYPHS = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_COMMANDLINKGLYPHS = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -112,14 +112,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "DEFAULTED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_PUSHBUTTONDROPDOWN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_PUSHBUTTONDROPDOWN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TIME = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TIME = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -127,7 +127,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_COMMANDMODULE_SPLITBUTTON = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_COMMANDMODULE_SPLITBUTTON = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -138,20 +138,20 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "DISABLED")
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_COMMANDMODULE_LIBRARYPANE_GEN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_COMMANDMODULE_LIBRARYPANE_GEN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "HOT")
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CONTROLPANEL_CONTENTPANE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CONTROLPANEL_CONTENTPANE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "STANDALONE"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_COPYCLOSEBTN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_COPYCLOSEBTN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -161,7 +161,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CB_STYLE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CB_STYLE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -170,7 +170,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CB_DROPDOWNLR = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CB_DROPDOWNLR = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -179,7 +179,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CB_TRANSPARENTBG = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CB_TRANSPARENTBG = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -188,7 +188,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "FOCUSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CB_BORDER = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CB_BORDER = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -197,7 +197,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CB_READONLY = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CB_READONLY = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -206,7 +206,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CB_CUEBANNER = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CB_CUEBANNER = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -215,14 +215,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_CP_DROPDOWNITEM = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_CP_DROPDOWNITEM = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "HIGHLIGHTED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TAB = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TAB = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -230,7 +230,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "SELECTED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LINK_HELP = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LINK_HELP = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -240,7 +240,7 @@ namespace libmsstyle
 
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LINK_TASK = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LINK_TASK = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -250,7 +250,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "PAGE"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LINK_CONTENT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LINK_CONTENT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -259,14 +259,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LINK_SECTIONTITLE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LINK_SECTIONTITLE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "HOT"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_DATE_TEXT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_DATE_TEXT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -274,7 +274,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "SELECTED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_DATE_BORDER = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_DATE_BORDER = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -283,7 +283,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_DATE_CALENDERBUTTONRIGHT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_DATE_CALENDERBUTTONRIGHT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -292,14 +292,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_DND_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_DND_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "HIGHLIGHT"),
             new VisualStyleStateEntry(2, "NOHIGHLIGHT"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -312,7 +312,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(8, "CUEBANNER"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT_BG = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT_BG = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -324,7 +324,7 @@ namespace libmsstyle
 
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT_BGWITHBORDER = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT_BGWITHBORDER = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -333,7 +333,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "FOCUSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_EDITTEXT_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -342,7 +342,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_EXPLORERBAR_HDRPIN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_EXPLORERBAR_HDRPIN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -353,7 +353,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "SELECTEDPRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_EXPLORERBAR_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_EXPLORERBAR_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -361,7 +361,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_LABEL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_LABEL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -370,28 +370,28 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_LINK = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_LINK = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "HOVER"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_BODY = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_BODY = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "EMPHASIZED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_HEADER = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_FLYOUT_HEADER = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "HOVER"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_HEADER_ITEMSTATES = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_HEADER_ITEMSTATES = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -408,7 +408,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(12, "ICONSORTEDPRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_HEADER_LEFT_AND_RIGHT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_HEADER_LEFT_AND_RIGHT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -416,14 +416,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_HEADERSORTARROWSTATES = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_HEADERSORTARROWSTATES = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "SORTEDUP"),
             new VisualStyleStateEntry(2, "SORTEDDOWN"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_HEADERDROPDOWNSTATES = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_HEADERDROPDOWNSTATES = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -432,7 +432,7 @@ namespace libmsstyle
 
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_HEADERDROPDOWNFILTERSTATES = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_HEADERDROPDOWNFILTERSTATES = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -440,14 +440,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "HOT"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_HEADEROVERFLOWSTATES = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_HEADEROVERFLOWSTATES = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "HOT"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_ITEMSVIEW_SEARCHHIT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_ITEMSVIEW_SEARCHHIT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "START"),
@@ -456,14 +456,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "FINALSELECTED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_ITEMSVIEW_FOCUSRECT = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_ITEMSVIEW_FOCUSRECT = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "HOVER"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_ITEMSVIEW_PROPERTY = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_ITEMSVIEW_PROPERTY = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "SUBPROPERTY"),
@@ -481,7 +481,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(13, "PROGRESSBAR"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LISTBOX_SCROLL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LISTBOX_SCROLL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -490,7 +490,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LISTBOX_ITEMS = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LISTBOX_ITEMS = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "HOT"),
@@ -499,7 +499,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "SELECTEDNOTFOCUS"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LISTVIEW_ITEMS = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LISTVIEW_ITEMS = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -510,7 +510,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "HOTSELECTED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LISTVIEW_GROUPHEADER_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LISTVIEW_GROUPHEADER_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "OPEN"),
@@ -531,7 +531,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(16, "CLOSEMIXEDSELECTIONHOT"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_LISTVIEW_EXPCOLLAPSE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_LISTVIEW_EXPCOLLAPSE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -539,14 +539,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PUSHED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MENU_BARBG = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MENU_BARBG = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "ACTIVE"),
             new VisualStyleStateEntry(2, "INACTIVE"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MENU_BARITEM = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MENU_BARITEM = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -557,14 +557,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "DISABLEDPUSHED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MENU_BARBACKGROUND = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MENU_BARBACKGROUND = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "ACTIVE"),
             new VisualStyleStateEntry(2, "INACTIVE"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MENU_POPCHECK = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MENU_POPCHECK = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "CHECKMARKNORMAL"),
@@ -573,7 +573,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "BULLETDISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MENU_POPCHECKBG = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MENU_POPCHECKBG = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "DISABLED"),
@@ -581,7 +581,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "BITMAP"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MENU_POPITEMS = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MENU_POPITEMS = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -590,14 +590,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLEDHOT"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MENU_SYSTEM_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MENU_SYSTEM_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MDP_NEWAPPBUTTON = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MDP_NEWAPPBUTTON = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -608,7 +608,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "HOTCHECKED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_MONTHCAL_CELL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_MONTHCAL_CELL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "HOT"),
@@ -620,7 +620,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(7, "SELECTEDHOT"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "BB_NORMAL"),
@@ -629,7 +629,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "BB_DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_PAGE_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_PAGE_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -638,14 +638,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_PROGRESS_TRANSPARENT_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_PROGRESS_TRANSPARENT_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "PARTIAL"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_PROGRESS_FILL_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_PROGRESS_FILL_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -654,7 +654,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "PARTIAL"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_REBAR_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_REBAR_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -662,7 +662,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SCROLLBAR_ARROWBTN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SCROLLBAR_ARROWBTN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "UPNORMAL"),
@@ -688,7 +688,7 @@ namespace libmsstyle
 
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SCROLLBAR_STYLE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SCROLLBAR_STYLE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -698,7 +698,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "HOVER"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SCROLLBAR_SIZEBOX = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SCROLLBAR_SIZEBOX = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "RIGHTALIGN"),
@@ -711,7 +711,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(8, "HALFTOPLEFTALIGN"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPIN_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPIN_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -720,7 +720,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPP_MOREPROGRAMSARROW = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPP_MOREPROGRAMSARROW = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -728,7 +728,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPP_LOGOFFBUTTONS = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPP_LOGOFFBUTTONS = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -736,7 +736,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPP_MOREPROGRAMSTAB = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPP_MOREPROGRAMSTAB = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -746,7 +746,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "FOCUSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPP_SOFTWAREEXPLORER = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPP_SOFTWAREEXPLORER = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -756,7 +756,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "FOCUSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPP_OPENBOX = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPP_OPENBOX = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -766,7 +766,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "FOCUSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPP_MOREPROGRAMSARROWBACK = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPP_MOREPROGRAMSARROWBACK = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -774,7 +774,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_SPP_LOGOFFSPLITBUTTONDROPDOWN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_SPP_LOGOFFSPLITBUTTONDROPDOWN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -782,7 +782,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TABITEM_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TABITEM_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -792,13 +792,13 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "FOCUSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TASKDLG_CONTROLPANE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TASKDLG_CONTROLPANE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "STANDALONE"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TASKDLG_EXPANDOBUTTON = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TASKDLG_EXPANDOBUTTON = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -811,7 +811,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(8, "EXPANDEDDISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TEXTSTYLE_HLINK = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TEXTSTYLE_HLINK = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "HYPERLINK_NORMAL"),
@@ -820,14 +820,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "HYPERLINK_DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TEXTSTYLE_CTRLLABEL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TEXTSTYLE_CTRLLABEL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "CONTROLLABEL_NORMAL"),
             new VisualStyleStateEntry(2, "CONTROLLABEL_DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TOOLBARSTYLE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TOOLBARSTYLE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -841,7 +841,7 @@ namespace libmsstyle
 
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_CLOSE = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_CLOSE = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -849,14 +849,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_BALLOON_AND_STANDARD = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_BALLOON_AND_STANDARD = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "LINK"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_BALLOONSTEM = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_BALLOONSTEM = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "POINTINGUPLEFTWALL"),
@@ -867,7 +867,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "POINTINGDOWNLEFTWALL"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_WRENCH = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TOOLTIP_WRENCH = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -875,13 +875,13 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TRACKBAR_GENERAL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TRACKBAR_GENERAL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TRACKBAR_THUMB_GEN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TRACKBAR_THUMB_GEN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -891,7 +891,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(5, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TREEVIEW_ITEM = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TREEVIEW_ITEM = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -902,14 +902,14 @@ namespace libmsstyle
             new VisualStyleStateEntry(6, "HOTSELECTED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_TREEVIEW_GLYPH = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_TREEVIEW_GLYPH = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "CLOSED"),
             new VisualStyleStateEntry(2, "OPENED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_USERTILE_HOVERBACKGROUND = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_USERTILE_HOVERBACKGROUND = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -917,21 +917,21 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "PRESSED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_GRIPPER = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_GRIPPER = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
             new VisualStyleStateEntry(2, "CENTERED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_FRAME_GEN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_FRAME_GEN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "ACTIVE"),
             new VisualStyleStateEntry(2, "INACTIVE"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_CAPTION_GEN = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_CAPTION_GEN = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "ACTIVE"),
@@ -939,7 +939,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(3, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_BTN_AND_THUMB = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_BTN_AND_THUMB = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "NORMAL"),
@@ -948,7 +948,7 @@ namespace libmsstyle
             new VisualStyleStateEntry(4, "DISABLED"),
         };
 
-        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_CAPTION_SMALL = new List<VisualStyleStateEntry>()
+        public static readonly List<VisualStyleStateEntry> STATES_WINDOW_CAPTION_SMALL = new()
         {
             new VisualStyleStateEntry(0, "Common"),
             new VisualStyleStateEntry(1, "ACTIVE"),

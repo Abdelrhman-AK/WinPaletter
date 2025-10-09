@@ -196,10 +196,10 @@ namespace WinPaletter.UI.WP
 
                 ParentColor = Enabled ? ParentColor : Program.Style.Schemes.Disabled.Colors.Back(parentLevel);
 
-                BackColor = ParentColor.CB((float)(ParentColor.IsDark() ? 0.04d : -0.05d));
+                BackColor = ParentColor.CB(ParentColor.IsDark() ? 0.04f : -0.05f);
 
                 using (SolidBrush br = new(BackColor))
-                using (Pen P = new(ParentColor.CB((float)(ParentColor.IsDark() ? 0.06d : -0.07d))))
+                using (Pen P = new(ParentColor.CB(ParentColor.IsDark() ? 0.06f : -0.07f)))
                 {
                     if (!useSharpStyle)
                     {

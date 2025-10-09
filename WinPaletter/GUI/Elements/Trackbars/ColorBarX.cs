@@ -65,7 +65,7 @@ namespace WinPaletter.UI.WP
 
         public ColorBar.ModesList Mode
         {
-            get { return colorBar1.Mode; }
+            get => colorBar1.Mode;
             set
             {
                 if (colorBar1.Mode != value)
@@ -92,18 +92,6 @@ namespace WinPaletter.UI.WP
 
         private void value_btn_Click(object sender, EventArgs e)
         {
-            //string response = InputBox(Program.modifiedLang.InputValue, ((UI.WP.Button)sender).Text, Program.modifiedLang.ItMustBeNumerical);
-            //((UI.WP.Button)sender).Text = Math.Max(Math.Min(Conversion.Val(response), colorBar1.Maximum), colorBar1.Minimum).ToString();
-
-            //if (_animateChanges)
-            //{
-            //    FluentTransitions.Transition.With(this, nameof(Value), (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text))).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            //}
-            //else
-            //{
-            //    Value = (int)Math.Round(Conversion.Val(((UI.WP.Button)sender).Text));
-            //}
-
             textBox1.Text = Value.ToString();
             textBox1.BringToFront();
             Program.Animator.ShowSync(textBox1);

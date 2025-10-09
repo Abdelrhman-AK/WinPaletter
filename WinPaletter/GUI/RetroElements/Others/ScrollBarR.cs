@@ -68,10 +68,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get
-            {
-                return _ButtonHilight;
-            }
+            get => _ButtonHilight;
             set
             {
                 _ButtonHilight = value;
@@ -85,7 +82,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public int Value
         {
-            get { return _value; }
+            get => _value;
             set
             {
                 // Clamp the value
@@ -100,7 +97,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public int Maximum
         {
-            get { return maximum; }
+            get => maximum;
             set
             {
                 maximum = value;
@@ -116,7 +113,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public int Minimum
         {
-            get { return minimum; }
+            get => minimum;
             set
             {
                 minimum = value;
@@ -132,7 +129,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Orientation Orientation
         {
-            get { return orientation; }
+            get => orientation;
             set
             {
                 orientation = value;

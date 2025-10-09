@@ -24,7 +24,7 @@ namespace WinPaletter.UI.Controllers
 
         public int Value
         {
-            get { return trackBar1.Value; }
+            get => trackBar1.Value;
             set
             {
                 trackBar1.Value = value;
@@ -35,7 +35,7 @@ namespace WinPaletter.UI.Controllers
 
         public int Minimum
         {
-            get { return trackBar1.Minimum; }
+            get => trackBar1.Minimum;
             set
             {
                 if (trackBar1.Minimum != value)
@@ -47,7 +47,7 @@ namespace WinPaletter.UI.Controllers
 
         public int Maximum
         {
-            get { return trackBar1.Maximum; }
+            get => trackBar1.Maximum;
             set
             {
                 if (trackBar1.Maximum != value)

@@ -1,11 +1,9 @@
 ﻿using FluentTransitions;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -711,7 +709,7 @@ namespace WinPaletter
                 {
                     // Set the logging off flag to true to make WinPaletter exits without confirmation.
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
+                    Program.SendCommand($@"{SysPaths.System32}\logoff.exe", false);
                 }
                 else
                 {

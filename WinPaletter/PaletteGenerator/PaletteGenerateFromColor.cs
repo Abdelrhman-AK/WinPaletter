@@ -244,7 +244,7 @@ namespace WinPaletter
 
             // Add the lighter and darker colors into the list of colors to complete palette generation.
             // Trackbar1.Value is the number of colors to generate.
-            for (double i = 0d, loopTo = Trackbar1.Value / 2d; i <= loopTo; i++)
+            for (float i = 0f, loopTo = Trackbar1.Value / 2f; i <= loopTo; i++)
             {
                 Colors_List.Add(_Color.Dark((float)(i / Trackbar1.Value)));
                 Colors_List.Add(_Color.Light((float)(i / Trackbar1.Value)));

@@ -425,17 +425,17 @@ namespace WinPaletter.UI.Simulation
             float f0 = 0.5f;
             float f1 = 2f - f0;
 
-            Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
-            Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
-            Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
-            Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+            RectangleF R1 = new(r.X + f0 * d, r.Y, d, d);
+            RectangleF R2 = new(r.X + r.Width - f1 * d, r.Y, d, d);
+            RectangleF R3 = new(r.X - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d);
+            RectangleF R4 = new(r.X + r.Width - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d);
 
             path.AddArc(R4, 90f, 90f);
-            path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
+            path.AddLine(new PointF(R4.X, R4.Y), new PointF(R2.Right, R2.Bottom));
             path.AddArc(R2, 0f, -90);
             path.AddArc(R1, -90, -90);
             path.AddArc(R3, 0f, 90f);
-            path.AddLine(new Point(R3.X + R3.Width, R3.Y + R3.Height), new Point(R4.X, R4.Y + R4.Height));
+            path.AddLine(new PointF(R3.X + R3.Width, R3.Y + R3.Height), new PointF(R4.X, R4.Y + R4.Height));
 
             path.CloseFigure();
 
@@ -449,17 +449,17 @@ namespace WinPaletter.UI.Simulation
             float f0 = 0.5f;
             float f1 = 2f - f0;
 
-            Rectangle R1 = new((int)Math.Round(r.X + f0 * d), r.Y, d, d);
-            Rectangle R2 = new((int)Math.Round(r.X + r.Width - f1 * d), r.Y, d, d);
-            Rectangle R3 = new((int)Math.Round(r.X - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
-            Rectangle R4 = new((int)Math.Round(r.X + r.Width - f0 * d), (int)Math.Round(r.Y + r.Height - f0 * d), d, (int)Math.Round(f0 * d));
+            RectangleF R1 = new(r.X + f0 * d, r.Y, d, d);
+            RectangleF R2 = new(r.X + r.Width - f1 * d, r.Y, d, d);
+            RectangleF R3 = new(r.X - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d);
+            RectangleF R4 = new(r.X + r.Width - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d);
 
             path.AddArc(R4, 90f, 90f);
-            path.AddLine(new Point(R4.X, R4.Y), new Point(R2.Right, R2.Bottom));
+            path.AddLine(new PointF(R4.X, R4.Y), new PointF(R2.Right, R2.Bottom));
             path.AddArc(R2, 0f, -90);
             path.AddArc(R1, -90, -90);
             path.AddArc(R3, 0f, 90f);
-            path.AddLine(new Point(R3.X + R3.Width, R3.Y + R3.Height), new Point(R4.X, R4.Y + R4.Height));
+            path.AddLine(new PointF(R3.X + R3.Width, R3.Y + R3.Height), new PointF(R4.X, R4.Y + R4.Height));
 
             path.CloseFigure();
 
@@ -623,17 +623,16 @@ namespace WinPaletter.UI.Simulation
             SizeF s1X = s1.Measure(Font) + new SizeF(5f, 0f);
             SizeF s2X = s2.Measure(Font) + new SizeF(5f, 0f);
             SizeF s3X = s3.Measure(Font) + new SizeF(2f, 0f);
-            Rectangle Rect_ConsoleText0 = new(8, Rect_Titlebar.Bottom + 8, (int)Math.Round(s1X.Width), (int)Math.Round(s1X.Height));
-            Rectangle Rect_ConsoleText1 = new(8, Rect_ConsoleText0.Bottom + 3, (int)Math.Round(s2X.Width), (int)Math.Round(s2X.Height));
-            Rectangle Rect_ConsoleText2 = new(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, (int)Math.Round(s3X.Width), (int)Math.Round(s3X.Height));
-
-            Rectangle Rect_ConsoleCursor = new(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y - 2, 50, Rect_ConsoleText2.Height - 1);
+            RectangleF Rect_ConsoleText0 = new(8, Rect_Titlebar.Bottom + 8, s1X.Width, s1X.Height);
+            RectangleF Rect_ConsoleText1 = new(8, Rect_ConsoleText0.Bottom + 3, s2X.Width, s2X.Height);
+            RectangleF Rect_ConsoleText2 = new(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, s3X.Width, s3X.Height);
+            RectangleF Rect_ConsoleCursor = new(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y - 2, 50, Rect_ConsoleText2.Height - 1);
 
             if (UseAcrylic)
             {
                 if (adaptedBackBlurred != null) G.DrawRoundImage(adaptedBackBlurred, Rect);
                 G.FillRoundedRect(Noise, Rect);
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
+                using (SolidBrush br = new(Color.FromArgb((int)(_Opacity / 100f * 255f), Color_Background)))
                 {
                     G.FillRoundedRect(br, Rect);
                 }
@@ -643,7 +642,7 @@ namespace WinPaletter.UI.Simulation
             else
             {
                 if (adaptedBack != null) G.DrawRoundImage(adaptedBack, Rect);
-                using (SolidBrush br = new(Color.FromArgb((int)Math.Round(_Opacity / 100f * 255f), Color_Background)))
+                using (SolidBrush br = new(Color.FromArgb((int)(_Opacity / 100f * 255f), Color_Background)))
                 {
                     G.FillRoundedRect(br, Rect);
                 }
@@ -854,14 +853,14 @@ namespace WinPaletter.UI.Simulation
                     {
                         case CursorShape_Enum.bar:
                             {
-                                G.FillRectangle(br, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, 1, Rect_ConsoleCursor.Height));
+                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, 1, Rect_ConsoleCursor.Height));
                                 break;
                             }
 
                         case CursorShape_Enum.doubleUnderscore:
                             {
-                                G.FillRectangle(br, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom, (int)Math.Round(Rect_ConsoleCursor.Height * 0.5d), 1));
-                                G.FillRectangle(br, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 3, (int)Math.Round(Rect_ConsoleCursor.Height * 0.5d), 1));
+                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom, Rect_ConsoleCursor.Height * 0.5f, 1));
+                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 3, Rect_ConsoleCursor.Height * 0.5f, 1));
                                 break;
                             }
 
@@ -869,7 +868,7 @@ namespace WinPaletter.UI.Simulation
                             {
                                 using (Pen p = new(Color_Cursor))
                                 {
-                                    G.DrawRectangle(p, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, (int)Math.Round(Rect_ConsoleCursor.Height * 0.5d), Rect_ConsoleCursor.Height));
+                                    G.DrawRectangle(p, Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, Rect_ConsoleCursor.Height * 0.5f, Rect_ConsoleCursor.Height);
                                 }
 
                                 break;
@@ -877,25 +876,25 @@ namespace WinPaletter.UI.Simulation
 
                         case CursorShape_Enum.filledBox:
                             {
-                                G.FillRectangle(br, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, (int)Math.Round(Rect_ConsoleCursor.Height * 0.5d), Rect_ConsoleCursor.Height));
+                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, Rect_ConsoleCursor.Height * 0.5f, Rect_ConsoleCursor.Height));
                                 break;
                             }
 
                         case CursorShape_Enum.underscore:
                             {
-                                G.FillRectangle(br, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 1, (int)Math.Round(Rect_ConsoleCursor.Height * 0.5d), 1));
+                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 1, Rect_ConsoleCursor.Height * 0.5f, 1));
                                 break;
                             }
 
                         case CursorShape_Enum.vintage:
                             {
-                                G.FillRectangle(br, new Rectangle(Rect_ConsoleCursor.X, (int)Math.Round(Rect_ConsoleCursor.Bottom - CursorHeight / 100d * Rect_ConsoleCursor.Height), (int)Math.Round(Rect_ConsoleCursor.Height * 0.5d), (int)Math.Round(CursorHeight / 100d * Rect_ConsoleCursor.Height)));
+                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - CursorHeight / 100f * Rect_ConsoleCursor.Height, Rect_ConsoleCursor.Height * 0.5f, CursorHeight / 100f * Rect_ConsoleCursor.Height));
                                 break;
                             }
 
                         default:
                             {
-                                G.FillRectangle(br, new Rectangle(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, 1, Rect_ConsoleCursor.Height));
+                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, 1, Rect_ConsoleCursor.Height));
                                 break;
                             }
 

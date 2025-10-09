@@ -266,7 +266,7 @@ namespace WinPaletter
                 CMD_PreviewCUR2.Width = 8;
 
                 int all = CMD_PreviewCUR.Height - 4;
-                CMD_PreviewCUR2.Height = (int)Math.Round(all * (CMD_CursorSizeBar.Value / (double)CMD_CursorSizeBar.Maximum));
+                CMD_PreviewCUR2.Height = (int)(all * (CMD_CursorSizeBar.Value / (float)CMD_CursorSizeBar.Maximum));
                 CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             }
 
@@ -330,7 +330,7 @@ namespace WinPaletter
         public void UpdateCurPreview()
         {
             int all = CMD_PreviewCUR.Height - 4;
-            CMD_PreviewCUR2.Height = (int)Math.Round(all * (CMD_CursorSizeBar.Value / (double)CMD_CursorSizeBar.Maximum));
+            CMD_PreviewCUR2.Height = (int)(all * (CMD_CursorSizeBar.Value / (float)CMD_CursorSizeBar.Maximum));
             CMD_PreviewCUR2.Top = CMD_PreviewCUR.Height - CMD_PreviewCUR2.Height - 2;
             ApplyCursorShape();
         }
@@ -1559,7 +1559,7 @@ while ($true) {{
                 {
                     FontName.Text = dlg.Font.Name;
 
-                    CMD_FontPxHeight.Value = (int)Math.Round(dlg.Font.Size);
+                    CMD_FontPxHeight.Value = (int)(dlg.Font.Size);
 
                     GDI32.LogFont logFont = new();
                     dlg.Font.ToLogFont(logFont);

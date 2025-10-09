@@ -59,7 +59,7 @@ namespace WinPaletter
         /// <param name="element"></param>
         /// <param name="Active"></param>
         /// <param name="ToolWindow"></param>
-        public void Draw(Graphics G, Rectangle Rectangle, Element element, bool Active, bool ToolWindow)
+        public void Draw(Graphics G, RectangleF Rectangle, Element element, bool Active, bool ToolWindow)
         {
             // The visual style element.
             VisualStyleElement el;
@@ -179,7 +179,7 @@ namespace WinPaletter
                 {
                     // Draw the visual style element.
                     VisualStyleRenderer renderer = new(el);
-                    renderer.DrawBackground(G, Rectangle);
+                    renderer.DrawBackground(G, new Rectangle((int)Rectangle.X, (int)Rectangle.Y, (int)Rectangle.Width, (int)Rectangle.Height));
                 }
                 catch { } // Couldn't draw the visual style, may be a classic theme is enabled or the visual style is not supported.
             }

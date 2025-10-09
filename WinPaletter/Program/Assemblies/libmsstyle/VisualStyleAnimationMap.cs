@@ -4,7 +4,7 @@ namespace libmsstyle
 {
     public class VisualStyleAnimations
     {
-        public static readonly Dictionary<int, string> TimingFunctionNameMap = new Dictionary<int, string>()
+        public static readonly Dictionary<int, string> TimingFunctionNameMap = new()
         {
             {1 , "Linear"},
             {2 , "EaseIn"},
@@ -41,7 +41,7 @@ namespace libmsstyle
         }
 
 
-        public static readonly Dictionary<int, AnimationStates> AnimationNameMap = new Dictionary<int, AnimationStates>()
+        public static readonly Dictionary<int, AnimationStates> AnimationNameMap = new()
         {
             { 1, new AnimationStates("Expand", new Dictionary<int, string>
                 {

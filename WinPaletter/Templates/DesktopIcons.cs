@@ -119,7 +119,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Font IconFont
         {
-            get { return _iconFont; }
+            get => _iconFont;
             set
             {
                 _iconFont = value;

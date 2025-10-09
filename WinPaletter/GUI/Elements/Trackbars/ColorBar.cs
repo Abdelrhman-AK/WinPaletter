@@ -221,7 +221,7 @@ namespace WinPaletter.UI.WP
 
             if (ThumbDown)
             {
-                Value = (int)Math.Min(Math.Max(e.X / (float)Width * (float)Maximum, (float)_Minimum), (float)_Maximum);
+                Value = (int)Math.Min(Math.Max(e.X / (float)Width * Maximum, _Minimum), _Maximum);
                 InvalidatePosition();
             }
 
@@ -244,7 +244,10 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Keyboard
-        protected override bool IsInputKey(Keys keyData) => keyData is Keys.Left or Keys.Right or Keys.Home or Keys.End || base.IsInputKey(keyData);
+        protected override bool IsInputKey(Keys keyData)
+        {
+            return keyData is Keys.Left or Keys.Right or Keys.Home or Keys.End || base.IsInputKey(keyData);
+        }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -288,7 +291,10 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Paint
-        protected override void OnPaintBackground(PaintEventArgs pevent) => base.OnPaintBackground(pevent);
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {

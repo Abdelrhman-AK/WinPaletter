@@ -220,7 +220,7 @@ namespace WinPaletter
             foreach (CursorControl i in cursorsConatiner.Controls)
             {
                 i.Prop_Scale = trackBarX10.Value / 32f;
-                i.Width = (int)Math.Round(32f * i.Prop_Scale + 32f);
+                i.Width = (int)(32f * i.Prop_Scale + 32f);
                 i.Height = i.Width;
                 i.Refresh();
             }
@@ -397,23 +397,78 @@ namespace WinPaletter
             source0.Checked = !CursorControl.Prop_UseFromFile;
             textBox1.Text = CursorControl.Prop_File;
 
-            ComboBox5.SelectedIndex = (int)CursorControl.Prop_ArrowStyle;
-            ComboBox6.SelectedIndex = (int)CursorControl.Prop_CircleStyle;
+            switch (CursorControl.Prop_ArrowStyle)
+            {
+                case Paths.ArrowStyle.Aero:
+                    {
+                        curstyle_aero.Checked = true;
+                        break;
+                    }
+                case Paths.ArrowStyle.Modern:
+                    {
+                        curstyle_modern.Checked = true;
+                        break;
+                    }
+                case Paths.ArrowStyle.Classic:
+                    {
+                        curstyle_classic.Checked = true;
+                        break;
+                    }
+                default:
+                    {
+                        curstyle_aero.Checked = true;
+                        break;
+                    }
+            }
+
+            switch (CursorControl.Prop_CircleStyle)
+            {
+                case Paths.CircleStyle.Aero:
+                    {
+                        anistyle_metro.Checked = true;
+                        break;
+                    }
+                case Paths.CircleStyle.Aero7:
+                    {
+                        anistyle_aero.Checked = true;
+                        break;
+                    }
+                case Paths.CircleStyle.Classic:
+                    {
+                        anistyle_classic.Checked = true;
+                        break;
+                    }
+                case Paths.CircleStyle.Modern:
+                    {
+                        anistyle_modern.Checked = true;
+                        break;
+                    }
+                case Paths.CircleStyle.Fluid:
+                    {
+                        anistyle_fluid.Checked = true;
+                        break;
+                    }
+                default:
+                    {
+                        anistyle_metro.Checked = true;
+                        break;
+                    }
+            }
 
             PrimaryColor1.BackColor = CursorControl.Prop_PrimaryColor1;
             PrimaryColor2.BackColor = CursorControl.Prop_PrimaryColor2;
             CheckBox1.Checked = CursorControl.Prop_PrimaryColorGradient;
             ComboBox1.SelectedItem = Paths.ReturnStringFromGradientMode(CursorControl.Prop_PrimaryColorGradientMode);
             CheckBox5.Checked = CursorControl.Prop_PrimaryNoise;
-            trackBarX1.Value = (int)Math.Round(CursorControl.Prop_PrimaryNoiseOpacity * 100f);
+            trackBarX1.Value = (int)(CursorControl.Prop_PrimaryNoiseOpacity * 100f);
 
             SecondaryColor1.BackColor = CursorControl.Prop_SecondaryColor1;
             SecondaryColor2.BackColor = CursorControl.Prop_SecondaryColor2;
             CheckBox4.Checked = CursorControl.Prop_SecondaryColorGradient;
             ComboBox2.SelectedItem = Paths.ReturnStringFromGradientMode(CursorControl.Prop_SecondaryColorGradientMode);
             CheckBox3.Checked = CursorControl.Prop_SecondaryNoise;
-            trackBarX2.Value = (int)Math.Round(CursorControl.Prop_SecondaryNoiseOpacity * 100f);
-            trackBarX12.Value = (int)(CursorControl.Prop_BorderThickness * (float)trackBarX12.Maximum / 3f);
+            trackBarX2.Value = (int)(CursorControl.Prop_SecondaryNoiseOpacity * 100f);
+            trackBarX12.Value = (int)(CursorControl.Prop_BorderThickness * trackBarX12.Maximum / 3f);
             trackBarX11.Value = CursorControl.Prop_LoadingCircleHot_AnimationSpeed;
 
             CircleColor1.BackColor = CursorControl.Prop_LoadingCircleBack1;
@@ -421,19 +476,19 @@ namespace WinPaletter
             CheckBox8.Checked = CursorControl.Prop_LoadingCircleBackGradient;
             ComboBox4.SelectedItem = Paths.ReturnStringFromGradientMode(CursorControl.Prop_LoadingCircleBackGradientMode);
             CheckBox7.Checked = CursorControl.Prop_LoadingCircleBackNoise;
-            trackBarX3.Value = (int)Math.Round(CursorControl.Prop_LoadingCircleBackNoiseOpacity * 100f);
+            trackBarX3.Value = (int)(CursorControl.Prop_LoadingCircleBackNoiseOpacity * 100f);
 
             LoadingColor1.BackColor = CursorControl.Prop_LoadingCircleHot1;
             LoadingColor2.BackColor = CursorControl.Prop_LoadingCircleHot2;
             CheckBox2.Checked = CursorControl.Prop_LoadingCircleHotGradient;
             ComboBox3.SelectedItem = Paths.ReturnStringFromGradientMode(CursorControl.Prop_LoadingCircleHotGradientMode);
             CheckBox6.Checked = CursorControl.Prop_LoadingCircleHotNoise;
-            trackBarX4.Value = (int)Math.Round(CursorControl.Prop_LoadingCircleHotNoiseOpacity * 100f);
+            trackBarX4.Value = (int)(CursorControl.Prop_LoadingCircleHotNoiseOpacity * 100f);
 
             toggle1.Checked = CursorControl.Prop_Shadow_Enabled;
             ColorItem1.BackColor = CursorControl.Prop_Shadow_Color;
             trackBarX5.Value = CursorControl.Prop_Shadow_Blur;
-            trackBarX6.Value = (int)Math.Round(CursorControl.Prop_Shadow_Opacity * 100f);
+            trackBarX6.Value = (int)(CursorControl.Prop_Shadow_Opacity * 100f);
             trackBarX7.Value = CursorControl.Prop_Shadow_OffsetX;
             trackBarX8.Value = CursorControl.Prop_Shadow_OffsetY;
         }
@@ -460,8 +515,17 @@ namespace WinPaletter
             CursorControl.Prop_UseFromFile = source1.Checked;
             if (!ignoreSettingFile) CursorControl.Prop_File = textBox1.Text;
 
-            CursorControl.Prop_ArrowStyle = (Paths.ArrowStyle)ComboBox5.SelectedIndex;
-            CursorControl.Prop_CircleStyle = (Paths.CircleStyle)ComboBox6.SelectedIndex;
+            if (curstyle_aero.Checked) CursorControl.Prop_ArrowStyle = Paths.ArrowStyle.Aero;
+            else if (curstyle_modern.Checked) CursorControl.Prop_ArrowStyle = Paths.ArrowStyle.Modern;
+            else if (curstyle_classic.Checked) CursorControl.Prop_ArrowStyle = Paths.ArrowStyle.Classic;
+            else CursorControl.Prop_ArrowStyle = Paths.ArrowStyle.Aero;
+
+            if (anistyle_metro.Checked) CursorControl.Prop_CircleStyle = Paths.CircleStyle.Aero;
+            else if (anistyle_aero.Checked) CursorControl.Prop_CircleStyle = Paths.CircleStyle.Aero7;
+            else if (anistyle_classic.Checked) CursorControl.Prop_CircleStyle = Paths.CircleStyle.Classic;
+            else if (anistyle_modern.Checked) CursorControl.Prop_CircleStyle = Paths.CircleStyle.Modern;
+            else if (anistyle_fluid.Checked) CursorControl.Prop_CircleStyle = Paths.CircleStyle.Fluid;
+            else CursorControl.Prop_CircleStyle = Paths.CircleStyle.Aero;
 
             CursorControl.Prop_PrimaryColor1 = PrimaryColor1.BackColor;
             CursorControl.Prop_PrimaryColor2 = PrimaryColor2.BackColor;
@@ -476,7 +540,7 @@ namespace WinPaletter
             CursorControl.Prop_SecondaryColorGradientMode = Paths.ReturnGradientModeFromString((ComboBox2.SelectedItem ?? "vertical").ToString());
             CursorControl.Prop_SecondaryNoise = CheckBox3.Checked;
             CursorControl.Prop_SecondaryNoiseOpacity = trackBarX2.Value / 100f;
-            CursorControl.Prop_BorderThickness = ((float)trackBarX12.Value / (float)trackBarX12.Maximum) * 3f;
+            CursorControl.Prop_BorderThickness = (trackBarX12.Value / (float)trackBarX12.Maximum) * 3f;
             CursorControl.Prop_LoadingCircleHot_AnimationSpeed = trackBarX11.Value;
 
             CursorControl.Prop_LoadingCircleBack1 = CircleColor1.BackColor;
@@ -1319,46 +1383,6 @@ namespace WinPaletter
             }
         }
 
-        private void ComboBox5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!IsShown) return;
-
-            if (global.Checked)
-            {
-                foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
-                {
-                    i.Prop_ArrowStyle = (Paths.ArrowStyle)ComboBox5.SelectedIndex;
-                }
-            }
-            else
-            {
-                _SelectedControl.Prop_ArrowStyle = (Paths.ArrowStyle)ComboBox5.SelectedIndex;
-            }
-        }
-
-        private void ComboBox6_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!IsShown) return;
-
-            if (global.Checked)
-            {
-                foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
-                {
-                    if (i is not null)
-                    {
-                        i.Prop_CircleStyle = (Paths.CircleStyle)ComboBox6.SelectedIndex;
-                    }
-                }
-            }
-            else
-            {
-                if (_SelectedControl is not null)
-                {
-                    _SelectedControl.Prop_CircleStyle = (Paths.CircleStyle)ComboBox6.SelectedIndex;
-                }
-            }
-        }
-
         private void ColorItem1_Click(object sender, EventArgs e)
         {
             if (e is DragEventArgs)
@@ -1737,7 +1761,7 @@ namespace WinPaletter
                 {
                     if (i is not null)
                     {
-                        i.Prop_BorderThickness = ((float)(sender as TrackBarX).Value / (float)(sender as TrackBarX).Maximum) * 3f;
+                        i.Prop_BorderThickness = ((sender as TrackBarX).Value / (float)(sender as TrackBarX).Maximum) * 3f;
                         i.Invalidate();
                     }
                 }
@@ -1746,7 +1770,7 @@ namespace WinPaletter
             {
                 if (_SelectedControl is not null)
                 {
-                    _SelectedControl.Prop_BorderThickness = ((float)(sender as TrackBarX).Value / (float)(sender as TrackBarX).Maximum) * 3f;
+                    _SelectedControl.Prop_BorderThickness = ((sender as TrackBarX).Value / (float)(sender as TrackBarX).Maximum) * 3f;
                     _SelectedControl.Invalidate();
                 }
             }
@@ -1850,6 +1874,62 @@ namespace WinPaletter
         private void ColorItem1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             _SelectedControl.Prop_Shadow_Color = e.Color;
+        }
+
+        private void curstyle_aero_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!IsShown) return;
+
+            Paths.ArrowStyle style = sender == curstyle_aero && (sender as RadioImage).Checked ? Paths.ArrowStyle.Aero :
+                                     sender == curstyle_classic && (sender as RadioImage).Checked ? Paths.ArrowStyle.Classic :
+                                     sender == curstyle_modern && (sender as RadioImage).Checked ? Paths.ArrowStyle.Modern : Paths.ArrowStyle.Aero;
+
+            if (global.Checked)
+            {
+                foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
+                {
+                    i.Prop_ArrowStyle = style;
+                }
+            }
+            else
+            {
+                _SelectedControl.Prop_ArrowStyle = style;
+            }
+        }
+
+        private void anistyle_metro_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!IsShown) return;
+
+            Paths.CircleStyle style = sender == anistyle_metro && (sender as RadioImage).Checked ? Paths.CircleStyle.Aero :
+                                      sender == anistyle_aero && (sender as RadioImage).Checked ? Paths.CircleStyle.Aero7 :
+                                      sender == anistyle_classic && (sender as RadioImage).Checked ? Paths.CircleStyle.Classic :
+                                      sender == anistyle_modern && (sender as RadioImage).Checked ? Paths.CircleStyle.Modern :
+                                      sender == anistyle_fluid && (sender as RadioImage).Checked ? Paths.CircleStyle.Fluid : Paths.CircleStyle.Aero;
+
+            CircleColor2.Enabled = !anistyle_aero.Checked;
+            CheckBox8.Enabled = !anistyle_aero.Checked;
+            ComboBox4.Enabled = !anistyle_aero.Checked;
+            CheckBox7.Enabled = !anistyle_aero.Checked;
+            trackBarX3.Enabled = !anistyle_aero.Checked;
+
+            if (global.Checked)
+            {
+                foreach (CursorControl i in cursorsConatiner.Controls.OfType<CursorControl>())
+                {
+                    if (i is not null)
+                    {
+                        i.Prop_CircleStyle = style;
+                    }
+                }
+            }
+            else
+            {
+                if (_SelectedControl is not null)
+                {
+                    _SelectedControl.Prop_CircleStyle = style;
+                }
+            }
         }
     }
 }

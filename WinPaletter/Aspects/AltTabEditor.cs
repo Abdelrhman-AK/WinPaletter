@@ -269,8 +269,8 @@ namespace WinPaletter
                 WinElement1.Size = new(450, 150);
             }
 
-            WinElement1.Left = (int)Math.Round((WinElement1.Parent.Width - WinElement1.Width) / 2d);
-            WinElement1.Top = (int)Math.Round((WinElement1.Parent.Height - WinElement1.Height) / 2d);
+            WinElement1.Left = (int)((WinElement1.Parent.Width - WinElement1.Width) / 2f);
+            WinElement1.Top = (int)((WinElement1.Parent.Height - WinElement1.Height) / 2f);
 
             tabs_preview_1.DoubleBuffer();
         }

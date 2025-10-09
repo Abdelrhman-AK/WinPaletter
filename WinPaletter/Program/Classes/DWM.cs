@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -31,10 +29,7 @@ namespace WinPaletter
         /// compatibility with certain systems.</param>
         public static void DropEffect(IntPtr hwnd, Padding Margins = default, bool Border = true, BackdropStyles Style = BackdropStyles.Mica, bool useOldAcrylicMethod = false)
         {
-            if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
-            {
-                Margins = new(-1, -1, -1, -1);
-            }
+            Margins = Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0) ? new(-1) : Margins;
 
             bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
             bool Transparency_W10x = (OS.W10 || OS.W11 || OS.W12) && ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true);
@@ -200,7 +195,7 @@ namespace WinPaletter
         {
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x || OS.W10) return; // Mica and Tabbed are only supported on Windows 11 and later
 
-            if (margins == Padding.Empty) margins = new Padding(-1);
+            margins = margins == default || margins == null || margins == Padding.Empty || margins == new Padding(0) ? new(-1) : margins;
 
             DrawAero(hwnd, margins, false); // Extend frame into client area
 
@@ -296,10 +291,7 @@ namespace WinPaletter
         {
             if (OS.WXP) return; // Unsupported OS
 
-            if (Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0))
-            {
-                Margins = new(-1, -1, -1, -1);
-            }
+            Margins = Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0) ? new(-1) : Margins;
 
             if (!OS.WVista && !OS.W7 && !OS.W8x && !OS.W10 && eraseOldBackdrops)
             {
@@ -319,7 +311,7 @@ namespace WinPaletter
         /// If true, removes the standard window border and caption (makes the window borderless).
         /// </param>
         /// <param name="opacity">Opacity value from 0.0 (fully transparent) to 1.0 (fully opaque).</param>
-        public static void DrawTransparentGray(IntPtr hWnd, bool noWindowBorders = true, double opacity = 0.5)
+        public static void DrawTransparentGray(IntPtr hWnd, bool noWindowBorders = true, float opacity = 0.5f)
         {
             if (hWnd == IntPtr.Zero) return;
 
@@ -344,7 +336,7 @@ namespace WinPaletter
             User32.SetWindowLong(hWnd, GWL_EXSTYLE, exStyle);
 
             // Set gray color and opacity
-            byte alpha = (byte)(opacity * 255);
+            byte alpha = (byte)(opacity * 255f);
             var color = Color.FromArgb(5, 5, 5);
             uint colorRef = (uint)((color.R) | (color.G << 8) | (color.B << 16));
 

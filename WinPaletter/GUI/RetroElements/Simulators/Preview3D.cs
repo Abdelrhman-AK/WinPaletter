@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -52,7 +51,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color WindowFrame
         {
-            get { return windowFrame; }
+            get => windowFrame;
             set
             {
                 if (windowFrame != value)
@@ -68,7 +67,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonShadow
         {
-            get { return buttonShadow; }
+            get => buttonShadow;
             set
             {
                 if (buttonShadow != value)
@@ -84,7 +83,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonDkShadow
         {
-            get { return buttonDkShadow; }
+            get => buttonDkShadow;
             set
             {
                 if (buttonDkShadow != value)
@@ -100,7 +99,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get { return buttonHilight; }
+            get => buttonHilight;
             set
             {
                 if (buttonHilight != value)
@@ -116,7 +115,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonLight
         {
-            get { return buttonLight; }
+            get => buttonLight;
             set
             {
                 if (buttonLight != value)
@@ -132,7 +131,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public int LineSize
         {
-            get { return lineSize; }
+            get => lineSize;
             set
             {
                 if (lineSize != value)
@@ -176,9 +175,9 @@ namespace WinPaletter.UI.Retro
 
             Rectangle Filling = new(LightLeftRect.Right, LightTopRect.Bottom, ShadowRightRect.Left - LightLeftRect.Right, ShadowBottomRect.Top - LightTopRect.Bottom);
 
-            int tw = (int)Math.Round(Filling.Width / 2d);
-            int th = (int)Math.Round(LineSize * 1.75d);
-            Rectangle TextRect = new((int)Math.Round(Filling.X + (Filling.Width - tw) / 2d), (int)Math.Round(Filling.Y + (Filling.Height - th) / 2d), tw, th);
+            float tw = Filling.Width / 2f;
+            float th = LineSize * 1.75f;
+            RectangleF TextRect = new(Filling.X + (Filling.Width - tw) / 2f, Filling.Y + (Filling.Height - th) / 2f, tw, th);
 
             // #################################################################################
 

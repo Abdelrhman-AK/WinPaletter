@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
@@ -30,14 +29,14 @@ namespace WinPaletter.TypesExtensions
         /// <param name="rectangle">The rectangle that specifies the layout of the text within the <paramref name="clientRectangle"/>.</param>
         /// <param name="format">The <see cref="StringFormat"/> that specifies text layout information, such as alignment and line spacing. Cannot be
         /// null.</param>
-        public static void DrawGlowString(this Graphics G, int glowSize, string text, Font font, Color foreColor, Color glowColor, Rectangle clientRectangle, Rectangle rectangle, StringFormat format)
+        public static void DrawGlowString(this Graphics G, int glowSize, string text, Font font, Color foreColor, Color glowColor, RectangleF clientRectangle, RectangleF rectangle, StringFormat format)
         {
-            int w = (int)Math.Round(Math.Max(8d, clientRectangle.Width / 5d));
-            int h = (int)Math.Round(Math.Max(8d, clientRectangle.Height / 5d));
+            float w = Math.Max(8f, clientRectangle.Width / 5f);
+            float h = Math.Max(8f, clientRectangle.Height / 5f);
             float emSize = G.DpiY * font.SizeInPoints / 72f;
             if (text is null | string.IsNullOrWhiteSpace(text)) text = string.Empty;
 
-            using (Bitmap b = new(w, h))
+            using (Bitmap b = new((int)w, (int)h))
             using (GraphicsPath gp = new())
             using (Graphics gx = Graphics.FromImage(b))
             using (Matrix m = new(1.0f / 5f, 0f, 0f, 1.0f / 5f, -(1.0f / 5f), -(1.0f / 5f)))
@@ -54,7 +53,7 @@ namespace WinPaletter.TypesExtensions
                 InterpolationMode oldInterpolationMode = G.InterpolationMode;
 
                 G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                G.DrawImage(b, clientRectangle, 0, 0, b.Width, b.Height, GraphicsUnit.Pixel);
+                G.DrawImage(b, new Rectangle((int)clientRectangle.X, (int)clientRectangle.Y, (int)clientRectangle.Width, (int)clientRectangle.Height), 0, 0, b.Width, b.Height, GraphicsUnit.Pixel);
 
                 G.DrawString(text, font, br, rectangle, format);
 
@@ -76,7 +75,7 @@ namespace WinPaletter.TypesExtensions
         /// 0.</param>
         /// <param name="rounded">A value indicating whether the glow effect should follow a rounded rectangle shape. If <see langword="true"/>, the
         /// glow will be applied to a rounded rectangle; otherwise, it will follow the standard rectangle shape.</param>
-        public static void DrawGlow(this Graphics G, Rectangle rectangle, Color glowColor, int glowSize = 5, int glowFade = 7, bool rounded = false)
+        public static void DrawGlow(this Graphics G, RectangleF rectangle, Color glowColor, int glowSize = 5, int glowFade = 7, bool rounded = false)
         {
             if (G is null) return;
             if (rectangle.Width <= 0 || rectangle.Height <= 0) return;
@@ -84,9 +83,9 @@ namespace WinPaletter.TypesExtensions
             if (glowSize <= 0) glowSize = 1;
             if (glowFade <= 0) glowFade = 1;
 
-            Rectangle glowRect = rounded ? GetRoundedRectangle(rectangle, glowSize) : new(rectangle.X - glowSize - 2, rectangle.Y - glowSize - 2, rectangle.Width + glowSize * 2 + 3, rectangle.Height + glowSize * 2 + 3);
+            RectangleF glowRect = rounded ? GetRoundedRectangle(rectangle, glowSize) : new(rectangle.X - glowSize - 2, rectangle.Y - glowSize - 2, rectangle.Width + glowSize * 2 + 3, rectangle.Height + glowSize * 2 + 3);
 
-            using (Bitmap glowBitmap = new((int)Math.Round(glowRect.Width / (double)glowFade), (int)Math.Round(glowRect.Height / (double)glowFade)))
+            using (Bitmap glowBitmap = new((int)(glowRect.Width / glowFade), (int)(glowRect.Height / glowFade)))
             using (Graphics glowGraphics = Graphics.FromImage(glowBitmap))
             {
                 Rectangle glowRect2 = new(1, 1, glowBitmap.Width, glowBitmap.Height);
@@ -97,10 +96,10 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        private static Rectangle GetRoundedRectangle(Rectangle rectangle, int radius)
+        private static RectangleF GetRoundedRectangle(RectangleF rectangle, int radius)
         {
             int diameter = 2 * radius;
-            Rectangle roundedRect = new(rectangle.X - radius, rectangle.Y - radius, rectangle.Width + diameter, rectangle.Height + diameter);
+            RectangleF roundedRect = new(rectangle.X - radius, rectangle.Y - radius, rectangle.Width + diameter, rectangle.Height + diameter);
             return roundedRect;
         }
 
@@ -125,7 +124,7 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Draws an emulated Windows Vista/7 Aero effect preview.
         /// </summary>
-        public static void DrawAeroEffect(this Graphics G, Rectangle rect, Bitmap backgroundBlurred, Color colorizationColor, float colorBalance, Color glowColor, float glowBalance, float alpha, int radius, bool roundedCorners)
+        public static void DrawAeroEffect(this Graphics G, RectangleF rect, Bitmap backgroundBlurred, Color colorizationColor, float colorBalance, Color glowColor, float glowBalance, float alpha, int radius, bool roundedCorners)
         {
             if (G is null) return;
             if (rect.Width <= 0 || rect.Height <= 0) return;
@@ -139,7 +138,7 @@ namespace WinPaletter.TypesExtensions
             if (alpha < 0f) alpha = 0f;
             if (alpha > 1f) alpha = 1f;
 
-            Rectangle innerRect = new(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
+            RectangleF innerRect = new(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
 
             // Set smoothing for rounded corners
             if (roundedCorners && radius > 0)
@@ -160,7 +159,7 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Internal helper that renders Aero layers in correct order.
         /// </summary>
-        private static void RenderAeroLayers(Graphics G, Rectangle rect, Bitmap backgroundBlurred, Color colorizationColor, float colorBalance, Color glowColor, float glowBalance, float alpha)
+        private static void RenderAeroLayers(Graphics G, RectangleF rect, Bitmap backgroundBlurred, Color colorizationColor, float colorBalance, Color glowColor, float glowBalance, float alpha)
         {
             // Base blurred background
             G.DrawImage(backgroundBlurred, rect);
@@ -200,8 +199,8 @@ namespace WinPaletter.TypesExtensions
             if (whiteAlpha > 0)
             {
                 using (LinearGradientBrush whiteBrush = new(
-                           new Point(rect.Left, rect.Top),
-                           new Point(rect.Left, rect.Bottom),
+                           new PointF(rect.Left, rect.Top),
+                           new PointF(rect.Left, rect.Bottom),
                            Color.FromArgb(whiteAlpha, Color.White),
                            Color.Transparent))
                 {
@@ -216,7 +215,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="rectangle">The <see cref="Rectangle"/> to round.</param>
         /// <param name="radius">The radius of the corners. If set to -1, the radius will default to half the smaller dimension of the rectangle.</param>
         /// <returns>A <see cref="GraphicsPath"/> representing the rounded rectangle.</returns>
-        public static GraphicsPath Round(this Rectangle rectangle, int radius = -1) => Round(new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius);
+        public static GraphicsPath Round(this Rectangle rectangle, int radius = -1)
+        {
+            return Round(new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius);
+        }
 
         /// <summary>
         /// Creates a <see cref="GraphicsPath"/> representing a rectangle with rounded corners.
@@ -352,7 +354,7 @@ namespace WinPaletter.TypesExtensions
         /// are not applied.</param>
         /// <param name="forcedRoundCorner">A value indicating whether rounded corners should be applied regardless of the global style settings. If <see
         /// langword="true"/>, rounded corners are applied if <paramref name="radius"/> is greater than 0.</param>
-        public static void DrawRoundImage(this Graphics G, Image image, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false)
+        public static void DrawRoundImage(this Graphics G, Image image, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false)
         {
             if (G == null || image == null || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
 
@@ -459,22 +461,22 @@ namespace WinPaletter.TypesExtensions
         /// and adjusted based on the current style's dark mode setting.</remarks>
         /// <param name="G">The <see cref="Graphics"/> object used to draw the rectangle. Cannot be <see langword="null"/>.</param>
         /// <param name="pen">The <see cref="Pen"/> used to draw the rectangle. Must be valid and non-<see langword="null"/>.</param>
-        /// <param name="rectangle">The <see cref="Rectangle"/> that defines the bounds of the rounded rectangle. Must have positive width and height.</param>
+        /// <param name="rectangleF">The <see cref="RectangleF"/> that defines the bounds of the rounded rectangle. Must have positive width and height.</param>
         /// <param name="radius">The radius of the rounded corners. If set to -1, the default radius from the current style is used.  The radius is
         /// clamped to half the width or height of the rectangle to prevent overlapping arcs.</param>
         /// <param name="forcedRoundCorner">A value indicating whether rounded corners should be forced, even if the current style does not enable them.</param>
         /// <param name="reverseBevel">A value indicating whether the bevel effect should be reversed. If <see langword="true"/>, the bevel is drawn on the
         /// opposite edge.</param>
-        public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false)
+        public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, RectangleF rectangleF, float radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false)
         {
-            if (G is null || !pen.IsValid() || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
+            if (G is null || !pen.IsValid() || rectangleF.IsEmpty || rectangleF.Width <= 0 || rectangleF.Height <= 0) return;
 
             bool dark = Program.Style.DarkMode;
             bool useRoundedCorners = Program.Style.RoundedCorners || forcedRoundCorner;
             if (radius == -1) radius = Program.Style.Radius;
 
             // Clamp radius to half of width/height to avoid overlapping arcs
-            radius = Math.Min(radius, Math.Min(rectangle.Width, rectangle.Height) / 2);
+            radius = Math.Min(radius, Math.Min(rectangleF.Width, rectangleF.Height) / 2f);
 
             Color baseColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;
             Color bevelColor = baseColor.CB(dark ? 0.09f : -0.08f);
@@ -482,8 +484,8 @@ namespace WinPaletter.TypesExtensions
             bool drawTop = dark ^ reverseBevel;
 
             // Create a path for rounded rectangle
-            using GraphicsPath path = useRoundedCorners ? rectangle.Round(radius) : new GraphicsPath() { };
-            if (!useRoundedCorners) path.AddRectangle(rectangle);
+            using GraphicsPath path = useRoundedCorners ? rectangleF.Round((int)radius) : new GraphicsPath() { };
+            if (!useRoundedCorners) path.AddRectangle(rectangleF);
 
             // Draw the main rounded rectangle
             G.DrawPath(pen, path);
@@ -491,12 +493,12 @@ namespace WinPaletter.TypesExtensions
             if (path != null && path.PointCount > 0 && pen is not null)
             {
                 // Draw the bevel effect along top or bottom edge
-                float bevelY = drawTop ? rectangle.Top : rectangle.Bottom;
+                float bevelY = drawTop ? rectangleF.Top : rectangleF.Bottom;
                 float halfRadius = radius / 2f;
-                float x1 = rectangle.Left + radius;
-                float x2 = rectangle.Right - radius;
+                float x1 = rectangleF.Left + radius;
+                float x2 = rectangleF.Right - radius;
 
-                using LinearGradientBrush bevelBrush = new(new RectangleF(rectangle.Left, bevelY - 1, rectangle.Width, 2), bevelColor, Color.Transparent, 90f)
+                using LinearGradientBrush bevelBrush = new(new RectangleF(rectangleF.Left, bevelY - 1, rectangleF.Width, 2), bevelColor, Color.Transparent, 90f)
                 {
                     InterpolationColors = new ColorBlend(3)
                     {
@@ -515,6 +517,22 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        /// <summary>
+        /// Draws a rounded rectangle with beveled corners onto the specified <see cref="Graphics"/> surface.
+        /// </summary>
+        /// <remarks>This method draws a rounded rectangle with optional beveled corners. The appearance
+        /// of the corners can be customized using the <paramref name="radius"/>, <paramref name="forcedRoundCorner"/>,
+        /// and <paramref name="reverseBevel"/> parameters.</remarks>
+        /// <param name="G">The <see cref="Graphics"/> object on which the rounded rectangle will be drawn.</param>
+        /// <param name="pen">The <see cref="Pen"/> used to outline the rounded rectangle.</param>
+        /// <param name="rectangle">The <see cref="Rectangle"/> that defines the bounds of the rounded rectangle.</param>
+        /// <param name="radius">The radius of the rounded corners. If set to a negative value, a default radius is used.</param>
+        /// <param name="forcedRoundCorner">A value indicating whether the corners should always be rounded, even if the radius is zero or negative.</param>
+        /// <param name="reverseBevel">A value indicating whether the bevel effect should be reversed, creating an inverted appearance.</param>
+        public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, Rectangle rectangle, float radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false)
+        {
+            DrawRoundedRectBeveled(G, pen, new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius, forcedRoundCorner, reverseBevel);
+        }
 
         /// <summary>
         /// Draws a beveled rectangle with rounded corners in reverse bevel style.
@@ -593,7 +611,45 @@ namespace WinPaletter.TypesExtensions
         /// <param name="targetRect">The rectangle to check for containment within the <paramref name="parentRect"/>.</param>
         /// <returns><see langword="true"/> if the <paramref name="targetRect"/> is fully contained within the <paramref
         /// name="parentRect"/>; otherwise, <see langword="false"/>.</returns>
-        public static bool Contains_ButNotExceed(this Rectangle parentRect, Rectangle targetRect) => targetRect.Left >= parentRect.Left && targetRect.Top >= parentRect.Top && targetRect.Right <= parentRect.Right && targetRect.Bottom <= parentRect.Bottom;
+        public static bool Contains_ButNotExceed(this Rectangle parentRect, Rectangle targetRect)
+        {
+            return targetRect.Left >= parentRect.Left && targetRect.Top >= parentRect.Top && targetRect.Right <= parentRect.Right && targetRect.Bottom <= parentRect.Bottom;
+        }
+
+        /// <summary>
+        /// Determines whether the specified point lies within the border of the rectangle.
+        /// </summary>
+        /// <remarks>A point is considered to be within the border if it lies inside the rectangle but outside an inner
+        /// rectangle that is shrunk inward by the specified border width.</remarks>
+        /// <param name="rectangleF">The rectangle to check against.</param>
+        /// <param name="pointToCheck">The point to evaluate.</param>
+        /// <param name="borderWidth">The width of the border to consider, in pixels. Must be greater than 0. Defaults to 1.</param>
+        /// <returns><see langword="true"/> if the point is within the border of the rectangle; otherwise, <see langword="false"/>.</returns>
+        public static bool BordersContains(this RectangleF rectangleF, PointF pointToCheck, float borderWidth = 1f)
+        {
+            if (borderWidth <= 0f) return false;
+
+            // Inflate inward to shrink the rectangle by the border width
+            RectangleF inner = RectangleF.Inflate(rectangleF, -borderWidth, -borderWidth);
+
+            // If the point is inside the rectangle but outside the inner shrunken rectangle, it's on the border
+            return rectangleF.Contains(pointToCheck) && !inner.Contains(pointToCheck);
+        }
+
+        /// <summary>
+        /// Determines whether the specified point lies within the border of the rectangle.
+        /// </summary>
+        /// <remarks>A point is considered to be within the border if it lies inside the rectangle but outside an inner
+        /// rectangle that is shrunk inward by the specified border width.</remarks>
+        /// <param name="rectangleF">The rectangle to check against.</param>
+        /// <param name="pointToCheck">The point to evaluate.</param>
+        /// <param name="borderWidth">The width of the border to consider, in pixels. Must be greater than 0. Defaults to 1.</param>
+        /// <returns><see langword="true"/> if the point is within the border of the rectangle; otherwise, <see langword="false"/>.</returns>
+        public static bool BordersContains(this RectangleF rectangleF, Point pointToCheck, float borderWidth = 1f)
+        {
+            return BordersContains(rectangleF, new PointF(pointToCheck.X, pointToCheck.Y), borderWidth);
+        }
+
 
         /// <summary>
         /// Determines whether the specified point lies within the border of the rectangle.
@@ -606,13 +662,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns><see langword="true"/> if the point is within the border of the rectangle; otherwise, <see langword="false"/>.</returns>
         public static bool BordersContains(this Rectangle rectangle, Point pointToCheck, float borderWidth = 1f)
         {
-            if (borderWidth <= 0f) return false;
-
-            // Inflate inward to shrink the rectangle by the border width
-            RectangleF inner = RectangleF.Inflate(rectangle, -borderWidth, -borderWidth);
-
-            // If the point is inside the rectangle but outside the inner shrunken rectangle, it's on the border
-            return rectangle.Contains(pointToCheck) && !inner.Contains(pointToCheck);
+            return BordersContains(rectangle, new PointF(pointToCheck.X, pointToCheck.Y), borderWidth);
         }
 
         /// <summary>
@@ -891,8 +941,8 @@ namespace WinPaletter.TypesExtensions
                         // Use imageAlign to align the block
                         RectangleF totalRect = AlignIn(bounds, new SizeF(totalWidth, maxHeight), imageAlign);
 
-                        RectangleF imageRegion = new RectangleF(totalRect.X, totalRect.Y, imageSize.Width, maxHeight);
-                        RectangleF textRegion = new RectangleF(imageRegion.Right + spacing, totalRect.Y, textSize.Width, maxHeight);
+                        RectangleF imageRegion = new(totalRect.X, totalRect.Y, imageSize.Width, maxHeight);
+                        RectangleF textRegion = new(imageRegion.Right + spacing, totalRect.Y, textSize.Width, maxHeight);
 
                         imageRect = AlignIn(imageRegion, imageSize, imageAlign);
                         textRect = AlignIn(textRegion, textSize, textAlign);
@@ -907,8 +957,8 @@ namespace WinPaletter.TypesExtensions
                         // Use textAlign to align the block
                         RectangleF totalRect = AlignIn(bounds, new SizeF(totalWidth, maxHeight), textAlign);
 
-                        RectangleF textRegion = new RectangleF(totalRect.X, totalRect.Y, textSize.Width, maxHeight);
-                        RectangleF imageRegion = new RectangleF(textRegion.Right + spacing, totalRect.Y, imageSize.Width, maxHeight);
+                        RectangleF textRegion = new(totalRect.X, totalRect.Y, textSize.Width, maxHeight);
+                        RectangleF imageRegion = new(textRegion.Right + spacing, totalRect.Y, imageSize.Width, maxHeight);
 
                         imageRect = AlignIn(imageRegion, imageSize, imageAlign);
                         textRect = AlignIn(textRegion, textSize, textAlign);
@@ -923,8 +973,8 @@ namespace WinPaletter.TypesExtensions
                         // Use imageAlign to align the block
                         RectangleF totalRect = AlignIn(bounds, new SizeF(maxWidth, totalHeight), imageAlign);
 
-                        RectangleF imageRegion = new RectangleF(totalRect.X, totalRect.Y, maxWidth, imageSize.Height);
-                        RectangleF textRegion = new RectangleF(totalRect.X, imageRegion.Bottom + spacing, maxWidth, textSize.Height);
+                        RectangleF imageRegion = new(totalRect.X, totalRect.Y, maxWidth, imageSize.Height);
+                        RectangleF textRegion = new(totalRect.X, imageRegion.Bottom + spacing, maxWidth, textSize.Height);
 
                         imageRect = AlignIn(imageRegion, imageSize, imageAlign);
                         textRect = AlignIn(textRegion, textSize, textAlign);
@@ -939,8 +989,8 @@ namespace WinPaletter.TypesExtensions
                         // Use textAlign to align the block
                         RectangleF totalRect = AlignIn(bounds, new SizeF(maxWidth, totalHeight), textAlign);
 
-                        RectangleF textRegion = new RectangleF(totalRect.X, totalRect.Y, maxWidth, textSize.Height);
-                        RectangleF imageRegion = new RectangleF(totalRect.X, textRegion.Bottom + spacing, maxWidth, imageSize.Height);
+                        RectangleF textRegion = new(totalRect.X, totalRect.Y, maxWidth, textSize.Height);
+                        RectangleF imageRegion = new(totalRect.X, textRegion.Bottom + spacing, maxWidth, imageSize.Height);
 
                         imageRect = AlignIn(imageRegion, imageSize, imageAlign);
                         textRect = AlignIn(textRegion, textSize, textAlign);

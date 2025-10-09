@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -49,7 +48,7 @@ namespace WinPaletter.Dialogs
                 if (File.Exists($@"{SysPaths.System32}\logoff.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{SysPaths.System32}\logoff.exe", AppWinStyle.Hide);
+                    Program.SendCommand($@"{SysPaths.System32}\logoff.exe", false);
                 }
                 else
                 {
@@ -69,7 +68,7 @@ namespace WinPaletter.Dialogs
                 if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /t 0", AppWinStyle.Hide);
+                    Program.SendCommand($@"{SysPaths.System32}\shutdown.exe /r /t 0");
                 }
                 else
                 {
@@ -89,7 +88,7 @@ namespace WinPaletter.Dialogs
                 if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
-                    Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /s /t 0", AppWinStyle.Hide);
+                    Program.SendCommand($@"{SysPaths.System32}\shutdown.exe /s /t 0");
                 }
                 else
                 {
@@ -262,7 +261,7 @@ namespace WinPaletter.Dialogs
                     if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                     {
                         Forms.MainForm.LoggingOff = true;
-                        Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /o /f /t 0", AppWinStyle.Hide);
+                        Program.SendCommand($@"{SysPaths.System32}\shutdown.exe /r /o /f /t 0");
                     }
                     else
                     {
@@ -274,9 +273,9 @@ namespace WinPaletter.Dialogs
                     if (File.Exists($@"{SysPaths.System32}\bcdedit.exe") && File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                     {
                         Forms.MainForm.LoggingOff = true;
-                        Interaction.Shell($@"{SysPaths.System32}\bcdedit.exe /set " + "{current} recoverysequence {default}", AppWinStyle.Hide);
-                        Interaction.Shell($@"{SysPaths.System32}\bcdedit.exe /set " + "{current} recoveryenabled Yes", AppWinStyle.Hide);
-                        Interaction.Shell($@"{SysPaths.System32}\shutdown.exe /r /t 0", AppWinStyle.Hide);
+                        Program.SendCommand($@"{SysPaths.System32}\bcdedit.exe /set " + "{current} recoverysequence {default}");
+                        Program.SendCommand($@"{SysPaths.System32}\bcdedit.exe /set " + "{current} recoveryenabled Yes");
+                        Program.SendCommand($@"{SysPaths.System32}\shutdown.exe /r /t 0");
                     }
                     else
                     {

@@ -503,12 +503,12 @@ namespace WinPaletter
         /// <summary>
         /// Return correct height of a titlebar provided by a font
         /// </summary>
-        public static int GetTitlebarTextHeight(Font font)
+        public static float GetTitlebarTextHeight(Font font)
         {
             // Title scheme for measuring
             string TitleScheme = "ABCabc0123xYz.#";
-            int Title_x_Height = (int)Math.Round(TitleScheme.Measure(font).Height);
-            int Title_9_Height = (int)Math.Round(TitleScheme.Measure(new Font(font.Name, 9f, font.Style)).Height);
+            float Title_x_Height = TitleScheme.Measure(font).Height;
+            float Title_9_Height = TitleScheme.Measure(new Font(font.Name, 9f, font.Style)).Height;
 
             // Return correct height of a titlebar
             return Math.Max(0, Title_x_Height - Title_9_Height - 5);

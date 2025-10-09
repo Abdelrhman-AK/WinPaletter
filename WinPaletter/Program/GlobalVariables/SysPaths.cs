@@ -14,17 +14,17 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Windows directory
         /// </summary>
-        public readonly static string Windows = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows");
+        public static readonly string Windows = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows");
 
         /// <summary>
         /// System32 directory
         /// </summary>
-        public readonly static string System32 = $"{Windows}\\System32";
+        public static readonly string System32 = $"{Windows}\\System32";
 
         /// <summary>
         /// SysWOW64 directory
         /// </summary>
-        public readonly static string SysWOW64 = $"{Windows}\\SysWOW64";
+        public static readonly string SysWOW64 = $"{Windows}\\SysWOW64";
 
         /// <summary>
         /// User profile directory
@@ -39,12 +39,12 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Program files directory
         /// </summary>
-        public readonly static string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        public static readonly string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
         /// <summary>
         /// Program files directory
         /// </summary>
-        public readonly static string ProgramFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+        public static readonly string ProgramFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
         #endregion
 
         #region WinPaletter
@@ -113,24 +113,24 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Explorer process File path
         /// </summary>
-        public readonly static string Explorer = $"{Windows}\\explorer.exe";
+        public static readonly string Explorer = $"{Windows}\\explorer.exe";
 
         /// <summary>
         /// Task Scheduler command process File path
         /// </summary>
-        public readonly static string SchTasks = $"{System32}\\schtasks.exe";
+        public static readonly string SchTasks = $"{System32}\\schtasks.exe";
 
         /// <summary>
         /// Take ownership command process File path
         /// </summary>
-        public readonly static string TakeOwn = $"{System32}\\takeown.exe";
+        public static readonly string TakeOwn = $"{System32}\\takeown.exe";
         #endregion
 
         #region System PE files
         /// <summary>
         /// Imageres.dll PE File
         /// </summary>
-        public readonly static string imageres = $"{System32}\\imageres.dll";
+        public static readonly string imageres = $"{System32}\\imageres.dll";
         #endregion
 
         #region Windows themes
@@ -180,37 +180,37 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Command Prompt process File path
         /// </summary>
-        public readonly static string CMD = $"{System32}\\cmd.exe";
+        public static readonly string CMD = $"{System32}\\cmd.exe";
 
         /// <summary>
         /// PowerShell x86 process File directory
         /// </summary>
-        public readonly static string PS86_dir = $"{System32}\\WindowsPowerShell\\v1.0";
+        public static readonly string PS86_dir = $"{System32}\\WindowsPowerShell\\v1.0";
 
         /// <summary>
         /// PowerShell x86 process File path
         /// </summary>
-        public readonly static string PS86_app = $"{PS86_dir}\\powershell.exe";
+        public static readonly string PS86_app = $"{PS86_dir}\\powershell.exe";
 
         /// <summary>
         /// PowerShell x64 process File directory
         /// </summary>
-        public readonly static string PS64_dir = $"{SysWOW64}\\WindowsPowerShell\\v1.0";
+        public static readonly string PS64_dir = $"{SysWOW64}\\WindowsPowerShell\\v1.0";
 
         /// <summary>
         /// PowerShell x64 process File path
         /// </summary>
-        public readonly static string PS64_app = $"{PS64_dir}\\powershell.exe";
+        public static readonly string PS64_app = $"{PS64_dir}\\powershell.exe";
 
         /// <summary>
         /// PowerShell x86 registry key path
         /// </summary>
-        public readonly static string PS86_reg = $"{PS86_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
+        public static readonly string PS86_reg = $"{PS86_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
 
         /// <summary>
         /// PowerShell x64 registry key path
         /// </summary>
-        public readonly static string PS64_reg = $"{PS64_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
+        public static readonly string PS64_reg = $"{PS64_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
 
         /// <summary>
         /// Microsoft Terminal JSON settings File

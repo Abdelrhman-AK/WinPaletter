@@ -97,7 +97,7 @@ namespace libmsstyle
 
         public byte[] Serialize()
         {
-            List<byte> data = new List<byte>();
+            List<byte> data = new();
             data.AddRange(BitConverter.GetBytes(nameID));
             data.AddRange(BitConverter.GetBytes(typeID));
             data.AddRange(BitConverter.GetBytes(classID));
@@ -157,7 +157,7 @@ namespace libmsstyle
 
         public object Clone()
         {
-            PropertyHeader hdr = new PropertyHeader(this.nameID, this.typeID);
+            PropertyHeader hdr = new(this.nameID, this.typeID);
             hdr.classID = this.classID;
             hdr.partID = this.partID;
             hdr.stateID = this.stateID;

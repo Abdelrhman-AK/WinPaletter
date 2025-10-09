@@ -66,7 +66,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public bool EnableEditingColors
         {
-            get { return enableColorsEditing; }
+            get => enableColorsEditing;
             set
             {
                 if (enableColorsEditing != value)
@@ -184,7 +184,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public WindowStyle WindowStyle
         {
-            get { return _windowStyle; }
+            get => _windowStyle;
             set
             {
                 if (_windowStyle != value)
@@ -209,7 +209,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Preview_Enum Preview
         {
-            get { return _preview; }
+            get => _preview;
             set
             {
                 if (_preview != value)
@@ -459,7 +459,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public bool Classic
         {
-            get { return _classic; }
+            get => _classic;
             set
             {
                 if (_classic != value)
@@ -478,7 +478,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public int Win7Alpha
         {
-            get { return _win7Alpha; }
+            get => _win7Alpha;
             set
             {
                 if (_win7Alpha != value)
@@ -497,7 +497,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public int Win7ColorBal
         {
-            get { return _win7ColorBal; }
+            get => _win7ColorBal;
             set
             {
                 if (_win7ColorBal != value)
@@ -514,7 +514,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public int Win7GlowBal
         {
-            get { return _win7GlowBal; }
+            get => _win7GlowBal;
             set
             {
                 if (_win7GlowBal != value)
@@ -556,7 +556,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public bool Shadow
         {
-            get { return _shadow; }
+            get => _shadow;
             set
             {
                 if (_shadow != value || ForceRefresh)
@@ -592,7 +592,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color TitlebarColor_Active
         {
-            get { return _titlebarColor_Active; }
+            get => _titlebarColor_Active;
             set
             {
                 if (_titlebarColor_Active != value || ForceRefresh)
@@ -616,7 +616,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color TitlebarColor_Inactive
         {
-            get { return _titlebarColor_Inactive; }
+            get => _titlebarColor_Inactive;
             set
             {
                 if (_titlebarColor_Inactive != value || ForceRefresh)
@@ -633,7 +633,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color AfterGlowColor_Active
         {
-            get { return _afterglowColor_Active; }
+            get => _afterglowColor_Active;
             set
             {
                 if (_afterglowColor_Active != value || ForceRefresh)
@@ -656,7 +656,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color AfterGlowColor_Inactive
         {
-            get { return _afterglowColor2_Inactive; }
+            get => _afterglowColor2_Inactive;
             set
             {
                 if (_afterglowColor2_Inactive != value || ForceRefresh)
@@ -1398,7 +1398,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public bool EnableGradient
         {
-            get { return enableGradient; }
+            get => enableGradient;
             set
             {
                 if (enableGradient != value)
@@ -1416,7 +1416,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ActiveBorder
         {
-            get { return activeBorder; }
+            get => activeBorder;
             set
             {
                 if (activeBorder != value)
@@ -1440,7 +1440,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ActiveTitle
         {
-            get { return activeTitle; }
+            get => activeTitle;
             set
             {
                 if (activeTitle != value)
@@ -1462,7 +1462,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color Background
         {
-            get { return background; }
+            get => background;
             set
             {
                 if (background != value)
@@ -1480,7 +1480,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ButtonFace
         {
-            get { return buttonFace; }
+            get => buttonFace;
             set
             {
                 if (buttonFace != value)
@@ -1509,7 +1509,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ButtonShadow
         {
-            get { return buttonShadow; }
+            get => buttonShadow;
             set
             {
                 if (buttonShadow != value)
@@ -1541,7 +1541,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ButtonDkShadow
         {
-            get { return buttonDkShadow; }
+            get => buttonDkShadow;
             set
             {
                 if (buttonDkShadow != value)
@@ -1570,7 +1570,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ButtonHilight
         {
-            get { return buttonHilight; }
+            get => buttonHilight;
             set
             {
                 if (buttonHilight != value)
@@ -1603,7 +1603,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ButtonLight
         {
-            get { return buttonLight; }
+            get => buttonLight;
             set
             {
                 if (buttonLight != value)
@@ -1632,7 +1632,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color ButtonText
         {
-            get { return buttonText; }
+            get => buttonText;
             set
             {
                 if (buttonText != value)
@@ -1658,7 +1658,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color GradientActiveTitle
         {
-            get { return gradientActiveTitle; }
+            get => gradientActiveTitle;
             set
             {
                 if (gradientActiveTitle != value)
@@ -1680,7 +1680,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color GradientInactiveTitle
         {
-            get { return gradientInactiveTitle; }
+            get => gradientInactiveTitle;
             set
             {
                 if (gradientInactiveTitle != value)
@@ -1702,7 +1702,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color GrayText
         {
-            get { return grayText; }
+            get => grayText;
             set
             {
                 if (grayText != value)
@@ -1722,7 +1722,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color InactiveBorder
         {
-            get { return inactiveBorder; }
+            get => inactiveBorder;
             set
             {
                 if (inactiveBorder != value)
@@ -1744,7 +1744,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color InactiveTitle
         {
-            get { return inactiveTitle; }
+            get => inactiveTitle;
             set
             {
                 if (inactiveTitle != value)
@@ -1766,7 +1766,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color InactiveTitleText
         {
-            get { return inactiveTitleText; }
+            get => inactiveTitleText;
             set
             {
                 if (inactiveTitleText != value)
@@ -1793,7 +1793,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color TitleText
         {
-            get { return titleText; }
+            get => titleText;
             set
             {
                 if (titleText != value)
@@ -1820,7 +1820,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color Window
         {
-            get { return window; }
+            get => window;
             set
             {
                 if (window != value)
@@ -1839,7 +1839,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color WindowFrame
         {
-            get { return windowFrame; }
+            get => windowFrame;
             set
             {
                 if (windowFrame != value)
@@ -1862,7 +1862,7 @@ namespace WinPaletter.Templates
         /// </summary>
         public Color WindowText
         {
-            get { return windowText; }
+            get => windowText;
             set
             {
                 if (windowText != value)
@@ -2299,11 +2299,11 @@ namespace WinPaletter.Templates
             // !DesignMode is used to avoid ex error of accessing WinPaletter theme manager from designer mode
             if (!DesignMode && (_windowStyle == WindowStyle.W12 || _windowStyle == WindowStyle.W11 || (_windowStyle == WindowStyle.W10 && _hookedTM is not null && (bool)!_hookedTM?.WindowsEffects.FullScreenStartMenu)))
             {
-                Window1.Left = (int)Math.Round(start.Right + (Window1.Parent.Width - (start.Width + start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - Window1.Width) / 2d);
+                Window1.Left = (int)(start.Right + (Window1.Parent.Width - (start.Width + start.Left) - (ActionCenter.Width + (ActionCenter.Parent.Width - ActionCenter.Right)) - Window1.Width) / 2f);
             }
             else
             {
-                Window1.Left = (int)Math.Round((Window1.Parent.Width - Window1.Width) / 2d);
+                Window1.Left = (int)((Window1.Parent.Width - Window1.Width) / 2f);
             }
 
             WXP_Alert.Visible = false;
@@ -2314,7 +2314,7 @@ namespace WinPaletter.Templates
             lnk_preview.Visible = _windowStyle == WindowStyle.W12 || _windowStyle == WindowStyle.W11 || _windowStyle == WindowStyle.W10;
             ActionCenter.Visible = _windowStyle == WindowStyle.W12 || _windowStyle == WindowStyle.W11 || _windowStyle == WindowStyle.W10;
 
-            Window1.Top = (int)Math.Round((Window1.Parent.Height - taskbar.Height - (Window1.Height + Window2.Height)) / 2d);
+            Window1.Top = (int)((Window1.Parent.Height - taskbar.Height - (Window1.Height + Window2.Height)) / 2f);
             Window2.Top = Window1.Bottom;
             Window2.Left = Window1.Left;
 
@@ -2672,9 +2672,9 @@ namespace WinPaletter.Templates
             Metrics_PaddedBorderWidth = TM.MetricsFonts.PaddedBorderWidth;
             Metrics_CaptionFont = TM.MetricsFonts.CaptionFont;
 
-            int iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
-            int iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
-            System.Windows.Forms.Padding _Padding = new(iP, iT, iP, iP);
+            float iP = 3 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth;
+            float iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
+            System.Windows.Forms.Padding _Padding = new((int)iP, (int)iT, (int)iP, (int)iP);
 
             foreach (ContextMenuR contextMenu in this.GetAllControls().OfType<ContextMenuR>()) { contextMenu.Font = TM.MetricsFonts.MenuFont; }
             foreach (LabelR label in this.GetAllControls().OfType<LabelR>()) { label.Font = TM.MetricsFonts.MessageFont; }

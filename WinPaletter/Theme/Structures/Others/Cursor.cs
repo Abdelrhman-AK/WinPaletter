@@ -276,7 +276,7 @@ namespace WinPaletter.Theme.Structures
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Enabled", Cursor.Shadow_Enabled);
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Color", Cursor.Shadow_Color.ToArgb());
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Blur", Cursor.Shadow_Blur);
-            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Opacity", (int)Math.Round(Cursor.Shadow_Opacity * 100f));
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_Opacity", (int)(Cursor.Shadow_Opacity * 100f));
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetX", Cursor.Shadow_OffsetX);
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "Shadow_OffsetY", Cursor.Shadow_OffsetY);
         }

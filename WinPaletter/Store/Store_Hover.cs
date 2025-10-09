@@ -38,7 +38,7 @@ namespace WinPaletter
             Point p;
             if (Forms.Store.selectedItem is not null)
             {
-                p = Forms.Store.selectedItem.PointToScreen(Point.Empty) - (Size)new Point((int)Math.Round((Width - Forms.Store.selectedItem.Width) / 2d), (int)Math.Round((Height - Forms.Store.selectedItem.Height) / 2d));
+                p = Forms.Store.selectedItem.PointToScreen(Point.Empty) - (Size)new Point((int)((Width - Forms.Store.selectedItem.Width) / 2f), (int)((Height - Forms.Store.selectedItem.Height) / 2f));
             }
             else
             {

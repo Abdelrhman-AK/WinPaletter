@@ -753,13 +753,13 @@ namespace WinPaletter.UI.Controllers
                 Shadow_OffsetY = Prop_Shadow_OffsetY
             };
 
-            bmp = new((int)Math.Round(32f * Prop_Scale), (int)Math.Round(32f * Prop_Scale), PixelFormat.Format32bppPArgb);
+            bmp = new((int)(32f * Prop_Scale), (int)(32f * Prop_Scale), PixelFormat.Format32bppPArgb);
 
             bmp = Paths.Draw(CurOptions);
 
             Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
             Rectangle MainRectInner = new(1, 1, Width - 3, Height - 3);
-            Rectangle CenterRect = new((int)Math.Round(MainRect.X + (MainRect.Width - bmp.Width) / 2d), (int)Math.Round(MainRect.Y + (MainRect.Height - bmp.Height) / 2d), bmp.Width, bmp.Height);
+            RectangleF CenterRect = new(MainRect.X + (MainRect.Width - bmp.Width) / 2f, MainRect.Y + (MainRect.Height - bmp.Height) / 2f, bmp.Width, bmp.Height);
 
             Color back = Color.FromArgb(alpha, scheme.Colors.Back_Checked_Hover);
             Color line = Color.FromArgb(255 - alpha, Focused ? scheme.Colors.Line_Checked : State != MouseState.Over ? scheme.Colors.Line(parentLevel) : scheme.Colors.Line_Checked_Hover);

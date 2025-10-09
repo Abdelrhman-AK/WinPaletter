@@ -311,7 +311,7 @@ namespace WinPaletter.Theme.Structures
                     #endregion
 
                     // Get current DPI and set it to 100% to avoid DPI scaling issues
-                    double OldDPI = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor());
+                    float OldDPI = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor());
                     WriteReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
 
                     // Convert fonts to LogFont

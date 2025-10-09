@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -474,7 +473,7 @@ namespace WinPaletter
             else if (TerThemes.Items.Count > 1) TerThemes.SelectedIndex = 1; else TerThemes.SelectedIndex = 0;
 
             TerBackImage.Text = profile.BackgroundImage;
-            TerImageOpacity.Value = (int)Math.Round(profile.BackgroundImageOpacity * 100f);
+            TerImageOpacity.Value = (int)(profile.BackgroundImageOpacity * 100f);
 
             TerCursorStyle.SelectedIndex = (int)profile.CursorShape;
             TerCursorHeightBar.Value = profile.CursorHeight;
@@ -1349,15 +1348,13 @@ namespace WinPaletter
             {
                 case WinTerminal.Version.Stable:
                     {
-                        if (File.Exists(TerDir))
-                            Interaction.Shell(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App");
+                        if (File.Exists(TerDir)) Program.SendCommand(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App", false);
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
-                        if (File.Exists(TerPreDir))
-                            Interaction.Shell(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App");
+                        if (File.Exists(TerPreDir)) Program.SendCommand(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App", false);
                         break;
                     }
             }
@@ -1611,7 +1608,7 @@ namespace WinPaletter
                         else TerSchemes.SelectedIndex = 0;
 
                         TerBackImage.Text = CCatFrom.BackgroundImage;
-                        TerImageOpacity.Value = (int)Math.Round(CCatFrom.BackgroundImageOpacity * 100f);
+                        TerImageOpacity.Value = (int)(CCatFrom.BackgroundImageOpacity * 100f);
 
                         TerCursorStyle.SelectedIndex = (int)CCatFrom.CursorShape;
                         TerCursorHeightBar.Value = CCatFrom.CursorHeight;
@@ -1813,7 +1810,7 @@ namespace WinPaletter
                         Terminal1.Font = new(dlg.Font.Name, dlg.Font.Size, temp.Style);
                     }
                     TerFontName.Font = new(dlg.Font.Name, 9f, Terminal1.Font.Style);
-                    TerFontSizeBar.Value = (int)Math.Round(dlg.Font.Size);
+                    TerFontSizeBar.Value = (int)(dlg.Font.Size);
 
                     if (TerProfiles.SelectedIndex == 0)
                     {

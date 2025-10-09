@@ -45,7 +45,7 @@ namespace libmsstyle
 
             for (int i = 0; i < TransformCount; i++)
             {
-                Transform t = new Transform(data, ref start);
+                Transform t = new(data, ref start);
                 Transforms.Add(t);
                 start += GetPaddingForSize(t.StructureSize);
             }

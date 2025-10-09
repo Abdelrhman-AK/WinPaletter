@@ -91,9 +91,9 @@ namespace WinPaletter.TypesExtensions
             {
                 // Keep original semantics: draw into a temp bitmap under the Control lock,
                 // then return a detached clone (so caller owns the image).
-                using (Bitmap bmp = new Bitmap(Math.Max(1, control.Width), Math.Max(1, control.Height)))
+                using (Bitmap bmp = new(Math.Max(1, control.Width), Math.Max(1, control.Height)))
                 {
-                    Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                    Rectangle rect = new(0, 0, bmp.Width, bmp.Height);
                     lock (control) // preserved from your original code
                     {
                         control.DrawToBitmap(bmp, rect);
@@ -111,7 +111,7 @@ namespace WinPaletter.TypesExtensions
         {
             if (control == null) throw new ArgumentNullException(nameof(control));
 
-            Bitmap bmp = new Bitmap(Math.Max(1, control.Width), Math.Max(1, control.Height));
+            Bitmap bmp = new(Math.Max(1, control.Width), Math.Max(1, control.Height));
 
             // Preserve your original behavior: copy controls, reverse array
             Control[] childControls = control.Controls.Cast<Control>().ToArray();
@@ -172,9 +172,9 @@ namespace WinPaletter.TypesExtensions
             if (ancestorColor.IsEmpty) ancestorColor = Program.Style.Schemes.Main.Colors.Back(); // final fallback
 
             float alpha = parentColor.A / 255f;
-            byte r = (byte)Math.Round(parentColor.R * alpha + ancestorColor.R * (1 - alpha));
-            byte g = (byte)Math.Round(parentColor.G * alpha + ancestorColor.G * (1 - alpha));
-            byte b = (byte)Math.Round(parentColor.B * alpha + ancestorColor.B * (1 - alpha));
+            byte r = (byte)(parentColor.R * alpha + ancestorColor.R * (1 - alpha));
+            byte g = (byte)(parentColor.G * alpha + ancestorColor.G * (1 - alpha));
+            byte b = (byte)(parentColor.B * alpha + ancestorColor.B * (1 - alpha));
 
             return Color.FromArgb(r, g, b);
         }

@@ -354,11 +354,11 @@ namespace WinPaletter.UI.Controllers
 
         private Rectangle GetImageRectangle(Rectangle rect, Size size, ContentAlignment contentAlignment)
         {
-            float CenterWidthD = rect.X + (float)(rect.Width - size.Width) / 2;
-            float CenterHeightD = rect.Y + (float)(rect.Height - size.Height) / 2;
+            float CenterWidthF = rect.X + (float)(rect.Width - size.Width) / 2;
+            float CenterHeightF = rect.Y + (float)(rect.Height - size.Height) / 2;
 
-            int CenterWidth = (int)Math.Round(CenterWidthD, 2);
-            int CenterHeight = (int)Math.Round(CenterHeightD, 2);
+            int CenterWidth = (int)CenterWidthF;
+            int CenterHeight = (int)CenterHeightF;
 
             return contentAlignment switch
             {

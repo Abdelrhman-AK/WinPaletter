@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Media;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -26,10 +25,7 @@ namespace WinPaletter.UI.Style
         private static TaskDialog TD
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
-            get
-            {
-                return _TD;
-            }
+            get => _TD;
 
             [MethodImpl(MethodImplOptions.Synchronized)]
             set

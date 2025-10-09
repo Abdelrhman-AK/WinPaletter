@@ -25,12 +25,13 @@ namespace WinPaletter.UI.WP
         /// required.</remarks>
         public TablessControl()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
-            
-            DoubleBuffered = true;
+            if (!DesignMode)
+            {
+                //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
+                Multiline = true;
+            }
 
-            // Prevent the built-in scroll buttons
-            if (!DesignMode) Multiline = true;
+            DoubleBuffered = true;
         }
 
         /// <summary>
@@ -44,7 +45,10 @@ namespace WinPaletter.UI.WP
             set { base.BackColor = value; Invalidate(); }
         }
 
-        private static IntPtr MakeLParam(int lo, int hi) => (IntPtr)((hi << 16) | (lo & 0xFFFF));
+        private static IntPtr MakeLParam(int lo, int hi)
+        {
+            return (IntPtr)((hi << 16) | (lo & 0xFFFF));
+        }
 
         /// <summary>
         /// Processes Windows messages sent to the control.
@@ -56,33 +60,36 @@ namespace WinPaletter.UI.WP
         /// <param name="m">A <see cref="Message"/> object that represents the Windows message to process.</param>
         protected override void WndProc(ref Message m)
         {
-            const int WM_ERASEBKGND = 0x14;
-            const int TCM_ADJUSTRECT = 0x1328;
-            const int TCM_SETPADDING = 0x132B;   // sets tab item padding
-            const int WM_PAINT = 0x0F;
-
-            // Hide the tab strip area completely
-            if (!DesignMode && m.Msg == TCM_ADJUSTRECT)
+            if (!DesignMode)
             {
-                m.Result = (IntPtr)1;
-                return;
-            }
+                const int WM_ERASEBKGND = 0x14;
+                const int TCM_ADJUSTRECT = 0x1328;
+                const int TCM_SETPADDING = 0x132B;   // sets tab item padding
+                const int WM_PAINT = 0x0F;
 
-            // Remove the up/down scroll buttons that Windows draws
-            // by forcing the tab strip to have zero height before it paints.
-            if (m.Msg == WM_PAINT)
-            {
-                User32.SendMessage(Handle, TCM_SETPADDING, IntPtr.Zero, MakeLParam(0, 1));
-            }
+                // Hide the tab strip area completely
+                if (m.Msg == TCM_ADJUSTRECT)
+                {
+                    m.Result = (IntPtr)1;
+                    return;
+                }
 
-            if (m.Msg == WM_ERASEBKGND)
-            {
-                using (var g = Graphics.FromHdc(m.WParam))
-                using (var b = new SolidBrush(BackColor))
-                    g.FillRectangle(b, ClientRectangle);
+                // Remove the up/down scroll buttons that Windows draws
+                // by forcing the tab strip to have zero height before it paints.
+                if (m.Msg == WM_PAINT)
+                {
+                    User32.SendMessage(Handle, TCM_SETPADDING, IntPtr.Zero, MakeLParam(0, 1));
+                }
 
-                m.Result = (IntPtr)1;
-                return;
+                if (m.Msg == WM_ERASEBKGND)
+                {
+                    using (var g = Graphics.FromHdc(m.WParam))
+                    using (var b = new SolidBrush(BackColor))
+                        g.FillRectangle(b, ClientRectangle);
+
+                    m.Result = (IntPtr)1;
+                    return;
+                }
             }
 
             base.WndProc(ref m);
@@ -90,12 +97,12 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            e.Graphics.Clear(Parent.BackColor);
+            if (!DesignMode) e.Graphics.Clear(Parent.BackColor); else base.OnPaint(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.Clear(Parent.BackColor);
+            if (!DesignMode) e.Graphics.Clear(Parent.BackColor); else base.OnPaint(e);
         }
 
     }

@@ -121,14 +121,7 @@ namespace EOFC
 
         public bool this[int index]
         {
-            get
-            {
-                return Get(index);
-            }
-            set
-            {
-                BooleanBitArray.Set(m_data, index, value);
-            }
+            get => Get(index); set => BooleanBitArray.Set(m_data, index, value);
         }
     }
 }

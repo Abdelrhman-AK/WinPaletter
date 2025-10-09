@@ -39,8 +39,8 @@ namespace WinPaletter.UI.WP
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.3f));
-        private readonly static TextureBrush Noise2 = new(Resources.Noise.Fade(0.9f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.3f));
+        private static readonly TextureBrush Noise2 = new(Resources.Noise.Fade(0.9f));
 
         #endregion
 
@@ -250,7 +250,7 @@ namespace WinPaletter.UI.WP
             using (Pen P = new(FadeOutColor)) { G.DrawRoundedRectBeveled(P, InnerRect); }
 
             int ArrowHeight = 5;
-            int Arrow_Y_1 = (int)Math.Round((Height - ArrowHeight) / 2d - 1d);
+            int Arrow_Y_1 = (int)((Height - ArrowHeight) / 2f - 1f);
             int Arrow_Y_2 = Arrow_Y_1 + ArrowHeight;
 
             Point point_TopRight = new(Width - 18, Arrow_Y_1);

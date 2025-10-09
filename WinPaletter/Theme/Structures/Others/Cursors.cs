@@ -337,7 +337,7 @@ namespace WinPaletter.Theme.Structures
 
                         float i = scale / 32f;
                         Bitmap bmp = new(scale, scale, PixelFormat.Format32bppPArgb);
-                        Point HotPoint = new(1, 1);
+                        PointF HotPoint = new(1, 1);
 
                         // Switch to create different cursors. Each case is a different cursor type and has its own rendering options.
                         switch (Type)
@@ -362,7 +362,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_None) { Cursor = Paths.CursorType.None, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
+                                    HotPoint = new(1f + 8f * i, 1f + 8f * i);
                                     break;
                                 }
 
@@ -370,7 +370,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_Move) { Cursor = Paths.CursorType.Move, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(11f * i), 1 + (int)Math.Round(11f * i));
+                                    HotPoint = new(1 + 11f * i, 1 + 11f * i);
                                     break;
                                 }
 
@@ -378,7 +378,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_Up) { Cursor = Paths.CursorType.Up, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(4f * i), 1);
+                                    HotPoint = new(1 + 4f * i, 1);
                                     break;
                                 }
 
@@ -386,7 +386,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_NS) { Cursor = Paths.CursorType.NS, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(11f * i));
+                                    HotPoint = new(1 + 4f * i, 1 + 11f * i);
                                     break;
                                 }
 
@@ -394,7 +394,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_EW) { Cursor = Paths.CursorType.EW, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new((int)Math.Round(1f + 11f * i), (int)Math.Round(1f + 4f * i));
+                                    HotPoint = new(1f + 11f * i, 1f + 4f * i);
                                     break;
                                 }
 
@@ -402,7 +402,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_NESW) { Cursor = Paths.CursorType.NESW, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
+                                    HotPoint = new(1 + 8f * i, 1 + 8f * i);
                                     break;
                                 }
 
@@ -410,7 +410,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_NWSE) { Cursor = Paths.CursorType.NWSE, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(8f * i), 1 + (int)Math.Round(8f * i));
+                                    HotPoint = new(1 + 8f * i, 1 + 8f * i);
                                     break;
                                 }
 
@@ -426,7 +426,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_Link) { Cursor = Paths.CursorType.Link, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
+                                    HotPoint = new(1 + 6f * i, CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                     break;
                                 }
 
@@ -434,7 +434,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_Pin) { Cursor = Paths.CursorType.Pin, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
+                                    HotPoint = new(1 + 6f * i, CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                     break;
                                 }
 
@@ -442,7 +442,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_Person) { Cursor = Paths.CursorType.Person, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(6f * i), CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
+                                    HotPoint = new(1 + 6f * i, CurOptions.ArrowStyle != Paths.ArrowStyle.Classic ? 1 : 2);
                                     break;
                                 }
 
@@ -450,7 +450,7 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_IBeam) { Cursor = Paths.CursorType.IBeam, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(4f * i), 1 + (int)Math.Round(9f * i));
+                                    HotPoint = new(1 + 4f * i, 1 + 9f * i);
                                     break;
                                 }
 
@@ -458,14 +458,14 @@ namespace WinPaletter.Theme.Structures
                                 {
                                     CursorOptions CurOptions = new(cursors.Cursor_Cross) { Cursor = Paths.CursorType.Cross, Scale = i, Angle = 0f };
                                     bmp = Paths.Draw(CurOptions);
-                                    HotPoint = new(1 + (int)Math.Round(9f * i), 1 + (int)Math.Round(9f * i));
+                                    HotPoint = new(1 + 9f * i, 1 + 9f * i);
                                     break;
                                 }
 
                         }
 
                         // Write bitmap to cursor file stream
-                        EO.WriteBitmap(bmp, null, HotPoint);
+                        EO.WriteBitmap(bmp, null, new((int)HotPoint.X, (int)HotPoint.Y));
 
                         // Log the rendering of the frame
                         if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"This frame has been rendered`.");
@@ -486,7 +486,7 @@ namespace WinPaletter.Theme.Structures
             {
                 if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}`.");
 
-                Point HotPoint = new(1, 1);
+                PointF HotPoint = new(1f, 1f);
                 int increment = Math.Max(5, Math.Min(25, Type == Paths.CursorType.AppLoading ? Cursor_AppLoading.LoadingCircleHot_AnimationSpeed : Cursor_Busy.LoadingCircleHot_AnimationSpeed));
                 int steps = 360 / Math.Abs(increment) + 2; // +1 for first angle, +1 for last  angle
                 int loopIndex = 0;
@@ -518,14 +518,14 @@ namespace WinPaletter.Theme.Structures
                         {
                             CursorOptions CurOptions = new(cursors.Cursor_AppLoading) { Cursor = Paths.CursorType.AppLoading, Scale = factor, Angle = angle };
                             bm = new(Paths.Draw(CurOptions));
-                            HotPoint = new(1, 1 + (int)Math.Round(8f * factor));
+                            HotPoint = new(1, 1 + 8f * factor);
                         }
 
                         else if (Type == Paths.CursorType.Busy)
                         {
                             CursorOptions CurOptions = new(cursors.Cursor_Busy) { Cursor = Paths.CursorType.Busy, Scale = factor, Angle = angle };
                             bm = new(Paths.Draw(CurOptions));
-                            HotPoint = new((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + (int)Math.Round(11f * factor), 1 + (int)Math.Round(11f * factor));
+                            HotPoint = new((CurOptions.CircleStyle != Paths.CircleStyle.Classic ? 1 : 2) + 11f * factor, 1 + 11f * factor);
                         }
 
                         if (bm != null) { BMPList.Add(bm); }
@@ -553,7 +553,7 @@ namespace WinPaletter.Theme.Structures
                     using (FileStream fs = new(OutputFile, FileMode.Create))
                     {
                         // Use EOIcoCurWriter to write cursor file
-                        EOANIWriter AN = new(fs, count, Speed, frameRates, framesSequentialNumbers, null, null, HotPoint);
+                        EOANIWriter AN = new(fs, count, Speed, frameRates, framesSequentialNumbers, null, null, new((int)HotPoint.X, (int)HotPoint.Y));
 
                         for (uint i1 = 0; i1 <= count - 1; i1++) { AN.WriteFrame(BMPList[(int)i1]); }
 
@@ -586,7 +586,7 @@ namespace WinPaletter.Theme.Structures
             // WinPaletter saves rendered cursors to the following path
             string Path = SysPaths.CursorsWP;
 
-            double DPI = Program.GetWindowsScreenScalingFactor();
+            float DPI = Program.GetWindowsScreenScalingFactor();
             string DPI_Fixer = string.Empty;
 
             if (Size <= 32)

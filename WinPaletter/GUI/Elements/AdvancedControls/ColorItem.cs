@@ -64,7 +64,7 @@ namespace WinPaletter.UI.Controllers
         ToolStripMenuItem copy_AsKnownName = new();
         ToolStripMenuItem copy_AsCSS = new();
 
-        private static Font genericMonospacedFont = new Font(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular);
+        private static Font genericMonospacedFont = new(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular);
 
         public ColorItem()
         {
@@ -570,29 +570,65 @@ namespace WinPaletter.UI.Controllers
             contextMenu.Close();
         }
 
-        private void Copy_AsHEX(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HEX));
+        private void Copy_AsHEX(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.HEX));
+        }
 
-        private void Copy_AsRGB(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.RGB));
+        private void Copy_AsRGB(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.RGB));
+        }
 
-        private void Copy_AsHSL(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HSL));
+        private void Copy_AsHSL(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.HSL));
+        }
 
-        private void Copy_AsDec(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.Dec));
+        private void Copy_AsDec(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.Dec));
+        }
 
-        private void Copy_AsRGBPercent(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.RGBPercent));
+        private void Copy_AsRGBPercent(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.RGBPercent));
+        }
 
-        private void Copy_AsARGB(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.ARGB));
+        private void Copy_AsARGB(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.ARGB));
+        }
 
-        private void Copy_AsHSLA(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HSLA));
+        private void Copy_AsHSLA(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.HSLA));
+        }
 
-        private void Copy_AsHSV(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.HSV));
+        private void Copy_AsHSV(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.HSV));
+        }
 
-        private void Copy_AsCMYK(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.CMYK));
+        private void Copy_AsCMYK(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.CMYK));
+        }
 
-        private void Copy_AsWin32(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.Win32));
+        private void Copy_AsWin32(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.Win32));
+        }
 
-        private void Copy_AsKnownName(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.KnownName));
+        private void Copy_AsKnownName(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.KnownName));
+        }
 
-        private void Copy_AsCSS(object sender, EventArgs e) => CopyColor(BackColor.ToString(Formats.CSS));
+        private void Copy_AsCSS(object sender, EventArgs e)
+        {
+            CopyColor(BackColor.ToString(Formats.CSS));
+        }
 
         private void CopyColor(string text)
         {
@@ -1020,7 +1056,7 @@ namespace WinPaletter.UI.Controllers
         {
             if (!DesignMode && MakeAfterDropEffect)
             {
-                Timer2_factor = (int)Math.Round(Timer2_factor + Math.Min(Width, Height) * 3.5d);
+                Timer2_factor = (int)(Timer2_factor + Math.Min(Width, Height) * 3.5f);
                 await Task.Delay(1);
                 Invalidate();
             }
@@ -1088,7 +1124,7 @@ namespace WinPaletter.UI.Controllers
                             {
                                 G.Clip = reg;
                                 Point px = BeforeDropMousePosition;
-                                Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
+                                RectangleF MouseCircle = new(px.X - 0.5f * i, px.Y - 0.5f * i, i, i);
                                 gp.AddEllipse(MouseCircle);
                                 using (PathGradientBrush pgb = new(gp)
                                 {
@@ -1127,7 +1163,7 @@ namespace WinPaletter.UI.Controllers
                         G.Clip = reg;
                         int i = Math.Max(Width, Height);
                         Point px = PointToClient(MousePosition);
-                        Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
+                        RectangleF MouseCircle = new(px.X - 0.5f * i, px.Y - 0.5f * i, i, i);
                         gp.AddEllipse(MouseCircle);
                         using (PathGradientBrush pgb = new(gp)
                         {
@@ -1161,9 +1197,9 @@ namespace WinPaletter.UI.Controllers
                 {
                     using (SolidBrush br = new(DefaultBackColor))
                     {
-                        int L = 7;
-                        int Y = (int)Math.Round(RectInner.Y + (RectInner.Height - L) / 2d);
-                        Rectangle DefDotRect;
+                        float L = 7f;
+                        float Y = RectInner.Y + (RectInner.Height - L) / 2f;
+                        RectangleF DefDotRect;
 
                         if (!HoverOverDefColorDot) { DefDotRect = new(L, Y, L, L); }
                         else { DefDotRect = new(L - 1, Y - 1, L + 2, L + 2); }
@@ -1225,7 +1261,7 @@ namespace WinPaletter.UI.Controllers
                         {
                             int i = Math.Max(Width, Height);
                             Point px = PointToClient(MousePosition);
-                            Rectangle MouseCircle = new((int)Math.Round(px.X - 0.5d * i), (int)Math.Round(px.Y - 0.5d * i), i, i);
+                            RectangleF MouseCircle = new(px.X - 0.5f * i, px.Y - 0.5f * i, i, i);
                             gp.AddEllipse(MouseCircle);
 
                             G.SetClip(gp);

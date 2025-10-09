@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -25,7 +24,7 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
-        private readonly static TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
         #endregion
 
         #region Events/Overrides
@@ -133,15 +132,15 @@ namespace WinPaletter.UI.WP
             {
                 Color TextColor = ForeColor;
 
-                int SideTapeW = 3;
-                int SideTapeH = (int)G.MeasureString(TabPages[i].Text, Font).Width;
-                Rectangle TabRect = GetTabRect(i);
-                Rectangle SideTape = new(TabRect.X + (TabRect.Width - SideTapeH) / 2, TabRect.Y, SideTapeH, SideTapeW);
+                float SideTapeW = 3;
+                float SideTapeH = G.MeasureString(TabPages[i].Text, Font).Width;
+                RectangleF TabRect = GetTabRect(i);
+                RectangleF SideTape = new(TabRect.X + (TabRect.Width - SideTapeH) / 2, TabRect.Y, SideTapeH, SideTapeW);
 
                 if (Alignment == TabAlignment.Right | Alignment == TabAlignment.Left)
                 {
-                    SideTapeH = (int)Math.Round(TabRect.Height * 0.45d);
-                    SideTape = new(!RTL ? TabRect.X + 4 : TabRect.X + TabRect.Width - 6, (int)Math.Round(TabRect.Y + (TabRect.Height - SideTapeH) / 2d), SideTapeW, SideTapeH);
+                    SideTapeH = TabRect.Height * 0.45f;
+                    SideTape = new(!RTL ? TabRect.X + 4 : TabRect.X + TabRect.Width - 6, TabRect.Y + (TabRect.Height - SideTapeH) / 2f, SideTapeW, SideTapeH);
                 }
                 else if (Alignment == TabAlignment.Top)
                 {
@@ -171,23 +170,23 @@ namespace WinPaletter.UI.WP
 
                 if (img != null)
                 {
-                    Rectangle imgRect;
+                    RectangleF imgRect;
 
                     if (!RTL)
                     {
-                        imgRect = new(TabRect.X + 10, (int)Math.Round(TabRect.Y + (TabRect.Height - img.Height) / 2d) + 1, img.Width, img.Height);
+                        imgRect = new(TabRect.X + 10, TabRect.Y + (TabRect.Height - img.Height) / 2f + 1, img.Width, img.Height);
                     }
                     else
                     {
-                        imgRect = new(TabRect.X + TabRect.Width - img.Width - 8, (int)Math.Round(TabRect.Y + (TabRect.Height - img.Height) / 2d) + 1, img.Width, img.Height);
+                        imgRect = new(TabRect.X + TabRect.Width - img.Width - 8, TabRect.Y + (TabRect.Height - img.Height) / 2f + 1, img.Width, img.Height);
                     }
 
                     if (Alignment == TabAlignment.Right | Alignment == TabAlignment.Left)
                     {
-                        int xPoint = !RTL ? imgRect.X + imgRect.Width + 5 : TabRect.X;
-                        int Fixer = imgRect.Width + 15;
+                        float xPoint = !RTL ? imgRect.X + imgRect.Width + 5 : TabRect.X;
+                        float Fixer = imgRect.Width + 15;
 
-                        Rectangle tr = new(xPoint, TabRect.Y, TabRect.Width - Fixer, TabRect.Height);
+                        RectangleF tr = new(xPoint, TabRect.Y, TabRect.Width - Fixer, TabRect.Height);
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
                         {
@@ -220,12 +219,12 @@ namespace WinPaletter.UI.WP
                         {
                             using (SolidBrush br = new(TextColor))
                             {
-                                int LTFixer0 = !RTL ? SideTape.Width + 7 : 0;
-                                int LTFixer1 = SideTape.Width + 7;
+                                float LTFixer0 = !RTL ? SideTape.Width + 7 : 0;
+                                float LTFixer1 = SideTape.Width + 7;
 
-                                int xPoint = TabRect.X + LTFixer0;
+                                float xPoint = TabRect.X + LTFixer0;
 
-                                Rectangle tr = new(xPoint, TabRect.Y + 1, TabRect.Width - LTFixer1, TabRect.Height);
+                                RectangleF tr = new(xPoint, TabRect.Y + 1, TabRect.Width - LTFixer1, TabRect.Height);
 
                                 G.DrawString(TabPages[i].Text, Font, br, tr, sf);
                             }

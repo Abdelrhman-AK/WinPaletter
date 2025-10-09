@@ -21,27 +21,27 @@ namespace libmsstyle
 
     public class VisualStyleEnums
     {
-        public static readonly List<VisualStyleEnumEntry> ENUM_BGTYPE = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_BGTYPE = new()
         {
             new VisualStyleEnumEntry(0, "IMAGEFILE" ),
             new VisualStyleEnumEntry(1, "BORDERFILL" ),
             new VisualStyleEnumEntry(2, "NONE" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_IMAGELAYOUT = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_IMAGELAYOUT = new()
         {
             new VisualStyleEnumEntry(0, "VERTICAL" ),
             new VisualStyleEnumEntry(1, "HORIZONTAL" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_BORDERTYPE = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_BORDERTYPE = new()
         {
             new VisualStyleEnumEntry(0, "RECT" ),
             new VisualStyleEnumEntry(1, "ROUNDRECT" ),
             new VisualStyleEnumEntry(2, "ELLIPSE" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_FILLTYPE = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_FILLTYPE = new()
         {
             new VisualStyleEnumEntry(0, "SOLID" ),
             new VisualStyleEnumEntry(1, "VERTGRADIENT" ),
@@ -50,28 +50,28 @@ namespace libmsstyle
             new VisualStyleEnumEntry(4, "TILEIMAGE" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_SIZINGTYPE = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_SIZINGTYPE = new()
         {
             new VisualStyleEnumEntry(0, "TRUESIZE" ),
             new VisualStyleEnumEntry(1, "STRETCH" ),
             new VisualStyleEnumEntry(2, "TILE" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_ALIGNMENT_H = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_ALIGNMENT_H = new()
         {
             new VisualStyleEnumEntry(0, "LEFT" ),
             new VisualStyleEnumEntry(1, "CENTER" ),
             new VisualStyleEnumEntry(2, "RIGHT" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_ALIGNMENT_V = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_ALIGNMENT_V = new()
         {
             new VisualStyleEnumEntry(0, "TOP" ),
             new VisualStyleEnumEntry(1, "CENTER" ),
             new VisualStyleEnumEntry(2, "BOTTOM" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_OFFSET = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_OFFSET = new()
         {
             new VisualStyleEnumEntry(0, "TOPLEFT" ),
             new VisualStyleEnumEntry(1, "TOPRIGHT" ),
@@ -88,7 +88,7 @@ namespace libmsstyle
             new VisualStyleEnumEntry(12, "BELOWLASTBUTTON" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_ICONEFFECT = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_ICONEFFECT = new()
         {
             new VisualStyleEnumEntry(0, "NONE" ),
             new VisualStyleEnumEntry(1, "GLOW" ),
@@ -97,42 +97,42 @@ namespace libmsstyle
             new VisualStyleEnumEntry(4, "ALPHA" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_TEXTSHADOW = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_TEXTSHADOW = new()
         {
             new VisualStyleEnumEntry(0, "NONE" ),
             new VisualStyleEnumEntry(1, "SINGLE" ),
             new VisualStyleEnumEntry(2, "CONTINUOUS" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_GLYPHTYPE = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_GLYPHTYPE = new()
         {
             new VisualStyleEnumEntry(0, "NONE" ),
             new VisualStyleEnumEntry(1, "IMAGEGLYPH" ),
             new VisualStyleEnumEntry(2, "FONTGLYPH" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_IMAGESELECT = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_IMAGESELECT = new()
         {
             new VisualStyleEnumEntry(0, "NONE" ),
             new VisualStyleEnumEntry(1, "SIZE" ),
             new VisualStyleEnumEntry(2, "DPI" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_TRUESIZESCALING = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_TRUESIZESCALING = new()
         {
             new VisualStyleEnumEntry(0, "NONE" ),
             new VisualStyleEnumEntry(1, "SIZE" ),
             new VisualStyleEnumEntry(2, "DPI" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_GLYPHFONTSCALING = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_GLYPHFONTSCALING = new()
         {
             new VisualStyleEnumEntry(0, "NONE" ),
             new VisualStyleEnumEntry(1, "SIZE" ),
             new VisualStyleEnumEntry(2, "DPI" )
         };
 
-        public static readonly List<VisualStyleEnumEntry> ENUM_HIGHCONTRASTTYPE = new List<VisualStyleEnumEntry>()
+        public static readonly List<VisualStyleEnumEntry> ENUM_HIGHCONTRASTTYPE = new()
         {
             new VisualStyleEnumEntry(0, "ACTIVECAPTION" ),
             new VisualStyleEnumEntry(1, "CAPTIONTEXT" ),

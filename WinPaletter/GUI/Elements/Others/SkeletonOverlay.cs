@@ -43,7 +43,7 @@ namespace WinPaletter.UI.WP
         {
             if (DesignMode) return;
 
-            if (_timer == null)  _timer = new Timer { Interval = TickInterval };
+            if (_timer == null) _timer = new Timer { Interval = TickInterval };
             _timer.Interval = TickInterval;
             _timer.Start();
 

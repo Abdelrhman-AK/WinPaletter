@@ -87,17 +87,10 @@ namespace WinPaletter
             /// Examples of how to use the command line arguments.
             /// </summary>
             [Usage(ApplicationAlias = "WinPaletter")]
-            public static IEnumerable<Example> Examples
-            {
-                get
-                {
-                    return
-                    [
+            public static IEnumerable<Example> Examples => [
                         new Example("Apply a theme from command line", new Options { Apply = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\My Theme.wpth" }),
                         new Example("Edit a theme from command line", new Options { Edit = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\My Theme.wpth" }),
                     ];
-                }
-            }
         }
 
         /// <summary>

@@ -40,9 +40,7 @@ namespace WinPaletter
             this.Timer1 = new System.Windows.Forms.Timer(this.components);
             this.Label8 = new System.Windows.Forms.Label();
             this.PictureBox14 = new System.Windows.Forms.PictureBox();
-            this.ComboBox6 = new WinPaletter.UI.WP.ComboBox();
             this.Label10 = new System.Windows.Forms.Label();
-            this.ComboBox5 = new WinPaletter.UI.WP.ComboBox();
             this.PictureBox15 = new System.Windows.Forms.PictureBox();
             this.trackBarX4 = new WinPaletter.UI.Controllers.TrackBarX();
             this.trackBarX3 = new WinPaletter.UI.Controllers.TrackBarX();
@@ -152,6 +150,9 @@ namespace WinPaletter
             this.tablessControl2 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
+            this.curstyle_aero = new WinPaletter.UI.WP.RadioImage();
+            this.curstyle_modern = new WinPaletter.UI.WP.RadioImage();
+            this.curstyle_classic = new WinPaletter.UI.WP.RadioImage();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.pictureBox30 = new System.Windows.Forms.PictureBox();
             this.label27 = new System.Windows.Forms.Label();
@@ -169,6 +170,11 @@ namespace WinPaletter
             this.label7 = new System.Windows.Forms.Label();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.groupBox9 = new WinPaletter.UI.WP.GroupBox();
+            this.anistyle_modern = new WinPaletter.UI.WP.RadioImage();
+            this.anistyle_aero = new WinPaletter.UI.WP.RadioImage();
+            this.anistyle_metro = new WinPaletter.UI.WP.RadioImage();
+            this.anistyle_fluid = new WinPaletter.UI.WP.RadioImage();
+            this.anistyle_classic = new WinPaletter.UI.WP.RadioImage();
             this.separatorH3 = new WinPaletter.UI.WP.SeparatorH();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -262,9 +268,9 @@ namespace WinPaletter
             // Label8
             // 
             this.Label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label8.Location = new System.Drawing.Point(43, 141);
+            this.Label8.Location = new System.Drawing.Point(43, 146);
             this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(320, 24);
+            this.Label8.Size = new System.Drawing.Size(228, 24);
             this.Label8.TabIndex = 76;
             this.Label8.Text = "Busy cursor style:";
             this.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -272,68 +278,26 @@ namespace WinPaletter
             // PictureBox14
             // 
             this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
-            this.PictureBox14.Location = new System.Drawing.Point(13, 141);
+            this.PictureBox14.Location = new System.Drawing.Point(13, 146);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);
             this.PictureBox14.TabIndex = 75;
             this.PictureBox14.TabStop = false;
             // 
-            // ComboBox6
-            // 
-            this.ComboBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ComboBox6.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.ComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.ComboBox6.ForeColor = System.Drawing.Color.White;
-            this.ComboBox6.FormattingEnabled = true;
-            this.ComboBox6.ItemHeight = 20;
-            this.ComboBox6.Items.AddRange(new object[] {
-            "Metro",
-            "Modern",
-            "Classic",
-            "Fluid",
-            "Aero"});
-            this.ComboBox6.Location = new System.Drawing.Point(369, 140);
-            this.ComboBox6.Name = "ComboBox6";
-            this.ComboBox6.Size = new System.Drawing.Size(372, 26);
-            this.ComboBox6.TabIndex = 68;
-            this.ComboBox6.SelectedIndexChanged += new System.EventHandler(this.ComboBox6_SelectedIndexChanged);
-            // 
             // Label10
             // 
             this.Label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label10.Location = new System.Drawing.Point(43, 141);
+            this.Label10.Location = new System.Drawing.Point(43, 146);
             this.Label10.Name = "Label10";
-            this.Label10.Size = new System.Drawing.Size(322, 24);
+            this.Label10.Size = new System.Drawing.Size(278, 24);
             this.Label10.TabIndex = 74;
             this.Label10.Text = "Arrow style:";
             this.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ComboBox5
-            // 
-            this.ComboBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ComboBox5.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.ComboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ComboBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.ComboBox5.ForeColor = System.Drawing.Color.White;
-            this.ComboBox5.FormattingEnabled = true;
-            this.ComboBox5.ItemHeight = 20;
-            this.ComboBox5.Items.AddRange(new object[] {
-            "Aero",
-            "Modern",
-            "Classic"});
-            this.ComboBox5.Location = new System.Drawing.Point(369, 140);
-            this.ComboBox5.Name = "ComboBox5";
-            this.ComboBox5.Size = new System.Drawing.Size(372, 26);
-            this.ComboBox5.TabIndex = 65;
-            this.ComboBox5.SelectedIndexChanged += new System.EventHandler(this.ComboBox5_SelectedIndexChanged);
-            // 
             // PictureBox15
             // 
             this.PictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox15.Image")));
-            this.PictureBox15.Location = new System.Drawing.Point(13, 141);
+            this.PictureBox15.Location = new System.Drawing.Point(13, 146);
             this.PictureBox15.Name = "PictureBox15";
             this.PictureBox15.Size = new System.Drawing.Size(24, 24);
             this.PictureBox15.TabIndex = 73;
@@ -1114,14 +1078,14 @@ namespace WinPaletter
             this.GroupBox1.Location = new System.Drawing.Point(769, 62);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.GroupBox1.Size = new System.Drawing.Size(309, 614);
+            this.GroupBox1.Size = new System.Drawing.Size(309, 603);
             this.GroupBox1.TabIndex = 7;
             // 
             // numericUpDown1
             // 
             this.numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.numericUpDown1.BackColor = System.Drawing.Color.Transparent;
-            this.numericUpDown1.Location = new System.Drawing.Point(257, 573);
+            this.numericUpDown1.Location = new System.Drawing.Point(257, 570);
             this.numericUpDown1.Maximum = 20;
             this.numericUpDown1.Minimum = 3;
             this.numericUpDown1.Name = "numericUpDown1";
@@ -1140,7 +1104,7 @@ namespace WinPaletter
             this.Button5.Image = null;
             this.Button5.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button5.ImageGlyph")));
             this.Button5.ImageGlyphEnabled = true;
-            this.Button5.Location = new System.Drawing.Point(150, 572);
+            this.Button5.Location = new System.Drawing.Point(150, 569);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(101, 28);
             this.Button5.TabIndex = 66;
@@ -1186,7 +1150,7 @@ namespace WinPaletter
             this.cursorsConatiner.Location = new System.Drawing.Point(3, 41);
             this.cursorsConatiner.Name = "cursorsConatiner";
             this.cursorsConatiner.Padding = new System.Windows.Forms.Padding(4, 4, 0, 4);
-            this.cursorsConatiner.Size = new System.Drawing.Size(300, 525);
+            this.cursorsConatiner.Size = new System.Drawing.Size(300, 522);
             this.cursorsConatiner.TabIndex = 6;
             // 
             // Arrow
@@ -1965,7 +1929,7 @@ namespace WinPaletter
             this.Button6.Image = null;
             this.Button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste;
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.Location = new System.Drawing.Point(74, 572);
+            this.Button6.Location = new System.Drawing.Point(74, 569);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(70, 28);
             this.Button6.TabIndex = 67;
@@ -1985,7 +1949,7 @@ namespace WinPaletter
             this.Button2.Image = null;
             this.Button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste;
             this.Button2.ImageGlyphEnabled = true;
-            this.Button2.Location = new System.Drawing.Point(41, 572);
+            this.Button2.Location = new System.Drawing.Point(41, 569);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(27, 28);
             this.Button2.TabIndex = 11;
@@ -2003,7 +1967,7 @@ namespace WinPaletter
             this.Button1.Image = null;
             this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
             this.Button1.ImageGlyphEnabled = true;
-            this.Button1.Location = new System.Drawing.Point(8, 572);
+            this.Button1.Location = new System.Drawing.Point(8, 569);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(27, 28);
             this.Button1.TabIndex = 10;
@@ -2417,13 +2381,15 @@ namespace WinPaletter
             // groupBox7
             // 
             this.groupBox7.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox7.Controls.Add(this.curstyle_aero);
+            this.groupBox7.Controls.Add(this.curstyle_modern);
+            this.groupBox7.Controls.Add(this.curstyle_classic);
             this.groupBox7.Controls.Add(this.separatorH1);
             this.groupBox7.Controls.Add(this.pictureBox30);
             this.groupBox7.Controls.Add(this.PictureBox15);
             this.groupBox7.Controls.Add(this.Label10);
             this.groupBox7.Controls.Add(this.label27);
             this.groupBox7.Controls.Add(this.PictureBox2);
-            this.groupBox7.Controls.Add(this.ComboBox5);
             this.groupBox7.Controls.Add(this.trackBarX1);
             this.groupBox7.Controls.Add(this.Label3);
             this.groupBox7.Controls.Add(this.PrimaryColor1);
@@ -2436,9 +2402,59 @@ namespace WinPaletter
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox7.Location = new System.Drawing.Point(0, 0);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(748, 175);
+            this.groupBox7.Size = new System.Drawing.Size(748, 183);
             this.groupBox7.TabIndex = 222;
-            this.groupBox7.Text = "groupBox7";
+            // 
+            // curstyle_aero
+            // 
+            this.curstyle_aero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.curstyle_aero.Checked = false;
+            this.curstyle_aero.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.curstyle_aero.ForeColor = System.Drawing.Color.White;
+            this.curstyle_aero.Image = ((System.Drawing.Image)(resources.GetObject("curstyle_aero.Image")));
+            this.curstyle_aero.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.curstyle_aero.Location = new System.Drawing.Point(465, 140);
+            this.curstyle_aero.Name = "curstyle_aero";
+            this.curstyle_aero.Size = new System.Drawing.Size(88, 37);
+            this.curstyle_aero.TabIndex = 167;
+            this.curstyle_aero.Text = "Aero";
+            this.curstyle_aero.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.curstyle_aero.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.curstyle_aero.CheckedChanged += new System.EventHandler(this.curstyle_aero_CheckedChanged);
+            // 
+            // curstyle_modern
+            // 
+            this.curstyle_modern.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.curstyle_modern.Checked = false;
+            this.curstyle_modern.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.curstyle_modern.ForeColor = System.Drawing.Color.White;
+            this.curstyle_modern.Image = ((System.Drawing.Image)(resources.GetObject("curstyle_modern.Image")));
+            this.curstyle_modern.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.curstyle_modern.Location = new System.Drawing.Point(559, 140);
+            this.curstyle_modern.Name = "curstyle_modern";
+            this.curstyle_modern.Size = new System.Drawing.Size(88, 37);
+            this.curstyle_modern.TabIndex = 166;
+            this.curstyle_modern.Text = "Modern";
+            this.curstyle_modern.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.curstyle_modern.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.curstyle_modern.CheckedChanged += new System.EventHandler(this.curstyle_aero_CheckedChanged);
+            // 
+            // curstyle_classic
+            // 
+            this.curstyle_classic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.curstyle_classic.Checked = false;
+            this.curstyle_classic.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.curstyle_classic.ForeColor = System.Drawing.Color.White;
+            this.curstyle_classic.Image = ((System.Drawing.Image)(resources.GetObject("curstyle_classic.Image")));
+            this.curstyle_classic.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.curstyle_classic.Location = new System.Drawing.Point(653, 140);
+            this.curstyle_classic.Name = "curstyle_classic";
+            this.curstyle_classic.Size = new System.Drawing.Size(88, 37);
+            this.curstyle_classic.TabIndex = 165;
+            this.curstyle_classic.Text = "Classic";
+            this.curstyle_classic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.curstyle_classic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.curstyle_classic.CheckedChanged += new System.EventHandler(this.curstyle_aero_CheckedChanged);
             // 
             // separatorH1
             // 
@@ -2642,11 +2658,15 @@ namespace WinPaletter
             // groupBox9
             // 
             this.groupBox9.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox9.Controls.Add(this.anistyle_modern);
+            this.groupBox9.Controls.Add(this.anistyle_aero);
+            this.groupBox9.Controls.Add(this.anistyle_metro);
+            this.groupBox9.Controls.Add(this.anistyle_fluid);
+            this.groupBox9.Controls.Add(this.anistyle_classic);
             this.groupBox9.Controls.Add(this.separatorH3);
             this.groupBox9.Controls.Add(this.PictureBox14);
             this.groupBox9.Controls.Add(this.Label8);
             this.groupBox9.Controls.Add(this.pictureBox6);
-            this.groupBox9.Controls.Add(this.ComboBox6);
             this.groupBox9.Controls.Add(this.trackBarX3);
             this.groupBox9.Controls.Add(this.label2);
             this.groupBox9.Controls.Add(this.pictureBox33);
@@ -2661,9 +2681,94 @@ namespace WinPaletter
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox9.Location = new System.Drawing.Point(0, 0);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(748, 175);
+            this.groupBox9.Size = new System.Drawing.Size(748, 183);
             this.groupBox9.TabIndex = 223;
             this.groupBox9.Text = "groupBox9";
+            // 
+            // anistyle_modern
+            // 
+            this.anistyle_modern.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.anistyle_modern.Checked = false;
+            this.anistyle_modern.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.anistyle_modern.ForeColor = System.Drawing.Color.White;
+            this.anistyle_modern.Image = ((System.Drawing.Image)(resources.GetObject("anistyle_modern.Image")));
+            this.anistyle_modern.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_modern.Location = new System.Drawing.Point(465, 140);
+            this.anistyle_modern.Name = "anistyle_modern";
+            this.anistyle_modern.Size = new System.Drawing.Size(88, 37);
+            this.anistyle_modern.TabIndex = 172;
+            this.anistyle_modern.Text = "Modern";
+            this.anistyle_modern.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_modern.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.anistyle_modern.CheckedChanged += new System.EventHandler(this.anistyle_metro_CheckedChanged);
+            // 
+            // anistyle_aero
+            // 
+            this.anistyle_aero.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.anistyle_aero.Checked = false;
+            this.anistyle_aero.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.anistyle_aero.ForeColor = System.Drawing.Color.White;
+            this.anistyle_aero.Image = ((System.Drawing.Image)(resources.GetObject("anistyle_aero.Image")));
+            this.anistyle_aero.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_aero.Location = new System.Drawing.Point(371, 140);
+            this.anistyle_aero.Name = "anistyle_aero";
+            this.anistyle_aero.Size = new System.Drawing.Size(88, 37);
+            this.anistyle_aero.TabIndex = 171;
+            this.anistyle_aero.Text = "Aero";
+            this.anistyle_aero.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_aero.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.anistyle_aero.CheckedChanged += new System.EventHandler(this.anistyle_metro_CheckedChanged);
+            // 
+            // anistyle_metro
+            // 
+            this.anistyle_metro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.anistyle_metro.Checked = false;
+            this.anistyle_metro.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.anistyle_metro.ForeColor = System.Drawing.Color.White;
+            this.anistyle_metro.Image = ((System.Drawing.Image)(resources.GetObject("anistyle_metro.Image")));
+            this.anistyle_metro.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_metro.Location = new System.Drawing.Point(277, 140);
+            this.anistyle_metro.Name = "anistyle_metro";
+            this.anistyle_metro.Size = new System.Drawing.Size(88, 37);
+            this.anistyle_metro.TabIndex = 170;
+            this.anistyle_metro.Text = "Metro";
+            this.anistyle_metro.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_metro.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.anistyle_metro.CheckedChanged += new System.EventHandler(this.anistyle_metro_CheckedChanged);
+            // 
+            // anistyle_fluid
+            // 
+            this.anistyle_fluid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.anistyle_fluid.Checked = false;
+            this.anistyle_fluid.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.anistyle_fluid.ForeColor = System.Drawing.Color.White;
+            this.anistyle_fluid.Image = ((System.Drawing.Image)(resources.GetObject("anistyle_fluid.Image")));
+            this.anistyle_fluid.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_fluid.Location = new System.Drawing.Point(559, 140);
+            this.anistyle_fluid.Name = "anistyle_fluid";
+            this.anistyle_fluid.Size = new System.Drawing.Size(88, 37);
+            this.anistyle_fluid.TabIndex = 169;
+            this.anistyle_fluid.Text = "Fluid";
+            this.anistyle_fluid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_fluid.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.anistyle_fluid.CheckedChanged += new System.EventHandler(this.anistyle_metro_CheckedChanged);
+            // 
+            // anistyle_classic
+            // 
+            this.anistyle_classic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.anistyle_classic.Checked = false;
+            this.anistyle_classic.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.anistyle_classic.ForeColor = System.Drawing.Color.White;
+            this.anistyle_classic.Image = ((System.Drawing.Image)(resources.GetObject("anistyle_classic.Image")));
+            this.anistyle_classic.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_classic.Location = new System.Drawing.Point(653, 140);
+            this.anistyle_classic.Name = "anistyle_classic";
+            this.anistyle_classic.Size = new System.Drawing.Size(88, 37);
+            this.anistyle_classic.TabIndex = 168;
+            this.anistyle_classic.Text = "Classic";
+            this.anistyle_classic.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.anistyle_classic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.anistyle_classic.CheckedChanged += new System.EventHandler(this.anistyle_metro_CheckedChanged);
             // 
             // separatorH3
             // 
@@ -2972,7 +3077,7 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CanOpenColorsEffects = true;
-            this.ClientSize = new System.Drawing.Size(1090, 741);
+            this.ClientSize = new System.Drawing.Size(1090, 722);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -3107,8 +3212,6 @@ namespace WinPaletter
         internal PictureBox PictureBox21;
         internal PictureBox PictureBox22;
         internal UI.WP.CheckBox CheckBox10;
-        internal UI.WP.ComboBox ComboBox5;
-        internal UI.WP.ComboBox ComboBox6;
         internal Label Label8;
         internal PictureBox PictureBox14;
         internal Label Label10;
@@ -3206,5 +3309,13 @@ namespace WinPaletter
         private UI.WP.SeparatorH separatorH4;
         private UI.WP.SeparatorH separatorH5;
         private UI.WP.NumericUpDown numericUpDown1;
+        private UI.WP.RadioImage curstyle_aero;
+        private UI.WP.RadioImage curstyle_modern;
+        private UI.WP.RadioImage curstyle_classic;
+        private UI.WP.RadioImage anistyle_metro;
+        private UI.WP.RadioImage anistyle_fluid;
+        private UI.WP.RadioImage anistyle_classic;
+        private UI.WP.RadioImage anistyle_aero;
+        private UI.WP.RadioImage anistyle_modern;
     }
 }

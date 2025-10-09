@@ -39,7 +39,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool Flat
         {
-            get { return flat; }
+            get => flat;
             set
             {
                 if (flat != value)
@@ -55,7 +55,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get { return buttonHilight; }
+            get => buttonHilight;
             set
             {
                 if (buttonHilight != value)
@@ -71,7 +71,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonShadow
         {
-            get { return buttonShadow; }
+            get => buttonShadow;
             set
             {
                 if (buttonShadow != value)
@@ -87,7 +87,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonDkShadow
         {
-            get { return buttonDkShadow; }
+            get => buttonDkShadow;
             set
             {
                 if (buttonDkShadow != value)
@@ -103,7 +103,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonLight
         {
-            get { return buttonLight; }
+            get => buttonLight;
             set
             {
                 if (buttonLight != value)
@@ -119,7 +119,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool Style2
         {
-            get { return style2; }
+            get => style2;
             set
             {
                 if (style2 != value)

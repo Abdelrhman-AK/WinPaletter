@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -82,11 +81,11 @@ namespace WinPaletter.TypesExtensions
 
                     if (Splitted.Count() == 3)
                     {
-                        return Color.FromArgb(255, (int)Math.Round(Conversion.Val(Splitted[0])), (int)Math.Round(Conversion.Val(Splitted[1])), (int)Math.Round(Conversion.Val(Splitted[2])));
+                        return Color.FromArgb(255, int.Parse(Splitted[0]), int.Parse(Splitted[1]), int.Parse(Splitted[2]));
                     }
                     else if (Splitted.Count() == 4)
                     {
-                        return Color.FromArgb((int)Math.Round(Conversion.Val(Splitted[0])), (int)Math.Round(Conversion.Val(Splitted[1])), (int)Math.Round(Conversion.Val(Splitted[2])), (int)Math.Round(Conversion.Val(Splitted[3])));
+                        return Color.FromArgb(int.Parse(Splitted[0]), int.Parse(Splitted[1]), int.Parse(Splitted[2]), int.Parse(Splitted[3]));
                     }
                     else
                     {

@@ -27,9 +27,9 @@ namespace WinPaletter.UI.Retro
             titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
 
             // Initialize control box buttons
-            _CloseBtn = new() { Name = "CloseBtn", Text = "r", Font = new("Marlett", 7.8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            _MinBtn = new() { Name = "MinBtn", Text = "1", Font = new("Marlett", 8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            _MaxBtn = new() { Name = "MaxBtn", Text = "0", Font = new("Marlett", 8f), Size = new(BtnWidth, BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
+            _CloseBtn = new() { Name = "CloseBtn", Text = "r", Font = new("Marlett", 7.8f), Size = new((int)BtnWidth, (int)BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
+            _MinBtn = new() { Name = "MinBtn", Text = "1", Font = new("Marlett", 8f), Size = new((int)BtnWidth, (int)BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
+            _MaxBtn = new() { Name = "MaxBtn", Text = "0", Font = new("Marlett", 8f), Size = new((int)BtnWidth, (int)BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
             BtnHeight = Metrics_CaptionHeight + titleHeight - 4;
             BtnWidth = Metrics_CaptionWidth - 2;
             DoubleBuffered = true;
@@ -53,14 +53,14 @@ namespace WinPaletter.UI.Retro
 
         #region Variables
 
-        Rectangle Rect;
-        Rectangle Border;
-        Rectangle TitlebarRect;
-        Rectangle TitlebarTextRect;
-        Rectangle r0;
-        Rectangle r1;
+        RectangleF Rect;
+        RectangleF Border;
+        RectangleF TitlebarRect;
+        RectangleF TitlebarTextRect;
+        RectangleF r0;
+        RectangleF r1;
 
-        private int titleHeight;
+        private float titleHeight;
 
         private Point newPoint = new();
         private Point oldPoint = new();
@@ -75,15 +75,15 @@ namespace WinPaletter.UI.Retro
         private PointF[] btnLightPoints1;
 
         readonly int GripSize = 6;
-        Rectangle editingRect;
-        Rectangle Grip_topLeft;
-        Rectangle Grip_topRight;
-        Rectangle Grip_bottomLeft;
-        Rectangle Grip_bottomRight;
-        Rectangle Grip_topCenter;
-        Rectangle Grip_bottomCenter;
-        Rectangle Grip_leftCenter;
-        Rectangle Grip_rightCenter;
+        RectangleF editingRect;
+        RectangleF Grip_topLeft;
+        RectangleF Grip_topRight;
+        RectangleF Grip_bottomLeft;
+        RectangleF Grip_bottomRight;
+        RectangleF Grip_topCenter;
+        RectangleF Grip_bottomCenter;
+        RectangleF Grip_leftCenter;
+        RectangleF Grip_rightCenter;
 
         bool isMoving_Grip_topCenter = false;
         bool isMoving_Grip_padding_left = false;
@@ -101,8 +101,8 @@ namespace WinPaletter.UI.Retro
         private readonly ButtonR _MinBtn;
         private readonly ButtonR _MaxBtn;
 
-        private int BtnHeight;
-        private int BtnWidth;
+        private float BtnHeight;
+        private float BtnWidth;
 
         #endregion
 
@@ -176,7 +176,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ColorBorder
         {
-            get { return _colorBorder; }
+            get => _colorBorder;
             set
             {
                 if (_colorBorder != value)
@@ -193,7 +193,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool Flat
         {
-            get { return _flat; }
+            get => _flat;
             set
             {
                 if (_flat != value)
@@ -210,10 +210,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color Color1
         {
-            get
-            {
-                return _Color1;
-            }
+            get => _Color1;
             set
             {
                 if (_Color1 != value)
@@ -230,10 +227,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color Color2
         {
-            get
-            {
-                return _Color2;
-            }
+            get => _Color2;
             set
             {
                 if (_Color2 != value)
@@ -865,9 +859,9 @@ namespace WinPaletter.UI.Retro
             BtnHeight = Math.Max(_Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5);
             BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5);
 
-            if (_CloseBtn != null) _CloseBtn.Size = new(BtnWidth, BtnHeight);
-            if (_MinBtn != null) _MinBtn.Size = new(BtnWidth, BtnHeight);
-            if (_MaxBtn != null) _MaxBtn.Size = new(BtnWidth, BtnHeight);
+            if (_CloseBtn != null) _CloseBtn.Size = new((int)BtnWidth, (int)BtnHeight);
+            if (_MinBtn != null) _MinBtn.Size = new((int)BtnWidth, (int)BtnHeight);
+            if (_MaxBtn != null) _MaxBtn.Size = new((int)BtnWidth, (int)BtnHeight);
             Refresh();
         }
 
@@ -902,7 +896,7 @@ namespace WinPaletter.UI.Retro
             float i0, iFx;
             i0 = Math.Abs(Math.Min(_Metrics_CaptionHeight, _Metrics_CaptionWidth));
             iFx = i0 / Math.Abs(Math.Min(17, 18));
-            Font f = new("Marlett", (float)(6.8d * (double)iFx));
+            Font f = new("Marlett", (float)(6.8f * (float)iFx));
             if (_CloseBtn != null) _CloseBtn.Font = f;
             if (_MinBtn != null) _MinBtn.Font = f;
             if (_MaxBtn != null) _MaxBtn.Font = f;
@@ -910,9 +904,9 @@ namespace WinPaletter.UI.Retro
 
         public void AdjustPadding()
         {
-            int iP = 3 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth;
-            int iT = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font);
-            Padding _Padding = new(iP, iT, iP, iP);
+            float iP = 3 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth;
+            float iT = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font);
+            Padding _Padding = new((int)iP, (int)iT, (int)iP, (int)iP);
             Padding = _Padding;
 
             editingRect = new(Padding.Left, Padding.Top, Width - Padding.Left * 2 - 1, Height - Padding.Bottom - Padding.Top - 1);
@@ -926,11 +920,11 @@ namespace WinPaletter.UI.Retro
             Grip_leftCenter = new(editingRect.X - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
             Grip_rightCenter = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
 
-            int CompinedPadding = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3;
+            float CompinedPadding = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3;
             TitlebarRect = new(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight + titleHeight);
 
             SizeF textSize = Text.Measure(Font);
-            int y = TitlebarRect.Y + (TitlebarRect.Height - (int)textSize.Height) / 2;
+            float y = TitlebarRect.Y + (TitlebarRect.Height - (int)textSize.Height) / 2;
             TitlebarTextRect = new(TitlebarRect.X, y, (int)textSize.Width, (int)textSize.Height);
 
             r0 = new(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width / 2, TitlebarRect.Height - 1);
@@ -939,17 +933,17 @@ namespace WinPaletter.UI.Retro
             Rect = new(0, 0, Width - 1, Height - 1);
             Border = new(2, 2, Width - 5, Height - 5);
 
-            btnShadowPoints0 = [new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1)];
-            btnShadowPoints1 = [new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1)];
+            btnShadowPoints0 = [new PointF(Rect.Width - 1, Rect.X + 1), new PointF(Rect.Width - 1, Rect.Height - 1)];
+            btnShadowPoints1 = [new PointF(Rect.X + 1, Rect.Height - 1), new PointF(Rect.Width - 1, Rect.Height - 1)];
 
-            btnDkShadowPoints0 = [new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height)];
-            btnDkShadowPoints1 = [new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height)];
+            btnDkShadowPoints0 = [new PointF(Rect.Width, Rect.X), new PointF(Rect.Width, Rect.Height)];
+            btnDkShadowPoints1 = [new PointF(Rect.X, Rect.Height), new PointF(Rect.Width, Rect.Height)];
 
-            btnHilightPoints0 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1)];
-            btnHilightPoints1 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2)];
+            btnHilightPoints0 = [new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.Width - 2, Rect.Y + 1)];
+            btnHilightPoints1 = [new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.X + 1, Rect.Height - 2)];
 
-            btnLightPoints0 = [new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y)];
-            btnLightPoints1 = [new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1)];
+            btnLightPoints0 = [new PointF(Rect.X, Rect.Y), new PointF(Rect.Width - 1, Rect.Y)];
+            btnLightPoints1 = [new PointF(Rect.X, Rect.Y), new PointF(Rect.X, Rect.Height - 1)];
         }
 
         #endregion
@@ -999,17 +993,17 @@ namespace WinPaletter.UI.Retro
             {
                 if (!Flat)
                 {
-                    G.DrawLine(btnShadow, new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1));
-                    G.DrawLine(btnShadow, new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1));
+                    G.DrawLine(btnShadow, new PointF(Rect.Width - 1, Rect.X + 1), new PointF(Rect.Width - 1, Rect.Height - 1));
+                    G.DrawLine(btnShadow, new PointF(Rect.X + 1, Rect.Height - 1), new PointF(Rect.Width - 1, Rect.Height - 1));
 
-                    G.DrawLine(btnHilight, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1));
-                    G.DrawLine(btnHilight, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2));
+                    G.DrawLine(btnHilight, new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.Width - 2, Rect.Y + 1));
+                    G.DrawLine(btnHilight, new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.X + 1, Rect.Height - 2));
 
-                    G.DrawLine(btnLight, new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y));
-                    G.DrawLine(btnLight, new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1));
+                    G.DrawLine(btnLight, new PointF(Rect.X, Rect.Y), new PointF(Rect.Width - 1, Rect.Y));
+                    G.DrawLine(btnLight, new PointF(Rect.X, Rect.Y), new PointF(Rect.X, Rect.Height - 1));
 
-                    G.DrawLine(btnDkShadow, new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height));
-                    G.DrawLine(btnDkShadow, new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height));
+                    G.DrawLine(btnDkShadow, new PointF(Rect.Width, Rect.X), new PointF(Rect.Width, Rect.Height));
+                    G.DrawLine(btnDkShadow, new PointF(Rect.X, Rect.Height), new PointF(Rect.Width, Rect.Height));
 
                     G.DrawRectangle(btnFace, new Rectangle(2, 2, Width - 5, Height - 5));
 
@@ -1060,27 +1054,27 @@ namespace WinPaletter.UI.Retro
                 }
                 else
                 {
-                    G.DrawRectangle(btnShadow, Rect);
+                    G.DrawRectangle(btnShadow, Rect.X, Rect.Y, Rect.Width, Rect.Height);
 
                     #region Editor
 
                     if (_ColorEdit_Shadow)
                     {
                         Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color)) { G.DrawRectangle(P, Rect); }
+                        using (Pen P = new(color)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
                     }
 
                     #endregion
                 }
 
-                G.DrawRectangle(clrBorder, Border);
+                G.DrawRectangle(clrBorder, Border.X, Border.Y, Border.Width, Border.Height);
 
                 #region Editor
 
                 if (_ColorEdit_Border)
                 {
                     Color color = Color.FromArgb(200, 128, 0, 0);
-                    using (Pen P = new(color)) { G.DrawRectangle(P, Border); }
+                    using (Pen P = new(color)) { G.DrawRectangle(P, Border.X, Border.Y, Border.Width, Border.Height); }
                 }
 
                 #endregion
@@ -1093,7 +1087,7 @@ namespace WinPaletter.UI.Retro
                 using (LinearGradientBrush gr = new(TitlebarRect, RTL ? Color2 : Color1, RTL ? Color1 : Color2, LinearGradientMode.Horizontal))
                 using (SolidBrush fixer = new(RTL ? Color2 : Color1))
                 {
-                    Rectangle TRectFixer = new(TitlebarRect.X, TitlebarRect.Y, 1, TitlebarRect.Height);
+                    RectangleF TRectFixer = new(TitlebarRect.X, TitlebarRect.Y, 1, TitlebarRect.Height);
 
                     G.FillRectangle(gr, TitlebarRect);
                     G.FillRectangle(fixer, TRectFixer);
@@ -1105,7 +1099,7 @@ namespace WinPaletter.UI.Retro
                         using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
                         {
                             G.FillRectangle(hb, r0);
-                            G.DrawRectangle(P, r0);
+                            G.DrawRectangle(P, r0.X, r0.Y, r0.Width, r0.Height);
                         }
                     }
 
@@ -1116,7 +1110,7 @@ namespace WinPaletter.UI.Retro
                         using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
                         {
                             G.FillRectangle(hb, r1);
-                            G.DrawRectangle(P, r1);
+                            G.DrawRectangle(P, r1.X, r1.Y, r1.Width, r1.Height);
                         }
                     }
                 }
@@ -1132,7 +1126,7 @@ namespace WinPaletter.UI.Retro
                     using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
                     {
                         G.FillRectangle(hb, TitlebarRect);
-                        G.DrawRectangle(P, TitlebarRect);
+                        G.DrawRectangle(P, TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width, TitlebarRect.Height);
                     }
                 }
             }
@@ -1147,7 +1141,7 @@ namespace WinPaletter.UI.Retro
                     using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
                     {
                         G.FillRectangle(hb, TitlebarTextRect);
-                        G.DrawRectangle(P, TitlebarTextRect);
+                        G.DrawRectangle(P, TitlebarTextRect.X, TitlebarTextRect.Y, TitlebarTextRect.Width, TitlebarTextRect.Height);
                     }
                 }
 
@@ -1158,7 +1152,7 @@ namespace WinPaletter.UI.Retro
             {
                 using (Pen P = new(BackColor.Invert()) { DashStyle = DashStyle.Dot })
                 {
-                    G.DrawRectangle(P, editingRect);
+                    G.DrawRectangle(P, editingRect.X, editingRect.Y, editingRect.Width, editingRect.Height);
                 }
 
                 using (Pen P = new(BackColor.Invert()) { DashStyle = DashStyle.Solid })

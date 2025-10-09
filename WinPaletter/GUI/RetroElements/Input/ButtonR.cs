@@ -79,10 +79,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public new Image Image
         {
-            get
-            {
-                return _Image;
-            }
+            get => _Image;
             set
             {
                 _Image = value;
@@ -106,7 +103,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color WindowFrame
         {
-            get { return windowFrame; }
+            get => windowFrame;
             set
             {
                 if (windowFrame != value)
@@ -122,7 +119,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonShadow
         {
-            get { return buttonShadow; }
+            get => buttonShadow;
             set
             {
                 if (buttonShadow != value)
@@ -138,7 +135,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonDkShadow
         {
-            get { return buttonDkShadow; }
+            get => buttonDkShadow;
             set
             {
                 if (buttonDkShadow != value)
@@ -154,7 +151,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get { return buttonHilight; }
+            get => buttonHilight;
             set
             {
                 if (buttonHilight != value)
@@ -170,7 +167,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonLight
         {
-            get { return buttonLight; }
+            get => buttonLight;
             set
             {
                 if (buttonLight != value)
@@ -186,7 +183,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool UseItAsScrollbar
         {
-            get { return useItAsScrollbar; }
+            get => useItAsScrollbar;
             set
             {
                 if (useItAsScrollbar != value)
@@ -202,7 +199,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool AppearsAsPressed
         {
-            get { return appearsAsPressed; }
+            get => appearsAsPressed;
             set
             {
                 if (appearsAsPressed != value)
@@ -218,7 +215,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public bool HatchBrush
         {
-            get { return hatchBrush; }
+            get => hatchBrush;
             set
             {
                 if (hatchBrush != value)
@@ -234,7 +231,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public int FocusRectWidth
         {
-            get { return focusRectWidth; }
+            get => focusRectWidth;
             set
             {
                 if (focusRectWidth != value)
@@ -250,7 +247,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public int FocusRectHeight
         {
-            get { return focusRectHeight; }
+            get => focusRectHeight;
             set
             {
                 if (focusRectHeight != value)
@@ -1049,16 +1046,16 @@ namespace WinPaletter.UI.Retro
                 }
             }
 
-            int imgX = default, imgY = default;
+            float imgX = default, imgY = default;
 
             if (Image is not null)
             {
-                imgX = (int)Math.Round((Width - Image.Width) / 2d);
-                imgY = (int)Math.Round((Height - Image.Height) / 2d);
+                imgX = (Width - Image.Width) / 2f;
+                imgY = (Height - Image.Height) / 2f;
             }
 
             // Draw the text and image
-            using (SolidBrush foreBrush = new(Enabled ? ForeColor : base.BackColor.CB((float)-0.2d)))
+            using (SolidBrush foreBrush = new(Enabled ? ForeColor : base.BackColor.CB(-0.2f)))
             {
                 if (Image is null)
                 {
@@ -1105,18 +1102,18 @@ namespace WinPaletter.UI.Retro
                                     ButtonString.LineAlignment = StringAlignment.Near;
 
                                     // GetTextAndImageRectangles the image position, offsets are made to make image shown in its possition correctly
-                                    int alx = (int)Math.Round((Height - (Image.Height + 4 + base.Text.Measure(base.Font).Height)) / 2f);
+                                    float alx = (Height - (Image.Height + 4 + base.Text.Measure(base.Font).Height)) / 2f;
                                     if (string.IsNullOrEmpty(Text))
                                     {
-                                        G.DrawImage(Image, new Rectangle(imgX, imgY, Image.Width, Image.Height));
+                                        G.DrawImage(Image, new RectangleF(imgX, imgY, Image.Width, Image.Height));
                                     }
                                     else
                                     {
-                                        G.DrawImage(Image, new Rectangle(imgX, alx, Image.Width, Image.Height));
+                                        G.DrawImage(Image, new RectangleF(imgX, alx, Image.Width, Image.Height));
                                     }
 
                                     // Offsets are made to make image shown in its possition correctly
-                                    G.DrawString(Text, Font, foreBrush, new Rectangle(0, alx + 9 + Image.Height, Width, Height), ButtonString);
+                                    G.DrawString(Text, Font, foreBrush, new RectangleF(0, alx + 9 + Image.Height, Width, Height), ButtonString);
                                     break;
                                 }
 
@@ -1125,15 +1122,15 @@ namespace WinPaletter.UI.Retro
                                     ButtonString.Alignment = StringAlignment.Near;
                                     ButtonString.LineAlignment = StringAlignment.Center;
                                     // GetTextAndImageRectangles the image position, offsets are made to make image shown in its possition correctly
-                                    int alx = (int)Math.Round((Width - (Image.Width + 4 + base.Text.Measure(base.Font).Width)) / 2f);
-                                    G.DrawImage(Image, new Rectangle(alx, imgY - 1, Image.Width, Image.Height));
-                                    G.DrawString(Text, Font, foreBrush, new Rectangle(alx + Image.Width, 0, Width, Height), ButtonString);
+                                    float alx = (Width - (Image.Width + 4 + base.Text.Measure(base.Font).Width)) / 2f;
+                                    G.DrawImage(Image, new RectangleF(alx, imgY - 1, Image.Width, Image.Height));
+                                    G.DrawString(Text, Font, foreBrush, new RectangleF(alx + Image.Width, 0, Width, Height), ButtonString);
                                     break;
                                 }
 
                             case ContentAlignment.MiddleRight:
                                 {
-                                    G.DrawImage(Image, new Rectangle(1, imgY - 1, Image.Width, Image.Height));
+                                    G.DrawImage(Image, new RectangleF(1, imgY - 1, Image.Width, Image.Height));
                                     using (StringFormat sf = base.TextAlign.ToStringFormat())
                                     {
                                         G.DrawString(Text, Font, foreBrush, new Rectangle(7, 0, Width, Height), sf);
@@ -1143,7 +1140,7 @@ namespace WinPaletter.UI.Retro
 
                             case ContentAlignment.BottomLeft:
                                 {
-                                    G.DrawImage(Image, new Rectangle(1, imgY, Image.Width, Image.Height));
+                                    G.DrawImage(Image, new RectangleF(1, imgY, Image.Width, Image.Height));
                                     using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                                     {
                                         G.DrawString(Text, Font, foreBrush, new Rectangle(Image.Width + 1, 0, Width, Height), sf);

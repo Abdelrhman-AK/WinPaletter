@@ -30,7 +30,7 @@ namespace WinPaletter.UI.WP
 
         readonly ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (ITaskbarList3)new CTaskbarList() : null;
         private IntPtr FormHwnd = IntPtr.Zero;
-        private readonly static TextureBrush Noise = new(Resources.Noise);
+        private static readonly TextureBrush Noise = new(Resources.Noise);
         #endregion
 
         #region Events/Overrides
@@ -551,8 +551,8 @@ namespace WinPaletter.UI.WP
                             using (Pen pen_background = new(brush2, PenWidth))
                             {
                                 G.DrawArc(pen_background, CircleRect, -90, 360);
-                                G.DrawArc(pen, CircleRect, _startAngle, (int)Math.Round((double)(_percent * 360)));
-                                G.DrawArc(penNoise, CircleRect, _startAngle, (int)Math.Round((double)(_percent * 360)));
+                                G.DrawArc(pen, CircleRect, _startAngle, (float)(_percent * 360));
+                                G.DrawArc(penNoise, CircleRect, _startAngle, (float)(_percent * 360));
                             }
                         }
                     }

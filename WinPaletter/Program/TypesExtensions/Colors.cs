@@ -111,12 +111,12 @@ namespace WinPaletter.TypesExtensions
 
             if (nums.Count > 0)
             {
-                int Parse(string v, int max)
+                static int Parse(string v, int max)
                 {
                     if (v.EndsWith("%"))
                     {
-                        double pct = double.Parse(v.TrimEnd('%'), CultureInfo.InvariantCulture) / 100.0;
-                        return (int)Math.Round(pct * max);
+                        float pct = float.Parse(v.TrimEnd('%'), CultureInfo.InvariantCulture) / 100f;
+                        return (int)(pct * max);
                     }
                     return int.Parse(v, CultureInfo.InvariantCulture);
                 }
@@ -230,10 +230,12 @@ namespace WinPaletter.TypesExtensions
         /// more descriptive format with labeled components.</param>
         /// <returns>A string representing the color in either RGB or ARGB format.  If the alpha channel is less than 255, the
         /// output includes the alpha component; otherwise, only the RGB components are included.</returns>
-        public static string ToRgbString(this Color c, bool shortForm = false) =>
-            shortForm
+        public static string ToRgbString(this Color c, bool shortForm = false)
+        {
+            return shortForm
                 ? (c.A < 255 ? $"{c.A} {c.R} {c.G} {c.B}" : $"{c.R} {c.G} {c.B}")
                 : (c.A < 255 ? $"A={c.A}, R={c.R}, G={c.G}, B={c.B}" : $"R={c.R}, G={c.G}, B={c.B}");
+        }
 
         /// <summary>
         /// Converts the specified <see cref="Color"/> to a string representation of its RGB(A) values as percentages.
@@ -246,13 +248,15 @@ namespace WinPaletter.TypesExtensions
         /// langword="true"/>, the output will omit decimal places and use a compact format.</param>
         /// <returns>A string representing the RGB(A) values of the color as percentages.  The format will be "rgb(R%, G%, B%)"
         /// or "rgb(R%, G%, B%) / A%" for the long form,  and "R% G% B%" or "R% G% B% A%" for the short form.</returns>
-        public static string ToRgbPercentString(this Color c, bool shortForm = false) =>
-            shortForm
+        public static string ToRgbPercentString(this Color c, bool shortForm = false)
+        {
+            return shortForm
                 ? (c.A < 255
                     ? $"{c.R / 2.55:F0}% {c.G / 2.55:F0}% {c.B / 2.55:F0}% {c.A / 2.55:F0}%"
                     : $"{c.R / 2.55:F0}% {c.G / 2.55:F0}% {c.B / 2.55:F0}%")
                 : $"rgb({c.R / 2.55:F1}%, {c.G / 2.55:F1}%, {c.B / 2.55:F1}%)" +
                   (c.A < 255 ? $" / {c.A / 2.55:F1}%" : string.Empty);
+        }
 
         /// <summary>
         /// Converts the specified <see cref="Color"/> to a string representation of its ARGB components.
@@ -261,8 +265,10 @@ namespace WinPaletter.TypesExtensions
         /// <param name="shortForm">A boolean value indicating whether to use a short format.  If <see langword="true"/>, the output is in the
         /// format "A R G B".  If <see langword="false"/>, the output is in the format "A=..., R=..., G=..., B=...".</param>
         /// <returns>A <see cref="string"/> representing the ARGB components of the <see cref="Color"/>.</returns>
-        public static string ToArgbString(this Color c, bool shortForm = false) =>
-            shortForm ? $"{c.A} {c.R} {c.G} {c.B}" : $"A={c.A}, R={c.R}, G={c.G}, B={c.B}";
+        public static string ToArgbString(this Color c, bool shortForm = false)
+        {
+            return shortForm ? $"{c.A} {c.R} {c.G} {c.B}" : $"A={c.A}, R={c.R}, G={c.G}, B={c.B}";
+        }
 
         /// <summary>
         /// Converts the specified <see cref="Color"/> to its HSL (Hue, Saturation, Lightness) string representation.
@@ -319,7 +325,7 @@ namespace WinPaletter.TypesExtensions
         /// the alpha channel is less than 255).</returns>
         public static string ToHsvString(this Color c, bool shortForm = false)
         {
-            (double h, double s, double v) = c.ToHSV();
+            (float h, float s, float v) = c.ToHSV();
             return shortForm
                 ? $"{h:F0} {s * 100:F0} {v * 100:F0}" + (c.A < 255 ? $" {c.A}" : string.Empty)
                 : (c.A < 255
@@ -341,7 +347,7 @@ namespace WinPaletter.TypesExtensions
         /// alpha component is included in the output.</returns>
         public static string ToCmykString(this Color c, bool shortForm = false)
         {
-            (double cc, double mm, double yy, double kk) = c.ToCMYK();
+            (float cc, float mm, float yy, float kk) = c.ToCMYK();
             return shortForm
                 ? $"{cc * 100:F0} {mm * 100:F0} {yy * 100:F0} {kk * 100:F0}" + (c.A < 255 ? $" {c.A}" : string.Empty)
                 : (c.A < 255
@@ -361,8 +367,9 @@ namespace WinPaletter.TypesExtensions
         /// <returns>A string representing the color in CSS format. If the color is a known color, its name is returned  in
         /// lowercase. Otherwise, the method returns either a short-form string or a CSS "rgb"/"rgba" string,  depending
         /// on the value of <paramref name="shortForm"/>.</returns>
-        public static string ToCssString(this Color c, bool shortForm = false) =>
-            c.IsKnownColor
+        public static string ToCssString(this Color c, bool shortForm = false)
+        {
+            return c.IsKnownColor
                 ? c.Name.ToLower()
                 : shortForm
                     ? (c.A < 255
@@ -371,6 +378,7 @@ namespace WinPaletter.TypesExtensions
                     : (c.A < 255
                         ? $"rgba({c.R}, {c.G}, {c.B}, {c.A / 255.0:F2})"
                         : $"rgb({c.R}, {c.G}, {c.B})");
+        }
 
         /// <summary>
         /// Converts an HSV (hue, saturation, value) color representation to an ARGB <see cref="Color"/>.
@@ -384,17 +392,17 @@ namespace WinPaletter.TypesExtensions
         /// <param name="a">The alpha (transparency) component of the color. Must be in the range 0 to 255. Defaults to 255 (fully
         /// opaque).</param>
         /// <returns>A <see cref="Color"/> structure representing the equivalent ARGB color.</returns>
-        private static Color HSVToColor(int h, int s, int v, int a = 255)
+        private static Color HSVToColor(float h, float s, float v, int a = 255)
         {
-            double hh = h / 360.0, ss = s / 100.0, vv = v / 100.0;
-            int hi = (int)Math.Floor(hh * 6) % 6;
-            double f = hh * 6 - Math.Floor(hh * 6);
+            float hh = h / 360f, ss = s / 100f, vv = v / 100f;
+            float hi = (float)Math.Floor(hh * 6f) % 6;
+            float f = (float)(hh * 6 - Math.Floor(hh * 6));
 
-            double p = vv * (1 - ss);
-            double q = vv * (1 - f * ss);
-            double t = vv * (1 - (1 - f) * ss);
+            float p = vv * (1 - ss);
+            float q = vv * (1 - f * ss);
+            float t = vv * (1 - (1 - f) * ss);
 
-            double r = 0, g = 0, b = 0;
+            float r = 0, g = 0, b = 0;
             switch (hi)
             {
                 case 0: r = vv; g = t; b = p; break;
@@ -405,10 +413,7 @@ namespace WinPaletter.TypesExtensions
                 case 5: r = vv; g = p; b = q; break;
             }
 
-            return Color.FromArgb(a,
-                (int)Math.Round(r * 255),
-                (int)Math.Round(g * 255),
-                (int)Math.Round(b * 255));
+            return Color.FromArgb(a, (int)(r * 255f), (int)(g * 255f), (int)(b * 255f));
         }
 
         /// <summary>
@@ -423,27 +428,27 @@ namespace WinPaletter.TypesExtensions
         /// <returns>A <see cref="Color"/> structure representing the equivalent RGB color.</returns>
         private static Color CmykToRgb(int c, int m, int y, int k)
         {
-            double C = c / 100.0, M = m / 100.0, Y = y / 100.0, K = k / 100.0;
-            int r = (int)Math.Round(255 * (1 - C) * (1 - K));
-            int g = (int)Math.Round(255 * (1 - M) * (1 - K));
-            int b = (int)Math.Round(255 * (1 - Y) * (1 - K));
+            float C = c / 100f, M = m / 100f, Y = y / 100f, K = k / 100f;
+            int r = (int)(255 * (1 - C) * (1 - K));
+            int g = (int)(255 * (1 - M) * (1 - K));
+            int b = (int)(255 * (1 - Y) * (1 - K));
             return Color.FromArgb(255, r, g, b);
         }
 
         /// <summary>
         /// Convert System.Drawing.Color to HSV (Hue 0–360, Saturation 0–1, Value 0–1).
         /// </summary>
-        public static (double H, double S, double V) ToHSV(this Color color)
+        public static (float H, float S, float V) ToHSV(this Color color)
         {
-            double r = color.R / 255.0;
-            double g = color.G / 255.0;
-            double b = color.B / 255.0;
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
 
-            double max = Math.Max(r, Math.Max(g, b));
-            double min = Math.Min(r, Math.Min(g, b));
-            double delta = max - min;
+            float max = Math.Max(r, Math.Max(g, b));
+            float min = Math.Min(r, Math.Min(g, b));
+            float delta = max - min;
 
-            double h = 0;
+            float h = 0;
 
             if (delta > 0)
             {
@@ -457,8 +462,8 @@ namespace WinPaletter.TypesExtensions
 
             if (h < 0) h += 360;
 
-            double s = max == 0 ? 0 : delta / max;
-            double v = max;
+            float s = max == 0 ? 0 : delta / max;
+            float v = max;
 
             return (h, s, v);
         }
@@ -466,13 +471,13 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Convert System.Drawing.Color to CMYK (0–1 ranges).
         /// </summary>
-        public static (double C, double M, double Y, double K) ToCMYK(this Color color)
+        public static (float C, float M, float Y, float K) ToCMYK(this Color color)
         {
-            double r = color.R / 255.0;
-            double g = color.G / 255.0;
-            double b = color.B / 255.0;
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
 
-            double k = 1 - Math.Max(r, Math.Max(g, b));
+            float k = 1 - Math.Max(r, Math.Max(g, b));
 
             if (Math.Abs(k - 1.0) < 0.00001)
             {
@@ -480,9 +485,9 @@ namespace WinPaletter.TypesExtensions
                 return (0, 0, 0, 1);
             }
 
-            double c = (1 - r - k) / (1 - k);
-            double m = (1 - g - k) / (1 - k);
-            double y = (1 - b - k) / (1 - k);
+            float c = (1 - r - k) / (1 - k);
+            float m = (1 - g - k) / (1 - k);
+            float y = (1 - b - k) / (1 - k);
 
             return (c, m, y, k);
         }
@@ -537,11 +542,11 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Change color brightness
         /// </summary>
-        public static Color CB(this Color color, double correctionFactor)
+        public static Color CB(this Color color, float correctionFactor)
         {
-            double red = color.R;
-            double green = color.G;
-            double blue = color.B;
+            float red = color.R;
+            float green = color.G;
+            float blue = color.B;
 
             if (correctionFactor < 0f)
             {
@@ -716,9 +721,9 @@ namespace WinPaletter.TypesExtensions
         /// Convert color to monochrome (black or white).
         /// Threshold = 0.5 brightness by default.
         /// </summary>
-        public static Color Monochrome(this Color color, double threshold = 0.5)
+        public static Color Monochrome(this Color color, float threshold = 0.5f)
         {
-            double brightness = color.GetBrightness();
+            float brightness = color.GetBrightness();
             return brightness < threshold
                 ? Color.FromArgb(color.A, 0, 0, 0)
                 : Color.FromArgb(color.A, 255, 255, 255);
@@ -1557,11 +1562,11 @@ namespace WinPaletter.TypesExtensions
         public static Color ToMaterialExpressive3(this Color input)
         {
             Color nearest = MaterialExpressivePalette[0];
-            double bestDist = double.MaxValue;
+            float bestDist = float.MaxValue;
 
             foreach (var c in MaterialExpressivePalette)
             {
-                double dist = ColorDistance(input, c);
+                float dist = ColorDistance(input, c);
                 if (dist < bestDist)
                 {
                     bestDist = dist;
@@ -1594,9 +1599,9 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static bool IsDark(this Color color)
         {
-            double luminance = color.R * 0.2126 +
-                               color.G * 0.7152 +
-                               color.B * 0.0722;
+            float luminance = color.R * 0.2126f +
+                              color.G * 0.7152f +
+                              color.B * 0.0722f;
 
             return luminance <= 127.5;
         }
@@ -1921,7 +1926,10 @@ namespace WinPaletter.TypesExtensions
             /// </summary>
             /// <param name="h">The hue value to set, typically in the range of 0 to 360.</param>
             /// <returns>A new <see cref="HSL"/> instance with the updated hue value.</returns>
-            public HSL WithH(float h) => new(h, this.S, this.L);
+            public HSL WithH(float h)
+            {
+                return new(h, this.S, this.L);
+            }
 
             /// <summary>
             /// Creates a new <see cref="HSL"/> instance with the specified saturation value,  while retaining the
@@ -1929,7 +1937,10 @@ namespace WinPaletter.TypesExtensions
             /// </summary>
             /// <param name="s">The saturation value to set. Must be in the range [0, 1].</param>
             /// <returns>A new <see cref="HSL"/> instance with the updated saturation value.</returns>
-            public HSL WithS(float s) => new(this.H, s, this.L);
+            public HSL WithS(float s)
+            {
+                return new(this.H, s, this.L);
+            }
 
             /// <summary>
             /// Creates a new <see cref="HSL"/> instance with the specified lightness value,  while retaining the
@@ -1937,7 +1948,10 @@ namespace WinPaletter.TypesExtensions
             /// </summary>
             /// <param name="l">The lightness value to set for the new <see cref="HSL"/> instance. Must be in the range 0 to 1.</param>
             /// <returns>A new <see cref="HSL"/> instance with the specified lightness value.</returns>
-            public HSL WithL(float l) => new(this.H, this.S, l);
+            public HSL WithL(float l)
+            {
+                return new(this.H, this.S, l);
+            }
         }
     }
 }

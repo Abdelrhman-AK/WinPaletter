@@ -18,25 +18,25 @@ namespace libmsstyle
 
     public class VisualStyleParts
     {
-        public static readonly List<VisualStylePartEntry> PARTS_ADDRESSBAND = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_ADDRESSBAND = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_EDITTEXT_BG ), // reuse states
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_BARRIERPAGE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_BARRIERPAGE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PANEBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_BREADCRUMBBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_BREADCRUMBBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "OVERFLOWCHEVRON", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_BUTTON = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_BUTTON = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PUSHBUTTON", VisualStyleStates.STATES_PUSHBUTTON ),
@@ -52,13 +52,13 @@ namespace libmsstyle
             new VisualStylePartEntry(11, "PUSHBUTTONDROPDOWN", VisualStyleStates.STATES_PUSHBUTTONDROPDOWN ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_CLOCK = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_CLOCK = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TIME", VisualStyleStates.STATES_TIME ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_CHARTVIEW = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_CHARTVIEW = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "CPU_BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -105,7 +105,7 @@ namespace libmsstyle
             new VisualStylePartEntry(42, "NETWORK_SCALELINETEXT", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_COMMANDMODULE_WINVista = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_COMMANDMODULE_WINVista = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "MODULEBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -121,7 +121,7 @@ namespace libmsstyle
             new VisualStylePartEntry(11, "LIBRARYPANEOVERLAY", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_COMMANDMODULE_WIN7 = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_COMMANDMODULE_WIN7 = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "MODULEBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -138,7 +138,7 @@ namespace libmsstyle
             new VisualStylePartEntry(12, "LIBRARYPANEOVERLAY", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_COMMANDMODULE_WIN8 = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_COMMANDMODULE_WIN8 = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "MODULEBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -153,13 +153,13 @@ namespace libmsstyle
             new VisualStylePartEntry(10, "LIBRARYPANEBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_COMMUNICATIONS = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_COMMUNICATIONS = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TAB", VisualStyleStates.STATES_TAB ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_COMBOBOX = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_COMBOBOX = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "DROPDOWNBUTTON", VisualStyleStates.STATES_CB_STYLE ),
@@ -173,7 +173,7 @@ namespace libmsstyle
             new VisualStylePartEntry(9, "DROPDOWNITEM", VisualStyleStates.STATES_CP_DROPDOWNITEM ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_CONTROLPANEL = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_CONTROLPANEL = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "NAVIGATIONPANE", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -197,25 +197,25 @@ namespace libmsstyle
             new VisualStylePartEntry(19, "BODYTITLE", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_COPYCLOSE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_COPYCLOSE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "COPYCLOSEBTN", VisualStyleStates.STATES_COPYCLOSEBTN ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_DROPLIST = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DROPLIST = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "MENUBUTTON", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_EMPTYMARKUP = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_EMPTYMARKUP = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "MARKUPTEXT", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_EXPLORERBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_EXPLORERBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "HEADERBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -232,14 +232,14 @@ namespace libmsstyle
             new VisualStylePartEntry(12, "SPECIALGROUPHEAD", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_INFOBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_INFOBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "FOREGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ), // W10
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_ITEMSVIEW = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_ITEMSVIEW = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "SEARCHHIT", VisualStyleStates.STATES_ITEMSVIEW_SEARCHHIT ),
@@ -250,7 +250,7 @@ namespace libmsstyle
             new VisualStylePartEntry(6, "FOCUSRECTINNER", VisualStyleStates.STATES_ITEMSVIEW_FOCUSRECT ), // W10
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_LISTBOX = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_LISTBOX = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BORDER_HSCROLL", VisualStyleStates.STATES_LISTBOX_SCROLL ),
@@ -260,7 +260,7 @@ namespace libmsstyle
             new VisualStylePartEntry(5, "ITEM", VisualStyleStates.STATES_LISTBOX_ITEMS ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_LISTVIEW = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_LISTVIEW = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "LISTITEM", VisualStyleStates.STATES_LISTVIEW_ITEMS ),
@@ -275,13 +275,13 @@ namespace libmsstyle
             new VisualStylePartEntry(10, "COLUMNDETAIL", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_LINK = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_LINK = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "HyperLink", VisualStyleStates.STATES_TOOLTIP_BALLOON_AND_STANDARD ), // reuse states
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_MENU = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_MENU = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "MENUITEM", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -306,14 +306,14 @@ namespace libmsstyle
             new VisualStylePartEntry(20, "SYSTEMRESTORE", VisualStyleStates.STATES_MENU_SYSTEM_GENERAL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_MENUBAND = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_MENUBAND = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "NEWAPPBUTTON", VisualStyleStates.STATES_MDP_NEWAPPBUTTON ),
             new VisualStylePartEntry(2, "SEPARATOR", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_NAVIGATION = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_NAVIGATION = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKBUTTON", VisualStyleStates.STATES_PUSHBUTTON ), // reuse button states
@@ -321,7 +321,7 @@ namespace libmsstyle
             new VisualStylePartEntry(3, "MENUBUTTON", VisualStyleStates.STATES_PUSHBUTTON ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TREEVIEW = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TREEVIEW = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TREEITEM", VisualStyleStates.STATES_TREEVIEW_ITEM ),
@@ -330,7 +330,7 @@ namespace libmsstyle
             new VisualStylePartEntry(4, "HOTGLYPH", VisualStyleStates.STATES_TREEVIEW_GLYPH ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_WINDOW = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_WINDOW = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "CAPTION", VisualStyleStates.STATES_WINDOW_CAPTION_GEN ),
@@ -374,7 +374,7 @@ namespace libmsstyle
             new VisualStylePartEntry(39, "BORDER", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_DWMPEN = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DWMPEN = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PENBARREL", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -403,7 +403,7 @@ namespace libmsstyle
             new VisualStylePartEntry(24, "FLICKGENERICKEY", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_DWMTOUCH = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DWMTOUCH = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TOUCHDRAG", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -417,7 +417,7 @@ namespace libmsstyle
         };
 
         // Uses custom naming.
-        public static readonly List<VisualStylePartEntry> PARTS_DWMWINDOW_WIN7 = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DWMWINDOW_WIN7 = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "FRAMEBOTTOM", VisualStyleStates.STATES_WINDOW_FRAME_GEN ),
@@ -494,7 +494,7 @@ namespace libmsstyle
         };
 
         // Definitive parts for Win 8.1, using the real names from the PDBs
-        public static readonly List<VisualStylePartEntry> PARTS_DWMWINDOW_WIN81 = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DWMWINDOW_WIN81 = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BOTTOMFRAME", VisualStyleStates.STATES_WINDOW_FRAME_GEN ),
@@ -566,7 +566,7 @@ namespace libmsstyle
         };
         // Definitive parts for W10, using the real names from the PDBs
         // States are generic and might not match every part.
-        public static readonly List<VisualStylePartEntry> PARTS_DWMWINDOW_WIN10 = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DWMWINDOW_WIN10 = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BOTTOMFRAME", VisualStyleStates.STATES_WINDOW_FRAME_GEN ),
@@ -662,7 +662,7 @@ namespace libmsstyle
             new VisualStylePartEntry(91, "BUTTONINACTIVECAPTIONENDDARK", VisualStyleStates.STATES_WINDOW_BTN_AND_THUMB ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_EDIT = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_EDIT = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "EDITTEXT", VisualStyleStates.STATES_EDITTEXT ),
@@ -676,7 +676,7 @@ namespace libmsstyle
             new VisualStylePartEntry(9, "EDITBORDER_HVSCROLL", VisualStyleStates.STATES_EDITTEXT_GENERAL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKDIALOG = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKDIALOG = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PRIMARYPANEL", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -702,7 +702,7 @@ namespace libmsstyle
             new VisualStylePartEntry(21, "RADIOBUTTONPANE", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_HEADER = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_HEADER = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "HEADERITEM", VisualStyleStates.STATES_HEADER_ITEMSTATES ),
@@ -714,14 +714,14 @@ namespace libmsstyle
             new VisualStylePartEntry(7, "HEADEROVERFLOW", VisualStyleStates.STATES_HEADEROVERFLOWSTATES ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_READINGPANE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_READINGPANE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUNDCOLORS", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "LABEL", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_REBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_REBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "GRIPPER", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -734,7 +734,7 @@ namespace libmsstyle
             new VisualStylePartEntry(8, "SPLITTERVERT", VisualStyleStates.STATES_REBAR_GENERAL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_AEROWIZARD = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_AEROWIZARD = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TITLEBAR", VisualStyleStates.STATES_WINDOW_FRAME_GEN ), // reuse
@@ -744,7 +744,7 @@ namespace libmsstyle
             new VisualStylePartEntry(5, "BUTTON", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_PAGE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_PAGE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "UP", VisualStyleStates.STATES_PAGE_GENERAL ),
@@ -753,13 +753,13 @@ namespace libmsstyle
             new VisualStylePartEntry(1, "DOWNHORZ", VisualStyleStates.STATES_PAGE_GENERAL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_PAUSE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_PAUSE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PAUSEBUTTON", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_PROGRESS = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_PROGRESS = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BAR", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -776,14 +776,14 @@ namespace libmsstyle
             new VisualStylePartEntry(12, "TRANSPARENTBARVERT", VisualStyleStates.STATES_PROGRESS_TRANSPARENT_GENERAL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_PROPERTREE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_PROPERTREE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "FOLDERSHEADER", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_PREVIEWPANE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_PREVIEWPANE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PREVIEWBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -797,7 +797,7 @@ namespace libmsstyle
             new VisualStylePartEntry(9, "VALUECID", VisualStyleStates.STATES_COMMON_DEFAULT )
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TRACKBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TRACKBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TRACK", VisualStyleStates.STATES_TRACKBAR_GENERAL ),
@@ -812,7 +812,7 @@ namespace libmsstyle
             new VisualStylePartEntry(10, "TICSVERT", VisualStyleStates.STATES_TRACKBAR_GENERAL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TAB = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TAB = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TABITEM", VisualStyleStates.STATES_TABITEM_GENERAL ),
@@ -828,7 +828,7 @@ namespace libmsstyle
             new VisualStylePartEntry(11, "AEROWIZARDBODY", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TOOLTIP = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TOOLTIP = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "STANDARD", VisualStyleStates.STATES_TOOLTIP_BALLOON_AND_STANDARD ),
@@ -840,7 +840,7 @@ namespace libmsstyle
             new VisualStylePartEntry(7, "WRENCH", VisualStyleStates.STATES_TOOLTIP_WRENCH ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TOOLBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TOOLBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BUTTON", VisualStyleStates.STATES_TOOLBARSTYLE ),
@@ -852,21 +852,21 @@ namespace libmsstyle
             new VisualStylePartEntry(7, "DROPDOWNBUTTONGLYPH", VisualStyleStates.STATES_TOOLBARSTYLE ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKBARPEARL = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKBARPEARL = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PEARLICON", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "TABLETMODEPEARLICON", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKBARSHOWDESKTOP = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKBARSHOWDESKTOP = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "SHOWDESKTOPTHEME", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "DIVIDERLINE", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKBAND = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKBAND = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "GROUPCOUNT", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -874,7 +874,7 @@ namespace libmsstyle
             new VisualStylePartEntry(3, "FLASHBUTTONGROUPMENU", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKBAND2 = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKBAND2 = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BARTOP", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -893,7 +893,7 @@ namespace libmsstyle
             new VisualStylePartEntry(14, "TASKITEMGROUPSELECTED", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKBANDEXUI = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKBANDEXUI = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -914,7 +914,7 @@ namespace libmsstyle
             new VisualStylePartEntry(16, "WINDOWBORDER", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKMANAGER = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKMANAGER = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "ROW", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -965,19 +965,19 @@ namespace libmsstyle
             new VisualStylePartEntry(46, "COLUMNDIVIDERHOT", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TEXTSELECTIONGRIPPER = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TEXTSELECTIONGRIPPER = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "GRIPPER", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TEXTGLOW = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TEXTGLOW = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TEXTSTYLE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TEXTSTYLE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "MAININSTRUCTION", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -991,21 +991,21 @@ namespace libmsstyle
             new VisualStylePartEntry(9, "CONTROLLABEL", VisualStyleStates.STATES_TEXTSTYLE_CTRLLABEL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TRAYNOTIFY = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TRAYNOTIFY = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "ANIMBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TRYHARDER = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TRYHARDER = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BUTTON", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "VERTICAL", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_SPIN = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_SPIN = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "UP", VisualStyleStates.STATES_SPIN_GENERAL ),
@@ -1014,7 +1014,7 @@ namespace libmsstyle
             new VisualStylePartEntry(4, "DOWNHORZ", VisualStyleStates.STATES_SPIN_GENERAL ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_SEARCHBOX = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_SEARCHBOX = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -1022,14 +1022,14 @@ namespace libmsstyle
             new VisualStylePartEntry(3, "SEARCHBUTTON", VisualStyleStates.STATES_PUSHBUTTON ), //W10
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_SEARCHHOME = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_SEARCHHOME = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(2, "LINE", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_SCROLLBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_SCROLLBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "ARROWBTN", VisualStyleStates.STATES_SCROLLBAR_ARROWBTN ),
@@ -1045,13 +1045,13 @@ namespace libmsstyle
             new VisualStylePartEntry(11, "SIZEBOXBKGND", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_STATIC = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_STATIC = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "TEXT", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_STATUS = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_STATUS = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "PANE", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -1059,7 +1059,7 @@ namespace libmsstyle
             new VisualStylePartEntry(3, "GRIPPER", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_FLYOUT = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_FLYOUT = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "HEADER", VisualStyleStates.STATES_FLYOUT_HEADER ),
@@ -1072,7 +1072,7 @@ namespace libmsstyle
             new VisualStylePartEntry(8, "LINKHEADER", VisualStyleStates.STATES_FLYOUT_HEADER ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_DRAGDROP = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DRAGDROP = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "COPY", VisualStyleStates.STATES_DND_GENERAL ),
@@ -1085,7 +1085,7 @@ namespace libmsstyle
             new VisualStylePartEntry(8, "TEXTBG", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_DATEPICKER = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_DATEPICKER = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "DATETEXT", VisualStyleStates.STATES_DATE_TEXT ),
@@ -1093,7 +1093,7 @@ namespace libmsstyle
             new VisualStylePartEntry(3, "SHOWCALENDARBUTTONRIGHT", VisualStyleStates.STATES_DATE_CALENDERBUTTONRIGHT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_TASKBAR = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_TASKBAR = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUNDBOTTOM", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -1106,7 +1106,7 @@ namespace libmsstyle
             new VisualStylePartEntry(8, "SIZINGBARLEFT", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_STARTPANEL = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_STARTPANEL = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "USERPANE", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -1130,7 +1130,7 @@ namespace libmsstyle
             new VisualStylePartEntry(19, "LOGOFFSPLITBUTTONDROPDOWN", VisualStyleStates.STATES_SPP_LOGOFFSPLITBUTTONDROPDOWN ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_STARTPANELPRIV = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_STARTPANELPRIV = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "USERPANE", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -1173,7 +1173,7 @@ namespace libmsstyle
             new VisualStylePartEntry(38, "LOGOFFSPLITBUTTONDEST", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_MONTHCAL = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_MONTHCAL = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "BACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),
@@ -1189,7 +1189,7 @@ namespace libmsstyle
             new VisualStylePartEntry(11, "NAVPREV", VisualStyleStates.STATES_COMMON_DEFAULT ),
         };
 
-        public static readonly List<VisualStylePartEntry> PARTS_USERTILE = new List<VisualStylePartEntry>()
+        public static readonly List<VisualStylePartEntry> PARTS_USERTILE = new()
         {
             new VisualStylePartEntry(0, "Common Properties", VisualStyleStates.STATES_COMMON_DEFAULT ),
             new VisualStylePartEntry(1, "STROKEBACKGROUND", VisualStyleStates.STATES_COMMON_DEFAULT ),

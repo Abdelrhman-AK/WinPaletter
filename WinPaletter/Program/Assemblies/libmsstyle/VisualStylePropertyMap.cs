@@ -24,7 +24,7 @@ namespace libmsstyle
 
     public class VisualStyleProperties
     {
-        public static readonly Dictionary<int, PropertyInfo> PROPERTY_INFO_MAP = new Dictionary<int, PropertyInfo>()
+        public static readonly Dictionary<int, PropertyInfo> PROPERTY_INFO_MAP = new()
         {
             // BASIC TYPES
             { 2, new PropertyInfo("DIBDATA", 2, string.Empty)},

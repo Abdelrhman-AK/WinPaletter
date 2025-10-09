@@ -61,7 +61,7 @@ namespace libmsstyle
 
         public static List<ushort> GetAllLanguageIds(IntPtr moduleHandle, string type, string name, Win32Api.EnumResourceFlags flags)
         {
-            EnumLanguagesCallbackContext ctx = new EnumLanguagesCallbackContext();
+            EnumLanguagesCallbackContext ctx = new();
             Win32Api.EnumResourceLanguagesEx(moduleHandle,
                 type,
                 name,
@@ -75,7 +75,7 @@ namespace libmsstyle
 
         class EnumLanguagesCallbackContext
         {
-            public List<ushort> langIds = new List<ushort>();
+            public List<ushort> langIds = new();
 
             public bool Callback(IntPtr hModule, IntPtr lpszType, IntPtr lpszName, ushort wIDLanguage, IntPtr lParam)
             {
@@ -119,7 +119,7 @@ namespace libmsstyle
 
             public static void Load(IntPtr moduleHandle, ushort langId, Dictionary<int, string> stringTable)
             {
-                ReadStringsCallbackContext ctx = new ReadStringsCallbackContext();
+                ReadStringsCallbackContext ctx = new();
                 ctx.langId = langId;
                 ctx.stringTable = stringTable;
 
@@ -134,8 +134,8 @@ namespace libmsstyle
 
             public static bool Update(IntPtr moduleHandle, IntPtr updateHandle, Dictionary<int, string> table, ushort langId = 0)
             {
-                MemoryStream ms = new MemoryStream();
-                BinaryWriter bw = new BinaryWriter(ms, Encoding.Unicode);
+                MemoryStream ms = new();
+                BinaryWriter bw = new(ms, Encoding.Unicode);
 
                 int previousBucketIndex = -1;
                 int currentBucketIndex = 0;
@@ -143,7 +143,7 @@ namespace libmsstyle
                 int currentBucket = 0;
                 int previousBucket = (table.Count > 0) ? (table.First().Key / 16) + 1 : 0;
 
-                List<int> bucketsTouched = new List<int>();
+                List<int> bucketsTouched = new();
 
                 foreach (KeyValuePair<int, string> item in table)
                 {
@@ -241,7 +241,7 @@ namespace libmsstyle
 
             class ReadStringsCallbackContext
             {
-                public Dictionary<int, string> stringTable = new Dictionary<int, string>();
+                public Dictionary<int, string> stringTable = new();
                 public ushort langId = 0;
 
                 public bool Callback(IntPtr hModule, IntPtr lpType, IntPtr lpName, IntPtr lParam)

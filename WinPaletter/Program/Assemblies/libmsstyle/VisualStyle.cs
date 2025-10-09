@@ -14,53 +14,29 @@ namespace libmsstyle
         private IntPtr m_moduleHandle;
 
         private string m_stylePath;
-        public string Path
-        {
-            get { return m_stylePath; }
-        }
+        public string Path => m_stylePath;
 
         private Platform m_platform;
-        public Platform Platform
-        {
-            get { return m_platform; }
-        }
+        public Platform Platform => m_platform;
 
         private Dictionary<int, StyleClass> m_classes;
-        public Dictionary<int, StyleClass> Classes
-        {
-            get { return m_classes; }
-        }
+        public Dictionary<int, StyleClass> Classes => m_classes;
 
         private List<TimingFunction> m_timingFunctions;
-        public List<TimingFunction> TimingFunctions
-        {
-            get { return m_timingFunctions; }
-        }
+        public List<TimingFunction> TimingFunctions => m_timingFunctions;
 
         private List<Animation> m_animations;
-        public List<Animation> Animations
-        {
-            get { return m_animations; }
-        }
+        public List<Animation> Animations => m_animations;
 
         private int m_numProps;
-        public int NumProperties
-        {
-            get { return m_numProps; }
-        }
+        public int NumProperties => m_numProps;
 
         private Dictionary<int, string> m_stringTable;
-        public Dictionary<int, string> PreferredStringTable
-        {
-            get { return m_stringTable; }
-        }
+        public Dictionary<int, string> PreferredStringTable => m_stringTable;
 
-        private Dictionary<int, Dictionary<int, string>> m_stringTables = new Dictionary<int, Dictionary<int, string>>();
+        private Dictionary<int, Dictionary<int, string>> m_stringTables = new();
 
-        public Dictionary<int, Dictionary<int, string>> StringTables
-        {
-            get { return m_stringTables; }
-        }
+        public Dictionary<int, Dictionary<int, string>> StringTables => m_stringTables;
 
         private Dictionary<StyleResource, string> m_resourceUpdates;
 
@@ -311,8 +287,8 @@ namespace libmsstyle
 
         private bool SaveProperties(IntPtr moduleHandle, IntPtr updateHandle)
         {
-            MemoryStream ms = new MemoryStream(4096);
-            BinaryWriter bw = new BinaryWriter(ms);
+            MemoryStream ms = new(4096);
+            BinaryWriter bw = new(ms);
 
             foreach (var cls in m_classes)
             {
@@ -394,8 +370,8 @@ namespace libmsstyle
             if (m_animations.Count == 0 && m_timingFunctions.Count == 0)
                 return true;
 
-            MemoryStream ms = new MemoryStream();
-            BinaryWriter bw = new BinaryWriter(ms);
+            MemoryStream ms = new();
+            BinaryWriter bw = new(ms);
 
             foreach (var item in m_timingFunctions)
             {
@@ -504,7 +480,7 @@ namespace libmsstyle
                     // have a non-empty string
                     if (i - first > 2)
                     {
-                        StyleClass cls = new StyleClass();
+                        StyleClass cls = new();
                         cls.ClassId = numFound;
                         cls.ClassName = Encoding.Unicode.GetString(cmap, first, i - first);
                         m_classes[numFound] = cls;
@@ -574,7 +550,7 @@ namespace libmsstyle
 
             while (cursor < amap.Length - 4)
             {
-                PropertyHeader header = new PropertyHeader(amap, cursor);
+                PropertyHeader header = new(amap, cursor);
 
                 cursor += 32;
                 if (header.nameID == (int)IDENTIFIER.TIMINGFUNCTION)
@@ -643,7 +619,7 @@ namespace libmsstyle
                 var partList = VisualStyleParts.Find(cls.Value.ClassName, p);
                 foreach (var partDescription in partList)
                 {
-                    StylePart part = new StylePart()
+                    StylePart part = new()
                     {
                         PartId = partDescription.Id,
                         PartName = partDescription.Name,
@@ -652,7 +628,7 @@ namespace libmsstyle
 
                     foreach (var stateDescription in partDescription.States)
                     {
-                        StyleState state = new StyleState()
+                        StyleState state = new()
                         {
                             StateId = stateDescription.Value,
                             StateName = stateDescription.Name,

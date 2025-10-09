@@ -711,13 +711,7 @@ namespace WinPaletter
         /// <returns>
         ///    <c>true</c> if a network connection is available; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsNetworkAvailable
-        {
-            get
-            {
-                return IsNetworkOperational && HasNetworkInterfaces && Wininet.CheckNet();
-            }
-        }
+        public static bool IsNetworkAvailable => IsNetworkOperational && HasNetworkInterfaces && Wininet.CheckNet();
 
         private static bool HasNetworkInterfaces
         {
@@ -792,7 +786,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="percentage"></param>
         /// <returns></returns>
-        public static double GetWindowsScreenScalingFactor(bool percentage = true)
+        public static float GetWindowsScreenScalingFactor(bool percentage = true)
         {
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
@@ -802,10 +796,9 @@ namespace WinPaletter
                 IntPtr DeviceContextHandle = GraphicsObject.GetHdc();
                 int LogicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
                 int PhysicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.DESKTOPVERTRES);
-                double ScreenScalingFactor = Math.Round(PhysicalScreenHeight / (double)LogicalScreenHeight, 2);
+                float ScreenScalingFactor = PhysicalScreenHeight / (float)LogicalScreenHeight;
 
-                if (percentage)
-                    ScreenScalingFactor *= 100.0d;
+                if (percentage) ScreenScalingFactor *= 100.0f;
 
                 GraphicsObject.ReleaseHdc(DeviceContextHandle);
                 GraphicsObject.Dispose();

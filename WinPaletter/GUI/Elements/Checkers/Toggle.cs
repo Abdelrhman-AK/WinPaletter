@@ -37,7 +37,7 @@ namespace WinPaletter.UI.WP
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        private Rectangle CheckC = new(4, 4, 11, 11);
+        private RectangleF CheckC = new(4, 4, 11, 11);
         private int MouseState = 0;
         private bool WasMoving = false;
         private readonly int DarkLight_TogglerSize = 13;
@@ -70,9 +70,9 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private int _checkerX = 4;
+        private float _checkerX = 4;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
-        public int CheckerX
+        public float CheckerX
         {
             get => _checkerX;
             set { _checkerX = value; Invalidate(); }
@@ -84,9 +84,11 @@ namespace WinPaletter.UI.WP
 
         protected virtual void OnCheckedChanged()
         {
+            CheckedChanged?.Invoke(this, EventArgs.Empty);
+
             if (CanAnimate)
             {
-                Transition.With(this, nameof(CheckerX), Checked ? Width - 17 : 4).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(CheckerX), _checked ? Width - 17f : 4f).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
             else
             {
@@ -100,8 +102,6 @@ namespace WinPaletter.UI.WP
                 CheckC.Height = DarkLight_TogglerSize;
                 Invalidate();
             }
-
-            CheckedChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
@@ -133,7 +133,7 @@ namespace WinPaletter.UI.WP
         {
             if (e.Button == MouseButtons.Left)
             {
-                int i = (int)Math.Round(e.X - 0.5d * CheckC.Width);
+                float i = e.X - 0.5f * CheckC.Width;
                 WasMoving = true;
                 MouseState = 1;
 
@@ -173,9 +173,8 @@ namespace WinPaletter.UI.WP
 
             if (WasMoving)
             {
-                if (e.X < Width * 0.5d) Checked = false;
-
-                if (e.X >= Width * 0.5d) Checked = true;
+                if (e.X < Width * 0.5f) Checked = false;
+                if (e.X >= Width * 0.5f) Checked = true;
 
                 WasMoving = false;
             }
@@ -230,14 +229,14 @@ namespace WinPaletter.UI.WP
 
             int min = 4;
             int max = Width - 17;
-            decimal val = (decimal)(CheckC.X / (double)max);
+            float val = (float)(CheckC.X / max);
 
-            if (val < 0m) val = 0m;
-            if (val > 1m) val = 1m;
-            if (CheckC.X <= min) val = 0m;
-            if (CheckC.X >= max) val = 1m;
+            if (val < 0f) val = 0f;
+            if (val > 1f) val = 1f;
+            if (CheckC.X <= min) val = 0f;
+            if (CheckC.X >= max) val = 1f;
 
-            int alpha = (int)Math.Round(255m * val);
+            int alpha = (int)(255f * val);
 
             if (!DarkLight_Toggler)
             {
@@ -284,7 +283,7 @@ namespace WinPaletter.UI.WP
                 if (Checked)
                 {
                     using (Bitmap b0 = (scheme.Colors.Line(parentLevel).IsDark() ? Resources.darkmode_light : Resources.darkmode_dark).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.Line(parentLevel).IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1m - val)))
+                    using (Bitmap b1 = (scheme.Colors.Line(parentLevel).IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1f - val)))
                     {
                         G.DrawImage(b0, CheckC);
                         G.DrawImage(b1, CheckC);
@@ -293,7 +292,7 @@ namespace WinPaletter.UI.WP
                 else
                 {
                     using (Bitmap b0 = (scheme.Colors.AccentAlt.IsDark() ? Resources.darkmode_light : Resources.darkmode_dark).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1m - val)))
+                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1f - val)))
                     {
                         G.DrawImage(b0, CheckC);
                         G.DrawImage(b1, CheckC);

@@ -11,49 +11,22 @@ namespace EOFC
         /// </summary>
         private readonly long m_pos = underlyingStream.Position;
 
-        public override bool CanRead
-        {
-            get
-            {
-                return m_base.CanRead;
-            }
-        }
+        public override bool CanRead => m_base.CanRead;
 
-        public override bool CanSeek
-        {
-            get
-            {
-                return m_base.CanSeek;
-            }
-        }
+        public override bool CanSeek => m_base.CanSeek;
 
-        public override bool CanWrite
-        {
-            get
-            {
-                return m_base.CanWrite;
-            }
-        }
+        public override bool CanWrite => m_base.CanWrite;
 
         public override void Flush()
         {
             m_base.Flush();
         }
 
-        public override long Length
-        {
-            get
-            {
-                return m_base.Length - m_pos;
-            }
-        }
+        public override long Length => m_base.Length - m_pos;
 
         public override long Position
         {
-            get
-            {
-                return m_base.Position - m_pos;
-            }
+            get => m_base.Position - m_pos;
             set
             {
                 // Documentation is sketchy for setting a position to a value less than zero, but 

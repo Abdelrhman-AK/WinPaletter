@@ -39,7 +39,7 @@ namespace WinPaletter
             /// <summary>
             /// Date and time of raising user change event
             /// </summary>
-            public DateTime SwitchTime { get { return DateTime.Now; } }
+            public DateTime SwitchTime => DateTime.Now;
 
             /// <summary>
             /// Name of user who invoked the event
@@ -54,18 +54,18 @@ namespace WinPaletter
             /// <summary>
             /// Return if user that invoked the event is administrator or not
             /// </summary>
-            public bool Administrator { get { return IsAdmin(SID); } }
+            public bool Administrator => IsAdmin(SID);
 
             /// <summary>
             /// Path of user profile picture that invoked the event
             /// </summary>
-            public string ProfilePicturePath { get { return Shell32.GetUserTilePath(UserName); } }
+            public string ProfilePicturePath => Shell32.GetUserTilePath(UserName);
 
             /// <summary>
             /// Get path of user profile
             /// <br>- For example: C:\Users\...</br>
             /// </summary>
-            public string UserProfilePath { get { return GetUserProfilePath(SID); } }
+            public string UserProfilePath => GetUserProfilePath(SID);
 
             /// <summary>
             /// Enumeration for user switch timing (event raised before or after switching user)
@@ -423,12 +423,12 @@ namespace WinPaletter
         /// <summary>
         /// Administrator user security identifier that opened WinPaletter after granting UAC dialog
         /// </summary>
-        public readonly static string AdminSID_GrantedUAC = WindowsIdentity.GetCurrent().User.Value;
+        public static readonly string AdminSID_GrantedUAC = WindowsIdentity.GetCurrent().User.Value;
 
         /// <summary>
         /// User's SID who opened WinPaletter before granting UAC dialog
         /// </summary>
-        public readonly static string UserSID_OpenedWP = GetActiveSessionSID();
+        public static readonly string UserSID_OpenedWP = GetActiveSessionSID();
 
         #endregion
 
@@ -482,7 +482,7 @@ namespace WinPaletter
         /// Get path of current user profile
         /// <br>- For example: C:\Users\...</br>
         /// </summary>
-        public static string UserProfilePath { get { return GetUserProfilePath(SID); } }
+        public static string UserProfilePath => GetUserProfilePath(SID);
         #endregion
 
         #region Methods

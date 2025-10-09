@@ -37,8 +37,8 @@ namespace WinPaletter.UI.WP
             FindForm() != null &&
             FindForm().Visible;
 
-        private Rectangle Shaft;
-        private Rectangle Circle;
+        private RectangleF Shaft;
+        private RectangleF Circle;
         private bool ThumbDown;
 
         private int parentLevel = 0;
@@ -157,7 +157,7 @@ namespace WinPaletter.UI.WP
         {
             if (ThumbDown)
             {
-                Value = (int)Math.Round(Math.Min(Math.Max(e.X / (double)Width * Maximum, _Minimum), _Maximum));
+                Value = (int)Math.Min(Math.Max(e.X / (float)Width * Maximum, _Minimum), _Maximum);
                 InvalidatePosition();
             }
 
@@ -197,10 +197,12 @@ namespace WinPaletter.UI.WP
             parentLevel = this.Level();
         }
 
-        protected override bool IsInputKey(Keys keyData) =>
-            keyData is Keys.Left or Keys.Right or Keys.Up or Keys.Down or Keys.PageUp or Keys.PageDown or Keys.Home or Keys.End
+        protected override bool IsInputKey(Keys keyData)
+        {
+            return keyData is Keys.Left or Keys.Right or Keys.Up or Keys.Down or Keys.PageUp or Keys.PageDown or Keys.Home or Keys.End
             ? true
             : base.IsInputKey(keyData);
+        }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -243,21 +245,16 @@ namespace WinPaletter.UI.WP
         #region Methods
         private void InvalidateLayout()
         {
-            Shaft = new((int)Math.Round(0.5d * Height), 0, Width - Height - 1, Height);
+            Shaft = new(0.5f * Height, 0, Width - Height - 1, Height);
             InvalidatePosition();
         }
 
         private void InvalidatePosition()
         {
-            double progress = (Maximum > Minimum) ? (Value - Minimum) / (double)(Maximum - Minimum) : 0d;
-            progress = Math.Max(0, Math.Min(1, progress));
+            float progress = (Maximum > Minimum) ? (Value - Minimum) / (float)(Maximum - Minimum) : 0f;
+            progress = Math.Max(0, Math.Min(1f, progress));
 
-            Circle = new(
-                (int)Math.Round(progress * Shaft.Width),
-                0,
-                Height - 1,
-                Height - 1
-            );
+            Circle = new((progress * Shaft.Width) - Shaft.Width / 2f, 0, Height - 1, Height - 1);
 
             Invalidate();
         }
@@ -273,7 +270,10 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
-        protected override void OnPaintBackground(PaintEventArgs pevent) => base.OnPaintBackground(pevent);
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            base.OnPaintBackground(pevent);
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -284,7 +284,7 @@ namespace WinPaletter.UI.WP
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
-            double progress = (Maximum > Minimum) ? (Value - Minimum) / (double)(Maximum - Minimum) : 0d;
+            float progress = (Maximum > Minimum) ? (Value - Minimum) / (float)(Maximum - Minimum) : 0f;
             progress = Math.Max(0, Math.Min(1, progress));
 
             RectangleF bar = new(0, (Height - Height * 0.25f) / 2f, Width - 1, Height * 0.25f);
@@ -292,7 +292,7 @@ namespace WinPaletter.UI.WP
             using (SolidBrush br0 = new(scheme.Colors.Back(parentLevel)))
                 G.FillRoundedRect(br0, bar);
 
-            int fillWidth = (int)Math.Round(progress * Shaft.Width);
+            float fillWidth = progress * Shaft.Width;
             if (fillWidth > 0)
             {
                 using (LinearGradientBrush lgb0 = new(bar, scheme.Colors.Back_Checked_Hover, scheme.Colors.AccentAlt, LinearGradientMode.Horizontal))
@@ -303,8 +303,8 @@ namespace WinPaletter.UI.WP
             using (SolidBrush br1 = new(scheme.Colors.Line_Hover(parentLevel)))
                 G.FillEllipse(br1, Circle);
 
-            Rectangle smallC1 = new(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
-            Rectangle smallC2 = new(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
+            RectangleF smallC1 = new(Circle.X + 5, Circle.Y + 5, Circle.Width - 10, Circle.Height - 10);
+            RectangleF smallC2 = new(Circle.X + 4, Circle.Y + 4, Circle.Width - 8, Circle.Height - 8);
 
             G.FillEllipse(scheme.Brushes.AccentAlt, smallC1);
             using (SolidBrush br2 = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt)))

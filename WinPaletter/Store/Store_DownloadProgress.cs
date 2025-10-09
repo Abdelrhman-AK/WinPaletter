@@ -44,10 +44,7 @@ namespace WinPaletter
         private DownloadManager ThemeDownloader
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
-            get
-            {
-                return _ThemeDownloader;
-            }
+            get => _ThemeDownloader;
 
             [MethodImpl(MethodImplOptions.Synchronized)]
             set
@@ -107,7 +104,7 @@ namespace WinPaletter
                 ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
                 ProgressBar1.Value = (int)e.ProgressPercentage;
                 Label2.SetText($"{e.BytesReceived.ToStringFileSize()}/{e.TotalBytesToReceive.ToStringFileSize()}");
-                TimeSpan time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / (double)Speed);
+                TimeSpan time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / Speed);
                 Label4.SetText(time.ToString(@"mm\:ss"));
             }
             else

@@ -252,9 +252,19 @@ namespace WinPaletter.UI.WP
             }
 
             #region Strings
-            using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
 
-            using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.ForeColor_Accent))) { G.DrawString(Text, Font, br, TextRect, format); }
+            if (Enabled)
+            {
+                using (SolidBrush br = new(Color.FromArgb(255 - alpha2, ForeColor))) { G.DrawString(Text, Font, br, TextRect, format); }
+
+                using (SolidBrush br = new(Color.FromArgb(alpha2, scheme.Colors.ForeColor_Accent))) { G.DrawString(Text, Font, br, TextRect, format); }
+            }
+            else
+            {
+                TextRect.X--; TextRect.Y--;
+                ControlPaint.DrawStringDisabled(G, Text, Font, ForeColor, TextRect, TextFormatFlags.EndEllipsis | TextFormatFlags.VerticalCenter);
+            }
+
             #endregion
 
             format.Dispose();

@@ -3,8 +3,6 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Tabs;
@@ -285,7 +283,7 @@ namespace WinPaletter.UI.Style
 
             if (ctrl is WP.GroupBox box)
             {
-                box.BackColor = ctrl.GetParentColor().CB((float)(ctrl.GetParentColor().IsDark() ? 0.04d : -0.05d));
+                box.BackColor = ctrl.GetParentColor().CB(ctrl.GetParentColor().IsDark() ? 0.04f : -0.05f);
             }
 
             else if (ctrl is WP.Button button)
@@ -328,7 +326,7 @@ namespace WinPaletter.UI.Style
 
             else if (ctrl is NumericUpDown temp5)
             {
-                temp5.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
+                temp5.BackColor = ctrl.FindForm().BackColor.CB(0.04f * (DarkMode ? +1 : -1));
                 temp5.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
@@ -336,7 +334,7 @@ namespace WinPaletter.UI.Style
             {
                 ComboBox temp6 = box1;
                 temp6.FlatStyle = FlatStyle.Flat;
-                temp6.BackColor = ctrl.FindForm().BackColor.CB((float)(0.04d * (DarkMode ? +1 : -1)));
+                temp6.BackColor = ctrl.FindForm().BackColor.CB(0.04f * (DarkMode ? +1 : -1));
                 temp6.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 

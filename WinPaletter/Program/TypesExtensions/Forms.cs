@@ -1,19 +1,12 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -26,7 +19,10 @@ namespace WinPaletter.TypesExtensions
         /// Center the form to the screen (It's a extension method that makes CenterToScreen() accessible as it is a private void in forms)
         /// </summary>
         /// <param name="form">Form to be centered to screen</param>
-        public static void CenterToScreen(this Form form) => form.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2, (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2);
+        public static void CenterToScreen(this Form form)
+        {
+            form.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2, (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2);
+        }
 
         /// <summary>
         /// Get the icon of a form type without creating an instance of the form and without form memory allocation.
