@@ -539,6 +539,10 @@ namespace WinPaletter.UI.Controllers
                     ? ColorItemContextMenu.Blend
                     : ColorItemContextMenu.Blend.Grayscale();
 
+                string clipBoard = Clipboard.GetText();
+                bool clipBoardHasColor = clipBoard?.IsHexColor() ?? false;
+                ColorClipboard.CopiedColor = ColorClipboard.CopiedColor == Color.Empty && clipBoardHasColor ? clipBoard.ToColor() : ColorClipboard.CopiedColor;
+
                 paste.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 paste.Image = paste.Enabled
                     ? ColorItemContextMenu.Paste

@@ -209,7 +209,7 @@ namespace WinPaletter
                     card3.Text = Program.Lang.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win8_1;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
+                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W81);
                     break;
 
                 case WindowStyle.W8:

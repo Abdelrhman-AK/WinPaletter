@@ -75,7 +75,6 @@ namespace WinPaletter
             // Animate the form.
             Transition
                 .With(this, nameof(Height), targetSize.Height)
-                .With(this, nameof(Top), targetLocation.Y)
                 .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
 
             BackColor = Color.Black;
