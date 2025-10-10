@@ -103,22 +103,14 @@ namespace WinPaletter.UI.WP
                 if (Dock == DockStyle.None)
                 {
                     G.FillRoundedRect(lgb0, Rect);
+                    G.FillRoundedRect(Noise, Rect);
                     G.DrawRoundedRect(P, Rect);
                 }
                 else
                 {
                     G.FillRectangle(lgb0, Rect);
+                    G.FillRectangle(Noise, Rect);
                 }
-            }
-
-            //Draw noise
-            if (Dock == DockStyle.None)
-            {
-                G.FillRoundedRect(Noise, Rect);
-            }
-            else
-            {
-                G.FillRectangle(Noise, Rect);
             }
 
             using (SolidBrush B = new(ForeColor))

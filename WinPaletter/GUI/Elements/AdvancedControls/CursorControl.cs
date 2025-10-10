@@ -753,8 +753,6 @@ namespace WinPaletter.UI.Controllers
                 Shadow_OffsetY = Prop_Shadow_OffsetY
             };
 
-            bmp = new((int)(32f * Prop_Scale), (int)(32f * Prop_Scale), PixelFormat.Format32bppPArgb);
-
             bmp = Paths.Draw(CurOptions);
 
             Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
@@ -783,26 +781,24 @@ namespace WinPaletter.UI.Controllers
 
                 int frames = GetTotalFramesFromANI(CurOptions.File);
 
-                Size size = new((int)(CurOptions.Scale * 32f), (int)(CurOptions.Scale * 32f));
-                Point location = new((Width - size.Width) / 2 - 1, (Height - size.Height) / 2 - 1);
+                SizeF size = new(CurOptions.Scale * 32f, CurOptions.Scale * 32f);
+                PointF location = new((Width - size.Width) / 2f - 1, (Height - size.Height) / 2f - 1);
 
                 int AngleToFrame = (int)(_Angle / 360 * frames);
 
                 IntPtr hCursor = User32.LoadCursorFromFile(CurOptions.File);
 
                 IntPtr hdc = G.GetHdc();
-                User32.DrawIconEx(hdc, location.X, location.Y, hCursor, size.Width, size.Height, AngleToFrame, IntPtr.Zero, (int)(User32.DrawIconExFlags.DI_NORMAL | User32.DrawIconExFlags.DI_COMPAT));
+                User32.DrawIconEx(hdc, (int)location.X, (int)location.Y, hCursor, (int)size.Width, (int)size.Height, AngleToFrame, IntPtr.Zero, (int)(User32.DrawIconExFlags.DI_NORMAL | User32.DrawIconExFlags.DI_COMPAT));
                 G.ReleaseHdc(hdc);
                 User32.DestroyIcon(hCursor);
             }
             else
             {
-                G.DrawImage(bmp, CenterRect);
+                G.DrawImageUnscaled(bmp, (int)CenterRect.X, (int)CenterRect.Y);
             }
 
             base.OnPaint(e);
-
-
         }
 
         private static int GetTotalFramesFromANI(string filePath)

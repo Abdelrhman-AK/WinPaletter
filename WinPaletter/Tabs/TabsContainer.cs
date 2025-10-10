@@ -179,7 +179,7 @@ namespace WinPaletter.Tabs
             TabControl.TabPages.Add(TP);
             SelectedTab = TP;
 
-            TabControl.FindForm().Visible = true;
+            if (FindForm() is not null) TabControl.FindForm().Visible = true;
 
             if (form is AspectsTemplate)
             {
@@ -595,7 +595,7 @@ namespace WinPaletter.Tabs
         private void HandleFormMove()
         {
             locationNewPoint = MousePosition - (Size)locationOldPoint;
-            FindForm().Location = locationNewPoint;
+            if (FindForm() is not null) FindForm().Location = locationNewPoint;
         }
 
         private void HandleMouseHover(MouseEventArgs e)
@@ -680,7 +680,7 @@ namespace WinPaletter.Tabs
 
             RemoveTab(tabData, false);
 
-            if (TabDataList.Count == 0) TabControl.FindForm().Visible = false;
+            if (TabDataList.Count == 0 && FindForm() is not null) TabControl.FindForm().Visible = false;
 
             tabData.Form.Visible = true;
         }
@@ -948,7 +948,7 @@ namespace WinPaletter.Tabs
 
             await tabData.Hide(animate, () => AfterRemovingTab(tabData, animate, SI));
 
-            FindForm().BackgroundImage = null;
+            if (FindForm() is not null) FindForm().BackgroundImage = null;
         }
 
         private void AfterRemovingTab(TabData tabData, bool animate, int SI)
@@ -962,7 +962,7 @@ namespace WinPaletter.Tabs
 
             _tabControl.TabPages.Remove(tabData.TabPage);
 
-            FindForm().Visible = _tabControl.TabPages.Count > 0;
+            if (FindForm() is not null) FindForm().Visible = _tabControl.TabPages.Count > 0;
 
             tabData.Dispose();
 
