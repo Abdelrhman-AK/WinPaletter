@@ -1614,7 +1614,7 @@ namespace WinPaletter.UI.Simulation
                         }
 
                         //Window title
-                        int alpha_caption = Active ? 120 : 75;
+                        int alpha_caption = Active ? 100 : 50;
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
                             G.DrawGlowString(1, Text, Font, CaptionColor, Color.FromArgb(alpha_caption, Color.White), RectAll, LabelRect, sf);

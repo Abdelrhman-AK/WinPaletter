@@ -5,6 +5,9 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
@@ -343,7 +346,12 @@ namespace WinPaletter.UI.Simulation
                     using (Graphics gShadow = Graphics.FromImage(bmpShadow))
                     {
                         gShadow.DrawString(Text, Font, brShadow, new RectangleF(0, 1, LabelRectX.Width, LabelRectX.Height), sf);
-                        G.DrawImage(bmpShadow.Blur(1.1f).Fade(0.6f), LabelRectX);
+
+                        using (Bitmap b_blur = bmpShadow.Blur(1.1f))
+                        using (Bitmap b_fade = b_blur.Fade(0.6f))
+                        {
+                            G.DrawImage(b_fade, LabelRectX);
+                        }
                     }
                 }
 

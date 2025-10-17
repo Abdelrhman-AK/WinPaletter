@@ -1172,15 +1172,32 @@ namespace WinPaletter.Templates
                 {
                     titleText = value;
 
-                    foreach (WindowR window in this.GetAllControls().OfType<WindowR>())
-                    {
-                        if (window.Active) window.ForeColor = value;
-                    }
+                    foreach (WindowR window in this.GetAllControls().OfType<WindowR>()) if (window.Active) window.ForeColor = value;
+                    foreach (Window window in this.GetAllControls().OfType<Window>()) if (window.Active) window.ForeColor = value;
                 }
             }
         }
         private Color titleText;
 
+
+        /// <summary>
+        /// Active titlebar text
+        /// </summary>
+        private Color InactiveTitleText
+        {
+            get => titleText_Inactive;
+            set
+            {
+                if (titleText_Inactive != value)
+                {
+                    titleText_Inactive = value;
+
+                    foreach (WindowR window in this.GetAllControls().OfType<WindowR>()) if (!window.Active) window.ForeColor = value;
+                    foreach (Window window in this.GetAllControls().OfType<Window>()) if (!window.Active) window.ForeColor = value;
+                }
+            }
+        }
+        private Color titleText_Inactive;
 
         /// <summary>
         /// Textbox and other controls BackColor
@@ -1638,6 +1655,7 @@ namespace WinPaletter.Templates
             MenuBar = TM.Win32.MenuBar;
             MenuText = TM.Win32.MenuText;
             TitleText = TM.Win32.TitleText;
+            InactiveTitleText = TM.Win32.InactiveTitleText;
             Window = TM.Win32.Window;
             WindowFrame = TM.Win32.WindowFrame;
             WindowText = TM.Win32.WindowText;

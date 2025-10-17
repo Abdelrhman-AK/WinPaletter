@@ -276,7 +276,7 @@ namespace WinPaletter
             alertBox1.Visible = Program.WindowStyle == PreviewHelpers.WindowStyle.W11 || Program.WindowStyle == PreviewHelpers.WindowStyle.W12;
 
             comboBox1.Items.Clear();
-            comboBox1.Items.AddRange(Schemes.Metrics.Split('\n').Select(f => f.Split('|')[0]).ToArray());
+            comboBox1.Items.AddRange([.. Schemes.Metrics.Split('\n').Select(f => f.Split('|')[0])]);
             comboBox1.SelectedIndex = 0;
 
             LoadFromTM(Program.TM);
@@ -364,7 +364,7 @@ namespace WinPaletter
             trackBarX14.Value = TM.MetricsFonts.ScrollHeight;
             trackBarX15.Value = TM.MetricsFonts.ScrollWidth;
 
-            windowMetrics1.LoadMetrics(TM);
+            windowMetrics1.LoadFromTM(TM);
             Desktop_icons.LoadMetrics(TM);
         }
 

@@ -31,15 +31,16 @@ namespace WinPaletter.TypesExtensions
         /// null.</param>
         public static void DrawGlowString(this Graphics G, int glowSize, string text, Font font, Color foreColor, Color glowColor, RectangleF clientRectangle, RectangleF rectangle, StringFormat format)
         {
-            float w = Math.Max(8f, clientRectangle.Width / 5f);
-            float h = Math.Max(8f, clientRectangle.Height / 5f);
+            float glowFactor = 5f;
+            float w = Math.Max(8f, clientRectangle.Width / glowFactor);
+            float h = Math.Max(8f, clientRectangle.Height / glowFactor);
             float emSize = G.DpiY * font.SizeInPoints / 72f;
             if (text is null | string.IsNullOrWhiteSpace(text)) text = string.Empty;
 
             using (Bitmap b = new((int)w, (int)h))
             using (GraphicsPath gp = new())
             using (Graphics gx = Graphics.FromImage(b))
-            using (Matrix m = new(1.0f / 5f, 0f, 0f, 1.0f / 5f, -(1.0f / 5f), -(1.0f / 5f)))
+            using (Matrix m = new(1.0f / glowFactor, 0f, 0f, 1.0f / glowFactor, -(1.0f / glowFactor), -(1.0f / glowFactor)))
             using (SolidBrush br = new(foreColor))
             using (Pen P = new(glowColor, glowSize))
             {
@@ -53,7 +54,7 @@ namespace WinPaletter.TypesExtensions
                 InterpolationMode oldInterpolationMode = G.InterpolationMode;
 
                 G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                G.DrawImage(b, new Rectangle((int)clientRectangle.X, (int)clientRectangle.Y, (int)clientRectangle.Width, (int)clientRectangle.Height), 0, 0, b.Width, b.Height, GraphicsUnit.Pixel);
+                G.DrawImage(b, clientRectangle, new Rectangle(0, 0, b.Width, b.Height), GraphicsUnit.Pixel);
 
                 G.DrawString(text, font, br, rectangle, format);
 
