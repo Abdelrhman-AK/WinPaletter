@@ -254,17 +254,11 @@ namespace WinPaletter
         /// </summary>
         public static Metrics_Fonts Metrics_Fonts => (_Metrics_Fonts == null || _Metrics_Fonts.IsDisposed) ? (_Metrics_Fonts = CreateInstance(_Metrics_Fonts)) : _Metrics_Fonts;
 
-        private static PaletteGenerateFromColor _PaletteGenerateFromColor;
+        private static PaletteGenerator _PaletteGenerator;
         /// <summary>
         /// Gets the instance of the form <see cref="PaletteGenerateFromColor"/> to generate a palette from a color.
         /// </summary>
-        public static PaletteGenerateFromColor PaletteGenerateFromColor => (_PaletteGenerateFromColor == null || _PaletteGenerateFromColor.IsDisposed) ? (_PaletteGenerateFromColor = CreateInstance(_PaletteGenerateFromColor)) : _PaletteGenerateFromColor;
-
-        private static PaletteGenerateFromImage _PaletteGenerateFromImage;
-        /// <summary>
-        /// Gets the instance of the form <see cref="PaletteGenerateFromImage"/> to generate a palette from an image.
-        /// </summary>
-        public static PaletteGenerateFromImage PaletteGenerateFromImage => (_PaletteGenerateFromImage == null || _PaletteGenerateFromImage.IsDisposed) ? (_PaletteGenerateFromImage = CreateInstance(_PaletteGenerateFromImage)) : _PaletteGenerateFromImage;
+        public static PaletteGenerator PaletteGenerator => (_PaletteGenerator == null || _PaletteGenerator.IsDisposed) ? (_PaletteGenerator = CreateInstance(_PaletteGenerator)) : _PaletteGenerator;
 
         private static SettingsX _SettingsX;
         /// <summary>

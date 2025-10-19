@@ -479,11 +479,7 @@ namespace WinPaletter.TypesExtensions
 
             float k = 1 - Math.Max(r, Math.Max(g, b));
 
-            if (Math.Abs(k - 1.0) < 0.00001)
-            {
-                // pure black
-                return (0, 0, 0, 1);
-            }
+            if (Math.Abs(k - 1.0) < 0.00001)  return (0, 0, 0, 1);
 
             float c = (1 - r - k) / (1 - k);
             float m = (1 - g - k) / (1 - k);
@@ -849,7 +845,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         private static Color[] GenerateWebSafePalette()
         {
-            List<Color> palette = new();
+            List<Color> palette = [];
 
             int[] steps = { 0, 51, 102, 153, 204, 255 };
 
@@ -1495,7 +1491,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns>The web-safe <see cref="Color"/> closest to the specified color.</returns>
         public static Color ToWebSafe(this Color color)
         {
-            return GenerateWebSafePalette().OrderBy(s => ColorDistance(color, s)).First();
+            return GenerateWebSafePalette().OrderBy(s => Distance(color, s)).First();
         }
 
         /// <summary>
@@ -1508,7 +1504,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns>The closest matching color from the Frutiger Aero palette.</returns>
         public static Color ToFrutigerAero(this Color color)
         {
-            return FrutigerAeroPalette.OrderBy(s => ColorDistance(color, s)).First();
+            return FrutigerAeroPalette.OrderBy(s => Distance(color, s)).First();
         }
 
         /// <summary>
@@ -1521,7 +1517,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns>The <see cref="Color"/> from the Metro palette that is closest to the specified color.</returns>
         public static Color ToMetro(this Color color)
         {
-            return MetroPalette.OrderBy(s => ColorDistance(color, s)).First();
+            return MetroPalette.OrderBy(s => Distance(color, s)).First();
         }
 
         /// <summary>
@@ -1534,7 +1530,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns>The material color that is closest to the specified color.</returns>
         public static Color ToMaterial(this Color c)
         {
-            return MaterialPalette.OrderBy(s => ColorDistance(c, s.color)).First().color;
+            return MaterialPalette.OrderBy(s => Distance(c, s.color)).First().color;
         }
 
         /// <summary>
@@ -1548,7 +1544,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns>The color from the palette that is nearest to the specified color.</returns>
         public static Color GetNearestColorFromPalette(this Color color, List<Color> colors)
         {
-            return colors.OrderBy(s => ColorDistance(color, s)).First();
+            return colors.OrderBy(s => Distance(color, s)).First();
         }
 
         /// <summary>
@@ -1556,7 +1552,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <remarks>The method calculates the distance between the input color and each color in the Material Expressive
         /// Palette, returning the color with the smallest distance. The distance metric used is determined by the
-        /// implementation of the <c>ColorDistance</c> method.</remarks>
+        /// implementation of the <c>Distance</c> method.</remarks>
         /// <param name="input">The input <see cref="Color"/> to match against the Material Expressive Palette.</param>
         /// <returns>The <see cref="Color"/> from the Material Expressive Palette that is closest to the input color.</returns>
         public static Color ToMaterialExpressive3(this Color input)
@@ -1566,7 +1562,7 @@ namespace WinPaletter.TypesExtensions
 
             foreach (var c in MaterialExpressivePalette)
             {
-                float dist = ColorDistance(input, c);
+                float dist = Distance(input, c);
                 if (dist < bestDist)
                 {
                     bestDist = dist;
@@ -1585,10 +1581,10 @@ namespace WinPaletter.TypesExtensions
         /// <returns>The macOS semantic color that most closely matches the specified color.</returns>
         public static Color ToMacSemantic(this Color c)
         {
-            return MacSemantic.OrderBy(s => ColorDistance(c, s)).First();
+            return MacSemantic.OrderBy(s => Distance(c, s)).First();
         }
 
-        private static int ColorDistance(Color a, Color b)
+        public static int Distance(this Color a, Color b)
         {
             int dr = a.R - b.R, dg = a.G - b.G, db = a.B - b.B;
             return dr * dr + dg * dg + db * db;

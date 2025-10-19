@@ -424,7 +424,7 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        public Size GetMiniColorItemSize()
+        public static Size GetMiniColorItemSize()
         {
             return new Size(Program.Settings.NerdStats.Enabled ? 80 : 30, 24);
         }

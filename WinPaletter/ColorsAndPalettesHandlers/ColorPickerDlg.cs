@@ -77,7 +77,7 @@ namespace WinPaletter
             foreach (Color c in ColorItem.ColorsHistory.Skip(1))
             {
                 ColorItem MiniColorItem = new();
-                MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
                 MiniColorItem.PauseColorsHistory = true;
                 MiniColorItem.BackColor = c;
@@ -107,7 +107,7 @@ namespace WinPaletter
             {
 
                 ColorItem MiniColorItem = new();
-                MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
                 MiniColorItem.AllowDrop = false;
                 MiniColorItem.PauseColorsHistory = true;
                 MiniColorItem.BackColor = c;
@@ -377,7 +377,7 @@ namespace WinPaletter
                         foreach (Color C in Colors_List)
                         {
                             ColorItem MiniColorItem = new();
-                            MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                            MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
                             MiniColorItem.AllowDrop = false;
                             MiniColorItem.PauseColorsHistory = true;
                             MiniColorItem.BackColor = Color.FromArgb(255, C);
@@ -522,7 +522,7 @@ namespace WinPaletter
                     foreach (Color C in colors)
                     {
                         ColorItem MiniColorItem = new();
-                        MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                        MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
                         MiniColorItem.AllowDrop = false;
                         MiniColorItem.PauseColorsHistory = true;
                         MiniColorItem.BackColor = C;
@@ -561,7 +561,7 @@ namespace WinPaletter
                             foreach (Color C in colors)
                             {
                                 ColorItem MiniColorItem = new();
-                                MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                                MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
                                 MiniColorItem.AllowDrop = false;
                                 MiniColorItem.PauseColorsHistory = true;
                                 MiniColorItem.BackColor = C;
@@ -590,7 +590,7 @@ namespace WinPaletter
                                 if (field.FieldType.Name.ToLower() == "color")
                                 {
                                     ColorItem MiniColorItem = new();
-                                    MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                                    MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
                                     MiniColorItem.AllowDrop = false;
                                     MiniColorItem.PauseColorsHistory = true;
                                     MiniColorItem.BackColor = (Color)field.GetValue(win32UI);
@@ -615,7 +615,7 @@ namespace WinPaletter
                                     if (field.FieldType.Name.ToLower() == "color")
                                     {
                                         ColorItem MiniColorItem = new();
-                                        MiniColorItem.Size = MiniColorItem.GetMiniColorItemSize();
+                                        MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
                                         MiniColorItem.AllowDrop = false;
                                         MiniColorItem.PauseColorsHistory = true;
                                         MiniColorItem.BackColor = (Color)field.GetValue(vs.Metrics.Colors);

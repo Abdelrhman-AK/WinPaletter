@@ -220,8 +220,6 @@ namespace WinPaletter
             import_JSON.Image = AspectsResources.JSON;
             applyThemeWithRP.Image = AspectsResources.Restorepoint;
 
-            create_palette_fromColor.Image = button_palette_generate.Image;
-
             import_scheme.DropDown = new UI.WP.ContextMenuStrip();
             import_scheme.DropDown.Items.Add(import_scheme_12);
             import_scheme.DropDown.Items.Add(import_scheme_11);
@@ -285,9 +283,6 @@ namespace WinPaletter
             if (button_import != null)
                 button_import.Click += _data.OnImportFromWPTH ?? null;
 
-            if (button_palette_generate != null)
-                button_palette_generate.Click += _data.OnGeneratePaletteFromImage ?? null;
-
             if (button_Effects != null)
                 button_Effects.Click += _data.OpenColorsEffects ?? null;
 
@@ -339,9 +334,6 @@ namespace WinPaletter
             if (import_scheme != null)
                 import_scheme.Click += _data.OnImportFromScheme ?? null;
 
-            if (create_palette_fromColor != null)
-                create_palette_fromColor.Click += _data.OnGeneratePaletteFromColor ?? null;
-
             if (schemes != null)
                 schemes.SelectedIndexChanged += _data.OnSchemeIndexChanged ?? null;
 
@@ -373,9 +365,6 @@ namespace WinPaletter
 
                 if (button_import != null)
                     button_import.Click -= _data.OnImportFromWPTH ?? null;
-
-                if (button_palette_generate != null)
-                    button_palette_generate.Click -= _data.OnGeneratePaletteFromImage ?? null;
 
                 if (button_saveas_MSTheme != null)
                     button_saveas_MSTheme.Click -= _data.OnSaveAsMSTheme ?? null;
@@ -427,9 +416,6 @@ namespace WinPaletter
 
                 if (import_scheme != null)
                     import_scheme.Click -= _data.OnImportFromScheme ?? null;
-
-                if (create_palette_fromColor != null)
-                    create_palette_fromColor.Click -= _data.OnGeneratePaletteFromColor ?? null;
 
                 if (schemes != null)
                     schemes.SelectedIndexChanged -= _data.OnSchemeIndexChanged ?? null;
@@ -615,6 +601,11 @@ namespace WinPaletter
         {
             Forms.ColorsEffects.Show(sender as UI.WP.Button);
         }
+
+        private void btn_palette_generate_Click(object sender, EventArgs e)
+        {
+            Forms.PaletteGenerator.Show(sender as UI.WP.Button);
+        }
     }
 
     /// <summary>
@@ -715,16 +706,6 @@ namespace WinPaletter
         /// EventHandler associated with clicking on 'Import from a preset' button
         /// </summary>
         public EventHandler OnImportFromScheme { get; set; }
-
-        /// <summary>
-        /// EventHandler associated with clicking on 'Generate a palette from an image' button
-        /// </summary>
-        public EventHandler OnGeneratePaletteFromImage { get; set; }
-
-        /// <summary>
-        /// EventHandler associated with clicking on 'Generate a palette from a color' button
-        /// </summary>
-        public EventHandler OnGeneratePaletteFromColor { get; set; }
 
         /// <summary>
         /// EventHandler associated with clicking on 'Save as *.theme File' button

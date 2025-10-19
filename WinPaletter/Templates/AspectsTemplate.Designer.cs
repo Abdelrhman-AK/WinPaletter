@@ -240,6 +240,7 @@
             this.btn_palette_generate.Text = "0";
             this.btn_palette_generate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_palette_generate.UseVisualStyleBackColor = false;
+            this.btn_palette_generate.Click += new System.EventHandler(this.btn_palette_generate_Click);
             // 
             // btn_colorsEffects
             // 

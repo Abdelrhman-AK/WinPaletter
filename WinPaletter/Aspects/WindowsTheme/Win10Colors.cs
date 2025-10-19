@@ -87,16 +87,6 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void GeneratePalette_Image(object sender, EventArgs e)
-        {
-            Forms.PaletteGenerateFromImage.ShowDialog();
-        }
-
-        private void GeneratePalette_Color(object sender, EventArgs e)
-        {
-            Forms.PaletteGenerateFromColor.ShowDialog();
-        }
-
         private void Win10Colors_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
@@ -112,9 +102,7 @@ namespace WinPaletter
                 OnApply = Apply,
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromWPTH = LoadFromWPTH,
-                OnImportFromCurrentApplied = LoadFromCurrent,
-                OnGeneratePaletteFromImage = GeneratePalette_Image,
-                OnGeneratePaletteFromColor = GeneratePalette_Color,
+                OnImportFromCurrentApplied = LoadFromCurrent
             };
 
             windowsDesktop1.BackgroundImage = Program.Wallpaper;

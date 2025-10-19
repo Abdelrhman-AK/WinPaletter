@@ -377,10 +377,10 @@
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ColorsEffects.cs">
+    <Compile Include="ColorsAndPalettesHandlers\ColorsEffects.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\ColorsEffects.Designer.cs">
+    <Compile Include="ColorsAndPalettesHandlers\ColorsEffects.Designer.cs">
       <DependentUpon>ColorsEffects.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\Welcome.cs">
@@ -420,6 +420,12 @@
     <Compile Include="Languages\Localizer\Strings\General\Extensions.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Languages\Localizer\Strings.cs" />
+    <Compile Include="ColorsAndPalettesHandlers\PaletteGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorsAndPalettesHandlers\PaletteGenerator.Designer.cs">
+      <DependentUpon>PaletteGenerator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
@@ -929,22 +935,10 @@
     </Compile>
     <Compile Include="Program\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PaletteGenerator\PaletteGenerateFromColor.Designer.cs">
-      <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PaletteGenerator\PaletteGenerateFromColor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PaletteGenerator\PaletteGenerateFromImage.Designer.cs">
-      <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PaletteGenerator\PaletteGenerateFromImage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\ColorPickerDlg.Designer.cs">
+    <Compile Include="ColorsAndPalettesHandlers\ColorPickerDlg.Designer.cs">
       <DependentUpon>ColorPickerDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ColorPickerDlg.cs">
+    <Compile Include="ColorsAndPalettesHandlers\ColorPickerDlg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\Saving_ex_list.Designer.cs">
@@ -1290,7 +1284,7 @@
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ColorsEffects.resx">
+    <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorsEffects.resx">
       <DependentUpon>ColorsEffects.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Welcome.resx">
@@ -1329,7 +1323,7 @@
     <EmbeddedResource Include="Dialogs\BugReport.resx">
       <DependentUpon>BugReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ColorPickerDlg.resx">
+    <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorPickerDlg.resx">
       <DependentUpon>ColorPickerDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Saving_ex_list.resx">
@@ -1388,11 +1382,8 @@
     <EmbeddedResource Include="Aspects\ScreenSaver_Editor.resx">
       <DependentUpon>ScreenSaver_Editor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromColor.resx">
-      <DependentUpon>PaletteGenerateFromColor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PaletteGenerator\PaletteGenerateFromImage.resx">
-      <DependentUpon>PaletteGenerateFromImage.cs</DependentUpon>
+    <EmbeddedResource Include="ColorsAndPalettesHandlers\PaletteGenerator.resx">
+      <DependentUpon>PaletteGenerator.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
