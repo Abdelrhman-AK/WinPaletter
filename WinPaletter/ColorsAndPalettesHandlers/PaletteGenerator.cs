@@ -230,20 +230,20 @@ namespace WinPaletter
                 {
                     for (float f = -1; f <= 1f; f += 0.05f)
                     {
-                        Color result = c.CB(f);
+                        Color result = Color.FromArgb(255, c.CB(f));
                         if (!Colors_List.Contains(result)) Colors_List.Add(result);
 
-                        result = c.Dark(f);
+                        result = Color.FromArgb(255, c.Dark(f));
                         if (!Colors_List.Contains(result)) Colors_List.Add(result);
 
-                        result = c.Light(f);
+                        result = Color.FromArgb(255, c.Light(f));
                         if (!Colors_List.Contains(result)) Colors_List.Add(result);
                     }
 
-                    Color result_1 = c.DarkDark();
+                    Color result_1 = Color.FromArgb(255, c.DarkDark());
                     if (!Colors_List.Contains(result_1)) Colors_List.Add(result_1);
 
-                    result_1 = c.LightLight();
+                    result_1 = Color.FromArgb(255, c.LightLight());
                     if (!Colors_List.Contains(result_1)) Colors_List.Add(result_1);
                 }
 

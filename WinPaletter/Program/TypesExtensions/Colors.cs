@@ -1584,10 +1584,25 @@ namespace WinPaletter.TypesExtensions
             return MacSemantic.OrderBy(s => Distance(c, s)).First();
         }
 
-        public static int Distance(this Color a, Color b)
+        /// <summary>
+        /// Computes a perceptually weighted color distance between two colors.
+        /// Lower result = more similar colors.
+        /// </summary>
+        public static float Distance(this Color a, Color b)
         {
-            int dr = a.R - b.R, dg = a.G - b.G, db = a.B - b.B;
-            return dr * dr + dg * dg + db * db;
+            // Calculate channel differences
+            int rMean = (a.R + b.R) / 2;
+            int dR = a.R - b.R;
+            int dG = a.G - b.G;
+            int dB = a.B - b.B;
+
+            // Weighted formula based on human perception
+            // Source: Compuphase (http://www.compuphase.com/cmetric.htm)
+            return (float)Math.Sqrt(
+                ((512 + rMean) * dR * dR >> 8) +
+                4 * dG * dG +
+                ((767 - rMean) * dB * dB >> 8)
+            );
         }
 
         /// <summary>
