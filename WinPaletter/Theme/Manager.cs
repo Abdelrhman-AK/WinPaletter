@@ -82,10 +82,10 @@ namespace WinPaletter.Theme
                                 WallpaperTone_WXP.Load("WinXP");
                                 Wallpaper.Load(@default.Wallpaper);
 
-                                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: Command Prompt");
+                                Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: Command Prompt");
                                 CommandPrompt.Load(string.Empty, "Terminal_CMD_Enabled", @default.CommandPrompt);
 
-                                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: PowerShell x86");
+                                Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: PowerShell x86");
                                 if (Directory.Exists(SysPaths.PS86_dir))
                                 {
                                     try { Registry.CurrentUser.CreateSubKey($@"Console\{SysPaths.PS86_reg}", true).Close(); }
@@ -94,7 +94,7 @@ namespace WinPaletter.Theme
                                 }
                                 else { PowerShellx86 = @default.PowerShellx86; }
 
-                                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: PowerShell x64");
+                                Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: PowerShell x64");
                                 if (Directory.Exists(SysPaths.PS64_dir))
                                 {
                                     try { Registry.CurrentUser.CreateSubKey($@"Console\{SysPaths.PS64_reg}", true).Close(); }
@@ -130,17 +130,17 @@ namespace WinPaletter.Theme
                                         else { TerPreDir = SysPaths.TerminalPreviewJSON; }
                                     }
 
-                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal colors and settings from {TerDir}");
+                                    Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal colors and settings from {TerDir}");
                                     if (System.IO.File.Exists(TerDir)) { Terminal = new(TerDir, WinTerminal.Mode.JSONFile); }
                                     else { Terminal = new(string.Empty, WinTerminal.Mode.Empty); }
 
-                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal Preview colors and settings from {TerPreDir}");
+                                    Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal Preview colors and settings from {TerPreDir}");
                                     if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
                                     else { TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
                                 }
                                 else // If the OS is not Windows 10 or higher, then set Terminal and TerminalPreview to empty (Default values)
                                 {
-                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't find Windows Terminals, loading default ones");
+                                    Program.Log?.Write(LogEventLevel.Error, $"Couldn't find Windows Terminals, loading default ones");
 
                                     Terminal = new(string.Empty, WinTerminal.Mode.Empty);
                                     TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview);
@@ -162,7 +162,7 @@ namespace WinPaletter.Theme
 
                 case Source.File:
                     {
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter theme `{File}` by converting JSON string into a valid theme class instance.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter theme `{File}` by converting JSON string into a valid theme class instance.");
 
                         // Clear the exception list that has theme load exceptions
                         Exceptions.ThemeLoad.Clear();
@@ -185,7 +185,7 @@ namespace WinPaletter.Theme
                                 SetDefaultValues(@default);
 
                                 // Extract theme name from the theme file quickly, to be used in creating theme pack resources cache
-                                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Extracting theme name from the theme file quickly, to be used in creating theme pack resources cache.");
+                                Program.Log?.Write(LogEventLevel.Information, $"Extracting theme name from the theme file quickly, to be used in creating theme pack resources cache.");
                                 SetThemeName(content_list);
 
                                 string content = string.Join("\r\n", content_list);
@@ -214,7 +214,7 @@ namespace WinPaletter.Theme
                                 }
                                 else if (GetEdition(File) == Editions.OldFormat)
                                 {
-                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"The used wpth file has the old format (obsolete.)");
+                                    Program.Log?.Write(LogEventLevel.Error, $"The used wpth file has the old format (obsolete.)");
 
                                     // Display a message box for old format themes
                                     MsgBox(Program.Lang.Strings.Converter.Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.Converter.Detect_Old_OnLoadingTip);
@@ -222,7 +222,7 @@ namespace WinPaletter.Theme
                                 }
                                 else
                                 {
-                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"The used wpth file is invalid.");
+                                    Program.Log?.Write(LogEventLevel.Error, $"The used wpth file is invalid.");
 
                                     // Display a message box for invalid JSON
                                     MsgBox(Program.Lang.Strings.Converter.Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -231,7 +231,7 @@ namespace WinPaletter.Theme
                                 // Display exception information if any
                                 if (!ignoreErrors && Exceptions.ThemeLoad.Count > 0)
                                 {
-                                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Errors happened in loading theme file and a list of errors dialog will appear.");
+                                    Program.Log?.Write(LogEventLevel.Error, $"Errors happened in loading theme file and a list of errors dialog will appear.");
 
                                     Forms.Saving_ex_list.ex_List = Exceptions.ThemeLoad;
                                     Forms.Saving_ex_list.ApplyMode = false;
@@ -256,7 +256,7 @@ namespace WinPaletter.Theme
         /// <param name="default"></param>
         private void SetDefaultValues(Manager @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Copying values from default theme instance to current instance's fields, to avoid empty values after upgrading/downgrading WinPaletter and use a different wpth version file.");
+            Program.Log?.Write(LogEventLevel.Information, $"Copying values from default theme instance to current instance's fields, to avoid empty values after upgrading/downgrading WinPaletter and use a different wpth version file.");
 
             // Copy values from default theme instance to current instance's fields, to avoid empty values after upgrading/downgrading WinPaletter
             foreach (FieldInfo field in GetType().GetFields(bindingFlags))
@@ -308,7 +308,7 @@ namespace WinPaletter.Theme
             {
                 if (packIsValid)
                 {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"The theme resources pack is valid. Extracting it.");
+                    Program.Log?.Write(LogEventLevel.Information, $"The theme resources pack is valid. Extracting it.");
 
                     if (!Directory.Exists(cache)) Directory.CreateDirectory(cache);
 
@@ -326,7 +326,7 @@ namespace WinPaletter.Theme
                                 if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
                             }
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Extracting `{entry.Name}` as `{Path.Combine(cache, entry.FullName)}`");
+                            Program.Log?.Write(LogEventLevel.Information, $"Extracting `{entry.Name}` as `{Path.Combine(cache, entry.FullName)}`");
 
                             entry.ExtractToFile(Path.Combine(cache, entry.FullName), true);
                         }
@@ -355,7 +355,7 @@ namespace WinPaletter.Theme
                     if (arr.Length == 2 && (arr[1] ?? string.Empty).ToLower().Contains("%WinPaletterAppData%".ToLower()))
                     {
 
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Replacing entry `{list[x]}` with `%WinPaletterAppData%` variable with a valid AppData folder path.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Replacing entry `{list[x]}` with `%WinPaletterAppData%` variable with a valid AppData folder path.");
 
                         list[x] = $"{arr[0]}:{arr[1].Replace("%WinPaletterAppData%", SysPaths.appData.Replace("\\", "\\\\"))}";
                     }
@@ -370,7 +370,7 @@ namespace WinPaletter.Theme
         /// <param name="defaults"></param>
         private void MergeDefaultsInCurrent(ref JObject current, JObject defaults)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Mergeing default theme data into current theme data to make a new WinPaletter with new features can load a WinPaletter theme made by an old WinPaletter");
+            Program.Log?.Write(LogEventLevel.Information, $"Mergeing default theme data into current theme data to make a new WinPaletter with new features can load a WinPaletter theme made by an old WinPaletter");
 
             foreach (KeyValuePair<string, JToken?> item in defaults)
             {
@@ -382,7 +382,7 @@ namespace WinPaletter.Theme
                     {
                         if (current[item.Key][prop.Key] is null && defaults[item.Key] is not null && defaults[item.Key][prop.Key] is not null)
                         {
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Merging default property `{prop.Key}` of `{item.Key}` into current theme data.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Merging default property `{prop.Key}` of `{item.Key}` into current theme data.");
                             current[item.Key][prop.Key] = defaults[item.Key][prop.Key];
                         }
                     }
@@ -396,7 +396,7 @@ namespace WinPaletter.Theme
         /// <param name="json"></param>
         private void ExtendCursorsComptability(ref JObject json)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Converting format of older WPTH cursors format to make current WinPalette version can handle cursors.");
+            Program.Log?.Write(LogEventLevel.Information, $"Converting format of older WPTH cursors format to make current WinPalette version can handle cursors.");
 
             Structures.Cursors cursors = new();
             bool cursorsModificationDone = false;
@@ -560,7 +560,7 @@ namespace WinPaletter.Theme
         /// <param name="json"></param>
         private void ExtendTerminalComptability(ref JObject json)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Converting format of older WPTH Windows Terminal format to make current WinPalette version can handle Windows Terminals.");
+            Program.Log?.Write(LogEventLevel.Information, $"Converting format of older WPTH Windows Terminal format to make current WinPalette version can handle Windows Terminals.");
 
             string[] editons = ["Terminal", "TerminalPreview"];
 
@@ -600,13 +600,13 @@ namespace WinPaletter.Theme
                     Type fieldType = field.FieldType;
                     if (json[field.Name] is not null)
                     {
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Setting field `{field.Name}` with value `{json[field.Name]}` of type `{fieldType.Name}` from theme File JSON data.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Setting field `{field.Name}` with value `{json[field.Name]}` of type `{fieldType.Name}` from theme File JSON data.");
                         field.SetValue(this, json[field.Name].ToObject(fieldType));
                     }
                 }
                 catch (Exception ex)
                 {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Error setting field `{field.Name}`: {ex.Message}");
+                    Program.Log?.Write(LogEventLevel.Error, $"Error setting field `{field.Name}`: {ex.Message}");
                     // Handle exceptions and add them to the error list
                     Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }

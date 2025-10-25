@@ -104,7 +104,7 @@ namespace WinPaletter.UI.Style
                 Program.Style.DarkMode = true;
             }
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be {(Program.Style.DarkMode ? "dark" : "light")} mode");
+            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter's style will be {(Program.Style.DarkMode ? "dark" : "light")} mode");
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace WinPaletter.UI.Style
         /// <param name="IgnoreTitleBar">Flag indicating whether to ignore the title bar when applying the style.</param>
         public static void ApplyStyle(Form Form = null, bool IgnoreTitleBar = false)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
+            Program.Log?.Write(LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
 
             bool DarkMode;
             bool RoundedCorners;

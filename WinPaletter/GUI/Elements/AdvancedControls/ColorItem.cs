@@ -196,8 +196,18 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Properties        
-        public Color DefaultBackColor { get; set; } = Color.Black;
+        #region Properties 
+        /// <summary>
+        /// Gets or sets the default background color.
+        /// </summary>
+        public new Color DefaultBackColor { get; set; } = Color.Black;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the menu display should be canceled.
+        /// </summary>
+        [DefaultValue(false)]
+        public bool CancelShowingMenu { get; set; } = false;
+
         public bool DontShowInfo { get; set; } = false;
 
         [Browsable(true)]
@@ -491,7 +501,7 @@ namespace WinPaletter.UI.Controllers
         {
             const int WM_RBUTTONUP = 0x0205;
 
-            if (m.Msg == WM_RBUTTONUP)
+            if (m.Msg == WM_RBUTTONUP && !CancelShowingMenu)
             {
                 // Custom context menu implementation
                 copy_AsHex.Text = Program.Lang.Strings.General.Copy_HEX;

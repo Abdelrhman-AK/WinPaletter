@@ -46,7 +46,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows XP LogonUI data structure</param>
         public void Load(LogonUIXP @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
 
             if (OS.WXP)
             {
@@ -102,7 +102,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP LogonUI screen preferences into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows XP LogonUI screen preferences into registry.");
 
             SaveToggleState(treeView);
 

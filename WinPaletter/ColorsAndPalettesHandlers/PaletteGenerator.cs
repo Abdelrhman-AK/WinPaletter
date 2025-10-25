@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -21,7 +22,7 @@ namespace WinPaletter
         /// <summary>
         /// List of colors generated from the image.
         /// </summary>
-        private readonly List<Color> Colors_List = [];
+        private List<Color> Colors_List = [];
 
         /// <summary>
         /// Represents a collection of color items and their default colors.
@@ -31,7 +32,6 @@ namespace WinPaletter
         /// is used to manage  and associate color-related data.</remarks>
         private List<(ColorItem, Color)> colorItems = [];
         private Form form;
-        bool isCreatingMiniColorItemInColors = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaletteGenerateFromImage"/> class.
@@ -45,6 +45,8 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
+
+            Height = checkBox1.Checked ? Height : GroupBox1.Top + bottom_buttons.Height;
         }
 
         public void Show(UI.WP.Button button)
@@ -58,6 +60,8 @@ namespace WinPaletter
             foreach (Toggle t in this.GetAllControls().OfType<Toggle>()) t.Checked = false;
 
             TextBox1.Text = Program.TM.Wallpaper.ImageFile;
+
+            GetColors();
 
             ShowDialog();
         }
@@ -90,13 +94,11 @@ namespace WinPaletter
 
         private void RadioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            tablessControl1.Enabled = !radioImage2.Checked;
             GroupBox1.Enabled = true;
-            groupBox4.Enabled = true;
 
             if ((sender as RadioImage).Checked)
             {
-                tablessControl1.SelectedIndex = 0;
+                tablessControl1.SelectedIndex = 1;
 
                 List<Color> colors = [.. flowLayoutPanel1.Controls.OfType<ColorItem>().Select(ci => ci.BackColor)];
                 GetColors(colors);
@@ -105,13 +107,11 @@ namespace WinPaletter
 
         private void RadioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            tablessControl1.Enabled = !radioImage2.Checked;
             GroupBox1.Enabled = true;
-            groupBox4.Enabled = true;
 
             if ((sender as RadioImage).Checked)
             {
-                tablessControl1.SelectedIndex = 1;
+                tablessControl1.SelectedIndex = 2;
 
                 using (Bitmap src = BitmapMgr.Load(TextBox1.Text))
                 {
@@ -136,6 +136,93 @@ namespace WinPaletter
         }
 
         /// <summary>
+        /// Processes a collection of colors, applies effects, and updates the UI with the resulting color items.
+        /// </summary>
+        /// <remarks>
+        /// This method performs the following operations:
+        /// <list type="bullet">
+        /// <item>Clears the existing color list and UI elements.</item>
+        /// <item>Processes a predefined collection of colors, applies an effect to each color, and creates corresponding UI controls.</item>
+        /// <item>Updates the UI with the newly created color items.</item>
+        /// </list>
+        /// The method runs asynchronously and updates the UI on the main thread only when necessary.
+        /// </remarks>
+        public void GetColors()
+        {
+            // Run asynchronously to avoid blocking the UI
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    // Prepare UI before heavy work
+                    Invoke(() =>
+                    {
+                        Cursor = System.Windows.Forms.Cursors.AppStarting;
+                        ImgPaletteContainer.Visible = false;
+
+                        foreach (var ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>())
+                            ctrl.Dispose();
+
+                        ImgPaletteContainer.Controls.Clear();
+                    });
+
+                    // Extract base colors from the predefined collection
+                    Colors_List.Clear();
+
+                    foreach (var (ctrl, color) in colorItems) Colors_List.Add(color);
+
+                    // Sort efficiently (threaded if large)
+                    if (Colors_List.Count > 1000)
+                        Colors_List = Colors_List.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
+                    else
+                        Colors_List.Sort(new RGBColorComparer());
+
+                    // Build controls in parallel (off the UI thread)
+                    int colorCount = Colors_List.Count;
+                    ColorItem[] collection = new ColorItem[colorCount];
+
+                    Parallel.For(0, colorCount, i =>
+                    {
+                        Color original = Colors_List[i];
+                        Color processed = ApplyEffect(original);
+
+                        collection[i] = new()
+                        {
+                            Size = ColorItem.GetMiniColorItemSize(),
+                            AllowDrop = false,
+                            PauseColorsHistory = true,
+                            BackColor = processed,
+                            DefaultBackColor = original // keep original color
+                        };
+                    });
+
+                    // Apply all UI changes in one batch
+                    Invoke(() =>
+                    {
+                        ImgPaletteContainer.SuspendLayout();
+                        ImgPaletteContainer.Controls.AddRange(collection);
+                        ImgPaletteContainer.Visible = true;
+                        ImgPaletteContainer.ResumeLayout();
+                        Cursor = System.Windows.Forms.Cursors.Default;
+
+                        Distribute(false);
+                    });
+                }
+                catch (Exception ex)
+                {
+                    // Fail-safe: restore UI state even on error
+                    Invoke(() =>
+                    {
+                        Cursor = System.Windows.Forms.Cursors.Default;
+                        ImgPaletteContainer.Visible = true;
+                    });
+
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in GetColors: {ex}");
+                }
+            });
+        }
+
+        /// <summary>
         /// Extracts a palette of distinct colors from the specified bitmap and displays them as color items in the UI.
         /// </summary>
         /// <remarks>
@@ -151,44 +238,59 @@ namespace WinPaletter
         {
             if (source is null) return;
 
+            // Create a downscaled copy early
             Bitmap thumbnail = source.Resize(Program.PreviewSize);
 
-            Task.Run(() =>
+            // Start asynchronous background task
+            _ = Task.Run(() =>
             {
                 try
                 {
+                    // Update UI before heavy work
                     Invoke(() =>
                     {
                         Cursor = System.Windows.Forms.Cursors.AppStarting;
                         ImgPaletteContainer.Visible = false;
 
-                        // Dispose existing color items
-                        foreach (ColorItem item in ImgPaletteContainer.Controls.OfType<ColorItem>()) item.Dispose();
+                        foreach (var item in ImgPaletteContainer.Controls.OfType<ColorItem>()) item.Dispose();
 
                         ImgPaletteContainer.Controls.Clear();
                     });
 
-                    // Generate and sort color palette
-                    Colors_List.Clear();
-                    List<Color> extractedColors = [.. thumbnail.ToPalette(100, 10, false).OrderBy(c => c, new RGBColorComparer())];
+                    List<Color> extractedColors = thumbnail
+                        .ToPalette(100, 10, false)
+                        .AsParallel() // use multiple cores for sorting/comparison
+                        .OrderBy(c => c, new RGBColorComparer())
+                        .ToList();
 
+                    thumbnail?.Dispose();
+
+                    // Store globally
+                    Colors_List.Clear();
                     Colors_List.AddRange(extractedColors);
 
-                    // Prepare UI controls (off-UI thread)
-                    ColorItem[] colorItems = [.. extractedColors.Select(c => new ColorItem
+                    // Build UI controls off the main thread, in parallel
+                    ColorItem[] colorItems = new ColorItem[extractedColors.Count];
+                    Parallel.For(0, extractedColors.Count, i =>
                     {
-                        Size = ColorItem.GetMiniColorItemSize(),
-                        AllowDrop = false,
-                        PauseColorsHistory = true,
-                        BackColor = Color.FromArgb(255, c),
-                        DefaultBackColor = Color.FromArgb(255, c)
-                    })];
+                        Color c = extractedColors[i];
+                        colorItems[i] = new()
+                        {
+                            Size = ColorItem.GetMiniColorItemSize(),
+                            AllowDrop = false,
+                            PauseColorsHistory = true,
+                            BackColor = Color.FromArgb(255, ApplyEffect(c)),
+                            DefaultBackColor = Color.FromArgb(255, c)
+                        };
+                    });
 
-                    // Apply results back to the UI
                     Invoke(() =>
                     {
+                        ImgPaletteContainer.SuspendLayout();
                         ImgPaletteContainer.Controls.AddRange(colorItems);
                         ImgPaletteContainer.Visible = true;
+                        ImgPaletteContainer.ResumeLayout();
+                        Distribute();
                         Cursor = System.Windows.Forms.Cursors.Default;
                     });
                 }
@@ -200,101 +302,113 @@ namespace WinPaletter
                         ImgPaletteContainer.Visible = true;
                     });
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in generating palette from image. {ex.Message}");
-                }
-                finally
-                {
-                    thumbnail?.Dispose();
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in generating palette from image. {ex}");
                 }
             });
         }
 
         public void GetColors(List<Color> colors)
         {
-            Task.Run(() =>
+            // Immediately disable UI and show loading state on the UI thread
+            Cursor = System.Windows.Forms.Cursors.AppStarting;
+            ImgPaletteContainer.Visible = false;
+
+            // Dispose existing controls safely
+            foreach (var ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>()) ctrl.Dispose();
+            ImgPaletteContainer.Controls.Clear();
+
+            // Heavy work runs fully asynchronously
+            _ = Task.Run(() =>
             {
-                Invoke(() =>
+                ConcurrentDictionary<int, byte> colorSet = new();
+                ConcurrentBag<Color> colorsList = [];
+
+                Parallel.ForEach(colors, c =>
                 {
-                    Cursor = System.Windows.Forms.Cursors.AppStarting;
-                    ImgPaletteContainer.Visible = false;
-
-                    // Clear the list of colors and the color items.
-                    foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>()) ctrl?.Dispose();
-                    ImgPaletteContainer.Controls.Clear();
-                });
-
-                // Clear the list of colors.
-                Colors_List.Clear();
-
-                foreach (Color c in colors)
-                {
-                    for (float f = -1; f <= 1f; f += 0.05f)
+                    for (float f = -1f; f <= 1f; f += 0.05f)
                     {
-                        Color result = Color.FromArgb(255, c.CB(f));
-                        if (!Colors_List.Contains(result)) Colors_List.Add(result);
+                        Color result;
+
+                        result = Color.FromArgb(255, c.CB(f));
+                        if (colorSet.TryAdd(result.ToArgb(), 0)) colorsList.Add(result);
 
                         result = Color.FromArgb(255, c.Dark(f));
-                        if (!Colors_List.Contains(result)) Colors_List.Add(result);
+                        if (colorSet.TryAdd(result.ToArgb(), 0)) colorsList.Add(result);
 
                         result = Color.FromArgb(255, c.Light(f));
-                        if (!Colors_List.Contains(result)) Colors_List.Add(result);
+                        if (colorSet.TryAdd(result.ToArgb(), 0)) colorsList.Add(result);
                     }
 
-                    Color result_1 = Color.FromArgb(255, c.DarkDark());
-                    if (!Colors_List.Contains(result_1)) Colors_List.Add(result_1);
+                    Color dark = Color.FromArgb(255, c.DarkDark());
+                    if (colorSet.TryAdd(dark.ToArgb(), 0)) colorsList.Add(dark);
 
-                    result_1 = Color.FromArgb(255, c.LightLight());
-                    if (!Colors_List.Contains(result_1)) Colors_List.Add(result_1);
-                }
+                    Color light = Color.FromArgb(255, c.LightLight());
+                    if (colorSet.TryAdd(light.ToArgb(), 0)) colorsList.Add(light);
+                });
 
-                // Sort the list of colors.
+                // Convert to List and sort
+                List<Color> Colors_List = [.. colorsList];
                 Colors_List.Sort(new RGBColorComparer());
 
-                List<ColorItem> collection = [];
-
-                // Add the colors to the color items as colors controls.
-                foreach (Color c in Colors_List)
+                List<ColorItem> collection = new(Colors_List.Count);
+                Parallel.ForEach(Colors_List, c =>
                 {
                     Color processedColor = ApplyEffect(c);
-
-                    ColorItem MiniColorItem = new()
+                    ColorItem item = new()
                     {
                         Size = ColorItem.GetMiniColorItemSize(),
                         AllowDrop = false,
                         PauseColorsHistory = true,
                         BackColor = processedColor,
-                        DefaultBackColor = processedColor
+                        DefaultBackColor = c
                     };
 
-                    collection.Add(MiniColorItem);
-                }
+                    lock (collection) // prevent race conditions when adding
+                        collection.Add(item);
+                });
 
                 Invoke(() =>
                 {
                     Cursor = System.Windows.Forms.Cursors.Default;
+                    ImgPaletteContainer.SuspendLayout();
                     ImgPaletteContainer.Controls.AddRange([.. collection]);
                     ImgPaletteContainer.Visible = true;
+                    ImgPaletteContainer.ResumeLayout();
+
+                    Distribute();
                 });
             });
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Cursor = System.Windows.Forms.Cursors.AppStarting;
 
+        }
+
+        /// <summary>
+        /// Distributes colors to items by matching each color to the nearest color in the provided palette.
+        /// </summary>
+        /// <remarks>This method updates the background color of each <see cref="ColorItem"/> in the
+        /// collection  by finding the closest matching color from the palette. The method assumes that the palette  is
+        /// derived from the current state of the <see cref="ImgPaletteContainer"/> controls.</remarks>
+        /// <param name="nearing">A boolean value indicating whether the distribution process should prioritize finding the nearest color. The
+        /// default value is <see langword="true"/>.</param>
+        void Distribute(bool nearing = true)
+        {
             if (Colors_List != null && Colors_List.Count > 0)
             {
-                List<Color> processedColors = ImgPaletteContainer.Controls.OfType<ColorItem>().Select(ci => ci.BackColor).ToList();
+                List<Color> processedColors = [.. ImgPaletteContainer.Controls.OfType<ColorItem>().Select(ci => ci.BackColor)];
 
-                foreach ((ColorItem, Color) item in colorItems)
+                if (processedColors.Count > 0)
                 {
-                    item.Item1.BackColor = item.Item2.GetNearestColorFromPalette(processedColors);
+                    foreach ((ColorItem, Color) item in colorItems)
+                    {
+                        item.Item1.BackColor = nearing ? item.Item2.GetNearestColorFromPalette(processedColors) : ApplyEffect(item.Item2);
+                    }
                 }
             }
 
             ApplyPreview(form);
-
-            Cursor = System.Windows.Forms.Cursors.Default;
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -322,44 +436,47 @@ namespace WinPaletter
 
         private void button5_Click(object sender, EventArgs e)
         {
-            isCreatingMiniColorItemInColors = false;
+            CreateColorItem(Program.Style.Schemes.Main.Colors.Accent);
+        }
 
+        void CreateColorItem(Color c, bool skipUpdatingPalette = false)
+        {
             ColorItem colorItem = new()
             {
                 Size = ColorItem.GetMiniColorItemSize(),
                 AllowDrop = false,
                 PauseColorsHistory = true,
+                CancelShowingMenu = true,
+                BackColor =  c,
+                DefaultBackColor = c
             };
 
-            Color InitColor = colorItem.BackColor;
-
-            flowLayoutPanel1.Controls.Add(colorItem);
-
-            Dictionary<Control, string[]> Dict = new()
+            colorItem.MouseClick += (s, ev) =>
             {
-                { colorItem, [nameof(colorItem.BackColor)] }
-            };
-
-            Color c = Forms.ColorPickerDlg.Pick(Dict, true);
-
-            //isCreatingMiniColorItemInColors = false;
-
-            if (c == InitColor) colorItem?.Dispose();
-            else
-            {
-                colorItem.BackColor = c;
-                colorItem.DefaultBackColor = c;
-
-                colorItem.Click += (s, ev) =>
+                if (ev.Button == MouseButtons.Right)
                 {
                     flowLayoutPanel1.Controls.Remove(s as ColorItem);
                     (s as ColorItem).Click -= null;
                     (s as ColorItem)?.Dispose();
+                }
+                else
+                {
+                    Dictionary<Control, string[]> Dict = new()
+                        {
+                            { (s as ColorItem), [nameof(colorItem.BackColor)] }
+                        };
 
-                    List<Color> colors = [.. flowLayoutPanel1.Controls.OfType<ColorItem>().Select(ci => ci.BackColor)];
-                    GetColors(colors);
-                };
+                    (s as ColorItem).BackColor = Forms.ColorPickerDlg.Pick(Dict);
+                }
 
+                List<Color> colors = [.. flowLayoutPanel1.Controls.OfType<ColorItem>().Select(ci => ci.BackColor)];
+                GetColors(colors);
+            };
+
+            flowLayoutPanel1.Controls.Add(colorItem);
+
+            if (!skipUpdatingPalette)
+            {
                 List<Color> colors = [.. flowLayoutPanel1.Controls.OfType<ColorItem>().Select(ci => ci.BackColor)];
                 GetColors(colors);
             }
@@ -367,63 +484,13 @@ namespace WinPaletter
 
         private void radioImage2_CheckedChanged(object sender, EventArgs e)
         {
-            tablessControl1.Enabled = !radioImage2.Checked;
             GroupBox1.Enabled = true;
-            groupBox4.Enabled = true;
 
             if ((sender as UI.WP.RadioImage).Checked)
             {
-                Task.Run(() =>
-                {
-                    Invoke(() =>
-                    {
-                        Cursor = System.Windows.Forms.Cursors.AppStarting;
-                        ImgPaletteContainer.Visible = false;
+                tablessControl1.SelectedIndex = 0;
 
-                        // Clear the list of colors and the color items.
-                        foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>()) ctrl?.Dispose();
-                        ImgPaletteContainer.Controls.Clear();
-                    });
-
-                    // Clear the list of colors.
-                    Colors_List.Clear();
-
-                    foreach ((ColorItem, Color) item in colorItems)
-                    {
-                        Colors_List.Add(item.Item2);
-                    }
-
-                    // Sort the list of colors.
-                    Colors_List.Sort(new RGBColorComparer());
-
-                    List<ColorItem> collection = [];
-
-                    // Add the colors to the color items as colors controls.
-                    foreach (Color c in Colors_List)
-                    {
-                        Color processedColor = ApplyEffect(c);
-
-                        ColorItem MiniColorItem = new()
-                        {
-                            Size = ColorItem.GetMiniColorItemSize(),
-                            AllowDrop = false,
-                            PauseColorsHistory = true,
-                            BackColor = processedColor,
-                            DefaultBackColor = processedColor
-                        };
-
-                        collection.Add(MiniColorItem);
-                    }
-
-                    Invoke(() =>
-                    {
-                        Cursor = System.Windows.Forms.Cursors.Default;
-                        ImgPaletteContainer.Controls.AddRange([.. collection]);
-                        ImgPaletteContainer.Visible = true;
-                    });
-                });
-
-                ApplyPreview(form);
+                GetColors();
             }
         }
 
@@ -461,65 +528,81 @@ namespace WinPaletter
             else return c;
         }
 
-        void ApplyEffects(object sender)
+        void ApplyEffects()
         {
-            Task.Run(() =>
+            foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>())
             {
-                Invoke(() =>
-                {
-                    Cursor = System.Windows.Forms.Cursors.AppStarting;
-                    ImgPaletteContainer.Visible = false;
-
-                    // Clear the list of colors and the color items.
-                    foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>()) ctrl?.Dispose();
-                    ImgPaletteContainer.Controls.Clear();
-                });
-
-                List<ColorItem> collection = [];
-
-                // Add the colors to the color items as colors controls.
-                foreach (Color c in Colors_List)
-                {
-                    Color processedColor = ApplyEffect(c);
-
-                    ColorItem MiniColorItem = new()
-                    {
-                        Size = ColorItem.GetMiniColorItemSize(),
-                        AllowDrop = false,
-                        PauseColorsHistory = true,
-                        BackColor = processedColor,
-                        DefaultBackColor = processedColor
-                    };
-
-                    collection.Add(MiniColorItem);
-                }
-
-                Invoke(() =>
-                {
-                    Cursor = System.Windows.Forms.Cursors.Default;
-                    ImgPaletteContainer.Controls.AddRange([.. collection]);
-                    ImgPaletteContainer.Visible = true;
-                });
-            });
+                ctrl.BackColor = ApplyEffect(ctrl.DefaultBackColor);
+            }
         }
+
         private void toggle_effects_CheckedChanged(object sender, EventArgs e)
         {
             foreach (Toggle t in panel1.GetAllControls().OfType<Toggle>().Where(x => x != sender)) t.Checked = false;
 
-            if ((sender as Toggle).Checked) ApplyEffects(sender);
+            if ((sender as Toggle).Checked)
+            {
+                ApplyEffects();
+                Distribute(!radioImage2.Checked);
+            }
 
             // Ensure if all toggles are not applied, if so, reapply effects
             bool anyChecked = panel1.GetAllControls().OfType<Toggle>().Any(t => t.Checked);
 
-            if (!anyChecked) ApplyEffects(sender);
+            if (!anyChecked)
+            {
+                ApplyEffects();
+                Distribute(!radioImage2.Checked);
+            }
         }
-
 
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             panel14.Enabled = (sender as Toggle).Checked;
 
-            ApplyEffects(sender);
+            ApplyEffects();
+            Distribute(!radioImage2.Checked);
+        }
+
+        private void effectsBars_ValueChanged(object sender, EventArgs e)
+        {
+            if (toggle1.Checked)
+            {
+                ApplyEffects();
+                Distribute(!radioImage2.Checked);
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                if (Program.Style.Animations)
+                {
+                    FluentTransitions.Transition.With(this, nameof(Height), GroupBox1.Bottom + bottom_buttons.Height + 5)
+                        .HookOnCompletion(() => Program.Animator.ShowSync(GroupBox1))
+                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
+                else
+                {
+                    GroupBox1.Visible = true;
+                    Height = GroupBox1.Bottom + bottom_buttons.Height + 5;
+                }
+            }
+            else
+            {
+                if (Program.Style.Animations)
+                {
+                    FluentTransitions.Transition.With(this, nameof(Height), GroupBox1.Top + bottom_buttons.Height)
+                        .HookOnCompletion(() => Program.Animator.HideSync(GroupBox1))
+                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
+                else
+                {
+                    GroupBox1.Visible = false;
+                    Height = GroupBox1.Top + bottom_buttons.Height;
+                }
+            }
         }
     }
 }

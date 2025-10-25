@@ -182,7 +182,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Icons data structure</param>
         public void Load(Icons @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows icons from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows icons from registry.");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, @default.Enabled);
 
@@ -242,7 +242,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows icons into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows icons into registry.");
 
             SaveToggleState(treeView);
 

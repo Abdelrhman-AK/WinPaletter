@@ -19,7 +19,7 @@ namespace WinPaletter
         {
             if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
             {
-                Program.Log?.Debug("File to be loaded as image is not found or path is invalid: {file}", filePath);
+                Program.Log?.Debug($"File to be loaded as image is not found or path is invalid: {filePath}");
                 return null;
             }
 
@@ -54,17 +54,17 @@ namespace WinPaletter
             }
             catch (OutOfMemoryException ex)
             {
-                Program.Log?.Error(ex, "Out of memory while loading image: {file}", filePath);
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Out of memory while loading image: {ex.Message}");
                 return null;
             }
             catch (FileNotFoundException ex)
             {
-                Program.Log?.Error(ex, "Image file is not found: {file}", filePath);
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Image file is not found: {filePath}");
                 return null;
             }
             catch (Exception ex)
             {
-                Program.Log?.Error(ex, "Error loading image: {file}", filePath);
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error loading image: {filePath}");
                 return null;
             }
         }

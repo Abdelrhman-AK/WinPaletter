@@ -195,7 +195,7 @@ namespace WinPaletter
                 Enabled = Program.TM.Win32.Enabled,
                 Import_theme = true,
                 Import_msstyles = true,
-                GeneratePalette = false,
+                GeneratePalette = true,
                 GenerateMSTheme = true,
                 Import_preset = false,
 

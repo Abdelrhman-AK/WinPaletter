@@ -158,7 +158,7 @@ namespace WinPaletter
             this.highContrastToggle.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.highContrastToggle.Checked = false;
             this.highContrastToggle.DarkLight_Toggler = false;
-            this.highContrastToggle.Location = new System.Drawing.Point(737, 8);
+            this.highContrastToggle.Location = new System.Drawing.Point(734, 8);
             this.highContrastToggle.Name = "highContrastToggle";
             this.highContrastToggle.Size = new System.Drawing.Size(40, 20);
             this.highContrastToggle.TabIndex = 80;
@@ -814,6 +814,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(959, 561);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

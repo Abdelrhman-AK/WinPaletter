@@ -91,7 +91,6 @@ namespace WinPaletter
             UI.WP.Button button_load = buttons.Where(b => b.Name.StartsWith("btn_load_into_theme")).FirstOrDefault() ?? null;
             UI.WP.Button button_apply = buttons.Where(b => b.Name.StartsWith("btn_apply")).FirstOrDefault() ?? null;
             UI.WP.Button button_cancel = buttons.Where(b => b.Name.StartsWith("btn_cancel")).FirstOrDefault() ?? null;
-            UI.WP.Button button_Effects = buttons.Where(b => b.Name.StartsWith("btn_colorsEffects")).FirstOrDefault() ?? null;
             UI.WP.Button button_CPL = buttons.Where(b => b.Name.StartsWith("btn_CPL")).FirstOrDefault() ?? null;
 
             UI.WP.RadioImage mode_advanced = modes.Where(b => b.Name.StartsWith("checker_mode_advanced")).FirstOrDefault() ?? null;
@@ -103,7 +102,6 @@ namespace WinPaletter
 
             button_palette_generate.Visible = _data.GeneratePalette;
             button_saveas_MSTheme.Visible = _data.GenerateMSTheme;
-            button_Effects.Visible = _data.CanOpenColorsEffects;
             button_CPL.Visible = _data.CanOpenInControlPanel;
 
             if (toggle != null) toggle.Checked = _data.Enabled;
@@ -116,9 +114,8 @@ namespace WinPaletter
 
             #region Text _data
             button_import.Text = Program.Lang.Strings.Previewer.Import_wpth;
-            button_palette_generate.Text = Program.Lang.Strings.Previewer.GeneratePalette_image;
+            button_palette_generate.Text = Program.Lang.Strings.Previewer.GeneratePalette;
             button_saveas_MSTheme.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme;
-            button_Effects.Text = Program.Lang.Strings.Previewer.ColorsEffects;
             button_CPL.Text = Program.Lang.Strings.Previewer.Open_in_CPL;
             mode_advanced.Text = Program.Lang.Strings.Previewer.Mode_advanced;
             mode_simple.Text = Program.Lang.Strings.Previewer.Mode_simple;
@@ -129,7 +126,6 @@ namespace WinPaletter
 
             #region Menu _data
             button_import.Menu.Items.Clear();
-            button_palette_generate.Menu.Items.Clear();
             button_apply.Menu.Items.Clear();
 
             ToolStripMenuItem import_current = new();
@@ -146,7 +142,6 @@ namespace WinPaletter
             ToolStripMenuItem import_scheme_7 = new();
             ToolStripMenuItem import_scheme_Vista = new();
             ToolStripMenuItem import_scheme_XP = new();
-            ToolStripMenuItem create_palette_fromColor = new();
             ToolStripMenuItem saveTheme_oneAspect = new();
             ToolStripMenuItem applyThemeWithRP = new();
 
@@ -166,8 +161,6 @@ namespace WinPaletter
             applyThemeWithRP.Text = Program.Lang.Strings.Previewer.Apply_RestorePoint;
 
             import_JSON.Text = Program.Lang.Strings.Previewer.Import_JSON;
-
-            create_palette_fromColor.Text = Program.Lang.Strings.Previewer.GeneratePalette_color;
 
             import_current.Image = AspectsResources.CurrentApplied;
 
@@ -232,8 +225,6 @@ namespace WinPaletter
 
             button_import.Menu.Items.Add(import_current);
             button_import.Menu.Items.Add(import_defaultWindows);
-            button_palette_generate.Menu.Items.Add(create_palette_fromColor);
-
             button_apply.Menu.Items.Add(applyThemeWithRP);
 
             saveTheme_oneAspect.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme_OneAspect;
@@ -282,9 +273,6 @@ namespace WinPaletter
 
             if (button_import != null)
                 button_import.Click += _data.OnImportFromWPTH ?? null;
-
-            if (button_Effects != null)
-                button_Effects.Click += _data.OpenColorsEffects ?? null;
 
             if (button_CPL != null)
                 button_CPL.Click += _data.OpenInControlPanel ?? null;
@@ -368,9 +356,6 @@ namespace WinPaletter
 
                 if (button_saveas_MSTheme != null)
                     button_saveas_MSTheme.Click -= _data.OnSaveAsMSTheme ?? null;
-
-                if (button_Effects != null)
-                    button_Effects.Click -= _data.OpenColorsEffects ?? null;
 
                 if (button_CPL != null)
                     button_CPL.Click -= _data.OpenInControlPanel ?? null;
@@ -482,12 +467,12 @@ namespace WinPaletter
         public bool CanDragOver = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Colors Effects button is visible.
+        /// Gets or sets a value indicating whether the palette generation functionality is visible.
         /// </summary>
-        public bool CanOpenColorsEffects
+        public bool CanGeneratePalette
         {
-            get => btn_colorsEffects.Visible;
-            set => btn_colorsEffects.Visible = value;
+            get => btn_palette_generate.Visible;
+            set => btn_palette_generate.Visible = value;
         }
 
         #endregion

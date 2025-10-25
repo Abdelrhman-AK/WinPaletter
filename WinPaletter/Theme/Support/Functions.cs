@@ -44,7 +44,7 @@ namespace WinPaletter.Theme
                 ls = [.. ls.Distinct()];
                 ls.Sort(colorComparer);
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{Filename}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{Filename}`.");
 
                 return ls;
             }
@@ -100,7 +100,7 @@ namespace WinPaletter.Theme
             ls = [.. ls.Distinct()];
             ls.Sort(colorComparer);
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{ThemeName}` inside WinPaletter's themes database.");
+            Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{ThemeName}` inside WinPaletter's themes database.");
 
             return ls;
         }
@@ -320,7 +320,7 @@ namespace WinPaletter.Theme
                     while (CL.Contains(Color.FromArgb(0, 0, 0, 0))) CL.Remove(Color.FromArgb(0, 0, 0, 0));
                 }
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Found {CL.Count} colors in current WinPaletter theme.");
+                Program.Log?.Write(LogEventLevel.Information, $"Found {CL.Count} colors in current WinPaletter theme.");
 
                 return CL;
             }

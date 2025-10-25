@@ -46,7 +46,7 @@ namespace WinPaletter
 
             if (!isInstalledBefore)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File Association for {extension} with class name {className} has been created");
+                Program.Log?.Write(LogEventLevel.Information, $"File Association for {extension} with class name {className} has been created");
             }
 
             return isInstalledBefore;
@@ -61,13 +61,13 @@ namespace WinPaletter
         {
             if (string.IsNullOrEmpty(extension) || string.IsNullOrEmpty(className))
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, "DeleteFileAssociation called with null or empty parameters.");
+                Program.Log?.Write(LogEventLevel.Error, "DeleteFileAssociation called with null or empty parameters.");
                 return;
             }
 
             if (extension.Substring(0, 1) != ".") extension = $".{extension}";
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Deleting File Association for {extension} with class name {className}");
+            Program.Log?.Write(LogEventLevel.Information, $"Deleting File Association for {extension} with class name {className}");
 
             DeleteKey($"HKEY_CURRENT_USER\\Software\\Classes\\{extension}");
             DeleteKey($"HKEY_CURRENT_USER\\Software\\Classes\\{className}");
@@ -76,8 +76,8 @@ namespace WinPaletter
             DeleteValue("HKEY_CURRENT_USER\\Software\\WinPaletter", "Version");
 
             // Notify Windows that File associations have changed
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"A NativeMethods.Shell32.SHChangeNotify request has been sent to notify Windows that File associations have changed.");
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Command is: NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0)");
+            Program.Log?.Write(LogEventLevel.Information, $"A NativeMethods.Shell32.SHChangeNotify request has been sent to notify Windows that File associations have changed.");
+            Program.Log?.Write(LogEventLevel.Information, $"Command is: NativeMethods.Shell32.SHChangeNotify(NativeMethods.Shell32.ShellConstants.SHCNE_ASSOCCHANGED, NativeMethods.Shell32.ShellConstants.SHCNF_IDLIST, 0, 0)");
 
             Shell32.SHChangeNotify(Shell32.ShellConstants.SHCNE_ASSOCCHANGED, Shell32.ShellConstants.SHCNF_IDLIST, 0, 0);
         }

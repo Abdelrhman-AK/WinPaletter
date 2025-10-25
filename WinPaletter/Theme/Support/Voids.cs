@@ -14,7 +14,7 @@ namespace WinPaletter.Theme
         /// <param name="Exception"></param>
         private void AddException(string Label, Exception Exception)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, Exception, $"Exception while applying theme feature `{Label}`: {Exception.Message}");
+            Program.Log?.Write(LogEventLevel.Error, $"Exception while applying theme feature `{Label}`", Exception);
             Exceptions.ThemeApply.Add(new Tuple<string, Exception>(Label, Exception));
         }
 
@@ -34,7 +34,7 @@ namespace WinPaletter.Theme
             bool ReportProgress = treeView is not null;
             Stopwatch sw = new();
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Debug, $"Executing method: {method.Method.Name} with statingStr: {statingStr}, errorStr: {errorStr}, TimeStr: {TimeStr}, skip: {skip}, skipStr: {skipStr}");
+            Program.Log?.Write(LogEventLevel.Debug, $"Executing method: {method.Method.Name} with statingStr: {statingStr}, errorStr: {errorStr}, TimeStr: {TimeStr}, skip: {skip}, skipStr: {skipStr}");
 
             sw.Reset();
             sw.Stop();
@@ -71,7 +71,7 @@ namespace WinPaletter.Theme
             }
             else if (!string.IsNullOrWhiteSpace(errorStr)) ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {skipStr}", "skip");
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Debug, $"Method {method.Method.Name} executed in {sw.ElapsedMilliseconds} ms");
+            Program.Log?.Write(LogEventLevel.Debug, $"Method {method.Method.Name} executed in {sw.ElapsedMilliseconds} ms");
 
             sw.Stop();
         }

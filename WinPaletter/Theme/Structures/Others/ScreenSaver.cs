@@ -33,7 +33,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default ScreenSaver data structure</param>
         public void Load(ScreenSaver @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Screen Saver settings from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Screen Saver settings from registry.");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", @default.Enabled);
             IsSecure = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaverIsSecure", @default.IsSecure);
@@ -47,7 +47,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Screen Saver settings into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Screen Saver settings into registry.");
 
             SaveToggleState(treeView);
 

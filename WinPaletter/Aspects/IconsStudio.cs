@@ -13,6 +13,10 @@ namespace WinPaletter
 {
     public partial class IconsStudio : AspectsTemplate
     {
+        private static readonly Dictionary<int, Bitmap> _shell32IconCache = [];
+        private static readonly Dictionary<string, Bitmap> _controlPanelIconCache = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, Bitmap> _explorerIconCache = new(StringComparer.OrdinalIgnoreCase);
+
         public IconsStudio()
         {
             InitializeComponent();
@@ -142,6 +146,46 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
         }
 
+        // Reusable helper to dispose any previous icon safely
+        private static void DisposeIcon(WinIcon iconControl)
+        {
+            if (iconControl != null && iconControl.Icon != null)
+            {
+                try
+                {
+                    iconControl.Icon.Dispose();
+                }
+                catch
+                {
+                    // ignore if already disposed
+                }
+                finally
+                {
+                    iconControl.Icon = null;
+                }
+            }
+        }
+
+        // Helper to safely dispose the previous image in a PictureBox
+        private static void DisposeImage(PictureBox box)
+        {
+            if (box != null && box.Image != null)
+            {
+                try
+                {
+                    box.Image.Dispose();
+                }
+                catch
+                {
+                    // Ignore if already disposed
+                }
+                finally
+                {
+                    box.Image = null;
+                }
+            }
+        }
+
         private void IconsStudio_FormClosing(object sender, FormClosingEventArgs e)
         {
             CleanUp();
@@ -149,186 +193,260 @@ namespace WinPaletter
 
         void PopulateShell32Icons()
         {
+            shell32Data.SuspendLayout();
             shell32Data.Rows.Clear();
-            shell32Data.Visible = false;
 
             Cursor = Cursors.WaitCursor;
 
-            string shell32 = $"{SysPaths.System32}\\shell32.dll";
-
-            List<DataGridViewRow> rowsToAdd = [];
-            rowsToAdd.Clear();
-
-            for (int i = 0, count = PE.GetIconGroupCount(shell32); i < count; i++)
+            try
             {
-                DataGridViewRow row = new();
-                row.CreateCells(shell32Data, i, PE.GetIcon(shell32, i), null, string.Empty, Program.Lang.Strings.General.Browse);
-                rowsToAdd.Add(row);
+                string shell32 = System.IO.Path.Combine(SysPaths.System32, "shell32.dll");
+                int count = PE.GetIconGroupCount(shell32);
+
+                // Reuse list with preallocated capacity to reduce reallocations
+                List<DataGridViewRow> rowsToAdd = new(count);
+
+                // Batch load icons with caching
+                for (int i = 0; i < count; i++)
+                {
+                    if (!_shell32IconCache.TryGetValue(i, out Bitmap iconBmp))
+                    {
+                        using Icon? ico = PE.GetIcon(shell32, i);
+                        iconBmp = ico?.ToBitmap();
+                        if (iconBmp != null) _shell32IconCache[i] = iconBmp;
+                    }
+
+                    // Create row
+                    DataGridViewRow row = new();
+                    row.CreateCells(shell32Data, i, iconBmp, null, string.Empty, Program.Lang.Strings.General.Browse);
+                    rowsToAdd.Add(row);
+                }
+
+                // Add all rows in one go
+                shell32Data.Rows.AddRange([.. rowsToAdd]);
+
+                // Ensure no default [X] icon shows up
+                foreach (DataGridViewColumn column in shell32Data.Columns)
+                {
+                    if (column is DataGridViewImageColumn imgCol) imgCol.DefaultCellStyle.NullValue = null;
+                }
             }
-
-            shell32Data.Rows.AddRange([.. rowsToAdd]);
-
-            // remove default [x] image for data DataGridViewImageColumn columns
-            foreach (DataGridViewColumn column in shell32Data.Columns)
+            catch (Exception ex)
             {
-                if (column is DataGridViewImageColumn) (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Failed to load shell32 icons: {ex.Message}");
             }
-
-            shell32Data.Visible = true;
-
-            Cursor = Cursors.Default;
+            finally
+            {
+                shell32Data.ResumeLayout();
+                Cursor = Cursors.Default;
+            }
         }
 
         void PopulateControlPanelIcons()
         {
-            cpData.Rows.Clear();
+            cpData.SuspendLayout();
             cpData.Visible = false;
+            cpData.Rows.Clear();
 
             Cursor = Cursors.WaitCursor;
 
-            List<DataGridViewRow> rowsToAdd = [];
-            rowsToAdd.Clear();
-
-            for (int i = 0, count = Theme.Structures.Icons.ControlPanelCLSIDs.Count; i < count; i++)
+            try
             {
-                DataGridViewRow row = new();
+                List<Tuple<string, string, string>> clsidList = Theme.Structures.Icons.ControlPanelCLSIDs;
+                int count = clsidList.Count;
+                List<DataGridViewRow> rowsToAdd = new(count);
 
-                string CLSID = Theme.Structures.Icons.ControlPanelCLSIDs[i].Item1;
-                string name = Theme.Structures.Icons.ControlPanelCLSIDs[i].Item2;
-                string defaultIconPath = Theme.Structures.Icons.ControlPanelCLSIDs[i].Item3;
-                Icon icon;
-
-                if (defaultIconPath != null && defaultIconPath.Contains(",") && File.Exists(defaultIconPath.Split(',')[0]))
+                for (int i = 0; i < count; i++)
                 {
-                    string[] parts = defaultIconPath.Split(',');
-                    icon = PE.GetIcon(parts[0], int.Parse(parts[1]));
-                }
-                else if (defaultIconPath != null && File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
-                {
-                    icon = new(defaultIconPath);
-                }
-                else
-                {
-                    icon = null;
+                    var (clsid, name, defaultIconPath) = clsidList[i];
+
+                    Bitmap? iconBmp = null;
+
+                    if (!string.IsNullOrWhiteSpace(defaultIconPath))
+                    {
+                        string resolvedPath = Environment.ExpandEnvironmentVariables(defaultIconPath);
+
+                        // Cache by path
+                        if (_controlPanelIconCache.TryGetValue(resolvedPath, out var cached))
+                        {
+                            iconBmp = cached;
+                        }
+                        else
+                        {
+                            iconBmp = TryExtractBitmap(resolvedPath);
+                            if (iconBmp != null) _controlPanelIconCache[resolvedPath] = iconBmp;
+                        }
+                    }
+
+                    DataGridViewRow row = new();
+                    row.CreateCells(cpData, name, clsid, iconBmp, null, string.Empty, Program.Lang.Strings.General.Browse);
+                    rowsToAdd.Add(row);
                 }
 
-                row.CreateCells(cpData, name, CLSID, icon, null, string.Empty, Program.Lang.Strings.General.Browse);
+                cpData.Rows.AddRange(rowsToAdd.ToArray());
 
-                rowsToAdd.Add(row);
+                foreach (DataGridViewColumn column in cpData.Columns)
+                {
+                    if (column is DataGridViewImageColumn imgCol) imgCol.DefaultCellStyle.NullValue = null;
+                }
             }
-
-            cpData.Rows.AddRange([.. rowsToAdd]);
-
-            // remove default [x] image for data DataGridViewImageColumn columns
-            foreach (DataGridViewColumn column in cpData.Columns)
+            catch (Exception ex)
             {
-                if (column is DataGridViewImageColumn) (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Failed to load Control Panel icons: {ex.Message}");
             }
-
-            cpData.Visible = true;
-
-            Cursor = Cursors.Default;
+            finally
+            {
+                cpData.ResumeLayout();
+                cpData.Visible = true;
+                Cursor = Cursors.Default;
+            }
         }
 
         void PopulateExplorerIcons()
         {
-            explorerData.Rows.Clear();
+            explorerData.SuspendLayout();
             explorerData.Visible = false;
+            explorerData.Rows.Clear();
 
             Cursor = Cursors.WaitCursor;
 
-            List<DataGridViewRow> rowsToAdd = [];
-            rowsToAdd.Clear();
-
-            for (int i = 0, count = Theme.Structures.Icons.ExplorerCLSIDs.Count; i < count; i++)
+            try
             {
-                DataGridViewRow row = new();
+                List<Tuple<string, string, string>> clsidList = Theme.Structures.Icons.ExplorerCLSIDs;
+                int count = clsidList.Count;
 
-                string CLSID = Theme.Structures.Icons.ExplorerCLSIDs[i].Item1;
-                string name = Theme.Structures.Icons.ExplorerCLSIDs[i].Item2;
-                string defaultIconPath = Theme.Structures.Icons.ExplorerCLSIDs[i].Item3;
-                Icon icon;
+                List<DataGridViewRow> rowsToAdd = new(count);
 
-                if (defaultIconPath != null && defaultIconPath.Contains(",") && File.Exists(defaultIconPath.Split(',')[0]))
+                for (int i = 0; i < count; i++)
                 {
-                    string[] parts = defaultIconPath.Split(',');
-                    icon = PE.GetIcon(parts[0], int.Parse(parts[1]));
-                }
-                else if (defaultIconPath != null && File.Exists(defaultIconPath) && System.IO.Path.GetExtension(defaultIconPath).ToLower() == ".ico")
-                {
-                    icon = new(defaultIconPath);
-                }
-                else
-                {
-                    icon = null;
+                    var (clsid, name, defaultIconPath) = clsidList[i];
+
+                    Bitmap? iconBmp = null;
+
+                    if (!string.IsNullOrWhiteSpace(defaultIconPath))
+                    {
+                        string resolvedPath = Environment.ExpandEnvironmentVariables(defaultIconPath);
+
+                        if (_explorerIconCache.TryGetValue(resolvedPath, out var cached))
+                        {
+                            iconBmp = cached;
+                        }
+                        else
+                        {
+                            iconBmp = TryExtractBitmap(resolvedPath);
+                            if (iconBmp != null) _explorerIconCache[resolvedPath] = iconBmp;
+                        }
+                    }
+
+                    DataGridViewRow row = new();
+                    row.CreateCells(explorerData, name, clsid, iconBmp, null, string.Empty, Program.Lang.Strings.General.Browse);
+                    rowsToAdd.Add(row);
                 }
 
-                row.CreateCells(explorerData, name, CLSID, icon, null, string.Empty, Program.Lang.Strings.General.Browse);
+                explorerData.Rows.AddRange(rowsToAdd.ToArray());
 
-                rowsToAdd.Add(row);
+                foreach (DataGridViewColumn column in explorerData.Columns)
+                {
+                    if (column is DataGridViewImageColumn imgCol) imgCol.DefaultCellStyle.NullValue = null;
+                }
             }
-
-            explorerData.Rows.AddRange([.. rowsToAdd]);
-
-            // remove default [x] image for data DataGridViewImageColumn columns
-            foreach (DataGridViewColumn column in explorerData.Columns)
+            catch (Exception ex)
             {
-                if (column is DataGridViewImageColumn) (column as DataGridViewImageColumn).DefaultCellStyle.NullValue = null;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"ailed to load Explorer icons: {ex.Message}");
             }
+            finally
+            {
+                explorerData.ResumeLayout();
+                explorerData.Visible = true;
+                Cursor = Cursors.Default;
+            }
+        }
 
-            explorerData.Visible = true;
+        private static Bitmap? TryExtractBitmap(string iconPath)
+        {
+            try
+            {
+                string[] parts = iconPath.Split(',');
+                string path = parts[0].Trim('"', ' ');
+                int index = (parts.Length > 1 && int.TryParse(parts[1], out int parsed)) ? parsed : 0;
 
-            Cursor = Cursors.Default;
+                if (!File.Exists(path)) return null;
+
+                if (System.IO.Path.GetExtension(path).Equals(".ico", StringComparison.OrdinalIgnoreCase))
+                {
+                    using Icon ico = new(path);
+                    return ico.ToBitmap();
+                }
+
+                using Icon? extracted = PE.GetIcon(path, index);
+                return extracted?.ToBitmap();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         void CleanUp()
         {
-            if (explorerData != null)
+            static void DisposeIconsAndClear(DataGridView dgv, params int[] iconColumns)
             {
-                for (int i = 0; i < explorerData.Rows.Count; i++)
+                if (dgv == null || dgv.IsDisposed) return;
+
+                // Marshal back to UI thread if necessary
+                if (dgv.InvokeRequired)
                 {
-                    if (explorerData[2, i].Value is Icon icon0) icon0?.Dispose();
-                    if (explorerData[3, i].Value is Icon icon1) icon1?.Dispose();
+                    dgv.Invoke(new Action(() => DisposeIconsAndClear(dgv, iconColumns)));
+                    return;
                 }
 
-                explorerData.Rows.Clear();
-            }
-
-            if (cpData != null)
-            {
-                for (int i = 0; i < cpData.Rows.Count; i++)
+                try
                 {
-                    if (cpData[2, i].Value is Icon icon0) icon0?.Dispose();
-                    if (cpData[3, i].Value is Icon icon1) icon1?.Dispose();
+                    dgv.SuspendLayout();
+
+                    foreach (DataGridViewRow row in dgv.Rows)
+                    {
+                        foreach (int colIndex in iconColumns)
+                        {
+                            if (colIndex < dgv.ColumnCount && row.Cells[colIndex].Value is Icon icon)
+                            {
+                                icon.Dispose();
+                                row.Cells[colIndex].Value = null;
+                            }
+                        }
+                    }
+
+                    dgv.Rows.Clear();
                 }
-
-                cpData.Rows.Clear();
-            }
-
-            if (shell32Data != null)
-            {
-                for (int i = 0; i < shell32Data.Rows.Count; i++)
+                catch (ObjectDisposedException)
                 {
-                    if (shell32Data[1, i].Value is Icon icon0) icon0?.Dispose();
-                    if (shell32Data[2, i].Value is Icon icon1) icon1?.Dispose();
+                    // Ignore if control is being disposed during cleanup
                 }
-
-                shell32Data.Rows.Clear();
+                finally
+                {
+                    if (!dgv.IsDisposed) dgv.ResumeLayout();
+                }
             }
 
-            //winIcon1?.Icon?.Dispose();
-            //winIcon2?.Icon?.Dispose();
-            //winIcon3?.Icon?.Dispose();
-            //winIcon4?.Icon?.Dispose();
-            //winIcon5?.Icon?.Dispose();
-            //winIcon6?.Icon?.Dispose();
+            DisposeIconsAndClear(explorerData, 2, 3);
+            DisposeIconsAndClear(cpData, 2, 3);
+            DisposeIconsAndClear(shell32Data, 1, 2);
 
-            //pictureBox1?.Image?.Dispose();
-            //pictureBox6?.Image?.Dispose();
-            //pictureBox9?.Image?.Dispose();
-            //pictureBox2?.Image?.Dispose();
-            //pictureBox5?.Image?.Dispose();
-            //pictureBox8?.Image?.Dispose();
+            ClearCache(_shell32IconCache);
+            ClearCache(_controlPanelIconCache);
+            ClearCache(_explorerIconCache);
+        }
+
+        private static void ClearCache(Dictionary<int, Bitmap> cache)
+        {
+            foreach (var kv in cache) kv.Value?.Dispose();
+            cache.Clear();
+        }
+
+        private static void ClearCache(Dictionary<string, Bitmap> cache)
+        {
+            foreach (var kv in cache) kv.Value?.Dispose();
+            cache.Clear();
         }
 
         public void LoadFromTM(Manager TM)
@@ -504,44 +622,62 @@ namespace WinPaletter
 
         private void shell32Data_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 3)
+            if (e.ColumnIndex != 3 || e.RowIndex < 0 || shell32Data.Rows.Count == 0) return;
+
+            DataGridViewRow row = shell32Data.Rows[e.RowIndex];
+            string rawValue = (row.Cells[3].Value ?? string.Empty).ToString().Trim();
+
+            if (string.IsNullOrEmpty(rawValue))
             {
-                if (shell32Data.Rows.Count == 0) return;
+                DisposeIconAtCell(row, 2);
+                row.Cells[2].Value = null;
+                return;
+            }
 
-                string data = (shell32Data.Rows[e.RowIndex].Cells[3].Value ?? string.Empty).ToString();
+            string path;
+            int index = 0;
 
-                string path;
-                int index;
+            int commaIndex = rawValue.IndexOf(',');
+            if (commaIndex > 0)
+            {
+                path = rawValue.Substring(0, commaIndex);
+                if (commaIndex + 1 < rawValue.Length) int.TryParse(rawValue.Substring(commaIndex + 1), out index);
+            }
+            else
+            {
+                path = rawValue;
+            }
 
-                if (data.Contains(","))
+            path = Environment.ExpandEnvironmentVariables(path);
+            Icon newIcon = null;
+
+            try
+            {
+                if (File.Exists(path))
                 {
-                    string[] parts = data.Split(',');
-                    path = parts[0];
-                    int.TryParse(parts[1], out index);
+                    string ext = System.IO.Path.GetExtension(path).ToLowerInvariant();
+                    newIcon = ext == ".ico" ? new Icon(path) : PE.GetIcon(path, index);
                 }
-                else
-                {
-                    path = data;
-                    index = 0;
-                }
+            }
+            catch
+            {
+                newIcon = null; // ignore bad paths or file read errors
+            }
 
-                path = Environment.ExpandEnvironmentVariables(path);
+            // Dispose old icon to prevent leaks
+            DisposeIconAtCell(row, 2);
+            row.Cells[2].Value = newIcon;
 
-                if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
-                {
-                    shell32Data.Rows[e.RowIndex].Cells[2].Value = PE.GetIcon(path, index);
-                }
-                else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
-                {
-                    shell32Data.Rows[e.RowIndex].Cells[2].Value = new Icon(path);
-                }
-                else
-                {
-                    shell32Data.Rows[e.RowIndex].Cells[2].Value = null;
-                }
+            if (e.RowIndex == 7) textBox8.Text = rawValue;
+            else if (e.RowIndex == 8) textBox9.Text = rawValue;
+        }
 
-                if (e.RowIndex == 7) textBox8.Text = data;
-                if (e.RowIndex == 8) textBox9.Text = data;
+        private static void DisposeIconAtCell(DataGridViewRow row, int columnIndex)
+        {
+            if (row != null && row.Cells[columnIndex].Value is Icon oldIcon)
+            {
+                oldIcon.Dispose();
+                row.Cells[columnIndex].Value = null;
             }
         }
 
@@ -641,42 +777,51 @@ namespace WinPaletter
 
         private void explorerData_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 4)
+            if (e.ColumnIndex != 4 || e.RowIndex < 0 || explorerData.Rows.Count == 0) return;
+
+            DataGridViewRow row = explorerData.Rows[e.RowIndex];
+            string rawValue = (row.Cells[4].Value ?? string.Empty).ToString().Trim();
+
+            if (string.IsNullOrEmpty(rawValue))
             {
-                if (explorerData.Rows.Count == 0) return;
+                DisposeIconAtCell(row, 3);
+                row.Cells[3].Value = null;
+                return;
+            }
 
-                string data = (explorerData.Rows[e.RowIndex].Cells[4].Value ?? string.Empty).ToString();
+            string path;
+            int index = 0;
 
-                string path;
-                int index;
+            int commaIndex = rawValue.IndexOf(',');
+            if (commaIndex > 0)
+            {
+                path = rawValue.Substring(0, commaIndex);
+                if (commaIndex + 1 < rawValue.Length) int.TryParse(rawValue.Substring(commaIndex + 1), out index);
+            }
+            else
+            {
+                path = rawValue;
+            }
 
-                if (data.Contains(","))
-                {
-                    string[] parts = data.Split(',');
-                    path = parts[0];
-                    int.TryParse(parts[1], out index);
-                }
-                else
-                {
-                    path = data;
-                    index = 0;
-                }
+            path = Environment.ExpandEnvironmentVariables(path);
+            Icon newIcon = null;
 
-                path = Environment.ExpandEnvironmentVariables(path);
-
-                if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+            try
+            {
+                if (File.Exists(path))
                 {
-                    explorerData.Rows[e.RowIndex].Cells[3].Value = PE.GetIcon(path, index);
-                }
-                else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
-                {
-                    explorerData.Rows[e.RowIndex].Cells[3].Value = new Icon(path);
-                }
-                else
-                {
-                    explorerData.Rows[e.RowIndex].Cells[3].Value = null;
+                    string ext = System.IO.Path.GetExtension(path).ToLowerInvariant();
+                    newIcon = ext == ".ico" ? new Icon(path) : PE.GetIcon(path, index);
                 }
             }
+            catch
+            {
+                newIcon = null; // Ignore invalid paths or load errors
+            }
+
+            // Dispose old icon before setting the new one
+            DisposeIconAtCell(row, 3);
+            row.Cells[3].Value = newIcon;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -784,35 +929,49 @@ namespace WinPaletter
 
         void UpdateIconPreview(string data, WinIcon iconControl)
         {
-            string path;
-            int index;
+            if (iconControl == null) return;
 
-            if (data.Contains(","))
+            if (string.IsNullOrWhiteSpace(data))
             {
-                string[] parts = data.Split(',');
-                path = parts[0];
-                int.TryParse(parts[1], out index);
+                DisposeIcon(iconControl);
+                iconControl.Icon = null;
+                return;
+            }
+
+            string path;
+            int index = 0;
+
+            int commaIndex = data.IndexOf(',');
+            if (commaIndex > 0)
+            {
+                path = data.Substring(0, commaIndex);
+                if (commaIndex + 1 < data.Length)
+                    int.TryParse(data.Substring(commaIndex + 1), out index);
             }
             else
             {
                 path = data;
-                index = 0;
             }
 
             path = Environment.ExpandEnvironmentVariables(path);
+            Icon newIcon = null;
 
-            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+            try
             {
-                iconControl.Icon = PE.GetIcon(path, index);
+                if (File.Exists(path))
+                {
+                    string ext = System.IO.Path.GetExtension(path).ToLowerInvariant();
+                    newIcon = ext == ".ico" ? new Icon(path) : PE.GetIcon(path, index);
+                }
             }
-            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+            catch
             {
-                iconControl.Icon = new Icon(path);
+                newIcon = null; // ignore bad files
             }
-            else
-            {
-                iconControl.Icon = null;
-            }
+
+            // Safely dispose the old icon before replacing it
+            DisposeIcon(iconControl);
+            iconControl.Icon = newIcon;
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -926,46 +1085,6 @@ namespace WinPaletter
             shell32Data[3, 28].Value = $"{SysPaths.System32}\\shell32.dll,49";
         }
 
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-            string path;
-            int index;
-            string data = (sender as UI.WP.TextBox).Text;
-
-            if (data.Contains(","))
-            {
-                string[] parts = data.Split(',');
-                path = parts[0];
-                int.TryParse(parts[1], out index);
-            }
-            else
-            {
-                path = data;
-                index = 0;
-            }
-
-            path = Environment.ExpandEnvironmentVariables(path);
-
-            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
-            {
-                using (Icon ico = PE.GetIcon(path, index))
-                {
-                    pictureBox2.Image = ico.ToBitmap();
-                }
-            }
-            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
-            {
-                using (Icon ico = new(path))
-                {
-                    pictureBox2.Image = ico.ToBitmap();
-                }
-            }
-            else
-            {
-                pictureBox2.Image = null;
-            }
-        }
-
         private void button17_Click(object sender, EventArgs e)
         {
             textBox7.Text = string.Empty;
@@ -976,88 +1095,77 @@ namespace WinPaletter
             PickIconForDesktopIcons(textBox7);
         }
 
-        private void textBox9_TextChanged(object sender, EventArgs e)
+        private void textBox7_TextChanged(object sender, EventArgs e)
         {
-            string path;
-            int index;
-            string data = (sender as UI.WP.TextBox).Text;
-
-            if (data.Contains(","))
-            {
-                string[] parts = data.Split(',');
-                path = parts[0];
-                int.TryParse(parts[1], out index);
-            }
-            else
-            {
-                path = data;
-                index = 0;
-            }
-
-            path = Environment.ExpandEnvironmentVariables(path);
-
-            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
-            {
-                using (Icon ico = PE.GetIcon(path, index))
-                {
-                    pictureBox5.Image = ico.ToBitmap();
-                }
-            }
-            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
-            {
-                using (Icon ico = new(path))
-                {
-                    pictureBox5.Image = ico.ToBitmap();
-                }
-            }
-            else
-            {
-                pictureBox5.Image = null;
-            }
-
-            if (data != shell32Data[3, 8].Value?.ToString()) shell32Data[3, 8].Value = data;
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox2, null, -1, -1);
         }
 
         private void textBox8_TextChanged(object sender, EventArgs e)
         {
-            string path;
-            int index;
-            string data = (sender as UI.WP.TextBox).Text;
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox8, shell32Data, 3, 7);
+        }
 
-            if (data.Contains(","))
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox5, shell32Data, 3, 8);
+        }
+
+        private void HandleTextBoxIconChange(UI.WP.TextBox textBox, PictureBox targetBox, DataGridView dataGrid, int columnIndex, int rowIndex)
+        {
+            if (textBox == null || targetBox == null) return;
+
+            string data = (textBox.Text ?? string.Empty).Trim();
+
+            if (string.IsNullOrEmpty(data))
             {
-                string[] parts = data.Split(',');
-                path = parts[0];
-                int.TryParse(parts[1], out index);
+                DisposeImage(targetBox);
+                targetBox.Image = null;
+                return;
+            }
+
+            string path;
+            int index = 0;
+
+            int commaIndex = data.IndexOf(',');
+            if (commaIndex > 0)
+            {
+                path = data.Substring(0, commaIndex);
+                if (commaIndex + 1 < data.Length) int.TryParse(data.Substring(commaIndex + 1), out index);
             }
             else
             {
                 path = data;
-                index = 0;
             }
 
             path = Environment.ExpandEnvironmentVariables(path);
+            Image newImage = null;
 
-            if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() != ".ico")
+            try
             {
-                using (Icon ico = PE.GetIcon(path, index))
+                if (File.Exists(path))
                 {
-                    pictureBox8.Image = ico.ToBitmap();
+                    string ext = System.IO.Path.GetExtension(path).ToLowerInvariant();
+                    using (Icon ico = (ext == ".ico" ? new Icon(path) : PE.GetIcon(path, index)))
+                    {
+                        newImage = ico.ToBitmap();
+                    }
                 }
             }
-            else if (File.Exists(path) && System.IO.Path.GetExtension(path).ToLower() == ".ico")
+            catch
             {
-                using (Icon ico = new(path))
-                {
-                    pictureBox8.Image = ico.ToBitmap();
-                }
-            }
-            else
-            {
-                pictureBox8.Image = null;
+                newImage = null;
             }
 
-            if (data != shell32Data[3, 7].Value?.ToString()) shell32Data[3, 7].Value = data;
+            // Safely replace PictureBox image
+            DisposeImage(targetBox);
+            targetBox.Image = newImage;
+
+            // Sync the corresponding DataGridView cell if needed
+            if (dataGrid != null && rowIndex >= 0 && rowIndex < dataGrid.Rows.Count && columnIndex >= 0 && columnIndex < dataGrid.ColumnCount)
+            {
+                string current = dataGrid[columnIndex, rowIndex].Value?.ToString();
+                if (current != data) dataGrid[columnIndex, rowIndex].Value = data;
+            }
         }
 
         private void button21_Click(object sender, EventArgs e)

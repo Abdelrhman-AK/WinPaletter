@@ -19,7 +19,7 @@ namespace WinPaletter
         public static Settings Settings = new(Settings.Source.Registry);
 
         /// <summary>
-        /// An instance of the Serilog logger class
+        /// An instance of WinPaletter logger class (wrapper for Serilog)
         /// </summary>
         public static Logger Log;
 

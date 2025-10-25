@@ -40,7 +40,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WindowsVista data structure</param>
         public void Load(WindowsVista @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Vista colors and appearance preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Vista colors and appearance preferences from registry.");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, @default.Enabled);
 
@@ -56,7 +56,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Vista colors and appearance preferences into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Vista colors and appearance preferences into registry.");
 
             SaveToggleState(treeView);
 

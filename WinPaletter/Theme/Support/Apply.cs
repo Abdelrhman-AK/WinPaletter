@@ -13,7 +13,7 @@ namespace WinPaletter.Theme
         /// <param name="treeView">treeView used to show applying log</param>
         public void Apply_CommandPrompt(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Applying Command Prompt preferences...");
+            Program.Log?.Write(LogEventLevel.Information, "Applying Command Prompt preferences...");
 
             Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", string.Empty, "Terminal_CMD_Enabled", CommandPrompt, treeView);
             if (Program.Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences)
@@ -34,7 +34,7 @@ namespace WinPaletter.Theme
         {
             if (PowerShellx86.Enabled & Directory.Exists($@"{Environment.GetEnvironmentVariable("WINDIR")}\System32\WindowsPowerShell\v1.0"))
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Applying PowerShell x86 preferences...");
+                Program.Log?.Write(LogEventLevel.Information, "Applying PowerShell x86 preferences...");
 
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe", "Terminal_PS_32_Enabled", PowerShellx86, treeView);
                 if (Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -52,7 +52,7 @@ namespace WinPaletter.Theme
         {
             if (PowerShellx64.Enabled & Directory.Exists($@"{Environment.GetEnvironmentVariable("WINDIR")}\SysWOW64\WindowsPowerShell\v1.0"))
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Applying PowerShell x64 preferences...");
+                Program.Log?.Write(LogEventLevel.Information, "Applying PowerShell x64 preferences...");
 
                 Theme.Structures.Console.Save_Console_To_Registry("HKEY_CURRENT_USER", "%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe", "Terminal_PS_64_Enabled", PowerShellx64, treeView);
                 if (Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)

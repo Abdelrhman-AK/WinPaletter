@@ -62,7 +62,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
         public void Load(string edition, LogonUI10x @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
 
             Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, @default.Enabled);
 
@@ -80,7 +80,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
         public void Apply(string edition, TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
 
             SaveToggleState(edition, treeView);
 
@@ -104,7 +104,7 @@ namespace WinPaletter.Theme.Structures
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Broadcast the system message to notify about the setting change
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
+                    Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
                     User32.UpdatePerUserSystemParameters(1, true);
 
                     wic.Undo();

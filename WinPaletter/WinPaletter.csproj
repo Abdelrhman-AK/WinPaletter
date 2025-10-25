@@ -101,7 +101,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Devcorp.Controls.VisualStyles">
-      <HintPath>..\..\Workspace\WinPaletter_WorkingArea\Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
+      <HintPath>..\..\Workspace\WinPaletter_WorkingArea\3. Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FluentTransitions, Version=2.0.2.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
@@ -429,7 +429,7 @@
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
-    <Compile Include="Program\LogInitializer.cs" />
+    <Compile Include="Program\Logger.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\NTDLL.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />

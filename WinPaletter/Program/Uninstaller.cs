@@ -19,7 +19,7 @@ namespace WinPaletter
             if (!Directory.Exists(SysPaths.appData))
             {
                 Directory.CreateDirectory(SysPaths.appData);
-                Program.Log.Information($"A new directory has been created: {SysPaths.appData}");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.appData}");
             }
 
             // Write uninstaller icon to application data folder if it doesn't exist or changed
@@ -41,13 +41,13 @@ namespace WinPaletter
             WriteReg(RegPath, "NoRepair", 1, RegistryValueKind.DWord);
             WriteReg(RegPath, "EstimatedSize", Length / 1024, RegistryValueKind.DWord);
 
-            Program.Log.Information($"Uninstaller entry has been updated.");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Uninstaller entry has been updated.");
         }
 
         // Uninstall the application quietly without user interaction
         public static void Uninstall_Quiet()
         {
-            Program.Log.Information("Uninstalling WinPaletter quietly...");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Uninstalling WinPaletter quietly...");
 
             // Delete file associations
             DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");

@@ -91,7 +91,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Windows 8.1 LogonUI data structure</param>
         public void Load(LogonUI81 @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 8.1 lock screen preferences from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows 8.1 lock screen preferences from registry.");
 
             Enabled = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", string.Empty, @default.Enabled);
             ImagePath = ReadReg(@$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\8.1", "ImagePath", string.Empty);
@@ -115,7 +115,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used to show applying log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 8.1 lock screen data into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 8.1 lock screen data into registry.");
 
             SaveToggleState(treeView);
 
@@ -135,7 +135,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 8.1 lock screen extended data into registry.");
+                Program.Log?.Write(LogEventLevel.Information, $"Saving Windows 8.1 lock screen extended data into registry.");
 
                 WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "NoChangingLockScreen", 0);
 
@@ -177,7 +177,7 @@ namespace WinPaletter.Theme.Structures
                                 bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                             }
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Image to be used as lock screen is `{syslock ?? "null"}` with ID `{LockScreenSystemID.ToString() ?? "null"}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Image to be used as lock screen is `{syslock ?? "null"}` with ID `{LockScreenSystemID.ToString() ?? "null"}`.");
 
                             break;
                         }
@@ -193,7 +193,7 @@ namespace WinPaletter.Theme.Structures
                                 bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
                             }
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Custom image to be used as lock screen is `{ImagePath ?? "null"}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Custom image to be used as lock screen is `{ImagePath ?? "null"}`.");
 
                             break;
                         }
@@ -202,7 +202,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             bmp = Color.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Solid color to be used as lock screen background is `{Color}`.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Solid color to be used as lock screen background is `{Color}`.");
 
                             break;
                         }
@@ -214,7 +214,7 @@ namespace WinPaletter.Theme.Structures
                                 bmp = (Bitmap)b.Clone();
                             }
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Using current wallpaper as a lock screen.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Using current wallpaper as a lock screen.");
 
                             break;
                         }
@@ -223,7 +223,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             bmp = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Black color is used as lock screen background as a default fallback option.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Black color is used as lock screen background as a default fallback option.");
 
                             break;
                         }
@@ -241,7 +241,7 @@ namespace WinPaletter.Theme.Structures
                     if (ReportProgress_Detailed)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Grayscaling lock screen image.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Grayscaling lock screen image.");
                     bmp = bmp.Grayscale();
                 }
 
@@ -250,7 +250,7 @@ namespace WinPaletter.Theme.Structures
                     if (ReportProgress_Detailed)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Blurring lock screen image with radius `{Blur_Intensity}`.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Blurring lock screen image with radius `{Blur_Intensity}`.");
 
                     bmp = bmp.Blur(Blur_Intensity);
                 }
@@ -260,7 +260,7 @@ namespace WinPaletter.Theme.Structures
                     if (ReportProgress_Detailed)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Generating noise effect for lock screen image with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Generating noise effect for lock screen image with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
 
                     bmp = bmp.Noise(Noise_Mode, Noise_Intensity / 100f);
                 }
@@ -270,7 +270,7 @@ namespace WinPaletter.Theme.Structures
                 if (ReportProgress_Detailed)
                     ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LockScreen, lockimg), "info");
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Generating lock screen image is done.");
+                Program.Log?.Write(LogEventLevel.Information, $"Generating lock screen image is done.");
 
                 bmp.Save(lockimg);
             }

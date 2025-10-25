@@ -1659,7 +1659,7 @@ namespace WinPaletter
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            CanOpenColorsEffects = (sender as UI.WP.RadioButton).Checked;
+            CanGeneratePalette = (sender as UI.WP.RadioButton).Checked;
 
             if ((sender as UI.WP.RadioButton).Checked)
             {

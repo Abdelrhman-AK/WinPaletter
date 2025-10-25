@@ -143,7 +143,7 @@ namespace WinPaletter
             bool shouldExit = false;
             bool displayHelp = false;
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Command line arguments: {string.Join(" ", args ?? Environment.GetCommandLineArgs().Skip(1))}");
+            Program.Log?.Write(LogEventLevel.Information, $"Command line arguments: {string.Join(" ", args ?? Environment.GetCommandLineArgs().Skip(1))}");
 
             using (Parser parser = new(config => config.HelpWriter = null))
             {
@@ -298,7 +298,7 @@ namespace WinPaletter
                         return HelpText.DefaultParsingErrorsHandler(parser.ParseArguments<Options>(args ?? Environment.GetCommandLineArgs().Skip(1).ToArray()), h);
                     }, e => e);
 
-                    Log?.Write(LogEventLevel.Information, "Command line arguments help requested: {helpText}", helpText);
+                    Log?.Write(LogEventLevel.Information, $"Command line arguments help requested: {helpText}");
 
                     Forms.ArgsHelp.TextBox1.Text = helpText;
                     Forms.ArgsHelp.ShowDialog();

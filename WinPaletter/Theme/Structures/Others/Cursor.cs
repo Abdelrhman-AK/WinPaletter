@@ -186,7 +186,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="subKey">Subkey of cursor inside registry key HKEY_CURRENT_USER\Software\WinPaletter\Cursors</param>
         public void Load(string subKey)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor to be loaded: `{subKey}`");
+            Program.Log?.Write(LogEventLevel.Information, $"Cursor to be loaded: `{subKey}`");
 
             UseFromFile = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", false);
             File = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", string.Empty);
@@ -241,7 +241,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used for theme log</param>
         public static void Save_Cursors_To_Registry(string subKey, Cursor Cursor, TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor to be saved: `{subKey}`");
+            Program.Log?.Write(LogEventLevel.Information, $"Cursor to be saved: `{subKey}`");
 
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "UseFromFile", Cursor.UseFromFile);
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors\{subKey}", "File", Cursor.File, RegistryValueKind.String);

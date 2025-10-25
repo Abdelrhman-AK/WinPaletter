@@ -57,7 +57,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private static void OnExit(object sender, EventArgs e)
         {
-            if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
+            Log?.Write(LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
 
             DeleteUpdateResiduals();
 
@@ -67,7 +67,7 @@ namespace WinPaletter
             User.UserSwitch -= User.OnUserSwitch;
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
 
-            if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, "WinPaletter has exited successfully.");
+            Log?.Write(LogEventLevel.Information, "WinPaletter has exited successfully.");
         }
 
         /// <summary>
@@ -82,24 +82,24 @@ namespace WinPaletter
                 User.UserSwitch -= User.OnUserSwitch;
                 User.UserSwitch += User.OnUserSwitch;
 
-                LoggerInitializer.Initialize();
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"Calculating MD5... {Program.CalculateMD5(AppFile)}");
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
+                Log = new();
+                Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
+                Log?.Write(LogEventLevel.Information, $"Calculating MD5... {Program.CalculateMD5(AppFile)}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
 
                 // Create the data directory if it does not exist
                 if (!Directory.Exists(SysPaths.ProgramFilesData))
                 {
                     Directory.CreateDirectory(SysPaths.ProgramFilesData);
-                    if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.ProgramFilesData}");
+                    Log?.Write(LogEventLevel.Information, $"A new directory has been created: {SysPaths.ProgramFilesData}");
                 }
 
                 // Important to load proper style and language before showing login dialog
-                if (Settings.AppLog.Enabled) Log?.Write(LogEventLevel.Information, $"Loading application style.");
+                Log?.Write(LogEventLevel.Information, $"Loading application style.");
 
                 GetDarkMode();
                 ApplyStyle();

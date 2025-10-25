@@ -126,14 +126,14 @@ namespace WinPaletter.Tabs
                 {
                     TabControl.SelectedTab = TPx;
                     Cursor = Cursors.Default;
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"`{form.Name}` form is already shown and added into tabs, re-focusing it.");
+                    Program.Log?.Write(LogEventLevel.Information, $"`{form.Name}` form is already shown and added into tabs, re-focusing it.");
                     return;
                 }
             }
 
             if (busy)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Warning, $"`{form.Name}` form cannot be added into tabs as the tabs container is busy.");
+                Program.Log?.Write(LogEventLevel.Warning, $"`{form.Name}` form cannot be added into tabs as the tabs container is busy.");
                 Cursor = Cursors.Default;
                 return;
             }
@@ -192,7 +192,7 @@ namespace WinPaletter.Tabs
 
             if (!DesignMode && !TabControl.IsInUse()) Program.Animator.ShowSync(TabControl);
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"`{form.Name}` form has been shown and added into tabs.");
+            Program.Log?.Write(LogEventLevel.Information, $"`{form.Name}` form has been shown and added into tabs.");
 
             busy = false;
 

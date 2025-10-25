@@ -845,7 +845,7 @@ namespace WinPaletter
 
         private void source_color_CheckedChanged(object sender, EventArgs e)
         {
-            CanOpenColorsEffects = (sender as RadioImage).Checked;
+            CanGeneratePalette = (sender as RadioImage).Checked;
 
             if (((RadioImage)sender).Checked)
             {

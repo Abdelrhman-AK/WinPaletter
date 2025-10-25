@@ -96,7 +96,7 @@ namespace WinPaletter
             // Reset frequency to 0 instead of 24 hours
             WriteReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\SystemRestore", "SystemRestorePointCreationFrequency", 0);
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Creating system restore point with description: {description}", description);
+            Program.Log?.Write(LogEventLevel.Information, $"Creating system restore point with description: {description}");
 
             // Start actions
             var mScope = new ManagementScope("\\\\localhost\\root\\default");
@@ -126,7 +126,7 @@ namespace WinPaletter
         /// </summary>
         public static void SetSystemRestoreStatus(char driveLetter, bool enable)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Setting system restore status for drive {driveLetter} to {enable}", driveLetter, enable);
+            Program.Log?.Write(LogEventLevel.Information, $"Setting system restore status for drive {driveLetter} to {enable}");
 
             if (enable) { SrClient.EnableSR(driveLetter + ":"); } else { SrClient.DisableSR(driveLetter + ":"); }
         }

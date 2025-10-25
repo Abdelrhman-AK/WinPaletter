@@ -105,7 +105,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Wallpaper data structure</param>
         public void Load(Wallpaper @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Wallpaper settings from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Wallpaper settings from registry.");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, @default.Enabled);
             SlideShow_Folder_or_ImagesList = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "SlideShow_Folder_or_ImagesList", @default.SlideShow_Folder_or_ImagesList);
@@ -149,7 +149,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(bool SkipSettingWallpaper = false, TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Wallpaper settings into registry and by using User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Wallpaper settings into registry and by using User32.SystemParametersInfo");
 
             SaveToggleState(treeView);
 

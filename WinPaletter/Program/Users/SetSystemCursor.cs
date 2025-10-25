@@ -46,7 +46,7 @@ namespace WinPaletter.NativeMethods
                     if (treeView != null)
                         ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"));
+                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"));
 
                     // Add the exception to the list of exceptions
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
@@ -59,7 +59,7 @@ namespace WinPaletter.NativeMethods
             if (treeView != null)
                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()), "dll");
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()));
+            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()));
         }
 
         /// <summary>

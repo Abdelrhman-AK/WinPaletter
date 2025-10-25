@@ -51,7 +51,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default AppTheme data structure</param>
         public void Load(AppTheme @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter application theme (appearance) from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter application theme (appearance) from registry.");
 
             Enabled = ReadReg(Settings.Structures.REG_Appearance, "CustomColors", @default.Enabled);
             Animations = ReadReg(Settings.Structures.REG_Appearance, "Animations", @default.Animations);
@@ -71,7 +71,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter application theme (appearance) into registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter application theme (appearance) into registry.");
 
             SaveToggleState(treeView);
 
@@ -87,7 +87,7 @@ namespace WinPaletter.Theme.Structures
 
             // Apply settings to program settings
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
+                Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
 
                 ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
                 Appearance.CustomColors = Enabled;

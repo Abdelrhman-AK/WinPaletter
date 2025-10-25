@@ -23,7 +23,7 @@ public class SingleInstanceApplication : Microsoft.VisualBasic.ApplicationServic
     /// <param name="startupHandler"></param>
     public static void Run(Form form, Microsoft.VisualBasic.ApplicationServices.StartupNextInstanceEventHandler startupHandler)
     {
-        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Starting WinPaletter in single-instance mode");
+        Program.Log?.Write(LogEventLevel.Information, "Starting WinPaletter in single-instance mode");
 
         SingleInstanceApplication app = new()
         {

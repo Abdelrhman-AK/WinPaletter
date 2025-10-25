@@ -172,7 +172,7 @@ namespace WinPaletter
                             // Undo impersonation after finishing operations on user profile
                             wic.Undo();
 
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`.");
+                            Program.Log?.Write(LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`.");
                         }
 
                         break;

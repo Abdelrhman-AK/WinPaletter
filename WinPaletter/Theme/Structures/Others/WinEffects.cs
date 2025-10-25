@@ -219,7 +219,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default WinEffects data structure</param>
         public void Load(WinEffects @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Effects settings from registry and User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Effects settings from registry and User32.SystemParametersInfo");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, true);
 
@@ -370,7 +370,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="silent">If true, no alert will be shown</param>
         public async void Apply(TreeView treeView = null, bool silent = false)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Effects settings into registry and by using User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Effects settings into registry and by using User32.SystemParametersInfo");
 
             SaveToggleState(treeView);
 
@@ -383,8 +383,8 @@ namespace WinPaletter.Theme.Structures
                     // Apply WinEffects in a new thread to prevent freezing the UI
                     await Task.Run(() =>
                     {
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Windows Effects settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Windows Effects settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
+                        Program.Log?.Write(LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
 
                         ANIMATIONINFO anim = new();
                         anim.cbSize = (uint)Marshal.SizeOf(anim);

@@ -21,8 +21,7 @@
                 public string Import_msstyles { get; set; } = "Import from a Windows visual styles file (*.msstyles)";
                 public string Import_preset { get; set; } = "Import from a preset";
                 public string Import_JSON { get; set; } = "Import from a JSON file";
-                public string GeneratePalette_image { get; set; } = "Generate a palette from an image";
-                public string GeneratePalette_color { get; set; } = "Generate a palette from a color";
+                public string GeneratePalette { get; set; } = "Generate a palette";
                 public string Mode_advanced { get; set; } = "Advanced mode";
                 public string Mode_simple { get; set; } = "Simple mode";
                 public string Load_into_current_theme { get; set; } = "Load preferences into the current theme";

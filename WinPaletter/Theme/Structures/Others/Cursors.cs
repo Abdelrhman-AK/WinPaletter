@@ -137,7 +137,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default Cursors data structure</param>
         public void Load(Cursors @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows cursors settings from registry and User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows cursors settings from registry and User32.SystemParametersInfo");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled);
 
@@ -177,7 +177,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows cursors settings into registry, rendering custom cursors and by using User32.SystemParametersInfo");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows cursors settings into registry, rendering custom cursors and by using User32.SystemParametersInfo");
 
             SaveToggleState(treeView);
 
@@ -303,14 +303,14 @@ namespace WinPaletter.Theme.Structures
 
             string CurName = cursorTypeMap.TryGetValue(Type, out string name) ? name : string.Empty;
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering cursor `{CurName}`.");
+            Program.Log?.Write(LogEventLevel.Information, $"Rendering cursor `{CurName}`.");
 
             if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.RenderingCursor, CurName), "pe_patch");
 
             if (!Directory.Exists(SysPaths.CursorsWP))
             {
                 Directory.CreateDirectory(SysPaths.CursorsWP);
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Created directory for WinPaletter cursors: `{SysPaths.CursorsWP}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"Created directory for WinPaletter cursors: `{SysPaths.CursorsWP}`.");
             }
 
             if (Type != Paths.CursorType.Busy & Type != Paths.CursorType.AppLoading)
@@ -318,7 +318,7 @@ namespace WinPaletter.Theme.Structures
                 // Save cursor to file path inside WinPaletter cursors folder
                 string Path = $"{SysPaths.CursorsWP}\\{CurName}.cur";
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{Path}` with size `{Size}x{Size}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{Path}` with size `{Size}x{Size}`.");
 
                 // Create cursor file stream
                 using (FileStream FS = new(Path, FileMode.Create))
@@ -333,7 +333,7 @@ namespace WinPaletter.Theme.Structures
                     // Loop to create different cursors sizes (scales)
                     foreach (int scale in scales)
                     {
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}`.");
 
                         float i = scale / 32f;
                         Bitmap bmp = new(scale, scale, PixelFormat.Format32bppPArgb);
@@ -468,7 +468,7 @@ namespace WinPaletter.Theme.Structures
                         EO.WriteBitmap(bmp, null, new((int)HotPoint.X, (int)HotPoint.Y));
 
                         // Log the rendering of the frame
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"This frame has been rendered`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"This frame has been rendered`.");
 
                         bmp.Dispose();
                     }
@@ -478,13 +478,13 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, Path), "info");
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{Path}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{Path}`.");
             }
 
             // Render animated cursors
             else
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}`.");
 
                 PointF HotPoint = new(1f, 1f);
                 int increment = Math.Max(5, Math.Min(25, Type == Paths.CursorType.AppLoading ? Cursor_AppLoading.LoadingCircleHot_AnimationSpeed : Cursor_Busy.LoadingCircleHot_AnimationSpeed));
@@ -502,7 +502,7 @@ namespace WinPaletter.Theme.Structures
                 //Loop to create different cursors sizes (scales)
                 foreach (int scale in scales)
                 {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}` with size `{scale}x{scale}`.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Rendering animated cursor `{CurName}` with size `{scale}x{scale}`.");
 
                     List<Bitmap> BMPList = [];
                     BMPList.Clear();
@@ -510,7 +510,7 @@ namespace WinPaletter.Theme.Structures
 
                     foreach (int angle in angles)
                     {
-                        if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}` and angle `{angle}`.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Rendering a frame for `{CurName}` with size `{scale}x{scale}` and angle `{angle}`.");
 
                         Bitmap bm = null;
 
@@ -547,7 +547,7 @@ namespace WinPaletter.Theme.Structures
                     // Save cursor to file path inside WinPaletter cursors folder
                     string OutputFile = $@"{SysPaths.CursorsWP}\{CurName}{curFileNameModifier}.ani";
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{OutputFile}` with size `{scale}x{scale}` and speed `{Speed}`.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` will be saved as `{OutputFile}` with size `{scale}x{scale}` and speed `{Speed}`.");
 
                     // Create cursor file stream
                     using (FileStream fs = new(OutputFile, FileMode.Create))
@@ -568,7 +568,7 @@ namespace WinPaletter.Theme.Structures
 
                     if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, OutputFile), "info");
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{OutputFile}`.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{OutputFile}`.");
                 }
             }
         }
@@ -581,7 +581,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used to show applying log</param>
         public void SetCursorsToSystem(Cursors cursors, string scopeReg = "HKEY_CURRENT_USER", TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter cursors to system from `{scopeReg}` registry scope.");
+            Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter cursors to system from `{scopeReg}` registry scope.");
 
             // WinPaletter saves rendered cursors to the following path
             string Path = SysPaths.CursorsWP;
@@ -739,7 +739,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used to show applying log</param>
         public static void ResetCursorsToAero(string scopeReg = "HKEY_CURRENT_USER", TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Aero scheme from `{scopeReg}` registry scope.");
+            Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Aero scheme from `{scopeReg}` registry scope.");
 
             try
             {
@@ -884,7 +884,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">TreeView used to show applying log</param>
         public static void ResetCursorsToNone_XP(string scopeReg = "HKEY_CURRENT_USER", TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Windows XP scheme from `{scopeReg}` registry scope.");
+            Program.Log?.Write(LogEventLevel.Information, $"Resetting cursors to Windows XP scheme from `{scopeReg}` registry scope.");
 
             try
             {

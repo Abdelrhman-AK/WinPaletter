@@ -42,7 +42,8 @@ namespace WinPaletter
 
             // Start showing home page tab.
             tabControl1.Visible = false;
-
+            Status_lbl.Font = Fonts.Console;
+            Status_pnl.BackColor = Program.Style.Schemes.Main.Colors.Back_Hover();
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");
             if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Welcome);

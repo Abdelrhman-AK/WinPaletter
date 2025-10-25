@@ -124,7 +124,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Console structure that has default data</param>
         public void Load(string RegKey, string Signature_Of_Enable, Console @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading console settings from registry.");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading console settings from registry.");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", Signature_Of_Enable, 0) == 1;
 
@@ -223,7 +223,7 @@ namespace WinPaletter.Theme.Structures
 
             if (Console.Enabled)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving console settings into registry.");
+                Program.Log?.Write(LogEventLevel.Information, $"Saving console settings into registry.");
 
                 string RegAddress = $@"{scopeReg}\Console{(string.IsNullOrEmpty(RegKey) ? string.Empty : $@"\{RegKey}")}";
 

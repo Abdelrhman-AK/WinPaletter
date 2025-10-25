@@ -44,7 +44,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="default">Default AltTab data structure</param>
         public void Load(AltTab @default)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Alt+Tab switcher settings from registry");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Alt+Tab switcher settings from registry");
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\AltTab", string.Empty, @default.Enabled);
             Style = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "AltTabSettings", @default.Style);
@@ -59,7 +59,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="treeView">treeView used as theme log</param>
         public void Apply(TreeView treeView = null)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Alt+Tab switcher settings into registry");
+            Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Alt+Tab switcher settings into registry");
 
             SaveToggleState(treeView);
 

@@ -482,7 +482,7 @@ namespace WinPaletter
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
             }
 
-            if (Program.Settings.AppLog.Reg) Program.Log?.Write(LogEventLevel.Error, ex, $"Registry exception error: {ex}");
+            Program.Log?.WriteReg(LogEventLevel.Error, $"Registry exception error", ex);
         }
 
         /// <summary>
@@ -693,12 +693,12 @@ namespace WinPaletter
             object existingValue = ReadRegRaw(Key_BeforeModification, ValueName, null);
             if (existingValue is not null && CanSkip(existingValue, Value, RegType))
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
+                Program.Log?.WriteRegWrite(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
                 AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
                 return;
             }
 
-            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`");
+            Program.Log?.WriteRegWrite(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`");
 
             // Set the value to the registry
             try
@@ -728,14 +728,14 @@ namespace WinPaletter
             {
                 // A security exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
 
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Security exception: {@PermissionEx.Message}");
+                Program.Log?.WriteRegWrite(LogEventLevel.Error, $"Security exception: {@PermissionEx.Message}");
 
                 try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(treeView, @PermissionEx, Key, ValueName, Value, RegType); }
             }
             catch (UnauthorizedAccessException @UnauthorizedAccessEx)
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Unauthorized access exception: {@UnauthorizedAccessEx.Message}");
+                Program.Log?.WriteRegWrite(LogEventLevel.Error, $"Unauthorized access exception: {@UnauthorizedAccessEx.Message}");
 
                 // An unauthorized access exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
                 try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
@@ -743,7 +743,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Registry write exception error: {ex.Message}");
+                Program.Log?.WriteRegWrite(LogEventLevel.Error, $"Registry write exception error: {ex.Message}");
 
                 // An exception occurred while trying to set the value directly. Try to use the EditReg_CMD function to solve the security access issues.
                 try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
@@ -785,7 +785,7 @@ namespace WinPaletter
             // Process the key to be valid for Command Prompt.
             Key = FormatKey_CMD(Key);
 
-            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` by using REG.EXE instead of native .NET Framework methods.");
+            Program.Log?.WriteRegWrite(LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` by using REG.EXE instead of native .NET Framework methods.");
 
             string _Value;
 
@@ -876,8 +876,8 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Executing command exception error: {ex.Message}");
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Program.Log?.Write(LogEventLevel.Error, $"Registry edit couldn't be done by the two methods; .NET Framework methods and REG.EXE");
+                Program.Log?.WriteRegWrite(LogEventLevel.Error, $"Executing command exception error: {ex.Message}");
+                Program.Log?.WriteRegWrite(LogEventLevel.Error, $"Registry edit couldn't be done by the two methods; .NET Framework methods and REG.EXE");
 
                 AddVerboseException(treeView, ex, Key, ValueName, Value, RegType);
             }
@@ -1120,15 +1120,13 @@ namespace WinPaletter
                     Result = ReadReg($"HKEY_REAL_CURRENT_USER\\{Result.ToString().Replace("#USR:", string.Empty)}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
                 }
 
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead)
-                    Program.Log?.Write(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && Result is null ? DefaultValue : Result)}`");
+                Program.Log?.WriteRegRead(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && Result is null ? DefaultValue : Result)}`");
 
                 return IfNullReturnDefaultValue && Result is null ? DefaultValue : Result;
             }
             catch (Exception ex)
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead)
-                    Program.Log?.Write(LogEventLevel.Error, ex, $"Registry read exception error: {ex.Message}");
+                Program.Log?.WriteRegRead(LogEventLevel.Error, $"Registry exception error", ex);
 
                 Exceptions.ThemeLoad.Add(new Tuple<string, Exception>($"{Key} : {ValueName}", ex));
                 if (RaiseExceptions) Forms.BugReport.ThrowError(ex);
@@ -1220,7 +1218,7 @@ namespace WinPaletter
                     if (subKey is not null)
                     {
                         Result = subKey?.GetValueNames();
-                        if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead) Program.Log?.Write(LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", Result)}`");
+                        Program.Log?.WriteRegRead(LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", Result)}`");
                     }
                     subKey?.Close();
                 }
@@ -1316,7 +1314,7 @@ namespace WinPaletter
                     if (subKey is not null)
                     {
                         Result = subKey?.GetSubKeyNames();
-                        if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead) Program.Log?.Write(LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", Result)}`");
+                        Program.Log?.WriteRegRead(LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", Result)}`");
                     }
                     subKey?.Close();
                 }
@@ -1369,18 +1367,18 @@ namespace WinPaletter
 
             try
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}");
+                Program.Log?.WriteRegDel(LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}");
                 R.DeleteSubKeyTree(Key, true);
                 if (deleteSubKeysAndValuesOnly)
                 {
-                    if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Keeping the key intact and empty without subkeys and values.");
+                    Program.Log?.WriteRegDel(LogEventLevel.Information, $"Keeping the key intact and empty without subkeys and values.");
                     R.CreateSubKey(Key, true);
                 }
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
             catch
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete key `{Key_BeforeModification}` using .NET Framework methods. WinPaletter will use REG.EXE");
+                Program.Log?.WriteRegDel(LogEventLevel.Error, $"Couldn't delete key `{Key_BeforeModification}` using .NET Framework methods. WinPaletter will use REG.EXE");
                 // An exception occurred while trying to delete the key. Try to use the DelKey_AdministratorDeflector function to solve the security access issues.
                 DeleteKeyAsAdministrator(Key);
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
@@ -1447,7 +1445,7 @@ namespace WinPaletter
             {
                 using (RegistryKey subR = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree))
                 {
-                    if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.");
+                    Program.Log?.WriteRegDel(LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.");
                     subR?.DeleteValue(ValueName, true);
                     subR?.Close();
                     AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
@@ -1455,7 +1453,7 @@ namespace WinPaletter
             }
             catch
             {
-                if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Error, $"Couldn't delete value using .NET Framework methods. WinPaletter will use REG.EXE");
+                Program.Log?.WriteRegDel(LogEventLevel.Error, $"Couldn't delete value using .NET Framework methods. WinPaletter will use REG.EXE");
 
                 // An exception occurred while trying to delete the value. Try to use the DelValue_AdministratorDeflector function to solve the security access issues.
                 DeleteValueAsAdministrator(Key, ValueName);
@@ -1626,7 +1624,7 @@ namespace WinPaletter
         /// <param name="ValueName">The name of the registry value to delete. This must not be null or empty.</param>
         public static void DeleteValueAsAdministrator(string Key, string ValueName)
         {
-            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Deleting registry value using REG.EXE: reg {$@"delete ""{FormatKey_CMD(Key)}\{ValueName}"" /f"}");
+            Program.Log?.WriteRegDel(LogEventLevel.Information, $"Deleting registry value using REG.EXE: reg {$@"delete ""{FormatKey_CMD(Key)}\{ValueName}"" /f"}");
 
             // /f = Disable prompt
             Program.SendCommand($"reg {$@"delete ""{FormatKey_CMD(Key)}\{ValueName}"" /f"}");
@@ -1641,7 +1639,7 @@ namespace WinPaletter
         /// <param name="Key">The full path of the registry key to delete. This must be a valid registry key path.</param>
         public static void DeleteKeyAsAdministrator(string Key)
         {
-            if (Program.Settings is not null && Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Program.Log?.Write(LogEventLevel.Information, $"Deleting registry key using REG.EXE: reg {$@"delete ""{FormatKey_CMD(Key)}"" /f"}");
+            Program.Log?.WriteRegDel(LogEventLevel.Information, $"Deleting registry key using REG.EXE: reg {$@"delete ""{FormatKey_CMD(Key)}"" /f"}");
 
             // /f = Disable prompt
             Program.SendCommand($"reg {$@"delete ""{FormatKey_CMD(Key)}"" /f"}");

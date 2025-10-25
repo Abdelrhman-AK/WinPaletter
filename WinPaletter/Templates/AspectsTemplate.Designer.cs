@@ -40,7 +40,6 @@
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.btn_import = new WinPaletter.UI.WP.Button();
             this.btn_palette_generate = new WinPaletter.UI.WP.Button();
-            this.btn_colorsEffects = new WinPaletter.UI.WP.Button();
             this.btn_saveas_MSTheme = new WinPaletter.UI.WP.Button();
             this.btn_CPL = new WinPaletter.UI.WP.Button();
             this.checker = new WinPaletter.UI.WP.Toggle();
@@ -182,7 +181,6 @@
             this.flowLayoutPanel1.Controls.Add(this.pin_button);
             this.flowLayoutPanel1.Controls.Add(this.btn_import);
             this.flowLayoutPanel1.Controls.Add(this.btn_palette_generate);
-            this.flowLayoutPanel1.Controls.Add(this.btn_colorsEffects);
             this.flowLayoutPanel1.Controls.Add(this.btn_saveas_MSTheme);
             this.flowLayoutPanel1.Controls.Add(this.btn_CPL);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(7, 6);
@@ -235,30 +233,12 @@
             this.btn_palette_generate.ImageGlyphEnabled = false;
             this.btn_palette_generate.Location = new System.Drawing.Point(284, 3);
             this.btn_palette_generate.Name = "btn_palette_generate";
-            this.btn_palette_generate.Size = new System.Drawing.Size(235, 34);
+            this.btn_palette_generate.Size = new System.Drawing.Size(200, 34);
             this.btn_palette_generate.TabIndex = 122;
             this.btn_palette_generate.Text = "0";
             this.btn_palette_generate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_palette_generate.UseVisualStyleBackColor = false;
             this.btn_palette_generate.Click += new System.EventHandler(this.btn_palette_generate_Click);
-            // 
-            // btn_colorsEffects
-            // 
-            this.btn_colorsEffects.CustomColor = System.Drawing.Color.Empty;
-            this.btn_colorsEffects.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.btn_colorsEffects.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btn_colorsEffects.ForeColor = System.Drawing.Color.White;
-            this.btn_colorsEffects.Image = ((System.Drawing.Image)(resources.GetObject("btn_colorsEffects.Image")));
-            this.btn_colorsEffects.ImageGlyph = null;
-            this.btn_colorsEffects.ImageGlyphEnabled = false;
-            this.btn_colorsEffects.Location = new System.Drawing.Point(525, 3);
-            this.btn_colorsEffects.Name = "btn_colorsEffects";
-            this.btn_colorsEffects.Size = new System.Drawing.Size(145, 34);
-            this.btn_colorsEffects.TabIndex = 126;
-            this.btn_colorsEffects.Text = "0";
-            this.btn_colorsEffects.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btn_colorsEffects.UseVisualStyleBackColor = false;
-            this.btn_colorsEffects.Click += new System.EventHandler(this.btn_colorsEffects_Click);
             // 
             // btn_saveas_MSTheme
             // 
@@ -269,7 +249,7 @@
             this.btn_saveas_MSTheme.Image = ((System.Drawing.Image)(resources.GetObject("btn_saveas_MSTheme.Image")));
             this.btn_saveas_MSTheme.ImageGlyph = null;
             this.btn_saveas_MSTheme.ImageGlyphEnabled = false;
-            this.btn_saveas_MSTheme.Location = new System.Drawing.Point(676, 3);
+            this.btn_saveas_MSTheme.Location = new System.Drawing.Point(490, 3);
             this.btn_saveas_MSTheme.Name = "btn_saveas_MSTheme";
             this.btn_saveas_MSTheme.Size = new System.Drawing.Size(200, 34);
             this.btn_saveas_MSTheme.TabIndex = 123;
@@ -286,7 +266,7 @@
             this.btn_CPL.Image = ((System.Drawing.Image)(resources.GetObject("btn_CPL.Image")));
             this.btn_CPL.ImageGlyph = null;
             this.btn_CPL.ImageGlyphEnabled = false;
-            this.btn_CPL.Location = new System.Drawing.Point(3, 43);
+            this.btn_CPL.Location = new System.Drawing.Point(696, 3);
             this.btn_CPL.Name = "btn_CPL";
             this.btn_CPL.Size = new System.Drawing.Size(200, 34);
             this.btn_CPL.TabIndex = 125;
@@ -375,6 +355,5 @@
         public Tabs.TitlebarExtender titlebarExtender1;
         internal UI.WP.Button pin_button;
         internal UI.WP.Button btn_CPL;
-        internal UI.WP.Button btn_colorsEffects;
     }
 }

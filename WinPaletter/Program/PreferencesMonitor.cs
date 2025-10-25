@@ -255,7 +255,7 @@ namespace WinPaletter
 
             if (imageFiles.Length > 0 && File.Exists(imageFiles[0]))
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Fetching the first image from the slideshow folder to be used as a preview: {imageFiles[0]}", imageFiles[0]);
+                Program.Log?.Write(LogEventLevel.Information, $"Fetching the first image from the slideshow folder to be used as a preview: {imageFiles[0]}");
 
                 return BitmapMgr.Load(imageFiles[0]);
             }
@@ -286,7 +286,7 @@ namespace WinPaletter
             // Resize the wallpaper according to the scale and preview area siz
             wallpaper = wallpaper.Resize((int)(wallpaper.Width / scaleW), (int)(wallpaper.Height / scaleH));
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
+            Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
 
             // Apply the wallpaper style
             return wallpaperStyle switch
@@ -345,7 +345,7 @@ namespace WinPaletter
                 stopwatch.Stop();
             }
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Wallpaper type changed to {wallpaperType}", wallpaperType);
+            Program.Log?.Write(LogEventLevel.Information, $"Wallpaper type changed to {wallpaperType}");
 
             Wallpaper_Changed();
         }
@@ -432,7 +432,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Program.Log?.Error(ex, $"Failed watcher registration for {fullKey}\\{valueName}");
+                Program.Log?.Write(LogEventLevel.Error, $"Failed watcher registration for {fullKey}\\{valueName}", ex);
             }
         }
 

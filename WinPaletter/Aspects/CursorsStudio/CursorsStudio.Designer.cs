@@ -3076,7 +3076,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.CanOpenColorsEffects = true;
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1090, 722);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.groupBox3);

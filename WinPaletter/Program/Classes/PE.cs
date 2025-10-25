@@ -34,7 +34,7 @@ namespace WinPaletter
                 if (PE is null) throw new ArgumentNullException(nameof(PE));
                 if (iconGroupResourceIdentifier is null) throw new ArgumentNullException(nameof(iconGroupResourceIdentifier));
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Extracting icon group '{iconGroupResourceIdentifier}' from PE file '{PE.FilePath}'.");
+                Program.Log?.Write(LogEventLevel.Information, $"Extracting icon group '{iconGroupResourceIdentifier}' from PE file '{PE.FilePath}'.");
 
                 int structureSize = 14;
                 byte[] iconBytes = [.. PE.GetResource(iconGroupResourceIdentifier).Data.Skip(6)];
@@ -66,7 +66,7 @@ namespace WinPaletter
                     // Reset the stream position before reading the icon data
                     stream.Seek(0, SeekOrigin.Begin);
 
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Successfully extracted {icons.Count} icons from PE file '{PE.FilePath}'.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Successfully extracted {icons.Count} icons from PE file '{PE.FilePath}'.");
 
                     return new Icon(stream);
                 }
@@ -208,7 +208,7 @@ namespace WinPaletter
         /// <returns></returns>
         public static byte[] GetResource(string SourceFile, string ResourceType, int ID, ushort LangID = 1033)
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Getting resource '{ResourceType}' with ID '{ID}' from PE file '{SourceFile}'.");
+            Program.Log?.Write(LogEventLevel.Information, $"Getting resource '{ResourceType}' with ID '{ID}' from PE file '{SourceFile}'.");
             PortableExecutable PE_File = new(SourceFile);
             return PE_File.GetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID))).Data;
         }
@@ -240,7 +240,7 @@ namespace WinPaletter
         {
             if (Path.GetFullPath(SourceFile).ToLower().StartsWith(SysPaths.Windows, StringComparison.OrdinalIgnoreCase))
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Replacing resource '{ResourceType}' with ID '{ID}' in PE file '{SourceFile}'.");
+                Program.Log?.Write(LogEventLevel.Information, $"Replacing resource '{ResourceType}' with ID '{ID}' in PE file '{SourceFile}'.");
 
                 // It is a system PE File that needs rights/permissions modification.
 
@@ -270,7 +270,7 @@ namespace WinPaletter
                                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_PatchingPE, Path.GetFileName(SourceFile)), "pe_patch");
                             PortableExecutable PE_File = new(SourceFile);
                             PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
-                            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
+                            Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
 
                             if (treeView is not null)
                                 ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_RestoringPermissions, Path.GetFileName(SourceFile)), "pe_restore");
@@ -289,7 +289,7 @@ namespace WinPaletter
                     ThemeLog.AddNode(treeView, $"Replacing '{Path.GetFileName(SourceFile)}' resources", "pe_patch");
                 PortableExecutable PE_File = new(SourceFile);
                 PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
+                Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
             }
 
         }
@@ -305,7 +305,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Deleting old PE backup file `{backupFile}`");
+                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old PE backup file `{backupFile}`");
                     File.Delete(backupFile);
                 }
                 catch { } // Ignore deleting backup File if it fails
@@ -321,12 +321,12 @@ namespace WinPaletter
                 File.Move(SourceFile, backupFile);
                 File.Copy(backupFile, SourceFile);
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"A backup to PE file has been created as `{backupFile}`");
+                Program.Log?.Write(LogEventLevel.Information, $"A backup to PE file has been created as `{backupFile}`");
                 return result;
             }
             catch
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't backup PE file `{SourceFile}");
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't backup PE file `{SourceFile}");
                 return false;
             }
         }
@@ -352,7 +352,7 @@ namespace WinPaletter
             accessControl.AddAccessRule(AccessRule);
             File.SetAccessControl(SourceFile, accessControl);
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been backed up to `{BackupFile}`");
+            Program.Log?.Write(LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been backed up to `{BackupFile}`");
 
             return true;
         }
@@ -372,7 +372,7 @@ namespace WinPaletter
             File.SetAccessControl(SourceFile, BackupAccessControl);
             File.Delete(BackupFile);
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been restored from `{BackupFile}`");
+            Program.Log?.Write(LogEventLevel.Information, $"Permissions of PE file `{SourceFile}` have been restored from `{BackupFile}`");
 
             return true;
         }
@@ -383,8 +383,8 @@ namespace WinPaletter
         /// <exception cref="Exception"></exception>
         private static void PreparePrivileges()
         {
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Preparing privileges for PE file modification.");
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, "Enabling SeTakeOwnershipPrivilege, SeSecurityPrivilege, SeRestorePrivilege, and SeBackupPrivilege.");
+            Program.Log?.Write(LogEventLevel.Information, "Preparing privileges for PE file modification.");
+            Program.Log?.Write(LogEventLevel.Information, "Enabling SeTakeOwnershipPrivilege, SeSecurityPrivilege, SeRestorePrivilege, and SeBackupPrivilege.");
 
             if (!ADVAPI.EnablePrivilege("SeTakeOwnershipPrivilege", false)) throw new Exception("Failed to get SeTakeOwnershipPrivilege");
             if (!ADVAPI.EnablePrivilege("SeSecurityPrivilege", false)) throw new Exception("Failed to get SeSecurityPrivilege");

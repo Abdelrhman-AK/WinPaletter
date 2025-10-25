@@ -83,13 +83,13 @@ namespace WinPaletter
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
+                    Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
                     throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
                 }
                 else
                 {
                     result = await response.Content.ReadAsStringAsync();
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
+                    Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
                 }
             }
 
@@ -166,13 +166,13 @@ namespace WinPaletter
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
                 OnDownloadErrorOccurred($"Error downloading file: {ex.Message}", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
                 IsBusy = false;
             }
         }
@@ -250,13 +250,13 @@ namespace WinPaletter
             {
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
                 OnDownloadErrorOccurred($"Error downloading file from byte {startByte} for length of {endByte} bytes: {ex.Message}", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
                 IsBusy = false;
             }
         }
@@ -285,11 +285,11 @@ namespace WinPaletter
                     result = response.Content.Headers.ContentLength.GetValueOrDefault();
                 }
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
             }
             catch (Exception ex)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
                 OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}", ex);
                 result = 0;
             }
@@ -311,7 +311,7 @@ namespace WinPaletter
 
             };
 
-            if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Creating HttpClient with timeout of {Program.Timeout} ms and protocols {handler.SslProtocols}");
+            Program.Log?.Write(LogEventLevel.Information, $"Creating HttpClient with timeout of {Program.Timeout} ms and protocols {handler.SslProtocols}");
 
             return new HttpClient(handler)
             {
@@ -341,13 +341,13 @@ namespace WinPaletter
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
+                    Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
                     throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
                 }
                 else
                 {
                     result = response.Content.ReadAsStringAsync().Result;
-                    if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
+                    Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
                 }
             }
 
@@ -420,13 +420,13 @@ namespace WinPaletter
             {
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}`", ex);
                 OnDownloadErrorOccurred($"Error downloading file: {ex.Message}", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}`");
                 IsBusy = false;
             }
         }
@@ -504,13 +504,13 @@ namespace WinPaletter
             {
                 // Raise the DownloadErrorOccurred event if an error occurs
                 IsBusy = false;
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't download `{url}` as `{destinationPath}` from byte {startByte} for length of {endByte} bytes", ex);
                 OnDownloadErrorOccurred($"Error downloading file: {ex.Message} from byte {startByte} for length of {endByte} bytes", ex);
             }
             finally
             {
                 // Set the IsBusy flag to false when the download is completed
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File from URL `{url}` is saved as `{destinationPath}` from byte {startByte} for length of {endByte} bytes");
                 IsBusy = false;
             }
         }
@@ -542,11 +542,11 @@ namespace WinPaletter
                     result = response.Content.Headers.ContentLength.GetValueOrDefault();
                 }
 
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
+                Program.Log?.Write(LogEventLevel.Information, $"File size from URL `{url}` is `{result}` bytes");
             }
             catch (Exception ex)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Couldn't get file size from `{url}`", ex);
                 OnDownloadErrorOccurred($"Error getting file size from URL: {ex.Message}", ex);
                 result = 0;
             }
@@ -561,7 +561,7 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Download is paused.");
+                Program.Log?.Write(LogEventLevel.Information, $"Download is paused.");
                 cancellationTokenSource?.Cancel();
             }
         }
@@ -573,7 +573,7 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
-                if (Program.Settings.AppLog.Enabled) Program.Log?.Write(LogEventLevel.Information, $"Download is stopped.");
+                Program.Log?.Write(LogEventLevel.Information, $"Download is stopped.");
                 cancellationTokenSource?.Cancel();
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
                 // Additional cleanup if needed
