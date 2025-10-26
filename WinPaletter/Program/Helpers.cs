@@ -228,8 +228,8 @@ namespace WinPaletter
                 ExternalLink_File = string.Empty;
             }
 
-            TM_Original = TM.Clone() as Manager;
-            TM_FirstTime = TM.Clone() as Manager;
+            TM_Original = TM.Clone();
+            TM_FirstTime = TM.Clone();
 
             if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnAppOpen)
             {

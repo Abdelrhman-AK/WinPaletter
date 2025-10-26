@@ -10,7 +10,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows icons
     /// </summary>
-    public class Icons : ICloneable
+    public class Icons : ManagerBase<Icons>
     {
         /// <summary>
         /// List of Control Panel CLSIDs and their icons (used as helpers)
@@ -319,36 +319,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two Icons structures are equal</summary>
-        public static bool operator ==(Icons First, Icons Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Icons structures are not equal</summary>
-        public static bool operator !=(Icons First, Icons Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Icons structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Icons structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Icons structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

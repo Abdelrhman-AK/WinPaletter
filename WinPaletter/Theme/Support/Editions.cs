@@ -27,7 +27,7 @@ namespace WinPaletter.Theme
 
                 else if (WPTH)
                 {
-                    return Editions.OldFormat;
+                    return Editions.Legacy;
                 }
 
                 else
@@ -53,7 +53,7 @@ namespace WinPaletter.Theme
             /// <summary>
             /// Old format, obsolete
             /// </summary>
-            OldFormat,
+            Legacy,
             /// <summary>
             /// Error, File not found or not a WinPaletter theme File
             /// </summary>

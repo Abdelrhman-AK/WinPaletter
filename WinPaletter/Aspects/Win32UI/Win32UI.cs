@@ -151,7 +151,7 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     Theme.Structures.Win32UI win32UI = new();
-                    ApplyToWin32UI(ref win32UI);
+                    ApplyToWin32UI(win32UI);
 
                     try
                     {
@@ -441,10 +441,10 @@ namespace WinPaletter
 
         public void ApplyToTM(Manager TM)
         {
-            ApplyToWin32UI(ref TM.Win32);
+            ApplyToWin32UI(TM.Win32);
         }
 
-        public void ApplyToWin32UI(ref Theme.Structures.Win32UI Win32)
+        public void ApplyToWin32UI(Theme.Structures.Win32UI Win32)
         {
             Win32.Enabled = AspectEnabled;
             Win32.EnableTheming = Toggle1.Checked;
@@ -976,7 +976,7 @@ namespace WinPaletter
                     {
                         if (trackBarX1.Value > 100f)
                         {
-                            float amount = (trackBarX1.Value - 100f) / 100f;
+                            float amount = 1f - ((trackBarX1.Value - 100f) / 100f);
                             retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_dkshadow.DarkDark(), amount);
                             retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(_btn_shadow.DarkDark(), amount);
                             retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_hilight.Dark(), amount);
@@ -984,7 +984,7 @@ namespace WinPaletter
                         }
                         else if (trackBarX1.Value < 100f)
                         {
-                            float amount = 1f - trackBarX1.Value / 100f;
+                            float amount = trackBarX1.Value / 100f;
                             retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_hilight, amount);
                             retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(_btn_light, amount);
                             retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_dkshadow, amount);
@@ -995,7 +995,7 @@ namespace WinPaletter
                     {
                         if (trackBarX1.Value > 100f)
                         {
-                            float amount = (trackBarX1.Value - 100f) / 100f;
+                            float amount = 1f - ((trackBarX1.Value - 100f) / 100f);
                             retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_shadow, amount);
                             retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(retroDesktopColors1.ButtonFace, amount);
                             retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_shadow, amount);
@@ -1003,7 +1003,7 @@ namespace WinPaletter
                         }
                         else if (trackBarX1.Value < 100f)
                         {
-                            float amount = 1f - trackBarX1.Value / 100f;
+                            float amount = trackBarX1.Value / 100f;
                             retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(retroDesktopColors1.ButtonFace, amount);
                             retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(retroDesktopColors1.ButtonFace, amount);
                             retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(retroDesktopColors1.ButtonFace, amount);

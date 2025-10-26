@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// LogonUI structure for Windows 7
     /// </summary>
-    public class LogonUI7 : ICloneable
+    public class LogonUI7 : ManagerBase<LogonUI7>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>
         /// Source of LogonUI background image
@@ -27,31 +28,31 @@ namespace WinPaletter.Theme.Structures
         /// SolidColor
         /// </code>
         /// </summary>
-        public Sources Mode = Sources.Default;
+        public Sources Mode { get; set; } = Sources.Default;
 
         /// <summary>LogonUI background image path. Used if 'Source' is 'CustomImage'</summary>
-        public string ImagePath = @"C:\Windows\Web\Wallpaper\Windows\img0.jpg";
+        public string ImagePath { get; set; } = @"C:\Windows\Web\Wallpaper\Windows\img0.jpg";
 
         /// <summary>LogonUI background color. Used if 'Source' is 'SolidColor'</summary>
-        public Color Color = Color.Black;
+        public Color Color { get; set; } = Color.Black;
 
         /// <summary>LogonUI background blur enabled or not</summary>
-        public bool Blur = false;
+        public bool Blur { get; set; } = false;
 
         /// <summary>LogonUI background blur intensity</summary>
-        public int Blur_Intensity = 0;
+        public int Blur_Intensity { get; set; } = 0;
 
         /// <summary>LogonUI background grayscale effect enabled or not</summary>
-        public bool Grayscale = false;
+        public bool Grayscale { get; set; } = false;
 
         /// <summary>LogonUI background noise effect enabled or not</summary>
-        public bool Noise = false;
+        public bool Noise { get; set; } = false;
 
         /// <summary>LogonUI background noise type. It can be acrylic noise or Aero glass reflection</summary>
-        public BitmapExtensions.NoiseMode Noise_Mode = BitmapExtensions.NoiseMode.Acrylic;
+        public BitmapExtensions.NoiseMode Noise_Mode { get; set; } = BitmapExtensions.NoiseMode.Acrylic;
 
         /// <summary>LogonUI background noise intensity</summary>
-        public int Noise_Intensity = 0;
+        public int Noise_Intensity { get; set; } = 0;
 
         /// <summary>
         /// Enumeration for LogonUI background sources
@@ -198,7 +199,6 @@ namespace WinPaletter.Theme.Structures
 
                             break;
                         }
-
                 }
 
                 if (ReportProgress)
@@ -298,38 +298,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\7", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two LogonUI7 structures are equal</summary>
-        public static bool operator ==(LogonUI7 First, LogonUI7 Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two LogonUI7 structures are not equal</summary>
-        public static bool operator !=(LogonUI7 First, LogonUI7 Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones LogonUI7 structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two LogonUI7 structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>
-        /// Get hash code of LogonUI7 structure
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

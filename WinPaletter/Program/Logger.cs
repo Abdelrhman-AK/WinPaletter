@@ -2,6 +2,7 @@
 using Serilog.Events;
 using Serilog.Formatting.Json;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 
@@ -46,18 +47,45 @@ namespace WinPaletter
             }
         }
 
-        private void UpdateStatusLabel(string message)
+        void UpdateStatusColor(LogEventLevel level)
+        {
+            if (Forms.MainForm == null || Forms.MainForm.IsDisposed) return;
+
+            Color color = level switch
+            {
+                LogEventLevel.Warning => Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover,
+                LogEventLevel.Error => Program.Style.Schemes.Secondary.Colors.Back_Checked_Hover,
+                LogEventLevel.Fatal => Program.Style.Schemes.Secondary.Colors.Back_Checked_Hover,
+                _ => Program.Style.Schemes.Main.Colors.Back(),
+            };
+
+            if (Program.Style.Animations)
+            {
+                FluentTransitions.Transition.With(Forms.MainForm.Status_lbl, nameof(Forms.MainForm.Status_lbl.BackColor), color).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                Forms.MainForm.Status_lbl.BackColor = color;
+            }
+        }
+
+        private void UpdateStatusLabel(LogEventLevel level, string message)
         {
             if (Forms.MainForm == null || Forms.MainForm.IsDisposed) return;
 
             // Update UI text (marshal to UI thread if needed)
             if (Forms.MainForm.InvokeRequired)
             {
-                Forms.MainForm.Invoke((Action)(() => Forms.MainForm.Status_lbl.Text = message));
+                Forms.MainForm.Invoke(() =>
+                {
+                    Forms.MainForm.Status_lbl.Text = message;
+                    UpdateStatusColor(level);
+                });
             }
             else
             {
                 Forms.MainForm.Status_lbl.Text = message;
+                UpdateStatusColor(level);
             }
 
             // Ensure timer exists and reset its due time to ResetMs
@@ -89,12 +117,14 @@ namespace WinPaletter
                     {
                         if (Program.Style.Animations) FluentTransitions.Transition.With(Forms.MainForm.Status_lbl, nameof(Forms.MainForm.Status_lbl.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                         else Forms.MainForm.Status_lbl.Text = string.Empty;
+                        UpdateStatusColor(default);
                     });
                 }
                 else
                 {
                     if (Program.Style.Animations) FluentTransitions.Transition.With(Forms.MainForm.Status_lbl, nameof(Forms.MainForm.Status_lbl.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                     else Forms.MainForm.Status_lbl.Text = string.Empty;
+                    UpdateStatusColor(default);
                 }
             }
             catch (ObjectDisposedException)
@@ -122,100 +152,49 @@ namespace WinPaletter
             }
         }
 
+        public void Write(LogEventLevel level, string messageTemplate, System.Exception ex = null)
+        {
+            if (!_initialized) Initialize();
+
+            if (Program.Settings.AppLog.Enabled)
+            {
+                if (ex is null)
+                {
+                    UpdateStatusLabel(level, $"[{level}] {messageTemplate}");
+                    _log?.Write(level, messageTemplate);
+                }
+                else
+                {
+                    UpdateStatusLabel(level, $"[{level}] {messageTemplate}; {ex.Message}");
+                    _log?.Write(level, $"{messageTemplate}; {ex.Message}", ex);
+                }
+            }
+        }
+
         public void Debug(string messageTemplate)
         {
-            if (!_initialized) Initialize();
-            if (Program.Settings.AppLog.Enabled) _log?.Debug(messageTemplate);
-
-            UpdateStatusLabel($"[{LogEventLevel.Debug}] {messageTemplate}");
+            Write(LogEventLevel.Debug, messageTemplate);
         }
 
-        public void Write(LogEventLevel level, string messageTemplate)
+        public void WriteReg(LogEventLevel level, string messageTemplate, System.Exception ex = null)
         {
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled)
-            {
-                _log?.Write(level, messageTemplate);
-                UpdateStatusLabel($"[{level}] {messageTemplate}");
-            }
+            if (Program.Settings.AppLog.Reg) Write(level, messageTemplate, ex);
         }
 
-        public void Write(LogEventLevel level, string messageTemplate, System.Exception ex)
-        {
-            if (!_initialized) Initialize();
 
-            if (Program.Settings.AppLog.Enabled)
-            {
-                _log?.Write(level, $"{messageTemplate}; {ex.Message}", ex);
-                UpdateStatusLabel($"[{level}] {messageTemplate}; {ex.Message}");
-            }
+        public void WriteRegRead(LogEventLevel level, string messageTemplate, System.Exception ex = null)
+        {
+            if (Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead) Write(level, messageTemplate, ex);
         }
 
-        public void WriteReg(LogEventLevel level, string messageTemplate)
+        public void WriteRegWrite(LogEventLevel level, string messageTemplate, System.Exception ex = null)
         {
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg)
-            {
-                _log?.Write(level, messageTemplate);
-                UpdateStatusLabel($"[{level}] {messageTemplate}");
-            }
+            if (Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Write(level, messageTemplate, ex);
         }
 
-        public void WriteReg(LogEventLevel level, string messageTemplate, System.Exception ex)
+        public void WriteRegDel(LogEventLevel level, string messageTemplate, System.Exception ex = null)
         {
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg)
-            {
-                _log?.Write(level, $"{messageTemplate}; {ex.Message}", ex);
-                UpdateStatusLabel($"[{level}] {messageTemplate}; {ex.Message}");
-            }
-        }
-
-        public void WriteRegRead(LogEventLevel level, string messageTemplate)
-        {
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead)
-            {
-                _log?.Write(level, messageTemplate);
-                UpdateStatusLabel($"[{level}] {messageTemplate}");
-            }
-        }
-
-        public void WriteRegRead(LogEventLevel level, string messageTemplate, System.Exception ex)
-        {
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead)
-            {
-                _log?.Write(level, $"{messageTemplate}; {ex.Message}", ex);
-                UpdateStatusLabel($"[{level}] {messageTemplate}; {ex.Message}");
-            }
-        }
-
-        public void WriteRegWrite(LogEventLevel level, string messageTemplate)
-        {
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite)
-            {
-                _log?.Write(level, messageTemplate);
-                UpdateStatusLabel($"[{level}] {messageTemplate}");
-            }
-        }
-
-        public void WriteRegDel(LogEventLevel level, string messageTemplate)
-        {
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled && Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete)
-            {
-                _log?.Write(level, messageTemplate);
-                UpdateStatusLabel($"[{level}] {messageTemplate}");
-            }
+            if (Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Write(level, messageTemplate, ex);
         }
     }
 }

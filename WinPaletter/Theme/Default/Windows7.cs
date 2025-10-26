@@ -13,7 +13,7 @@ namespace WinPaletter.Theme
         {
             Manager TM = new(Manager.Source.Empty);
 
-            ref Info Info = ref TM.Info;
+            Info Info = TM.Info;
             Info.ThemeName = "Default Windows 7";
             Info.Description = "Initial, like the default look after a fresh Windows 7 setup—clean, untouched, and ready for customization.";
             Info.ThemeVersion = "1.0.0.0";
@@ -21,7 +21,7 @@ namespace WinPaletter.Theme
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
 
-            ref Windows7 Win7 = ref TM.Windows7;
+            Windows7 Win7 = TM.Windows7;
             Win7.Enabled = true;
             Win7.ColorizationColor = Color.FromArgb(116, 184, 252);
             Win7.ColorizationAfterglow = Color.FromArgb(116, 184, 252);
@@ -30,7 +30,7 @@ namespace WinPaletter.Theme
             Win7.ColorizationBlurBalance = 49;
             Win7.ColorizationGlassReflectionIntensity = 0;
 
-            ref Console CMD = ref TM.CommandPrompt;
+            Console CMD = TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable05 = Color.FromArgb(136, 23, 152);
             CMD.ColorTable06 = Color.FromArgb(193, 156, 0);
@@ -43,7 +43,7 @@ namespace WinPaletter.Theme
             CMD.FontRaster = true;
             CMD.W10_1909_ForceV2 = false;
 
-            ref Console PS86 = ref TM.PowerShellx86;
+            Console PS86 = TM.PowerShellx86;
             PS86.Enabled = true;
             PS86.ColorTable05 = Color.FromArgb(1, 36, 86);
             PS86.ColorTable06 = Color.FromArgb(238, 237, 240);
@@ -56,7 +56,7 @@ namespace WinPaletter.Theme
             PS86.FontRaster = true;
             PS86.W10_1909_ForceV2 = false;
 
-            ref Console PS64 = ref TM.PowerShellx64;
+            Console PS64 = TM.PowerShellx64;
             PS64.Enabled = true;
             PS64.ColorTable05 = Color.FromArgb(1, 36, 86);
             PS64.ColorTable06 = Color.FromArgb(238, 237, 240);
@@ -69,7 +69,7 @@ namespace WinPaletter.Theme
             PS64.FontRaster = true;
             PS64.W10_1909_ForceV2 = false;
 
-            ref MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+            MetricsFonts MetricsFonts = TM.MetricsFonts;
             MetricsFonts.Enabled = true;
             MetricsFonts.BorderWidth = 1;
             MetricsFonts.CaptionHeight = 21;
@@ -86,7 +86,7 @@ namespace WinPaletter.Theme
             MetricsFonts.DesktopIconSize = 48;
             MetricsFonts.ShellIconSize = 32;
 
-            ref WinEffects WinEffects = ref TM.WindowsEffects;
+            WinEffects WinEffects = TM.WindowsEffects;
             WinEffects.Enabled = true;
             WinEffects.ShakeToMinimize = true;
             WinEffects.BalloonNotifications = true;
@@ -99,7 +99,7 @@ namespace WinPaletter.Theme
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
             TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
-            ref Icons Icons = ref TM.Icons;
+            Icons Icons = TM.Icons;
             Icons.Enabled = true;
 
             TM.Cursors.Enabled = true;
@@ -138,7 +138,7 @@ namespace WinPaletter.Theme
             TM.Cursors.Cursor_Busy.LoadingCircleBack2 = Color.FromArgb(112, 255, 250);
             TM.Cursors.Cursor_Busy.LoadingCircleHot_AnimationSpeed = 20;
 
-            ref Sounds Sounds = ref TM.Sounds;
+            Sounds Sounds = TM.Sounds;
             Sounds.Enabled = true;
             Sounds.Snd_Imageres_SystemStart = "Default";
             Sounds.Snd_Win_Default = $@"{SysPaths.Windows}\media\Windows Ding.wav";
@@ -224,12 +224,12 @@ namespace WinPaletter.Theme
             Sounds.Snd_SpeechRec_MisrecoSound = $@"{SysPaths.Windows}\media\Speech Misrecognition.wav";
             Sounds.Snd_SpeechRec_PanelSound = $@"{SysPaths.Windows}\media\Speech Disambiguation.wav";
 
-            ref Wallpaper Wallpaper = ref TM.Wallpaper;
+            Wallpaper Wallpaper = TM.Wallpaper;
             Wallpaper.Enabled = true;
 
             TM.AppTheme.Enabled = true;
 
-            ref Accessibility Accessibility = ref TM.Accessibility;
+            Accessibility Accessibility = TM.Accessibility;
             Accessibility.Enabled = true;
 
             return TM;

@@ -8,22 +8,22 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows 8 appearance
     /// </summary>
-    public class Windows8 : ICloneable
+    public class Windows8 : ManagerBase<Windows8>
     {
         /// <summary> Controls if Windows 8 colors editing is enabled or not </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>Main Windows color</summary>
-        public Color ColorizationColor = Color.FromArgb(76, 159, 253);
+        public Color ColorizationColor { get; set; } = Color.FromArgb(76, 159, 253);
 
         /// <summary>Control amount of main Windows color</summary>
-        public int ColorizationColorBalance = 78;
+        public int ColorizationColorBalance { get; set; } = 78;
 
         /// <summary>Start screen background ID.</summary>
-        public int StartBackground = 0;
+        public int StartBackground { get; set; } = 0;
 
         /// <summary>Color scheme ID.</summary>
-        public int ColorSet_Version3 = 8;
+        public int ColorSet_Version3 { get; set; } = 8;
 
         /// <summary>
         /// Represents the visual styles configuration for the application.
@@ -31,7 +31,7 @@ namespace WinPaletter.Theme.Structures
         /// <remarks>This field provides access to the visual styles settings, which can be used to
         /// customize the appearance of user interface. It is initialized with default
         /// values.</remarks>
-        public VisualStyles VisualStyles = new();
+        public VisualStyles VisualStyles { get; set; } = new();
 
         /// <summary>
         /// Creates new Windows8 data structure
@@ -97,36 +97,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two Windows8 structures are equal</summary>
-        public static bool operator ==(Windows8 First, Windows8 Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Windows8 structures are not equal</summary>
-        public static bool operator !=(Windows8 First, Windows8 Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Windows8 structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Windows8 structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Windows8 structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

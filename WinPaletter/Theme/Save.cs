@@ -740,7 +740,7 @@ namespace WinPaletter.Theme
                     if (Info.ExportResThemePack)
                     {
                         // Always clone theme manager as PackThemeResources will modify the current theme manager (Some paths will be converted into environment variables)
-                        using (Manager TMx = Clone() as Manager)
+                        using (Manager TMx = Clone())
                         {
                             PackThemeResources(TMx, file, $"{new FileInfo(file).DirectoryName}\\{Path.GetFileNameWithoutExtension(file)}.wptp");
                         }
@@ -3293,14 +3293,14 @@ namespace WinPaletter.Theme
                 // Add Visual Styles files of Windows 12
                 if (TM.Windows12.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.Windows12.VisualStyles.ThemeFile;
+                    string targetProperty = TM.Windows12.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W12_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 12 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.Windows12.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
@@ -3318,14 +3318,14 @@ namespace WinPaletter.Theme
                 // Add Visual Styles files of Windows 11
                 if (TM.Windows11.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.Windows11.VisualStyles.ThemeFile;
+                    string targetProperty = TM.Windows11.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W11_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 11 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.Windows11.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
@@ -3343,14 +3343,14 @@ namespace WinPaletter.Theme
                 // Add Visual Styles files of Windows 10
                 if (TM.Windows10.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.Windows10.VisualStyles.ThemeFile;
+                    string targetProperty = TM.Windows10.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W10_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 10 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.Windows10.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
@@ -3365,17 +3365,17 @@ namespace WinPaletter.Theme
                     }
                 }
 
-                // Add Visual Styles files of Windows 8.1
+                // Add Visual Styles files of Windows 81
                 if (TM.Windows81.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.Windows81.VisualStyles.ThemeFile;
+                    string targetProperty = TM.Windows81.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W81_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 8.1 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.Windows81.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
@@ -3393,14 +3393,14 @@ namespace WinPaletter.Theme
                 // Add Visual Styles files of Windows 8
                 if (TM.Windows8.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.Windows8.VisualStyles.ThemeFile;
+                    string targetProperty = TM.Windows8.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W8_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 8 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.Windows8.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
@@ -3418,14 +3418,14 @@ namespace WinPaletter.Theme
                 // Add Visual Styles files of Windows 7
                 if (TM.Windows7.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.Windows7.VisualStyles.ThemeFile;
+                    string targetProperty = TM.Windows7.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}W7_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows 7 Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.Windows7.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
@@ -3443,14 +3443,14 @@ namespace WinPaletter.Theme
                 // Add Visual Styles files of Windows Vista
                 if (TM.WindowsVista.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.WindowsVista.VisualStyles.ThemeFile;
+                    string targetProperty = TM.WindowsVista.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WVista_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows Vista Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.WindowsVista.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;
@@ -3468,14 +3468,14 @@ namespace WinPaletter.Theme
                 // Add Visual Styles files of Windows XP
                 if (TM.WindowsXP.VisualStyles.Enabled)
                 {
-                    ref string targetProperty = ref TM.WindowsXP.VisualStyles.ThemeFile;
+                    string targetProperty = TM.WindowsXP.VisualStyles.ThemeFile;
                     if (!string.IsNullOrWhiteSpace(targetProperty) && File.Exists(targetProperty) && !targetProperty.StartsWith($@"{SysPaths.Windows}\Resources\Themes\Aero", StringComparison.OrdinalIgnoreCase))
                     {
                         ZipEntry = $@"{cache}WXP_VS\{Path.GetFileName(targetProperty)}";
                         if (File.Exists(targetProperty))
                         {
                             Program.Log?.Write(LogEventLevel.Information, $"Modifying entry of Windows XP Visual Style file inside the theme resources pack to be `{ZipEntry}`. The previous value was `{targetProperty}`.");
-                            targetProperty = ZipEntry;
+                            TM.WindowsXP.VisualStyles.ThemeFile = ZipEntry;
                         }
 
                         string DirName = new FileInfo(targetProperty).Directory.FullName;

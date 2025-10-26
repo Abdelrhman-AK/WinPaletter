@@ -18,6 +18,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Preview3D()
         {
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             DoubleBuffered = true;
         }
 
@@ -41,7 +42,7 @@ namespace WinPaletter.UI.Retro
                 if (base.BackColor != value)
                 {
                     base.BackColor = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -57,7 +58,7 @@ namespace WinPaletter.UI.Retro
                 if (windowFrame != value)
                 {
                     windowFrame = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -73,7 +74,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonShadow != value)
                 {
                     buttonShadow = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -89,7 +90,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonDkShadow != value)
                 {
                     buttonDkShadow = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -105,7 +106,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonHilight != value)
                 {
                     buttonHilight = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -121,7 +122,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonLight != value)
                 {
                     buttonLight = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -137,7 +138,7 @@ namespace WinPaletter.UI.Retro
                 if (lineSize != value)
                 {
                     lineSize = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -150,8 +151,8 @@ namespace WinPaletter.UI.Retro
         /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            Bitmap B = new(Width, Height);
-            Graphics G = Graphics.FromImage(B);
+            Graphics G = e.Graphics;
+
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
@@ -198,11 +199,6 @@ namespace WinPaletter.UI.Retro
             G.FillRectangle(new SolidBrush(BackColor), Filling);
 
             G.FillRectangle(new SolidBrush(ForeColor), TextRect);
-
-            e.Graphics.DrawImage(B, new Point(0, 0));
-            G.Dispose();
-            B.Dispose();
         }
-
     }
 }

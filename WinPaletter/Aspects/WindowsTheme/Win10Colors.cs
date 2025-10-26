@@ -125,8 +125,12 @@ namespace WinPaletter
             // Copycat from Windows 11 colors
             using (Manager TMx = new(Manager.Source.Empty))
             {
-                TMx.Windows10 = (Theme.Structures.Windows10x)Program.TM.Windows11.Clone();
-                LoadFromTM((Manager)TMx.Clone());
+                TMx.Windows10 = Program.TM.Windows11.Clone();
+
+                using (Theme.Manager TMx0 = TMx.Clone())
+                {
+                    LoadFromTM(TMx0);
+                }
 
                 Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
             }
@@ -137,8 +141,12 @@ namespace WinPaletter
             // Copycat from Windows 12 colors
             using (Manager TMx = new(Manager.Source.Empty))
             {
-                TMx.Windows10 = (Theme.Structures.Windows10x)Program.TM.Windows12.Clone();
-                LoadFromTM((Manager)TMx.Clone());
+                TMx.Windows10 = Program.TM.Windows12.Clone();
+
+                using (Theme.Manager TMx0 = TMx.Clone())
+                {
+                    LoadFromTM(TMx0);
+                }
 
                 Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
             }

@@ -139,7 +139,7 @@ namespace WinPaletter
                 if (MsgBox(Program.Lang.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.TM = new(Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text);
-                    Program.TM_Original = Program.TM.Clone() as Manager;
+                    Program.TM_Original = Program.TM.Clone();
 
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
                     Forms.Home.LoadFromTM(Program.TM);
@@ -294,7 +294,7 @@ namespace WinPaletter
                 if (MsgBox(Program.Lang.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.TM = new(Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, false, true);
-                    Program.TM_Original = Program.TM.Clone() as Manager;
+                    Program.TM_Original = Program.TM.Clone();
                     Forms.ThemeLog.Apply_Theme();
 
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;

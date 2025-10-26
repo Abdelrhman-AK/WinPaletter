@@ -18,123 +18,105 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows metrics and fonts
     /// </summary>
-    public class MetricsFonts : ICloneable
+    public class MetricsFonts : ManagerBase<MetricsFonts>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Window border width</summary>
-        public int BorderWidth = 1;
+        public int BorderWidth { get; set; } = 1;
 
         /// <summary>Titlebar (caption) height</summary>
-        public int CaptionHeight = 22;
+        public int CaptionHeight { get; set; } = 22;
 
         /// <summary>Buttons in classic titlebar (caption) width</summary>
-        public int CaptionWidth = 22;
+        public int CaptionWidth { get; set; } = 22;
 
         /// <summary>Horizontal spacing between desktop icons</summary>
-        public int IconSpacing = 75;
+        public int IconSpacing { get; set; } = 75;
 
         /// <summary>Vertical spacing between desktop icons</summary>
-        public int IconVerticalSpacing = 75;
+        public int IconVerticalSpacing { get; set; } = 75;
 
         /// <summary>Context menu height (if it is a horizontal menu)</summary>
-        public int MenuHeight = 19;
+        public int MenuHeight { get; set; } = 19;
 
         /// <summary>Context menu width (if it is a vertical menu)</summary>
-        public int MenuWidth = 19;
+        public int MenuWidth { get; set; } = 19;
 
         /// <summary>Padding width of a Window border</summary>
-        public int PaddedBorderWidth = 4;
+        public int PaddedBorderWidth { get; set; } = 4;
 
         /// <summary>Scroll bar height (if it is a horizontal scroll bar)</summary>
-        public int ScrollHeight = 19;
+        public int ScrollHeight { get; set; } = 19;
 
         /// <summary>Scroll bar width (if it is a vertical scroll bar)</summary>
-        public int ScrollWidth = 19;
+        public int ScrollWidth { get; set; } = 19;
 
         /// <summary>Titlebar (caption) height of a tool box window</summary>
-        public int SmCaptionHeight = 22;
+        public int SmCaptionHeight { get; set; } = 22;
 
         /// <summary>Width of Buttons in classic titlebar (caption) of a tool box window</summary>
-        public int SmCaptionWidth = 22;
+        public int SmCaptionWidth { get; set; } = 22;
 
         /// <summary>Size of desktop icons <c>(size x size)</c></summary>
-        public int DesktopIconSize = 48;
+        public int DesktopIconSize { get; set; } = 48;
 
         /// <summary>
         /// Size of shell icons (used in Windows XP)
         /// <br>Default: <b>32</b></br>
         /// </summary>
-        public int ShellIconSize = 32;
+        public int ShellIconSize { get; set; } = 32;
 
         /// <summary>
         /// Size of small icons (used in Windows XP)
         /// <br>Default: <b>16</b></br>
         /// </summary>
-        public int ShellSmallIconSize = 16;
+        public int ShellSmallIconSize { get; set; } = 16;
 
         /// <summary>Make fonts pixelated like old versions of Windows (not ClearType)</summary>
-        public bool Fonts_SingleBitPP = false;
+        public bool Fonts_SingleBitPP { get; set; } = false;
 
         /// <summary>Titlebar (caption) font</summary>
-        public Font CaptionFont = new("Segoe UI", 9f, FontStyle.Regular);
+        public Font CaptionFont { get; set; } = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Icons font</summary>
-        public Font IconFont = new("Segoe UI", 9f, FontStyle.Regular);
+        public Font IconFont { get; set; } = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>contextMenu font</summary>
-        public Font MenuFont = new("Segoe UI", 9f, FontStyle.Regular);
+        public Font MenuFont { get; set; } = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Message box font</summary>
-        public Font MessageFont = new("Segoe UI", 9f, FontStyle.Regular);
+        public Font MessageFont { get; set; } = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Titlebar (caption) font of a tool box window</summary>
-        public Font SmCaptionFont = new("Segoe UI", 9f, FontStyle.Regular);
+        public Font SmCaptionFont { get; set; } = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>Status bar (in the lower part of a window) font</summary>
-        public Font StatusFont = new("Segoe UI", 9f, FontStyle.Regular);
+        public Font StatusFont { get; set; } = new("Segoe UI", 9f, FontStyle.Regular);
 
         /// <summary>
         /// Font name that should substitutes MSShellDlg
         /// <br>Default value: <b>Microsoft Sans Serif</b></br>
         /// </summary>
-        public string FontSubstitute_MSShellDlg = "Microsoft Sans Serif";
+        public string FontSubstitute_MSShellDlg { get; set; } = "Microsoft Sans Serif";
 
         /// <summary>
         /// Font name that should substitutes MSShellDlg2
         /// <br>Default value: <b>Tahoma</b></br>
         /// </summary>
-        public string FontSubstitute_MSShellDlg2 = "Tahoma";
+        public string FontSubstitute_MSShellDlg2 { get; set; } = "Tahoma";
 
         /// <summary>
         /// Font name that should substitutes Segoe UI
         /// <br><b>Has no default value, it is empty</b></br>
         /// </summary>
-        public string FontSubstitute_SegoeUI = string.Empty;
+        public string FontSubstitute_SegoeUI { get; set; } = string.Empty;
 
         /// <summary>
         /// Create a new MetricsFonts structure with default values
         /// </summary>
         public MetricsFonts() { }
-
-        /// <summary>Operator to check if two MetricsFonts structures are equal</summary>
-        public static bool operator ==(MetricsFonts First, MetricsFonts Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two MetricsFonts structures are not equal</summary>
-        public static bool operator !=(MetricsFonts First, MetricsFonts Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones MetricsFonts structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
 
         /// <summary>
         /// Overwrite current metrics values by values inside a visual styles File opened by Devcorp advanced UxTheme wrapper
@@ -338,7 +320,7 @@ namespace WinPaletter.Theme.Structures
 
                     SystemParametersInfo(treeView, SPI.SPI_SETFONTSMOOTHING, !Fonts_SingleBitPP, default, SPIF.SPIF_UPDATEINIFILE);
 
-                    MetricsFonts MF = (MetricsFonts)Clone();
+                    MetricsFonts MF = Clone();
 
                     // Apply Metrics/Fonts in a new thread to avoid UI freeze when applying changes
                     await Task.Run(() =>
@@ -480,12 +462,6 @@ namespace WinPaletter.Theme.Structures
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Metrics", string.Empty, Enabled);
         }
 
-        /// <summary>Checks if two MetricsFonts structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
         /// <summary>
         /// Retrun MetricsFonts structure into a string in format of Microsoft theme File (*.theme)
         /// </summary>
@@ -605,12 +581,6 @@ namespace WinPaletter.Theme.Structures
             s.AppendLine("Transparency=0");
 
             return s.ToString();
-        }
-
-        /// <summary>Get hash code of MetricsFonts structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

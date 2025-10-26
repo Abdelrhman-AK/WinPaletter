@@ -8,19 +8,19 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows screen saver
     /// </summary>
-    public class ScreenSaver : ICloneable
+    public class ScreenSaver : ManagerBase<MetricsFonts>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Lock Windows after closure of screen saver</summary>
-        public bool IsSecure = false;
+        public bool IsSecure { get; set; } = false;
 
         /// <summary>Inactivity (idle) time after which the screen saver will start</summary>
-        public int TimeOut = 60;
+        public int TimeOut { get; set; } = 60;
 
         /// <summary>Screen saver File</summary>
-        public string File = string.Empty;
+        public string File { get; set; } = string.Empty;
 
         /// <summary>
         /// Creates new ScreenSaver structure with default values
@@ -63,36 +63,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "ScreenSaveActive", Enabled ? 1 : 0, RegistryValueKind.String);
-        }
-
-        /// <summary>Operator to check if two ScreenSaver structures are equal</summary>
-        public static bool operator ==(ScreenSaver First, ScreenSaver Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two ScreenSaver structures are not equal</summary>
-        public static bool operator !=(ScreenSaver First, ScreenSaver Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones ScreenSaver structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two ScreenSaver structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of ScreenSaver structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

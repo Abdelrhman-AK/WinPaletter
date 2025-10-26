@@ -167,8 +167,8 @@ namespace WinPaletter
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
-                Program.TM = TM.Clone() as Manager;
-                Program.TM_Original = TM.Clone() as Manager;
+                Program.TM = TM.Clone();
+                Program.TM_Original = TM.Clone();
 
                 Cursor = Cursors.Default;
 

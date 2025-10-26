@@ -12,25 +12,25 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows 8.1 appearance
     /// </summary>
-    public class Windows81 : ICloneable
+    public class Windows81 : ManagerBase<Windows81>
     {
         /// <summary> Controls if Windows 8.1 colors editing is enabled or not </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>Start screen background ID. It can be any number from 1 to 20.</summary>
         public int Start;
 
         /// <summary>Main Windows color</summary>
-        public Color ColorizationColor = Color.FromArgb(246, 195, 74);
+        public Color ColorizationColor { get; set; } = Color.FromArgb(246, 195, 74);
 
         /// <summary>Control amount of main Windows color</summary>
-        public int ColorizationColorBalance = 78;
+        public int ColorizationColorBalance { get; set; } = 78;
 
         /// <summary>Start screen background color</summary>
-        public Color StartColor = Color.FromArgb(30, 0, 84);
+        public Color StartColor { get; set; } = Color.FromArgb(30, 0, 84);
 
         /// <summary>Accent color for start screen and UWP apps</summary>
-        public Color AccentColor = Color.FromArgb(72, 29, 178);
+        public Color AccentColor { get; set; } = Color.FromArgb(72, 29, 178);
 
         /// <summary>
         /// Represents the visual styles configuration for the application.
@@ -38,13 +38,13 @@ namespace WinPaletter.Theme.Structures
         /// <remarks>This field provides access to the visual styles settings, which can be used to
         /// customize the appearance of user interface. It is initialized with default
         /// values.</remarks>
-        public VisualStyles VisualStyles = new();
+        public VisualStyles VisualStyles { get; set; } = new();
 
         /// <summary>Start screen background color (secondary)</summary>
-        public Color PersonalColors_Background = Color.FromArgb(30, 0, 84);
+        public Color PersonalColors_Background { get; set; } = Color.FromArgb(30, 0, 84);
 
         /// <summary>Accent color for start screen and UWP apps (secondary)</summary>
-        public Color PersonalColors_Accent = Color.FromArgb(72, 29, 178);
+        public Color PersonalColors_Accent { get; set; } = Color.FromArgb(72, 29, 178);
 
         /// <summary>
         /// Creates new Windows81 data structure
@@ -126,36 +126,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows8.1", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two Windows81 structures are equal</summary>
-        public static bool operator ==(Windows81 First, Windows81 Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Windows81 structures are not equal</summary>
-        public static bool operator !=(Windows81 First, Windows81 Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Windows81 structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Windows81 structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Windows81 structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

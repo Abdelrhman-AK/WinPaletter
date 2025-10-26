@@ -7,10 +7,10 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows XP appearance
     /// </summary>
-    public class WindowsXP : ICloneable
+    public class WindowsXP : ManagerBase<WindowsXP>
     {
         /// <summary> Controls if Windows XP themes editing is enabled or not </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>
         /// Represents the visual styles configuration for the application.
@@ -18,7 +18,7 @@ namespace WinPaletter.Theme.Structures
         /// <remarks>This field provides access to the visual styles settings, which can be used to
         /// customize the appearance of user interface. It is initialized with default
         /// values.</remarks>
-        public VisualStyles VisualStyles = new();
+        public VisualStyles VisualStyles { get; set; } = new();
 
         /// <summary>
         /// Creates WindowsXP data structure with default values
@@ -61,36 +61,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsXP", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two WindowsXP structures are equal</summary>
-        public static bool operator ==(WindowsXP First, WindowsXP Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two WindowsXP structures are not equal</summary>
-        public static bool operator !=(WindowsXP First, WindowsXP Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones WindowsXP structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two WindowsXP structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of WindowsXP structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

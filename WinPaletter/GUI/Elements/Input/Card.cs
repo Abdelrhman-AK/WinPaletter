@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
 
@@ -320,7 +321,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            // Let parent paint behind you and hence transparent background
+            // Let parent paint behind and hence transparent background
             if (Parent != null)
             {
                 GraphicsState state = e.Graphics.Save();

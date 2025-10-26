@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.Drawing;
@@ -10,19 +11,19 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// LogonUI structure for Windows XP
     /// </summary>
-    public class LogonUIXP : ICloneable
+    public class LogonUIXP : ManagerBase<LogonUIXP>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Windows XP LogonUI mode</summary>
-        public Modes Mode = Modes.Default;
+        public Modes Mode { get; set; } = Modes.Default;
 
         /// <summary>Windows XP LogonUI background color if selected 'Source' is 'Win2000'</summary>
-        public Color BackColor = Color.Black;
+        public Color BackColor { get; set; } = Color.Black;
 
         /// <summary>Controls if 'More options' button is visible if selected 'Source' is 'Win2000'</summary>
-        public bool ShowMoreOptions = false;
+        public bool ShowMoreOptions { get; set; } = false;
 
         /// <summary>
         /// Enumeration for Windows XP LogonUI modes
@@ -121,40 +122,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two LogonUIXP structures are equal</summary>
-        public static bool operator ==(LogonUIXP First, LogonUIXP Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two LogonUIXP structures are not equal</summary>
-        public static bool operator !=(LogonUIXP First, LogonUIXP Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones LogonUIXP structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>
-        /// Checks if two LogonUIXP structures are equal or not
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>
-        /// Get hash code of LogonUIXP structure
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

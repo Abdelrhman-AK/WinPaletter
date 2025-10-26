@@ -104,15 +104,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            Checked = !Checked;
-            Invalidate();
-
-            base.OnMouseClick(e);
-        }
-
-        protected override async void OnResize(EventArgs e)
+        protected override  void OnResize(EventArgs e)
         {
             Height = 20;
             if (Width < 40) Width = 40;
@@ -123,74 +115,63 @@ namespace WinPaletter.UI.WP
                 CheckC.Height = DarkLight_TogglerSize;
             }
 
-            await Task.Delay(10);
             Invalidate();
 
             base.OnResize(e);
         }
 
-        protected override async void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 float i = e.X - 0.5f * CheckC.Width;
-                WasMoving = true;
+
+                // Only consider it a drag if it moves more than 2 pixels
+                if (i - CheckerX > 2f) WasMoving = true;
+
                 MouseState = 1;
 
-                if (i <= 4)
-                {
-                    _checkerX = 4;
-                }
-                else if (i >= Width - 17)
-                {
-                    _checkerX = Width - 17;
-                }
-                else
-                {
-                    _checkerX = i;
-                }
+                if (i <= 4) _checkerX = 4;
+                else if (i >= Width - 17) _checkerX = Width - 17;
+                else _checkerX = i;
 
                 CheckC.X = CheckerX;
                 CheckC.Y = 4;
 
-                await Task.Delay(10);
                 Invalidate();
             }
 
             base.OnMouseMove(e);
         }
 
-        protected override async void OnMouseUp(MouseEventArgs e)
+        protected override void OnMouseUp(MouseEventArgs e)
         {
             MouseState = 0;
-            CheckC.Width = 11;
+            CheckC.Width = DarkLight_Toggler ? DarkLight_TogglerSize : 11;
+            CheckC.Height = DarkLight_Toggler ? DarkLight_TogglerSize : 11;
 
-            if (DarkLight_Toggler)
-            {
-                CheckC.Width = DarkLight_TogglerSize;
-                CheckC.Height = DarkLight_TogglerSize;
-            }
-
+            // Only consider it a drag if it actually moved more than a threshold (e.g., 2px)
             if (WasMoving)
             {
-                if (e.X < Width * 0.5f) Checked = false;
-                if (e.X >= Width * 0.5f) Checked = true;
-
+                Checked = e.X >= Width * 0.5f;
                 WasMoving = false;
             }
+            else
+            {
+                // Otherwise, toggle on simple click
+                Checked = !Checked;
+            }
 
-            await Task.Delay(10);
             Invalidate();
 
             base.OnMouseUp(e);
         }
 
-        protected override async void OnMouseDown(MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
             MouseState = 1;
             CheckC.Width = 13;
 
-            await Task.Delay(10);
             Invalidate();
 
             base.OnMouseDown(e);

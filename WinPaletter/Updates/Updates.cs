@@ -365,7 +365,7 @@ namespace WinPaletter
             if (DM.IsBusy)
             {
                 Disturbed = true;
-                DM.StopDownload();
+                DM.StopDownload(true);
 
                 // Restore the old executable file if the user cancels the download.
                 if (RadioButton1.Checked)

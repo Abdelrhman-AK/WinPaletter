@@ -209,7 +209,7 @@ namespace WinPaletter
                             using (Manager TMx = new(Manager.Source.File, o.Apply, false, o.SilentApply))
                             {
                                 Forms.Home.Text = Path.GetFileName(o.Apply);
-                                Program.TM = TMx.Clone() as Manager;
+                                Program.TM = TMx.Clone();
                                 TMx.Save(Manager.Source.Registry, string.Empty, null, false, o.SilentApply);
                                 if (Settings.ThemeApplyingBehavior.AutoRestartExplorer) RestartExplorer();
 
@@ -226,7 +226,7 @@ namespace WinPaletter
                         Log?.Write(LogEventLevel.Information, $"Command line arguments edit requested: {o.Edit}");
 
                         TM = new(Manager.Source.File, o.Edit);
-                        TM_Original = (Manager)TM.Clone();
+                        TM_Original = TM.Clone();
                         Forms.Home.File = o.Edit;
                         Forms.Home.LoadFromTM(TM);
                         Forms.Home.Text = Path.GetFileName(o.Edit);
@@ -250,7 +250,7 @@ namespace WinPaletter
                                 {
                                     Forms.Home.Text = Path.GetFileName(file);
                                     TM = new(Manager.Source.File, file, false);
-                                    TM_Original = (Manager)TM.Clone();
+                                    TM_Original = TM.Clone();
                                     Forms.Home.File = file;
                                     Forms.Home.LoadFromTM(TM);
 

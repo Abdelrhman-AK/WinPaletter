@@ -42,8 +42,8 @@ namespace WinPaletter
 
             // Start showing home page tab.
             tabControl1.Visible = false;
+            Status_pnl.Visible = Program.Settings.AppLog.StatusPanel;
             Status_lbl.Font = Fonts.Console;
-            Status_pnl.BackColor = Program.Style.Schemes.Main.Colors.Back_Hover();
             tabsContainer1.AddFormIntoTab(Forms.Home);
             if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");
             if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Welcome);
@@ -71,7 +71,7 @@ namespace WinPaletter
                         if (File.Exists(dlg.FileName) || dlg.ShowDialog() == DialogResult.OK)
                         {
                             Program.TM.Save(Manager.Source.File, dlg.FileName);
-                            Program.TM_Original = (Manager)Program.TM.Clone();
+                            Program.TM_Original = Program.TM.Clone();
                         }
                     }
 
@@ -156,6 +156,13 @@ namespace WinPaletter
                     Appearance.Save();
                 }
             }
+        }
+
+        private void Status_lbl_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.Clear((sender as Label).BackColor);
+            TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis;
+            TextRenderer.DrawText(e.Graphics, (sender as Label).Text, (sender as Label).Font, (sender as Label).ClientRectangle, (sender as Label).ForeColor, flags);
         }
     }
 }

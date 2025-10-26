@@ -171,8 +171,8 @@ namespace WinPaletter
             int backdropNone = (int)BackdropStyles.None;
             DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref backdropNone, Marshal.SizeOf<int>());
 
-            // 2. Disable dark mode if previously applied
-            int useDarkMode = 0;
+            // 2. Use correct dark mode setting
+            int useDarkMode = Program.Style.DarkMode ? 1 : 0;
             DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref useDarkMode, Marshal.SizeOf<int>());
 
             // 3. Clear any frame extension

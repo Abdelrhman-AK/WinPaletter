@@ -13,25 +13,25 @@ namespace WinPaletter.Theme.Structures
     /// Structure responsible for managing Wallpaper Tone
     /// <br>Wallpaper Tone is a feature by WinPaletter (not a feature in Windows). It modifies images HSL filter to alter wallpaper colors.</br>
     /// </summary>
-    public class WallpaperTone : ICloneable
+    public class WallpaperTone : ManagerBase<WallpaperTone>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>
         /// Image File used
         /// <br><b>- It is better to use a stock Windows wallpaper in '%windir%\Web\Wallpaper', but sure you can use other images.</b></br>
         /// </summary>
-        public string Image = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
+        public string Image { get; set; } = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
 
         /// <summary>Hue</summary>
-        public int H = 0;
+        public int H { get; set; } = 0;
 
         /// <summary>Saturation</summary>
-        public int S = 50;
+        public int S { get; set; } = 50;
 
         /// <summary>Lightness</summary>
-        public int L = 50;
+        public int L { get; set; } = 50;
 
         /// <summary>
         /// Creates a new WallpaperTone structure with default values
@@ -130,36 +130,6 @@ namespace WinPaletter.Theme.Structures
             SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
             WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);
-        }
-
-        /// <summary>Operator to check if two WallpaperTone structures are equal</summary>
-        public static bool operator ==(WallpaperTone First, WallpaperTone Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two WallpaperTone structures are not equal</summary>
-        public static bool operator !=(WallpaperTone First, WallpaperTone Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones WallpaperTone structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two WallpaperTone structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of WallpaperTone structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

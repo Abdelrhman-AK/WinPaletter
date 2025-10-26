@@ -7,16 +7,16 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows switcher (Alt+Tab) appearance
     /// </summary>
-    public class AltTab : ICloneable
+    public class AltTab : ManagerBase<AltTab>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Controls Windows switcher appearance</summary>
-        public Styles Style = AltTab.Styles.Default;
+        public Styles Style { get; set; } = AltTab.Styles.Default;
 
         /// <summary>Controls Windows switcher opacity for Windows 10 (or Windows 11 when ExplorerPatcher is installed with changing Alt+Tab appearance into Windows 10</summary>
-        public int Win10Opacity = 95;
+        public int Win10Opacity { get; set; } = 95;
 
         /// <summary>
         /// Creates new AltTab structure with default values
@@ -77,36 +77,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\AltTab", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two AltTab structures are equal</summary>
-        public static bool operator ==(AltTab First, AltTab Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two AltTab structures are not equal</summary>
-        public static bool operator !=(AltTab First, AltTab Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones AltTab structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two AltTab structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of AltTab structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

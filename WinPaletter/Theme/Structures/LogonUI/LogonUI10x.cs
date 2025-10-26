@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.IO;
@@ -11,49 +12,31 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Lock screen structure for Windows 10/11/12
     /// </summary>
-    public class LogonUI10x : ICloneable
+    public class LogonUI10x : ManagerBase<LogonUI10x>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>If true, it will disable acrylic effect on LogonUI background</summary>
-        public bool DisableAcrylicBackgroundOnLogon = false;
+        public bool DisableAcrylicBackgroundOnLogon { get; set; } = false;
 
         /// <summary>If true, it will disable background on LogonUI</summary>
-        public bool DisableLogonBackgroundImage = false;
+        public bool DisableLogonBackgroundImage { get; set; } = false;
 
         /// <summary>If true, it will disable lock screen</summary>
-        public bool NoLockScreen = false;
+        public bool NoLockScreen { get; set; } = false;
 
         /// <summary>
         /// Represents the file path of an image.
         /// </summary>
         /// <remarks>This field is initialized to an empty string by default.  It is expected to hold the
         /// path to an image file as a string.</remarks>
-        public string ImageFile = string.Empty;
+        public string ImageFile { get; set; } = string.Empty;
 
         /// <summary>
         /// Creates a new Windows 10/11 LogonUI data structure with default values
         /// </summary>
         public LogonUI10x() { }
-
-        /// <summary>Operator to check if two LogonUI10x structures are equal</summary>
-        public static bool operator ==(LogonUI10x First, LogonUI10x Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two LogonUI10x structures are not equal</summary>
-        public static bool operator !=(LogonUI10x First, LogonUI10x Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones LogonUI10x structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
 
         /// <summary>
         /// Loads Windows 10/11 LogonUI data from registry
@@ -121,22 +104,5 @@ namespace WinPaletter.Theme.Structures
         {
             WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, Enabled);
         }
-
-        /// <summary>
-        /// Checks if two LogonUI10x structures are equal or not
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>
-        /// Get hash code of LogonUI10x structure
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
     }
 }

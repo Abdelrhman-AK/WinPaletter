@@ -80,6 +80,8 @@ namespace WinPaletter
             this.LinkLabel13 = new WinPaletter.UI.WP.LinkLabel();
             this.pictureBox19 = new System.Windows.Forms.PictureBox();
             this.linkLabel18 = new WinPaletter.UI.WP.LinkLabel();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.linkLabel3 = new WinPaletter.UI.WP.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).BeginInit();
@@ -100,6 +102,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.bottom_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // PictureBox2
@@ -160,7 +163,7 @@ namespace WinPaletter
             // 
             this.PictureBox7.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox7.Image")));
-            this.PictureBox7.Location = new System.Drawing.Point(12, 573);
+            this.PictureBox7.Location = new System.Drawing.Point(12, 603);
             this.PictureBox7.Name = "PictureBox7";
             this.PictureBox7.Size = new System.Drawing.Size(24, 24);
             this.PictureBox7.TabIndex = 24;
@@ -180,7 +183,7 @@ namespace WinPaletter
             // 
             this.PictureBox9.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox9.Image")));
-            this.PictureBox9.Location = new System.Drawing.Point(12, 543);
+            this.PictureBox9.Location = new System.Drawing.Point(12, 573);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
             this.PictureBox9.TabIndex = 28;
@@ -315,7 +318,7 @@ namespace WinPaletter
             this.LinkLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel6.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel6.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel6.Location = new System.Drawing.Point(42, 573);
+            this.LinkLabel6.Location = new System.Drawing.Point(42, 603);
             this.LinkLabel6.Name = "LinkLabel6";
             this.LinkLabel6.Size = new System.Drawing.Size(616, 24);
             this.LinkLabel6.TabIndex = 25;
@@ -333,7 +336,7 @@ namespace WinPaletter
             this.LinkLabel8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LinkLabel8.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.LinkLabel8.LinkColor = System.Drawing.Color.White;
-            this.LinkLabel8.Location = new System.Drawing.Point(42, 543);
+            this.LinkLabel8.Location = new System.Drawing.Point(42, 573);
             this.LinkLabel8.Name = "LinkLabel8";
             this.LinkLabel8.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel8.TabIndex = 29;
@@ -585,7 +588,7 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Controls.Add(this.Label3);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 616);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 688);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(664, 48);
             this.bottom_buttons.TabIndex = 119;
@@ -723,12 +726,42 @@ namespace WinPaletter
             this.linkLabel18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.linkLabel18.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel18_LinkClicked);
             // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(12, 543);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox4.TabIndex = 127;
+            this.pictureBox4.TabStop = false;
+            // 
+            // linkLabel3
+            // 
+            this.linkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkLabel3.LinkColor = System.Drawing.Color.White;
+            this.linkLabel3.Location = new System.Drawing.Point(42, 543);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(610, 24);
+            this.linkLabel3.TabIndex = 128;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "FastCloner by lofcz (used inside theme manager core)";
+            this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(664, 664);
+            this.ClientSize = new System.Drawing.Size(664, 736);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.linkLabel3);
             this.Controls.Add(this.pictureBox19);
             this.Controls.Add(this.linkLabel18);
             this.Controls.Add(this.pictureBox18);
@@ -799,6 +832,7 @@ namespace WinPaletter
             this.bottom_buttons.ResumeLayout(false);
             this.bottom_buttons.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -847,5 +881,7 @@ namespace WinPaletter
         internal UI.WP.LinkLabel linkLabel17;
         internal PictureBox pictureBox19;
         internal UI.WP.LinkLabel linkLabel18;
+        internal PictureBox pictureBox4;
+        internal UI.WP.LinkLabel linkLabel3;
     }
 }

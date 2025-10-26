@@ -21,112 +21,112 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing classic Windows colors
     /// </summary>
-    public class Win32UI : ICloneable
+    public class Win32UI : ManagerBase<Win32UI>
     {
         /// <summary> Controls if Classic Colors editing is enabled or not </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>If disabled, classic 3D effects will be made to menus and menu items selection</summary>
-        public bool EnableTheming = true;
+        public bool EnableTheming { get; set; } = true;
 
         /// <summary>Enable titlebar gradience</summary>
-        public bool EnableGradient = true;
+        public bool EnableGradient { get; set; } = true;
 
         /// <summary>Color of active window border</summary>
-        public Color ActiveBorder = Color.FromArgb(180, 180, 180);
+        public Color ActiveBorder { get; set; } = Color.FromArgb(180, 180, 180);
 
         /// <summary>Active titlebar main color</summary>
-        public Color ActiveTitle = Color.FromArgb(153, 180, 209);
+        public Color ActiveTitle { get; set; } = Color.FromArgb(153, 180, 209);
 
         ///
-        public Color AppWorkspace = Color.FromArgb(171, 171, 171);
+        public Color AppWorkspace { get; set; } = Color.FromArgb(171, 171, 171);
 
         ///
-        public Color Background = Color.FromArgb(0, 0, 0);
+        public Color Background { get; set; } = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color ButtonAlternateFace = Color.FromArgb(0, 0, 0);
+        public Color ButtonAlternateFace { get; set; } = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color ButtonDkShadow = Color.FromArgb(105, 105, 105);
+        public Color ButtonDkShadow { get; set; } = Color.FromArgb(105, 105, 105);
 
         ///
-        public Color ButtonFace = Color.FromArgb(240, 240, 240);
+        public Color ButtonFace { get; set; } = Color.FromArgb(240, 240, 240);
 
         ///
-        public Color ButtonHilight = Color.FromArgb(255, 255, 255);
+        public Color ButtonHilight { get; set; } = Color.FromArgb(255, 255, 255);
 
         ///
-        public Color ButtonLight = Color.FromArgb(227, 227, 227);
+        public Color ButtonLight { get; set; } = Color.FromArgb(227, 227, 227);
 
         ///
-        public Color ButtonShadow = Color.FromArgb(160, 160, 160);
+        public Color ButtonShadow { get; set; } = Color.FromArgb(160, 160, 160);
 
         ///
-        public Color ButtonText = Color.FromArgb(0, 0, 0);
+        public Color ButtonText { get; set; } = Color.FromArgb(0, 0, 0);
 
         /// <summary>Second color for gradience in active titlebar</summary>
-        public Color GradientActiveTitle = Color.FromArgb(185, 209, 234);
+        public Color GradientActiveTitle { get; set; } = Color.FromArgb(185, 209, 234);
 
         /// <summary>Second color for gradience in inactive titlebar</summary>
-        public Color GradientInactiveTitle = Color.FromArgb(215, 228, 242);
+        public Color GradientInactiveTitle { get; set; } = Color.FromArgb(215, 228, 242);
 
         /// <summary>Used in disabled items</summary>
-        public Color GrayText = Color.FromArgb(109, 109, 109);
+        public Color GrayText { get; set; } = Color.FromArgb(109, 109, 109);
 
         ///
-        public Color HilightText = Color.FromArgb(255, 255, 255);
+        public Color HilightText { get; set; } = Color.FromArgb(255, 255, 255);
 
         /// <summary>Color of selection rectangles and hyperlinks</summary>
-        public Color HotTrackingColor = Color.FromArgb(0, 102, 204);
+        public Color HotTrackingColor { get; set; } = Color.FromArgb(0, 102, 204);
 
         /// <summary>Color of inactive window border</summary>
-        public Color InactiveBorder = Color.FromArgb(244, 247, 252);
+        public Color InactiveBorder { get; set; } = Color.FromArgb(244, 247, 252);
 
         /// <summary>Inactive titlebar main color</summary>
-        public Color InactiveTitle = Color.FromArgb(191, 205, 219);
+        public Color InactiveTitle { get; set; } = Color.FromArgb(191, 205, 219);
 
         /// <summary>Inactive titlebar text</summary>
-        public Color InactiveTitleText = Color.FromArgb(0, 0, 0);
+        public Color InactiveTitleText { get; set; } = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color InfoText = Color.FromArgb(0, 0, 0);
+        public Color InfoText { get; set; } = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color InfoWindow = Color.FromArgb(255, 255, 225);
+        public Color InfoWindow { get; set; } = Color.FromArgb(255, 255, 225);
 
         /// <summary>Color of cascaded menu</summary>
-        public Color Menu = Color.FromArgb(240, 240, 240);
+        public Color Menu { get; set; } = Color.FromArgb(240, 240, 240);
 
         /// <summary>Color of menu bar</summary>
-        public Color MenuBar = Color.FromArgb(240, 240, 240);
+        public Color MenuBar { get; set; } = Color.FromArgb(240, 240, 240);
 
         ///
-        public Color MenuText = Color.FromArgb(0, 0, 0);
+        public Color MenuText { get; set; } = Color.FromArgb(0, 0, 0);
 
         /// <summary>Obsolete: was used in Windows 9x</summary>
-        public Color Scrollbar = Color.FromArgb(200, 200, 200);
+        public Color Scrollbar { get; set; } = Color.FromArgb(200, 200, 200);
 
         /// <summary>Active titlebar text</summary>
-        public Color TitleText = Color.FromArgb(0, 0, 0);
+        public Color TitleText { get; set; } = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color Window = Color.FromArgb(255, 255, 255);
+        public Color Window { get; set; } = Color.FromArgb(255, 255, 255);
 
         /// <summary>Color of rectangle surrounding a pressed button</summary>
-        public Color WindowFrame = Color.FromArgb(100, 100, 100);
+        public Color WindowFrame { get; set; } = Color.FromArgb(100, 100, 100);
 
         ///
-        public Color WindowText = Color.FromArgb(0, 0, 0);
+        public Color WindowText { get; set; } = Color.FromArgb(0, 0, 0);
 
         ///
-        public Color Hilight = Color.FromArgb(0, 120, 215);
+        public Color Hilight { get; set; } = Color.FromArgb(0, 120, 215);
 
         ///
-        public Color MenuHilight = Color.FromArgb(0, 120, 215);
+        public Color MenuHilight { get; set; } = Color.FromArgb(0, 120, 215);
 
         ///
-        public Color Desktop = Color.FromArgb(0, 0, 0);
+        public Color Desktop { get; set; } = Color.FromArgb(0, 0, 0);
 
         /// <summary>
         /// Creates a new instance of Win32UI structure with default values
@@ -169,8 +169,10 @@ namespace WinPaletter.Theme.Structures
                         Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, true);
 
                         // Set some flags like EnableTheming and EnableGradient
-                        SystemParametersInfo(SPI.SPI_GETFLATMENU, 0, ref EnableTheming, SPIF.SPIF_NONE);
-                        SystemParametersInfo(SPI.SPI_GETGRADIENTCAPTIONS, 0, ref EnableGradient, SPIF.SPIF_NONE);
+                        bool enableTheming = EnableTheming;
+                        bool enableGradient = EnableGradient;
+                        SystemParametersInfo(SPI.SPI_GETFLATMENU, 0, ref enableTheming, SPIF.SPIF_NONE);
+                        SystemParametersInfo(SPI.SPI_GETGRADIENTCAPTIONS, 0, ref enableGradient, SPIF.SPIF_NONE);
 
                         ActiveTitle = GetColor(SysColorIndex.ActiveCaption);
                         AppWorkspace = GetColor(SysColorIndex.AppWorkspace);
@@ -743,36 +745,6 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
             }
-        }
-
-        /// <summary>Operator to check if two Win32UI structures are equal</summary>
-        public static bool operator ==(Win32UI First, Win32UI Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Win32UI structures are not equal</summary>
-        public static bool operator !=(Win32UI First, Win32UI Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Win32UI structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two AltTab structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of AltTab structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
 
         /// <summary>

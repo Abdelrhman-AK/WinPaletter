@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.IO;
@@ -12,19 +13,19 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows accessibility settings
     /// </summary>
-    public class Accessibility : ICloneable
+    public class Accessibility : ManagerBase<Accessibility>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Controls if high contrast mode is enabled or not</summary>
-        public bool HighContrast = false;
+        public bool HighContrast { get; set; } = false;
 
         /// <summary>Enable accessibility feature: color filter</summary>
-        public bool ColorFilter_Enabled = false;
+        public bool ColorFilter_Enabled { get; set; } = false;
 
         /// <summary>Color filter type</summary>
-        public ColorFilters ColorFilter = ColorFilters.Grayscale;
+        public ColorFilters ColorFilter { get; set; } = ColorFilters.Grayscale;
 
         /// <summary>
         /// Enumeration for color filters
@@ -123,36 +124,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Accessibility", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two Accessibility structures are equal</summary>
-        public static bool operator ==(Accessibility First, Accessibility Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Accessibility structures are not equal</summary>
-        public static bool operator !=(Accessibility First, Accessibility Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Accessibility structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Accessibility structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Accessibility structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

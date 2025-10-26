@@ -703,6 +703,11 @@ namespace WinPaletter
                 public bool Enabled = true;
 
                 /// <summary>
+                /// Indicates whether the status panel is enabled.
+                /// </summary>
+                public bool StatusPanel = true;
+
+                /// <summary>
                 /// Indicates whether logging registry operations are enabled.
                 /// </summary>
                 public bool Reg = true;
@@ -725,6 +730,7 @@ namespace WinPaletter
                 public void Load()
                 {
                     Enabled = ReadReg(REG_AppLog, string.Empty, true);
+                    StatusPanel = ReadReg(REG_AppLog, "StatusPanel", true);
                     Reg = ReadReg(REG_AppLog, "Reg", true);
                     RegRead = ReadReg(REG_AppLog, "RegRead", true);
                     RegWrite = ReadReg(REG_AppLog, "RegWrite", true);
@@ -734,6 +740,7 @@ namespace WinPaletter
                 public void Save()
                 {
                     WriteReg(REG_AppLog, string.Empty, Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, "StatusPanel", StatusPanel, RegistryValueKind.DWord);
                     WriteReg(REG_AppLog, "Reg", Reg, RegistryValueKind.DWord);
                     WriteReg(REG_AppLog, "RegRead", RegRead, RegistryValueKind.DWord);
                     WriteReg(REG_AppLog, "RegWrite", RegWrite, RegistryValueKind.DWord);
@@ -1577,9 +1584,12 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Returns WinPaletter settings as a JSON string
+        /// Returns a JSON-formatted string representation of the current object,  including all fields except those named "GENERAL".
         /// </summary>
-        /// <returns></returns>
+        /// <remarks>The method dynamically inspects the fields of the object using reflection  and serializes their
+        /// values into a JSON object. Fields of complex types  are recursively serialized, while primitive types are directly
+        /// added to  the JSON structure. Fields named "GENERAL" are excluded from the output.</remarks>
+        /// <returns>A JSON-formatted string representing the current object.</returns>
         public override string ToString()
         {
             JObject JSON_Overall = [];
@@ -1605,6 +1615,16 @@ namespace WinPaletter
             return JSON_Overall.ToString();
         }
 
+        /// <summary>
+        /// Converts the fields of the specified structure into a JSON object.
+        /// </summary>
+        /// <remarks>This method iterates through all fields of the specified structure, including public
+        /// and non-public fields,  and attempts to serialize their values into JSON tokens. If a field's value cannot
+        /// be serialized,  a default value is used for that field in the resulting JSON object.</remarks>
+        /// <param name="StructureType">The <see cref="Type"/> of the structure to be serialized.</param>
+        /// <param name="Structure">The instance of the structure whose fields will be serialized into JSON.</param>
+        /// <returns>A <see cref="JObject"/> containing the serialized fields of the structure.  Fields that cannot be serialized
+        /// will have a default value.</returns>
         private JObject DeserializeProps(Type StructureType, object Structure)
         {
             JObject j = [];
@@ -1630,6 +1650,16 @@ namespace WinPaletter
             return j;
         }
 
+        /// <summary>
+        /// Determines whether the specified string is a valid JSON object or array.
+        /// </summary>
+        /// <remarks>The method trims the input string and checks if it starts and ends with valid JSON
+        /// delimiters  (curly braces for objects or square brackets for arrays). If the string meets these criteria, 
+        /// it attempts to parse the string as JSON. If parsing fails, the method returns <see
+        /// langword="false"/>.</remarks>
+        /// <param name="strInput">The string to validate as JSON. The string can represent a JSON object or array.</param>
+        /// <returns><see langword="true"/> if the string is valid JSON and represents an object or array; otherwise, <see
+        /// langword="false"/>.</returns>
         private static bool IsValidJson(string strInput)
         {
             if (string.IsNullOrWhiteSpace(strInput))
@@ -1660,5 +1690,87 @@ namespace WinPaletter
                 return false;
             }
         }
+
+        /// <summary>
+        /// Determines whether the current <see cref="Settings"/> instance is equal to another <see cref="Settings"/>
+        /// instance.
+        /// </summary>
+        /// <remarks>Equality is determined by comparing the JSON representations of the two <see
+        /// cref="Settings"/> instances. If <paramref name="other"/> is <see langword="null"/>, this method returns <see
+        /// langword="false"/>.</remarks>
+        /// <param name="other">The <see cref="Settings"/> instance to compare with the current instance.</param>
+        /// <returns><see langword="true"/> if the current instance is equal to the <paramref name="other"/> instance; otherwise,
+        /// <see langword="false"/>.</returns>
+        public bool Equals(Settings other)
+        {
+            if (ReferenceEquals(this, other)) return true;
+            if (other is null) return false;
+
+            try
+            {
+                // Compare JSON representations structurally (ToString already omits `General`)
+                JObject j1 = JObject.Parse(this.ToString());
+                JObject j2 = JObject.Parse(other.ToString());
+                return JToken.DeepEquals(j1, j2);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current instance.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance. Can be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the specified object is equal to the current instance; otherwise, <see
+        /// langword="false"/>.</returns>
+        public override bool Equals(object obj) => Equals(obj as Settings);
+
+        /// <summary>
+        /// Returns a hash code for the current object.
+        /// </summary>
+        /// <remarks>The hash code is derived from the string representation of the object.  If an error
+        /// occurs during the computation, the base implementation of <see cref="object.GetHashCode"/> is used as a
+        /// fallback.</remarks>
+        /// <returns>A 32-bit signed integer hash code that can be used for hashing algorithms and data structures such as a hash
+        /// table.</returns>
+        public override int GetHashCode()
+        {
+            try
+            {
+                // Use JSON representation as hash source. Fast and stable enough for settings comparison.
+                return ToString().GetHashCode();
+            }
+            catch
+            {
+                return base.GetHashCode();
+            }
+        }
+
+        /// <summary>
+        /// Determines whether two <see cref="Settings"/> instances are equal.
+        /// </summary>
+        /// <remarks>Two <see cref="Settings"/> instances are considered equal if they have the same
+        /// values for all properties.</remarks>
+        /// <param name="left">The first <see cref="Settings"/> instance to compare.</param>
+        /// <param name="right">The second <see cref="Settings"/> instance to compare.</param>
+        /// <returns><see langword="true"/> if the specified <see cref="Settings"/> instances are equal; otherwise, <see
+        /// langword="false"/>.</returns>
+        public static bool operator ==(Settings left, Settings right)
+        {
+            if (ReferenceEquals(left, right)) return true;
+            if (left is null || right is null) return false;
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Determines whether two <see cref="Settings"/> instances are not equal.
+        /// </summary>
+        /// <param name="left">The first <see cref="Settings"/> instance to compare.</param>
+        /// <param name="right">The second <see cref="Settings"/> instance to compare.</param>
+        /// <returns><see langword="true"/> if the two <see cref="Settings"/> instances are not equal; otherwise, <see
+        /// langword="false"/>.</returns>
+        public static bool operator !=(Settings left, Settings right) => !(left == right);
     }
 }

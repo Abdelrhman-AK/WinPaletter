@@ -16,115 +16,115 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows cursors, either rendered by WinPaletter or loaded from files.
     /// </summary>
-    public class Cursors : ICloneable
+    public class Cursors : ManagerBase<Cursor>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>
         /// Enable using custom shadow for cursors rendered by WinPaletter (not Windows).
         /// </summary>
-        public bool Shadow = false;
+        public bool Shadow { get; set; } = false;
 
         /// <summary>
         /// Enable sonar (gray circle) surrounding cursor while pressing <c>CTRL</c> key multiple times.
         /// </summary>
-        public bool Sonar = false;
+        public bool Sonar { get; set; } = false;
 
         /// <summary>
         /// Amount of cursor trails.
         /// </summary>
-        public int Trails = 0;
+        public int Trails { get; set; } = 0;
 
         /// <summary>
         /// Size of cursors
         /// </summary>
-        public int Size = 32;
+        public int Size { get; set; } = 32;
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Arrow' cursor.
         /// </summary>
-        public Cursor Cursor_Arrow = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_arrow.cur" };
+        public Cursor Cursor_Arrow { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_arrow.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'AppLoading' cursor.
         /// </summary>
-        public Cursor Cursor_AppLoading = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_working.ani" };
+        public Cursor Cursor_AppLoading { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_working.ani" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Busy' cursor.
         /// </summary>
-        public Cursor Cursor_Busy = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_busy.ani" };
+        public Cursor Cursor_Busy { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_busy.ani" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Help' cursor.
         /// </summary>
-        public Cursor Cursor_Help = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_helpsel.cur" };
+        public Cursor Cursor_Help { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_helpsel.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Move' cursor.
         /// </summary>
-        public Cursor Cursor_Move = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_move.cur" };
+        public Cursor Cursor_Move { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_move.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'NorthSouth' cursor.
         /// </summary>
-        public Cursor Cursor_NS = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_ns.cur" };
+        public Cursor Cursor_NS { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_ns.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'EastWest' cursor.
         /// </summary>
-        public Cursor Cursor_EW = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_ew.cur" };
+        public Cursor Cursor_EW { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_ew.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'NorthEastSouthWest' cursor.
         /// </summary>
-        public Cursor Cursor_NESW = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_nesw.cur" };
+        public Cursor Cursor_NESW { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_nesw.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'NorthWestSouthEast' cursor.
         /// </summary>
-        public Cursor Cursor_NWSE = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_nwse.cur" };
+        public Cursor Cursor_NWSE { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_nwse.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Up' cursor.
         /// </summary>
-        public Cursor Cursor_Up = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_up.cur" };
+        public Cursor Cursor_Up { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_up.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Pen' cursor.
         /// </summary>
-        public Cursor Cursor_Pen = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_pen.cur" };
+        public Cursor Cursor_Pen { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_pen.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'None' cursor.
         /// </summary>
-        public Cursor Cursor_None = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_unavail.cur", SecondaryColor1 = Color.FromArgb(255, 0, 0), SecondaryColor2 = Color.FromArgb(255, 0, 0) };
+        public Cursor Cursor_None { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_unavail.cur", SecondaryColor1 = Color.FromArgb(255, 0, 0), SecondaryColor2 = Color.FromArgb(255, 0, 0) };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Link\Hand' cursor.
         /// </summary>
-        public Cursor Cursor_Link = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_link.cur" };
+        public Cursor Cursor_Link { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_link.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Pin' cursor.
         /// </summary>
-        public Cursor Cursor_Pin = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_pin.cur" };
+        public Cursor Cursor_Pin { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_pin.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Person' cursor
         /// .</summary>
-        public Cursor Cursor_Person = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_person.cur" };
+        public Cursor Cursor_Person { get; set; } = new() { File = $"{SysPaths.Windows}\\Cursors\\aero_person.cur" };
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'IBeam' cursor.
         /// </summary>
-        public Cursor Cursor_IBeam = new();
+        public Cursor Cursor_IBeam { get; set; } = new();
 
         /// <summary>
         /// Structure instance that has data can be modified to customize 'Cross' cursor.
         /// </summary>
-        public Cursor Cursor_Cross = new();
+        public Cursor Cursor_Cross { get; set; } = new();
 
         /// <summary>
         /// Creates new Cursors structure with default values
@@ -141,13 +141,16 @@ namespace WinPaletter.Theme.Structures
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled);
 
-            if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref Shadow, SPIF.SPIF_NONE))
+            bool shadow = Shadow;
+            if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref shadow, SPIF.SPIF_NONE))
                 Shadow = @default.Shadow;
 
-            if (!SystemParametersInfo(SPI.SPI_GETMOUSETRAILS, 0, ref Trails, SPIF.SPIF_NONE))
+            int trails = Trails;
+            if (!SystemParametersInfo(SPI.SPI_GETMOUSETRAILS, 0, ref trails, SPIF.SPIF_NONE))
                 Trails = @default.Trails;
 
-            if (!SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref Sonar, SPIF.SPIF_NONE))
+            bool sonar = Sonar;
+            if (!SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref sonar, SPIF.SPIF_NONE))
                 Sonar = @default.Sonar;
 
             Size = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", @default.Size);
@@ -950,36 +953,6 @@ namespace WinPaletter.Theme.Structures
                 if (MsgBox(Program.Lang.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.ThemeManager.Tips.RestoreCursorsTip, TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }
-        }
-
-        /// <summary>Operator to check if two Cursors structures are equal</summary>
-        public static bool operator ==(Cursors First, Cursors Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Cursors structures are not equal</summary>
-        public static bool operator !=(Cursors First, Cursors Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Cursors structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Cursors structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Cursors structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

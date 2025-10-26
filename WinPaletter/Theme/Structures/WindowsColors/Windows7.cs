@@ -8,28 +8,28 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows 7 appearance
     /// </summary>
-    public class Windows7 : ICloneable
+    public class Windows7 : ManagerBase<Windows7>
     {
         /// <summary> Controls if Windows 7 colors editing is enabled or not </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>Main Windows color</summary>
-        public Color ColorizationColor = Color.FromArgb(116, 184, 252);
+        public Color ColorizationColor { get; set; } = Color.FromArgb(116, 184, 252);
 
         /// <summary>Glow or blur color</summary>
-        public Color ColorizationAfterglow = Color.FromArgb(116, 184, 252);
+        public Color ColorizationAfterglow { get; set; } = Color.FromArgb(116, 184, 252);
 
         /// <summary>Control amount of main Windows color</summary>
-        public int ColorizationColorBalance = 8;
+        public int ColorizationColorBalance { get; set; } = 8;
 
         /// <summary>Control amount of glow color</summary>
-        public int ColorizationAfterglowBalance = 43;
+        public int ColorizationAfterglowBalance { get; set; } = 43;
 
         /// <summary>Control amount of blur power for aero glass</summary>
-        public int ColorizationBlurBalance = 49;
+        public int ColorizationBlurBalance { get; set; } = 49;
 
         /// <summary>Control amount of aero glass reflection</summary>
-        public int ColorizationGlassReflectionIntensity = 0;
+        public int ColorizationGlassReflectionIntensity { get; set; } = 0;
 
         /// <summary>
         /// Represents the visual styles configuration for the application.
@@ -37,7 +37,7 @@ namespace WinPaletter.Theme.Structures
         /// <remarks>This field provides access to the visual styles settings, which can be used to
         /// customize the appearance of user interface. It is initialized with default
         /// values.</remarks>
-        public VisualStyles VisualStyles = new();
+        public VisualStyles VisualStyles { get; set; } = new();
 
         /// <summary>
         /// Creates Windows7 data structure with default values
@@ -100,36 +100,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows7", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two Windows7 structures are equal</summary>
-        public static bool operator ==(Windows7 First, Windows7 Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Windows7 structures are not equal</summary>
-        public static bool operator !=(Windows7 First, Windows7 Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Windows7 structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Windows7 structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Windows7 structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

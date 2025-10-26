@@ -13,7 +13,7 @@ namespace WinPaletter.Theme
         {
             Manager TM = new(Manager.Source.Empty);
 
-            ref Info Info = ref TM.Info;
+            Info Info = TM.Info;
             Info.ThemeName = "Default Windows XP";
             Info.Description = "Initial, like the default look after a fresh Windows XP setup—clean, untouched, and ready for customization.";
             Info.ThemeVersion = "1.0.0.0";
@@ -21,14 +21,14 @@ namespace WinPaletter.Theme
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
 
-            ref WindowsXP WinXP = ref TM.WindowsXP;
+            WindowsXP WinXP = TM.WindowsXP;
             WinXP.Enabled = true;
             WinXP.VisualStyles.VisualStylesType = VisualStyles.DefaultVisualStyles.LunaBlue;
 
-            ref Structures.LogonUIXP logonUI = ref TM.LogonUIXP;
+            Structures.LogonUIXP logonUI = TM.LogonUIXP;
             logonUI.Enabled = true;
 
-            ref Structures.Win32UI Win32 = ref TM.Win32;
+            Structures.Win32UI Win32 = TM.Win32;
             Win32.Enabled = true;
             Win32.ActiveBorder = Color.FromArgb(212, 208, 200);
             Win32.ActiveTitle = Color.FromArgb(0, 84, 227);
@@ -63,7 +63,7 @@ namespace WinPaletter.Theme
             Win32.MenuHilight = Color.FromArgb(49, 106, 197);
             Win32.Desktop = Color.FromArgb(0, 0, 0);
 
-            ref Console CMD = ref TM.CommandPrompt;
+            Console CMD = TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable00 = Color.FromArgb(12, 12, 12);
             CMD.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -90,7 +90,7 @@ namespace WinPaletter.Theme
             CMD.FontRaster = true;
             CMD.W10_1909_ForceV2 = false;
 
-            ref Console PS86 = ref TM.PowerShellx86;
+            Console PS86 = TM.PowerShellx86;
             PS86.Enabled = true;
             PS86.ColorTable00 = Color.FromArgb(12, 12, 12);
             PS86.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -117,7 +117,7 @@ namespace WinPaletter.Theme
             PS86.FontRaster = true;
             PS86.W10_1909_ForceV2 = false;
 
-            ref Console PS64 = ref TM.PowerShellx64;
+            Console PS64 = TM.PowerShellx64;
             PS64.Enabled = true;
             PS64.ColorTable00 = Color.FromArgb(12, 12, 12);
             PS64.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -144,7 +144,7 @@ namespace WinPaletter.Theme
             PS64.FontRaster = true;
             PS64.W10_1909_ForceV2 = false;
 
-            ref MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+            MetricsFonts MetricsFonts = TM.MetricsFonts;
             MetricsFonts.Enabled = true;
             MetricsFonts.BorderWidth = 0;
             MetricsFonts.CaptionHeight = 25;
@@ -205,7 +205,7 @@ namespace WinPaletter.Theme
             TM.Cursors.Cursor_IBeam.File = string.Empty;
             TM.Cursors.Cursor_Cross.File = string.Empty;
 
-            ref WinEffects WinEffects = ref TM.WindowsEffects;
+            WinEffects WinEffects = TM.WindowsEffects;
             WinEffects.Enabled = true;
             WinEffects.ShakeToMinimize = false;
             WinEffects.BalloonNotifications = true;
@@ -214,7 +214,7 @@ namespace WinPaletter.Theme
             WinEffects.Win11ClassicContextMenu = false;
             WinEffects.SysListView32 = true;
 
-            ref Icons Icons = ref TM.Icons;
+            Icons Icons = TM.Icons;
             Icons.Enabled = true;
             Icons.Computer = $"{SysPaths.Explorer},0";
             Icons.User = $"{SysPaths.System32}\\mydocs.dll,0";
@@ -226,13 +226,13 @@ namespace WinPaletter.Theme
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
             TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
-            ref ScreenSaver ScreenSaver = ref TM.ScreenSaver;
+            ScreenSaver ScreenSaver = TM.ScreenSaver;
             ScreenSaver.Enabled = true;
             ScreenSaver.IsSecure = false;
             ScreenSaver.TimeOut = 60;
             ScreenSaver.File = $@"{SysPaths.System32}\logon.scr";
 
-            ref Sounds Sounds = ref TM.Sounds;
+            Sounds Sounds = TM.Sounds;
             Sounds.Enabled = true;
             Sounds.Snd_Imageres_SystemStart = string.Empty;
             Sounds.Snd_Win_Default = $@"{SysPaths.Windows}\media\Windows XP Ding.wav";
@@ -318,14 +318,14 @@ namespace WinPaletter.Theme
             Sounds.Snd_SpeechRec_MisrecoSound = string.Empty;
             Sounds.Snd_SpeechRec_PanelSound = string.Empty;
 
-            ref Wallpaper Wallpaper = ref TM.Wallpaper;
+            Wallpaper Wallpaper = TM.Wallpaper;
             Wallpaper.Enabled = true;
             Wallpaper.ImageFile = $"{SysPaths.Windows}\\Web\\Wallpaper\\Bliss.bmp";
             Wallpaper.WallpaperStyle = Structures.Wallpaper.WallpaperStyles.Stretched;
 
             TM.AppTheme.Enabled = true;
 
-            ref Accessibility Accessibility = ref TM.Accessibility;
+            Accessibility Accessibility = TM.Accessibility;
             Accessibility.Enabled = true;
 
             return TM;

@@ -567,13 +567,17 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Stop the currently running download
+        /// Stops the current download operation.
         /// </summary>
-        public void StopDownload()
+        /// <remarks>This method cancels the ongoing download operation and raises the download completion event if the
+        /// operation was in progress. It ensures thread safety by locking the operation during execution.</remarks>
+        /// <param name="canceled">A value indicating whether the download was canceled by the user. If <see langword="true"/>, the operation is marked
+        /// as canceled; otherwise, it is stopped normally.</param>
+        public void StopDownload(bool canceled = false, bool disposed = false)
         {
             lock (lockObject)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Download is stopped.");
+                Program.Log?.Write(LogEventLevel.Information, $"Download {(disposed ? "manager has been disposed" : (canceled ? "canceled" : "finished"))}.");
                 cancellationTokenSource?.Cancel();
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
                 // Additional cleanup if needed
@@ -651,7 +655,7 @@ namespace WinPaletter
         /// </summary>
         public void Dispose()
         {
-            StopDownload();
+            StopDownload(false, true);
             client?.Dispose();
             cancellationTokenSource?.Dispose();
         }

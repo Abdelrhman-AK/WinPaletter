@@ -136,15 +136,13 @@ namespace WinPaletter
 
         private void Store_DownloadProgress_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (ThemeDownloader.IsBusy)
-                ThemeDownloader.StopDownload();
+            if (ThemeDownloader.IsBusy) ThemeDownloader.StopDownload();
             ThemeDownloader.Dispose();
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            if (ThemeDownloader.IsBusy)
-                ThemeDownloader.StopDownload();
+            if (ThemeDownloader.IsBusy) ThemeDownloader.StopDownload(true);
             DialogResult = DialogResult.Abort;
             Close();
         }

@@ -1002,7 +1002,7 @@ namespace WinPaletter
 
                 Forms.ThemeLog.Apply_Theme(TMx, true);
 
-                Program.TM_Original = (Manager)TMx.Clone();
+                Program.TM_Original = TMx.Clone();
             }
         }
 
@@ -1018,7 +1018,7 @@ namespace WinPaletter
                     Apply_Theme();
                     if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
                     Program.TM = selectedItem.TM;
-                    Program.TM_Original = (Manager)Program.TM.Clone();
+                    Program.TM_Original = Program.TM.Clone();
                     Forms.Home.LoadFromTM(Program.TM);
                     Forms.Home.Text = Path.GetFileName(selectedItem.FileName);
                     UpdateTitlebarColors();
@@ -1030,7 +1030,7 @@ namespace WinPaletter
                 {
                     // Edit button is pressed
                     Forms.MainForm.tabsContainer1.SelectedIndex = 0;
-                    Program.TM_Original = (Manager)Program.TM.Clone();
+                    Program.TM_Original = Program.TM.Clone();
                     Program.TM = new(Manager.Source.File, selectedItem.FileName, false, true);
                     if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
                     Forms.Home.Text = Path.GetFileName(selectedItem.FileName);

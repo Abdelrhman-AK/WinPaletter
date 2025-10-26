@@ -9,88 +9,88 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for handling information about WinPaletter theme
     /// </summary>
-    public class Info : ICloneable
+    public class Info : ManagerBase<Info>
     {
         /// <summary>WinPaletter version that designed this theme</summary>
-        public string AppVersion = Program.Version;
+        public string AppVersion { get; set; } = Program.Version;
 
         /// <summary>Name of current WinPaletter theme</summary>
-        public string ThemeName = Program.Lang.Strings.General.MyTheme;
+        public string ThemeName { get; set; } = Program.Lang.Strings.General.MyTheme;
 
         /// <summary>Description_SysEventsSounds of current WinPaletter theme. It can include tags that are useful for search in WinPaletter Store.</summary>
-        public string Description = string.Empty;
+        public string Description { get; set; } = string.Empty;
 
         /// <summary>Make saving this theme export theme resources pack that has sounds and images used in theme and are not located in system directories.</summary>
-        public bool ExportResThemePack = false;
+        public bool ExportResThemePack { get; set; } = false;
 
         /// <summary>License/credits of included sounds and images. Keep it empty if there are no license or credits or didn't use files.</summary>
-        public string License = string.Empty;
+        public string License { get; set; } = string.Empty;
 
         /// <summary>WinPaletter theme version</summary>
-        public string ThemeVersion = "1.0.0.0";
+        public string ThemeVersion { get; set; } = "1.0.0.0";
 
         /// <summary>Person's name that designed this theme</summary>
-        public string Author = User.Name;
+        public string Author { get; set; } = User.Name;
 
         /// <summary>Person's social media link that designed this theme</summary>
-        public string AuthorSocialMediaLink = string.Empty;
+        public string AuthorSocialMediaLink { get; set; } = string.Empty;
 
         /// <summary>Descriptive color 1. It should give the user a figure about your theme.</summary>
-        public Color Color1 = Color.FromArgb(0, 102, 204);
+        public Color Color1 { get; set; } = Color.FromArgb(0, 102, 204);
 
         /// <summary>Descriptive color 2. It should give the user a figure about your theme.</summary>
-        public Color Color2 = Color.FromArgb(122, 9, 9);
+        public Color Color2 { get; set; } = Color.FromArgb(122, 9, 9);
 
         /// <summary>Decorative pattern for your theme displayed in WinPaletter Store.</summary>
-        public int Pattern = 1;
+        public int Pattern { get; set; } = 1;
 
         /// <summary>
         /// This theme is designed especially for Windows 12
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win12 = true;
+        public bool DesignedFor_Win12 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 11
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win11 = true;
+        public bool DesignedFor_Win11 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 10
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win10 = true;
+        public bool DesignedFor_Win10 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 8.1
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win81 = true;
+        public bool DesignedFor_Win81 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 8.1
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win8 = true;
+        public bool DesignedFor_Win8 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 7
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win7 = true;
+        public bool DesignedFor_Win7 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows Vista
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_WinVista = true;
+        public bool DesignedFor_WinVista { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows XP
         /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_WinXP = true;
+        public bool DesignedFor_WinXP { get; set; } = true;
 
         /// <summary>
         /// Creates a new instance of Info structure
@@ -155,36 +155,5 @@ namespace WinPaletter.Theme.Structures
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", DesignedFor_WinVista ? 1 : 0, RegistryValueKind.DWord);
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP ? 1 : 0, RegistryValueKind.DWord);
         }
-
-        /// <summary>Operator to check if two Info structures are equal</summary>
-        public static bool operator ==(Info First, Info Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Info structures are not equal</summary>
-        public static bool operator !=(Info First, Info Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Info structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Info structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Info structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
     }
-
 }

@@ -12,70 +12,70 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows 10/11 colors and appearance
     /// </summary>
-    public class Windows10x : ICloneable
+    public class Windows10x : ManagerBase<Windows10x>
     {
         /// <summary> Controls if Windows 10x colors editing is enabled or not </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>Color index 0 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index0 = Color.FromArgb(153, 235, 255);
+        public Color Color_Index0 { get; set; } = Color.FromArgb(153, 235, 255);
 
         /// <summary>Color index 1 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index1 = Color.FromArgb(76, 194, 255);
+        public Color Color_Index1 { get; set; } = Color.FromArgb(76, 194, 255);
 
         /// <summary>Color index 2 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index2 = Color.FromArgb(0, 145, 248);
+        public Color Color_Index2 { get; set; } = Color.FromArgb(0, 145, 248);
 
         /// <summary>Color index 3 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index3 = Color.FromArgb(0, 120, 212);
+        public Color Color_Index3 { get; set; } = Color.FromArgb(0, 120, 212);
 
         /// <summary>Color index 4 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index4 = Color.FromArgb(0, 103, 192);
+        public Color Color_Index4 { get; set; } = Color.FromArgb(0, 103, 192);
 
         /// <summary>Color index 5 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index5 = Color.FromArgb(0, 62, 146);
+        public Color Color_Index5 { get; set; } = Color.FromArgb(0, 62, 146);
 
         /// <summary>Color index 6 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index6 = Color.FromArgb(0, 26, 104);
+        public Color Color_Index6 { get; set; } = Color.FromArgb(0, 26, 104);
 
         /// <summary>Color index 7 in registry value array 'AccentPalette' in 'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'</summary>
-        public Color Color_Index7 = Color.FromArgb(247, 99, 12);
+        public Color Color_Index7 { get; set; } = Color.FromArgb(247, 99, 12);
 
         /// <summary>Light mode for Windows</summary>
-        public bool WinMode_Light = true;
+        public bool WinMode_Light { get; set; } = true;
 
         /// <summary>Light mode for applications</summary>
-        public bool AppMode_Light = true;
+        public bool AppMode_Light { get; set; } = true;
 
         /// <summary>Transparency effects (Mica/Acrylic)</summary>
-        public bool Transparency = true;
+        public bool Transparency { get; set; } = true;
 
         /// <summary>Active titlebar color</summary>
-        public Color Titlebar_Active = Color.FromArgb(0, 120, 212);
+        public Color Titlebar_Active { get; set; } = Color.FromArgb(0, 120, 212);
 
         /// <summary>Inactive titlebar color</summary>
-        public Color Titlebar_Inactive = Color.FromArgb(32, 32, 32);
+        public Color Titlebar_Inactive { get; set; } = Color.FromArgb(32, 32, 32);
 
         /// <summary>Start menu accent color. It is a <b>misnomer</b> as it may not be responsible for start menu if 'Transparency'/'WinMode_Light' are changed.</summary>
-        public Color StartMenu_Accent = Color.FromArgb(0, 103, 192);
+        public Color StartMenu_Accent { get; set; } = Color.FromArgb(0, 103, 192);
 
         /// <summary>Make accent can be applied on titlebars</summary>
-        public bool ApplyAccentOnTitlebars = false;
+        public bool ApplyAccentOnTitlebars { get; set; } = false;
 
         /// <summary>Choices to apply accents on taskbar alone, taskbar with start and action center, or finally with nothing.</summary>
-        public AccentTaskbarLevels ApplyAccentOnTaskbar = Windows10x.AccentTaskbarLevels.None;
+        public AccentTaskbarLevels ApplyAccentOnTaskbar { get; set; } = Windows10x.AccentTaskbarLevels.None;
 
         /// <summary>
         /// Increase transparency of taskbar (and removes blur)
         /// <br></br>- Targeting Windows 10 only
         /// </summary>
-        public bool IncreaseTBTransparency = false;
+        public bool IncreaseTBTransparency { get; set; } = false;
 
         /// <summary>
         /// Make taskbar blur. If false, it will reduce blur power.
         /// <br></br>- Targeting Windows 10 only
         /// </summary>
-        public bool TB_Blur = true;
+        public bool TB_Blur { get; set; } = true;
 
         /// <summary>
         /// Represents the visual styles configuration for the application.
@@ -83,7 +83,7 @@ namespace WinPaletter.Theme.Structures
         /// <remarks>This field provides access to the visual styles settings, which can be used to
         /// customize the appearance of user interface. It is initialized with default
         /// values.</remarks>
-        public VisualStyles VisualStyles = new();
+        public VisualStyles VisualStyles { get; set; } = new();
 
         /// <summary>
         /// Creates a new Windows10x data structure with default values
@@ -269,36 +269,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(string edition, TreeView treeView = null)
         {
             WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{edition}", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two Windows10x structures are equal</summary>
-        public static bool operator ==(Windows10x First, Windows10x Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Windows10x structures are not equal</summary>
-        public static bool operator !=(Windows10x First, Windows10x Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Windows10x structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Windows10x structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Windows10x structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

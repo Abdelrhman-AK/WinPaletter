@@ -154,17 +154,19 @@ namespace WinPaletter
             {
                 try
                 {
-                    // Prepare UI before heavy work
-                    Invoke(() =>
+                    if (IsHandleCreated)
                     {
-                        Cursor = System.Windows.Forms.Cursors.AppStarting;
-                        ImgPaletteContainer.Visible = false;
+                        // Prepare UI before heavy work
+                        Invoke(() =>
+                        {
+                            Cursor = System.Windows.Forms.Cursors.AppStarting;
+                            ImgPaletteContainer.Visible = false;
 
-                        foreach (var ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>())
-                            ctrl.Dispose();
+                            foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>()) ctrl.Dispose();
 
-                        ImgPaletteContainer.Controls.Clear();
-                    });
+                            ImgPaletteContainer.Controls.Clear();
+                        });
+                    }
 
                     // Extract base colors from the predefined collection
                     Colors_List.Clear();
@@ -196,26 +198,32 @@ namespace WinPaletter
                         };
                     });
 
-                    // Apply all UI changes in one batch
-                    Invoke(() =>
+                    if (IsHandleCreated)
                     {
-                        ImgPaletteContainer.SuspendLayout();
-                        ImgPaletteContainer.Controls.AddRange(collection);
-                        ImgPaletteContainer.Visible = true;
-                        ImgPaletteContainer.ResumeLayout();
-                        Cursor = System.Windows.Forms.Cursors.Default;
+                        // Apply all UI changes in one batch
+                        Invoke(() =>
+                        {
+                            ImgPaletteContainer.SuspendLayout();
+                            ImgPaletteContainer.Controls.AddRange(collection);
+                            ImgPaletteContainer.Visible = true;
+                            ImgPaletteContainer.ResumeLayout();
+                            Cursor = System.Windows.Forms.Cursors.Default;
 
-                        Distribute(false);
-                    });
+                            Distribute(false);
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // Fail-safe: restore UI state even on error
-                    Invoke(() =>
+                    if (IsHandleCreated)
                     {
-                        Cursor = System.Windows.Forms.Cursors.Default;
-                        ImgPaletteContainer.Visible = true;
-                    });
+                        // Fail-safe: restore UI state even on error
+                        Invoke(() =>
+                        {
+                            Cursor = System.Windows.Forms.Cursors.Default;
+                            ImgPaletteContainer.Visible = true;
+                        });
+                    }
 
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in GetColors: {ex}");
                 }
@@ -246,16 +254,19 @@ namespace WinPaletter
             {
                 try
                 {
-                    // Update UI before heavy work
-                    Invoke(() =>
+                    if (IsHandleCreated)
                     {
-                        Cursor = System.Windows.Forms.Cursors.AppStarting;
-                        ImgPaletteContainer.Visible = false;
+                        // Update UI before heavy work
+                        Invoke(() =>
+                        {
+                            Cursor = System.Windows.Forms.Cursors.AppStarting;
+                            ImgPaletteContainer.Visible = false;
 
-                        foreach (var item in ImgPaletteContainer.Controls.OfType<ColorItem>()) item.Dispose();
+                            foreach (var item in ImgPaletteContainer.Controls.OfType<ColorItem>()) item.Dispose();
 
-                        ImgPaletteContainer.Controls.Clear();
-                    });
+                            ImgPaletteContainer.Controls.Clear();
+                        });
+                    }
 
                     List<Color> extractedColors = thumbnail
                         .ToPalette(100, 10, false)
@@ -284,23 +295,29 @@ namespace WinPaletter
                         };
                     });
 
-                    Invoke(() =>
+                    if (IsHandleCreated)
                     {
-                        ImgPaletteContainer.SuspendLayout();
-                        ImgPaletteContainer.Controls.AddRange(colorItems);
-                        ImgPaletteContainer.Visible = true;
-                        ImgPaletteContainer.ResumeLayout();
-                        Distribute();
-                        Cursor = System.Windows.Forms.Cursors.Default;
-                    });
+                        Invoke(() =>
+                        {
+                            ImgPaletteContainer.SuspendLayout();
+                            ImgPaletteContainer.Controls.AddRange(colorItems);
+                            ImgPaletteContainer.Visible = true;
+                            ImgPaletteContainer.ResumeLayout();
+                            Distribute();
+                            Cursor = System.Windows.Forms.Cursors.Default;
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Invoke(() =>
+                    if (IsHandleCreated)
                     {
-                        Cursor = System.Windows.Forms.Cursors.Default;
-                        ImgPaletteContainer.Visible = true;
-                    });
+                        Invoke(() =>
+                        {
+                            Cursor = System.Windows.Forms.Cursors.Default;
+                            ImgPaletteContainer.Visible = true;
+                        });
+                    }
 
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in generating palette from image. {ex}");
                 }
@@ -367,16 +384,19 @@ namespace WinPaletter
                         collection.Add(item);
                 });
 
-                Invoke(() =>
+                if (IsHandleCreated)
                 {
-                    Cursor = System.Windows.Forms.Cursors.Default;
-                    ImgPaletteContainer.SuspendLayout();
-                    ImgPaletteContainer.Controls.AddRange([.. collection]);
-                    ImgPaletteContainer.Visible = true;
-                    ImgPaletteContainer.ResumeLayout();
+                    Invoke(() =>
+                    {
+                        Cursor = System.Windows.Forms.Cursors.Default;
+                        ImgPaletteContainer.SuspendLayout();
+                        ImgPaletteContainer.Controls.AddRange([.. collection]);
+                        ImgPaletteContainer.Visible = true;
+                        ImgPaletteContainer.ResumeLayout();
 
-                    Distribute();
-                });
+                        Distribute();
+                    });
+                }
             });
         }
 

@@ -5,9 +5,6 @@ using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Style
 {
-    /// <summary>
-    /// Class to pick an icon from a PE File
-    /// </summary>
     public static class IconPicker
     {
         private const int MAX_PATH = 0x00000104;
@@ -21,28 +18,42 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static string ShowIconPicker(IntPtr windowHandle, string PEfileName, int index = 0)
         {
+            // Log method call and parameters
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "IconPicker.ShowIconPicker query");
+            if (PEfileName is not null)
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"IconPicker.ShowIconPicker.PEfileName: {PEfileName}");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"IconPicker.ShowIconPicker.InitialIndex: {index}");
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"IconPicker.ShowIconPicker.WindowHandle: {windowHandle}");
+
             // Create a StringBuilder with the PE file name
             StringBuilder sb = new(PEfileName, MAX_PATH);
 
-            // Hide the icon picker dialog
+            // Show the icon picker dialog
             int retval = Shell32.PickIconDlg(windowHandle, sb, sb.MaxCapacity, ref index);
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"IconPicker.ShowIconPicker.PickIconDlg returned: {retval}");
 
-            // If the user selected an icon, return the path to the icon
             if (retval != 0)
             {
+                string result;
+
                 if (Path.GetExtension(sb.ToString()).ToLower() != ".ico")
                 {
-                    // If the user selected an icon from a PE file, return the path to the icon and the index
-                    return $"{sb},{index}";
+                    // Icon from a PE file
+                    result = $"{sb},{index}";
                 }
                 else
                 {
-                    // If the user selected an icon from an ICO file, return the path to the icon only
-                    return $"{sb}";
+                    // Icon from an ICO file
+                    result = sb.ToString();
                 }
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"IconPicker.ShowIconPicker.SelectedPEIcon: {result}");
+
+                return result;
             }
 
-            // Return null if the user canceled the icon picker
+            // User canceled the dialog
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "IconPicker canceled by user.");
             return null;
         }
     }

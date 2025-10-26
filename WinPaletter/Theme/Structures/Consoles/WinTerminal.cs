@@ -16,7 +16,7 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Class that has data of Windows Terminal settings
     /// </summary>
-    public class WinTerminal : ICloneable, IEquatable<WinTerminal>
+    public class WinTerminal : ManagerBase<WinTerminal>
     {
         /// <summary>
         /// Enumeration for ways by which WinPaletter can get Windows Terminal settings data
@@ -1790,96 +1790,6 @@ namespace WinPaletter.Theme.Structures
                         return string.Empty;
                     }
             }
-        }
-
-        /// <summary>
-        /// Clone current Windows Terminal settings
-        /// </summary>
-        /// <returns></returns>
-        public object Clone()
-        {
-            // Deep copy the WinTerminal instance
-            return new WinTerminal(string.Empty, Mode.Empty, Version.Stable)
-            {
-                Enabled = Enabled,
-                DefaultProfile = DefaultProfile,
-                Profiles = Profiles.Clone() as Profiles,
-                Schemes = [.. Schemes],
-                Theme = Theme,
-                Themes = [.. Themes],
-                UseAcrylicInTabRow = UseAcrylicInTabRow
-            };
-        }
-
-        /// <summary>
-        /// Checks if two Windows Terminals settings are equal or not
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as WinTerminal);
-        }
-
-        /// <summary>
-        /// Checks if two Windows Terminals settings are equal or not
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(WinTerminal other)
-        {
-            return other != null &&
-                   Enabled == other.Enabled &&
-                   DefaultProfile == other.DefaultProfile &&
-                   EqualityComparer<Profiles>.Default.Equals(Profiles, other.Profiles) &&
-                   EqualityComparer<List<Scheme>>.Default.Equals(Schemes, other.Schemes) &&
-                   Theme == other.Theme &&
-                   EqualityComparer<List<Types.Theme>>.Default.Equals(Themes, other.Themes) &&
-                   UseAcrylicInTabRow == other.UseAcrylicInTabRow;
-        }
-
-        /// <summary>
-        /// Get hash code of Windows Terminal settings
-        /// </summary>
-        /// <returns></returns>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int hash = 17;
-
-                hash = (hash * 23) + Enabled.GetHashCode();
-                hash = (hash * 23) + (DefaultProfile?.GetHashCode() ?? 0);
-                hash = (hash * 23) + (Profiles?.GetHashCode() ?? 0);
-                hash = (hash * 23) + (Schemes?.GetHashCode() ?? 0);
-                hash = (hash * 23) + (Theme?.GetHashCode() ?? 0);
-                hash = (hash * 23) + (Themes?.GetHashCode() ?? 0);
-                hash = (hash * 23) + UseAcrylicInTabRow.GetHashCode();
-
-                return hash;
-            }
-        }
-
-        /// <summary>
-        /// Checks if two Windows Terminals settings are equal
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator ==(WinTerminal left, WinTerminal right)
-        {
-            return EqualityComparer<WinTerminal>.Default.Equals(left, right);
-        }
-
-        /// <summary>
-        /// Checks if two Windows Terminals settings are not equal
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator !=(WinTerminal left, WinTerminal right)
-        {
-            return !(left == right);
         }
     }
 }

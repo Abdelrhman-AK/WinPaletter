@@ -136,5 +136,10 @@ namespace WinPaletter
         {
             Process.Start(Links.Serilog);
         }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/lofcz/FastCloner");
+        }
     }
 }

@@ -69,22 +69,20 @@ namespace WinPaletter
             this.Status_pnl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Status_pnl.Location = new System.Drawing.Point(0, 763);
             this.Status_pnl.Name = "Status_pnl";
-            this.Status_pnl.Padding = new System.Windows.Forms.Padding(3);
             this.Status_pnl.Size = new System.Drawing.Size(1156, 24);
             this.Status_pnl.TabIndex = 122;
             // 
             // Status_lbl
             // 
-            this.Status_lbl.AutoEllipsis = true;
             this.Status_lbl.BackColor = System.Drawing.Color.Transparent;
             this.Status_lbl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Status_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Status_lbl.Location = new System.Drawing.Point(3, 3);
+            this.Status_lbl.Location = new System.Drawing.Point(0, 0);
             this.Status_lbl.Name = "Status_lbl";
-            this.Status_lbl.Size = new System.Drawing.Size(1150, 18);
+            this.Status_lbl.Size = new System.Drawing.Size(1156, 24);
             this.Status_lbl.TabIndex = 39;
-            this.Status_lbl.Text = "Log";
             this.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Status_lbl.Paint += new System.Windows.Forms.PaintEventHandler(this.Status_lbl_Paint);
             // 
             // MainForm
             // 

@@ -13,19 +13,19 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows wallpaper
     /// </summary>
-    public class Wallpaper : ICloneable
+    public class Wallpaper : ManagerBase<Wallpaper>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>
         /// - If true, slideshow source will be a folder
         /// <br>- If false, slideshow source will be a list of images</br>
         /// </summary>
-        public bool SlideShow_Folder_or_ImagesList = true;
+        public bool SlideShow_Folder_or_ImagesList { get; set; } = true;
 
         /// <summary>Wallpaper File path</summary>
-        public string ImageFile = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
+        public string ImageFile { get; set; } = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
 
         /// <summary>
         /// It is how the image will be previewed in desktop
@@ -37,7 +37,7 @@ namespace WinPaletter.Theme.Structures
         /// Fill
         /// </code>
         /// </summary>
-        public WallpaperStyles WallpaperStyle = WallpaperStyles.Fill;
+        public WallpaperStyles WallpaperStyle { get; set; } = WallpaperStyles.Fill;
 
         /// <summary>
         /// Different types of wallpaper to be set
@@ -47,22 +47,22 @@ namespace WinPaletter.Theme.Structures
         /// SlideShow
         /// </code>
         /// </summary>
-        public WallpaperTypes WallpaperType = WallpaperTypes.Picture;
+        public WallpaperTypes WallpaperType { get; set; } = WallpaperTypes.Picture;
 
         /// <summary>Folder that has images for wallpaper slide show, (if <c>SlideShow_Folder_or_ImagesList == true</c>)</summary>
-        public string Wallpaper_Slideshow_ImagesRootPath = string.Empty;
+        public string Wallpaper_Slideshow_ImagesRootPath { get; set; } = string.Empty;
 
         /// <summary>
-        /// String array that has pathes of images files, (if SlideShow_Folder_or_ImagesList = false;)
+        /// String array that has pathes of images files, (if SlideShow_Folder_or_ImagesList { get; set; } = false;)
         /// <br><b><i>(!) Important note: array items (files) must be located in the same folder, or slideshow won't load them.</i></b></br>
         /// </summary>
-        public string[] Wallpaper_Slideshow_Images = [];
+        public string[] Wallpaper_Slideshow_Images { get; set; } = [];
 
         /// <summary>Interval of wallpaper changing in slideshow</summary>
-        public int Wallpaper_Slideshow_Interval = 60000;
+        public int Wallpaper_Slideshow_Interval { get; set; } = 60000;
 
         /// <summary>Shuffle slideshow images (don't preview them in their order)</summary>
-        public bool Wallpaper_Slideshow_Shuffle = false;
+        public bool Wallpaper_Slideshow_Shuffle { get; set; } = false;
 
         /// <summary>
         /// Creates a new instance of Wallpaper structure with default values
@@ -268,36 +268,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two Wallpaper structures are equal</summary>
-        public static bool operator ==(Wallpaper First, Wallpaper Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two Wallpaper structures are not equal</summary>
-        public static bool operator !=(Wallpaper First, Wallpaper Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones Wallpaper structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two Wallpaper structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of Wallpaper structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

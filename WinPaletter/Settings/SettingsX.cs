@@ -27,11 +27,6 @@ namespace WinPaletter
         public string _File = null;
 
         /// <summary>
-        /// A flag to determine if the settings has been changed
-        /// </summary>
-        private bool Changed = false;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SettingsX"/> class.
         /// </summary>
         public SettingsX()
@@ -139,6 +134,7 @@ namespace WinPaletter
             checkBox15.Checked = Sets.AppLog.RegRead;
             checkBox17.Checked = Sets.AppLog.RegWrite;
             checkBox18.Checked = Sets.AppLog.RegDelete;
+            toggle42.Checked = Sets.AppLog.StatusPanel;
 
             toggle23.Checked = Sets.ExplorerPatcher.Enabled;
             toggle24.Checked = Sets.ExplorerPatcher.Enabled_Force;
@@ -243,13 +239,13 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
 
-            // Ch = Change
+            // ch = Change
             bool ch_nerd = false;
             bool ch_terminal = false;
             bool ch_lang = false;
             bool ch_appearance = false;
             bool ch_EP = false;
-            //bool ch_WPElevator = false;
+            bool ch_logStatusPanel = false;
 
             // A quick check for settings change
             {
@@ -273,6 +269,9 @@ namespace WinPaletter
                     ch_nerd = true;
                 if (Settings.NerdStats.DotDefaultChangedIndicator != toggle26.Checked)
                     ch_nerd = true;
+
+                if (Settings.AppLog.StatusPanel != toggle42.Checked)
+                    ch_logStatusPanel = true;
 
                 if (Settings.WindowsTerminals.Path_Deflection != toggle22.Checked)
                     ch_terminal = true;
@@ -298,9 +297,6 @@ namespace WinPaletter
                     ch_EP = true;
                 if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
                     ch_EP = true;
-
-                //if (Settings.Miscellaneous.DontUseWPElevatorConsole != checkBox19.Checked)
-                //    ch_WPElevator = true;
             }
 
             Write(Program.Settings, Settings.Source.Registry);
@@ -398,6 +394,11 @@ namespace WinPaletter
                 Forms.Home.LoadFromTM(Program.TM);
             }
 
+            if (ch_logStatusPanel)
+            {
+                Forms.MainForm.Status_pnl.Visible = toggle42.Checked;
+            }
+
             Cursor = Cursors.Default;
 
             MsgBox(Program.Lang.Strings.Messages.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -461,6 +462,7 @@ namespace WinPaletter
             Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose = toggle18.Checked;
 
             Sets.AppLog.Enabled = toggle40.Checked;
+            Sets.AppLog.StatusPanel = toggle42.Checked;
             Sets.AppLog.Reg = toggle41.Checked;
             Sets.AppLog.RegRead = checkBox15.Checked;
             Sets.AppLog.RegWrite = checkBox17.Checked;
@@ -540,8 +542,8 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.Show_WinEffects_Alert = toggle12.Checked;
 
             Sets.Store.Online_or_Offline = RadioImage1.Checked;
-            Sets.Store.Online_Repositories = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
-            Sets.Store.Offline_Directories = ListBox2.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
+            Sets.Store.Online_Repositories = [.. ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s))];
+            Sets.Store.Offline_Directories = [.. ListBox2.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s))];
             Sets.Store.Search_ThemeNames = CheckBox28.Checked;
             Sets.Store.Search_Descriptions = CheckBox26.Checked;
             Sets.Store.Search_AuthorsNames = CheckBox27.Checked;
@@ -576,232 +578,9 @@ namespace WinPaletter
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Settings NewSets = new(Settings.Source.Empty);
+            Write(NewSets, Settings.Source.Empty);
 
-            Changed = false;
-
-            // Full check for settings change
-            {
-                ref Settings Settings = ref Program.Settings;
-
-                if (Settings.Updates.AutoCheck != toggle1.Checked)
-                    Changed = true;
-                if (Settings.FileTypeManagement.AutoAddExt != toggle6.Checked)
-                    Changed = true;
-                if (Settings.FileTypeManagement.OpeningPreviewInApp_or_AppliesIt != RadioButton1.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.AutoRestartExplorer != toggle8.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.ResetCursorsToAero != toggle13.Checked)
-                    Changed = true;
-                if ((int)Settings.Updates.Channel != ComboBox2.SelectedIndex)
-                    Changed = true;
-                if (Settings.Miscellaneous.Win7LivePreview != toggle35.Checked)
-                    Changed = true;
-                if (Settings.Miscellaneous.ShowWelcomeDialog != toggle37.Checked)
-                    Changed = true;
-
-                if (Settings.NerdStats.Classic_Color_Picker != toggle30.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.ShowSaveConfirmation != toggle9.Checked)
-                    Changed = true;
-                if (Settings.FileTypeManagement.CompressThemeFile != toggle7.Checked)
-                    Changed = true;
-
-                if (Settings.Appearance.DarkMode != toggle3.Checked)
-                    Changed = true;
-                if (Settings.Appearance.AutoDarkMode != toggle4.Checked)
-                    Changed = true;
-                if (Settings.Appearance.ManagedByTheme != toggle5.Checked)
-                    Changed = true;
-
-                if (Settings.Language.Enabled != toggle2.Checked)
-                    Changed = true;
-                if ((Settings.Language.File ?? string.Empty) != (TextBox3.Text ?? string.Empty))
-                    Changed = true;
-
-                if (Settings.NerdStats.Enabled != toggle25.Checked)
-                    Changed = true;
-                if ((int)Settings.NerdStats.Type != ComboBox3.SelectedIndex)
-                    Changed = true;
-                if (Settings.NerdStats.ShowHexHash != CheckBox11.Checked)
-                    Changed = true;
-                if (Settings.NerdStats.MoreLabelTransparency != toggle27.Checked)
-                    Changed = true;
-                if (Settings.NerdStats.UseWindowsMonospacedFont != toggle28.Checked)
-                    Changed = true;
-                if (Settings.NerdStats.DotDefaultChangedIndicator != toggle26.Checked)
-                    Changed = true;
-                if (Settings.NerdStats.DragAndDrop != toggle29.Checked)
-                    Changed = true;
-
-                if (Settings.WindowsTerminals.Bypass != toggle20.Checked)
-                    Changed = true;
-                if (Settings.WindowsTerminals.ListAllFonts != toggle21.Checked)
-                    Changed = true;
-                if (Settings.WindowsTerminals.Path_Deflection != toggle22.Checked)
-                    Changed = true;
-                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? string.Empty) != (TextBox1.Text ?? string.Empty))
-                    Changed = true;
-                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? string.Empty) != (TextBox2.Text ?? string.Empty))
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.CMD_OverrideUserPreferences != toggle14.Checked)
-                    Changed = true;
-
-                if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.None & !VL0.Checked)
-                    Changed = true;
-                if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Basic & !VL1.Checked)
-                    Changed = true;
-                if (Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed & !VL2.Checked)
-                    Changed = true;
-                if (Settings.ThemeLog.CountDown != toggle19.Checked)
-                    Changed = true;
-                if (Settings.ThemeLog.CountDown_Seconds != trackBarX1.Value)
-                    Changed = true;
-                if (Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose != toggle18.Checked)
-                    Changed = true;
-
-                if (Settings.AppLog.Enabled != toggle40.Checked)
-                    Changed = true;
-                if (Settings.AppLog.Reg != toggle41.Checked)
-                    Changed = true;
-                if (Settings.AppLog.RegRead != checkBox15.Checked)
-                    Changed = true;
-                if (Settings.AppLog.RegWrite != checkBox17.Checked)
-                    Changed = true;
-                if (Settings.AppLog.RegDelete != checkBox18.Checked)
-                    Changed = true;
-
-                if (Settings.ExplorerPatcher.Enabled != toggle23.Checked)
-                    Changed = true;
-                if (Settings.ExplorerPatcher.Enabled_Force != toggle24.Checked)
-                    Changed = true;
-                if (Settings.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
-                    Changed = true;
-                if ((int)Settings.ExplorerPatcher.StartStyle != EP_Start_10_Type.SelectedIndex)
-                    Changed = true;
-                if (Settings.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
-                    Changed = true;
-                if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
-                    Changed = true;
-
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton5.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton6.Checked)
-                    Changed = true;
-
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton8.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton10.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton9.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase & !RadioButton7.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT != toggle10.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton12.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton11.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton14.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton13.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton16.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton15.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton18.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton17.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton20.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton19.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite & !RadioButton22.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults & !RadioButton23.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange & !RadioButton21.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound != toggle15.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert != toggle16.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.PE_ModifyByDefault != RadioButton25.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.Show_WinEffects_Alert != toggle12.Checked)
-                    Changed = true;
-                if (Settings.ThemeApplyingBehavior.CreateSystemRestore != toggle38.Checked)
-                    Changed = true;
-
-                if (Settings.Store.Online_or_Offline & !RadioImage1.Checked)
-                    Changed = true;
-                if (!Settings.Store.Online_or_Offline & !RadioImage2.Checked)
-                    Changed = true;
-
-                if (Settings.Store.Search_ThemeNames != CheckBox28.Checked)
-                    Changed = true;
-                if (Settings.Store.Search_Descriptions != CheckBox26.Checked)
-                    Changed = true;
-                if (Settings.Store.Search_AuthorsNames != CheckBox27.Checked)
-                    Changed = true;
-                if (Settings.Store.Offline_SubFolders != CheckBox29.Checked)
-                    Changed = true;
-                if (Settings.Store.ShowTips != toggle17.Checked)
-                    Changed = true;
-
-                if (Settings.BackupTheme.Enabled != toggle31.Checked)
-                    Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnAppOpen != toggle33.Checked)
-                    Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnApply != toggle32.Checked)
-                    Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnApplySingleAspect != toggle36.Checked)
-                    Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnThemeLoad != toggle34.Checked)
-                    Changed = true;
-                if (Settings.BackupTheme.AutoBackupOnExError != toggle39.Checked)
-                    Changed = true;
-                if (Settings.BackupTheme.BackupPath != textBox4.Text)
-                    Changed = true;
-
-                if (Settings.AspectsControl.Enabled != toggle11.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.WinColors != checkBox1.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.ClassicColors != checkBox2.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.LogonUI != checkBox13.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.Cursors != checkBox4.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.MetricsFonts != checkBox3.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.Wallpaper != checkBox5.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.Consoles != checkBox6.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.WinTerminals != checkBox7.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.Effects != checkBox8.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.Sounds != checkBox9.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.ScreenSaver != checkBox10.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.AltTab != checkBox12.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.Icons != checkBox14.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.ClassicColors_Advanced != radioImage4.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.MetricsFonts_Advanced != radioImage8.Checked)
-                    Changed = true;
-                if (Settings.AspectsControl.Accessibility != checkBox16.Checked)
-                    Changed = true;
-            }
+            bool Changed = Program.Settings != NewSets;
 
             if (e.CloseReason == CloseReason.UserClosing & Changed)
             {

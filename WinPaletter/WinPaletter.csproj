@@ -104,12 +104,16 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\3. Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FastCloner, Version=3.3.16.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastCloner.3.3.16\lib\net46\FastCloner.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="FluentTransitions, Version=2.0.2.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentTransitions.2.0.2\lib\net48\FluentTransitions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.0-rc.1.25451.107\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.0-rc.2.25502.107\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -150,14 +154,14 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.10.0.0-rc.1.25451.107\lib\net462\System.Collections.Immutable.dll</HintPath>
+      <HintPath>..\packages\System.Collections.Immutable.10.0.0-rc.2.25502.107\lib\net462\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Design">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.10.0.0-rc.1.25451.107\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.10.0.0-rc.2.25502.107\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.DirectoryServices.AccountManagement">
@@ -167,7 +171,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Formats.Nrbf, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Formats.Nrbf.10.0.0-rc.1.25451.107\lib\net462\System.Formats.Nrbf.dll</HintPath>
+      <HintPath>..\packages\System.Formats.Nrbf.10.0.0-rc.2.25502.107\lib\net462\System.Formats.Nrbf.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Compression">
@@ -189,11 +193,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Reflection.Metadata, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.10.0.0-rc.1.25451.107\lib\net462\System.Reflection.Metadata.dll</HintPath>
+      <HintPath>..\packages\System.Reflection.Metadata.10.0.0-rc.2.25502.107\lib\net462\System.Reflection.Metadata.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Resources.Extensions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Resources.Extensions.10.0.0-rc.1.25451.107\lib\net462\System.Resources.Extensions.dll</HintPath>
+      <HintPath>..\packages\System.Resources.Extensions.10.0.0-rc.2.25502.107\lib\net462\System.Resources.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -202,7 +206,7 @@
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Channels, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.10.0.0-rc.1.25451.107\lib\net462\System.Threading.Channels.dll</HintPath>
+      <HintPath>..\packages\System.Threading.Channels.10.0.0-rc.2.25502.107\lib\net462\System.Threading.Channels.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -718,18 +722,16 @@
     <Compile Include="Theme\Default\WindowsVista.cs" />
     <Compile Include="Theme\Default\WindowsXP.cs" />
     <Compile Include="Theme\Save.cs" />
+    <Compile Include="Theme\ManagerBase.cs" />
     <Compile Include="Theme\Structures\LogonUI\LogonUI81.cs" />
     <Compile Include="Theme\Structures\Others\Cursors.cs" />
     <Compile Include="Theme\Structures\Others\Icons.cs" />
     <Compile Include="Theme\Structures\Others\Accessibility.cs" />
     <Compile Include="Theme\Structures\WindowsColors\VisualStyles.cs" />
     <Compile Include="Theme\Structures\WindowsColors\Windows8.cs" />
-    <Compile Include="Theme\Support\CloneSupport.cs" />
-    <Compile Include="Theme\Support\DisposeSupport.cs" />
     <Compile Include="Theme\Support\Editions.cs" />
     <Compile Include="Theme\Support\Functions.cs" />
     <Compile Include="Theme\Support\JSON_Helpers.cs" />
-    <Compile Include="Theme\Support\Operators.cs" />
     <Compile Include="Theme\Support\Apply.cs" />
     <Compile Include="Theme\Properties.cs" />
     <Compile Include="Theme\Structures\Others\AltTab.cs" />

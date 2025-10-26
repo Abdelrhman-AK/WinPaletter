@@ -8,37 +8,37 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing WinPaletter appearance
     /// </summary>
-    public class AppTheme : ICloneable
+    public class AppTheme : ManagerBase<AppTheme>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Back color of forms</summary>
-        public Color BackColor = DefaultColors.BackColor_Dark;
+        public Color BackColor { get; set; } = DefaultColors.BackColor_Dark;
 
         /// <summary>Accent color for controls</summary>
-        public Color AccentColor = DefaultColors.PrimaryColor_Dark;
+        public Color AccentColor { get; set; } = DefaultColors.PrimaryColor_Dark;
 
         /// <summary> Secondary color for controls </summary>
-        public Color SecondaryColor = DefaultColors.SecondaryColor_Dark;
+        public Color SecondaryColor { get; set; } = DefaultColors.SecondaryColor_Dark;
 
         /// <summary> Tertiary color for controls </summary>
-        public Color TertiaryColor = DefaultColors.TertiaryColor_Dark;
+        public Color TertiaryColor { get; set; } = DefaultColors.TertiaryColor_Dark;
 
         /// <summary> Disabled color for controls </summary>
-        public Color DisabledColor = DefaultColors.DisabledColor_Dark;
+        public Color DisabledColor { get; set; } = DefaultColors.DisabledColor_Dark;
 
         /// <summary> Disabled back color for controls </summary>
-        public Color DisabledBackColor = DefaultColors.DisabledBackColor_Dark;
+        public Color DisabledBackColor { get; set; } = DefaultColors.DisabledBackColor_Dark;
 
         /// <summary>Make WinPaletter in dark mode</summary>
-        public bool DarkMode = true;
+        public bool DarkMode { get; set; } = true;
 
         /// <summary>Make controls have rounded corners</summary>
-        public bool RoundCorners = OS.WXP || OS.WVista || OS.W7 || OS.W11 || OS.W12;
+        public bool RoundCorners { get; set; } = OS.WXP || OS.WVista || OS.W7 || OS.W11 || OS.W12;
 
         /// <summary>Enable animations</summary>
-        public bool Animations = true;
+        public bool Animations { get; set; } = true;
 
         /// <summary>
         /// Creates a new AppTheme structure
@@ -111,36 +111,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, Settings.Structures.REG_Appearance, "CustomColors", Enabled);
-        }
-
-        /// <summary>Operator to check if two AppTheme structures are equal</summary>
-        public static bool operator ==(AppTheme First, AppTheme Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two AppTheme structures are not equal</summary>
-        public static bool operator !=(AppTheme First, AppTheme Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones AppTheme structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two AppTheme structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of AppTheme structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

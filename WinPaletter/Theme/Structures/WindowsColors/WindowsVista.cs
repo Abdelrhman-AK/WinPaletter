@@ -10,13 +10,13 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows Vista appearance
     /// </summary>
-    public class WindowsVista : ICloneable
+    public class WindowsVista : ManagerBase<WindowsVista>
     {
         /// <summary> Controls if Windows Vista colors editing is enabled or not </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>Main Windows color</summary>
-        public Color ColorizationColor = Color.FromArgb(64, 158, 254);
+        public Color ColorizationColor { get; set; } = Color.FromArgb(64, 158, 254);
 
         /// <summary>Control amount of main Windows color</summary>
         public byte Alpha;
@@ -27,7 +27,7 @@ namespace WinPaletter.Theme.Structures
         /// <remarks>This field provides access to the visual styles settings, which can be used to
         /// customize the appearance of user interface. It is initialized with default
         /// values.</remarks>
-        public VisualStyles VisualStyles = new();
+        public VisualStyles VisualStyles { get; set; } = new();
 
         /// <summary>
         /// Creates new WindowsVista data structure with default values
@@ -78,36 +78,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\WindowsVista", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two WindowsVista structures are equal</summary>
-        public static bool operator ==(WindowsVista First, WindowsVista Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two WindowsVista structures are not equal</summary>
-        public static bool operator !=(WindowsVista First, WindowsVista Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones WindowsVista structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two WindowsVista structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of WindowsVista structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

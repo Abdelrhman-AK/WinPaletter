@@ -13,7 +13,7 @@ namespace WinPaletter.Theme
         {
             Manager TM = new(Manager.Source.Empty);
 
-            ref Info Info = ref TM.Info;
+            Info Info = TM.Info;
             Info.ThemeName = "Default Windows Vista";
             Info.Description = "Initial, like the default look after a fresh Windows Vista setup—clean, untouched, and ready for customization.";
             Info.ThemeVersion = "1.0.0.0";
@@ -21,11 +21,11 @@ namespace WinPaletter.Theme
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
 
-            ref WindowsVista WinVista = ref TM.WindowsVista;
+            WindowsVista WinVista = TM.WindowsVista;
             WinVista.Enabled = true;
             WinVista.ColorizationColor = Color.FromArgb(64, 158, 254);
 
-            ref Console CMD = ref TM.CommandPrompt;
+            Console CMD = TM.CommandPrompt;
             CMD.Enabled = true;
             CMD.ColorTable00 = Color.FromArgb(0, 0, 0);
             CMD.ColorTable01 = Color.FromArgb(0, 0, 128);
@@ -52,7 +52,7 @@ namespace WinPaletter.Theme
             CMD.FontRaster = true;
             CMD.W10_1909_ForceV2 = false;
 
-            ref Console PS86 = ref TM.PowerShellx86;
+            Console PS86 = TM.PowerShellx86;
             PS86.Enabled = true;
             PS86.ColorTable00 = Color.FromArgb(12, 12, 12);
             PS86.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -79,7 +79,7 @@ namespace WinPaletter.Theme
             PS86.FontRaster = true;
             PS86.W10_1909_ForceV2 = false;
 
-            ref Console PS64 = ref TM.PowerShellx64;
+            Console PS64 = TM.PowerShellx64;
             PS64.Enabled = true;
             PS64.ColorTable00 = Color.FromArgb(12, 12, 12);
             PS64.ColorTable01 = Color.FromArgb(0, 55, 218);
@@ -106,7 +106,7 @@ namespace WinPaletter.Theme
             PS64.FontRaster = true;
             PS64.W10_1909_ForceV2 = false;
 
-            ref MetricsFonts MetricsFonts = ref TM.MetricsFonts;
+            MetricsFonts MetricsFonts = TM.MetricsFonts;
             MetricsFonts.Enabled = true;
             MetricsFonts.BorderWidth = 1;
             MetricsFonts.CaptionHeight = 19;
@@ -123,7 +123,7 @@ namespace WinPaletter.Theme
             MetricsFonts.DesktopIconSize = 48;
             MetricsFonts.ShellIconSize = 32;
 
-            ref WinEffects WinEffects = ref TM.WindowsEffects;
+            WinEffects WinEffects = TM.WindowsEffects;
             WinEffects.Enabled = true;
             WinEffects.ShakeToMinimize = false;
             WinEffects.BalloonNotifications = true;
@@ -132,7 +132,7 @@ namespace WinPaletter.Theme
             WinEffects.Win11ClassicContextMenu = false;
             WinEffects.SysListView32 = true;
 
-            ref Icons Icons = ref TM.Icons;
+            Icons Icons = TM.Icons;
             Icons.Enabled = true;
 
             TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
@@ -174,7 +174,7 @@ namespace WinPaletter.Theme
             TM.Cursors.Cursor_Busy.LoadingCircleBack2 = Color.FromArgb(112, 255, 250);
             TM.Cursors.Cursor_Busy.LoadingCircleHot_AnimationSpeed = 20;
 
-            ref Sounds Sounds = ref TM.Sounds;
+            Sounds Sounds = TM.Sounds;
             Sounds.Enabled = true;
             Sounds.Snd_Imageres_SystemStart = "Default";
             Sounds.Snd_Win_Default = $@"{SysPaths.Windows}\media\Windows Ding.wav";
@@ -260,12 +260,12 @@ namespace WinPaletter.Theme
             Sounds.Snd_SpeechRec_MisrecoSound = $@"{SysPaths.Windows}\media\Speech Misrecognition.wav";
             Sounds.Snd_SpeechRec_PanelSound = $@"{SysPaths.Windows}\media\Speech Disambiguation.wav";
 
-            ref Wallpaper Wallpaper = ref TM.Wallpaper;
+            Wallpaper Wallpaper = TM.Wallpaper;
             Wallpaper.Enabled = true;
 
             TM.AppTheme.Enabled = true;
 
-            ref Accessibility Accessibility = ref TM.Accessibility;
+            Accessibility Accessibility = TM.Accessibility;
             Accessibility.Enabled = true;
 
             return TM;

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -365,7 +366,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    // Predefine key paths
+                    //Predefine key paths
                     const string Desktop = @"Control Panel\Desktop";
                     const string Colors = @"Control Panel\Colors";
                     const string Explorer = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers";
@@ -409,7 +410,6 @@ namespace WinPaletter
         {
             string fullKey = $@"HKEY_USERS\{sid}\{keyPath}";
 
-            // Skip if value doesn't exist (avoid expensive WMI setup)
             if (!ValueExists(fullKey, valueName))
             {
                 Program.Log?.Debug($"Skipped watcher: {fullKey}\\{valueName} does not exist.");
@@ -418,10 +418,10 @@ namespace WinPaletter
 
             try
             {
-                string escapedKey = keyPath.Replace(@"\", @"\\");
-                string query = $"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{sid}\\{escapedKey}' AND ValueName='{valueName}'";
+                // WMI expects double backslashes inside the query string only
+                string escapedKey = $@"{sid}\{keyPath}".Replace(@"\", @"\\");
+                string query = $"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{escapedKey}' AND ValueName='{valueName}'";
 
-                // Reuse query object directly to avoid multiple allocations
                 ManagementEventWatcher watcher = new(new WqlEventQuery(query));
                 watcher.EventArrived += handler;
                 watcher.Start();
@@ -435,6 +435,7 @@ namespace WinPaletter
                 Program.Log?.Write(LogEventLevel.Error, $"Failed watcher registration for {fullKey}\\{valueName}", ex);
             }
         }
+
 
         /// <summary>
         /// Stop all the registered watchers

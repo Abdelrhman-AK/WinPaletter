@@ -143,7 +143,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Trackbar1.AnimateChanges = true;
             this.Trackbar1.BackColor = System.Drawing.Color.Transparent;
-            this.Trackbar1.DefaultValue = 100;
+            this.Trackbar1.DefaultValue = 95;
             this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Trackbar1.Location = new System.Drawing.Point(4, 39);
             this.Trackbar1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -286,6 +286,7 @@ namespace WinPaletter
             this.tabs_preview_1.Controls.Add(this.TabPage6);
             this.tabs_preview_1.Controls.Add(this.TabPage7);
             this.tabs_preview_1.Location = new System.Drawing.Point(4, 4);
+            this.tabs_preview_1.Multiline = true;
             this.tabs_preview_1.Name = "tabs_preview_1";
             this.tabs_preview_1.SelectedIndex = 0;
             this.tabs_preview_1.Size = new System.Drawing.Size(528, 297);
@@ -487,6 +488,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(893, 451);
             this.Controls.Add(this.alertBox3);
             this.Controls.Add(this.AlertBox2);

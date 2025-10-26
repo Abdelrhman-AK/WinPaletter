@@ -15,7 +15,7 @@ namespace WinPaletter.Theme
     /// <summary>
     /// This class is responsible for managing WinPaletter theme
     /// </summary>
-    public partial class Manager
+    public partial class Manager : ManagerBase<Manager>
     {
         /// <summary>
         /// Create new instance of WinPaletter theme
@@ -212,7 +212,7 @@ namespace WinPaletter.Theme
                                     // Set the value of the current instance's field from theme File JSON data
                                     SetThemeValues(json);
                                 }
-                                else if (GetEdition(File) == Editions.OldFormat)
+                                else if (GetEdition(File) == Editions.Legacy)
                                 {
                                     Program.Log?.Write(LogEventLevel.Error, $"The used wpth file has the old format (obsolete.)");
 

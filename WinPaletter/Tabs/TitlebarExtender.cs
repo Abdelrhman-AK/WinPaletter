@@ -212,6 +212,8 @@ namespace WinPaletter.Tabs
                 UpdateColors();
                 if (!DesignMode)
                 {
+                    _lastBackdropType = (TitlebarTypes)(-1);
+                    _lastBackdropPadding = Padding.Empty;
                     FindForm()?.ResetEffect();
                     UpdateBackDrop();
                 }
@@ -318,6 +320,9 @@ namespace WinPaletter.Tabs
             base.OnMouseMove(e);
         }
 
+        private TitlebarTypes _lastBackdropType = (TitlebarTypes)(-1);
+        private Padding _lastBackdropPadding = Padding.Empty;
+
         /// <summary>
         /// Updates the backdrop of the control.
         /// </summary>
@@ -326,74 +331,67 @@ namespace WinPaletter.Tabs
             if (Flag == Flags.Tabs_Extended)
             {
                 BackColor = scheme.Colors.Back_Hover(0);
+                return;
             }
-            else
+
+            Padding p = Dock switch
             {
-                Padding p = Padding.Empty;
+                DockStyle.Top => new(0, Height, 0, 0),
+                DockStyle.Bottom => new(0, 0, 0, Height),
+                DockStyle.Left => new(Width, 0, 0, 0),
+                DockStyle.Right => new(0, 0, Width, 0),
+                DockStyle.Fill => new(0),
+                _ => Padding.Empty
+            };
 
-                if (Dock == DockStyle.Top)
-                {
-                    p = new(0, Height, 0, 0);
-                }
-                else if (Dock == DockStyle.Bottom)
-                {
-                    p = new(0, 0, 0, Height);
-                }
-                else if (Dock == DockStyle.Left)
-                {
-                    p = new(Width, 0, 0, 0);
-                }
-                else if (Dock == DockStyle.Right)
-                {
-                    p = new(0, 0, Width, 0);
-                }
-                else if (Dock == DockStyle.Fill)
-                {
-                    p = new(0);
-                }
+            Form form = FindForm();
+            if (form is not null && form.Parent is not null) form = form.Parent.FindForm();
 
-                Form form = FindForm();
+            if (Flag != Flags.System || form is null) return;
 
-                // Fixer for tabbed forms
-                if (form is not null && form.Parent is not null) form = form.Parent.FindForm();
+            TitlebarTypes type = TitlebarType;
 
-                if (Flag == Flags.System)
-                {
-                    TitlebarTypes type = TitlebarType;
+            // Apply only if changed
+            bool needsRedraw = type != _lastBackdropType || p != _lastBackdropPadding;
 
-                    if (type == TitlebarTypes.DWM)
+            switch (type)
+            {
+                case TitlebarTypes.DWM:
                     {
                         BackColor = Color.Black;
-                        if (p != Padding.Empty) form?.DropEffect(p);
+                        if (needsRedraw && p != Padding.Empty) form.DropEffect(p);
+                        break;
                     }
 
-                    else if (type == TitlebarTypes.DWM_Aero)
+                case TitlebarTypes.DWM_Aero:
                     {
                         BackColor = Color.Black;
-                        if (p != Padding.Empty) form?.DropEffect(p, false, DWM.BackdropStyles.Aero);
+                        if (needsRedraw && p != Padding.Empty) form.DropEffect(p, false, DWM.BackdropStyles.Aero);
+                        break;
                     }
 
-                    else if (type == TitlebarTypes.ColorPrevalence)
+                case TitlebarTypes.ColorPrevalence:
                     {
                         BackColor = _formFocused ? activeTtl : inactiveTtl;
+                        break;
                     }
 
-                    else if (type == TitlebarTypes.AppMode)
+                case TitlebarTypes.AppMode:
                     {
                         BackColor = Program.Style.DarkMode ? Color.FromArgb(32, 32, 32) : OS.W10 ? Color.White : Color.FromArgb(243, 243, 243);
+                        break;
                     }
 
-                    else if (type == TitlebarTypes.Basic)
+                case TitlebarTypes.Basic:
+                case TitlebarTypes.Classic:
                     {
                         BackColor = Color.Black;
+                        break;
                     }
-
-                    else if (type == TitlebarTypes.Classic)
-                    {
-                        BackColor = Color.Black;
-                    }
-                }
             }
+
+            _lastBackdropType = type;
+            _lastBackdropPadding = p;
         }
 
         /// <summary>

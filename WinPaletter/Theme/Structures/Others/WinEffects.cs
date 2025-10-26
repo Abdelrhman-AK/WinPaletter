@@ -12,80 +12,80 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing Windows effects and animations
     /// </summary>
-    public class WinEffects : ICloneable
+    public class WinEffects : ManagerBase<WinEffects>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Windows animation (open app, close, minimize, maximize, ...)</summary>
-        public bool WindowAnimation = true;
+        public bool WindowAnimation { get; set; } = true;
 
         /// <summary>Shadow around window border</summary>
-        public bool WindowShadow = true;
+        public bool WindowShadow { get; set; } = true;
 
         /// <summary>Controls all Windows effects, including WindowAnimation and WindowShadow</summary>
-        public bool WindowUIEffects = true;
+        public bool WindowUIEffects { get; set; } = true;
 
         /// <summary>Hide contents of a window while dragging</summary>
-        public bool ShowWinContentDrag = true;
+        public bool ShowWinContentDrag { get; set; } = true;
 
         /// <summary>Enable animation for controls inside window</summary>
-        public bool AnimateControlsInsideWindow = true;
+        public bool AnimateControlsInsideWindow { get; set; } = true;
 
         /// <summary>Enable menu show animation</summary>
-        public bool MenuAnimation = true;
+        public bool MenuAnimation { get; set; } = true;
 
         /// <summary>contextMenu animation type. It can be fade or scroll</summary>
-        public MenuAnimType MenuFade = MenuAnimType.Fade;
+        public MenuAnimType MenuFade { get; set; } = MenuAnimType.Fade;
 
         /// <summary>Fade selection after clicking on a menu item</summary>
-        public bool MenuSelectionFade = true;
+        public bool MenuSelectionFade { get; set; } = true;
 
         /// <summary>
         /// Delay menu show in milliseconds
         /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
         /// </summary>
-        public uint MenuShowDelay = 400U;
+        public uint MenuShowDelay { get; set; } = 400U;
 
         /// <summary>Animate combo box control</summary>
-        public bool ComboBoxAnimation = true;
+        public bool ComboBoxAnimation { get; set; } = true;
 
         /// <summary>Smooth scrolling animation for list box</summary>
-        public bool ListBoxSmoothScrolling = true;
+        public bool ListBoxSmoothScrolling { get; set; } = true;
 
         /// <summary>Enable tooltip animation</summary>
-        public bool TooltipAnimation = true;
+        public bool TooltipAnimation { get; set; } = true;
 
         /// <summary>ToolTip appearance animation. It can be fade or scroll</summary>
-        public MenuAnimType TooltipFade = MenuAnimType.Fade;
+        public MenuAnimType TooltipFade { get; set; } = MenuAnimType.Fade;
 
         /// <summary>Hide shadow in icons labels at desktop</summary>
-        public bool IconsShadow = true;
+        public bool IconsShadow { get; set; } = true;
 
         /// <summary>
         /// - If true, desktop icons selection will be colored transparent rectangle
         /// <br></br>- If false, desktop icons selection will be rectangle with dotted border
         /// </summary>
-        public bool IconsDesktopTranslSel = true;
+        public bool IconsDesktopTranslSel { get; set; } = true;
 
         /// <summary>
         /// Make every menu item has an underline to inform the user that this menu item can be triggered by clicking on ALT+LETTER.
         /// <br>For example: when menu item 'EȢit' with letter 'x' has an underline, clicking on ALT+X will trigger this menu item.</br>
         /// <br>If false, 'EȢit' will be 'Exit'.</br>
         /// </summary>
-        public bool KeyboardUnderline = false;
+        public bool KeyboardUnderline { get; set; } = false;
 
         /// <summary>
         /// Width of dotted rectangle on focused classic button
         /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
         /// </summary>
-        public uint FocusRectWidth = 1U;
+        public uint FocusRectWidth { get; set; } = 1U;
 
         /// <summary>
         /// Height of dotted rectangle on focused classic button
         /// <br><b>It is an unsigned integer (as User32.SystemParameterInfo requires DWORD not INT)</b></br>
         /// </summary>
-        public uint FocusRectHeight = 1U;
+        public uint FocusRectHeight { get; set; } = 1U;
 
         /// <summary>
         /// Width of text cursor (carret)
@@ -93,90 +93,90 @@ namespace WinPaletter.Theme.Structures
         /// <br></br>   1: Hello world! ▓
         /// <br></br>   5: Hello world! ▓▓▓▓▓
         /// </summary>
-        public uint Caret = 1U;
+        public uint Caret { get; set; } = 1U;
 
         /// <summary>Hide ballon or notification for milliseconds</summary>
-        public int NotificationDuration = 5;
+        public int NotificationDuration { get; set; } = 5;
 
         /// <summary>
         /// Shake a window from its titlebar to minimize rest windows
         /// <br></br><b>- Targets Windows 7 and later</b>
         /// </summary>
-        public bool ShakeToMinimize = true;
+        public bool ShakeToMinimize { get; set; } = true;
 
         /// <summary>Enable active window tracking feature</summary>
-        public bool AWT_Enabled = false;
+        public bool AWT_Enabled { get; set; } = false;
 
         /// <summary>Active window tracking: bring window to top when mouse enters it</summary>
-        public bool AWT_BringActivatedWindowToTop = false;
+        public bool AWT_BringActivatedWindowToTop { get; set; } = false;
 
         /// <summary>Active window tracking: delay bringing window to top for milliseconds</summary>
-        public int AWT_Delay = 0;
+        public int AWT_Delay { get; set; } = 0;
 
         /// <summary>Move cursor to the default button when a window or a dialog appears</summary>
-        public bool SnapCursorToDefButton = false;
+        public bool SnapCursorToDefButton { get; set; } = false;
 
         /// <summary>
         /// Enable classic context menus for Windows 11
         /// <br></br><b>- Requires Explorer restart</b>
         /// </summary>
-        public bool Win11ClassicContextMenu = false;
+        public bool Win11ClassicContextMenu { get; set; } = false;
 
         /// <summary>
         /// Make Windows Explorer shows items in SysListView32 style (that looks like Windows XP and Vista) in higher editions of Windows
         /// <br></br><b>- Targets Windows 7 and later</b>
         /// </summary>
-        public bool SysListView32 = false;
+        public bool SysListView32 { get; set; } = false;
 
         /// <summary>
         /// Hide seconds in taskbar clock
         /// <br></br><b>- Targets Windows 10, and 11 with Moment 3 update</b>
         /// </summary>
-        public bool ShowSecondsInSystemClock = false;
+        public bool ShowSecondsInSystemClock { get; set; } = false;
 
         /// <summary>
         /// Replace rectangle notifications by classic balloons
         /// <br></br><b>- Targets Windows 8 and 8.1</b>
         /// </summary>
-        public bool BalloonNotifications = false;
+        public bool BalloonNotifications { get; set; } = false;
 
         /// <summary>Paint Windows edition on desktop</summary>
-        public bool PaintDesktopVersion = false;
+        public bool PaintDesktopVersion { get; set; } = false;
 
         /// <summary>Replace Windows 11 boot solid circle by spinning dots (of Windows 8/8.1/10)</summary>
-        public bool Win11BootDots = !OS.W12 && !OS.W11;
+        public bool Win11BootDots { get; set; } = !OS.W12 && !OS.W11;
 
         /// <summary>
         /// Controls Windows Explorer bar/ribbon
         /// <br></br><b>- It is be better to be modified with ExplorerPatcher installed</b>
         /// </summary>
-        public ExplorerBar Win11ExplorerBar = ExplorerBar.Default;
+        public ExplorerBar Win11ExplorerBar { get; set; } = ExplorerBar.Default;
 
         /// <summary>Disable navigation bar in open\save dialogs. Requires ExplorerPatcher</summary>
-        public bool DisableNavBar = false;
+        public bool DisableNavBar { get; set; } = false;
 
         /// <summary>Automatically hide scroll bars in modern apps (UWP/WinUI3) in Windows 10/11</summary>
-        public bool AutoHideScrollBars = true;
+        public bool AutoHideScrollBars { get; set; } = true;
 
         /// <summary>
         /// Full-screen start menu
         /// <br></br><b>- Targets Windows 10</b>
         /// </summary>
-        public bool FullScreenStartMenu = false;
+        public bool FullScreenStartMenu { get; set; } = false;
 
         /// <summary>
         /// Enable classic volume mixer
         /// <br></br><b>- Targets Windows 10</b>
         /// </summary>
-        public bool ClassicVolMixer = false;
+        public bool ClassicVolMixer { get; set; } = false;
 
         /// <summary>
         /// Enable Aero Peek feature: hovering on taskbar right corner will show apps with Aero transparent glass rectangles on desktop.
         /// </summary>
-        public bool EnableAeroPeek = false;
+        public bool EnableAeroPeek { get; set; } = false;
 
         ///
-        public bool AlwaysHibernateThumbnails = false;
+        public bool AlwaysHibernateThumbnails { get; set; } = false;
 
         /// <summary>
         /// Creates an instance of WinEffects structure with default values
@@ -223,58 +223,76 @@ namespace WinPaletter.Theme.Structures
 
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, true);
 
-            if (!SystemParametersInfo(SPI.SPI_GETDROPSHADOW, 0, ref WindowShadow, SPIF.SPIF_NONE))
+            bool windowShadow = WindowShadow;
+            if (!SystemParametersInfo(SPI.SPI_GETDROPSHADOW, 0, ref windowShadow, SPIF.SPIF_NONE))
                 WindowShadow = @default.WindowShadow;
 
-            if (!SystemParametersInfo(SPI.SPI_GETUIEFFECTS, 0, ref WindowUIEffects, SPIF.SPIF_NONE))
+            bool windowUIEffects = WindowUIEffects;
+            if (!SystemParametersInfo(SPI.SPI_GETUIEFFECTS, 0, ref windowUIEffects, SPIF.SPIF_NONE))
                 WindowUIEffects = @default.WindowUIEffects;
 
-            if (!OS.WXP && !SystemParametersInfo(SPI.SPI_GETCLIENTAREAANIMATION, 0, ref AnimateControlsInsideWindow, SPIF.SPIF_NONE))
+            bool animateControlsInsideWindow = AnimateControlsInsideWindow;
+            if (!OS.WXP && !SystemParametersInfo(SPI.SPI_GETCLIENTAREAANIMATION, 0, ref animateControlsInsideWindow, SPIF.SPIF_NONE))
                 AnimateControlsInsideWindow = @default.AnimateControlsInsideWindow;
 
-            if (!SystemParametersInfo(SPI.SPI_GETMENUANIMATION, 0, ref MenuAnimation, SPIF.SPIF_NONE))
+            bool menuAnimation = MenuAnimation;
+            if (!SystemParametersInfo(SPI.SPI_GETMENUANIMATION, 0, ref menuAnimation, SPIF.SPIF_NONE))
                 MenuAnimation = @default.MenuAnimation;
 
-            if (!SystemParametersInfo(SPI.SPI_GETSELECTIONFADE, 0, ref MenuSelectionFade, SPIF.SPIF_NONE))
+            bool menuSelectionFade = MenuSelectionFade;
+            if (!SystemParametersInfo(SPI.SPI_GETSELECTIONFADE, 0, ref menuSelectionFade, SPIF.SPIF_NONE))
                 MenuSelectionFade = @default.MenuSelectionFade;
 
-            if (!SystemParametersInfo(SPI.SPI_GETMENUSHOWDELAY, 0, ref MenuShowDelay, SPIF.SPIF_NONE))
+            uint menuShowDelay = MenuShowDelay;
+            if (!SystemParametersInfo(SPI.SPI_GETMENUSHOWDELAY, 0, ref menuShowDelay, SPIF.SPIF_NONE))
                 MenuShowDelay = @default.MenuShowDelay;
 
-            if (!SystemParametersInfo(SPI.SPI_GETCOMBOBOXANIMATION, 0, ref ComboBoxAnimation, SPIF.SPIF_NONE))
+            bool comboBoxAnimation = ComboBoxAnimation;
+            if (!SystemParametersInfo(SPI.SPI_GETCOMBOBOXANIMATION, 0, ref comboBoxAnimation, SPIF.SPIF_NONE))
                 ComboBoxAnimation = @default.ComboBoxAnimation;
 
-            if (!SystemParametersInfo(SPI.SPI_GETLISTBOXSMOOTHSCROLLING, 0, ref ListBoxSmoothScrolling, SPIF.SPIF_NONE))
+            bool listBoxSmoothScrolling = ListBoxSmoothScrolling;
+            if (!SystemParametersInfo(SPI.SPI_GETLISTBOXSMOOTHSCROLLING, 0, ref listBoxSmoothScrolling, SPIF.SPIF_NONE))
                 ListBoxSmoothScrolling = @default.ListBoxSmoothScrolling;
 
-            if (!SystemParametersInfo(SPI.SPI_GETTOOLTIPANIMATION, 0, ref TooltipAnimation, SPIF.SPIF_NONE))
+            bool tooltipAnimation = TooltipAnimation;
+            if (!SystemParametersInfo(SPI.SPI_GETTOOLTIPANIMATION, 0, ref tooltipAnimation, SPIF.SPIF_NONE))
                 TooltipAnimation = @default.TooltipAnimation;
 
-            if (!SystemParametersInfo(SPI.SPI_GETDRAGFULLWINDOWS, 0, ref ShowWinContentDrag, SPIF.SPIF_NONE))
+            bool showWinContentDrag = ShowWinContentDrag;
+            if (!SystemParametersInfo(SPI.SPI_GETDRAGFULLWINDOWS, 0, ref showWinContentDrag, SPIF.SPIF_NONE))
                 ShowWinContentDrag = @default.ShowWinContentDrag;
 
-            if (!SystemParametersInfo(SPI.SPI_GETMENUUNDERLINES, 0, ref KeyboardUnderline, SPIF.SPIF_NONE))
+            bool keyboardUnderline = KeyboardUnderline;
+            if (!SystemParametersInfo(SPI.SPI_GETMENUUNDERLINES, 0, ref keyboardUnderline, SPIF.SPIF_NONE))
                 KeyboardUnderline = @default.KeyboardUnderline;
 
-            if (!SystemParametersInfo(SPI.SPI_GETFOCUSBORDERWIDTH, 0, ref FocusRectWidth, SPIF.SPIF_NONE))
+            uint focusRectWidth = FocusRectWidth;
+            if (!SystemParametersInfo(SPI.SPI_GETFOCUSBORDERWIDTH, 0, ref focusRectWidth, SPIF.SPIF_NONE))
                 FocusRectWidth = @default.FocusRectWidth;
 
-            if (!SystemParametersInfo(SPI.SPI_GETFOCUSBORDERHEIGHT, 0, ref FocusRectHeight, SPIF.SPIF_NONE))
+            uint focusRectHeight = FocusRectHeight;
+            if (!SystemParametersInfo(SPI.SPI_GETFOCUSBORDERHEIGHT, 0, ref focusRectHeight, SPIF.SPIF_NONE))
                 FocusRectHeight = @default.FocusRectHeight;
 
-            if (!SystemParametersInfo(SPI.SPI_GETCARETWIDTH, 0, ref Caret, SPIF.SPIF_NONE))
+            uint caret = Caret;
+            if (!SystemParametersInfo(SPI.SPI_GETCARETWIDTH, 0, ref caret, SPIF.SPIF_NONE))
                 Caret = @default.Caret;
 
-            if (!SystemParametersInfo(SPI.SPI_GETACTIVEWINDOWTRACKING, 0, ref AWT_Enabled, SPIF.SPIF_NONE))
+            bool aWT_Enabled = AWT_Enabled;
+            if (!SystemParametersInfo(SPI.SPI_GETACTIVEWINDOWTRACKING, 0, ref aWT_Enabled, SPIF.SPIF_NONE))
                 AWT_Enabled = @default.AWT_Enabled;
 
-            if (!SystemParametersInfo(SPI.SPI_GETACTIVEWNDTRKZORDER, 0, ref AWT_BringActivatedWindowToTop, SPIF.SPIF_NONE))
+            bool aWT_BringActivatedWindowToTop = AWT_BringActivatedWindowToTop;
+            if (!SystemParametersInfo(SPI.SPI_GETACTIVEWNDTRKZORDER, 0, ref aWT_BringActivatedWindowToTop, SPIF.SPIF_NONE))
                 AWT_BringActivatedWindowToTop = @default.AWT_BringActivatedWindowToTop;
 
-            if (!SystemParametersInfo(SPI.SPI_GETACTIVEWNDTRKTIMEOUT, 0, ref AWT_Delay, SPIF.SPIF_NONE))
+            int aWT_Delay = AWT_Delay;
+            if (!SystemParametersInfo(SPI.SPI_GETACTIVEWNDTRKTIMEOUT, 0, ref aWT_Delay, SPIF.SPIF_NONE))
                 AWT_Delay = @default.AWT_Delay;
 
-            if (!SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, ref SnapCursorToDefButton, SPIF.SPIF_NONE))
+            bool snapCursorToDefButton = SnapCursorToDefButton;
+            if (!SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, ref snapCursorToDefButton, SPIF.SPIF_NONE))
                 SnapCursorToDefButton = @default.SnapCursorToDefButton;
 
             ANIMATIONINFO anim = new();
@@ -378,7 +396,7 @@ namespace WinPaletter.Theme.Structures
             {
                 if (silent || !Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert || Forms.WinEffectsAlert.ShowDialog() == DialogResult.OK)
                 {
-                    WinEffects WE = (WinEffects)Clone();
+                    WinEffects WE = Clone();
 
                     // Apply WinEffects in a new thread to prevent freezing the UI
                     await Task.Run(() =>
@@ -571,36 +589,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(TreeView treeView = null)
         {
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsEffects", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two WinEffects structures are equal</summary>
-        public static bool operator ==(WinEffects First, WinEffects Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two WinEffects structures are not equal</summary>
-        public static bool operator !=(WinEffects First, WinEffects Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones WinEffects structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two WinEffects structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of WinEffects structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

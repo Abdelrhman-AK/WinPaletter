@@ -43,6 +43,7 @@ namespace WinPaletter.UI.Simulation
         private MouseState _State_Btn1, _State_Btn2;
 
         public VisualStylesRes resVS;
+        private bool _w1125H2 = OS.W11_25H2;
 
         public enum MouseState
         {
@@ -753,7 +754,7 @@ namespace WinPaletter.UI.Simulation
                         }
                         if (Transparency && Noise != null)
                             G.FillRoundedRect(Noise, RRect, Radius, true);
-                        Rectangle SearchRect = new(8, 10, Width - 8 * 2, 15);
+                        Rectangle SearchRect = new(8, _w1125H2 ? 7 : 10, Width - 8 * 2, _w1125H2 ? 16 : 15);
 
                         #region Editor
 
@@ -771,7 +772,14 @@ namespace WinPaletter.UI.Simulation
 
                         #endregion
 
-                        G.DrawRoundImage(DarkMode ? Win11Preview.Start11_Dark : Win11Preview.Start11_Light, RRect, Radius, true);
+                        if (_w1125H2)
+                        {
+                            G.DrawRoundImage(DarkMode ? Win11Preview.Start1125H2_Dark : Win11Preview.Start1125H2_Light, RRect, Radius, true);
+                        }
+                        else
+                        {
+                            G.DrawRoundImage(DarkMode ? Win11Preview.Start11_Dark : Win11Preview.Start11_Light, RRect, Radius, true);
+                        }
 
                         Color SearchColor, SearchBorderColor;
                         if (DarkMode)

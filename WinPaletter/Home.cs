@@ -93,6 +93,12 @@ namespace WinPaletter
                 card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
+
+            //using (Theme.Manager M0 = new(Source.Empty))
+            //{
+            //    Theme.Manager M1 = M0.Clone() as Theme.Manager;
+            //    MsgBox(M0 == M1);
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -600,7 +606,7 @@ namespace WinPaletter
             if (Forms.MainForm.ExitWithChangedFileResponse())
             {
                 Program.TM = new(Source.Registry);
-                Program.TM_Original = (Manager)Program.TM.Clone();
+                Program.TM_Original = Program.TM.Clone();
                 File = null;
                 Text = Application.ProductName;
                 LoadFromTM(Program.TM);
@@ -611,8 +617,8 @@ namespace WinPaletter
         {
             if (Forms.MainForm.ExitWithChangedFileResponse())
             {
-                Program.TM = (Manager)Default.Get().Clone();
-                Program.TM_Original = (Manager)Program.TM.Clone();
+                Program.TM = Default.Get().Clone();
+                Program.TM_Original = Program.TM.Clone();
                 File = null;
                 Text = Application.ProductName;
                 LoadFromTM(Program.TM);
@@ -635,7 +641,7 @@ namespace WinPaletter
 
                         File = dlg.FileName;
                         Program.TM = new(Source.File, dlg.FileName);
-                        Program.TM_Original = (Manager)Program.TM.Clone();
+                        Program.TM_Original = Program.TM.Clone();
                         Text = Path.GetFileName(File);
                         LoadFromTM(Program.TM);
                     }

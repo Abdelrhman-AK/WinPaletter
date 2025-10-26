@@ -107,7 +107,20 @@ namespace WinPaletter
         /// <summary>
         /// Global variables to manage WinPaletter theme
         /// </summary>
-        public static Manager TM = new(Manager.Source.Empty), TM_Original, TM_FirstTime;
+        public static Manager TM = new(Manager.Source.Empty);
+
+        /// <summary>
+        /// Represents the original instance of the <see cref="Manager"/> class.
+        /// </summary>
+        /// <remarks>This static field holds a reference to the original <see cref="Manager"/> instance. 
+        /// It can be used to access the default or initial configuration of the manager.</remarks>
+        public static Manager TM_Original;
+
+        /// <summary>
+        /// Represents the first-time instance of the <see cref="Manager"/> class.
+        /// </summary>
+        /// <remarks>This static field is used to manage and track the application's first-time theme.</remarks>
+        public static Manager TM_FirstTime;
 
         /// <summary>
         /// Process that kills (stops by force) Windows Explorer

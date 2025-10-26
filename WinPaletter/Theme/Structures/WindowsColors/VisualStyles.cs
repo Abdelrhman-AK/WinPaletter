@@ -15,37 +15,37 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Structure responsible for managing VisualStyles, provided that patched themes can be applied
     /// </summary>
-    public class VisualStyles : ICloneable
+    public class VisualStyles : ManagerBase<VisualStyles>
     {
         /// <summary> 
         /// Controls if VisualStyles editing is enabled or not 
         /// </summary> 
-        public bool Enabled = true;
+        public bool Enabled { get; set; } = true;
 
         /// <summary>
         /// Visual styles File used when 'WinTheme' selected as 'Custom'
         /// </summary>
-        public string ThemeFile = $@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles";
+        public string ThemeFile { get; set; } = $@"{SysPaths.Windows}\resources\Themes\Aero\Aero.msstyles";
 
         /// <summary>
         /// Color scheme of visual styles File
         /// </summary>
-        public string ColorScheme = "NormalColor";
+        public string ColorScheme { get; set; } = "NormalColor";
 
         /// <summary>
         /// Size scheme of visual styles File
         /// </summary>
-        public string SizeScheme = "NormalSize";
+        public string SizeScheme { get; set; } = "NormalSize";
 
         /// <summary>
         /// Override 'Classic Colors' by selected color scheme in this theme when applying
         /// </summary>
-        public bool OverrideColors = false;
+        public bool OverrideColors { get; set; } = false;
 
         /// <summary>
         /// Override 'Metrics and Fonts' by selected size scheme in this theme when applying
         /// </summary>
-        public bool OverrideSizes = false;
+        public bool OverrideSizes { get; set; } = false;
 
         /// <summary>
         /// Represents the default visual styles available for user interface themes.
@@ -411,36 +411,6 @@ namespace WinPaletter.Theme.Structures
         public void SaveToggleState(string edition, TreeView treeView = null)
         {
             WriteReg(treeView, $"HKEY_CURRENT_USER\\Software\\WinPaletter\\Aspects\\WindowsColorsThemes\\{edition}\\VisualStyles", string.Empty, Enabled);
-        }
-
-        /// <summary>Operator to check if two VisualStyles structures are equal</summary>
-        public static bool operator ==(VisualStyles First, VisualStyles Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>Operator to check if two VisualStyles structures are not equal</summary>
-        public static bool operator !=(VisualStyles First, VisualStyles Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>Clones VisualStyles structure</summary>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>Checks if two VisualStyles structures are equal or not</summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>Get hash code of VisualStyles structure</summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

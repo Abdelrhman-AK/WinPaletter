@@ -154,7 +154,7 @@ namespace WinPaletter
 
         public void LoadFromTM(Manager TM)
         {
-            ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
+            Theme.Structures.WinEffects Effects = TM.WindowsEffects;
             AspectEnabled = Effects.Enabled;
             CheckBox1.Checked = Effects.WindowAnimation;
             CheckBox2.Checked = Effects.WindowShadow;
@@ -205,7 +205,7 @@ namespace WinPaletter
 
         public void ApplyToTM(Manager TM)
         {
-            ref Theme.Structures.WinEffects Effects = ref TM.WindowsEffects;
+            Theme.Structures.WinEffects Effects = TM.WindowsEffects;
             Effects.Enabled = AspectEnabled;
             Effects.WindowAnimation = CheckBox1.Checked;
             Effects.WindowShadow = CheckBox2.Checked;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.Drawing;
@@ -10,106 +11,106 @@ namespace WinPaletter.Theme.Structures
     /// <summary>
     /// Windows console (Command Prompt, PowerShell x86, PowerShell x64 or other consoles)
     /// </summary>
-    public class Console : ICloneable
+    public class Console : ManagerBase<Console>
     {
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>Color table 0</summary>
-        public Color ColorTable00 = Color.FromArgb(12, 12, 12);
+        public Color ColorTable00 { get; set; } = Color.FromArgb(12, 12, 12);
 
         /// <summary>Color table 1</summary>
-        public Color ColorTable01 = Color.FromArgb(0, 55, 218);
+        public Color ColorTable01 { get; set; } = Color.FromArgb(0, 55, 218);
 
         /// <summary>Color table 2</summary>
-        public Color ColorTable02 = Color.FromArgb(19, 161, 14);
+        public Color ColorTable02 { get; set; } = Color.FromArgb(19, 161, 14);
 
         /// <summary>Color table 3</summary>
-        public Color ColorTable03 = Color.FromArgb(58, 150, 221);
+        public Color ColorTable03 { get; set; } = Color.FromArgb(58, 150, 221);
 
         /// <summary>Color table 4</summary>
-        public Color ColorTable04 = Color.FromArgb(197, 15, 31);
+        public Color ColorTable04 { get; set; } = Color.FromArgb(197, 15, 31);
 
         /// <summary>Color table 5</summary>
-        public Color ColorTable05 = Color.FromArgb(136, 23, 152);
+        public Color ColorTable05 { get; set; } = Color.FromArgb(136, 23, 152);
 
         /// <summary>Color table 6</summary>
-        public Color ColorTable06 = Color.FromArgb(193, 156, 0);
+        public Color ColorTable06 { get; set; } = Color.FromArgb(193, 156, 0);
 
         /// <summary>Color table 7</summary>
-        public Color ColorTable07 = Color.FromArgb(204, 204, 204);
+        public Color ColorTable07 { get; set; } = Color.FromArgb(204, 204, 204);
 
         /// <summary>Color table 8</summary>
-        public Color ColorTable08 = Color.FromArgb(118, 118, 118);
+        public Color ColorTable08 { get; set; } = Color.FromArgb(118, 118, 118);
 
         /// <summary>Color table 9</summary>
-        public Color ColorTable09 = Color.FromArgb(59, 120, 255);
+        public Color ColorTable09 { get; set; } = Color.FromArgb(59, 120, 255);
 
         /// <summary>Color table A</summary>
-        public Color ColorTable10 = Color.FromArgb(22, 198, 12);
+        public Color ColorTable10 { get; set; } = Color.FromArgb(22, 198, 12);
 
         /// <summary>Color table B</summary>
-        public Color ColorTable11 = Color.FromArgb(97, 214, 214);
+        public Color ColorTable11 { get; set; } = Color.FromArgb(97, 214, 214);
 
         /// <summary>Color table C</summary>
-        public Color ColorTable12 = Color.FromArgb(231, 72, 86);
+        public Color ColorTable12 { get; set; } = Color.FromArgb(231, 72, 86);
 
         /// <summary>Color table D</summary>
-        public Color ColorTable13 = Color.FromArgb(180, 0, 158);
+        public Color ColorTable13 { get; set; } = Color.FromArgb(180, 0, 158);
 
         /// <summary>Color table E</summary>
-        public Color ColorTable14 = Color.FromArgb(249, 241, 165);
+        public Color ColorTable14 { get; set; } = Color.FromArgb(249, 241, 165);
 
         /// <summary>Color table F</summary>
-        public Color ColorTable15 = Color.FromArgb(242, 242, 242);
+        public Color ColorTable15 { get; set; } = Color.FromArgb(242, 242, 242);
 
         /// <summary>Selected color table number as a popup foreground</summary>
-        public int PopupForeground = 5;
+        public int PopupForeground { get; set; } = 5;
 
         /// <summary>Selected color table number as a popup background</summary>
-        public int PopupBackground = 15;
+        public int PopupBackground { get; set; } = 15;
 
         /// <summary>Selected color table number as a screen foreground</summary>
-        public int ScreenColorsForeground = 7;
+        public int ScreenColorsForeground { get; set; } = 7;
 
         /// <summary>Selected color table number as a screen foreground</summary>
-        public int ScreenColorsBackground = 0;
+        public int ScreenColorsBackground { get; set; } = 0;
 
         /// <summary>Console carret size</summary>
-        public int CursorSize = 19;
+        public int CursorSize { get; set; } = 19;
 
         /// <summary>Console font name</summary>
-        public string FaceName = "Consolas";
+        public string FaceName { get; set; } = "Consolas";
 
         /// <summary>Use raster (pixelated/retro) font</summary>
-        public bool FontRaster = false;
+        public bool FontRaster { get; set; } = false;
 
         /// <summary>Console font height</summary>
-        public int PixelHeight = 16;
+        public int PixelHeight { get; set; } = 16;
 
         /// <summary>Console font width</summary>
-        public int PixelWidth = 0;
+        public int PixelWidth { get; set; } = 0;
 
         /// <summary>Console font weight</summary>
-        public int FontWeight = 400;
+        public int FontWeight { get; set; } = 400;
 
         /// <summary>Cursor type<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public int W10_1909_CursorType = 0;
+        public int W10_1909_CursorType { get; set; } = 0;
 
         /// <summary>Cursor color<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public Color W10_1909_CursorColor = Color.White;
+        public Color W10_1909_CursorColor { get; set; } = Color.White;
 
         /// <summary>Use enhanced terminal<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public bool W10_1909_ForceV2 = true;
+        public bool W10_1909_ForceV2 { get; set; } = true;
 
         /// <summary>Use line selection<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public bool W10_1909_LineSelection = false;
+        public bool W10_1909_LineSelection { get; set; } = false;
 
         /// <summary>Use terminal scrolling<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public bool W10_1909_TerminalScrolling = false;
+        public bool W10_1909_TerminalScrolling { get; set; } = false;
 
         /// <summary>Console window opacity<br><b>- For Windows 10 1909 and higher</b></br></summary>
-        public int W10_1909_WindowAlpha = 255;
+        public int W10_1909_WindowAlpha { get; set; } = 255;
 
         /// <summary>
         /// Create console structure with default data
@@ -285,47 +286,6 @@ namespace WinPaletter.Theme.Structures
 
                 WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", Console.FaceName, RegistryValueKind.String);
             }
-        }
-
-        /// <summary>
-        /// Operator to check if two consoles are equal
-        /// </summary>
-        public static bool operator ==(Console First, Console Second)
-        {
-            return First.Equals(Second);
-        }
-
-        /// <summary>
-        /// Operator to check if two consoles are not equal
-        /// </summary>
-        public static bool operator !=(Console First, Console Second)
-        {
-            return !First.Equals(Second);
-        }
-
-        /// <summary>
-        /// Clone console structure
-        /// </summary>
-        /// <returns></returns>
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-
-        /// <summary>
-        /// Checks if two consoles are equal or not
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        /// <summary>
-        /// Gets console hash code
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

@@ -1296,11 +1296,11 @@ namespace WinPaletter
                 int initFg = CMD_AccentForegroundBar.Value;
 
                 string[] colorNames = {
-    "Black", "DarkBlue", "DarkGreen", "DarkCyan",
-    "DarkRed", "DarkMagenta", "DarkYellow", "Gray",
-    "DarkGray", "Blue", "Green", "Cyan",
-    "Red", "Magenta", "Yellow", "White"
-};
+                    "Black", "DarkBlue", "DarkGreen", "DarkCyan",
+                    "DarkRed", "DarkMagenta", "DarkYellow", "Gray",
+                    "DarkGray", "Blue", "Green", "Cyan",
+                    "Red", "Magenta", "Yellow", "White"
+                };
 
                 string initBgName = colorNames[initBg];
                 string initFgName = colorNames[initFg];

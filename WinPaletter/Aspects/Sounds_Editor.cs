@@ -476,7 +476,7 @@ namespace WinPaletter
 
         public void ApplyToTM(Manager TM)
         {
-            ref Theme.Structures.Sounds Sounds = ref TM.Sounds;
+            Theme.Structures.Sounds Sounds = TM.Sounds;
             Sounds.Enabled = AspectEnabled;
             Sounds.Snd_Win_SystemStart = TextBox1.Text;
             Sounds.Snd_Imageres_SystemStart = TextBox2.Text;

@@ -133,6 +133,26 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Start1125H2_Dark {
+            get {
+                object obj = ResourceManager.GetObject("Start1125H2_Dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Start1125H2_Light {
+            get {
+                object obj = ResourceManager.GetObject("Start1125H2_Light", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap StartBtn_11_EP {
             get {
                 object obj = ResourceManager.GetObject("StartBtn_11_EP", resourceCulture);

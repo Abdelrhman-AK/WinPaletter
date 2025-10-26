@@ -111,7 +111,7 @@ namespace WinPaletter
 
         public void LoadFromTM(Manager TM)
         {
-            backup_TM = (Manager)TM.Clone();
+            backup_TM = TM.Clone();
 
             AspectEnabled = TM.WindowsXP.Enabled;
 
