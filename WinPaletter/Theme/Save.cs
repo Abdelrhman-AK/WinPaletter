@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -753,38 +755,55 @@ namespace WinPaletter.Theme
         }
 
         /// <summary>
-        /// WinPaletter theme File contents
+        /// Serializes the WinPaletter theme file into a JSON string.
         /// </summary>
-        /// <param name="IgnoreCompression"></param>
-        /// <returns></returns>
-        public string ToString(bool IgnoreCompression = false)
+        /// <param name="ignoreCompression">If true, skips compression.</param>
+        /// <returns>JSON string representation of the theme file, possibly compressed.</returns>
+        public string ToString(bool ignoreCompression = false)
         {
-            JObject JSON_Overall = [];
-            JSON_Overall.RemoveAll();
-
+            // Ensure AppVersion is up to date
             Info.AppVersion = Program.Version;
 
-            foreach (FieldInfo field in GetType().GetFields(bindingFlags))
+            JsonSerializerSettings sets = new()
             {
-                Type type = field.FieldType;
+                ContractResolver = new PublicWritableOnlyContractResolver(),
+                DefaultValueHandling = DefaultValueHandling.Ignore, // optional
+                NullValueHandling = NullValueHandling.Ignore         // optional
+            };
 
-                if (type.IsStructure())
+            string jsonText = JsonConvert.SerializeObject(this, Formatting.Indented, sets);
+
+            if (Program.Settings.FileTypeManagement.CompressThemeFile && !ignoreCompression)
+            {
+                try
                 {
-                    JSON_Overall.Add(field.Name, DeserializeProps(type, field.GetValue(this)));
+                    return jsonText.Compress();
                 }
-                else
+                catch (Exception ex)
                 {
-                    JSON_Overall.Add(field.Name, JToken.FromObject(field.GetValue(this)));
+                    Program.Log?.Write(LogEventLevel.Error, $"Compression faile", ex);
+                    return jsonText;
                 }
             }
 
-            if (Program.Settings.FileTypeManagement.CompressThemeFile && !IgnoreCompression)
+            return jsonText;
+        }
+
+        private class PublicWritableOnlyContractResolver : DefaultContractResolver
+        {
+            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
-                return JSON_Overall.ToString().Compress();
-            }
-            else
-            {
-                return JSON_Overall.ToString();
+                // Get all fields and properties normally
+                var props = base.CreateProperties(type, memberSerialization);
+
+                // Keep only public writable members (exclude readonly and private)
+                return [.. props.Where(p =>
+                    p.Writable &&
+                    p.Readable &&
+                    p.PropertyType != typeof(FieldInfo) && // avoid recursion traps
+                    (p.DeclaringType?.GetMember(p.UnderlyingName ?? "", BindingFlags.Public | BindingFlags.Instance)
+                        ?.Any() == true)
+                )];
             }
         }
 
