@@ -311,8 +311,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="tolerance">Max per-channel difference to still consider a "match" (0 = exact). Recommended 8-20.</param>
         public static Bitmap ReplaceColor(this Bitmap inputImage, Color oldColor, Color newColor, int tolerance = 16)
         {
-            if (inputImage == null || inputImage.Width == 0 || inputImage.Height == 0)
-                return null;
+            if (inputImage == null || inputImage.Width == 0 || inputImage.Height == 0) return null;
 
             using (Bitmap src = inputImage.Clone(new Rectangle(0, 0, inputImage.Width, inputImage.Height), PixelFormat.Format32bppArgb))
             {
@@ -384,15 +383,16 @@ namespace WinPaletter.TypesExtensions
                                 int expG = (oldG * a + 127) / 255;
                                 int expB = (oldB * a + 127) / 255;
 
-                                if (Math.Abs(r - expR) <= tolerance &&
-                                    Math.Abs(g - expG) <= tolerance &&
-                                    Math.Abs(b - expB) <= tolerance)
+                                if (Math.Abs(r - expR) <= tolerance && Math.Abs(g - expG) <= tolerance && Math.Abs(b - expB) <= tolerance)
                                 {
                                     // set new color premultiplied by original alpha so edges remain smooth
-                                    uint outR = (uint)((newR * a) / 255);
-                                    uint outG = (uint)((newG * a) / 255);
-                                    uint outB = (uint)((newB * a) / 255);
+                                    float blendFactor = a / 255f;  // 0..1
+                                    blendFactor = (float)Math.Pow(blendFactor, 0.1f); // reduce anti-alias power (adjust exponent)
+                                    uint outR = (uint)(r + (newR - r) * blendFactor);
+                                    uint outG = (uint)(g + (newG - g) * blendFactor);
+                                    uint outB = (uint)(b + (newB - b) * blendFactor);
                                     dPx[x] = ((uint)a << 24) | (outR << 16) | (outG << 8) | outB;
+
                                     continue;
                                 }
 
@@ -401,14 +401,16 @@ namespace WinPaletter.TypesExtensions
                                 int unG = (g * 255 + a / 2) / a;
                                 int unB = (b * 255 + a / 2) / a;
 
-                                if (Math.Abs(unR - oldR) <= tolerance &&
-                                    Math.Abs(unG - oldG) <= tolerance &&
-                                    Math.Abs(unB - oldB) <= tolerance)
+                                if (Math.Abs(unR - oldR) <= tolerance && Math.Abs(unG - oldG) <= tolerance && Math.Abs(unB - oldB) <= tolerance)
                                 {
-                                    uint outR = (uint)((newR * a) / 255);
-                                    uint outG = (uint)((newG * a) / 255);
-                                    uint outB = (uint)((newB * a) / 255);
+                                    // set new color premultiplied by original alpha so edges remain smooth
+                                    float blendFactor = a / 255f;  // 0..1
+                                    blendFactor = (float)Math.Pow(blendFactor, 0.1f); // reduce anti-alias power (adjust exponent)
+                                    uint outR = (uint)(r + (newR - r) * blendFactor);
+                                    uint outG = (uint)(g + (newG - g) * blendFactor);
+                                    uint outB = (uint)(b + (newB - b) * blendFactor);
                                     dPx[x] = ((uint)a << 24) | (outR << 16) | (outG << 8) | outB;
+
                                     continue;
                                 }
 

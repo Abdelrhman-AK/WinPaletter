@@ -1454,6 +1454,13 @@ namespace WinPaletter
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Settings"/> class with default values.
+        /// </summary>
+        /// <remarks>This constructor creates a <see cref="Settings"/> object using an empty source
+        /// configuration.</remarks>
+        public Settings() => new Settings(Source.Empty);
+
+        /// <summary>
         /// Create a new instance of WinPaletter settings
         /// </summary>
         /// <param name="source"></param>

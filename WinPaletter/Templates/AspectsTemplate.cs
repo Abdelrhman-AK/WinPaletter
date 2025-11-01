@@ -582,11 +582,6 @@ namespace WinPaletter
             }
         }
 
-        private void btn_colorsEffects_Click(object sender, EventArgs e)
-        {
-            Forms.ColorsEffects.Show(sender as UI.WP.Button);
-        }
-
         private void btn_palette_generate_Click(object sender, EventArgs e)
         {
             Forms.PaletteGenerator.Show(sender as UI.WP.Button);

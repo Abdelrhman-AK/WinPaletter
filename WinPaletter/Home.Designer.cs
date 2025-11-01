@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel1 = new WinPaletter.UI.WP.SmoothFlowLayoutPanel();
             this.card1 = new WinPaletter.UI.WP.Card();
             this.card2 = new WinPaletter.UI.WP.Card();
             this.card3 = new WinPaletter.UI.WP.Card();
@@ -964,7 +964,7 @@
         internal UI.WP.Button Button39;
         internal UI.WP.Button userButton;
         internal UI.WP.Button Button5;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private WinPaletter.UI.WP.SmoothFlowLayoutPanel flowLayoutPanel1;
         private UI.WP.Card card1;
         private UI.WP.Card card2;
         private UI.WP.Card card3;

@@ -767,8 +767,8 @@ namespace WinPaletter.Theme
             JsonSerializerSettings sets = new()
             {
                 ContractResolver = new PublicWritableOnlyContractResolver(),
-                DefaultValueHandling = DefaultValueHandling.Ignore, // optional
-                NullValueHandling = NullValueHandling.Ignore         // optional
+                //DefaultValueHandling = DefaultValueHandling.Ignore, // optional
+                //NullValueHandling = NullValueHandling.Ignore         // optional
             };
 
             string jsonText = JsonConvert.SerializeObject(this, Formatting.Indented, sets);
@@ -793,17 +793,20 @@ namespace WinPaletter.Theme
         {
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
-                // Get all fields and properties normally
-                var props = base.CreateProperties(type, memberSerialization);
+                // Get all public instance properties
+                var props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                .Where(p => p.CanWrite && p.GetSetMethod(false) != null) // must have a *public* setter
+                                .Select(p => base.CreateProperty(p, memberSerialization))
+                                .ToList();
 
-                // Keep only public writable members (exclude readonly and private)
-                return [.. props.Where(p =>
-                    p.Writable &&
-                    p.Readable &&
-                    p.PropertyType != typeof(FieldInfo) && // avoid recursion traps
-                    (p.DeclaringType?.GetMember(p.UnderlyingName ?? "", BindingFlags.Public | BindingFlags.Instance)
-                        ?.Any() == true)
-                )];
+                // Mark all as readable/writable to preserve JSON values
+                foreach (var prop in props)
+                {
+                    prop.Readable = true;
+                    prop.Writable = true;
+                }
+
+                return props;
             }
         }
 

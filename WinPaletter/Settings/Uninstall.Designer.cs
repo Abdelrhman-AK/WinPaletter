@@ -317,6 +317,7 @@ namespace WinPaletter
             this.tablessControl1.Controls.Add(this.tabPage3);
             this.tablessControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablessControl1.Location = new System.Drawing.Point(0, 86);
+            this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
             this.tablessControl1.Size = new System.Drawing.Size(844, 425);
@@ -795,8 +796,8 @@ namespace WinPaletter
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(668, 26);
             this.label7.TabIndex = 26;
-            this.label7.Text = "Is there is any weird fonts size or small icons after applying Metrics and Fonts " +
-    "(with high DPI scales)?";
+            this.label7.Text = "Are there any weird fonts sizes or small icons after applying Metrics and Fonts (" +
+    "with high DPI scales)?";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label18

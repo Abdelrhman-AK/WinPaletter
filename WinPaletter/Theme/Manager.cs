@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.VisualBasic.FileIO;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
@@ -17,6 +19,13 @@ namespace WinPaletter.Theme
     /// </summary>
     public partial class Manager : ManagerBase<Manager>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Manager"/> class with default settings.
+        /// </summary>
+        /// <remarks>This constructor creates a <see cref="Manager"/> instance using an empty source. Use
+        /// this constructor when no initial source is required.</remarks>
+        public Manager() => new Manager(Source.Empty);
+
         /// <summary>
         /// Create new instance of WinPaletter theme
         /// </summary>
@@ -203,7 +212,7 @@ namespace WinPaletter.Theme
 
                                     // Parse the decompressed content_list as JSON
                                     JObject json = JObject.Parse(content);
-                                    MergeDefaultsInCurrent(ref json, JObject.Parse(@default.ToString(true)));
+                                    //MergeDefaultsInCurrent(ref json, JObject.Parse(@default.ToString(true)));
 
                                     // Fixing new Cursors and Windows Terminal structures from older WPTH files
                                     ExtendCursorsComptability(ref json);
@@ -396,7 +405,7 @@ namespace WinPaletter.Theme
         /// <param name="json"></param>
         private void ExtendCursorsComptability(ref JObject json)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Converting format of older WPTH cursors format to make current WinPalette version can handle cursors.");
+            Program.Log?.Write(LogEventLevel.Information, $"Converting format of legacy WPTH cursors format to make current WinPalette version can handle cursors.");
 
             Structures.Cursors cursors = new();
             bool cursorsModificationDone = false;
@@ -560,7 +569,7 @@ namespace WinPaletter.Theme
         /// <param name="json"></param>
         private void ExtendTerminalComptability(ref JObject json)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Converting format of older WPTH Windows Terminal format to make current WinPalette version can handle Windows Terminals.");
+            Program.Log?.Write(LogEventLevel.Information, $"Converting format of legacy WPTH Windows Terminal format to make current WinPalette version can handle Windows Terminals.");
 
             string[] editons = ["Terminal", "TerminalPreview"];
 
@@ -586,27 +595,24 @@ namespace WinPaletter.Theme
             }
         }
 
-        /// <summary>
-        /// Set the value of the current instance's field from theme File JSON data
-        /// </summary>
-        /// <param name="json"></param>
         private void SetThemeValues(JObject json)
         {
-            // Set values from JSON to the current instance's fields
-            foreach (FieldInfo field in GetType().GetFields(bindingFlags))
+            Manager mgr = json.ToObject<Manager>();
+
+            if (mgr == null) return;
+
+            // Copy all writable public properties
+            foreach (PropertyInfo prop in typeof(Manager).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanWrite))
             {
                 try
                 {
-                    Type fieldType = field.FieldType;
-                    if (json[field.Name] is not null)
-                    {
-                        Program.Log?.Write(LogEventLevel.Information, $"Setting field `{field.Name}` with value `{json[field.Name]}` of type `{fieldType.Name}` from theme File JSON data.");
-                        field.SetValue(this, json[field.Name].ToObject(fieldType));
-                    }
+                    //Program.Log?.Write(LogEventLevel.Information, $"Setting field `{prop.Name}` with value `{json[prop.Name]}` of type `{prop.Name}` from theme File JSON data.");
+                    prop.SetValue(this, prop.GetValue(mgr));
                 }
+
                 catch (Exception ex)
                 {
-                    Program.Log?.Write(LogEventLevel.Error, $"Error setting field `{field.Name}`: {ex.Message}");
+                    Program.Log?.Write(LogEventLevel.Error, $"Error setting field `{prop.Name}`: {ex.Message}");
                     // Handle exceptions and add them to the error list
                     Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }

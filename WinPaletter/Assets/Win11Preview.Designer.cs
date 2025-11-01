@@ -83,16 +83,6 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LockScreen {
-            get {
-                object obj = ResourceManager.GetObject("LockScreen", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Start11_Dark {
             get {
                 object obj = ResourceManager.GetObject("Start11_Dark", resourceCulture);

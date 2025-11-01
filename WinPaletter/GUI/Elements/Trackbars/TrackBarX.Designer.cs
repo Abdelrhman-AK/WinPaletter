@@ -52,15 +52,15 @@
             // 
             // reset
             // 
-            this.reset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.reset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.reset.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
             this.reset.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.reset.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.reset.ForeColor = System.Drawing.Color.White;
             this.reset.Image = null;
-            this.reset.ImageGlyphEnabled = true;
             this.reset.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Reset;
+            this.reset.ImageGlyphEnabled = true;
             this.reset.Location = new System.Drawing.Point(266, 0);
             this.reset.Name = "reset";
             this.reset.Size = new System.Drawing.Size(34, 31);
@@ -73,15 +73,15 @@
             // 
             // value_btn
             // 
-            this.value_btn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.value_btn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.value_btn.CustomColor = System.Drawing.Color.Empty;
             this.value_btn.Flag = WinPaletter.UI.WP.Button.Flags.None;
             this.value_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.value_btn.ForeColor = System.Drawing.Color.White;
             this.value_btn.Image = null;
-            this.value_btn.ImageGlyphEnabled = true;
             this.value_btn.ImageGlyph = null;
+            this.value_btn.ImageGlyphEnabled = true;
             this.value_btn.Location = new System.Drawing.Point(306, 0);
             this.value_btn.Name = "value_btn";
             this.value_btn.Size = new System.Drawing.Size(34, 31);
@@ -128,6 +128,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "TrackBarX";
             this.Size = new System.Drawing.Size(340, 31);
+            this.Load += new System.EventHandler(this.TrackBarX_Load);
             this.ResumeLayout(false);
 
         }

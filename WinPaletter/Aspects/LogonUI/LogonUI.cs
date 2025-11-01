@@ -165,7 +165,7 @@ namespace WinPaletter
             LoadData(data);
 
             tabs_preview_1.SelectedIndex = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? 1 : 0;
-            pictureBox1.Image = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? Win10Preview.LockScreen : Win11Preview.LockScreen;
+            pictureBox1.Image = Program.WindowStyle == PreviewHelpers.WindowStyle.W10 ? LogonUIRes.Win10 : LogonUIRes.Win11;
 
             label1.Text = DateTime.Now.ToString("h:mm");
             label2.Text = DateTime.Now.ToString("dddd, MMMM d");

@@ -162,7 +162,8 @@ namespace WinPaletter
         {
             e.Graphics.Clear((sender as Label).BackColor);
             TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis;
-            TextRenderer.DrawText(e.Graphics, (sender as Label).Text, (sender as Label).Font, (sender as Label).ClientRectangle, (sender as Label).ForeColor, flags);
+            string status = (sender as Label).Text.Trim().Replace("\r\n", " <br> ");
+            TextRenderer.DrawText(e.Graphics, status, (sender as Label).Font, (sender as Label).ClientRectangle, (sender as Label).ForeColor, flags);
         }
     }
 }

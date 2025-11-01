@@ -234,5 +234,21 @@ namespace WinPaletter.Theme.Structures
         }
 
         #endregion
+
+        #region Others
+
+        /// <summary>
+        /// Returns a JSON string representation of the current object.
+        /// </summary>
+        /// <remarks>The JSON string is generated using the <see
+        /// cref="JsonConvert.SerializeObject(object)"/> method. This representation includes all public properties of
+        /// the object.</remarks>
+        /// <returns>A JSON string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        #endregion
     }
 }

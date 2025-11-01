@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.UI.AdvancedControls;
 using WinPaletter.Theme;
 using static WinPaletter.PreviewHelpers;
 

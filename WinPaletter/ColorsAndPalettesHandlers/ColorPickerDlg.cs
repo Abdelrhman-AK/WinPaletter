@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Theme;
+using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
@@ -52,7 +53,8 @@ namespace WinPaletter
         private void ColorPicker_Load(object sender, EventArgs e)
         {
             ComboBox1.Items.Clear();
-            ComboBox1.Items.AddRange(Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray());
+            ComboBox1.Items.AddRange([.. Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0])]);
+            ColorEditor1.Font = Fonts.ConsoleMedium;
         }
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
@@ -172,140 +174,136 @@ namespace WinPaletter
         {
             if (ControlsWithProperties.Count == 0) return Color.Empty;
 
-            ColorItem colorItem = ControlsWithProperties.Keys.OfType<ColorItem>().FirstOrDefault();
-            Control firstControl = ControlsWithProperties.Keys.FirstOrDefault();
-
-            string colorItemProperty = ControlsWithProperties[colorItem]?.FirstOrDefault() ?? "BackColor";
-            string firstControlProperty = ControlsWithProperties[firstControl]?.FirstOrDefault() ?? "BackColor";
-
-            Color c = colorItem != null ? colorItem.GetProperty<Color>(colorItemProperty) : firstControl.GetProperty<Color>(firstControlProperty);
-
-            if (!Program.Settings.NerdStats.Classic_Color_Picker)
+            using (ColorPickerDlg dlg = new())
             {
-                InitColor = c;
-                enableAlpha = EnableAlpha;
-                ColorControls_List = ControlsWithProperties;
+                ColorItem colorItem = ControlsWithProperties.Keys.OfType<ColorItem>().FirstOrDefault();
+                Control firstControl = ControlsWithProperties.Keys.FirstOrDefault();
 
-                ColorEditorManager1.Color = c;
-                ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
+                string colorItemProperty = ControlsWithProperties[colorItem]?.FirstOrDefault() ?? "BackColor";
+                string firstControlProperty = ControlsWithProperties[firstControl]?.FirstOrDefault() ?? "BackColor";
 
-                ImagePath.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty);
+                Color c = colorItem != null ? colorItem.GetProperty<Color>(colorItemProperty) : firstControl.GetProperty<Color>(firstControlProperty);
 
-                effect_dark.BackColor = c.Dark(trackBar1.Value / 100f);
-                effect_light.BackColor = c.Light(trackBar2.Value / 100f);
-                effect_desaturate.BackColor = c.Desaturate(trackBar4.Value / 100f);
-                effect_rotateHue.BackColor = c.RotateHue(trackBar5.Value);
-                effect_invert.BackColor = c.Invert();
-                effect_reverse.BackColor = c.Reverse();
-                effect_sepia.BackColor = c.Sepia();
-                effect_websafe.BackColor = c.ToWebSafe();
-                effect_256.BackColor = c.To256Color();
-                effect_frutigerAero.BackColor = c.ToFrutigerAero();
-                effect_metro.BackColor = c.ToMetro();
-                effect_monochrome.BackColor = c.Monochrome();
-                effect_grayscale.BackColor = c.Grayscale();
-                effect_macOS.BackColor = c.ToMacSemantic();
-                effect_Material.BackColor = c.ToMaterial();
-                effect_MaterialExpressive.BackColor = c.ToMaterialExpressive3();
-
-                foreach (ColorItem effect in panel1.Controls.OfType<ColorItem>()) effect.DefaultBackColor = effect.BackColor;
-
-                if (colorItem != null)
+                if (!Program.Settings.NerdStats.Classic_Color_Picker)
                 {
-                    GetColorsHistory(colorItem);
-                    colorItem.PauseColorsHistory = true;
-                    colorItem.ColorPickerOpened = true;
-                    Location = colorItem.PointToScreen(Point.Empty) + (Size)new Point(-Width + colorItem.Width + 5, colorItem.Height - 1);
-                }
-                else
-                {
-                    Location = firstControl.PointToScreen(Point.Empty) + (Size)new Point(-Width + firstControl.Width + 5, firstControl.Height - 1);
-                }
+                    dlg.InitColor = c;
+                    dlg.enableAlpha = EnableAlpha;
+                    dlg.ColorControls_List = ControlsWithProperties;
 
-                if (Location.Y + Height > Screen.PrimaryScreen.Bounds.Height) Location = new(Location.X, Screen.PrimaryScreen.Bounds.Height - Height);
-                if (Location.X + Width > Screen.PrimaryScreen.Bounds.Width) Location = new(Screen.PrimaryScreen.Bounds.Width - Width, Location.Y);
+                    dlg.ColorEditorManager1.Color = c;
+                    dlg.ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
 
-                if (Location.Y < 0) Location = new(Location.X, 0);
-                if (Location.X < 0) Location = new(0, Location.Y);
-
-                DialogResult result = ShowDialog();
-
-                c = result == DialogResult.OK ? ColorEditorManager1.Color : InitColor;
-
-                /* 
-                 Change_Color_Preview uses FluentTransitions. If FluentTransitions starts and cancel is pressed, the color won't be reverted back to the original color
-                ;so we need to revert it manually using FluentTransitions.
-                 */
-                foreach (KeyValuePair<Control, string[]> entry in ColorControls_List)
-                {
-                    foreach (string prop in entry.Value)
+                    for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
                     {
-                        try
+                        ColorEffect effect = ColorEffect.RegisteredEffects[i].Clone();
+                        effect.Checked = true;
+                        effect.InputColor = c;
+                        ColorEffectMiniControl control = new() { ColorEffect = effect, Dock = DockStyle.Top };
+                        dlg.panel1.Controls.Add(control);
+                        control.SendColorClick += (s, e) =>
                         {
-                            Transition
-                                .With(entry.Key, prop ?? "BackColor", c)
-                                .HookOnCompletion(() =>
-                                {
-                                    if (colorItem != null)
-                                    {
-                                        colorItem.Refresh();
-                                        colorItem.PauseColorsHistory = false;
-                                        colorItem.ColorPickerOpened = false;
-                                        colorItem.UpdateColorsHistory();
-                                    }
-                                })
-                                .Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                        }
-                        catch
-                        {
-                            entry.Key.SetProperty(prop ?? "BackColor", c);
-
-                            if (colorItem != null)
-                            {
-                                colorItem.Refresh();
-                                colorItem.PauseColorsHistory = false;
-                                colorItem.ColorPickerOpened = false;
-                                colorItem.UpdateColorsHistory();
-                            }
-                        }
-                    }
-                }
-
-                return enableAlpha ? c : Color.FromArgb(255, c);
-            }
-
-            else
-            {
-                int[] colors = colorItem.ColorsHistory.Select(x => ColorTranslator.ToWin32(x)).ToArray();
-
-                using (ColorDialog CCP = new() { AllowFullOpen = true, AnyColor = true, Color = c, FullOpen = true, SolidColorOnly = false, CustomColors = colors })
-                {
-                    if (CCP.ShowDialog() == DialogResult.OK)
-                    {
-                        foreach (KeyValuePair<Control, string[]> entry in ColorControls_List)
-                        {
-                            foreach (string prop in entry.Value)
-                            {
-                                try { entry.Key.SetProperty(prop ?? "BackColor", CCP.Color); }
-                                catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
-                            }
-                        }
-
-                        return CCP.Color;
+                            Color result = (e as ColorEffectMiniControl.ColorEventArgs).Color;
+                            dlg.ColorEditorManager1.Color = result;
+                        };
                     }
 
+                    if (colorItem != null)
+                    {
+                        dlg.GetColorsHistory(colorItem);
+                        colorItem.PauseColorsHistory = true;
+                        colorItem.ColorPickerOpened = true;
+                        dlg.Location = colorItem.PointToScreen(Point.Empty) + (Size)new Point(-dlg.Width + colorItem.Width + 5, colorItem.Height - 1);
+                    }
                     else
                     {
-                        foreach (KeyValuePair<Control, string[]> entry in ColorControls_List)
+                        dlg.Location = firstControl.PointToScreen(Point.Empty) + (Size)new Point(-dlg.Width + firstControl.Width + 5, firstControl.Height - 1);
+                    }
+
+                    if (dlg.Location.Y + dlg.Height > Screen.PrimaryScreen.Bounds.Height) dlg.Location = new(dlg.Location.X, Screen.PrimaryScreen.Bounds.Height - dlg.Height);
+                    if (dlg.Location.X + dlg.Width > Screen.PrimaryScreen.Bounds.Width) dlg.Location = new(Screen.PrimaryScreen.Bounds.Width - dlg.Width, dlg.Location.Y);
+
+                    if (dlg.Location.Y < 0) dlg.Location = new(dlg.Location.X, 0);
+                    if (dlg.Location.X < 0) dlg.Location = new(0, dlg.Location.Y);
+
+                    DialogResult result = dlg.ShowDialog();
+
+                    c = result == DialogResult.OK ? dlg.ColorEditorManager1.Color : dlg.InitColor;
+
+                    /* 
+                     Change_Color_Preview uses FluentTransitions. If FluentTransitions starts and cancel is pressed, the color won't be reverted back to the original color
+                    ;so we need to revert it manually using FluentTransitions.
+                     */
+                    foreach (KeyValuePair<Control, string[]> entry in dlg.ColorControls_List)
+                    {
+                        foreach (string prop in entry.Value)
                         {
-                            foreach (string prop in entry.Value)
+                            try
                             {
-                                try { entry.Key.SetProperty(prop ?? "BackColor", c); }
-                                catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
+                                Transition
+                                    .With(entry.Key, prop ?? "BackColor", c)
+                                    .HookOnCompletion(() =>
+                                    {
+                                        if (colorItem != null)
+                                        {
+                                            colorItem.Refresh();
+                                            colorItem.PauseColorsHistory = false;
+                                            colorItem.ColorPickerOpened = false;
+                                            colorItem.UpdateColorsHistory();
+                                        }
+                                    })
+                                    .Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                            }
+                            catch
+                            {
+                                entry.Key.SetProperty(prop ?? "BackColor", c);
+
+                                if (colorItem != null)
+                                {
+                                    colorItem.Refresh();
+                                    colorItem.PauseColorsHistory = false;
+                                    colorItem.ColorPickerOpened = false;
+                                    colorItem.UpdateColorsHistory();
+                                }
                             }
                         }
+                    }
 
-                        return c;
+                    return dlg.enableAlpha ? c : Color.FromArgb(255, c);
+                }
+
+                else
+                {
+                    int[] colors = [.. colorItem.ColorsHistory.Select(x => ColorTranslator.ToWin32(x))];
+
+                    using (ColorDialog CCP = new() { AllowFullOpen = true, AnyColor = true, Color = c, FullOpen = true, SolidColorOnly = false, CustomColors = colors })
+                    {
+                        if (CCP.ShowDialog() == DialogResult.OK)
+                        {
+                            foreach (KeyValuePair<Control, string[]> entry in dlg.ColorControls_List)
+                            {
+                                foreach (string prop in entry.Value)
+                                {
+                                    try { entry.Key.SetProperty(prop ?? "BackColor", CCP.Color); }
+                                    catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
+                                }
+                            }
+
+                            return CCP.Color;
+                        }
+
+                        else
+                        {
+                            foreach (KeyValuePair<Control, string[]> entry in dlg.ColorControls_List)
+                            {
+                                foreach (string prop in entry.Value)
+                                {
+                                    try { entry.Key.SetProperty(prop ?? "BackColor", c); }
+                                    catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
+                                }
+                            }
+
+                            return c;
+                        }
                     }
                 }
             }
@@ -634,78 +632,6 @@ namespace WinPaletter
                     }
                 }
             }
-        }
-
-        private void effects_Click(object sender, EventArgs e)
-        {
-            ColorEditorManager1.Color = (sender as ColorItem).BackColor;
-        }
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            effect_dark.BackColor = InitColor.Dark(trackBar1.Value / 100f);
-            effect_dark.DefaultBackColor = effect_dark.BackColor;
-        }
-
-        private void trackBar2_ValueChanged(object sender, EventArgs e)
-        {
-            effect_light.BackColor = InitColor.Light(trackBar2.Value / 100f);
-            effect_light.DefaultBackColor = effect_light.BackColor;
-        }
-
-        private void trackBar4_ValueChanged(object sender, EventArgs e)
-        {
-            effect_desaturate.BackColor = InitColor.Desaturate(trackBar4.Value / 100f);
-            effect_desaturate.DefaultBackColor = effect_desaturate.BackColor;
-        }
-
-        private void trackBar5_ValueChanged(object sender, EventArgs e)
-        {
-            effect_rotateHue.BackColor = InitColor.RotateHue(trackBar5.Value);
-            effect_rotateHue.DefaultBackColor = effect_rotateHue.BackColor;
-        }
-
-        private void trackBarX3_ValueChanged(object sender, EventArgs e)
-        {
-            effect_brightness.BackColor = InitColor.CB((trackBar5.Value - 50f) / 50f);
-            effect_brightness.DefaultBackColor = effect_brightness.BackColor;
-        }
-
-        private void Button16_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog dlg = new() { FileName = ImagePath.Text, Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
-            {
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    ImagePath.Text = dlg.FileName;
-                }
-            }
-        }
-
-        private void ImagePath_TextChanged(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                if (File.Exists(ImagePath.Text))
-                {
-                    using (Bitmap bmp = BitmapMgr.Load(ImagePath.Text))
-                    {
-                        imageColors = bmp.ToPalette(100);
-                    }
-                }
-                else
-                {
-                    imageColors.Clear();
-                }
-
-                Invoke(() =>
-                {
-                    if (imageColors.Count > 0) effect_image.BackColor = InitColor.GetNearestColorFromPalette(imageColors);
-                    else effect_image.BackColor = Color.Black;
-
-                    effect_image.DefaultBackColor = effect_image.BackColor;
-                });
-            });
         }
     }
 }

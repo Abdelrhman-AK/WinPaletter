@@ -157,6 +157,7 @@
       <HintPath>..\packages\System.Collections.Immutable.10.0.0-rc.2.25502.107\lib\net462\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Design">
       <Private>False</Private>
     </Reference>
@@ -222,6 +223,7 @@
     <Reference Include="System.Net.Http">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -300,6 +302,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AeroLoadingCircles.resx</DependentUpon>
     </Compile>
+    <Compile Include="Assets\ColorEffects.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ColorEffects.resx</DependentUpon>
+    </Compile>
     <Compile Include="Assets\ColorItemContextMenu.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -375,17 +382,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WinVistaPreview.resx</DependentUpon>
     </Compile>
+    <Compile Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.Designer.cs">
+      <DependentUpon>ColorEffectMiniControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ArgsHelp.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ColorsAndPalettesHandlers\ColorsEffects.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ColorsAndPalettesHandlers\ColorsEffects.Designer.cs">
-      <DependentUpon>ColorsEffects.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\Welcome.cs">
       <SubType>Form</SubType>
@@ -399,10 +406,19 @@
     <Compile Include="Dialogs\WinEffectsAlert.Designer.cs">
       <DependentUpon>WinEffectsAlert.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorsAndPalettesHandlers\ColorEffectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorsAndPalettesHandlers\ColorEffectControl.Designer.cs">
+      <DependentUpon>ColorEffectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Others\SkeletonOverlay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Others\SmoothPanels.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
@@ -421,6 +437,7 @@
     <Compile Include="GUI\Elements\AdvancedControls\Magnifier.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Languages\Localizer\Strings\General\ColorsEffects.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Extensions.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Tabs.cs" />
     <Compile Include="Languages\Localizer\Strings.cs" />
@@ -431,6 +448,7 @@
       <DependentUpon>PaletteGenerator.cs</DependentUpon>
     </Compile>
     <Compile Include="Program\Classes\Animator.cs" />
+    <Compile Include="ColorsAndPalettesHandlers\ColorEffect.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\Logger.cs" />
@@ -1223,6 +1241,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AeroLoadingCircles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Assets\ColorEffects.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ColorEffects.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Assets\ColorItemContextMenu.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ColorItemContextMenu.Designer.cs</LastGenOutput>
@@ -1283,17 +1305,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WinVistaPreview.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.resx">
+      <DependentUpon>ColorEffectMiniControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorsEffects.resx">
-      <DependentUpon>ColorsEffects.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Welcome.resx">
       <DependentUpon>Welcome.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\WinEffectsAlert.resx">
       <DependentUpon>WinEffectsAlert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectControl.resx">
+      <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\GlassWindow.resx">
       <DependentUpon>GlassWindow.cs</DependentUpon>

@@ -126,7 +126,7 @@ namespace WinPaletter
             using (Manager TMx = new(Manager.Source.Empty))
             {
                 TMx.Windows11 = Program.TM.Windows10.Clone();
-
+                
                 using (Theme.Manager TMx0 = TMx.Clone())
                 {
                     LoadFromTM(TMx0);

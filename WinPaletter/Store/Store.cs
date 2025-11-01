@@ -109,7 +109,14 @@ namespace WinPaletter
                     lfWeight = Console.FontWeight
                 };
 
-                CMD.Font = Font.FromLogFont(logFont);
+                try
+                {
+                    CMD.Font = Font.FromLogFont(logFont);
+                }
+                catch
+                {
+
+                }
             }
 
             CMD.PowerShell = PS;
@@ -245,12 +252,15 @@ namespace WinPaletter
 
             Apply_btn.Image = Forms.Home.apply_btn.Image;
             RestartExplorer.Image = Forms.Home.restartExplorer_btn.Image;
+            labelAlt2.Text = string.Format(Program.Lang.Strings.Store.WontWork_Protocol, OS.WXP ? Program.Lang.Strings.Windows.WXP : Program.Lang.Strings.Windows.WVista);
+            if (OS.WXP || OS.WVista) Tabs.SelectedIndex = 4;
 
-            Status_lbl.Font = Fonts.ConsoleMedium;
             themeSize_lbl.Font = Fonts.ConsoleLarge;
             respacksize_lbl.Font = Fonts.ConsoleLarge;
             desc_txt.Font = Fonts.ConsoleLarge;
             Theme_MD5_lbl.Font = Fonts.Console;
+
+            groupBox4.UpdatePattern(Program.TM.Info.Pattern);
         }
 
         private void Store_Shown(object sender, EventArgs e)
@@ -272,13 +282,9 @@ namespace WinPaletter
             ApplyStyle(this, true);
             Program.Settings.Appearance.CustomColors = oldAppearance.CustomColors;
 
-            Status_pnl.Visible = true;
-
             ThemesFetcher.CancelAsync();
             RemoveAllStoreItems(store_container);
             Tabs.SelectedIndex = 0;
-
-            Status_lbl.SetText(string.Empty);
         }
 
         private void Store_FormClosed(object sender, FormClosedEventArgs e)
@@ -325,16 +331,11 @@ namespace WinPaletter
             foreach (string DB in Program.Settings.Store.Online_Repositories)
             {
                 string repoUrl = DB.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? DB : $"https://{DB}";
-                Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.Ping, repoUrl));
 
                 // If repository is reachable, add it to the list
                 if (Program.Ping(repoUrl))
                 {
                     repos_list.Add(repoUrl);
-                }
-                else
-                {
-                    Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.PingFailed, repoUrl));
                 }
             }
 
@@ -395,8 +396,6 @@ namespace WinPaletter
             // Loop through the collected theme data
             foreach (ThemeData theme in allThemes)
             {
-                Status_lbl.SetText(string.Empty);
-
                 // Create a folder for storing the theme
                 if (!Directory.Exists(theme.FolderPath)) Directory.CreateDirectory(theme.FolderPath);
 
@@ -418,6 +417,11 @@ namespace WinPaletter
 
             // Hide progress bar when done
             BeginInvoke(() => ProgressBar1.Visible = false);
+
+            if (store_container.Controls.Count == 0 || allThemes.Count == 0)
+            {
+                Tabs.SelectedIndex = 3;
+            }
 
             // Mark the process as finished
             FinishedLoadingInitialTMs = true;
@@ -537,13 +541,13 @@ namespace WinPaletter
                 if ((Program.CalculateMD5(theme.FullPath) ?? string.Empty) != theme.MD5_ThemeFile)
                 {
                     File.Delete(theme.FullPath); // Delete the old file if MD5 doesn't match
-                    Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
                     Download(theme);
                 }
             }
             else
             {
-                Status_lbl.SetText(string.Format(Program.Lang.Strings.Store.DownloadTheme, theme.FileName, theme.URL_ThemeFile));
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.Store.DownloadTheme, theme.FileName, theme.URL_ThemeFile));
                 Download(theme);
             }
         }
@@ -592,9 +596,15 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Fetches themes from the offline store (local directory on a disk).
+        /// Loads themes from specified folders in offline mode, updating the UI to reflect progress.
         /// </summary>
-        private void OfflineMode()
+        /// <remarks>This method processes theme files with the ".wpth" extension found in the specified
+        /// folders. It updates the UI to show progress and loads each theme into the application. If a theme cannot be
+        /// loaded, it is silently ignored. The method also updates the UI to reflect the loading status and
+        /// progress.</remarks>
+        /// <param name="folders">An array of folder paths to search for theme files. If <see langword="null"/>, the default offline
+        /// directories specified in the application settings are used.</param>
+        private void OfflineMode(string[] folders = null)
         {
             BeginInvoke(() =>
                 {
@@ -605,18 +615,20 @@ namespace WinPaletter
             int i = 0;
             int allProgress = 0;
 
-            foreach (string folder in Program.Settings.Store.Offline_Directories)
+            if (folders == null) folders = Program.Settings.Store.Offline_Directories;
+
+            foreach (string folder in folders)
             {
                 if (Directory.Exists(folder))
                 {
-                    Status_lbl.SetText($"Accessing themes from folder \"{folder}\"");
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Accessing themes from folder \"{folder}\"");
                     allProgress += Directory.GetFiles(folder, "*.wpth", Program.Settings.Store.Offline_SubFolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).Count();
                 }
             }
 
             allProgress *= 2;
 
-            foreach (string folder in Program.Settings.Store.Offline_Directories)
+            foreach (string folder in folders)
             {
                 if (Directory.Exists(folder))
                 {
@@ -627,7 +639,7 @@ namespace WinPaletter
                             if (!TMList.ContainsKey(file))
                             {
 
-                                Status_lbl.SetText($"Enumerating themes: \"{file}\"");
+                                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Enumerating themes: \"{file}\"");
 
                                 using (Manager TMx = new(Manager.Source.File, file, true, true))
                                 {
@@ -640,14 +652,14 @@ namespace WinPaletter
                         i += 1;
 
                         if (allProgress > 0)
-                            ThemesFetcher.ReportProgress((int)(i / (float)allProgress * 100f));
+                            ProgressBar1.Value = Math.Max(Math.Min((int)(i / (float)allProgress * 100f), ProgressBar1.Maximum), ProgressBar1.Minimum);
                     }
                 }
             }
 
             foreach (KeyValuePair<string, Manager> StoreItem in TMList)
             {
-                Status_lbl.SetText($"Loading theme \"{StoreItem.Value.Info.ThemeName}\"");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Loading theme \"{StoreItem.Value.Info.ThemeName}\"");
 
                 StoreItem ctrl = new()
                 {
@@ -669,7 +681,8 @@ namespace WinPaletter
 
                 i += 1;
 
-                if (allProgress > 0) ThemesFetcher.ReportProgress((int)(i / (float)allProgress * 100f));
+                if (allProgress > 0)
+                    ProgressBar1.Value = Math.Max(Math.Min((int)(i / (float)allProgress * 100f), ProgressBar1.Maximum), ProgressBar1.Minimum);
             }
 
             BeginInvoke(() =>
@@ -677,8 +690,6 @@ namespace WinPaletter
                     ProgressBar1.Visible = false;
                     store_container.Visible = true;
                 });
-
-            Status_lbl.SetText(string.Empty);
 
             TMList.Clear();
 
@@ -691,16 +702,9 @@ namespace WinPaletter
             {
                 if (!Program.IsNetworkAvailable)
                 {
-                    Status_lbl.SetText(Program.Lang.Strings.Store.NoNetwork);
-
-                    if (MsgBox(Program.Lang.Strings.Store.NoNetwork, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Store.TryOffline) == DialogResult.Yes)
-                    {
-                        StartedAsOnlineOrOffline = false;
-                        OfflineMode();
-                        return;
-                    }
+                    StartedAsOnlineOrOffline = false;
+                    Tabs.SelectedIndex = 3;
                 }
-
                 else
                 {
                     StartedAsOnlineOrOffline = true;
@@ -712,8 +716,6 @@ namespace WinPaletter
                 StartedAsOnlineOrOffline = false;
                 OfflineMode();
             }
-
-            Program.Animator.HideSync(Status_pnl);
         }
 
         private void FilesFetcher_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -1408,5 +1410,63 @@ namespace WinPaletter
         }
 
         #endregion
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (OS.WXP)
+            {
+                Program.SendCommand($"{SysPaths.Windows}\\Network Diagnostic\\xpnetdiag.exe", false);
+            }
+            else if (OS.WVista || OS.W7 || OS.W8x || OS.W10)
+            {
+                Process.Start($"{SysPaths.System32}\\msdt.exe", $"-path {SysPaths.Windows}\\diagnostics\\system\\networking -ep NetworkDiagnosticsPNI");
+            }
+            else
+            {
+                Program.SendCommand($"{SysPaths.Explorer} \"ms-contact-support:///?ActivationType=NetworkDiagnostics\"", false);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            StartedAsOnlineOrOffline = false;
+            RemoveAllStoreItems(store_container);
+            Tabs.SelectedIndex = 0;
+            OfflineMode([SysPaths.StoreCache]);
+            Cursor = Cursors.Default;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            StartedAsOnlineOrOffline = false;
+            RemoveAllStoreItems(store_container);
+            Tabs.SelectedIndex = 0;
+            OfflineMode();
+            Cursor = Cursors.Default;
+        }
+
+        private void titlebarExtender1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
+            Forms.SettingsX.TabControl1.SelectedIndex = 6;
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Tabs.SelectedIndex = 0;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
+using WinPaletter.UI.AdvancedControls;
 using static WinPaletter.Settings.Structures.NerdStats;
 
 namespace WinPaletter.UI.Controllers
@@ -30,22 +31,7 @@ namespace WinPaletter.UI.Controllers
         ToolStripMenuItem delete = new() { Image = ColorItemContextMenu.Delete };
         ToolStripMenuItem reset = new() { Image = ColorItemContextMenu.Default };
         ToolStripMenuItem blend = new();
-        ToolStripMenuItem reverse = new() { Image = ColorItemContextMenu.Reverse };
-        ToolStripMenuItem effects = new() { Image = ColorItemContextMenu.Effects };
-        ToolStripMenuItem grayscale = new() { Image = ColorItemContextMenu.Grayscale };
-        ToolStripMenuItem sepia = new() { Image = ColorItemContextMenu.Sepia };
-        ToolStripMenuItem rotateHuePlus10 = new() { Image = ColorItemContextMenu.RotateHue };
-        ToolStripMenuItem rotateHueMinus10 = new() { Image = ColorItemContextMenu.RotateHue };
-        ToolStripMenuItem desaturate = new() { Image = ColorItemContextMenu.Desaturate };
-        ToolStripMenuItem monochrome = new() { Image = ColorItemContextMenu.Monochrome };
-        ToolStripMenuItem imageToColor = new() { Image = ColorItemContextMenu.Image };
-        ToolStripMenuItem webSafe = new() { Image = ColorItemContextMenu.WebSafe };
-        ToolStripMenuItem _256Colors = new() { Image = ColorItemContextMenu._265Colors };
-        ToolStripMenuItem frutigerAero = new() { Image = ColorItemContextMenu.FrutigerAero };
-        ToolStripMenuItem metro = new() { Image = ColorItemContextMenu.Metro };
-        ToolStripMenuItem macOS = new() { Image = ColorItemContextMenu.macOS };
-        ToolStripMenuItem material = new() { Image = ColorItemContextMenu.M2015 };
-        ToolStripMenuItem materialExpressive3 = new() { Image = ColorItemContextMenu.ME3 };
+        ToolStripMenuItem someEffects = new() { Image = ColorItemContextMenu.Effects };
 
         ToolStripMenuItem previousColor = new();
         ToolStripSeparator toolStripSeparator0 = new();
@@ -112,24 +98,48 @@ namespace WinPaletter.UI.Controllers
             contextMenu.Items.Add(lighten);
             contextMenu.Items.Add(toolStripSeparator2);
             contextMenu.Items.Add(invert);
-            contextMenu.Items.Add(reverse);
 
-            effects.DropDown = new WP.ContextMenuStrip();
-            effects.DropDownItems.Add(imageToColor);
-            effects.DropDownItems.Add(grayscale);
-            effects.DropDownItems.Add(sepia);
-            effects.DropDownItems.Add(rotateHuePlus10);
-            effects.DropDownItems.Add(rotateHueMinus10);
-            effects.DropDownItems.Add(desaturate);
-            effects.DropDownItems.Add(monochrome);
-            effects.DropDownItems.Add(webSafe);
-            effects.DropDownItems.Add(_256Colors);
-            effects.DropDownItems.Add(frutigerAero);
-            effects.DropDownItems.Add(metro);
-            effects.DropDownItems.Add(macOS);
-            effects.DropDownItems.Add(material);
-            effects.DropDownItems.Add(materialExpressive3);
-            contextMenu.Items.Add(effects);
+            someEffects.DropDown = new WP.ContextMenuStrip();
+
+            for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
+            {
+                ColorEffect effect = ColorEffect.RegisteredEffects[i].Clone();
+
+                if (!effect.HasScrollbar)
+                {
+                    effect.Checked = true;
+
+                    ToolStripMenuItem item = new() { Text = effect.Name, Image = effect.SmallImage.Resize(20, 20), Tag = effect };
+
+                    item.Click += Item_Click;
+
+                    someEffects.DropDownItems.Add(item);
+                }
+                else
+                {
+                    //ToolStripMenuItem item = new()
+                    //{
+                    //    Text = effect.Name,
+                    //    Image = effect.SmallImage,
+                    //    DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = false },
+                    //    Tag = effect
+                    //};
+
+                    //for (int i = (int)effect.ScrollbarMin; i <= effect.ScrollbarMax; i += (int)((effect.ScrollbarMax - effect.ScrollbarMin) / 10f))
+                    //{
+                    //    effect.Checked = true;
+                    //    effect.ScrollbarValue = i;
+
+                    //    ToolStripMenuItem subItem = new() { Text = i.ToString(), Tag = effect };
+                    //    subItem.Click += Item_Click;
+                    //    item.DropDownItems.Add(subItem);
+                    //}
+
+                    //someEffects.DropDownItems.Add(item);
+                }
+            }
+
+            contextMenu.Items.Add(someEffects);
 
             copy.Click += Copy_Click;
             cut.Click += Cut_Click;
@@ -141,7 +151,6 @@ namespace WinPaletter.UI.Controllers
             invert.Click += Invert_Click;
             reset.Click += Reset_Click;
             previousColor.Click += PreviousColor_Click;
-            reverse.Click += Reverse_Click;
             copy_AsHex.Click += Copy_AsHEX;
             copy_AsRGB.Click += Copy_AsRGB;
             copy_AsHSL.Click += Copy_AsHSL;
@@ -154,21 +163,6 @@ namespace WinPaletter.UI.Controllers
             copy_AsWin32.Click += Copy_AsWin32;
             copy_AsKnownName.Click += Copy_AsKnownName;
             copy_AsCSS.Click += Copy_AsCSS;
-
-            grayscale.Click += Grayscale_Click;
-            sepia.Click += Sepia_Click;
-            rotateHuePlus10.Click += RotateHuePlus10_Click;
-            rotateHueMinus10.Click += RotateHueMinus10_Click;
-            desaturate.Click += Desaturate_Click;
-            monochrome.Click += Monochrome_Click;
-            _256Colors.Click += _256Colors_Click;
-            macOS.Click += MacOS_Click;
-            material.Click += Material_Click;
-            materialExpressive3.Click += MaterialExpressive3_Click;
-            imageToColor.Click += ImageToColor_Click;
-            webSafe.Click += WebSafe_Click;
-            frutigerAero.Click += FrutigerAero_Click;
-            metro.Click += Metro_Click;
         }
 
         #region Variables
@@ -243,7 +237,7 @@ namespace WinPaletter.UI.Controllers
         }
 
 
-        protected override async void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             mousePosition_afterDrag = MousePosition;
 
@@ -256,7 +250,6 @@ namespace WinPaletter.UI.Controllers
             if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
             {
                 HoverOverDefColorDot = CanRaiseEventsForDefColorDot();
-                await Task.Delay(10);
                 Invalidate();
             }
 
@@ -441,7 +434,7 @@ namespace WinPaletter.UI.Controllers
 
         public bool CanRaiseEventsForDefColorDot()
         {
-            return Program.Settings.NerdStats.DotDefaultChangedIndicator && Rect_DefColor_MouseHoverFixer.Contains(PointToClient(MousePosition)) && BackColor != DefaultBackColor;
+            return Program.Settings.NerdStats.DotDefaultChangedIndicator && DefaultBackColor != Color.Empty && DefaultBackColor != Color.Transparent && Rect_DefColor_MouseHoverFixer.Contains(PointToClient(MousePosition)) && BackColor != DefaultBackColor;
         }
 
         #endregion
@@ -527,22 +520,7 @@ namespace WinPaletter.UI.Controllers
                 lighten.Text = Program.Lang.Strings.General.Lighten;
                 invert.Text = Program.Lang.Strings.General.Invert;
                 previousColor.Text = Program.Lang.Strings.General.PreviousColor;
-                reverse.Text = Program.Lang.Strings.General.Reverse;
-                grayscale.Text = Program.Lang.Strings.General.Grayscale;
-                effects.Text = Program.Lang.Strings.General.Effects;
-                sepia.Text = Program.Lang.Strings.General.Sepia;
-                rotateHuePlus10.Text = Program.Lang.Strings.General.RotateHuePlus10;
-                rotateHueMinus10.Text = Program.Lang.Strings.General.RotateHueMinus10;
-                desaturate.Text = Program.Lang.Strings.General.Desaturate;
-                monochrome.Text = Program.Lang.Strings.General.Monochrome;
-                _256Colors.Text = Program.Lang.Strings.General._256Colors;
-                macOS.Text = Program.Lang.Strings.General.macOS_Color;
-                material.Text = Program.Lang.Strings.General.AndroidMaterialColor;
-                materialExpressive3.Text = Program.Lang.Strings.General.AndroidMaterialExpressive3Color;
-                imageToColor.Text = Program.Lang.Strings.General.WallpaperAccentColor;
-                webSafe.Text = Program.Lang.Strings.General.WebSafe;
-                frutigerAero.Text = Program.Lang.Strings.General.FrutigerAero;
-                metro.Text = Program.Lang.Strings.General.Metro;
+                someEffects.Text = Program.Lang.Strings.ColorEffects.SomeEffects;
 
                 blend.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 blend.Image = blend.Enabled
@@ -779,7 +757,7 @@ namespace WinPaletter.UI.Controllers
             if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
-        private void Reverse_Click(object sender, EventArgs e)
+        private void Item_Click(object sender, EventArgs e)
         {
             BeforeDropColor = BackColor;
             BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
@@ -787,189 +765,9 @@ namespace WinPaletter.UI.Controllers
             MakeAfterDropEffect = true;
             Timer2.Enabled = true;
             Timer2.Start();
-            BackColor = BackColor.Reverse();
 
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void _256Colors_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.To256Color();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Monochrome_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Monochrome();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Desaturate_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Desaturate(0.3f);
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void RotateHuePlus10_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.RotateHue(10f);
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void RotateHueMinus10_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.RotateHue(-10f);
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Grayscale_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Grayscale();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Sepia_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Sepia();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void MaterialExpressive3_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.ToMaterialExpressive3();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Material_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.ToMaterial();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void MacOS_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.ToMacSemantic();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Metro_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.ToMetro();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void FrutigerAero_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.ToFrutigerAero();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void WebSafe_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.ToWebSafe();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void ImageToColor_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.GetNearestColorFromPalette(Program.Wallpaper.ToPalette(100));
+            ColorEffect effect = (sender as ToolStripMenuItem).Tag as ColorEffect;
+            BackColor = effect.Apply(BeforeDropColor);
 
             if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
@@ -1007,9 +805,9 @@ namespace WinPaletter.UI.Controllers
         {
             InitializeDrag = false;
             State = MouseState.Over;
-
-            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
-            else { alpha = ContainsFocus ? 255 : 0; }
+            bool MouseOver = ClientRectangle.Contains(e.Location);
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus || MouseOver ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            else { alpha = ContainsFocus || MouseOver ? 255 : 0; }
 
             base.OnMouseUp(e);
         }

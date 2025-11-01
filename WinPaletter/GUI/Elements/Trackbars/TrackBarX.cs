@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Controllers
@@ -17,6 +18,8 @@ namespace WinPaletter.UI.Controllers
             value_btn.Text = Value.ToString();
             value_btn.Font = Fonts.ConsoleMedium;
             textBox1.Font = Fonts.ConsoleMedium;
+
+            AdjustLayout();
         }
 
         public event EventHandler ValueChanged;
@@ -83,6 +86,15 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
+        private void AdjustLayout()
+        {
+            int innerPadding = trackBar1.Left;
+            int width = TextRenderer.MeasureText(value_btn.Text ?? "0", value_btn.Font).Width + 10;
+            value_btn.Width = width;
+            value_btn.Left = Width - width;
+            reset.Left = value_btn.Left - reset.Width - innerPadding;
+            trackBar1.Width = reset.Left - trackBar1.Left - innerPadding;
+        }
 
         private void trackBar1_Scroll(object sender)
         {
@@ -150,12 +162,7 @@ namespace WinPaletter.UI.Controllers
 
         private void value_btn_TextChanged(object sender, EventArgs e)
         {
-            int innerPadding = trackBar1.Left;
-            int width = TextRenderer.MeasureText(value_btn.Text ?? "0", value_btn.Font).Width + 10;
-            value_btn.Width = width;
-            value_btn.Left = Width - width;
-            reset.Left = value_btn.Left - reset.Width - innerPadding;
-            trackBar1.Width = reset.Left - trackBar1.Left - innerPadding;
+            AdjustLayout();
         }
 
         private void reset_LocationChanged(object sender, EventArgs e)
@@ -192,6 +199,11 @@ namespace WinPaletter.UI.Controllers
         private void textBox1_MouseLeave(object sender, EventArgs e)
         {
             Program.ToolTip.Hide(sender as WP.TextBox);
+        }
+
+        private void TrackBarX_Load(object sender, EventArgs e)
+        {
+            AdjustLayout();
         }
     }
 }

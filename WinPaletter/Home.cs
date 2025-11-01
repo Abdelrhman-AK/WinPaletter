@@ -381,17 +381,6 @@ namespace WinPaletter
 
         private void Button31_Click(object sender, EventArgs e)
         {
-            if (OS.WXP)
-            {
-                if (MsgBox(string.Format(Program.Lang.Strings.Store.WontWork_Protocol, Program.Lang.Strings.Windows.WXP), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
-                    return;
-            }
-            else if (OS.WVista)
-            {
-                if (MsgBox(string.Format(Program.Lang.Strings.Store.WontWork_Protocol, Program.Lang.Strings.Windows.WVista), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
-                    return;
-            }
-
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Store);
         }
 

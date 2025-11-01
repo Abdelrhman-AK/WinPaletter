@@ -13,6 +13,11 @@
             public General_Cls General { get; set; } = new();
 
             /// <summary>
+            /// A class that contains all the general strings used in the application.
+            /// </summary>
+            public ColorEffects_Cls ColorEffects { get; set; } = new();
+
+            /// <summary>
             /// A class that contains all the strings used for describing the Windows editions.
             /// </summary>
             public WindowsEditions_Cls Windows { get; set; } = new();

@@ -703,14 +703,539 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Reduce saturation of color.
+        /// Adjust color saturation (can both increase or decrease it).
         /// </summary>
-        public static Color Desaturate(this Color color, float factor)
+        /// <param name="color">Base color.</param>
+        /// <param name="factor">
+        /// Saturation factor:  
+        /// 0 = grayscale,  
+        /// 1 = original,  
+        /// >1 = more saturated (up to 3 is safe).
+        /// </param>
+        public static Color Saturate(this Color color, float factor = 1.2f)
         {
-            float h = color.GetHue();
-            float s = Math.Max(0, color.GetSaturation() - factor);
+            // Clamp factor between 0 and 3 to avoid overflow or distortion
+            factor = Math.Max(0f, Math.Min(3f, factor));
+
+            // Convert RGB to HSL
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
+
+            float max = Math.Max(r, Math.Max(g, b));
+            float min = Math.Min(r, Math.Min(g, b));
+            float delta = max - min;
+
+            float l = (max + min) / 2f;
+            float s = 0f;
+            float h = 0f;
+
+            if (delta != 0)
+            {
+                s = delta / (1f - Math.Abs(2f * l - 1f));
+
+                if (max == r)
+                    h = 60f * (((g - b) / delta) % 6f);
+                else if (max == g)
+                    h = 60f * (((b - r) / delta) + 2f);
+                else
+                    h = 60f * (((r - g) / delta) + 4f);
+            }
+
+            // Adjust saturation
+            s *= factor;
+            s = Math.Max(0f, Math.Min(1f, s));
+
+            // Convert back to RGB
+            float c = (1f - Math.Abs(2f * l - 1f)) * s;
+            float x = c * (1f - Math.Abs((h / 60f) % 2f - 1f));
+            float m = l - c / 2f;
+
+            float r1 = 0, g1 = 0, b1 = 0;
+            if (h < 60f) { r1 = c; g1 = x; b1 = 0; }
+            else if (h < 120f) { r1 = x; g1 = c; b1 = 0; }
+            else if (h < 180f) { r1 = 0; g1 = c; b1 = x; }
+            else if (h < 240f) { r1 = 0; g1 = x; b1 = c; }
+            else if (h < 300f) { r1 = x; g1 = 0; b1 = c; }
+            else { r1 = c; g1 = 0; b1 = x; }
+
+            int R = (int)((r1 + m) * 255);
+            int G = (int)((g1 + m) * 255);
+            int B = (int)((b1 + m) * 255);
+
+            return Color.FromArgb(color.A,
+                Math.Min(255, Math.Max(0, R)),
+                Math.Min(255, Math.Max(0, G)),
+                Math.Min(255, Math.Max(0, B)));
+        }
+
+        /// <summary>
+        /// Apply a cool (bluish) tone to the color.
+        /// </summary>
+        /// <param name="color">Base color.</param>
+        /// <param name="intensity">Effect intensity (0 = none, 1 = full).</param>
+        public static Color Cool(this Color color, float intensity = 0.3f)
+        {
+            // Shift toward blue-cyan tones
+            int r = (int)(color.R * (1 - intensity));
+            int g = (int)(color.G * (1 - intensity / 2f));
+            int b = (int)(color.B + (255 - color.B) * intensity);
+
+            r = Math.Min(255, Math.Max(0, r));
+            g = Math.Min(255, Math.Max(0, g));
+            b = Math.Min(255, Math.Max(0, b));
+
+            return Color.FromArgb(color.A, r, g, b);
+        }
+
+        /// <summary>
+        /// Apply a warm (reddish) tone to the color.
+        /// </summary>
+        /// <param name="color">Base color.</param>
+        /// <param name="intensity">Effect intensity (0 = none, 1 = full).</param>
+        public static Color Hot(this Color color, float intensity = 0.3f)
+        {
+            // Shift toward warm orange-red tones
+            int r = (int)(color.R + (255 - color.R) * intensity);
+            int g = (int)(color.G * (1 - intensity / 3f));
+            int b = (int)(color.B * (1 - intensity));
+
+            r = Math.Min(255, Math.Max(0, r));
+            g = Math.Min(255, Math.Max(0, g));
+            b = Math.Min(255, Math.Max(0, b));
+
+            return Color.FromArgb(color.A, r, g, b);
+        }
+
+        /// <summary>
+        /// Adjust contrast for a single color. contrast = 1 => unchanged; &lt;1 lowers; &gt;1 increases.
+        /// Operates on normalized channels.
+        /// </summary>
+        private static Color AdjustContrast(Color c, float contrast)
+        {
+            contrast = Math.Max(0f, contrast);
+            float r = ((c.R / 255f - 0.5f) * contrast + 0.5f);
+            float g = ((c.G / 255f - 0.5f) * contrast + 0.5f);
+            float b = ((c.B / 255f - 0.5f) * contrast + 0.5f);
+            return Color.FromArgb(c.A,
+                (int)(Math.Min(1f, Math.Max(0f, r)) * 255f),
+                (int)(Math.Min(1f, Math.Max(0f, g)) * 255f),
+                (int)(Math.Min(1f, Math.Max(0f, b)) * 255f));
+        }
+
+        /// <summary>
+        /// Vibrance internal: increase saturation more for muted colors, less for already saturated ones.
+        /// factor: 1 = unchanged, &gt;1 increases vibrance, &lt;1 reduces it.
+        /// </summary>
+        private static Color VibranceInternal(Color color, float factor = 1.15f)
+        {
+            factor = Math.Max(0f, factor);
+            var hsl = color.ToHSL();
+            // compute how muted the color is: (1 - saturation)
+            float muted = 1f - hsl.S;
+            // scale effect by muted (so muted colors get more boost)
+            float boost = 1f + (factor - 1f) * (0.6f + 0.4f * muted);
+            hsl.S = Math.Min(1f, hsl.S * boost);
+            return hsl.ToRGB();
+        }
+
+        /// <summary>
+        /// Soft light blend of base and blend color with amount.
+        /// Uses a standard soft-light blend curve.
+        /// </summary>
+        private static Color SoftLightBlend(Color baseColor, Color blendColor, float amount)
+        {
+            amount = Math.Min(1f, Math.Max(0f, amount));
+            // Convert to 0..1
+            float br = baseColor.R / 255f, bg = baseColor.G / 255f, bb = baseColor.B / 255f;
+            float lr = blendColor.R / 255f, lg = blendColor.G / 255f, lb = blendColor.B / 255f;
+
+            Func<float, float, float> soft = (B, S) =>
+            {
+                // Soft light formula per channel
+                return (S <= 0.5f)
+                    ? (B - (1f - 2f * S) * B * (1f - B))
+                    : (B + (2f * S - 1f) * (d(B) - B));
+            };
+
+            static float d(float x)
+            {
+                if (x <= 0.25f) return ((16f * x - 12f) * x + 4f) * x;
+                return (float)Math.Sqrt(x);
+            }
+
+            float rr = soft(br, lr);
+            float rg = soft(bg, lg);
+            float rb = soft(bb, lb);
+
+            // Interpolate with amount
+            rr = br * (1f - amount) + rr * amount;
+            rg = bg * (1f - amount) + rg * amount;
+            rb = bb * (1f - amount) + rb * amount;
+
+            return Color.FromArgb(baseColor.A, (int)(rr * 255f), (int)(rg * 255f), (int)(rb * 255f));
+        }
+
+        /// <summary>
+        /// Hard light blend (fast approximation) - amount 0..1.
+        /// </summary>
+        private static Color HardLightBlend(Color baseColor, Color blendColor, float amount)
+        {
+            amount = Math.Min(1f, Math.Max(0f, amount));
+            float br = baseColor.R / 255f, bg = baseColor.G / 255f, bb = baseColor.B / 255f;
+            float lr = blendColor.R / 255f, lg = blendColor.G / 255f, lb = blendColor.B / 255f;
+
+            Func<float, float, float> hard = (B, S) =>
+            {
+                return (S <= 0.5f) ? (2f * B * S) : (1f - 2f * (1f - B) * (1f - S));
+            };
+
+            float rr = hard(br, lr);
+            float rg = hard(bg, lg);
+            float rb = hard(bb, lb);
+
+            rr = br * (1f - amount) + rr * amount;
+            rg = bg * (1f - amount) + rg * amount;
+            rb = bb * (1f - amount) + rb * amount;
+
+            return Color.FromArgb(baseColor.A, (int)(rr * 255f), (int)(rg * 255f), (int)(rb * 255f));
+        }
+
+        /// <summary>
+        /// Sunset / Golden Hour: blend warm red-orange hues for a sunset feel.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Sunset(this Color color, float intensity = 0.5f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            // golden overlay
+            Color warm = Color.FromArgb(255, 255, 150, 60); // warm golden-orange
+                                                            // stronger effect on midtones
+            float b = color.GetBrightness(); // 0..1 brightness
+            float midBias = 1f - Math.Abs(0.5f - b) * 2f;
+            float alpha = intensity * (0.25f + 0.7f * midBias);
+
+            Color blended = Blend(color, warm, alpha);
+            // slightly increase vibrance and contrast
+            blended = VibranceInternal(blended, 1f + intensity * 0.35f);
+            blended = AdjustContrast(blended, 1f + intensity * 0.06f);
+            return blended;
+        }
+
+        /// <summary>
+        /// Night / Moonlight: bluish, desaturated look for moonlight.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Night(this Color color, float intensity = 0.6f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            // desaturate
+            var desat = color.Saturate(1f - intensity * 0.65f);
+            // bluish tint
+            var moon = Color.FromArgb(255, 100, 140, 255);
+            var blended = Blend(desat, moon, intensity * 0.45f);
+            // slightly reduce contrast and darken
+            blended = AdjustContrast(blended, 1f - intensity * 0.18f);
+            blended = blended.CB(-intensity * 0.06f); // use CB for minor darken
+            return blended;
+        }
+
+        /// <summary>
+        /// Filmic / Cinematic Tone: cool shadows and warm highlights.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Filmic(this Color color, float intensity = 0.6f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            float lum = color.GetBrightness();
+            // tint colors
+            Color shadowTint = Color.FromArgb(255, 70, 100, 160); // cool
+            Color highlightTint = Color.FromArgb(255, 240, 190, 120); // warm
+
+            float shadowAlpha = intensity * (1f - lum) * 0.9f;
+            float highlightAlpha = intensity * Math.Max(0f, lum - 0.45f) * 1.6f;
+
+            var afterShadow = Blend(color, shadowTint, shadowAlpha);
+            var afterBoth = Blend(afterShadow, highlightTint, highlightAlpha);
+
+            // modest contrast and vibrance tweak
+            afterBoth = AdjustContrast(afterBoth, 1f + intensity * 0.06f);
+            afterBoth = VibranceInternal(afterBoth, 1f + intensity * 0.12f);
+
+            return afterBoth;
+        }
+
+        /// <summary>
+        /// Posterize: reduce color depth (levels >= 2).
+        /// </summary>
+        public static Color Posterize(this Color color, int levels = 6)
+        {
+            levels = Math.Max(2, levels);
+            Func<int, int> q = (v) =>
+            {
+                float t = (v / 255f) * (levels - 1);
+                int idx = (int)Math.Round(t);
+                return (int)Math.Round(idx * (255f / (levels - 1)));
+            };
+            return Color.FromArgb(color.A, q(color.R), q(color.G), q(color.B));
+        }
+
+        /// <summary>
+        /// Threshold: if brightness >= threshold (0..1) => white else black.
+        /// </summary>
+        public static Color Threshold(this Color color, float threshold = 0.5f)
+        {
+            threshold = Math.Max(0f, Math.Min(1f, threshold));
             float b = color.GetBrightness();
-            return FromAhsb(color.A, h, s, b);
+            return b >= threshold ? Color.FromArgb(color.A, 255, 255, 255) : Color.FromArgb(color.A, 0, 0, 0);
+        }
+
+        /// <summary>
+        /// Vintage / Retro: sepia + faded highlights and reduced contrast.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Vintage(this Color color, float intensity = 0.6f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            // base sepia
+            Color s = color.Sepia();
+            // fade towards warm off-white
+            Color faded = Color.FromArgb(255, 245, 235, 200);
+            var blended = Blend(s, faded, intensity * 0.22f);
+            // minor contrast reduction and warmth
+            blended = AdjustContrast(blended, 1f - intensity * 0.16f);
+            blended = Blend(blended, Color.FromArgb(255, 220, 180, 120), intensity * 0.08f);
+            return blended;
+        }
+
+        /// <summary>
+        /// Noir / Monochrome: high-contrast grayscale (film-noir look).
+        /// intensity: 0..1 (how strong the contrast boost is)
+        /// </summary>
+        public static Color Noir(this Color color, float intensity = 0.9f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            var g = color.Grayscale();
+            float contrast = 1f + intensity * 1.2f;
+            return AdjustContrast(g, contrast);
+        }
+
+        /// <summary>
+        /// Pastel: low contrast, soft lightened colors.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Pastel(this Color color, float intensity = 0.6f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            var hsl = color.ToHSL();
+            hsl.S *= (1f - 0.6f * intensity);       // reduce saturation
+            hsl.L = Math.Min(1f, hsl.L + 0.08f * intensity); // lighten
+            var result = hsl.ToRGB();
+            result = AdjustContrast(result, 1f - intensity * 0.22f);
+            return result;
+        }
+
+        /// <summary>
+        /// PopArt: strong saturation + contrast + mild posterize for pop-art style.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color PopArt(this Color color, float intensity = 0.9f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            var saturated = color.Saturate(1f + intensity * 1.6f);
+            var contrasted = AdjustContrast(saturated, 1f + intensity * 0.6f);
+            // posterize stronger with intensity
+            int levels = Math.Max(2, (int)Math.Round(6 - intensity * 4)); // from 6 down to ~2
+            return contrasted.Posterize(levels);
+        }
+
+        /// <summary>
+        /// Faded: reduce contrast and add a slight pale tint as if colors faded.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Faded(this Color color, float intensity = 0.5f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            var lowContrast = AdjustContrast(color, 1f - intensity * 0.48f);
+            var tint = Color.FromArgb(255, 250, 245, 220);
+            return Blend(lowContrast, tint, intensity * 0.36f);
+        }
+
+        /// <summary>
+        /// Matte: slightly lower contrast and subtle darkening for a soft matte feel.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Matte(this Color color, float intensity = 0.45f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            var c = AdjustContrast(color, 1f - intensity * 0.32f);
+            c = c.CB(-intensity * 0.025f);
+            c = c.Saturate(1f - intensity * 0.22f);
+            return c;
+        }
+
+        /// <summary>
+        /// Fog / Haze: blend color with a light gray to simulate fog/haze. intensity: 0..1
+        /// </summary>
+        public static Color Fog(this Color color, float intensity = 0.35f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            var fog = Color.FromArgb(255, 220, 220, 220);
+            float b = color.GetBrightness();
+            // more fog on darker (simulates depth)
+            float alpha = intensity * (0.4f + (1f - b) * 0.6f);
+            return Blend(color, fog, alpha);
+        }
+
+        /// <summary>
+        /// Underwater: shift toward blue-green tones and reduce contrast slightly.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Underwater(this Color color, float intensity = 0.7f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            var water = Color.FromArgb(255, 40, 140, 160);
+            var blended = Blend(color, water, intensity * 0.6f);
+            blended = AdjustContrast(blended, 1f - intensity * 0.28f);
+            blended = blended.Saturate(1f - intensity * 0.28f);
+            return blended.CB(-intensity * 0.03f);
+        }
+
+        /// <summary>
+        /// Thermal Vision: map brightness to heat colors (blue -> cyan -> green -> yellow -> red -> white).
+        /// intensity: 0..1 (controls mapping strength)
+        /// </summary>
+        public static Color ThermalVision(this Color color, float intensity = 1f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            float v = color.GetBrightness(); // 0..1
+                                             // Apply a smooth gradient mapping
+                                             // stops: 0.0=darkBlue, 0.2=cyan, 0.4=green, 0.6=yellow, 0.8=red, 1.0=white
+            Color Sample(float t)
+            {
+                if (t <= 0.2f) return Blend(Color.FromArgb(255, 0, 0, 90), Color.FromArgb(255, 0, 120, 200), t / 0.2f);
+                if (t <= 0.4f) return Blend(Color.FromArgb(255, 0, 120, 200), Color.FromArgb(255, 0, 160, 80), (t - 0.2f) / 0.2f);
+                if (t <= 0.6f) return Blend(Color.FromArgb(255, 0, 160, 80), Color.FromArgb(255, 220, 200, 50), (t - 0.4f) / 0.2f);
+                if (t <= 0.8f) return Blend(Color.FromArgb(255, 220, 200, 50), Color.FromArgb(255, 220, 40, 40), (t - 0.6f) / 0.2f);
+                return Blend(Color.FromArgb(255, 220, 40, 40), Color.FromArgb(255, 255, 255, 255), (t - 0.8f) / 0.2f);
+            }
+            var mapped = Sample(v);
+            // Interpolate between original and mapped based on intensity
+            return Blend(color, mapped, intensity);
+        }
+
+        /// <summary>
+        /// Infrared: emphasize reds, invert greens slightly to mimic IR look.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color Infrared(this Color color, float intensity = 1f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            // push G->R swap and exaggerate reds
+            int r = (int)(color.R + (color.G * 0.6f + color.B * 0.2f) * intensity);
+            int g = (int)(color.G * (1f - 0.9f * intensity));
+            int b = (int)(color.B * (1f - 0.6f * intensity));
+            r = Math.Min(255, Math.Max(0, r));
+            g = Math.Min(255, Math.Max(0, g));
+            b = Math.Min(255, Math.Max(0, b));
+            var outc = Color.FromArgb(color.A, r, g, b);
+            // boost contrast and slight desaturation to mimic IR film
+            outc = AdjustContrast(outc, 1f + intensity * 0.25f);
+            outc = outc.Saturate(1f - intensity * 0.12f);
+            return outc;
+        }
+
+        /// <summary>
+        /// X-Ray: bluish brightened inversion effect.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color XRay(this Color color, float intensity = 1f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            // invert channels, bias towards blue
+            int r = 255 - color.R;
+            int g = 255 - color.G;
+            int b = 255 - color.B;
+            var inv = Color.FromArgb(color.A, r, g, b);
+            // desaturate and bluish tint
+            var desat = inv.Saturate(0.6f + 0.4f * (1f - intensity));
+            var bluish = Color.FromArgb(255, 160, 200, 255);
+            var blended = Blend(desat, bluish, 0.55f * intensity);
+            // brighten and increase contrast
+            blended = blended.CB(intensity * 0.25f);
+            blended = AdjustContrast(blended, 1f + intensity * 0.4f);
+            return blended;
+        }
+
+        /// <summary>
+        /// GlowBoost: increase brightness and saturation for a luminous glow-like effect.
+        /// intensity: 0..1
+        /// </summary>
+        public static Color GlowBoost(this Color color, float intensity = 0.6f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            // increase brightness and saturation, then blend additively
+            var bright = color.CB(intensity * 0.35f);
+            var sat = bright.Saturate(1f + intensity * 0.6f);
+            // additive blend: approx by mixing with scaled version
+            int r = Math.Min(255, color.R + (int)((sat.R - color.R) * intensity * 0.9f));
+            int g = Math.Min(255, color.G + (int)((sat.G - color.G) * intensity * 0.9f));
+            int b = Math.Min(255, color.B + (int)((sat.B - color.B) * intensity * 0.9f));
+            return Color.FromArgb(color.A, r, g, b);
+        }
+
+        /// <summary>
+        /// ShadowTint: apply a tint only to darker areas (shadows).
+        /// tint: color to apply; intensity 0..1
+        /// </summary>
+        public static Color ShadowTint(this Color color, Color tint, float intensity = 0.35f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            float lum = color.GetBrightness();
+            float alpha = intensity * (1f - lum); // stronger on darker pixels
+            return Blend(color, tint, alpha);
+        }
+
+        /// <summary>
+        /// HighlightTint: apply a tint only to bright areas (highlights).
+        /// tint: color to apply; intensity 0..1
+        /// </summary>
+        public static Color HighlightTint(this Color color, Color tint, float intensity = 0.35f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            float lum = color.GetBrightness();
+            float alpha = intensity * Math.Max(0f, (lum - 0.5f) * 2f); // affects highlights
+            return Blend(color, tint, alpha);
+        }
+
+        /// <summary>
+        /// Vibrance: increase saturation but affect muted colors more than already-saturated colors.
+        /// factor: 0..inf (1 = unchanged)
+        /// </summary>
+        public static Color Vibrance(this Color color, float factor = 1.2f)
+        {
+            factor = Math.Max(0f, factor);
+            return VibranceInternal(color, factor);
+        }
+
+        /// <summary>
+        /// SoftLight blending with given blend color and intensity.
+        /// blendColor is applied using soft-light algorithm; intensity 0..1.
+        /// </summary>
+        public static Color SoftLight(this Color color, Color blendColor, float intensity = 0.5f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            return SoftLightBlend(color, blendColor, intensity);
+        }
+
+        /// <summary>
+        /// HardLight blending with given blend color and intensity.
+        /// intensity 0..1.
+        /// </summary>
+        public static Color HardLight(this Color color, Color blendColor, float intensity = 0.5f)
+        {
+            intensity = Math.Max(0f, Math.Min(1f, intensity));
+            return HardLightBlend(color, blendColor, intensity);
         }
 
         /// <summary>

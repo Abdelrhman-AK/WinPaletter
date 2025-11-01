@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme.Structures;
 using WinPaletter.TypesExtensions;
+using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.WP;
 
@@ -43,10 +44,36 @@ namespace WinPaletter
 
         private void PaletteGenerateFromImage_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
-            ApplyStyle(this);
+            this.DoubleBuffer();
+
+            SuspendLayout();
 
             Height = checkBox1.Checked ? Height : GroupBox1.Top + bottom_buttons.Height;
+            label3.Font = Fonts.ConsoleMedium;
+
+            ColorEffectControl[] colorEffectControls = new ColorEffectControl[ColorEffect.RegisteredEffects.Count];
+
+            for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
+            {
+                ColorEffect effect = ColorEffect.RegisteredEffects[i].Clone();
+                ColorEffectControl colorEffectControl = new() { ColorEffect = effect, Dock = DockStyle.Top };
+                colorEffectControls[i] = colorEffectControl;
+                colorEffectControl.ProcessColorEffect += ColorEffectControl_ProcessColorEffect;
+            }
+
+            smoothPanel1.Controls.AddRange(colorEffectControls);
+
+            label3.Text = EffectsSummary();
+
+            ResumeLayout();
+        }
+
+        private string EffectsSummary()
+        {
+            int checkedCount = toggle1.Checked ? smoothPanel1.Controls.OfType<ColorEffectControl>().Count(c => c.ColorEffect.Checked) : 0;
+
+            return $"{Program.Lang.Strings.ColorEffects.TotalEffects}: " + smoothPanel1.Controls.OfType<ColorEffectControl>().Count().ToString() + ", " +
+                   $"{(checkedCount > 0 ? ($"{Program.Lang.Strings.ColorEffects.Applied}: {checkedCount}") : Program.Lang.Strings.ColorEffects.NoEffects)}.";
         }
 
         public void Show(UI.WP.Button button)
@@ -423,7 +450,9 @@ namespace WinPaletter
                 {
                     foreach ((ColorItem, Color) item in colorItems)
                     {
-                        item.Item1.BackColor = nearing ? item.Item2.GetNearestColorFromPalette(processedColors) : ApplyEffect(item.Item2);
+                        Color color = item.Item2;
+                        if (checkBox2.Checked && flowLayoutPanel1.Controls.OfType<ColorEffectControl>().Any(c => c.ColorEffect.Checked)) color = color.Grayscale();
+                        item.Item1.BackColor = Color.FromArgb(255, nearing ? color.GetNearestColorFromPalette(processedColors) : ApplyEffect(color));
                     }
                 }
             }
@@ -467,7 +496,7 @@ namespace WinPaletter
                 AllowDrop = false,
                 PauseColorsHistory = true,
                 CancelShowingMenu = true,
-                BackColor =  c,
+                BackColor = c,
                 DefaultBackColor = c
             };
 
@@ -524,28 +553,27 @@ namespace WinPaletter
             TextBox1.Text = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "WallPaper", Program.TM.Wallpaper.ImageFile);
         }
 
+        private void ColorEffectControl_ProcessColorEffect(object sender, EventArgs e)
+        {
+            label3.Text = EffectsSummary();
+            ApplyEffects();
+            Distribute(!radioImage2.Checked);
+        }
+
         Color ApplyEffect(Color c)
         {
             if (!toggle1.Checked) return c;
 
-            if (toggle_brightness.Checked) return c.CB((trackBarX7.Value - 50) / 50f);
-            else if (toggle_darken.Checked) return c.Dark(trackBarX1.Value / 100f);
-            else if (toggle_lighten.Checked) return c.Light(trackBarX2.Value / 100f);
-            else if (toggle_desaturate.Checked) return c.Desaturate(trackBarX4.Value / 100f);
-            else if (toggle_rotateHue.Checked) return c.RotateHue(trackBarX5.Value);
-            else if (toggle_invert.Checked) return c.Invert();
-            else if (toggle_reverse.Checked) return c.Reverse();
-            else if (toggle_sepia.Checked) return c.Sepia();
-            else if (toggle_webSafe.Checked) return c.ToWebSafe();
-            else if (toggle_256.Checked) return c.To256Color();
-            else if (toggle_frutigerAero.Checked) return c.ToFrutigerAero();
-            else if (toggle_metro.Checked) return c.ToMetro();
-            else if (toggle_monochrome.Checked) return c.Monochrome();
-            else if (toggle_grayscale.Checked) return c.Grayscale();
-            else if (toggle_androidMaterial.Checked) return c.ToMaterial();
-            else if (toggle_androidMaterialExpressive.Checked) return c.ToMaterialExpressive3();
-            else if (toggle_Mac.Checked) return c.ToMacSemantic();
-            else return c;
+            // Apply all enabled effects in order
+            foreach (ColorEffectControl ctrl in smoothPanel1.Controls.OfType<ColorEffectControl>())
+            {
+                if (ctrl.ColorEffect.Checked)
+                {
+                    c = ctrl.ColorEffect.Apply(c);
+                }
+            }
+
+            return c;
         }
 
         void ApplyEffects()
@@ -556,29 +584,10 @@ namespace WinPaletter
             }
         }
 
-        private void toggle_effects_CheckedChanged(object sender, EventArgs e)
-        {
-            foreach (Toggle t in panel1.GetAllControls().OfType<Toggle>().Where(x => x != sender)) t.Checked = false;
-
-            if ((sender as Toggle).Checked)
-            {
-                ApplyEffects();
-                Distribute(!radioImage2.Checked);
-            }
-
-            // Ensure if all toggles are not applied, if so, reapply effects
-            bool anyChecked = panel1.GetAllControls().OfType<Toggle>().Any(t => t.Checked);
-
-            if (!anyChecked)
-            {
-                ApplyEffects();
-                Distribute(!radioImage2.Checked);
-            }
-        }
-
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             panel14.Enabled = (sender as Toggle).Checked;
+            label3.Text = EffectsSummary();
 
             ApplyEffects();
             Distribute(!radioImage2.Checked);
@@ -623,6 +632,11 @@ namespace WinPaletter
                     Height = GroupBox1.Top + bottom_buttons.Height;
                 }
             }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            Distribute();
         }
     }
 }
