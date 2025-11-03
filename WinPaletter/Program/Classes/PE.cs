@@ -442,41 +442,43 @@ namespace WinPaletter
         /// </summary>
         /// <param name="dllPath"></param>
         /// <param name="iconIndex"></param>
+        /// <param name="desiredSize"></param>
         /// <returns></returns>
-        public static Icon GetIcon(string dllPath, int iconIndex = 0)
+        public static Icon GetIcon(string dllPath, int iconIndex = 0, int desiredSize = 32)
         {
             if (!File.Exists(dllPath)) return null;
 
             IntPtr[] largeIcons = new IntPtr[1];
-            IntPtr[] smallIcons = new IntPtr[1];
 
-            uint result;
+            // Extract the icon at the requested size
+            uint result = Shell32.PrivateExtractIcons(
+                dllPath,
+                iconIndex,
+                desiredSize, // request width
+                desiredSize, // request height
+                largeIcons,
+                null,
+                1,
+                0
+            );
 
-            if (iconIndex >= 0)
+            if (result > 0 && largeIcons[0] != IntPtr.Zero)
             {
-                // Positive index, extract icon by index
-                result = Shell32.ExtractIconEx(dllPath, iconIndex, largeIcons, smallIcons, 1);
-            }
-            else
-            {
-                // Negative index, extract icon by resource name
-                result = Shell32.PrivateExtractIcons(dllPath, iconIndex, 32, 32, largeIcons, null, 1, 0);
-            }
-
-            if (result > 0)
-            {
-                IntPtr iconHandle = largeIcons[0]; // Use smallIcons[0] for small icons
-
-                Icon extractedIcon = Icon.FromHandle(iconHandle).Clone() as Icon;
-
-                // Clean up the icon handle
-                Shell32.DestroyIcon(iconHandle);
-
-                return extractedIcon;
+                try
+                {
+                    // Convert HICON to .NET Icon (clone to make safe)
+                    Icon ico = Icon.FromHandle(largeIcons[0]).Clone() as Icon;
+                    return ico;
+                }
+                finally
+                {
+                    Shell32.DestroyIcon(largeIcons[0]);
+                }
             }
 
             return null;
         }
+
 
         /// <summary>
         /// Get the number of icon groups in a Portable Executable (PE) File.

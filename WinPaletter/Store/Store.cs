@@ -826,8 +826,7 @@ namespace WinPaletter
                     LoadCursorsFromTM(selectedItem.TM);
                     Program.Style.TextRenderingHint = selectedItem.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
-                    foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>()
-                        .Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
+                    foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>().Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
                     {
                         AnimateList.Add(i);
                     }

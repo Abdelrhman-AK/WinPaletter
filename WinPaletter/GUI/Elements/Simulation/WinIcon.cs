@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
@@ -55,6 +56,7 @@ namespace WinPaletter.UI.Simulation
         public Color ColorGlow { get; set; } = Color.FromArgb(50, 0, 0, 0);
 
         private Icon _icon = null;
+        private Icon _processedIcon = null; // the icon that matches IconSize
         public Icon Icon
         {
             get => _icon;
@@ -63,7 +65,13 @@ namespace WinPaletter.UI.Simulation
                 if (value != _icon)
                 {
                     _icon?.Dispose();
+                    _processedIcon?.Dispose();
+
                     _icon = value;
+
+                    // Process icon for current IconSize
+                        _processedIcon = _icon.FromSize(_IconSize);
+
                     Invalidate();
                 }
             }
@@ -75,12 +83,18 @@ namespace WinPaletter.UI.Simulation
             get => _IconSize;
             set
             {
-                if (value < 16) value = 16;
-                if (value > 256) value = 256;
+                int newSize = Math.Min(Math.Max(value, 16), 256);
 
-                if (value != _IconSize)
+                if (newSize != _IconSize)
                 {
-                    _IconSize = value;
+                    _IconSize = newSize;
+
+                    // Update processed icon for new size
+                    if (_icon != null)
+                    {
+                        _processedIcon?.Dispose();
+                        _processedIcon = _icon.FromSize(_IconSize);
+                    }
 
                     if (EnableEditingMetrics && _sizing)
                         EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(IconSize)));
@@ -89,6 +103,12 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
+
+        /// <summary>
+        /// The icon to actually draw in Paint or rendering logic
+        /// </summary>
+        public Icon ProcessedIcon => _processedIcon ?? _icon;
+
 
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -309,17 +329,11 @@ namespace WinPaletter.UI.Simulation
 
             RectangleF IconRectX = new(IconRect.X + (IconRect.Width - _IconSize) / 2f, IconRect.Y + (IconRect.Height - _IconSize) / 2f, _IconSize, _IconSize);
 
-            if (_icon is not null)
+            if (ProcessedIcon is not null)
             {
-                using (Icon ico = new(_icon, _IconSize, _IconSize))
+                using (Bitmap bmp = ProcessedIcon.ToBitmap())
                 {
-                    if (ico is not null)
-                    {
-                        using (Bitmap bmp = ico.ToBitmap())
-                        {
-                            if (bmp is not null) G.DrawImage(bmp, IconRectX);
-                        }
-                    }
+                    if (bmp is not null) G.DrawImage(bmp, IconRectX);
                 }
             }
 

@@ -388,6 +388,12 @@
     <Compile Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.Designer.cs">
       <DependentUpon>ColorEffectMiniControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorsAndPalettesHandlers\Chromify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorsAndPalettesHandlers\Chromify.Designer.cs">
+      <DependentUpon>Chromify.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ArgsHelp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1307,6 +1313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.resx">
       <DependentUpon>ColorEffectMiniControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorsAndPalettesHandlers\Chromify.resx">
+      <DependentUpon>Chromify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>

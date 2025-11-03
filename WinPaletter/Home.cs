@@ -766,6 +766,16 @@ namespace WinPaletter
             Process.Start(SysPaths.LogsDir);
         }
 
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            Forms.Chromify.ShowDialog();
+        }
+
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);

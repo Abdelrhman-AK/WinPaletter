@@ -213,21 +213,21 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about PowerShell x86, and it can be customized.
         /// </summary>
-        public Console PowerShellx86 = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx86 { get; set; } = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// Structure instance that contains data about PowerShell x64, and it can be customized.
         /// </summary>
-        public Console PowerShellx64 = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx64 { get; set; } = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// class that contains data about Windows Terminal Stable, and it can be customized.
         /// </summary>
-        public WinTerminal Terminal = new(string.Empty, WinTerminal.Mode.Empty);
+        public WinTerminal Terminal { get; set; } = new(string.Empty, WinTerminal.Mode.Empty);
 
         /// <summary>
         /// class that contains data about Windows Terminal Preview, and it can be customized.
         /// </summary>
-        public WinTerminal TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
+        public WinTerminal TerminalPreview { get; set; } = new(string.Empty, WinTerminal.Mode.Empty);
     }
 }

@@ -33,6 +33,7 @@ namespace WinPaletter
         /// is used to manage  and associate color-related data.</remarks>
         private List<(ColorItem, Color)> colorItems = [];
         private Form form;
+        ColorEffectControl[] colorEffectControls = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PaletteGenerateFromImage"/> class.
@@ -51,17 +52,20 @@ namespace WinPaletter
             Height = checkBox1.Checked ? Height : GroupBox1.Top + bottom_buttons.Height;
             label3.Font = Fonts.ConsoleMedium;
 
-            ColorEffectControl[] colorEffectControls = new ColorEffectControl[ColorEffect.RegisteredEffects.Count];
-
-            for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
+            if (colorEffectControls == null)
             {
-                ColorEffect effect = ColorEffect.RegisteredEffects[i].Clone();
-                ColorEffectControl colorEffectControl = new() { ColorEffect = effect, Dock = DockStyle.Top };
-                colorEffectControls[i] = colorEffectControl;
-                colorEffectControl.ProcessColorEffect += ColorEffectControl_ProcessColorEffect;
-            }
+                colorEffectControls = new ColorEffectControl[ColorEffect.RegisteredEffects.Count];
 
-            smoothPanel1.Controls.AddRange(colorEffectControls);
+                for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
+                {
+                    ColorEffect effect = ColorEffect.RegisteredEffects[i].Clone();
+                    ColorEffectControl colorEffectControl = new() { ColorEffect = effect, Dock = DockStyle.Top };
+                    colorEffectControls[i] = colorEffectControl;
+                    colorEffectControl.ProcessColorEffect += ColorEffectControl_ProcessColorEffect;
+                }
+
+                smoothPanel1.Controls.AddRange(colorEffectControls);
+            }
 
             label3.Text = EffectsSummary();
 
@@ -296,7 +300,7 @@ namespace WinPaletter
                     }
 
                     List<Color> extractedColors = thumbnail
-                        .ToPalette(100, 10, false)
+                        .ToPalette(300, 10, false)
                         .AsParallel() // use multiple cores for sorting/comparison
                         .OrderBy(c => c, new RGBColorComparer())
                         .ToList();

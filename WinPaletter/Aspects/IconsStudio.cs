@@ -961,7 +961,7 @@ namespace WinPaletter
                 if (File.Exists(path))
                 {
                     string ext = System.IO.Path.GetExtension(path).ToLowerInvariant();
-                    newIcon = ext == ".ico" ? new Icon(path) : PE.GetIcon(path, index);
+                    newIcon = ext == ".ico" ? new Icon(path) : PE.GetIcon(path, index, iconControl.IconSize);
                 }
             }
             catch
@@ -972,6 +972,17 @@ namespace WinPaletter
             // Safely dispose the old icon before replacing it
             DisposeIcon(iconControl);
             iconControl.Icon = newIcon;
+
+            float scaleX = iconControl.IconSize / 48f; // original icon size = 32
+            float scaleY = iconControl.IconSize / 48f;
+
+            int originalWidth = 82;
+            int originalHeight = 90;
+
+            float newWidth = originalWidth * scaleX;
+            float newHeight = originalHeight * scaleY;
+
+            iconControl.Size = new Size((int)newWidth, (int)newHeight);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)

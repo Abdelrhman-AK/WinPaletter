@@ -1174,29 +1174,44 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Extracts a palette of dominant colors from the specified bitmap image.
         /// </summary>
-        /// <remarks>This method uses a combination of pixel sampling and K-Means clustering to identify the most dominant
+        /// <remarks>
+        /// This method uses a combination of pixel sampling and K-Means clustering to identify the most dominant
         /// colors in the image. The <paramref name="colorQuality"/> parameter controls the sampling resolution, where higher
-        /// values result in faster processing but less accurate results.  If <paramref name="ignoreWhiteColors"/> is <see
-        /// langword="true"/>, colors that are near-white (based on the <paramref name="whiteThreshold"/>) are excluded from the
-        /// analysis. This is useful for ignoring background colors in images with white or light backgrounds.  The extracted
-        /// colors can optionally be sorted by their dominance in the image, where dominance is determined by the frequency of
-        /// pixels closest to each color in the palette.</remarks>
+        /// values result in faster processing but less accurate results.  
+        /// If <paramref name="ignoreWhiteColors"/> is <see langword="true"/>, colors that are near-white (based on the 
+        /// <paramref name="whiteThreshold"/>) are excluded from the analysis.  
+        /// The <paramref name="disableTransparency"/> parameter, when set to <see langword="true"/>, forces all extracted
+        /// colors to have full opacity (alpha = 255).  
+        /// The extracted colors can optionally be sorted by their dominance in the image.
+        /// </remarks>
         /// <param name="bmp">The source <see cref="Bitmap"/> from which to extract the color palette. Cannot be <see langword="null"/>.</param>
         /// <param name="colorCount">The number of dominant colors to extract. Must be greater than or equal to 1. Defaults to 10.</param>
-        /// <param name="colorQuality">The sampling quality for color extraction. Higher values reduce the number of pixels analyzed, improving performance
-        /// at the cost of accuracy. Must be greater than or equal to 1. Defaults to 10.</param>
-        /// <param name="ignoreWhiteColors">A value indicating whether to ignore near-white colors during palette extraction. Defaults to <see
-        /// langword="true"/>.</param>
-        /// <param name="whiteThreshold">The threshold for determining near-white colors. Colors with red, green, and blue components greater than or equal
-        /// to this value are considered near-white. Defaults to 240.</param>
-        /// <param name="sortByDominance">A value indicating whether to sort the extracted colors by their dominance in the image. Defaults to <see
-        /// langword="true"/>.</param>
-        /// <returns>A list of <see cref="Color"/> objects representing the extracted palette. The list contains up to <paramref
-        /// name="colorCount"/> colors, sorted by dominance if <paramref name="sortByDominance"/> is <see langword="true"/>.
-        /// Returns an empty list if no colors are extracted.</returns>
+        /// <param name="colorQuality">
+        /// The sampling quality for color extraction. Higher values reduce the number of pixels analyzed, improving performance
+        /// at the cost of accuracy. Must be greater than or equal to 1. Defaults to 10.
+        /// </param>
+        /// <param name="ignoreWhiteColors">
+        /// A value indicating whether to ignore near-white colors during palette extraction. Defaults to <see langword="true"/>.
+        /// </param>
+        /// <param name="whiteThreshold">
+        /// The threshold for determining near-white colors. Colors with red, green, and blue components greater than or equal
+        /// to this value are considered near-white. Defaults to 240.
+        /// </param>
+        /// <param name="sortByDominance">
+        /// A value indicating whether to sort the extracted colors by their dominance in the image. Defaults to <see langword="true"/>.
+        /// </param>
+        /// <param name="disableTransparency">
+        /// If <see langword="true"/>, all colors with alpha less than 255 will be forced to full opacity.
+        /// Defaults to <see langword="false"/>.
+        /// </param>
+        /// <returns>
+        /// A list of <see cref="Color"/> objects representing the extracted palette. The list contains up to 
+        /// <paramref name="colorCount"/> colors, sorted by dominance if <paramref name="sortByDominance"/> is 
+        /// <see langword="true"/>. Returns an empty list if no colors are extracted.
+        /// </returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="bmp"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="colorCount"/> is less than 1.</exception>
-        public static List<Color> ToPalette(this Bitmap bmp, int colorCount = 10, int colorQuality = 10, bool ignoreWhiteColors = true, byte whiteThreshold = 240, bool sortByDominance = true)
+        public static List<Color> ToPalette(this Bitmap bmp, int colorCount = 10, int colorQuality = 10, bool ignoreWhiteColors = true, byte whiteThreshold = 240, bool sortByDominance = true, bool disableTransparency = false)
         {
             if (bmp == null) throw new ArgumentNullException(nameof(bmp));
             if (colorCount < 1) throw new ArgumentOutOfRangeException(nameof(colorCount));
@@ -1207,9 +1222,7 @@ namespace WinPaletter.TypesExtensions
                 using (Graphics g = Graphics.FromImage(clone))
                     g.DrawImage(bmp, new Rectangle(0, 0, clone.Width, clone.Height));
 
-                BitmapData data = clone.LockBits(new Rectangle(0, 0, clone.Width, clone.Height),
-                                                 ImageLockMode.ReadOnly,
-                                                 clone.PixelFormat);
+                BitmapData data = clone.LockBits(new Rectangle(0, 0, clone.Width, clone.Height), ImageLockMode.ReadOnly, clone.PixelFormat);
 
                 int bytesPerPixel = 4;
                 int width = data.Width;
@@ -1225,7 +1238,7 @@ namespace WinPaletter.TypesExtensions
                     {
                         if (y % colorQuality != 0) return;
 
-                        List<Color> localPixels = new();
+                        List<Color> localPixels = [];
 
                         for (int x = 0; x < width; x += colorQuality)
                         {
@@ -1235,8 +1248,9 @@ namespace WinPaletter.TypesExtensions
                             byte r = pixelPtr[2];
                             byte a = pixelPtr[3];
 
-                            if (ignoreWhiteColors && r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold)
-                                continue;
+                            if (ignoreWhiteColors && r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold) continue;
+
+                            if (disableTransparency && a < 255) a = 255;
 
                             localPixels.Add(Color.FromArgb(a, r, g, b));
                         }
@@ -1250,7 +1264,7 @@ namespace WinPaletter.TypesExtensions
 
                 clone.UnlockBits(data);
 
-                if (pixels.Count == 0) return new List<Color>();
+                if (pixels.Count == 0) return [];
 
                 // Run lock-free K-Means
                 List<Color> centroids = LockFreeKMeans(pixels, colorCount, 10);
@@ -1274,12 +1288,11 @@ namespace WinPaletter.TypesExtensions
                         }
                     }
 
-                    if (!colorFrequency.ContainsKey(centroids[nearestIndex]))
-                        colorFrequency[centroids[nearestIndex]] = 0;
+                    if (!colorFrequency.ContainsKey(centroids[nearestIndex])) colorFrequency[centroids[nearestIndex]] = 0;
                     colorFrequency[centroids[nearestIndex]]++;
                 }
 
-                return colorFrequency.OrderByDescending(kv => kv.Value).Select(kv => kv.Key).ToList();
+                return [.. colorFrequency.OrderByDescending(kv => kv.Value).Select(kv => kv.Key)];
             }
         }
 
