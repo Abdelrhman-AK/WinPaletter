@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using WinPaletter.Theme;
 using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
+using static WinPaletter.TypesExtensions.BitmapExtensions;
 
 namespace WinPaletter
 {
@@ -162,6 +163,22 @@ namespace WinPaletter
 
             AllowTransparency = false;
             TransparencyKey = default;
+        }
+
+        /// <summary>
+        /// Pick a color to set it to the BackColor property of a control
+        /// </summary>
+        /// <param name="ControlsWithProperties"></param>
+        /// <param name="EnableAlpha"></param>
+        /// <returns></returns>
+        public Color Pick(Control ctrl, bool EnableAlpha = false)
+        {
+            Dictionary<Control, string[]> dict = new()
+            {
+                { ctrl, [nameof(ctrl.BackColor)] }
+            };
+
+            return Pick(dict, EnableAlpha);
         }
 
         /// <summary>
@@ -351,11 +368,18 @@ namespace WinPaletter
 
                 if (thread is not null && thread.IsAlive) thread.Abort();
 
-                thread = new(() =>
+                thread = new(async () =>
                 {
                     if (img is not null)
                     {
-                        Colors_List = img.ToPalette(trackBarX1.Value, trackBarX2.Value, CheckBox1.Checked);
+                        PaletteGeneratorSettings settings = new()
+                        {
+                            ColorCount = trackBarX1.Value,
+                            ColorQuality = trackBarX2.Value,
+                            IgnoreWhiteColors = CheckBox1.Checked
+                        };
+
+                        Colors_List = await (img as Bitmap).ToPalette(settings);
                         img?.Dispose();
                     }
 
@@ -374,11 +398,13 @@ namespace WinPaletter
 
                         foreach (Color C in Colors_List)
                         {
-                            ColorItem MiniColorItem = new();
-                            MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
-                            MiniColorItem.AllowDrop = false;
-                            MiniColorItem.PauseColorsHistory = true;
-                            MiniColorItem.BackColor = Color.FromArgb(255, C);
+                            ColorItem MiniColorItem = new()
+                            {
+                                Size = ColorItem.GetMiniColorItemSize(),
+                                AllowDrop = false,
+                                PauseColorsHistory = true,
+                                BackColor = Color.FromArgb(255, C)
+                            };
                             MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                             ImgPaletteContainer.Controls.Add(MiniColorItem);

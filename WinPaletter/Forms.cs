@@ -77,11 +77,11 @@ namespace WinPaletter
         /// </summary>
         public static ColorPickerDlg ColorPickerDlg => (_ColorPickerDlg == null || _ColorPickerDlg.IsDisposed) ? (_ColorPickerDlg = CreateInstance(_ColorPickerDlg)) : _ColorPickerDlg;
 
-        private static Chromify _Chromify;
+        private static WallStudio _WallStudio;
         /// <summary>
         /// Gets the instance of the form <see cref="ColorPickerDlg"/> to pick a color.
         /// </summary>
-        public static Chromify Chromify => (_Chromify == null || _Chromify.IsDisposed) ? (_Chromify = CreateInstance(_Chromify)) : _Chromify;
+        public static WallStudio WallStudio => (_WallStudio == null || _WallStudio.IsDisposed) ? (_WallStudio = CreateInstance(_WallStudio)) : _WallStudio;
 
         private static CursorsStudio _CursorsStudio;
         /// <summary>

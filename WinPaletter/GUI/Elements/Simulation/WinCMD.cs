@@ -466,7 +466,7 @@ namespace WinPaletter.UI.Simulation
 
             using (SolidBrush br = new(Color.FromArgb(alpha, BK)))
             {
-                G.FillRectangle(br, new Rectangle(0, 0, Width, Height));
+                G.FillRectangle(br, new Rectangle(-1, -1, Width + 2, Height + 2));
             }
 
             if (!CustomTerminal)
@@ -707,7 +707,7 @@ namespace WinPaletter.UI.Simulation
                 }
             }
 
-            base.OnPaint(e);
+            //base.OnPaint(e);
         }
     }
 }

@@ -233,7 +233,7 @@ namespace WinPaletter
             tabs_preview_1.TabPages[2].BackgroundImage = LogonUI_Background_Toggle.Checked ? LogonUI_Acrylic_Toggle.Checked ? back_blurred : back_unblurred : null;
         }
 
-        Bitmap CaptureLockScreen()
+         Bitmap CaptureLockScreen()
         {
             if (File.Exists(textBox1.Text))
             {

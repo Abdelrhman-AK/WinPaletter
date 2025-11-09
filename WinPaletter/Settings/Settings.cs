@@ -451,7 +451,7 @@ namespace WinPaletter
                 /// <summary>
                 /// WinPaletter has rounded corners in custom theme
                 /// </summary>
-                public bool RoundedCorners = true;
+                public bool RoundedCorners = GetRoundedCorners(true);
 
                 /// <summary>
                 /// WinPaletter animations in custom theme

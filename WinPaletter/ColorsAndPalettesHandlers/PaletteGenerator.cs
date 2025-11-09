@@ -12,6 +12,7 @@ using WinPaletter.TypesExtensions;
 using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.WP;
+using static WinPaletter.TypesExtensions.BitmapExtensions;
 
 namespace WinPaletter
 {
@@ -281,7 +282,7 @@ namespace WinPaletter
             Bitmap thumbnail = source.Resize(Program.PreviewSize);
 
             // Start asynchronous background task
-            _ = Task.Run(() =>
+            _ = Task.Run(async () =>
             {
                 try
                 {
@@ -299,11 +300,19 @@ namespace WinPaletter
                         });
                     }
 
-                    List<Color> extractedColors = thumbnail
-                        .ToPalette(300, 10, false)
-                        .AsParallel() // use multiple cores for sorting/comparison
-                        .OrderBy(c => c, new RGBColorComparer())
-                        .ToList();
+                    PaletteGeneratorSettings settings = new()
+                    {
+                        ColorCount = 300,
+                        ColorQuality = 10,
+                        IgnoreWhiteColors = false
+                        // All other settings will use their default values
+                    };
+
+                    // Await the async palette extraction
+                    List<Color> palette = await thumbnail.ToPalette(settings);
+
+                    // Use PLINQ to sort in parallel
+                    List<Color> extractedColors = palette.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
 
                     thumbnail?.Dispose();
 

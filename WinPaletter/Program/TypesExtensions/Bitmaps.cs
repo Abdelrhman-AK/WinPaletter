@@ -1171,56 +1171,37 @@ namespace WinPaletter.TypesExtensions
             return Tile(bitmap, new Size(width, height));
         }
 
+        public class PaletteGeneratorSettings
+        {
+            public int ColorCount { get; set; } = 300;
+            public int ColorQuality { get; set; } = 10;
+            public bool IgnoreWhiteColors { get; set; } = false;
+            public byte WhiteThreshold { get; set; } = 240;
+            public bool SortByDominance { get; set; } = true;
+            public bool DisableTransparency { get; set; } = true;
+            public bool IncludeVariations { get; set; } = true;
+            public IProgress<float>? Progress { get; set; }
+            public IProgress<string>? Status { get; set; }
+            public CancellationToken CancellationToken { get; set; } = default;
+            public Color? AccentColor { get; set; } = null;
+            public float AccentWeight { get; set; } = 2f;
+        }
+
         /// <summary>
-        /// Extracts a palette of dominant colors from the specified bitmap image.
+        /// Extracts a palette of dominant colors from the specified bitmap image, optionally enhanced with vivid color variations.
         /// </summary>
-        /// <remarks>
-        /// This method uses a combination of pixel sampling and K-Means clustering to identify the most dominant
-        /// colors in the image. The <paramref name="colorQuality"/> parameter controls the sampling resolution, where higher
-        /// values result in faster processing but less accurate results.  
-        /// If <paramref name="ignoreWhiteColors"/> is <see langword="true"/>, colors that are near-white (based on the 
-        /// <paramref name="whiteThreshold"/>) are excluded from the analysis.  
-        /// The <paramref name="disableTransparency"/> parameter, when set to <see langword="true"/>, forces all extracted
-        /// colors to have full opacity (alpha = 255).  
-        /// The extracted colors can optionally be sorted by their dominance in the image.
-        /// </remarks>
-        /// <param name="bmp">The source <see cref="Bitmap"/> from which to extract the color palette. Cannot be <see langword="null"/>.</param>
-        /// <param name="colorCount">The number of dominant colors to extract. Must be greater than or equal to 1. Defaults to 10.</param>
-        /// <param name="colorQuality">
-        /// The sampling quality for color extraction. Higher values reduce the number of pixels analyzed, improving performance
-        /// at the cost of accuracy. Must be greater than or equal to 1. Defaults to 10.
-        /// </param>
-        /// <param name="ignoreWhiteColors">
-        /// A value indicating whether to ignore near-white colors during palette extraction. Defaults to <see langword="true"/>.
-        /// </param>
-        /// <param name="whiteThreshold">
-        /// The threshold for determining near-white colors. Colors with red, green, and blue components greater than or equal
-        /// to this value are considered near-white. Defaults to 240.
-        /// </param>
-        /// <param name="sortByDominance">
-        /// A value indicating whether to sort the extracted colors by their dominance in the image. Defaults to <see langword="true"/>.
-        /// </param>
-        /// <param name="disableTransparency">
-        /// If <see langword="true"/>, all colors with alpha less than 255 will be forced to full opacity.
-        /// Defaults to <see langword="false"/>.
-        /// </param>
-        /// <returns>
-        /// A list of <see cref="Color"/> objects representing the extracted palette. The list contains up to 
-        /// <paramref name="colorCount"/> colors, sorted by dominance if <paramref name="sortByDominance"/> is 
-        /// <see langword="true"/>. Returns an empty list if no colors are extracted.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="bmp"/> is <see langword="null"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="colorCount"/> is less than 1.</exception>
-        public static List<Color> ToPalette(this Bitmap bmp, int colorCount = 10, int colorQuality = 10, bool ignoreWhiteColors = true, byte whiteThreshold = 240, bool sortByDominance = true, bool disableTransparency = false)
+        public static async Task<List<Color>> ToPalette(this Bitmap bmp, PaletteGeneratorSettings settings)
         {
             if (bmp == null) throw new ArgumentNullException(nameof(bmp));
-            if (colorCount < 1) throw new ArgumentOutOfRangeException(nameof(colorCount));
-            if (colorQuality < 1) colorQuality = 1;
+            if (settings.ColorCount < 1) throw new ArgumentOutOfRangeException(nameof(settings.ColorCount));
+            if (settings.ColorQuality < 1) settings.ColorQuality = 1;
 
-            using (Bitmap clone = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb))
+            return await Task.Run(async () =>
             {
-                using (Graphics g = Graphics.FromImage(clone))
-                    g.DrawImage(bmp, new Rectangle(0, 0, clone.Width, clone.Height));
+                settings.Status?.Report($"{Program.Lang.Strings.General.SamplingPixels}...");
+
+                using Bitmap clone = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
+                using (Graphics g = Graphics.FromImage(clone)) g.DrawImage(bmp, new Rectangle(0, 0, clone.Width, clone.Height));
 
                 BitmapData data = clone.LockBits(new Rectangle(0, 0, clone.Width, clone.Height), ImageLockMode.ReadOnly, clone.PixelFormat);
 
@@ -1228,154 +1209,253 @@ namespace WinPaletter.TypesExtensions
                 int width = data.Width;
                 int height = data.Height;
                 int stride = data.Stride;
-                List<Color> pixels = new(width * height / (colorQuality * colorQuality));
+                List<Color> pixels = new(width * height / (settings.ColorQuality * settings.ColorQuality));
 
-                unsafe
+                int batchSize = 50;
+
+                for (int yStart = 0; yStart < height; yStart += batchSize)
                 {
-                    byte* ptr = (byte*)data.Scan0;
+                    settings.CancellationToken.ThrowIfCancellationRequested();
 
-                    Parallel.For(0, height, y =>
+                    int yEnd = Math.Min(yStart + batchSize, height);
+                    List<Color> batchPixels = new();
+
+                    unsafe
                     {
-                        if (y % colorQuality != 0) return;
-
-                        List<Color> localPixels = [];
-
-                        for (int x = 0; x < width; x += colorQuality)
+                        byte* ptr = (byte*)data.Scan0;
+                        for (int y = yStart; y < yEnd; y++)
                         {
-                            byte* pixelPtr = ptr + y * stride + x * bytesPerPixel;
-                            byte b = pixelPtr[0];
-                            byte g = pixelPtr[1];
-                            byte r = pixelPtr[2];
-                            byte a = pixelPtr[3];
+                            if (y % settings.ColorQuality != 0) continue;
 
-                            if (ignoreWhiteColors && r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold) continue;
+                            for (int x = 0; x < width; x += settings.ColorQuality)
+                            {
+                                byte* pixelPtr = ptr + y * stride + x * bytesPerPixel;
+                                byte b = pixelPtr[0];
+                                byte g = pixelPtr[1];
+                                byte r = pixelPtr[2];
+                                byte a = pixelPtr[3];
 
-                            if (disableTransparency && a < 255) a = 255;
+                                if (settings.IgnoreWhiteColors && r >= settings.WhiteThreshold && g >= settings.WhiteThreshold && b >= settings.WhiteThreshold)
+                                    continue;
 
-                            localPixels.Add(Color.FromArgb(a, r, g, b));
+                                if (settings.DisableTransparency && a < 255) a = 255;
+
+                                if (a > 0) batchPixels.Add(Color.FromArgb(a, r, g, b));
+                            }
                         }
+                    }
 
-                        lock (pixels)
-                        {
-                            pixels.AddRange(localPixels);
-                        }
-                    });
+                    lock (pixels) pixels.AddRange(batchPixels);
+                    settings.Progress?.Report((float)yEnd / height * 0.5f);
+                    await Task.Delay(1, settings.CancellationToken);
                 }
 
                 clone.UnlockBits(data);
 
-                if (pixels.Count == 0) return [];
+                if (pixels.Count == 0) return new List<Color>();
 
-                // Run lock-free K-Means
-                List<Color> centroids = LockFreeKMeans(pixels, colorCount, 10);
+                settings.Status?.Report($"{Program.Lang.Strings.General.ClusteringColors}...");
+                List<Color> centroids = LockFreeKMeansAsync(pixels, settings.ColorCount, settings);
 
-                if (!sortByDominance) return centroids;
-
-                // Sort by dominance
-                var colorFrequency = new Dictionary<Color, int>();
-                foreach (var pixel in pixels)
+                // Map all centroids toward accent color if provided
+                if (settings?.AccentColor.HasValue == true)
                 {
-                    int nearestIndex = 0;
-                    float nearestDistance = float.MaxValue;
+                    Color target = settings.AccentColor.Value;
+                    ColorToHSV(target, out float targetHue, out _, out _);
 
-                    for (int i = 0; i < centroids.Count; i++)
+                    List<Color> transformed = new List<Color>(centroids.Count);
+
+                    foreach (var c in centroids)
                     {
-                        float distance = ColorDistance(pixel, centroids[i]);
-                        if (distance < nearestDistance)
+                        ColorToHSV(c, out float hue, out float sat, out float val);
+                        Color newC = ColorFromHSV(targetHue, sat, val);
+                        transformed.Add(Color.FromArgb(c.A, newC.R, newC.G, newC.B));
+                    }
+
+                    centroids = transformed;
+                }
+
+                // Sort by dominance if requested
+                if (settings.SortByDominance && centroids.Count > 0)
+                {
+                    settings.Status?.Report($"{Program.Lang.Strings.General.SortingByDominance}...");
+                    Dictionary<Color, int> colorFrequency = pixels
+                        .GroupBy(px => centroids.OrderBy(c => ColorDistance(px, c)).First())
+                        .ToDictionary(g => g.Key, g => g.Count());
+
+                    centroids = colorFrequency.OrderByDescending(kv => kv.Value).Select(kv => kv.Key).ToList();
+                }
+
+                // Include variations if requested
+                if (settings.IncludeVariations && centroids.Count > 0)
+                {
+                    settings.Status?.Report($"{Program.Lang.Strings.General.GeneratingColorsVariations}...");
+                    List<Color> strongColors = centroids
+                        .OrderByDescending(c => c.GetSaturation() * (1f - Math.Abs(c.GetBrightness() - 0.5f)))
+                        .Take(Math.Min(centroids.Count / 2 + 1, 10))
+                        .ToList();
+
+                    List<Color> variations = new();
+                    foreach (var c in strongColors)
+                    {
+                        variations.Add(c.CB(0.7f));
+                        variations.Add(c.CB(-0.7f));
+                    }
+
+                    Color avgTone = Color.FromArgb(
+                        255,
+                        (int)centroids.Average(c => c.R),
+                        (int)centroids.Average(c => c.G),
+                        (int)centroids.Average(c => c.B)
+                    );
+
+                    variations.Add(avgTone);
+                    variations.Add(avgTone.CB(0.5f));
+                    variations.Add(avgTone.CB(-0.5f));
+
+                    centroids.AddRange(variations);
+                    centroids = centroids.GroupBy(c => c.ToArgb()).Select(g => g.First()).Take(settings.ColorCount * 2).ToList();
+                }
+
+                settings.Progress?.Report(1f);
+                settings.Status?.Report($"{Program.Lang.Strings.General.Done}");
+                return centroids;
+
+            }, settings.CancellationToken);
+        }
+
+        private static List<Color> LockFreeKMeansAsync(List<Color> pixels, int k, PaletteGeneratorSettings? settings = null)
+        {
+            if (pixels == null || pixels.Count == 0) return new List<Color>();
+
+            Random rnd = new();
+            int kEffective = Math.Min(k, pixels.Count);
+
+            List<Color> centroids = pixels.OrderBy(p => rnd.Next()).Take(kEffective).ToList();
+            Color? accent = settings?.AccentColor;
+            float accentWeight = settings?.AccentWeight ?? 2f;
+            int iterations = settings?.ColorCount ?? 10;
+            int totalSteps = iterations * pixels.Count;
+            int completedSteps = 0;
+
+            for (int iter = 0; iter < iterations; iter++)
+            {
+                settings?.CancellationToken.ThrowIfCancellationRequested();
+
+                List<List<Color>> clusters = new(kEffective);
+                for (int i = 0; i < kEffective; i++) clusters.Add(new List<Color>());
+
+                Parallel.ForEach(pixels, new ParallelOptions { CancellationToken = settings?.CancellationToken ?? default }, px =>
+                {
+                    int bestIndex = 0;
+                    float minDist = float.MaxValue;
+
+                    for (int i = 0; i < kEffective; i++)
+                    {
+                        float dist = ColorDistance(px, centroids[i]);
+
+                        if (accent.HasValue)
                         {
-                            nearestDistance = distance;
-                            nearestIndex = i;
+                            float accentDist = ColorDistance(px, accent.Value);
+                            dist /= (1f + accentWeight / (1f + accentDist));
+                        }
+
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            bestIndex = i;
                         }
                     }
 
-                    if (!colorFrequency.ContainsKey(centroids[nearestIndex])) colorFrequency[centroids[nearestIndex]] = 0;
-                    colorFrequency[centroids[nearestIndex]]++;
-                }
+                    lock (clusters[bestIndex])
+                        clusters[bestIndex].Add(px);
 
-                return [.. colorFrequency.OrderByDescending(kv => kv.Value).Select(kv => kv.Key)];
+                    Interlocked.Increment(ref completedSteps);
+                    settings?.Progress?.Report(0.5f + (float)completedSteps / totalSteps * 0.5f);
+                });
+
+                Parallel.For(0, kEffective, new ParallelOptions { CancellationToken = settings?.CancellationToken ?? default }, i =>
+                {
+                    var cluster = clusters[i];
+                    if (cluster.Count == 0) return;
+
+                    int r = (int)cluster.Average(c => c.R);
+                    int g = (int)cluster.Average(c => c.G);
+                    int b = (int)cluster.Average(c => c.B);
+                    int a = (int)cluster.Average(c => c.A);
+
+                    centroids[i] = Color.FromArgb(a, r, g, b);
+                });
+
+                Thread.Yield();
             }
+
+            settings?.Progress?.Report(1f);
+            return centroids;
         }
 
         /// <summary>
-        /// Performs the K-Means clustering algorithm to identify a specified number of color centroids from a
-        /// collection of pixels, using a lock-free parallel implementation.
+        /// Converts a Color to HSV components (Hue, Saturation, Value/Brightness)
+        /// Hue: 0-360, Saturation: 0-1, Value: 0-1
         /// </summary>
-        /// <remarks>This method uses a lock-free, thread-local approach to perform the clustering in
-        /// parallel, which can improve performance on large datasets. The algorithm iteratively refines the centroids
-        /// until convergence or until the maximum number of iterations is reached.  The returned centroids represent
-        /// the average colors of the clusters formed by the input pixels. If a cluster has no pixels assigned during an
-        /// iteration, its centroid remains unchanged.</remarks>
-        /// <param name="pixels">The list of pixel colors to cluster.</param>
-        /// <param name="colorCount">The number of color centroids to identify. Must be greater than zero.</param>
-        /// <param name="maxIterations">The maximum number of iterations to perform. Must be greater than zero.</param>
-        /// <returns>A list of <see cref="Color"/> objects representing the identified centroids.</returns>
-        private static List<Color> LockFreeKMeans(List<Color> pixels, int colorCount, int maxIterations)
+        public static void ColorToHSV(Color color, out float hue, out float saturation, out float value)
         {
-            Random rnd = new();
-            List<Color> centroids = pixels.OrderBy(p => rnd.Next()).Take(colorCount).ToList();
-            bool changed = true;
-            int iteration = 0;
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
 
-            while (changed && iteration < maxIterations)
-            {
-                iteration++;
-                changed = false;
+            float max = Math.Max(r, Math.Max(g, b));
+            float min = Math.Min(r, Math.Min(g, b));
+            float delta = max - min;
 
-                var threadLocalClusters = new ThreadLocal<List<Color>[]>(() =>
-                {
-                    var arr = new List<Color>[centroids.Count];
-                    for (int i = 0; i < arr.Length; i++) arr[i] = new List<Color>();
-                    return arr;
-                }, trackAllValues: true); // Enable tracking of all thread values
+            // Hue calculation
+            if (delta == 0)
+                hue = 0;
+            else if (max == r)
+                hue = 60f * (((g - b) / delta) % 6f);
+            else if (max == g)
+                hue = 60f * (((b - r) / delta) + 2f);
+            else // max == b
+                hue = 60f * (((r - g) / delta) + 4f);
 
-                // Assign pixels to nearest centroid
-                Parallel.ForEach(pixels, pixel =>
-                {
-                    int nearestIndex = 0;
-                    float nearestDistance = float.MaxValue;
+            if (hue < 0) hue += 360f;
 
-                    for (int i = 0; i < centroids.Count; i++)
-                    {
-                        float distance = ColorDistance(pixel, centroids[i]);
-                        if (distance < nearestDistance)
-                        {
-                            nearestDistance = distance;
-                            nearestIndex = i;
-                        }
-                    }
+            // Saturation calculation
+            saturation = (max == 0) ? 0 : delta / max;
 
-                    threadLocalClusters.Value[nearestIndex].Add(pixel);
-                });
+            // Value/Brightness
+            value = max;
+        }
 
-                // Merge clusters from all threads
-                List<Color>[] clusters = new List<Color>[centroids.Count];
-                for (int i = 0; i < centroids.Count; i++)
-                    clusters[i] = new List<Color>();
+        /// <summary>
+        /// Converts HSV components to a Color
+        /// Hue: 0-360, Saturation: 0-1, Value: 0-1
+        /// </summary>
+        public static Color ColorFromHSV(float hue, float saturation, float value)
+        {
+            float c = value * saturation;
+            float x = c * (1 - Math.Abs((hue / 60f) % 2 - 1));
+            float m = value - c;
 
-                foreach (var local in threadLocalClusters.Values)
-                    for (int i = 0; i < centroids.Count; i++)
-                        clusters[i].AddRange(local[i]);
+            float r1, g1, b1;
+            if (hue < 60)
+                (r1, g1, b1) = (c, x, 0);
+            else if (hue < 120)
+                (r1, g1, b1) = (x, c, 0);
+            else if (hue < 180)
+                (r1, g1, b1) = (0, c, x);
+            else if (hue < 240)
+                (r1, g1, b1) = (0, x, c);
+            else if (hue < 300)
+                (r1, g1, b1) = (x, 0, c);
+            else
+                (r1, g1, b1) = (c, 0, x);
 
-                threadLocalClusters.Dispose();
+            int r = (int)Math.Round((r1 + m) * 255f);
+            int g = (int)Math.Round((g1 + m) * 255f);
+            int b = (int)Math.Round((b1 + m) * 255f);
 
-                Parallel.For(0, centroids.Count, i =>
-                {
-                    if (clusters[i].Count == 0) return;
-
-                    int r = (int)clusters[i].Average(c => c.R);
-                    int g = (int)clusters[i].Average(c => c.G);
-                    int b = (int)clusters[i].Average(c => c.B);
-                    int a = (int)clusters[i].Average(c => c.A);
-
-                    Color newCentroid = Color.FromArgb(a, r, g, b);
-                    if (!newCentroid.Equals(centroids[i]))
-                        centroids[i] = newCentroid;
-                });
-
-                changed = true; // continue refining
-            }
-
-            return centroids;
+            return Color.FromArgb(r, g, b);
         }
 
         /// <summary>

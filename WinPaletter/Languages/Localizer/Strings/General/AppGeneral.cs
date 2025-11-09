@@ -90,6 +90,10 @@
                 public string RestorePoint_FirstTime_Desc { get; set; } = "And that is to ensure you can revert changes if needed.";
                 public string Help { get; set; } = "Help (from online GitHub Wiki)";
                 public string ThanksTo { get; set; } = "Thanks to";
+                public string SamplingPixels { get; set; } = "Sampling pixels";
+                public string ClusteringColors { get; set; } = "Clustering colors";
+                public string SortingByDominance { get; set; } = "Sorting by dominance";
+                public string GeneratingColorsVariations { get; set; } = "Generating colors variations";
             }
         }
     }

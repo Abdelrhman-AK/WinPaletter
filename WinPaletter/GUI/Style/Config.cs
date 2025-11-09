@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Newtonsoft.Json.Linq;
+using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
 
@@ -82,5 +83,143 @@ namespace WinPaletter.UI.Style
         /// Gets or sets the current animation state of the application; true for enabled, false for disabled
         /// </summary>
         public bool Animations = false;
+
+        private static Bitmap GetTexture(int val = 1, bool lightMode = false)
+        {
+            Bitmap bmp;
+
+            switch (val)
+            {
+                case 0:
+                    {
+                        using (Bitmap x = new(1, 1)) { bmp = (Bitmap)x.Clone(); }
+                        break;
+                    }
+
+                case 1:
+                    {
+                        bmp = Assets.Store.Pattern1;
+                        break;
+                    }
+                case 2:
+                    {
+                        bmp = Assets.Store.Pattern2;
+                        break;
+                    }
+                case 3:
+                    {
+                        bmp = Assets.Store.Pattern3;
+                        break;
+                    }
+                case 4:
+                    {
+                        bmp = Assets.Store.Pattern4;
+                        break;
+                    }
+                case 5:
+                    {
+                        bmp = Assets.Store.Pattern5;
+                        break;
+                    }
+                case 6:
+                    {
+                        bmp = Assets.Store.Pattern6;
+                        break;
+                    }
+                case 7:
+                    {
+                        bmp = Assets.Store.Pattern7;
+                        break;
+                    }
+                case 8:
+                    {
+                        bmp = Assets.Store.Pattern8;
+                        break;
+                    }
+                case 9:
+                    {
+                        bmp = Assets.Store.Pattern9;
+                        break;
+                    }
+                case 10:
+                    {
+                        bmp = Assets.Store.Pattern10;
+                        break;
+                    }
+                case 11:
+                    {
+                        bmp = Assets.Store.Pattern11;
+                        break;
+                    }
+                case 12:
+                    {
+                        bmp = Assets.Store.Pattern12;
+                        break;
+                    }
+                case 13:
+                    {
+                        bmp = Assets.Store.Pattern13;
+                        break;
+                    }
+                case 14:
+                    {
+                        bmp = Assets.Store.Pattern14;
+                        break;
+                    }
+                case 15:
+                    {
+                        bmp = Assets.Store.Pattern15;
+                        break;
+                    }
+                case 16:
+                    {
+                        bmp = Assets.Store.Pattern16;
+                        break;
+                    }
+                case 17:
+                    {
+                        bmp = Assets.Store.Pattern17;
+                        break;
+                    }
+                default:
+                    {
+                        bmp = null;
+                        break;
+                    }
+
+            }
+
+            if (lightMode)
+            {
+                using (Bitmap bmpContrast = bmp?.Contrast(0.4f))
+                using (Bitmap bmpInvert = bmpContrast?.Invert())
+                {
+                    bmp = bmpInvert.Fade(0.7f);
+                }
+            }
+
+            return bmp;
+        }
+
+        /// <summary>
+        /// Decorative texture bitmap
+        /// </summary>
+        public Bitmap Texture => texture;
+        private static Bitmap texture;
+
+        public int Pattern
+        {
+            get => pattern;
+            set
+            {
+                if (pattern != value)
+                {
+                    pattern = value;
+                    texture?.Dispose();
+                    texture = GetTexture(value, !DarkMode);
+                }
+            }
+        }
+        private static int pattern = 1;
     }
 }

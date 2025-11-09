@@ -388,11 +388,11 @@
     <Compile Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.Designer.cs">
       <DependentUpon>ColorEffectMiniControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorsAndPalettesHandlers\Chromify.cs">
+    <Compile Include="ColorsAndPalettesHandlers\WallStudio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorsAndPalettesHandlers\Chromify.Designer.cs">
-      <DependentUpon>Chromify.cs</DependentUpon>
+    <Compile Include="ColorsAndPalettesHandlers\WallStudio.Designer.cs">
+      <DependentUpon>WallStudio.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ArgsHelp.cs">
       <SubType>Form</SubType>
@@ -427,6 +427,7 @@
     <Compile Include="GUI\Elements\Others\SmoothPanels.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Style\ControlProperty.cs" />
     <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
@@ -1314,8 +1315,8 @@
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.resx">
       <DependentUpon>ColorEffectMiniControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorsAndPalettesHandlers\Chromify.resx">
-      <DependentUpon>Chromify.cs</DependentUpon>
+    <EmbeddedResource Include="ColorsAndPalettesHandlers\WallStudio.resx">
+      <DependentUpon>WallStudio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>

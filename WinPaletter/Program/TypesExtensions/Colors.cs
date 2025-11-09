@@ -2059,18 +2059,96 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Finds the color in the specified palette that is closest to the given color.
+        /// Finds the color in the specified palette that is closest to the reference color.
         /// </summary>
-        /// <remarks>The method determines the closest color based on a distance metric, which is used to compare the
-        /// reference color with each color in the palette. The exact distance calculation is not exposed but ensures the most
-        /// similar color is selected.</remarks>
-        /// <param name="color">The reference color to compare against the palette.</param>
-        /// <param name="colors">A list of colors representing the palette to search.</param>
-        /// <returns>The color from the palette that is nearest to the specified color.</returns>
-        public static Color GetNearestColorFromPalette(this Color color, List<Color> colors)
+        /// <remarks>
+        /// The comparison can be based either on saturation/brightness or on perceptual LAB distance.
+        /// Weighted HSB comparison is applied when <paramref name="bySB"/> = true.
+        /// </remarks>
+        /// <param name="color">The reference color to match.</param>
+        /// <param name="colors">The palette of colors to search. Cannot be null or empty.</param>
+        /// <param name="bySB">
+        /// If true, uses weighted saturation/brightness/hue comparison.
+        /// If false, uses perceptual LAB distance.
+        /// </param>
+        /// <returns>The closest color from the palette to the reference color.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="colors"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="colors"/> is empty.</exception>
+        public static Color GetNearestColorFromPalette(this Color color, List<Color> colors, bool bySB = false)
         {
-            return colors.OrderBy(s => Distance(color, s)).First();
+            if (colors == null) throw new ArgumentNullException(nameof(colors));
+            if (colors.Count == 0) throw new ArgumentException("Palette cannot be empty.", nameof(colors));
+
+            if (bySB)
+            {
+                float refS = color.GetSaturation();
+                float refL = PerceivedBrightness(color);
+                float refH = color.GetHue();
+
+                Color best = colors[0];
+                float minDist = float.MaxValue;
+
+                foreach (var c in colors)
+                {
+                    float sDiff = refS - c.GetSaturation();
+                    float lDiff = refL - PerceivedBrightness(c);
+
+                    float hDiff = Math.Min(Math.Abs(refH - c.GetHue()), 360 - Math.Abs(refH - c.GetHue())) / 180f;
+
+                    // Weighted perceptual distance
+                    float dist = 0.3f * hDiff * hDiff + 0.35f * sDiff * sDiff + 0.35f * lDiff * lDiff;
+
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        best = c;
+                    }
+                }
+
+                return best;
+            }
+            else
+            {
+                return colors.OrderBy(c => DistanceLAB(color, c)).First();
+            }
         }
+
+        static float PerceivedBrightness(Color c)
+        {
+            return (0.299f * c.R + 0.587f * c.G + 0.114f * c.B) / 255f;
+        }
+
+        private static double DistanceLAB(Color c1, Color c2)
+        {
+            var lab1 = ToLAB(c1);
+            var lab2 = ToLAB(c2);
+
+            double dl = lab1.L - lab2.L;
+            double da = lab1.A - lab2.A;
+            double db = lab1.B - lab2.B;
+
+            return Math.Sqrt(dl * dl + da * da + db * db);
+        }
+
+        private static (double L, double A, double B) ToLAB(Color color)
+        {
+            double r = PivotRgb(color.R / 255.0);
+            double g = PivotRgb(color.G / 255.0);
+            double b = PivotRgb(color.B / 255.0);
+
+            double x = r * 0.4124 + g * 0.3576 + b * 0.1805;
+            double y = r * 0.2126 + g * 0.7152 + b * 0.0722;
+            double z = r * 0.0193 + g * 0.1192 + b * 0.9505;
+
+            double l = 116 * Fyz(y / 1.0) - 16;
+            double a = 500 * (Fyz(x / 0.95047) - Fyz(y / 1.0));
+            double bVal = 200 * (Fyz(y / 1.0) - Fyz(z / 1.08883));
+
+            return (l, a, bVal);
+        }
+
+        private static double PivotRgb(double n) => n <= 0.04045 ? n / 12.92 : Math.Pow((n + 0.055) / 1.055, 2.4);
+        private static double Fyz(double t) => t > 0.008856 ? Math.Pow(t, 1.0 / 3.0) : (7.787 * t) + (16.0 / 116.0);
 
         /// <summary>
         /// Finds the closest matching color from the Material Expressive 3 Palette to the specified input color.

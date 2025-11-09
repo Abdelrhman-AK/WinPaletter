@@ -279,6 +279,7 @@ namespace WinPaletter
             labelAlt2.Text = $"{Program.Lang.Strings.General.By} {TM.Info.Author}";
             labelAlt3.Text = TM.Info.ThemeVersion;
             groupBox1.UpdatePattern(TM.Info.Pattern);
+            Program.Style.Pattern = TM.Info.Pattern; 
         }
 
         /// <summary>
@@ -773,7 +774,7 @@ namespace WinPaletter
 
         private void button14_Click(object sender, EventArgs e)
         {
-            Forms.Chromify.ShowDialog();
+            Forms.WallStudio.ShowDialog();
         }
 
         private void pin_button_Click(object sender, EventArgs e)

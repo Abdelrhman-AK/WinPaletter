@@ -242,26 +242,5 @@ namespace WinPaletter.TypesExtensions
         {
             return image is Bitmap bitmap ? BitmapExtensions.Tile(bitmap, new Size(width, height)) : null;
         }
-
-        /// <summary>
-        /// Extracts a palette of dominant colors from the specified image.
-        /// </summary>
-        /// <param name="image">The source image from which to extract the color palette. Must be a valid <see cref="Image"/> instance.</param>
-        /// <param name="colorCount">The maximum number of colors to include in the palette. Defaults to 10. Must be greater than 0.</param>
-        /// <param name="colorQuality">The quality factor for color sampling. Higher values reduce the number of pixels analyzed, improving
-        /// performance at the cost of accuracy. Defaults to 10. Must be greater than 0.</param>
-        /// <param name="ignoreWhiteColors">A value indicating whether to exclude near-white colors from the palette. Defaults to <see
-        /// langword="true"/>.</param>
-        /// <param name="whiteThreshold">The brightness threshold for determining near-white colors. Colors with all RGB components greater than or
-        /// equal to this value are considered near-white. Defaults to 240. Valid range is 0 to 255.</param>
-        /// <param name="sortByDominance">A value indicating whether to sort the resulting palette by color dominance. If <see langword="true"/>, the
-        /// most dominant colors appear first. Defaults to <see langword="true"/>.</param>
-        /// <returns>A list of <see cref="Color"/> objects representing the extracted color palette. The list may contain fewer
-        /// than <paramref name="colorCount"/> colors if the image has limited color diversity.</returns>
-        public static List<Color> ToPalette(this Image image, int colorCount = 10, int colorQuality = 10, bool ignoreWhiteColors = true, byte whiteThreshold = 240, bool sortByDominance = true)
-        {
-            return image is Bitmap bitmap ? BitmapExtensions.ToPalette(bitmap, colorCount, colorQuality, ignoreWhiteColors, whiteThreshold, sortByDominance) : [];
-        }
     }
-
 }

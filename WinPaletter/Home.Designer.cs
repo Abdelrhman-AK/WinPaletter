@@ -32,6 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
+            this.labelAlt3 = new WinPaletter.UI.WP.LabelAlt();
+            this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
             this.flowLayoutPanel1 = new WinPaletter.UI.WP.SmoothFlowLayoutPanel();
             this.card1 = new WinPaletter.UI.WP.Card();
             this.card2 = new WinPaletter.UI.WP.Card();
@@ -47,11 +52,6 @@
             this.card13 = new WinPaletter.UI.WP.Card();
             this.card15 = new WinPaletter.UI.WP.Card();
             this.card10 = new WinPaletter.UI.WP.Card();
-            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
-            this.labelAlt3 = new WinPaletter.UI.WP.LabelAlt();
-            this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.apply_btn = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
@@ -83,9 +83,9 @@
             this.userButton = new WinPaletter.UI.WP.Button();
             this.winEdition = new WinPaletter.UI.WP.Button();
             this.panel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.bottom_buttons.SuspendLayout();
             this.titlebarExtender2.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -105,6 +105,73 @@
             this.panel1.Size = new System.Drawing.Size(1176, 70);
             this.panel1.TabIndex = 162;
             this.panel1.BackColorChanged += new System.EventHandler(this.panel1_BackColorChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.flowLayoutPanel3);
+            this.groupBox1.Controls.Add(this.labelAlt2);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(1);
+            this.groupBox1.Size = new System.Drawing.Size(1176, 70);
+            this.groupBox1.TabIndex = 161;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.flowLayoutPanel3.AutoSize = true;
+            this.flowLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel3.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel3.Controls.Add(this.labelAlt1);
+            this.flowLayoutPanel3.Controls.Add(this.labelAlt3);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(9, 15);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(53, 20);
+            this.flowLayoutPanel3.TabIndex = 158;
+            // 
+            // labelAlt1
+            // 
+            this.labelAlt1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelAlt1.AutoSize = true;
+            this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt1.DrawOnGlass = false;
+            this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.labelAlt1.Location = new System.Drawing.Point(3, 0);
+            this.labelAlt1.Name = "labelAlt1";
+            this.labelAlt1.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.labelAlt1.Size = new System.Drawing.Size(23, 20);
+            this.labelAlt1.TabIndex = 156;
+            this.labelAlt1.Text = "0";
+            // 
+            // labelAlt3
+            // 
+            this.labelAlt3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelAlt3.AutoSize = true;
+            this.labelAlt3.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt3.DrawOnGlass = false;
+            this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelAlt3.Location = new System.Drawing.Point(32, 5);
+            this.labelAlt3.Name = "labelAlt3";
+            this.labelAlt3.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.labelAlt3.Size = new System.Drawing.Size(18, 15);
+            this.labelAlt3.TabIndex = 158;
+            this.labelAlt3.Text = "0";
+            // 
+            // labelAlt2
+            // 
+            this.labelAlt2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelAlt2.AutoSize = true;
+            this.labelAlt2.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt2.DrawOnGlass = false;
+            this.labelAlt2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelAlt2.Location = new System.Drawing.Point(13, 41);
+            this.labelAlt2.Name = "labelAlt2";
+            this.labelAlt2.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.labelAlt2.Size = new System.Drawing.Size(18, 15);
+            this.labelAlt2.TabIndex = 157;
+            this.labelAlt2.Text = "0";
             // 
             // flowLayoutPanel1
             // 
@@ -322,73 +389,6 @@
             this.card10.Tag = "Modify the look of WinPaletter to make it suits your theme";
             this.card10.Text = "WinPaletter Themes";
             this.card10.Click += new System.EventHandler(this.card10_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox1.Controls.Add(this.flowLayoutPanel3);
-            this.groupBox1.Controls.Add(this.labelAlt2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox1.Size = new System.Drawing.Size(1176, 70);
-            this.groupBox1.TabIndex = 161;
-            // 
-            // flowLayoutPanel3
-            // 
-            this.flowLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.flowLayoutPanel3.AutoSize = true;
-            this.flowLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayoutPanel3.BackColor = System.Drawing.Color.Transparent;
-            this.flowLayoutPanel3.Controls.Add(this.labelAlt1);
-            this.flowLayoutPanel3.Controls.Add(this.labelAlt3);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(9, 15);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(53, 20);
-            this.flowLayoutPanel3.TabIndex = 158;
-            // 
-            // labelAlt1
-            // 
-            this.labelAlt1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelAlt1.AutoSize = true;
-            this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt1.DrawOnGlass = false;
-            this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.labelAlt1.Location = new System.Drawing.Point(3, 0);
-            this.labelAlt1.Name = "labelAlt1";
-            this.labelAlt1.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.labelAlt1.Size = new System.Drawing.Size(23, 20);
-            this.labelAlt1.TabIndex = 156;
-            this.labelAlt1.Text = "0";
-            // 
-            // labelAlt3
-            // 
-            this.labelAlt3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelAlt3.AutoSize = true;
-            this.labelAlt3.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt3.DrawOnGlass = false;
-            this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.labelAlt3.Location = new System.Drawing.Point(32, 5);
-            this.labelAlt3.Name = "labelAlt3";
-            this.labelAlt3.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.labelAlt3.Size = new System.Drawing.Size(18, 15);
-            this.labelAlt3.TabIndex = 158;
-            this.labelAlt3.Text = "0";
-            // 
-            // labelAlt2
-            // 
-            this.labelAlt2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelAlt2.AutoSize = true;
-            this.labelAlt2.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt2.DrawOnGlass = false;
-            this.labelAlt2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.labelAlt2.Location = new System.Drawing.Point(13, 41);
-            this.labelAlt2.Name = "labelAlt2";
-            this.labelAlt2.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.labelAlt2.Size = new System.Drawing.Size(18, 15);
-            this.labelAlt2.TabIndex = 157;
-            this.labelAlt2.Text = "0";
             // 
             // bottom_buttons
             // 
@@ -691,7 +691,7 @@
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(32, 35);
             this.button14.TabIndex = 158;
-            this.button14.Tag = "Chromify";
+            this.button14.Tag = "WallStudio";
             this.button14.UseVisualStyleBackColor = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
@@ -961,11 +961,11 @@
             this.Shown += new System.EventHandler(this.Dashboard_Shown);
             this.ParentChanged += new System.EventHandler(this.Dashboard_ParentChanged);
             this.panel1.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.bottom_buttons.ResumeLayout(false);
             this.titlebarExtender2.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);

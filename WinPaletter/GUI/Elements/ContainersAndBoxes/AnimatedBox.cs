@@ -160,26 +160,17 @@ namespace WinPaletter.UI.WP
 
         protected override void OnHandleCreated(EventArgs e)
         {
+            base.OnHandleCreated(e);
+
             if (!DesignMode)
             {
                 Timer.Tick += Timer_Tick;
-                if (FindForm() is not null)
-                {
-                    FindForm().Activated += Form_GotFocus;
-                    FindForm().Shown += Form_Shown;
-                    FindForm().Deactivate += Form_LostFocus;
-                }
-
-                Timer.Enabled = Enabled;
-                if (Enabled) Timer.Start(); else Timer.Stop();
+                HookFormEvents();
+                ParentChanged += AnimatedBox_ParentChanged;
+                VisibleChanged += AnimatedBox_VisibleChanged;
+                HookParentEvents(Parent);
+                UpdateTimerState();
             }
-            else
-            {
-                Timer.Enabled = false;
-                Timer.Stop();
-            }
-
-            base.OnHandleCreated(e);
         }
 
         protected override void OnHandleDestroyed(EventArgs e)
@@ -187,40 +178,226 @@ namespace WinPaletter.UI.WP
             if (!DesignMode)
             {
                 Timer.Tick -= Timer_Tick;
-                if (FindForm() is not null)
-                {
-                    FindForm().Activated -= Form_GotFocus;
-                    FindForm().Shown -= Form_Shown;
-                    FindForm().Deactivate -= Form_LostFocus;
-                }
+                UnhookFormEvents();
+                ParentChanged -= AnimatedBox_ParentChanged;
+                VisibleChanged -= AnimatedBox_VisibleChanged;
             }
 
             base.OnHandleDestroyed(e);
         }
 
-        public void Form_GotFocus(object sender, EventArgs e)
+        private Form? _hookedForm;
+
+        /// <summary>
+        /// Hooks form events for both current form and topmost parent form.
+        /// </summary>
+        private void HookFormEvents()
         {
-            _Focused = Enabled;
-            Timer.Enabled = Enabled;
-            if (Enabled) Timer.Start(); else Timer.Stop();
+            UnhookFormEvents();
+
+            // Start from this control
+            Control? current = this;
+            Form? topForm = null;
+
+            while (current != null)
+            {
+                if (current is Form f)
+                {
+                    topForm = f; // found a Form in the hierarchy
+                }
+
+                // Step up the hierarchy
+                current = current.Parent;
+            }
+
+            // If still null, fallback to FindForm()
+            if (topForm == null)
+                topForm = FindForm();
+
+            _hookedForm = topForm;
+
+            if (_hookedForm != null)
+            {
+                // If the form's handle isn't created yet, defer hooking
+                if (!_hookedForm.IsHandleCreated)
+                {
+                    _hookedForm.HandleCreated += (s, e) => HookFormEvents();
+                    return; // exit for now; the events will be hooked once handle is ready
+                }
+
+                _hookedForm.Activated -= Form_Activated;
+                _hookedForm.Deactivate -= Form_Deactivate;
+                _hookedForm.Shown -= Form_Shown;
+                _hookedForm.Resize -= Form_Resize;
+
+                _hookedForm.Activated += Form_Activated;
+                _hookedForm.Deactivate += Form_Deactivate;
+                _hookedForm.Shown += Form_Shown;
+                _hookedForm.Resize += Form_Resize;
+            }
+        }
+
+        /// <summary>
+        /// Safely unhooks previously attached form event handlers.
+        /// </summary>
+        private void UnhookFormEvents()
+        {
+            if (_hookedForm != null)
+            {
+                _hookedForm.Activated -= Form_Activated;
+                _hookedForm.Deactivate -= Form_Deactivate;
+                _hookedForm.Shown -= Form_Shown;
+                _hookedForm.Resize -= Form_Resize;
+                _hookedForm = null;
+            }
+        }
+
+        /// <summary>
+        /// Recursively determines whether the control (or any of its parents)
+        /// resides inside an inactive TabPage.
+        /// </summary>
+        private bool IsInInactiveTabPage()
+        {
+            Control? current = this;
+
+            while (current != null)
+            {
+                if (current is TabPage page && page.Parent is TabControl tab)
+                {
+                    if (tab.SelectedTab != page)
+                        return true; // inside inactive tab
+                }
+                current = current.Parent;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Evaluates all relevant visibility and state conditions to decide
+        /// if animation should be active or stopped.
+        /// </summary>
+        private void UpdateTimerState()
+        {
+            bool shouldAnimate = Enabled && Visible && _Focused;
+
+            // Stop if inside inactive tab
+            if (IsInInactiveTabPage())
+                shouldAnimate = false;
+
+            // Stop if any parent is invisible
+            Control? p = Parent;
+            while (shouldAnimate && p != null)
+            {
+                if (!p.Visible)
+                {
+                    shouldAnimate = false;
+                    break;
+                }
+                p = p.Parent;
+            }
+
+            // Apply result
+            if (shouldAnimate)
+            {
+                if (!Timer.Enabled)
+                {
+                    Timer.Enabled = true;
+                    Timer.Start();
+                }
+            }
+            else
+            {
+                if (Timer.Enabled)
+                {
+                    Timer.Enabled = false;
+                    Timer.Stop();
+                }
+            }
+
             Invalidate();
         }
 
-        public void Form_Shown(object sender, EventArgs e)
+        /// <summary>
+        /// Hooks into TabControl events and parent visibility changes dynamically.
+        /// </summary>
+        private void HookParentEvents(Control? control)
         {
-            _Focused = Enabled;
-            SetColors();
-            Timer.Enabled = Enabled;
-            if (Enabled) Timer.Start(); else Timer.Stop();
-            Invalidate();
+            while (control != null)
+            {
+                // Hook into TabControls
+                if (control is TabPage page && page.Parent is TabControl tab)
+                {
+                    tab.SelectedIndexChanged -= Tab_SelectedIndexChanged;
+                    tab.SelectedIndexChanged += Tab_SelectedIndexChanged;
+                    tab.Selecting -= Tab_Selecting;
+                    tab.Selecting += Tab_Selecting;
+                }
+
+                // Hook into any parent visibility change
+                control.VisibleChanged -= Parent_VisibleChanged;
+                control.VisibleChanged += Parent_VisibleChanged;
+
+                control = control.Parent;
+            }
         }
 
-        public void Form_LostFocus(object sender, EventArgs e)
+        private void AnimatedBox_ParentChanged(object sender, EventArgs e)
+        {
+            HookParentEvents(Parent);
+            HookFormEvents();
+            UpdateTimerState();
+        }
+
+        private void Parent_VisibleChanged(object? sender, EventArgs e)
+        {
+            UpdateTimerState();
+        }
+
+        private void AnimatedBox_VisibleChanged(object? sender, EventArgs e)
+        {
+            UpdateTimerState();
+        }
+
+        private void Tab_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            UpdateTimerState();
+        }
+
+        private void Tab_Selecting(object? sender, TabControlCancelEventArgs e)
+        {
+            // Stop animations immediately when switching starts
+            Timer.Stop();
+            Timer.Enabled = false;
+        }
+
+        private void Form_Activated(object? sender, EventArgs e)
+        {
+            _Focused = true;
+            UpdateTimerState();
+        }
+
+        private void Form_Deactivate(object? sender, EventArgs e)
         {
             _Focused = false;
-            Timer.Enabled = false;
-            Timer.Stop();
-            Invalidate();
+            UpdateTimerState();
+        }
+
+        private void Form_Shown(object? sender, EventArgs e)
+        {
+            _Focused = true;
+            SetColors();
+            UpdateTimerState();
+        }
+
+        private void Form_Resize(object? sender, EventArgs e)
+        {
+            // Stop when minimized, resume when restored
+            if (FindForm() is Form f)
+            {
+                _Focused = f.WindowState != FormWindowState.Minimized;
+                UpdateTimerState();
+            }
         }
 
         protected override void OnControlAdded(ControlEventArgs e)
@@ -270,37 +447,42 @@ namespace WinPaletter.UI.WP
             Rectangle Rect = new(0, 0, Width, Height);
             Rectangle BorderRect = new(Rect.X, Rect.Y, Rect.Width - 1, Rect.Height - 1);
 
-            if (!DesignMode && _Focused)
+            if (!DesignMode)
             {
-                Color Cx2 = Style == Styles.SwapColors ? BackColor : C2;
-
-                using (LinearGradientBrush l = new(Rect, Color, Cx2, _Angle, false))
+                if (_Focused)
                 {
-                    if (Dock == DockStyle.None)
+                    Color Cx2 = Style == Styles.SwapColors ? BackColor : C2;
+
+                    using (LinearGradientBrush l = new(Rect, Color, Cx2, _Angle, false))
                     {
-                        G.FillRoundedRect(l, Rect);
-                        G.FillRoundedRect(Noise, Rect);
-                        using (Pen P = new(LineColor))
+                        l.WrapMode = WrapMode.TileFlipXY;
+
+                        if (Dock == DockStyle.None)
                         {
-                            G.DrawRoundedRect(P, BorderRect);
+                            G.FillRoundedRect(l, Rect);
+                            G.FillRoundedRect(Noise, Rect);
+                            using (Pen P = new(LineColor))
+                            {
+                                G.DrawRoundedRect(P, BorderRect);
+                            }
+                        }
+                        else
+                        {
+                            G.FillRectangle(l, Rect);
                         }
                     }
-                    else
-                    {
-                        G.FillRectangle(l, Rect);
+                }
 
-                        // Sometimes, Noise is used anywhere else and will throw an error
-                        try
-                        {
-                            G.FillRectangle(Noise, Rect);
-                        }
-                        catch { }
+                // Sometimes, Noise is used anywhere else and will throw an error
+                try
+                {
+                    if (Noise.IsValid()) G.FillRectangle(Noise, Rect);
+                }
+                catch { }
 
-                        using (TextureBrush tb = new(Assets.Store.Pattern1))
-                        {
-                            G.FillRectangle(tb, Rect);
-                        }
-                    }
+                using (TextureBrush tb = new(Program.Style.Texture ?? Assets.Store.Pattern1))
+                {
+                    G.FillRectangle(tb, Rect);
                 }
             }
 

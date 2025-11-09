@@ -16,48 +16,37 @@ namespace WinPaletter.UI.Style
     public partial class Helpers
     {
         /// <summary>
-        /// Returns if rounded corners should be applied to the program's style.
+        /// Determines whether rounded corners should be applied based on OS, theme, and settings.
         /// </summary>
-        public static bool GetRoundedCorners()
+        public static bool GetRoundedCorners(bool byOS = false)
         {
-            try
-            {
-                if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
-                {
-                    // Check if appearance is managed by theme and custom colors are enabled
-                    return Program.Settings.Appearance.RoundedCorners;
-                }
-                else if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-                {
-                    // Check if running in design mode. Drawing rounded corners in design mode is not necessary.
-                    return false;
-                }
-                else if (OS.W12 || OS.W11)
-                {
-                    // Windows 11 (and maybe 12 in the future when it will be released) have rounded corners by default
-                    return true;
-                }
-                else if (OS.W10 || OS.W8x)
-                {
-                    // Windows 10 and 8.x have sharp corners by default
-                    return false;
-                }
-                else if (OS.W7 || OS.WXP || OS.WVista)
-                {
-                    // Windows 7, Vista and WXP have rounded corners when not using the classic theme
-                    return !Program.ClassicThemeRunning;
-                }
-                else
-                {
-                    // Default to sharp corners
-                    return false;
-                }
-            }
-            catch
-            {
-                // Fall back to rounded corners if an exception occurs
+            if (byOS)
+                return GetRoundedCornersByOS();
+
+            // Check if appearance is managed by theme and custom colors are enabled
+            if (Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors)
+                return Program.Settings.Appearance.RoundedCorners;
+
+            // Do not draw rounded corners in design mode
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 return false;
-            }
+
+            // Fallback to OS-based behavior
+            return GetRoundedCornersByOS();
+        }
+
+        /// <summary>
+        /// Determines if the OS defaults to rounded corners.
+        /// </summary>
+        private static bool GetRoundedCornersByOS()
+        {
+            if (OS.W12 || OS.W11)
+                return true; // Rounded by default
+            if (OS.W10 || OS.W8x)
+                return false; // Sharp by default
+            if (OS.W7 || OS.WVista || OS.WXP)
+                return !Program.ClassicThemeRunning; // Rounded unless classic theme
+            return false; // Default to sharp corners
         }
 
         /// <summary>
