@@ -10,7 +10,6 @@ using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
 using WinPaletter.Theme.Structures;
-using WinPaletter.TypesExtensions;
 using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Simulation;
@@ -30,8 +29,9 @@ namespace WinPaletter
         private int Cycles = 0;
         ColorEffectControl[] colorEffectControls = null;
         float previewWidthFactor, previewHeightFactor;
-        CancellationTokenSource cts = new();
+        CancellationTokenSource cts;
         public List<ControlProperty<Color>> ColorProperties;
+        bool canCloseWithoutMsg = false;
 
         public WallStudio()
         {
@@ -45,6 +45,9 @@ namespace WinPaletter
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
             tablessControl1.SelectedIndex = 0;
+            canCloseWithoutMsg = false;
+            next_btn.Enabled = true;
+            cts = new();
 
             progressBar1.Maximum = (tablessControl1.TabCount - 1) * 100;
             previewWidthFactor = tabs_preview_1.Width / 1920f;
@@ -136,6 +139,7 @@ namespace WinPaletter
                     }
                 }
 
+                canCloseWithoutMsg = true;
                 DialogResult = DialogResult.OK;
                 Close();
                 return;
@@ -185,7 +189,7 @@ namespace WinPaletter
                     // Sort in parallel (still non-blocking)
                     Palette = palette.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
 
-                    if (checkBox1.Checked && File.Exists(textBox2.Text))
+                    if (checkBox1.Checked && File.Exists(textBox2.Text) && textBox2.Text.ToLower().Trim() != textBox1.Text.ToLower().Trim())
                     {
                         using Bitmap bmp_lock_src = BitmapMgr.Load(textBox2.Text);
                         using Bitmap bmp_lock = bmp_lock_src.Resize(Program.PreviewSize);
@@ -303,7 +307,10 @@ namespace WinPaletter
         {
             e.Cancel = false;
 
-            if (MsgBox(Program.Lang.Strings.Messages.CloseWizard, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+            if (!canCloseWithoutMsg)
+            {
+                if (MsgBox(Program.Lang.Strings.Messages.CloseWizard, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+            }
 
             // Continue with the closing event if the user has not cancelled it.
             if (!e.Cancel)
@@ -389,6 +396,8 @@ namespace WinPaletter
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            next_btn.Enabled = File.Exists(textBox1.Text);
+
             if (File.Exists(textBox1.Text))
             {
                 using (Bitmap bmp_src = BitmapMgr.Load(textBox1.Text))
@@ -454,24 +463,24 @@ namespace WinPaletter
         {
             foreach (ControlProperty<Color> prop in ColorProperties)
             {
-                prop.Value = ApplyEffect(prop.InitialValue);
+                prop.Value = Color.FromArgb(255, ApplyEffect(prop.InitialValue));
             }
         }
 
         Color ApplyEffect(Color c, bool skip = false)
         {
-            if (skip || !toggle1.Checked) return c;
+            if (skip || !toggle1.Checked) return Color.FromArgb(255, c);
 
             // Apply all enabled effects in order
             foreach (ColorEffectControl ctrl in smoothPanel1.Controls.OfType<ColorEffectControl>())
             {
                 if (ctrl.ColorEffect.Checked)
                 {
-                    c = ctrl.ColorEffect.Apply(c);
+                    c = Color.FromArgb(255, ctrl.ColorEffect.Apply(c));
                 }
             }
 
-            return c;
+            return Color.FromArgb(255, c);
         }
 
         private string EffectsSummary()
@@ -782,6 +791,7 @@ namespace WinPaletter
             retroDesktopColors1.LoadColors(TM);
             retroDesktopColors1.LoadMetrics(TM);
 
+            panel2.Visible = System.IO.File.Exists(textBox2.Text);
             tabs_preview_1.SelectedIndex = Program.WindowStyle == WindowStyle.W11 ? 0 : Program.WindowStyle == WindowStyle.W10 ? 1 : Program.WindowStyle == WindowStyle.W7 ? 2 : 0;
 
             tabs_preview_1.TabPages[0].BackgroundImage?.Dispose();
@@ -790,7 +800,7 @@ namespace WinPaletter
 
             tabs_preview_1.TabPages[0].BackgroundImage = System.IO.File.Exists(TM.LogonUI11.ImageFile) ? BitmapMgr.Load(TM.LogonUI11.ImageFile) : CaptureLockScreen() ?? null;
             tabs_preview_1.TabPages[1].BackgroundImage = System.IO.File.Exists(TM.LogonUI10.ImageFile) ? BitmapMgr.Load(TM.LogonUI10.ImageFile) : CaptureLockScreen() ?? null;
-            tabs_preview_1.TabPages[2].BackgroundImage = System.IO.File.Exists(TM.LogonUI7.ImagePath) ? BitmapMgr.Load(TM.LogonUI7.ImagePath) : ReturnBK() ?? null;
+            tabs_preview_1.TabPages[2].BackgroundImage = ReturnBK() ?? null;
         }
 
         public Bitmap CaptureLockScreen()
@@ -1010,6 +1020,22 @@ namespace WinPaletter
                 i.Width = (int)(32f * i.Prop_Scale + 32f);
                 i.Height = i.Width;
                 i.Refresh();
+            }
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as UI.WP.CheckBox).Checked)
+            {
+                Program.Animator.ShowSync(groupBox2);
+                Program.Animator.ShowSync(groupBox3);
+                Program.Animator.ShowSync(groupBox4);
+            }
+            else
+            {
+                Program.Animator.HideSync(groupBox4);
+                Program.Animator.HideSync(groupBox3);
+                Program.Animator.HideSync(groupBox2);
             }
         }
 

@@ -174,17 +174,24 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            if (!DesignMode)
-            {
-                if (FindForm() != null)
-                {
-                    FindForm().Activated += Form_Activated;
-                    FindForm().Deactivate += Form_Deactivate;
-                    SystemEvents.UserPreferenceChanged += OnSystemSettingsUpdated;
-                }
-            }
+            _lastBackdropType = (TitlebarTypes)(-1);
+            _lastBackdropPadding = Padding.Empty;
+            isCompositionEnabled = DWMAPI.IsCompositionEnabled();
 
             base.OnHandleCreated(e);
+
+            if (!DesignMode)
+            {
+                if (FindForm() is Form form)
+                {
+                    form.Activated += Form_Activated;
+                    form.Deactivate += Form_Deactivate;
+                    form.HandleCreated += (s, _) => UpdateBackDrop();
+                    SystemEvents.UserPreferenceChanged += OnSystemSettingsUpdated;
+                }
+
+                UpdateBackDrop();
+            }
         }
 
         /// <summary>

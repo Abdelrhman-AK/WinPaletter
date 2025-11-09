@@ -679,7 +679,7 @@
             // button14
             // 
             this.button14.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button14.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(164)))), ((int)(((byte)(9)))), ((int)(((byte)(18)))));
+            this.button14.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
             this.button14.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
             this.button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button14.ForeColor = System.Drawing.Color.White;

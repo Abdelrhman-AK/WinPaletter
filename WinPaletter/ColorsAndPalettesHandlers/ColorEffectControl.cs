@@ -30,7 +30,7 @@ namespace WinPaletter.UI.AdvancedControls
             int labelsTotalHeight = nameHeight + descHeight;
             int trackBarHeight = trackBar.Visible ? trackBar.Height : 0; // 6px margin if shown
 
-            int paddingTop = label1.Top;
+            int paddingTop = pictureBox.Top;
             int paddingBetweenLabels = label2.Top - label1.Bottom;
 
             if (trackBar.Visible)
