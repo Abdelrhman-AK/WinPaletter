@@ -703,7 +703,7 @@ namespace WinPaletter.UI.Simulation
 
                 using (Bitmap b = i1.ReplaceColor(Color.FromArgb(204, 204, 204), Color.FromArgb(alpha, PCF)))
                 {
-                    G.DrawImage(b, new PointF(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2f, RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2f));
+                    G.DrawImageUnscaled(b, new Point((int)(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2f), (int)(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2f)));
                 }
             }
 

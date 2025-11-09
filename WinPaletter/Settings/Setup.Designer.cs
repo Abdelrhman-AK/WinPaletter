@@ -159,6 +159,7 @@
             this.tablessControl1.Controls.Add(this.tabPage7);
             this.tablessControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablessControl1.Location = new System.Drawing.Point(0, 60);
+            this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
             this.tablessControl1.Size = new System.Drawing.Size(759, 531);
@@ -1311,6 +1312,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter Setup";
+            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Setup_FormClosed);
             this.Load += new System.EventHandler(this.Setup_Load);
             this.tablessControl1.ResumeLayout(false);

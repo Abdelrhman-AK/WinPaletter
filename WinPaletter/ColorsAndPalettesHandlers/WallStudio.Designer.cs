@@ -341,9 +341,9 @@
             this.checkBox4.Checked = false;
             this.checkBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox4.ForeColor = System.Drawing.Color.White;
-            this.checkBox4.Location = new System.Drawing.Point(36, 5);
+            this.checkBox4.Location = new System.Drawing.Point(36, 3);
             this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(692, 24);
+            this.checkBox4.Size = new System.Drawing.Size(692, 25);
             this.checkBox4.TabIndex = 238;
             this.checkBox4.Text = "Show advanced options";
             this.checkBox4.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox4_CheckedChanged);
@@ -388,9 +388,9 @@
             this.checkBox3.Checked = false;
             this.checkBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox3.ForeColor = System.Drawing.Color.White;
-            this.checkBox3.Location = new System.Drawing.Point(36, 5);
+            this.checkBox3.Location = new System.Drawing.Point(36, 4);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(692, 24);
+            this.checkBox3.Size = new System.Drawing.Size(692, 25);
             this.checkBox3.TabIndex = 238;
             this.checkBox3.Text = "Alternative colors nearing method (in case you do not like current colors nearing" +
     ")";
@@ -461,9 +461,9 @@
             this.checkBox2.Checked = false;
             this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox2.ForeColor = System.Drawing.Color.White;
-            this.checkBox2.Location = new System.Drawing.Point(36, 5);
+            this.checkBox2.Location = new System.Drawing.Point(36, 4);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(597, 24);
+            this.checkBox2.Size = new System.Drawing.Size(597, 25);
             this.checkBox2.TabIndex = 238;
             this.checkBox2.Text = "Rely on a single accent color";
             // 
@@ -501,9 +501,9 @@
             this.checkBox1.Checked = false;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox1.ForeColor = System.Drawing.Color.White;
-            this.checkBox1.Location = new System.Drawing.Point(6, 109);
+            this.checkBox1.Location = new System.Drawing.Point(6, 108);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(722, 24);
+            this.checkBox1.Size = new System.Drawing.Size(722, 25);
             this.checkBox1.TabIndex = 238;
             this.checkBox1.Text = "Process it as a second palette";
             // 

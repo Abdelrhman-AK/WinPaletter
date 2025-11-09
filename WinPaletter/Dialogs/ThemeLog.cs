@@ -88,7 +88,10 @@ namespace WinPaletter
 
             if (Program.ProgramsRunning(SysPaths.Explorer).Count == 0)
             {
-                Task.Run(() => { Program.SendCommand(SysPaths.Explorer, false, true); });
+                Task.Run(() => 
+                { 
+                    Program.SendCommand(SysPaths.Explorer, false, true);
+                });
             }
         }
 

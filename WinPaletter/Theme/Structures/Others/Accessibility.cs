@@ -114,6 +114,9 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "FilterType", (int)ColorFilter);
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Accessibility", "Configuration", ColorFilter_Enabled ? "colorfiltering" : string.Empty, RegistryValueKind.String);
+
+                // This entry is always set to 1 when manipulated by User32.SystemParametersInfo
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
             }
         }
 

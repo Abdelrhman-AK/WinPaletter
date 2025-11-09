@@ -23,7 +23,7 @@ namespace WinPaletter
             MinimizeBox = false;
             ShowIcon = false;
             ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             WindowState = FormWindowState.Maximized;
         }
 

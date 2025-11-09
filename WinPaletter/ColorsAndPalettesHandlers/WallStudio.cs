@@ -46,6 +46,7 @@ namespace WinPaletter
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
             tablessControl1.SelectedIndex = 0;
+            progressBar1.Value = 0;
             canCloseWithoutMsg = false;
             next_btn.Enabled = true;
             cts = new();
@@ -131,7 +132,7 @@ namespace WinPaletter
                 if (radioImage3.Checked) Forms.ThemeLog.Apply_Theme(TM);
                 if (radioImage5.Checked)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = TM.Info.ThemeName + ".wpth", Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = $"WallStudioTheme_{Path.GetFileNameWithoutExtension(textBox1.Text)}.wpth", Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -335,7 +336,7 @@ namespace WinPaletter
 
         private void button10_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = textBox2.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = textBox1.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -601,6 +602,8 @@ namespace WinPaletter
             TM.Cursors.Enabled = true;
             TM.AppTheme.Enabled = true;
 
+            TM.Info.ThemeName = Text;
+            TM.Info.Author = Application.CompanyName;
             TM.Info.ExportResThemePack = true;
 
             TM.Wallpaper.WallpaperType = Wallpaper.WallpaperTypes.Picture;

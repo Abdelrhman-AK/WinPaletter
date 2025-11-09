@@ -101,6 +101,7 @@ namespace WinPaletter
                 // Important to load proper style and language before showing login dialog
                 Log?.Write(LogEventLevel.Information, $"Loading application style.");
 
+                Program.Style.RoundedCorners = GetRoundedCorners(true); // When not included, rounded corners may be applied in non-rounded-corners-OS
                 GetDarkMode();
                 ApplyStyle();
                 LoadLanguage();

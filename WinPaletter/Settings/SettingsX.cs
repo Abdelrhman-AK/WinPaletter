@@ -26,6 +26,8 @@ namespace WinPaletter
         /// </summary>
         public string _File = null;
 
+        bool skipCheckingEquality = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsX"/> class.
         /// </summary>
@@ -582,7 +584,7 @@ namespace WinPaletter
 
             bool Changed = Program.Settings != NewSets;
 
-            if (e.CloseReason == CloseReason.UserClosing & Changed)
+            if (e.CloseReason == CloseReason.UserClosing && Changed && !skipCheckingEquality)
             {
                 switch (MsgBox(Program.Lang.Strings.Messages.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
@@ -609,9 +611,12 @@ namespace WinPaletter
                             break;
                         }
                 }
+
+                skipCheckingEquality = false;
             }
             else if (e.CloseReason == CloseReason.UserClosing & !Changed)
             {
+                skipCheckingEquality = false;
                 e.Cancel = false;
                 base.OnFormClosing(e);
             }
@@ -778,6 +783,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
+            skipCheckingEquality = true;
             SaveSettings();
             Close();
         }

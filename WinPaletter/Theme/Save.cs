@@ -191,6 +191,9 @@ namespace WinPaletter.Theme
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
 
+                        // Sometimes, this entry is set to 1 when manipulating preferences by User32.SystemParametersInfo
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
+
                         // WinTheme info
                         Execute(() => Info.Apply(tv), treeView, Program.Lang.Strings.ThemeManager.Actions.SavingInfo, Program.Lang.Strings.ThemeManager.Errors.SavingInfo, Program.Lang.Strings.ThemeManager.Actions.Time, sw_all);
 
@@ -337,13 +340,7 @@ namespace WinPaletter.Theme
                         // Apply Windows Vista execlusive features (Colors, themes, and visual styles)
                         if (OS.WVista)
                         {
-                            Execute(() =>
-                            {
-                                WindowsVista.Apply(tv);
-                                Program.RefreshDWM(this);
-                            }, treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.WVista),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista)),
+                            Execute(() => { WindowsVista.Apply(tv); }, treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.WVista), string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista)),
                             Program.Lang.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !WindowsVista.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
@@ -705,9 +702,13 @@ namespace WinPaletter.Theme
                         Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
                         User32.UpdatePerUserSystemParameters(1, true);
 
+                        // Sometimes, this entry is set to 1 when manipulating preferences by User32.SystemParametersInfo
+                        WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
+
                         // Update User Preference Mask for HKEY_USERS\.DEFAULT
                         // Always make it the last operation
                         if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT) Win32.Broadcast_UPM_ToDefUsers(tv);
+                        Program.RefreshDWM(this);
 
                         //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
                         //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
