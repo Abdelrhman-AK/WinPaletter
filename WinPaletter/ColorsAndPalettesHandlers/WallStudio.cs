@@ -42,6 +42,7 @@ namespace WinPaletter
         {
             this.LoadLanguage();
             ApplyStyle(this);
+
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
             tablessControl1.SelectedIndex = 0;
@@ -76,10 +77,10 @@ namespace WinPaletter
             // Make them all black after ApplyStyle(this);
             for (int i = 0; i <= tabs_preview_1.TabCount - 1; i++) { tabs_preview_1.TabPages[i].BackColor = Color.Black; }
 
-            label1.ForeColor = Color.White;
-            label2.ForeColor = Color.White;
-            label3.ForeColor = Color.White;
-            label4.ForeColor = Color.White;
+            label7.ForeColor = Color.White;
+            label5.ForeColor = Color.White;
+            label9.ForeColor = Color.White;
+            label10.ForeColor = Color.White;
 
             foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>().Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
             {

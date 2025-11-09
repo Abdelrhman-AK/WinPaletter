@@ -484,38 +484,87 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Resizes the specified bitmap to the given width and height while maintaining high-quality rendering settings.
+        /// Resizes a bitmap safely, automatically handling very large images by scaling in multiple steps.
+        /// Chooses optimal pixel format based on alpha usage to save memory.
         /// </summary>
-        /// <remarks>The method creates a new bitmap with the specified dimensions and uses high-quality rendering
-        /// settings,  such as bicubic interpolation and anti-aliasing, to ensure the resized image maintains visual fidelity.
-        /// The resolution of the source bitmap is preserved in the resized bitmap.</remarks>
-        /// <param name="src">The source <see cref="Bitmap"/> to resize. Cannot be <see langword="null"/>.</param>
-        /// <param name="width">The desired width of the resized bitmap, in pixels. Must be greater than 0.</param>
-        /// <param name="height">The desired height of the resized bitmap, in pixels. Must be greater than 0.</param>
-        /// <returns>A new <see cref="Bitmap"/> instance with the specified dimensions, or <see langword="null"/> if <paramref
-        /// name="src"/> is <see langword="null"/>.</returns>
-        public static Bitmap Resize(this Bitmap src, int width, int height)
+        /// <param name="src">Source bitmap.</param>
+        /// <param name="targetWidth">Target width.</param>
+        /// <param name="targetHeight">Target height.</param>
+        /// <returns>Resized bitmap, or null if src is null.</returns>
+        public static Bitmap Resize(this Bitmap src, int targetWidth, int targetHeight)
         {
             if (src == null) return null;
+            if (targetWidth <= 0 || targetHeight <= 0) throw new ArgumentOutOfRangeException("Width and height must be greater than 0.");
 
-            // Clone original bitmap to avoid "object is being used elsewhere"
-            using (Bitmap clone = src.Clone(new Rectangle(0, 0, src.Width, src.Height), PixelFormat.Format32bppArgb))
-            {
-                Bitmap dst = new(width, height, PixelFormat.Format32bppArgb);
-                dst.SetResolution(clone.HorizontalResolution, clone.VerticalResolution);
+            // Determine optimal pixel format
+            PixelFormat format = PixelFormat.Format32bppArgb;
+            bool hasAlpha = false;
 
-                using (Graphics g = Graphics.FromImage(dst))
+            // Quick alpha check: sample few pixels
+            for (int x = 0; x < src.Width && !hasAlpha; x += src.Width / 10)
+                for (int y = 0; y < src.Height && !hasAlpha; y += src.Height / 10)
                 {
-                    g.CompositingMode = CompositingMode.SourceOver;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                    g.DrawImage(clone, new Rectangle(0, 0, width, height));
+                    Color c = src.GetPixel(x, y);
+                    if (c.A < 255) hasAlpha = true;
                 }
 
-                return dst;
+            if (!hasAlpha) format = PixelFormat.Format24bppRgb; // no alpha needed, saves 25% memory
+
+            const int MAX_STEP_PIXELS = 2000; // maximum dimension per step
+
+            Bitmap current = src;
+            Bitmap temp = null;
+
+            try
+            {
+                // Progressive scaling loop
+                while (current.Width > MAX_STEP_PIXELS || current.Height > MAX_STEP_PIXELS)
+                {
+                    int stepWidth = current.Width > targetWidth ? Math.Max(targetWidth, current.Width / 2) : current.Width;
+                    int stepHeight = current.Height > targetHeight ? Math.Max(targetHeight, current.Height / 2) : current.Height;
+
+                    temp = new Bitmap(stepWidth, stepHeight, format);
+                    temp.SetResolution(current.HorizontalResolution, current.VerticalResolution);
+
+                    using (Graphics G = Graphics.FromImage(temp))
+                    {
+                        G.CompositingMode = CompositingMode.SourceOver;
+                        G.CompositingQuality = CompositingQuality.HighQuality;
+                        G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        G.SmoothingMode = SmoothingMode.HighQuality;
+                        G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                        G.DrawImage(current, new Rectangle(0, 0, stepWidth, stepHeight));
+                    }
+
+                    if (current != src) current.Dispose();
+
+                    current = temp;
+                    temp = null;
+                }
+
+                // Final resize to exact target dimensions
+                Bitmap final = new Bitmap(targetWidth, targetHeight, format);
+                final.SetResolution(current.HorizontalResolution, current.VerticalResolution);
+
+                using (Graphics G = Graphics.FromImage(final))
+                {
+                    G.CompositingMode = CompositingMode.SourceOver;
+                    G.CompositingQuality = CompositingQuality.HighQuality;
+                    G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    G.SmoothingMode = SmoothingMode.HighQuality;
+                    G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                    G.DrawImage(current, new Rectangle(0, 0, targetWidth, targetHeight));
+                }
+
+                if (current != src) current.Dispose();
+
+                return final;
+            }
+            finally
+            {
+                temp?.Dispose();
             }
         }
 

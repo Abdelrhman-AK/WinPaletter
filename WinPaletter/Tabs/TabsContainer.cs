@@ -1276,7 +1276,7 @@ namespace WinPaletter.Tabs
             }
 
             // Inferior border
-            using (Pen P = new(scheme.Colors.Line_Hover(0))) { G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); }
+            using (Pen P = new(!OS.W7 ? scheme.Colors.Line_Hover(0) : Color.Black)) { G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); }
 
             if (_tabControl != null)
             {
@@ -1341,10 +1341,12 @@ namespace WinPaletter.Tabs
 
                             if (OS.WVista || OS.W7 || OS.W8x)
                             {
+                                Color lineColor = Program.Style.DarkMode ? Color.White : Color.Black;
+
                                 // Draw a line around the tab to fix appearance issue that doesn't fit Windows style
-                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 128, 255, 255, 255)))
+                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 150, lineColor)))
                                 {
-                                    G.ExcludeClip(new Rectangle(rect.X, rect.Y + rect.Height - 2, rect.Width + 1, 2));
+                                    G.ExcludeClip(new Rectangle(rect.X, rect.Y + rect.Height - 1, rect.Width + 1, 1));
                                     G.DrawPath(Px, path);
                                     G.ResetClip();
                                 }
