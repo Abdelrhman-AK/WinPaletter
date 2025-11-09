@@ -1578,6 +1578,11 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
         /// </summary>
+        public WinTerminal() => new WinTerminal(string.Empty, Mode.Empty);
+
+        /// <summary>
+        /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
+        /// </summary>
         /// <param name="File">File to be opened, either JSON or WinPaletter theme File</param>
         /// <param name="Mode">Either Windows Terminal JSON settings File or WinPaletter theme File</param>
         /// <param name="Version">Either Stable or Preview</param>
