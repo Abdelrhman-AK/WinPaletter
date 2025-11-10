@@ -17,6 +17,8 @@
                 public string LogoffRecommended { get; set; } = "It is recommended to logoff your Windows and logon to apply all effects of the theme.";
                 public string AuthorURLRedirect { get; set; } = "This will redirect you to the author's social media URL. Do you want to continue?";
                 public string SearchCount { get; set; } = "Search results ({0})";
+                public string NoResourcesPack { get; set; } = "No resources pack";
+                public string ResourcesPackSize { get; set; } = "{0} resource pack";
             }
         }
     }

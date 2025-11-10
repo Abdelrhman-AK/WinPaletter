@@ -136,7 +136,7 @@ namespace WinPaletter
                     {
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
-                            Program.TM.Save(Manager.Source.File, dlg.FileNames[0]);
+                            TM.Save(Manager.Source.File, dlg.FileNames[0]);
                         }
                     }
                 }
@@ -273,7 +273,7 @@ namespace WinPaletter
             else if (tablessControl1.SelectedIndex == 3)
             {
                 CheckedListBox1.Items.Clear();
-                CheckedListBox1.Items.AddRange([.. Store_CPToggles.EnabledAspects(TM)]);
+                CheckedListBox1.Items.AddRange([.. Store_CPToggles.EnabledAspects(TM, true)]);
 
                 for (int i = 0, loopTo = CheckedListBox1.Items.Count - 1; i <= loopTo; i++) CheckedListBox1.SetItemChecked(i, true);
             }
@@ -497,28 +497,28 @@ namespace WinPaletter
         {
             for (int i = 0, loopTo = CheckedListBox1.Items.Count - 1; i <= loopTo; i++)
             {
-                if (OS.W12 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12).ToLower())
                     TM.Windows12.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.W11 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11).ToLower())
                     TM.Windows11.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.W10 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10).ToLower())
                     TM.Windows10.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.W81 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81).ToLower())
                     TM.Windows81.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.W8 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8).ToLower())
                     TM.Windows8.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.W7 && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7).ToLower())
                     TM.Windows7.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.WVista && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista).ToLower())
                     TM.WindowsVista.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (OS.WXP && CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP).ToLower())
                     TM.WindowsXP.Enabled = CheckedListBox1.GetItemChecked(i);
 
                 if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.ClassicColors)

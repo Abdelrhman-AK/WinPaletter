@@ -503,27 +503,33 @@ namespace WinPaletter.UI.WP
 
                 int radius = Height / 3;
 
-                if (Program.Style.RoundedCorners) G.SetClip(rect.Round(radius));
+                if (Program.Style.RoundedCorners && Dock == DockStyle.None) G.SetClip(rect.Round(radius));
 
                 using (LinearGradientBrush br = new(rect, scheme.Colors.Back(parentLevel), scheme.Colors.Back_Hover(parentLevel), LinearGradientMode.ForwardDiagonal))
                 {
-                    G.FillRoundedRect(br, rect, radius);
+                    if (Dock == DockStyle.None) G.FillRoundedRect(br, rect, radius);
+                    else G.FillRectangle(br, rect);
                 }
 
                 using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? StateColor.Dark(0.05f) : StateColor.Light(), StateColor, Percentage * 360f, true))
                 {
-                    G.FillRoundedRect(br, rectValue, radius);
+                    if (Dock == DockStyle.None) G.FillRoundedRect(br, rectValue, radius);
+                    else G.FillRectangle(br, rectValue);
                 }
 
-                G.FillRoundedRect(Noise, rectValue, radius);
+                if (Dock == DockStyle.None) G.FillRoundedRect(Noise, rectValue, radius);
+                else G.FillRectangle(Noise, rectValue);
 
                 G.ResetClip();
 
                 using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
                 using (Pen P_Value = new(Color.FromArgb((int)(Percentage * 255), StateColor)))
                 {
-                    G.DrawRoundedRect(P, rect, radius);
-                    G.DrawRoundedRect(P_Value, rectValue, radius);
+                    if (Dock == DockStyle.None) G.DrawRoundedRect(P, rect, radius);
+                    else G.DrawRectangle(P, rect);
+
+                    if (Dock == DockStyle.None) G.DrawRoundedRect(P_Value, rectValue, radius);
+                    else G.DrawRectangle(P_Value, rectValue.X, rectValue.Y, rectValue.Width, rectValue.Height);
                 }
             }
 

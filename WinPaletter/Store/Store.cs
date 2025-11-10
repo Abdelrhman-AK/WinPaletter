@@ -14,6 +14,7 @@ using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Simulation;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -251,14 +252,21 @@ namespace WinPaletter
             this.DoubleBuffer();
 
             Apply_btn.Image = Forms.Home.apply_btn.Image;
-            RestartExplorer.Image = Forms.Home.restartExplorer_btn.Image;
             labelAlt2.Text = string.Format(Program.Lang.Strings.Store.WontWork_Protocol, OS.WXP ? Program.Lang.Strings.Windows.WXP : Program.Lang.Strings.Windows.WVista);
             if (OS.WXP || OS.WVista) Tabs.SelectedIndex = 4;
 
-            themeSize_lbl.Font = Fonts.ConsoleLarge;
-            respacksize_lbl.Font = Fonts.ConsoleLarge;
+            themeSize_lbl.Font = Fonts.Console;
+            respacksize_lbl.Font = Fonts.Console;
             desc_txt.Font = Fonts.ConsoleLarge;
-            Theme_MD5_lbl.Font = Fonts.Console;
+
+            os_12.Image = Assets.Store.DesignedFor12;
+            os_11.Image = Assets.Store.DesignedFor11;
+            os_10.Image = Assets.Store.DesignedFor10;
+            os_81.Image = Assets.Store.DesignedFor81;
+            os_8.Image = Assets.Store.DesignedFor8;
+            os_7.Image = Assets.Store.DesignedFor7;
+            os_vista.Image = Assets.Store.DesignedForVista;
+            os_xp.Image = Assets.Store.DesignedForXP;
 
             groupBox4.UpdatePattern(Program.TM.Info.Pattern);
         }
@@ -768,22 +776,13 @@ namespace WinPaletter
                 default:
                     selectedItem = sender as StoreItem;
                     Cursor = Cursors.AppStarting;
-                    StoreItem1.TM = selectedItem.TM;
-                    StoreItem1.DoneByWinPaletter = selectedItem.DoneByWinPaletter;
-                    Theme_MD5_lbl.Text = $"MD5: {selectedItem.MD5_ThemeFile}";
+                    groupBox5.UpdatePattern(selectedItem.TM.Info.Pattern);
 
                     Program.Animator.HideSync(Tabs);
                     search_panel.Visible = false;
 
-                    Titlebar_lbl.Text = $"{selectedItem.TM.Info.ThemeName} - {Program.Lang.Strings.General.By} {selectedItem.TM.Info.Author}";
-                    if (Fonts.Exists(selectedItem.TM.MetricsFonts.CaptionFont.Name))
-                    {
-                        Titlebar_lbl.Font = new(selectedItem.TM.MetricsFonts.CaptionFont.Name, Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
-                    }
-                    else
-                    {
-                        Titlebar_lbl.Font = new("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
-                    }
+                    labelAlt3.Text = selectedItem.TM.Info.ThemeName;
+                    author_lbl.Text = selectedItem.TM.Info.Author;
 
                     // Make application theme is the same as the selected theme
                     if (selectedItem.TM.AppTheme.Enabled)
@@ -802,19 +801,13 @@ namespace WinPaletter
                         ApplyStyle(this, true);
                     }
 
-                    if (selectedItem.TM.AppTheme.Enabled)
-                    {
-                        Label14.ForeColor = selectedItem.TM.AppTheme.DarkMode ? Color.White.CB(-0.3f) : Color.Black.CB(0.3f);
-                    }
-                    else
-                    {
-                        Label14.ForeColor = Program.Style.DarkMode ? Color.White.CB(-0.3f) : Color.Black.CB(0.3f);
-                    }
+                    Color accentForeColor = Program.Style.Schemes.Main.Colors.ForeColor_Accent;
+                    Color accentBackColor = Program.Style.Schemes.Main.Colors.BackColor;
 
                     back_btn.CustomColor = selectedItem.TM.Info.Color2;
-
-                    Label6.ForeColor = Label14.ForeColor;
-                    Theme_MD5_lbl.ForeColor = Label14.ForeColor;
+                    author_lbl.ForeColor = accentForeColor;
+                    themeSize_lbl.ForeColor = accentForeColor;
+                    respacksize_lbl.ForeColor = accentForeColor;
 
                     FlowLayoutPanel1.ScrollControlIntoView(windowsDesktop1);
 
@@ -838,17 +831,52 @@ namespace WinPaletter
                     {
                         Task.Run(() =>
                                 {
-                                    respacksize_lbl.SetText(Program.Lang.Strings.General.Calculating);
+                                    Invoke(() => progressBar_ResPack.Visible = true);
+                                    Invoke(() => respacksize_lbl.Visible = false);
+
                                     long Pack_Size = DM.GetFileSizeFromUrl(selectedItem.URL_PackFile);
-                                    respacksize_lbl.SetText(Pack_Size > 0L ? Pack_Size.ToStringFileSize() : 0.ToStringFileSize());
+
+                                    respacksize_lbl.SetText(Pack_Size > 0L ?
+                                        string.Format(Program.Lang.Strings.Store.ResourcesPackSize, Pack_Size.ToStringFileSize()) :
+                                        Program.Lang.Strings.Store.NoResourcesPack);
+
+                                    Invoke(() => progressBar_ResPack.Visible = false);
+                                    Invoke(() => respacksize_lbl.Visible = true);
                                 });
                     }
                     else
                     {
-                        respacksize_lbl.Text = 0.ToStringFileSize();
+                        respacksize_lbl.Text = Program.Lang.Strings.Store.NoResourcesPack;
                     }
 
                     desc_txt.Text = selectedItem.TM.Info.Description;
+
+                    foreach (Label lbl in flowLayoutPanel5.Controls.OfType<Label>().Where(l => l != author_lbl))
+                    {
+                        lbl?.Dispose();
+                    }
+
+                    // Extract tags from description
+                    foreach (string tag in selectedItem.TM.Info.Description.Split(' '))
+                    {
+                        if (tag.StartsWith("#"))
+                        {
+                            selectedItem.TM.Info.Description = selectedItem.TM.Info.Description.Replace(tag, string.Empty).Trim();
+
+                            Label tagLabel = new()
+                            {
+                                Font = Fonts.Console,
+                                ForeColor = accentBackColor,
+                                BackColor = accentForeColor,
+                                AutoSize = true,
+                                TextAlign = ContentAlignment.TopCenter,
+                                Text = tag.Remove(0, 1),
+                                Anchor = AnchorStyles.Left,
+                            };
+
+                            flowLayoutPanel5.Controls.Add(tagLabel);
+                        }
+                    }
 
                     // Check if the theme is designed for the current version of WinPaletter or not and show an alert if not
                     if (Program.Version.CompareTo(selectedItem.TM.Info.AppVersion) != -1)
@@ -862,50 +890,15 @@ namespace WinPaletter
                     }
 
                     // Get the list of supported OS
-                    List<string> os_list = [];
-                    os_list.Clear();
 
-                    if (selectedItem.TM.Info.DesignedFor_Win12) os_list.Add(Program.Lang.Strings.Windows.W12);
-
-                    if (selectedItem.TM.Info.DesignedFor_Win11) os_list.Add(Program.Lang.Strings.Windows.W11);
-
-                    if (selectedItem.TM.Info.DesignedFor_Win10) os_list.Add(Program.Lang.Strings.Windows.W10);
-
-                    if (selectedItem.TM.Info.DesignedFor_Win81) os_list.Add(Program.Lang.Strings.Windows.W81);
-
-                    if (selectedItem.TM.Info.DesignedFor_Win8) os_list.Add(Program.Lang.Strings.Windows.W8);
-
-                    if (selectedItem.TM.Info.DesignedFor_Win7) os_list.Add(Program.Lang.Strings.Windows.W7);
-
-                    if (selectedItem.TM.Info.DesignedFor_WinVista) os_list.Add(Program.Lang.Strings.Windows.WVista);
-
-                    if (selectedItem.TM.Info.DesignedFor_WinXP) os_list.Add(Program.Lang.Strings.Windows.WXP);
-
-                    string os_format = string.Empty;
-                    if (os_list.Count == 1)
-                    {
-                        os_format = os_list[0];
-                    }
-                    else if (os_list.Count == 2)
-                    {
-                        os_format = $"{os_list[0]} {Program.Lang.Strings.General.And} {os_list[1]}";
-                    }
-                    else if (os_list.Count > 2)
-                    {
-                        for (int i = 0, loopTo = os_list.Count - 3; i <= loopTo; i++) os_format += $"{os_list[i]}, ";
-                        os_format += $"{os_list[os_list.Count - 2]} {Program.Lang.Strings.General.And} {os_list[os_list.Count - 1]}";
-                    }
-
-                    SupportedOS_lbl.Text = os_format;
-
-                    if (os_list.Count < 6)
-                    {
-                        Label26.Text = Program.Lang.Strings.Store.ThemeDesignedFor0;
-                    }
-                    else
-                    {
-                        Label26.Text = Program.Lang.Strings.Store.ThemeDesignedFor1;
-                    }
+                    os_12.Visible = selectedItem.TM.Info.DesignedFor_Win12;
+                    os_11.Visible = selectedItem.TM.Info.DesignedFor_Win11;
+                    os_10.Visible = selectedItem.TM.Info.DesignedFor_Win10;
+                    os_81.Visible = selectedItem.TM.Info.DesignedFor_Win81;
+                    os_8.Visible = selectedItem.TM.Info.DesignedFor_Win8;
+                    os_7.Visible = selectedItem.TM.Info.DesignedFor_Win7;
+                    os_vista.Visible = selectedItem.TM.Info.DesignedFor_WinVista;
+                    os_xp.Visible = selectedItem.TM.Info.DesignedFor_WinXP;
 
                     // Get Windows aspects that will be modified
                     List<string> aspects_list = Store_CPToggles.EnabledAspects(selectedItem.TM);
@@ -958,7 +951,6 @@ namespace WinPaletter
                     CMD2.Visible = selectedItem.TM.PowerShellx86.Enabled;
                     CMD3.Visible = selectedItem.TM.PowerShellx64.Enabled;
                     Panel1.Visible = selectedItem.TM.Cursors.Enabled;
-                    author_url_button.Visible = !string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink);
 
                     Tabs.SelectedIndex = 1;
 
@@ -1335,18 +1327,6 @@ namespace WinPaletter
             }
         }
 
-        private void Author_url_button_Click(object sender, EventArgs e)
-        {
-            if (MsgBox(Program.Lang.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
-            {
-                try
-                {
-                    if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink)) Process.Start(selectedItem.TM.Info.AuthorSocialMediaLink);
-                }
-                catch { } // If someone has entered a wrong URL, ignore it
-            }
-        }
-
         /// <summary>
         /// Save the theme as a file to be used later
         /// </summary>
@@ -1466,6 +1446,22 @@ namespace WinPaletter
         private void button7_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void labelAlt4_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink)) return;
+
+            if (selectedItem.DoneByWinPaletter)
+            {
+                Process.Start(Links.RepositoryURL);
+            }
+            else if (MsgBox(Program.Lang.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
+            {
+                string url = selectedItem.TM.Info.AuthorSocialMediaLink;
+                if (!url.StartsWith("https://") && !url.StartsWith("http://")) url = "https://" + url;
+                Process.Start(url);
+            }
         }
     }
 }
