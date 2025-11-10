@@ -257,7 +257,7 @@ namespace WinPaletter
             this.groupBox5.Controls.Add(this.Apply_btn);
             this.groupBox5.Location = new System.Drawing.Point(10, 10);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(1301, 133);
+            this.groupBox5.Size = new System.Drawing.Size(1301, 130);
             this.groupBox5.TabIndex = 142;
             this.groupBox5.Text = "groupBox5";
             // 
@@ -269,16 +269,16 @@ namespace WinPaletter
             this.flowLayoutPanel5.Controls.Add(this.panel3);
             this.flowLayoutPanel5.Controls.Add(this.author_lbl);
             this.flowLayoutPanel5.Controls.Add(this.separatorV1);
-            this.flowLayoutPanel5.Location = new System.Drawing.Point(4, 36);
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(4, 40);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(1055, 30);
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(1055, 25);
             this.flowLayoutPanel5.TabIndex = 152;
             // 
             // panel3
             // 
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1, 24);
+            this.panel3.Size = new System.Drawing.Size(1, 20);
             this.panel3.TabIndex = 15;
             // 
             // author_lbl
@@ -290,11 +290,11 @@ namespace WinPaletter
             this.author_lbl.DrawOnGlass = false;
             this.author_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.author_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.author_lbl.Location = new System.Drawing.Point(10, 7);
+            this.author_lbl.Location = new System.Drawing.Point(10, 5);
             this.author_lbl.Name = "author_lbl";
-            this.author_lbl.Size = new System.Drawing.Size(13, 15);
+            this.author_lbl.Size = new System.Drawing.Size(44, 15);
             this.author_lbl.TabIndex = 151;
-            this.author_lbl.Text = "0";
+            this.author_lbl.Text = "Author";
             this.author_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.author_lbl.Click += new System.EventHandler(this.labelAlt4_Click);
             // 
@@ -302,9 +302,9 @@ namespace WinPaletter
             // 
             this.separatorV1.AlternativeLook = false;
             this.separatorV1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV1.Location = new System.Drawing.Point(29, 3);
+            this.separatorV1.Location = new System.Drawing.Point(60, 3);
             this.separatorV1.Name = "separatorV1";
-            this.separatorV1.Size = new System.Drawing.Size(1, 24);
+            this.separatorV1.Size = new System.Drawing.Size(1, 18);
             this.separatorV1.TabIndex = 152;
             this.separatorV1.TabStop = false;
             this.separatorV1.Text = "separatorV1";
@@ -317,11 +317,11 @@ namespace WinPaletter
             this.labelAlt3.DrawOnGlass = false;
             this.labelAlt3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt3.Location = new System.Drawing.Point(8, 7);
+            this.labelAlt3.Location = new System.Drawing.Point(13, 11);
             this.labelAlt3.Name = "labelAlt3";
-            this.labelAlt3.Size = new System.Drawing.Size(1289, 25);
+            this.labelAlt3.Size = new System.Drawing.Size(1270, 25);
             this.labelAlt3.TabIndex = 39;
-            this.labelAlt3.Text = "0";
+            this.labelAlt3.Text = "Theme name";
             this.labelAlt3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // flowLayoutPanel4
@@ -337,9 +337,9 @@ namespace WinPaletter
             this.flowLayoutPanel4.Controls.Add(this.os_7);
             this.flowLayoutPanel4.Controls.Add(this.os_vista);
             this.flowLayoutPanel4.Controls.Add(this.os_xp);
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(4, 98);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(11, 89);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(1055, 30);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(1048, 30);
             this.flowLayoutPanel4.TabIndex = 150;
             // 
             // os_12
@@ -432,16 +432,16 @@ namespace WinPaletter
             this.flowLayoutPanel3.Controls.Add(this.SeparatorVertical1);
             this.flowLayoutPanel3.Controls.Add(this.respacksize_lbl);
             this.flowLayoutPanel3.Controls.Add(this.progressBar_ResPack);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(5, 66);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 63);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(1054, 30);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(1055, 25);
             this.flowLayoutPanel3.TabIndex = 149;
             // 
             // panel2
             // 
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1, 24);
+            this.panel2.Size = new System.Drawing.Size(1, 20);
             this.panel2.TabIndex = 14;
             // 
             // themeSize_lbl
@@ -450,45 +450,44 @@ namespace WinPaletter
             this.themeSize_lbl.AutoSize = true;
             this.themeSize_lbl.BackColor = System.Drawing.Color.Transparent;
             this.themeSize_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.themeSize_lbl.Location = new System.Drawing.Point(10, 7);
+            this.themeSize_lbl.Location = new System.Drawing.Point(10, 5);
             this.themeSize_lbl.Name = "themeSize_lbl";
-            this.themeSize_lbl.Size = new System.Drawing.Size(13, 15);
+            this.themeSize_lbl.Size = new System.Drawing.Size(23, 15);
             this.themeSize_lbl.TabIndex = 13;
-            this.themeSize_lbl.Text = "0";
+            this.themeSize_lbl.Text = "0 B";
             this.themeSize_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SeparatorVertical1
             // 
             this.SeparatorVertical1.AlternativeLook = false;
             this.SeparatorVertical1.BackColor = System.Drawing.Color.Transparent;
-            this.SeparatorVertical1.Location = new System.Drawing.Point(29, 3);
+            this.SeparatorVertical1.Location = new System.Drawing.Point(39, 3);
             this.SeparatorVertical1.Name = "SeparatorVertical1";
-            this.SeparatorVertical1.Size = new System.Drawing.Size(1, 24);
+            this.SeparatorVertical1.Size = new System.Drawing.Size(1, 18);
             this.SeparatorVertical1.TabIndex = 143;
             this.SeparatorVertical1.TabStop = false;
             this.SeparatorVertical1.Text = "SeparatorVertical1";
             // 
             // respacksize_lbl
             // 
-            this.respacksize_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.respacksize_lbl.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.respacksize_lbl.AutoSize = true;
             this.respacksize_lbl.BackColor = System.Drawing.Color.Transparent;
             this.respacksize_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.respacksize_lbl.Location = new System.Drawing.Point(36, 0);
+            this.respacksize_lbl.Location = new System.Drawing.Point(46, 5);
             this.respacksize_lbl.Name = "respacksize_lbl";
-            this.respacksize_lbl.Size = new System.Drawing.Size(13, 30);
+            this.respacksize_lbl.Size = new System.Drawing.Size(118, 15);
             this.respacksize_lbl.TabIndex = 16;
-            this.respacksize_lbl.Text = "0";
+            this.respacksize_lbl.Text = "0 B of resources pack";
             this.respacksize_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // progressBar_ResPack
             // 
             this.progressBar_ResPack.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
             this.progressBar_ResPack.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar_ResPack.Location = new System.Drawing.Point(55, 3);
+            this.progressBar_ResPack.Location = new System.Drawing.Point(170, 3);
             this.progressBar_ResPack.Name = "progressBar_ResPack";
-            this.progressBar_ResPack.Size = new System.Drawing.Size(24, 24);
+            this.progressBar_ResPack.Size = new System.Drawing.Size(18, 18);
             this.progressBar_ResPack.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
             this.progressBar_ResPack.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Marquee;
             this.progressBar_ResPack.TabIndex = 148;
@@ -505,9 +504,9 @@ namespace WinPaletter
             this.Apply_btn.Image = null;
             this.Apply_btn.ImageGlyph = null;
             this.Apply_btn.ImageGlyphEnabled = false;
-            this.Apply_btn.Location = new System.Drawing.Point(1065, 45);
+            this.Apply_btn.Location = new System.Drawing.Point(1065, 44);
             this.Apply_btn.Name = "Apply_btn";
-            this.Apply_btn.Size = new System.Drawing.Size(210, 42);
+            this.Apply_btn.Size = new System.Drawing.Size(201, 42);
             this.Apply_btn.TabIndex = 134;
             this.Apply_btn.Text = "Apply";
             this.Apply_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -523,7 +522,7 @@ namespace WinPaletter
             this.groupBox2.Controls.Add(this.desc_txt);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Location = new System.Drawing.Point(10, 557);
+            this.groupBox2.Location = new System.Drawing.Point(10, 522);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1301, 71);
             this.groupBox2.TabIndex = 141;
@@ -595,7 +594,7 @@ namespace WinPaletter
             this.VersionAlert_lbl.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.VersionAlert_lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.VersionAlert_lbl.Image = ((System.Drawing.Image)(resources.GetObject("VersionAlert_lbl.Image")));
-            this.VersionAlert_lbl.Location = new System.Drawing.Point(10, 634);
+            this.VersionAlert_lbl.Location = new System.Drawing.Point(10, 599);
             this.VersionAlert_lbl.Name = "VersionAlert_lbl";
             this.VersionAlert_lbl.Size = new System.Drawing.Size(1301, 34);
             this.VersionAlert_lbl.TabIndex = 140;
@@ -610,7 +609,7 @@ namespace WinPaletter
             this.previewContainer.Controls.Add(this.PictureBox41);
             this.previewContainer.Controls.Add(this.Label19);
             this.previewContainer.Controls.Add(this.FlowLayoutPanel1);
-            this.previewContainer.Location = new System.Drawing.Point(10, 181);
+            this.previewContainer.Location = new System.Drawing.Point(10, 146);
             this.previewContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.previewContainer.Name = "previewContainer";
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);

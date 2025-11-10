@@ -795,7 +795,7 @@ namespace WinPaletter
             retroDesktopColors1.LoadColors(TM);
             retroDesktopColors1.LoadMetrics(TM);
 
-            panel2.Visible = System.IO.File.Exists(textBox2.Text);
+            panel2.Visible = System.IO.File.Exists(textBox2.Text) && (Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11 || Program.WindowStyle == WindowStyle.W10 || Program.WindowStyle == WindowStyle.W7);
             tabs_preview_1.SelectedIndex = Program.WindowStyle == WindowStyle.W11 ? 0 : Program.WindowStyle == WindowStyle.W10 ? 1 : Program.WindowStyle == WindowStyle.W7 ? 2 : 0;
 
             tabs_preview_1.TabPages[0].BackgroundImage?.Dispose();

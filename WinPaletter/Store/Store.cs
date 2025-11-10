@@ -851,17 +851,22 @@ namespace WinPaletter
 
                     desc_txt.Text = selectedItem.TM.Info.Description;
 
-                    foreach (Label lbl in flowLayoutPanel5.Controls.OfType<Label>().Where(l => l != author_lbl))
+                    // Extract tags from description
+                    List<Control> toRemove = [.. flowLayoutPanel5.Controls.Cast<Control>().Where(c => c.Tag is not null)];
+
+                    foreach (Control ctrl in toRemove)
                     {
-                        lbl?.Dispose();
+                        flowLayoutPanel5.Controls.Remove(ctrl);
+                        ctrl.Dispose();
                     }
 
-                    // Extract tags from description
-                    foreach (string tag in selectedItem.TM.Info.Description.Split(' '))
+                    bool foundATag = false;
+                    string[] tags = selectedItem.TM.Info.Description.Split([' ', '\r', '\n', '\t'], StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string tag in tags)
                     {
                         if (tag.StartsWith("#"))
                         {
-                            selectedItem.TM.Info.Description = selectedItem.TM.Info.Description.Replace(tag, string.Empty).Trim();
+                            foundATag = true;
 
                             Label tagLabel = new()
                             {
@@ -872,11 +877,13 @@ namespace WinPaletter
                                 TextAlign = ContentAlignment.TopCenter,
                                 Text = tag.Remove(0, 1),
                                 Anchor = AnchorStyles.Left,
+                                Tag = 0,
                             };
 
                             flowLayoutPanel5.Controls.Add(tagLabel);
                         }
                     }
+                    separatorV1.Visible = foundATag;
 
                     // Check if the theme is designed for the current version of WinPaletter or not and show an alert if not
                     if (Program.Version.CompareTo(selectedItem.TM.Info.AppVersion) != -1)
@@ -1450,17 +1457,20 @@ namespace WinPaletter
 
         private void labelAlt4_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink)) return;
-
             if (selectedItem.DoneByWinPaletter)
             {
                 Process.Start(Links.RepositoryURL);
             }
-            else if (MsgBox(Program.Lang.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
+            else
             {
-                string url = selectedItem.TM.Info.AuthorSocialMediaLink;
-                if (!url.StartsWith("https://") && !url.StartsWith("http://")) url = "https://" + url;
-                Process.Start(url);
+                if (string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink)) return;
+
+                if (MsgBox(Program.Lang.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
+                {
+                    string url = selectedItem.TM.Info.AuthorSocialMediaLink;
+                    if (!url.StartsWith("https://") && !url.StartsWith("http://")) url += "https://";
+                    Process.Start(url);
+                }
             }
         }
     }
