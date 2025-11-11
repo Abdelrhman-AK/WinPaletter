@@ -295,11 +295,11 @@ namespace WinPaletter
         /// </summary>
         public static Store_Hover Store_Hover => (_Store_Hover == null || _Store_Hover.IsDisposed) ? (_Store_Hover = CreateInstance(_Store_Hover)) : _Store_Hover;
 
-        private static Store_Intro _Store_Intro;
+        private static Store_Intro_New _Store_Intro;
         /// <summary>
-        /// Gets the instance of the form <see cref="Store_Intro"/> to show the store introduction.
+        /// Gets the instance of the form <see cref="Store_Intro_New"/> to show the store introduction.
         /// </summary>
-        public static Store_Intro Store_Intro => (_Store_Intro == null || _Store_Intro.IsDisposed) ? (_Store_Intro = CreateInstance(_Store_Intro)) : _Store_Intro;
+        public static Store_Intro_New Store_Intro_New => (_Store_Intro == null || _Store_Intro.IsDisposed) ? (_Store_Intro = CreateInstance(_Store_Intro)) : _Store_Intro;
 
         private static Store_SearchFilter _Store_SearchFilter;
         /// <summary>

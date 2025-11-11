@@ -274,7 +274,7 @@ namespace WinPaletter
         private void Store_Shown(object sender, EventArgs e)
         {
             _Shown = true;
-            if (Program.Settings.Store.ShowTips) Forms.Store_Intro.ShowDialog();
+            if (Program.Settings.Store.ShowNewXPIntro) Forms.Store_Intro_New.ShowDialog();
         }
 
         private void Store_FormClosing(object sender, FormClosingEventArgs e)

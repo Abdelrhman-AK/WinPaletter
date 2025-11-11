@@ -851,9 +851,9 @@ namespace WinPaletter
                 public bool Offline_SubFolders = true;
 
                 /// <summary>
-                /// Hide WinPaletter Store tips
+                /// Shows the new WinPaletter Store Experience introduction on first launch
                 /// </summary>
-                public bool ShowTips = true;
+                public bool ShowNewXPIntro = true;
 
                 /// <summary>
                 /// Create new instance of Store settings structure with default values
@@ -872,7 +872,7 @@ namespace WinPaletter
                     Search_ThemeNames = ReadReg(REG_Store, "Search_ThemeNames", true);
                     Search_AuthorsNames = ReadReg(REG_Store, "Search_AuthorsNames", true);
                     Search_Descriptions = ReadReg(REG_Store, "Search_Descriptions", true);
-                    ShowTips = ReadReg(REG_Store, "ShowTips", true);
+                    ShowNewXPIntro = ReadReg(REG_Store, "ShowNewXPIntro", true);
 
                     if (!Online_Repositories.Contains(Links.Store_MainDB))
                     {
@@ -911,7 +911,7 @@ namespace WinPaletter
                     WriteReg(REG_Store, "Online_Repositories", Online_Repositories, RegistryValueKind.MultiString);
                     WriteReg(REG_Store, "Offline_Directories", Offline_Directories, RegistryValueKind.MultiString);
                     WriteReg(REG_Store, "Offline_SubFolders", Offline_SubFolders, RegistryValueKind.DWord);
-                    WriteReg(REG_Store, "ShowTips", ShowTips, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, "ShowNewXPIntro", ShowNewXPIntro, RegistryValueKind.DWord);
                 }
             }
 

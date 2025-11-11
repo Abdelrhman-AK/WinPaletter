@@ -201,7 +201,7 @@ namespace WinPaletter
             CheckBox26.Checked = Sets.Store.Search_Descriptions;
             CheckBox27.Checked = Sets.Store.Search_AuthorsNames;
             CheckBox29.Checked = Sets.Store.Offline_SubFolders;
-            toggle17.Checked = Sets.Store.ShowTips;
+            toggle17.Checked = Sets.Store.ShowNewXPIntro;
 
             toggle31.Checked = Sets.BackupTheme.Enabled;
             toggle33.Checked = Sets.BackupTheme.AutoBackupOnAppOpen;
@@ -550,7 +550,7 @@ namespace WinPaletter
             Sets.Store.Search_Descriptions = CheckBox26.Checked;
             Sets.Store.Search_AuthorsNames = CheckBox27.Checked;
             Sets.Store.Offline_SubFolders = CheckBox29.Checked;
-            Sets.Store.ShowTips = toggle17.Checked;
+            Sets.Store.ShowNewXPIntro = toggle17.Checked;
 
             Sets.AspectsControl.Enabled = toggle11.Checked;
             Sets.AspectsControl.WinColors = checkBox1.Checked;

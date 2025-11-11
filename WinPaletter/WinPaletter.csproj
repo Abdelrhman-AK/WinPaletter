@@ -130,6 +130,10 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Octokit, Version=14.0.0.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.14.0.0\lib\netstandard2.0\Octokit.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Ookii.Dialogs.WinForms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
       <HintPath>..\packages\Ookii.Dialogs.WinForms.4.0.0\lib\net462\Ookii.Dialogs.WinForms.dll</HintPath>
       <Private>False</Private>
@@ -475,6 +479,7 @@
     <Compile Include="Settings\Setup.Designer.cs">
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Store\GitHubAuth.cs" />
     <Compile Include="Tabs\TabData.cs" />
     <Compile Include="Tabs\TabsContainer.cs">
       <SubType>Component</SubType>
@@ -1070,10 +1075,10 @@
     <Compile Include="Store\Store_Hover.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Store\Store_Intro.Designer.cs">
-      <DependentUpon>Store_Intro.cs</DependentUpon>
+    <Compile Include="Store\Store_Intro_New.Designer.cs">
+      <DependentUpon>Store_Intro_New.cs</DependentUpon>
     </Compile>
-    <Compile Include="Store\Store_Intro.cs">
+    <Compile Include="Store\Store_Intro_New.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Store\Store_SearchFilter.Designer.cs">
@@ -1453,8 +1458,8 @@
     <EmbeddedResource Include="Store\Store_Hover.resx">
       <DependentUpon>Store_Hover.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Store\Store_Intro.resx">
-      <DependentUpon>Store_Intro.cs</DependentUpon>
+    <EmbeddedResource Include="Store\Store_Intro_New.resx">
+      <DependentUpon>Store_Intro_New.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_SearchFilter.resx">
       <DependentUpon>Store_SearchFilter.cs</DependentUpon>

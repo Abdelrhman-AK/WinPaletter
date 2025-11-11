@@ -8,18 +8,18 @@ namespace WinPaletter
     /// <summary>
     /// Introduction form for the store.
     /// </summary>
-    public partial class Store_Intro
+    public partial class Store_Intro_New
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Store_Intro"/> class.
+        /// Initializes a new instance of the <see cref="Store_Intro_New"/> class.
         /// </summary>
-        public Store_Intro()
+        public Store_Intro_New()
         {
             InitializeComponent();
         }
-        private void Store_Intro_Load(object sender, EventArgs e)
+        private void Store_Intro_New_Load(object sender, EventArgs e)
         {
-            CheckBox1.Checked = Program.Settings.Store.ShowTips;
+            CheckBox1.Checked = Program.Settings.Store.ShowNewXPIntro;
             this.LoadLanguage();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<Store>();
@@ -62,9 +62,9 @@ namespace WinPaletter
             Process.Start(Links.Wiki.StoreCreateSource);
         }
 
-        private void Store_Intro_FormClosing(object sender, FormClosingEventArgs e)
+        private void Store_Intro_New_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Program.Settings.Store.ShowTips = CheckBox1.Checked;
+            Program.Settings.Store.ShowNewXPIntro = CheckBox1.Checked;
             Program.Settings.Store.Save();
         }
 

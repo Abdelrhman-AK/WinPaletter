@@ -88,7 +88,42 @@ namespace WinPaletter
                 }
                 else
                 {
-                    result = await response.Content.ReadAsStringAsync();
+                    result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Read byte data from a URL
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
+        public async Task<byte[]> ReadAsync(string url)
+        {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/tree/", "/");
+                url = url.Replace("/blob/", "/");
+                url = url.Replace("?raw=true", string.Empty);
+            }
+
+            byte[] result;
+
+            using (HttpResponseMessage response = client.GetAsync(url).Result)
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
+                    throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+                else
+                {
+                    result = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
                 }
             }
@@ -121,7 +156,7 @@ namespace WinPaletter
             try
             {
                 // Send a GET request to the URL and get the response
-                using (HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token))
+                using (HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).ConfigureAwait(false))
                 {
                     // Ensure the response is successful
                     response.EnsureSuccessStatusCode();
@@ -130,7 +165,7 @@ namespace WinPaletter
                     long totalBytes = response.Content.Headers.ContentLength.GetValueOrDefault();
 
                     // Open a stream to read the response content and create a file stream to write the downloaded data
-                    using (Stream stream = await response.Content.ReadAsStreamAsync())
+                    using (Stream stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                     using (FileStream fileStream = File.Create(destinationPath))
                     {
                         // Create a buffer to read the data
@@ -143,7 +178,7 @@ namespace WinPaletter
                         long totalBytesRead = 0;
 
                         // Read the data in chunks and write it to the file stream
-                        while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token)) > 0)
+                        while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false)) > 0)
                         {
                             // Write the downloaded data
                             fileStream.Write(buffer, 0, bytesRead);
@@ -212,13 +247,13 @@ namespace WinPaletter
             }
                 };
 
-                HttpResponseMessage response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token);
+                HttpResponseMessage response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Ensure the response is successful
                 response.EnsureSuccessStatusCode();
 
                 // Open a stream to read the response content and create a file stream to write the downloaded data
-                using (Stream stream = await response.Content.ReadAsStreamAsync())
+                using (Stream stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 using (FileStream fileStream = File.Create(destinationPath))
                 {
                     // Create a buffer to read the data
@@ -228,7 +263,7 @@ namespace WinPaletter
                     int bytesRead;
                     long totalBytesRead = 0;
 
-                    while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token)) > 0)
+                    while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false)) > 0)
                     {
                         // Write the downloaded data
                         fileStream.Write(buffer, 0, bytesRead);
@@ -278,7 +313,7 @@ namespace WinPaletter
 
             try
             {
-                using (HttpResponseMessage response = await client.SendAsync(new(HttpMethod.Head, url)))
+                using (HttpResponseMessage response = await client.SendAsync(new(HttpMethod.Head, url)).ConfigureAwait(false))
                 {
                     response.EnsureSuccessStatusCode();
 

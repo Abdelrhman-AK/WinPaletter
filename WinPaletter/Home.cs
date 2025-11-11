@@ -93,12 +93,6 @@ namespace WinPaletter
                 card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
-
-            //using (Theme.Manager M0 = new(Source.Empty))
-            //{
-            //    Theme.Manager M1 = M0.Clone() as Theme.Manager;
-            //    MsgBox(M0 == M1);
-            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -279,7 +273,7 @@ namespace WinPaletter
             labelAlt2.Text = $"{Program.Lang.Strings.General.By} {TM.Info.Author}";
             labelAlt3.Text = TM.Info.ThemeVersion;
             groupBox1.UpdatePattern(TM.Info.Pattern);
-            Program.Style.Pattern = TM.Info.Pattern; 
+            Program.Style.Pattern = TM.Info.Pattern;
         }
 
         /// <summary>

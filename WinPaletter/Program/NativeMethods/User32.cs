@@ -54,6 +54,14 @@ namespace WinPaletter.NativeMethods
         public static extern int SetCursor(int hCursor);
 
         /// <summary>
+        /// Brings the thread that created the specified window into the foreground and activates the window.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        /// <summary>
         /// Animates a window by applying a visual effect over a specified duration.
         /// </summary>
         /// <remarks>The animation effect is determined by the combination of flags provided in the <paramref
