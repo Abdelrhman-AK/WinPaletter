@@ -24,6 +24,10 @@ namespace WinPaletter
     public partial class Store
     {
         #region Variables
+        private GitHubLoginManager loginManager;
+        private Octokit.User loggedInUser;
+        bool isLoggedIn;
+
         private bool StartedAsOnlineOrOffline = true;
         private bool FinishedLoadingInitialTMs;
         private readonly Dictionary<string, Manager> TMList = [];
@@ -219,7 +223,7 @@ namespace WinPaletter
 
         #region Store form events
 
-        private void Store_Load(object sender, EventArgs e)
+        private async void Store_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;         // Prevent exception error of cross-thread
 
@@ -267,6 +271,35 @@ namespace WinPaletter
             os_7.Image = Assets.Store.DesignedFor7;
             os_vista.Image = Assets.Store.DesignedForVista;
             os_xp.Image = Assets.Store.DesignedForXP;
+
+            c0.Font = Fonts.ConsoleLarge;
+            c1.Font = Fonts.ConsoleLarge;
+            c2.Font = Fonts.ConsoleLarge;
+            c3.Font = Fonts.ConsoleLarge;
+            c4.Font = Fonts.ConsoleLarge;
+            c5.Font = Fonts.ConsoleLarge;
+            c6.Font = Fonts.ConsoleLarge;
+            c7.Font = Fonts.ConsoleLarge;
+
+            loginManager = new();
+
+            loginManager.OnCountdownStarted += LoginManager_OnCountdownStarted;
+            loginManager.OnCountdownTick += LoginManager_OnCountdownTick;
+            loginManager.OnCountdownEnded += LoginManager_OnCountdownEnded;
+            loginManager.OnDeviceFlowInitiated += LoginManager_OnDeviceFlowInitiated;
+            loginManager.OnAuthorizationSuccess += LoginManager_OnAuthorizationSuccess;
+            loginManager.OnAuthorizationFailure += LoginManager_OnAuthorizationFailure;
+            loginManager.OnSignedOut += LoginManager_OnSignedOut;
+
+            isLoggedIn = await loginManager.IsLoggedInAsync().ConfigureAwait(false);
+
+            if (isLoggedIn)
+            {
+                loggedInUser = await loginManager.Client.User.Current().ConfigureAwait(false);
+                UpdateLoginData();
+            }
+
+            tabs_github.Visible = true;
 
             groupBox4.UpdatePattern(Program.TM.Info.Pattern);
         }
@@ -1472,6 +1505,139 @@ namespace WinPaletter
                     Process.Start(url);
                 }
             }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            tabs_github.SelectedIndex = 0;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            string code = $"{c0.Text}{c1.Text}{c2.Text}{c3.Text}-{c4.Text}{c5.Text}{c6.Text}{c7.Text}";
+            Clipboard.SetText(code);
+        }
+
+        private async void button1_Click_1(object sender, EventArgs e)
+        {
+            progressBar2.Visible = true;
+            await loginManager.StartLoggingInAsync().ConfigureAwait(false);
+        }
+
+        private async void button9_Click(object sender, EventArgs e)
+        {
+            await loginManager.SignOutAsync();
+        }
+
+        async void UpdateLoginData()
+        {
+            try
+            {
+                tabs_github.SelectedIndex = 3;
+
+                labelAlt4.Text = loggedInUser.Login;
+
+                using (DownloadManager DM = new())
+                {
+                    byte[] data = await DM.ReadAsync(loggedInUser.AvatarUrl).ConfigureAwait(false);
+                    using MemoryStream ms = new System.IO.MemoryStream(data);
+                    pictureBox4.Image = System.Drawing.Image.FromStream(ms).Resize(32, 32);
+                }
+            }
+            catch (Exception ex)
+            {
+                tabs_github.SelectedIndex = 2;
+                labelAlt6.Text = ex.Message;
+                Forms.BugReport.ThrowError(ex);
+            }
+        }
+
+        private void LoginManager_OnAuthorizationFailure(string obj)
+        {
+            tabs_github.SelectedIndex = 2;
+            progressBar3.Visible = false;
+            labelAlt6.Text = "Authentication failed. Please try again later.";
+        }
+
+        private async void LoginManager_OnAuthorizationSuccess(Octokit.User obj)
+        {
+            loggedInUser = await loginManager.Client.User.Current();
+            UpdateLoginData();
+        }
+
+        private void LoginManager_OnDeviceFlowInitiated(string arg1, int arg2, string arg3)
+        {
+            // Invoke is needed because this event is raised from a non-UI thread
+            Invoke(() => 
+            {
+                progressBar2.Visible = false;
+
+                string code = arg1;
+                c0.Text = code[0].ToString();
+                c1.Text = code[1].ToString();
+                c2.Text = code[2].ToString();
+                c3.Text = code[3].ToString();
+                c4.Text = code[5].ToString();
+                c5.Text = code[6].ToString();
+                c6.Text = code[7].ToString();
+                c7.Text = code[8].ToString();
+
+                Color accentForeColor = Program.Style.Schemes.Main.Colors.ForeColor_Accent;
+                Color accentBackColor = Program.Style.Schemes.Main.Colors.Back_Checked;
+
+                c0.ForeColor = accentForeColor;
+                c1.ForeColor = accentForeColor;
+                c2.ForeColor = accentForeColor;
+                c3.ForeColor = accentForeColor;
+                c4.ForeColor = accentForeColor;
+                c5.ForeColor = accentForeColor;
+                c6.ForeColor = accentForeColor;
+                c7.ForeColor = accentForeColor;
+                labelAlt5.ForeColor = accentBackColor;
+
+                c0.BackColor = accentBackColor;
+                c1.BackColor = accentBackColor;
+                c2.BackColor = accentBackColor;
+                c3.BackColor = accentBackColor;
+                c4.BackColor = accentBackColor;
+                c5.BackColor = accentBackColor;
+                c6.BackColor = accentBackColor;
+                c7.BackColor = accentBackColor;
+                labelAlt5.BackColor = accentForeColor;
+
+                int expiresIn = arg2;
+                string verificationUrl = arg3;
+
+                progressBar3.Visible = true;
+                progressBar3.Maximum = expiresIn;
+                progressBar3.Value = expiresIn;
+                githubLbl_elapsedSec.Text = $"Code expires in {expiresIn / 60:D2}:{expiresIn % 60:D2}";
+
+                tabs_github.SelectedIndex = 1;
+            });
+        }
+
+        private void LoginManager_OnCountdownEnded()
+        {
+            tabs_github.SelectedIndex = 0;
+            progressBar3.Visible = false;
+        }
+
+        private void LoginManager_OnCountdownTick(int obj)
+        {
+            progressBar3.Value = obj;
+            githubLbl_elapsedSec.Text = $"Code expires in {obj / 60:D2}:{obj % 60:D2}";
+        }
+
+        private void LoginManager_OnCountdownStarted(int obj)
+        {
+
+        }
+
+        private void LoginManager_OnSignedOut()
+        {
+            tabs_github.SelectedIndex = 0;
+            loggedInUser = null;
         }
     }
 }

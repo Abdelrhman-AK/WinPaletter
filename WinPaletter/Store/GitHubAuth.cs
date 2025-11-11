@@ -40,18 +40,6 @@ namespace WinPaletter
         public event Action<string, int, string> OnDeviceFlowInitiated;
 
         /// <summary>
-        /// Raised when the login code has been copied to the clipboard.
-        /// </summary>
-        /// <remarks>Use this to notify the user that the code is ready for pasting on GitHub.</remarks>
-        public event Action OnCopyCodeToClipboard;
-
-        /// <summary>
-        /// Raised when the verification URL is opened in the browser.
-        /// </summary>
-        /// <remarks>Use this to notify the user that the browser has been opened.</remarks>
-        public event Action OnOpenBrowser;
-
-        /// <summary>
         /// Raised when the countdown for device flow starts.
         /// Provides the total expiration time in seconds.
         /// </summary>
@@ -305,10 +293,6 @@ namespace WinPaletter
 
                 deviceFlow = await Client.Oauth.InitiateDeviceFlow(deviceFlowRequest).ConfigureAwait(false);
 
-                // Copy code to clipboard
-                Clipboard.SetText(deviceFlow.UserCode);
-                OnCopyCodeToClipboard?.Invoke();
-
                 // Open verification URL, maximized, focused and brought to top
                 ProcessStartInfo pci = new() { FileName = deviceFlow.VerificationUri, UseShellExecute = true };
                 Process process = Process.Start(pci);
@@ -321,8 +305,6 @@ namespace WinPaletter
                     // Bring to front using Win32 API
                     NativeMethods.User32.SetForegroundWindow(process.Handle);
                 }
-
-                OnOpenBrowser?.Invoke();
 
                 OnDeviceFlowInitiated?.Invoke(deviceFlow.UserCode, deviceFlow.ExpiresIn, deviceFlow.VerificationUri);
                 OnCountdownStarted?.Invoke(deviceFlow.ExpiresIn);
