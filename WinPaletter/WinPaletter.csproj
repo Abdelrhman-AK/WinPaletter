@@ -108,8 +108,8 @@
       <HintPath>..\packages\FastCloner.3.3.16\lib\net46\FastCloner.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FluentTransitions, Version=2.0.2.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentTransitions.2.0.2\lib\net48\FluentTransitions.dll</HintPath>
+    <Reference Include="FluentTransitions, Version=2.0.3.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentTransitions.2.0.3\lib\net48\FluentTransitions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -143,7 +143,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Serilog, Version=4.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.4.3.1-dev-02390\lib\net471\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.4.3.1-dev-02395\lib\net471\Serilog.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=7.0.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
@@ -1565,8 +1565,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets'))" />
-    <Error Condition="!Exists('..\packages\Serilog.4.3.1-dev-02390\build\Serilog.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Serilog.4.3.1-dev-02390\build\Serilog.targets'))" />
+    <Error Condition="!Exists('..\packages\Serilog.4.3.1-dev-02395\build\Serilog.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Serilog.4.3.1-dev-02395\build\Serilog.targets'))" />
   </Target>
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
-  <Import Project="..\packages\Serilog.4.3.1-dev-02390\build\Serilog.targets" Condition="Exists('..\packages\Serilog.4.3.1-dev-02390\build\Serilog.targets')" />
+  <Import Project="..\packages\Serilog.4.3.1-dev-02395\build\Serilog.targets" Condition="Exists('..\packages\Serilog.4.3.1-dev-02395\build\Serilog.targets')" />
 </Project>
