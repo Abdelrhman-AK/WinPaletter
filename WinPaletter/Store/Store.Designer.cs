@@ -137,9 +137,16 @@ namespace WinPaletter
             this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
             this.tabs_github = new WinPaletter.UI.WP.TablessControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.progressBar2 = new WinPaletter.UI.WP.ProgressBar();
             this.button1 = new WinPaletter.UI.WP.Button();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.c7 = new WinPaletter.UI.WP.LabelAlt();
+            this.c6 = new WinPaletter.UI.WP.LabelAlt();
+            this.c5 = new WinPaletter.UI.WP.LabelAlt();
+            this.c4 = new WinPaletter.UI.WP.LabelAlt();
+            this.c3 = new WinPaletter.UI.WP.LabelAlt();
+            this.c2 = new WinPaletter.UI.WP.LabelAlt();
+            this.c1 = new WinPaletter.UI.WP.LabelAlt();
+            this.c0 = new WinPaletter.UI.WP.LabelAlt();
             this.labelAlt7 = new WinPaletter.UI.WP.LabelAlt();
             this.githubLbl_elapsedSec = new WinPaletter.UI.WP.LabelAlt();
             this.progressBar3 = new WinPaletter.UI.WP.ProgressBar();
@@ -153,14 +160,6 @@ namespace WinPaletter
             this.button8 = new WinPaletter.UI.WP.Button();
             this.labelAlt4 = new WinPaletter.UI.WP.LabelAlt();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.c0 = new WinPaletter.UI.WP.LabelAlt();
-            this.c1 = new WinPaletter.UI.WP.LabelAlt();
-            this.c2 = new WinPaletter.UI.WP.LabelAlt();
-            this.c3 = new WinPaletter.UI.WP.LabelAlt();
-            this.c7 = new WinPaletter.UI.WP.LabelAlt();
-            this.c6 = new WinPaletter.UI.WP.LabelAlt();
-            this.c5 = new WinPaletter.UI.WP.LabelAlt();
-            this.c4 = new WinPaletter.UI.WP.LabelAlt();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage3.SuspendLayout();
@@ -2229,7 +2228,6 @@ namespace WinPaletter
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage6.Controls.Add(this.progressBar2);
             this.tabPage6.Controls.Add(this.button1);
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
@@ -2237,19 +2235,6 @@ namespace WinPaletter
             this.tabPage6.Size = new System.Drawing.Size(1321, 42);
             this.tabPage6.TabIndex = 0;
             this.tabPage6.Text = "0";
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
-            this.progressBar2.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar2.Location = new System.Drawing.Point(161, 4);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(34, 34);
-            this.progressBar2.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
-            this.progressBar2.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Marquee;
-            this.progressBar2.TabIndex = 44;
-            this.progressBar2.TaskbarBroadcast = true;
-            this.progressBar2.Visible = false;
             // 
             // button1
             // 
@@ -2290,6 +2275,118 @@ namespace WinPaletter
             this.tabPage8.Size = new System.Drawing.Size(1321, 42);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "1";
+            // 
+            // c7
+            // 
+            this.c7.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c7.BackColor = System.Drawing.Color.Transparent;
+            this.c7.DrawOnGlass = false;
+            this.c7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c7.Location = new System.Drawing.Point(691, 5);
+            this.c7.Name = "c7";
+            this.c7.Size = new System.Drawing.Size(19, 28);
+            this.c7.TabIndex = 55;
+            this.c7.Text = "0";
+            this.c7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // c6
+            // 
+            this.c6.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c6.BackColor = System.Drawing.Color.Transparent;
+            this.c6.DrawOnGlass = false;
+            this.c6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c6.Location = new System.Drawing.Point(666, 5);
+            this.c6.Name = "c6";
+            this.c6.Size = new System.Drawing.Size(19, 28);
+            this.c6.TabIndex = 54;
+            this.c6.Text = "0";
+            this.c6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // c5
+            // 
+            this.c5.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c5.BackColor = System.Drawing.Color.Transparent;
+            this.c5.DrawOnGlass = false;
+            this.c5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c5.Location = new System.Drawing.Point(641, 5);
+            this.c5.Name = "c5";
+            this.c5.Size = new System.Drawing.Size(19, 28);
+            this.c5.TabIndex = 53;
+            this.c5.Text = "0";
+            this.c5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // c4
+            // 
+            this.c4.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c4.BackColor = System.Drawing.Color.Transparent;
+            this.c4.DrawOnGlass = false;
+            this.c4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c4.Location = new System.Drawing.Point(616, 5);
+            this.c4.Name = "c4";
+            this.c4.Size = new System.Drawing.Size(19, 28);
+            this.c4.TabIndex = 52;
+            this.c4.Text = "0";
+            this.c4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // c3
+            // 
+            this.c3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c3.BackColor = System.Drawing.Color.Transparent;
+            this.c3.DrawOnGlass = false;
+            this.c3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c3.Location = new System.Drawing.Point(566, 5);
+            this.c3.Name = "c3";
+            this.c3.Size = new System.Drawing.Size(19, 28);
+            this.c3.TabIndex = 51;
+            this.c3.Text = "0";
+            this.c3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // c2
+            // 
+            this.c2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c2.BackColor = System.Drawing.Color.Transparent;
+            this.c2.DrawOnGlass = false;
+            this.c2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c2.Location = new System.Drawing.Point(541, 5);
+            this.c2.Name = "c2";
+            this.c2.Size = new System.Drawing.Size(19, 28);
+            this.c2.TabIndex = 50;
+            this.c2.Text = "0";
+            this.c2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // c1
+            // 
+            this.c1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c1.BackColor = System.Drawing.Color.Transparent;
+            this.c1.DrawOnGlass = false;
+            this.c1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c1.Location = new System.Drawing.Point(516, 5);
+            this.c1.Name = "c1";
+            this.c1.Size = new System.Drawing.Size(19, 28);
+            this.c1.TabIndex = 49;
+            this.c1.Text = "0";
+            this.c1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // c0
+            // 
+            this.c0.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.c0.BackColor = System.Drawing.Color.Transparent;
+            this.c0.DrawOnGlass = false;
+            this.c0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.c0.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.c0.Location = new System.Drawing.Point(491, 5);
+            this.c0.Name = "c0";
+            this.c0.Size = new System.Drawing.Size(19, 28);
+            this.c0.TabIndex = 48;
+            this.c0.Text = "0";
+            this.c0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelAlt7
             // 
@@ -2476,118 +2573,6 @@ namespace WinPaletter
             this.pictureBox4.TabIndex = 0;
             this.pictureBox4.TabStop = false;
             // 
-            // c0
-            // 
-            this.c0.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c0.BackColor = System.Drawing.Color.Transparent;
-            this.c0.DrawOnGlass = false;
-            this.c0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c0.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c0.Location = new System.Drawing.Point(491, 5);
-            this.c0.Name = "c0";
-            this.c0.Size = new System.Drawing.Size(19, 28);
-            this.c0.TabIndex = 48;
-            this.c0.Text = "0";
-            this.c0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c1
-            // 
-            this.c1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c1.BackColor = System.Drawing.Color.Transparent;
-            this.c1.DrawOnGlass = false;
-            this.c1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c1.Location = new System.Drawing.Point(516, 5);
-            this.c1.Name = "c1";
-            this.c1.Size = new System.Drawing.Size(19, 28);
-            this.c1.TabIndex = 49;
-            this.c1.Text = "0";
-            this.c1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c2
-            // 
-            this.c2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c2.BackColor = System.Drawing.Color.Transparent;
-            this.c2.DrawOnGlass = false;
-            this.c2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c2.Location = new System.Drawing.Point(541, 5);
-            this.c2.Name = "c2";
-            this.c2.Size = new System.Drawing.Size(19, 28);
-            this.c2.TabIndex = 50;
-            this.c2.Text = "0";
-            this.c2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c3
-            // 
-            this.c3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c3.BackColor = System.Drawing.Color.Transparent;
-            this.c3.DrawOnGlass = false;
-            this.c3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c3.Location = new System.Drawing.Point(566, 5);
-            this.c3.Name = "c3";
-            this.c3.Size = new System.Drawing.Size(19, 28);
-            this.c3.TabIndex = 51;
-            this.c3.Text = "0";
-            this.c3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c7
-            // 
-            this.c7.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c7.BackColor = System.Drawing.Color.Transparent;
-            this.c7.DrawOnGlass = false;
-            this.c7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c7.Location = new System.Drawing.Point(691, 5);
-            this.c7.Name = "c7";
-            this.c7.Size = new System.Drawing.Size(19, 28);
-            this.c7.TabIndex = 55;
-            this.c7.Text = "0";
-            this.c7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c6
-            // 
-            this.c6.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c6.BackColor = System.Drawing.Color.Transparent;
-            this.c6.DrawOnGlass = false;
-            this.c6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c6.Location = new System.Drawing.Point(666, 5);
-            this.c6.Name = "c6";
-            this.c6.Size = new System.Drawing.Size(19, 28);
-            this.c6.TabIndex = 54;
-            this.c6.Text = "0";
-            this.c6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c5
-            // 
-            this.c5.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c5.BackColor = System.Drawing.Color.Transparent;
-            this.c5.DrawOnGlass = false;
-            this.c5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c5.Location = new System.Drawing.Point(641, 5);
-            this.c5.Name = "c5";
-            this.c5.Size = new System.Drawing.Size(19, 28);
-            this.c5.TabIndex = 53;
-            this.c5.Text = "0";
-            this.c5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c4
-            // 
-            this.c4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c4.BackColor = System.Drawing.Color.Transparent;
-            this.c4.DrawOnGlass = false;
-            this.c4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c4.Location = new System.Drawing.Point(616, 5);
-            this.c4.Name = "c4";
-            this.c4.Size = new System.Drawing.Size(19, 28);
-            this.c4.TabIndex = 52;
-            this.c4.Text = "0";
-            this.c4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // Store
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2762,7 +2747,6 @@ namespace WinPaletter
         private TabPage tabPage8;
         private UI.WP.Button button10;
         internal LabelAlt labelAlt5;
-        internal UI.WP.ProgressBar progressBar2;
         internal UI.WP.ProgressBar progressBar3;
         private TabPage tabPage9;
         internal UI.WP.Button button11;

@@ -272,15 +272,6 @@ namespace WinPaletter
             os_vista.Image = Assets.Store.DesignedForVista;
             os_xp.Image = Assets.Store.DesignedForXP;
 
-            c0.Font = Fonts.ConsoleLarge;
-            c1.Font = Fonts.ConsoleLarge;
-            c2.Font = Fonts.ConsoleLarge;
-            c3.Font = Fonts.ConsoleLarge;
-            c4.Font = Fonts.ConsoleLarge;
-            c5.Font = Fonts.ConsoleLarge;
-            c6.Font = Fonts.ConsoleLarge;
-            c7.Font = Fonts.ConsoleLarge;
-
             loginManager = new();
 
             loginManager.OnCountdownStarted += LoginManager_OnCountdownStarted;
@@ -1520,8 +1511,13 @@ namespace WinPaletter
 
         private async void button1_Click_1(object sender, EventArgs e)
         {
-            progressBar2.Visible = true;
-            await loginManager.StartLoggingInAsync().ConfigureAwait(false);
+            //progressBar2.Visible = true;
+            //await loginManager.StartLoggingInAsync().ConfigureAwait(false);
+
+            using (Login logIn = new())
+            {
+                logIn.ShowDialog();
+            }
         }
 
         private async void button9_Click(object sender, EventArgs e)
@@ -1568,10 +1564,8 @@ namespace WinPaletter
         private void LoginManager_OnDeviceFlowInitiated(string arg1, int arg2, string arg3)
         {
             // Invoke is needed because this event is raised from a non-UI thread
-            Invoke(() => 
+            Invoke(() =>
             {
-                progressBar2.Visible = false;
-
                 string code = arg1;
                 c0.Text = code[0].ToString();
                 c1.Text = code[1].ToString();
@@ -1581,29 +1575,6 @@ namespace WinPaletter
                 c5.Text = code[6].ToString();
                 c6.Text = code[7].ToString();
                 c7.Text = code[8].ToString();
-
-                Color accentForeColor = Program.Style.Schemes.Main.Colors.ForeColor_Accent;
-                Color accentBackColor = Program.Style.Schemes.Main.Colors.Back_Checked;
-
-                c0.ForeColor = accentForeColor;
-                c1.ForeColor = accentForeColor;
-                c2.ForeColor = accentForeColor;
-                c3.ForeColor = accentForeColor;
-                c4.ForeColor = accentForeColor;
-                c5.ForeColor = accentForeColor;
-                c6.ForeColor = accentForeColor;
-                c7.ForeColor = accentForeColor;
-                labelAlt5.ForeColor = accentBackColor;
-
-                c0.BackColor = accentBackColor;
-                c1.BackColor = accentBackColor;
-                c2.BackColor = accentBackColor;
-                c3.BackColor = accentBackColor;
-                c4.BackColor = accentBackColor;
-                c5.BackColor = accentBackColor;
-                c6.BackColor = accentBackColor;
-                c7.BackColor = accentBackColor;
-                labelAlt5.BackColor = accentForeColor;
 
                 int expiresIn = arg2;
                 string verificationUrl = arg3;

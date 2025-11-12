@@ -17,6 +17,20 @@ namespace WinPaletter.NativeMethods
     public partial class User32
     {
         /// <summary>
+        /// Set position of a window in Z order
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="hWndInsertAfter"></param>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        /// <param name="cx"></param>
+        /// <param name="cy"></param>
+        /// <param name="uFlags"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        /// <summary>
         /// Retrieves the specified system metric or system configuration setting.
         /// </summary>
         /// <remarks>This method is a wrapper for the Windows API function <c>GetSystemMetrics</c> in the User32.dll

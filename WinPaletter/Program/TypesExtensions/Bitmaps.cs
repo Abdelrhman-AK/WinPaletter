@@ -1310,14 +1310,14 @@ namespace WinPaletter.TypesExtensions
                 if (settings?.AccentColor.HasValue == true)
                 {
                     Color target = settings.AccentColor.Value;
-                    ColorToHSV(target, out float targetHue, out _, out _);
+                    float targetHue = target.ToHSV().H;
 
-                    List<Color> transformed = new List<Color>(centroids.Count);
+                    List<Color> transformed = new(centroids.Count);
 
                     foreach (var c in centroids)
                     {
-                        ColorToHSV(c, out float hue, out float sat, out float val);
-                        Color newC = ColorFromHSV(targetHue, sat, val);
+                        (float, float, float) hsv = c.ToHSV();
+                        Color newC = ColorsExtensions.HSVToColor(targetHue, hsv.Item2, hsv.Item3);
                         transformed.Add(Color.FromArgb(c.A, newC.R, newC.G, newC.B));
                     }
 
@@ -1329,7 +1329,7 @@ namespace WinPaletter.TypesExtensions
                 {
                     settings.Status?.Report($"{Program.Lang.Strings.General.SortingByDominance}...");
                     Dictionary<Color, int> colorFrequency = pixels
-                        .GroupBy(px => centroids.OrderBy(c => ColorDistance(px, c)).First())
+                        .GroupBy(px => centroids.OrderBy(c => px.Distance(c)).First())
                         .ToDictionary(g => g.Key, g => g.Count());
 
                     centroids = colorFrequency.OrderByDescending(kv => kv.Value).Select(kv => kv.Key).ToList();
@@ -1401,11 +1401,11 @@ namespace WinPaletter.TypesExtensions
 
                     for (int i = 0; i < kEffective; i++)
                     {
-                        float dist = ColorDistance(px, centroids[i]);
+                        float dist = px.Distance(centroids[i]);
 
                         if (accent.HasValue)
                         {
-                            float accentDist = ColorDistance(px, accent.Value);
+                            float accentDist = px.Distance(accent.Value);
                             dist /= (1f + accentWeight / (1f + accentDist));
                         }
 
@@ -1444,81 +1444,43 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Converts a Color to HSV components (Hue, Saturation, Value/Brightness)
-        /// Hue: 0-360, Saturation: 0-1, Value: 0-1
+        /// Creates a new circular bitmap that fits the smallest dimension of the source image.
+        /// The background is always transparent.
         /// </summary>
-        public static void ColorToHSV(Color color, out float hue, out float saturation, out float value)
+        /// <param name="source">Source bitmap.</param>
+        /// <returns>Circular bitmap cropped and masked to the smallest dimension.</returns>
+        public static Bitmap ToCircular(this Bitmap source)
         {
-            float r = color.R / 255f;
-            float g = color.G / 255f;
-            float b = color.B / 255f;
+            if (source == null) throw new ArgumentNullException(nameof(source));
 
-            float max = Math.Max(r, Math.Max(g, b));
-            float min = Math.Min(r, Math.Min(g, b));
-            float delta = max - min;
+            int size = Math.Min(source.Width, source.Height);
+            int x = (source.Width - size) / 2;
+            int y = (source.Height - size) / 2;
 
-            // Hue calculation
-            if (delta == 0)
-                hue = 0;
-            else if (max == r)
-                hue = 60f * (((g - b) / delta) % 6f);
-            else if (max == g)
-                hue = 60f * (((b - r) / delta) + 2f);
-            else // max == b
-                hue = 60f * (((r - g) / delta) + 4f);
+            Bitmap output = new(size, size, PixelFormat.Format32bppArgb);
 
-            if (hue < 0) hue += 360f;
+            using (Graphics G = Graphics.FromImage(output))
+            {
+                G.SmoothingMode = SmoothingMode.AntiAlias;
+                G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                G.Clear(Color.Transparent);
 
-            // Saturation calculation
-            saturation = (max == 0) ? 0 : delta / max;
+                using (GraphicsPath path = new())
+                {
+                    path.AddEllipse(0, 0, size, size);
+                    G.SetClip(path);
 
-            // Value/Brightness
-            value = max;
-        }
+                    G.DrawImage(source, -x, -y, source.Width, source.Height);
 
-        /// <summary>
-        /// Converts HSV components to a Color
-        /// Hue: 0-360, Saturation: 0-1, Value: 0-1
-        /// </summary>
-        public static Color ColorFromHSV(float hue, float saturation, float value)
-        {
-            float c = value * saturation;
-            float x = c * (1 - Math.Abs((hue / 60f) % 2 - 1));
-            float m = value - c;
+                    using (Pen pen = new(Program.Style.Schemes.Main.Colors.Line(5), 5f))
+                    {
+                        G.DrawEllipse(pen, -x, -y, source.Width, source.Height);
+                    }
+                }
+            }
 
-            float r1, g1, b1;
-            if (hue < 60)
-                (r1, g1, b1) = (c, x, 0);
-            else if (hue < 120)
-                (r1, g1, b1) = (x, c, 0);
-            else if (hue < 180)
-                (r1, g1, b1) = (0, c, x);
-            else if (hue < 240)
-                (r1, g1, b1) = (0, x, c);
-            else if (hue < 300)
-                (r1, g1, b1) = (x, 0, c);
-            else
-                (r1, g1, b1) = (c, 0, x);
-
-            int r = (int)Math.Round((r1 + m) * 255f);
-            int g = (int)Math.Round((g1 + m) * 255f);
-            int b = (int)Math.Round((b1 + m) * 255f);
-
-            return Color.FromArgb(r, g, b);
-        }
-
-        /// <summary>
-        /// Calculates the squared Euclidean distance between two colors in RGB space.
-        /// </summary>
-        /// <param name="c1">The first color to compare.</param>
-        /// <param name="c2">The second color to compare.</param>
-        /// <returns>The squared distance between the two colors. A smaller value indicates greater similarity.</returns>
-        private static float ColorDistance(Color c1, Color c2)
-        {
-            int rDiff = c1.R - c2.R;
-            int gDiff = c1.G - c2.G;
-            int bDiff = c1.B - c2.B;
-            return rDiff * rDiff + gDiff * gDiff + bDiff * bDiff;
+            return output;
         }
     }
 }

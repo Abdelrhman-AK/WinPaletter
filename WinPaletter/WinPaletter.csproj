@@ -316,6 +316,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ColorItemContextMenu.resx</DependentUpon>
     </Compile>
+    <Compile Include="Assets\Store.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Store.resx</DependentUpon>
+    </Compile>
     <Compile Include="Assets\Themes_Banners.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -375,11 +380,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WinLogos.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Assets\Store.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Store.resx</DependentUpon>
     </Compile>
     <Compile Include="Assets\WinVistaPreview.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -480,6 +480,12 @@
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
     <Compile Include="Store\GitHubAuth.cs" />
+    <Compile Include="Store\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Store\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tabs\TabData.cs" />
     <Compile Include="Tabs\TabsContainer.cs">
       <SubType>Component</SubType>
@@ -1310,6 +1316,7 @@
       <LastGenOutput>WinLogos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Store.resx">
+      <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Store.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -1466,6 +1473,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
       <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Store\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\BorderlessForm.resx">
       <DependentUpon>BorderlessForm.cs</DependentUpon>

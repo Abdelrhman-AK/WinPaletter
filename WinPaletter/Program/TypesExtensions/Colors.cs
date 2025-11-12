@@ -392,7 +392,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="a">The alpha (transparency) component of the color. Must be in the range 0 to 255. Defaults to 255 (fully
         /// opaque).</param>
         /// <returns>A <see cref="Color"/> structure representing the equivalent ARGB color.</returns>
-        private static Color HSVToColor(float h, float s, float v, int a = 255)
+        public static Color HSVToColor(float h, float s, float v, int a = 255)
         {
             float hh = h / 360f, ss = s / 100f, vv = v / 100f;
             float hi = (float)Math.Floor(hh * 6f) % 6;
@@ -2201,11 +2201,7 @@ namespace WinPaletter.TypesExtensions
 
             // Weighted formula based on human perception
             // Source: Compuphase (http://www.compuphase.com/cmetric.htm)
-            return (float)Math.Sqrt(
-                ((512 + rMean) * dR * dR >> 8) +
-                4 * dG * dG +
-                ((767 - rMean) * dB * dB >> 8)
-            );
+            return (float)Math.Sqrt(((512 + rMean) * dR * dR >> 8) + 4 * dG * dG + ((767 - rMean) * dB * dB >> 8));
         }
 
         /// <summary>
