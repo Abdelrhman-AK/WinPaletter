@@ -117,6 +117,7 @@
             this.groupBox1.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox1.Size = new System.Drawing.Size(1176, 70);
             this.groupBox1.TabIndex = 161;
+            this.groupBox1.UseDecorationPattern = true;
             // 
             // flowLayoutPanel3
             // 
@@ -402,6 +403,7 @@
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(1176, 49);
             this.bottom_buttons.TabIndex = 152;
+            this.bottom_buttons.UseDecorationPattern = false;
             // 
             // apply_btn
             // 
@@ -917,6 +919,7 @@
             this.userButton.Size = new System.Drawing.Size(50, 50);
             this.userButton.TabIndex = 36;
             this.userButton.Tag = "";
+            this.userButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.userButton.UseVisualStyleBackColor = false;
             this.userButton.Click += new System.EventHandler(this.userButton_Click);
             // 

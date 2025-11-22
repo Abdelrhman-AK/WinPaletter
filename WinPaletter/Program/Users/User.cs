@@ -4,12 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -81,6 +84,89 @@ namespace WinPaletter
                 /// Event raised after switching user
                 /// </summary>
                 AfterChange
+            }
+        }
+
+        /// <summary>
+        /// Event args that have data of GitHub user login statue change event
+        /// </summary>
+        public class GitHubUserChangeEventArgs : EventArgs
+        {
+            public bool IsLoggedIn { get; set; } = false;
+        }
+
+        /// <summary>
+        /// Delegate for user change event
+        /// </summary>
+        /// <param name="e"></param>
+        public delegate void GitHubUserChangeEventHandler(GitHubUserChangeEventArgs e);
+
+        /// <summary>
+        /// Event for user change
+        /// </summary>
+        public static event GitHubUserChangeEventHandler GitHubUserSwitch;
+
+        /// <summary>
+        /// Void method occurs on GitHub user change event
+        /// </summary>
+        /// <param name="e"></param>
+        public async static void OnGitHubUserSwitch(GitHubUserChangeEventArgs e)
+        {
+            if (e.IsLoggedIn)
+            {
+                GitHub = await Program.GitHub.Client.User.Current();
+                GitHub_Avatar?.Dispose();
+                await DownloadAvatarAsync();
+            }
+            else
+            {
+                GitHub = null;
+                GitHub_Avatar?.Dispose();
+            }
+
+            GitHubUserSwitch?.Invoke(e);
+        }
+
+        private static readonly string AvatarCache = Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
+        private static readonly string ETagPath = Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
+
+        public static async Task DownloadAvatarAsync()
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(AvatarCache)!);
+
+            string? savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
+
+            using (HttpClient client = new())
+            {
+                if (!string.IsNullOrEmpty(savedETag)) client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(savedETag);
+
+                HttpResponseMessage response = await client.GetAsync(GitHub.AvatarUrl).ConfigureAwait(false);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.NotModified && File.Exists(AvatarCache))
+                {
+                    // Load cached avatar
+                    using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
+                    {
+                        GitHub_Avatar = bmp.Resize(48, 48);
+                    }
+                    return;
+                }
+
+
+                using (DownloadManager DM = new())
+                {
+                    byte[] data = await DM.ReadAsync(GitHub.AvatarUrl);
+                    using (MemoryStream ms = new())
+                    using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
+                    {
+                        GitHub_Avatar = bmp.Resize(48, 48);
+                        // Save locally
+                        bmp.Save(AvatarCache, ImageFormat.Png);
+                    }
+                }
+
+                // Save new ETag
+                if (response.Headers.ETag is not null) File.WriteAllText(ETagPath, response.Headers.ETag.Tag);
             }
         }
 
@@ -433,6 +519,33 @@ namespace WinPaletter
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// User logged into GitHub
+        /// </summary>
+        public static Octokit.User GitHub
+        {
+            get => gitHub;
+            set
+            {
+                if (gitHub != value)
+                {
+                    gitHub = value;
+                }
+            }
+        }
+        private static Octokit.User gitHub;
+
+        /// <summary>
+        /// A boolean that represents if the user is logged in to GitHub or not
+        /// </summary>
+        public static bool GitHub_LoggedIn { get; private set; } = false;
+
+        /// <summary>
+        /// Avatar of the signed-in GitHub user
+        /// </summary>
+        public static Bitmap GitHub_Avatar;
+
         /// <summary>
         /// Name of current user
         /// </summary>
@@ -486,6 +599,16 @@ namespace WinPaletter
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Update GitHub user logged in flag
+        /// </summary>
+        /// <param name="status"></param>
+        public static void UpdateGitHubLoginStatus(bool status)
+        {
+            GitHub_LoggedIn = status;
+            OnGitHubUserSwitch(new GitHubUserChangeEventArgs() { IsLoggedIn = status });
+        }
 
         /// <summary>
         /// Get dictionary of SID, USERNAME\DOMAIN of all users

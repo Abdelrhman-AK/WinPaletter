@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
@@ -33,16 +34,64 @@ namespace WinPaletter
             Forms.GlassWindow.Close();
         }
 
-        private void UserSwitch_Load(object sender, EventArgs e)
+        private async void UserSwitch_Load(object sender, EventArgs e)
         {
+            await UpdateGitHubLoginData();
+
             shown = false;
             this.LoadLanguage();
             ApplyStyle(this);
             checkBox1.Checked = false;
             CheckForIllegalCrossThreadCalls = false;
 
-            Forms.GlassWindow.Show();
+            User.GitHubUserSwitch += GitHub_OnSignedOut;
+
+            Forms.GlassWindow.ShowWithGlassFocusedOnParent(Forms.MainForm);
             BringToFront();
+        }
+
+        private async void GitHub_OnSignedOut(User.GitHubUserChangeEventArgs e)
+        {
+            await UpdateGitHubLoginData();
+        }
+
+        public async Task UpdateGitHubLoginData()
+        {
+            if (User.GitHub_LoggedIn)
+            {
+                label2.Text = User.GitHub?.Login;
+
+                // Start download only if avatar is null
+                if (User.GitHub_Avatar is null)
+                {
+                    // Run download in background, don't await
+                    _ = Task.Run(async () =>
+                    {
+                        await User.DownloadAvatarAsync().ConfigureAwait(false);
+
+                        // Update UI safely
+                        pictureBox2.Invoke(() =>
+                        {
+                            pictureBox2.Image = User.GitHub_Avatar?.ToCircular();
+                        });
+                    });
+                }
+                else
+                {
+                    pictureBox2.Image = User.GitHub_Avatar?.ToCircular();
+                }
+
+                button3.Text = Program.Lang.Strings.General.SignOut;
+                button3.ImageGlyph = Properties.Resources.Glyph_SignOut;
+            }
+            else
+            {
+                label2.Text = Program.Lang.Strings.Users.GitHub_NotSigned;
+                pictureBox2.Image = Properties.Resources.GitHub_SignInForFeatures;
+
+                button3.Text = Program.Lang.Strings.General.SignIn;
+                button3.ImageGlyph = Properties.Resources.Glyph_GitHub;
+            }
         }
 
         private void ListUsers(Dictionary<string, string> UsersList)
@@ -86,10 +135,15 @@ namespace WinPaletter
                     Checked = (User.SID != null) ? user.Key == User.SID : User.UserSID_OpenedWP != null ? user.Key == User.UserSID_OpenedWP : user.Key == User.AdminSID_GrantedUAC,
                     Size = new(250, 70),
                     Tag = user.Key,
-                    Image = Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()).Resize(48, 48),
                     Text = Scheme,
                     ForeColor = ForeColor
                 };
+
+                using (Bitmap bmp = Shell32.GetUserAccountPicture(user.Value.Split('\\').Last()) as Bitmap)
+                using (Bitmap bmp_resized = bmp.Resize(48, 48))
+                {
+                    radio.Image = bmp_resized.ToCircular();
+                }
 
                 radio.DoubleClick += Radio_DoubleClick;
                 radio.CheckedChanged += Radio_CheckedChanged;
@@ -182,6 +236,18 @@ namespace WinPaletter
                 {
                     ListUsers(User.GetUsers(false));
                 }
+            }
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            if (User.GitHub_LoggedIn)
+            {
+                await Program.GitHub.SignOutAsync();
+            }
+            else
+            {
+                Forms.GitHubLogin.ShowDialog();
             }
         }
     }

@@ -318,6 +318,7 @@ namespace WinPaletter
             if (!e.Cancel)
             {
                 cts?.Cancel();
+                Forms.GlassWindow.Close();
             }
         }
 

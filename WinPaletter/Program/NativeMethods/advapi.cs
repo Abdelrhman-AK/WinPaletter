@@ -81,6 +81,55 @@ namespace WinPaletter.NativeMethods
         #endregion
 
         #region Privileges
+
+        /// <summary>
+        /// Converts a security descriptor string (SDDL) into a valid Windows security descriptor structure in memory.
+        /// </summary>
+        /// <param name="StringSecurityDescriptor">
+        /// The SDDL string representing the security descriptor to convert.
+        /// Example: "O:BAG:SYD:(A;;CCLCRC;;;IU)(A;;CCDCLCSWRPSDRCWDWO;;;SY)".
+        /// </param>
+        /// <param name="StringSDRevision">
+        /// The revision level of the security descriptor string. Usually 1 (SE_SD_REVISION_1).
+        /// </param>
+        /// <param name="SecurityDescriptor">
+        /// Outputs a pointer to the resulting security descriptor structure in memory.
+        /// Must be freed with <see cref="Marshal.FreeHGlobal"/> if manually allocated.
+        /// </param>
+        /// <param name="SecurityDescriptorSize">
+        /// Outputs the size, in bytes, of the security descriptor structure.
+        /// </param>
+        /// <returns>
+        /// True if the conversion succeeds; otherwise, false. Use <see cref="Marshal.GetLastWin32Error"/> to get error information.
+        /// </returns>
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool ConvertStringSecurityDescriptorToSecurityDescriptor(string StringSecurityDescriptor, int StringSDRevision, out IntPtr SecurityDescriptor, out int SecurityDescriptorSize);
+
+        /// <summary>
+        /// Converts a Windows security descriptor structure in memory into a string in Security Descriptor Definition Language (SDDL) format.
+        /// </summary>
+        /// <param name="SecurityDescriptor">
+        /// A pointer to the security descriptor structure to convert.
+        /// </param>
+        /// <param name="RequestedStringSDRevision">
+        /// The revision level of the string security descriptor. Usually 1 (SE_SD_REVISION_1).
+        /// </param>
+        /// <param name="SecurityInformation">
+        /// A bitmask that specifies which components of the security descriptor to convert.
+        /// Commonly DACL_SECURITY_INFORMATION (0x4) to include DACL information.
+        /// </param>
+        /// <param name="StringSecurityDescriptor">
+        /// Outputs a pointer to the resulting SDDL string in memory. Must be freed with <see cref="Marshal.FreeHGlobal"/> when no longer needed.
+        /// </param>
+        /// <param name="StringSecurityDescriptorLen">
+        /// Outputs the length, in characters, of the SDDL string.
+        /// </param>
+        /// <returns>
+        /// True if the conversion succeeds; otherwise, false. Use <see cref="Marshal.GetLastWin32Error"/> for error information.
+        /// </returns>
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool ConvertSecurityDescriptorToStringSecurityDescriptor(IntPtr SecurityDescriptor, int RequestedStringSDRevision, uint SecurityInformation, out IntPtr StringSecurityDescriptor, out int StringSecurityDescriptorLen);
+
         internal const int SE_PRIVILEGE_ENABLED = 2;
         internal const int SE_PRIVILEGE_DISABLED = 0;
         internal const int TOKEN_QUERY = 0x0008;  // Use hexadecimal notation for constants
@@ -175,6 +224,140 @@ namespace WinPaletter.NativeMethods
                     Kernel32.CloseHandle(hToken);  // Close the token handle to prevent resource leaks
             }
         }
+
+        #endregion
+
+        #region Credentials
+
+        /// <summary>
+        /// Represents a credential stored in the Windows Credential Manager.
+        /// </summary>
+        /// <remarks>
+        /// This struct maps directly to the native Windows CREDENTIAL structure.  
+        /// It is used with P/Invoke functions such as <see cref="CredRead"/>, <see cref="CredWrite"/>, and <see cref="CredDelete"/>.
+        /// Ensure <see cref="CharSet.Unicode"/> is specified to properly marshal string fields.
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct CREDENTIAL
+        {
+            /// <summary>
+            /// Flags for the credential. Typically 0.
+            /// </summary>
+            public int Flags;
+
+            /// <summary>
+            /// The type of credential. Use <see cref="CRED_TYPE_GENERIC"/> for generic credentials.
+            /// </summary>
+            public int Type;
+
+            /// <summary>
+            /// The target name for the credential (used as the lookup key).
+            /// </summary>
+            public string TargetName;
+
+            /// <summary>
+            /// Optional comment for the credential.
+            /// </summary>
+            public string Comment;
+
+            /// <summary>
+            /// The last write time for the credential.
+            /// </summary>
+            public System.Runtime.InteropServices.ComTypes.FILETIME LastWritten;
+
+            /// <summary>
+            /// Size, in bytes, of the <see cref="CredentialBlob"/>.
+            /// </summary>
+            public int CredentialBlobSize;
+
+            /// <summary>
+            /// Pointer to the credential secret (e.g., password or token) in unmanaged memory.
+            /// </summary>
+            public IntPtr CredentialBlob;
+
+            /// <summary>
+            /// Persistence type. Use <see cref="CRED_PERSIST_LOCAL_MACHINE"/> for local machine persistence.
+            /// </summary>
+            public int Persist;
+
+            /// <summary>
+            /// Number of custom attributes. Usually 0.
+            /// </summary>
+            public int AttributeCount;
+
+            /// <summary>
+            /// Pointer to custom attributes. Usually <c>IntPtr.Zero</c>.
+            /// </summary>
+            public IntPtr Attributes;
+
+            /// <summary>
+            /// Optional alias for the target. Can be <c>null</c>.
+            /// </summary>
+            public string TargetAlias;
+
+            /// <summary>
+            /// The user name associated with the credential.
+            /// </summary>
+            public string UserName;
+        }
+
+        /// <summary>
+        /// Credential type for generic credentials.  
+        /// Use with <see cref="CREDENTIAL.Type"/> and P/Invoke functions.
+        /// </summary>
+        public const int CRED_TYPE_GENERIC = 1;
+
+        /// <summary>
+        /// Credential persistence type: local machine.  
+        /// Stored credentials are available to all users on the machine.
+        /// </summary>
+        public const int CRED_PERSIST_LOCAL_MACHINE = 2;
+
+        /// <summary>
+        /// Writes a credential to the Windows Credential Manager.
+        /// </summary>
+        /// <param name="userCredential">The credential struct to write.</param>
+        /// <param name="flags">Reserved. Pass 0.</param>
+        /// <returns><c>true</c> if the operation succeeds; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// Use <see cref="Marshal.GetLastWin32Error"/> to retrieve the error code if the call fails.
+        /// </remarks>
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool CredWrite([In] ref CREDENTIAL userCredential, [In] uint flags);
+
+        /// <summary>
+        /// Reads a credential from the Windows Credential Manager.
+        /// </summary>
+        /// <param name="target">The target name of the credential to retrieve.</param>
+        /// <param name="type">The credential type. Typically <see cref="CRED_TYPE_GENERIC"/>.</param>
+        /// <param name="reservedFlag">Reserved. Pass 0.</param>
+        /// <param name="credentialPtr">Receives a pointer to the unmanaged CREDENTIAL struct.</param>
+        /// <returns><c>true</c> if the credential is found; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// The returned pointer must be freed using <see cref="CredFree"/> to avoid memory leaks.
+        /// </remarks>
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool CredRead(string target, int type, int reservedFlag, out IntPtr credentialPtr);
+
+        /// <summary>
+        /// Frees unmanaged memory allocated by <see cref="CredRead"/>.
+        /// </summary>
+        /// <param name="buffer">Pointer to the credential struct returned by <see cref="CredRead"/>.</param>
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern void CredFree([In] IntPtr buffer);
+
+        /// <summary>
+        /// Deletes a credential from the Windows Credential Manager.
+        /// </summary>
+        /// <param name="target">The target name of the credential to delete.</param>
+        /// <param name="type">The credential type. Typically <see cref="CRED_TYPE_GENERIC"/>.</param>
+        /// <param name="flags">Reserved. Pass 0.</param>
+        /// <returns><c>true</c> if the deletion succeeds; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// Use <see cref="Marshal.GetLastWin32Error"/> to retrieve the error code if the call fails.
+        /// </remarks>
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool CredDelete(string target, int type, int flags);
 
         #endregion
     }

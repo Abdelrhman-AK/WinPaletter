@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme;
@@ -22,6 +23,11 @@ namespace WinPaletter
         /// An instance of WinPaletter logger class (wrapper for Serilog)
         /// </summary>
         public static Logger Log;
+
+        /// <summary>
+        /// GitHub Login Manager
+        /// </summary>
+        public static GitHubLoginManager GitHub { get; set; }
 
         /// <summary>
         /// Gets the file path for the log file, including the current timestamp in the file name.

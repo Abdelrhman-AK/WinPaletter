@@ -127,6 +127,12 @@ namespace WinPaletter
         public static UserSwitch UserSwitch => (_UserSwitch == null || _UserSwitch.IsDisposed) ? (_UserSwitch = CreateInstance(_UserSwitch)) : _UserSwitch;
 
 
+        private static GitHubLogin _GitHubLogin;
+        /// <summary>
+        /// Gets the instance of the form <see cref="GitHubLogin"/> to switch user.
+        /// </summary>
+        public static GitHubLogin GitHubLogin => (_GitHubLogin == null || _GitHubLogin.IsDisposed) ? (_GitHubLogin = CreateInstance(_GitHubLogin)) : _GitHubLogin;
+
         private static ArgsHelp _ArgsHelp;
         /// <summary>
         /// Gets the instance of the form <see cref="ArgsHelp"/> to show the arguments help.

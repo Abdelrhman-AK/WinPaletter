@@ -1,12 +1,10 @@
 ﻿using Octokit;
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Security.Cryptography;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace WinPaletter
 {
@@ -18,7 +16,6 @@ namespace WinPaletter
         public GitHubClient Client { get; private set; }
         private bool _disposed = false;
         private const string ClientId = "db4a27d1c8b8ba156eb5"; // WinPaletter's GitHub OAuth App
-        private static readonly string TokenFile = Path.Combine(SysPaths.appData, "github_token.dat");
         private OauthDeviceFlowResponse deviceFlow;
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -213,7 +210,7 @@ namespace WinPaletter
 
             try
             {
-                var user = await Client.User.Current().ConfigureAwait(false);
+                Octokit.User user = await Client.User.Current().ConfigureAwait(false);
                 return true;
             }
             catch (AuthorizationException)
@@ -460,6 +457,10 @@ namespace WinPaletter
                     NativeMethods.User32.SetForegroundWindow(process.Handle);
                 }
 
+                User.UpdateGitHubLoginStatus(false);
+                User.GitHub = null;
+                await Forms.UserSwitch.UpdateGitHubLoginData().ConfigureAwait(false);
+
                 // Fire signed out event
                 OnSignedOut?.Invoke();
             }
@@ -471,65 +472,80 @@ namespace WinPaletter
 
         #endregion
 
-        #region Token Storage (DPAPI)
+        #region GitHub OAuth Token Manager
 
         /// <summary>
-        /// Saves the GitHub OAuth token securely using DPAPI (CurrentUser scope).
+        /// The target name used in Windows Credential Manager for storing the GitHub OAuth token.
         /// </summary>
-        /// <param name="token">The OAuth token to save.</param>
-        /// <remarks>
-        /// The token is encrypted and written to a file located at <see cref="TokenFile"/>.
-        /// If an exception occurs during saving, <see cref="OnUnexpectedError"/> is raised with the error message.
-        /// </remarks>
-        private void SaveToken(string token)
-        {
-            try
-            {
-                var bytes = Encoding.UTF8.GetBytes(token);
-                var encrypted = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
+        private const string Target = $"WinPaletter_GitHubToken";
 
-                Directory.CreateDirectory(Path.GetDirectoryName(TokenFile));
-                File.WriteAllBytes(TokenFile, encrypted);
-            }
-            catch (Exception ex)
+        /// <summary>
+        /// Saves the GitHub OAuth token securely in Windows Credential Manager using a generic credential type.
+        /// </summary>
+        /// <param name="token">The OAuth token string to store.</param>
+        /// <exception cref="Exception">
+        /// Thrown if the underlying <see cref="NativeMethods.ADVAPI.CredWrite"/> call fails.
+        /// The Win32 error code can be retrieved via <see cref="Marshal.GetLastWin32Error"/>.
+        /// </exception>
+        /// <remarks>
+        /// This method allocates unmanaged memory for the credential blob, writes it to Credential Manager, 
+        /// and then frees the unmanaged memory. The token is persisted in the local machine scope.
+        /// </remarks>
+        public static void SaveToken(string token)
+        {
+            byte[] byteArray = Encoding.Unicode.GetBytes(token);
+            IntPtr blob = Marshal.AllocHGlobal(byteArray.Length);
+            Marshal.Copy(byteArray, 0, blob, byteArray.Length);
+
+            NativeMethods.ADVAPI.CREDENTIAL credential = new()
             {
-                OnUnexpectedError?.Invoke(ex.Message);
-            }
+                TargetName = Target,
+                Type = NativeMethods.ADVAPI.CRED_TYPE_GENERIC,
+                Persist = NativeMethods.ADVAPI.CRED_PERSIST_LOCAL_MACHINE,
+                CredentialBlobSize = byteArray.Length,
+                CredentialBlob = blob,
+                UserName = "GitHubToken"
+            };
+
+            if (!NativeMethods.ADVAPI.CredWrite(ref credential, 0)) throw new Exception("Failed to save credential. Error code: " + Marshal.GetLastWin32Error());
+
+            Marshal.FreeHGlobal(blob);
         }
 
         /// <summary>
-        /// Loads the GitHub OAuth token from secure storage.
+        /// Loads the GitHub OAuth token from Windows Credential Manager.
         /// </summary>
-        /// <returns>The decrypted OAuth token, or <c>null</c> if the token file does not exist or cannot be decrypted.</returns>
+        /// <returns>
+        /// The OAuth token string if found; otherwise, <c>null</c> if the credential does not exist or cannot be read.
+        /// </returns>
         /// <remarks>
-        /// If loading or decryption fails, the method returns <c>null</c> without throwing an exception.
+        /// This method calls <see cref="NativeMethods.ADVAPI.CredRead"/> to retrieve the credential pointer,
+        /// marshals the unmanaged data into a managed byte array, converts it to a string, and frees the unmanaged memory.
         /// </remarks>
-        private string LoadToken()
+        public static string LoadToken()
         {
-            if (!File.Exists(TokenFile)) return null;
-
-            try
+            if (NativeMethods.ADVAPI.CredRead(Target, NativeMethods.ADVAPI.CRED_TYPE_GENERIC, 0, out IntPtr credPtr))
             {
-                var encrypted = File.ReadAllBytes(TokenFile);
-                var decrypted = ProtectedData.Unprotect(encrypted, null, DataProtectionScope.CurrentUser);
-                return Encoding.UTF8.GetString(decrypted);
+                NativeMethods.ADVAPI.CREDENTIAL cred = (NativeMethods.ADVAPI.CREDENTIAL)Marshal.PtrToStructure(credPtr, typeof(NativeMethods.ADVAPI.CREDENTIAL));
+                byte[] blob = new byte[cred.CredentialBlobSize];
+                Marshal.Copy(cred.CredentialBlob, blob, 0, cred.CredentialBlobSize);
+                string token = Encoding.Unicode.GetString(blob);
+                NativeMethods.ADVAPI.CredFree(credPtr);
+                return token;
             }
-            catch
-            {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
-        /// Deletes the locally saved GitHub OAuth token file.
+        /// Deletes the stored GitHub OAuth token from Windows Credential Manager.
         /// </summary>
         /// <remarks>
-        /// After deletion, <see cref="OnTokenRevoked"/> is raised. If the file does not exist, no action is taken.
+        /// This method calls <see cref="NativeMethods.ADVAPI.CredDelete"/> to remove the credential.
+        /// If the credential does not exist, no exception is thrown.
         /// </remarks>
-        public void DeleteToken()
+        public static void DeleteToken()
         {
-            if (File.Exists(TokenFile)) File.Delete(TokenFile);
-            OnTokenRevoked?.Invoke();
+            NativeMethods.ADVAPI.CredDelete(Target, NativeMethods.ADVAPI.CRED_TYPE_GENERIC, 0);
         }
 
         #endregion

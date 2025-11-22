@@ -12,6 +12,7 @@ using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using WinPaletter.Theme;
+using WinPaletter.TypesExtensions;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
@@ -28,6 +29,7 @@ namespace WinPaletter
         private int StableInt, BetaInt, UpdateChannel;
         private int ChannelFixer;
         private List<string> Updates_ls = [];
+        private bool isLoggedIn = false;    
 
         /// <summary>
         /// File path of the theme File.
@@ -55,6 +57,9 @@ namespace WinPaletter
 
             // Reset the logging off flag to false.
             Forms.MainForm.LoggingOff = false;
+
+            isLoggedIn = User.GitHub_LoggedIn;
+            User.GitHubUserSwitch += User_GitHubUserSwitch;
 
             NotifyUpdates.Icon = Icon;
             groupBox1.UseSharpStyle = true;
@@ -93,6 +98,12 @@ namespace WinPaletter
                 card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
             }
+        }
+
+        private void User_GitHubUserSwitch(User.GitHubUserChangeEventArgs e)
+        {
+            isLoggedIn = e.IsLoggedIn;
+            LoadData();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -150,6 +161,8 @@ namespace WinPaletter
             // Continue with the closing event if the user has not cancelled it.
             if (!e.Cancel)
             {
+                //User.GitHubUserSwitch -= User_GitHubUserSwitch;
+
                 Forms.MainForm.tabsContainer1.TabControl.Visible = false;
 
                 Forms.MainForm.closeSignalReceivedFromHomePage = true;
@@ -165,8 +178,63 @@ namespace WinPaletter
         /// </summary>
         public void LoadData()
         {
-            userButton.Tag = User.Name;
-            userButton.Image = User.ProfilePicture.Resize(26, 26);
+            if (isLoggedIn)
+            {
+                Task.Run(() => 
+                {
+                    Transition.With(tip_label, nameof(tip_label.Text), $"{Program.Lang.Strings.General.Welcome}, {User.GitHub.Login}").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+
+                    System.Threading.Thread.Sleep(3500);
+
+                    Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                });
+
+                userButton.Tag = User.GitHub.Login + " > " + User.Name;
+
+                // Start download only if avatar is null
+                if (User.GitHub_Avatar is null)
+                {
+                    using (Bitmap resized = User.ProfilePicture?.Resize(32, 32))
+                    {
+                        userButton.Image = resized?.ToCircular();
+                    }
+
+                    // Run download in background, don't await
+                    _ = Task.Run(async () =>
+                    {
+                        await User.DownloadAvatarAsync().ConfigureAwait(false);
+
+                        using (Bitmap resized_avatar = User.GitHub_Avatar?.Resize(32, 32))
+                        using (Bitmap resized_user = User.ProfilePicture?.Resize(16, 16))
+                        using (Bitmap circular_avatar = resized_avatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+                        using (Bitmap circular_user = resized_user.ToCircular())
+                        {
+                            PointF rect_overlay = new(circular_avatar.Width - circular_user.Width, circular_avatar.Height - circular_user.Height);
+                            userButton.Image = circular_avatar.Overlay(circular_user, rect_overlay);
+                        }
+                    });
+                }
+                else
+                {
+                    using (Bitmap resized_avatar = User.GitHub_Avatar?.Resize(32, 32))
+                    using (Bitmap resized_user = User.ProfilePicture?.Resize(16, 16))
+                    using (Bitmap circular_avatar = resized_avatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+                    using (Bitmap circular_user = resized_user.ToCircular())
+                    {
+                        PointF rect_overlay = new(circular_avatar.Width - circular_user.Width, circular_avatar.Height - circular_user.Height);
+                        userButton.Image = circular_avatar.Overlay(circular_user, rect_overlay);
+                    }
+                }
+            }
+            else
+            {
+                userButton.Tag = User.Name;
+
+                using (Bitmap resized = User.ProfilePicture?.Resize(32, 32))
+                {
+                    userButton.Image = resized?.ToCircular();
+                }
+            }
         }
 
         /// <summary>

@@ -1,33 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using WinPaletter.Assets;
-using WinPaletter.NativeMethods;
-using WinPaletter.Theme;
-using WinPaletter.Theme.Structures;
-using WinPaletter.UI.AdvancedControls;
-using WinPaletter.UI.Controllers;
-using WinPaletter.UI.Simulation;
-using WinPaletter.UI.WP;
-using static WinPaletter.PreviewHelpers;
 using static WinPaletter.TypesExtensions.BitmapExtensions;
 
 namespace WinPaletter
 {
-    public partial class Login : Form
+    public partial class GitHubLogin : Form
     {
         CancellationTokenSource cts;
-        bool canCloseWithoutMsg = false;
-        private GitHubLoginManager loginManager;
-        private Octokit.User loggedInUser;
 
-        public Login()
+        public GitHubLogin()
         {
             InitializeComponent();
         }
@@ -39,7 +24,6 @@ namespace WinPaletter
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
             tablessControl1.SelectedIndex = 0;
-            canCloseWithoutMsg = false;
             signin_btn.Visible = true;
             cts = new();
             labelAlt1.Text = Text;
@@ -69,22 +53,24 @@ namespace WinPaletter
 
             githubLbl_elapsedSec.Font = Fonts.ConsoleMedium;
 
-            loginManager = new();
-
-            loginManager.OnCountdownStarted += LoginManager_OnCountdownStarted;
-            loginManager.OnCountdownTick += LoginManager_OnCountdownTick;
-            loginManager.OnCountdownEnded += LoginManager_OnCountdownEnded;
-            loginManager.OnDeviceFlowInitiated += LoginManager_OnDeviceFlowInitiated;
-            loginManager.OnAuthorizationSuccess += LoginManager_OnAuthorizationSuccess;
-            loginManager.OnAuthorizationFailure += LoginManager_OnAuthorizationFailure;
-            loginManager.OnSignedOut += LoginManager_OnSignedOut;
-
-            Forms.GlassWindow.ShowWithGlassFocusedOnParent(Forms.MainForm);
+            Program.GitHub?.OnCountdownStarted += LoginManager_OnCountdownStarted;
+            Program.GitHub?.OnCountdownTick += LoginManager_OnCountdownTick;
+            Program.GitHub?.OnCountdownEnded += LoginManager_OnCountdownEnded;
+            Program.GitHub?.OnDeviceFlowInitiated += LoginManager_OnDeviceFlowInitiated;
+            Program.GitHub?.OnAuthorizationSuccess += LoginManager_OnAuthorizationSuccess;
+            Program.GitHub?.OnAuthorizationFailure += LoginManager_OnAuthorizationFailure;
         }
 
         private void LoginManager_OnAuthorizationFailure(string obj)
         {
-            progressBar3.Visible = false;
+            Invoke(() =>  
+            {
+                label23.Text = obj;
+                signin_btn.Visible = true;
+                Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 4;
+                Program.Animator.ShowSync(tablessControl1);
+            });
         }
 
         private async void LoginManager_OnAuthorizationSuccess(Octokit.User obj)
@@ -95,11 +81,11 @@ namespace WinPaletter
             tablessControl1.SelectedIndex = 1;
             Program.Animator.ShowSync(tablessControl1);
 
-            loggedInUser = await loginManager.Client.User.Current();
+            User.GitHub = await Program.GitHub.Client.User.Current();
 
             using (DownloadManager DM = new())
             {
-                byte[] data = await DM.ReadAsync(loggedInUser.AvatarUrl).ConfigureAwait(false);
+                byte[] data = await DM.ReadAsync(User.GitHub.AvatarUrl).ConfigureAwait(false);
                 using (MemoryStream ms = new(data))
                 using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
                 using (Bitmap bmp_resized = bmp.Resize(pictureBox6.Size))
@@ -108,7 +94,7 @@ namespace WinPaletter
                 }
             }
 
-            label13.Text = $"{Program.Lang.Strings.Store.Login_Welcome}, {loggedInUser.Login}!";
+            label13.Text = $"{Program.Lang.Strings.General.Welcome}, {User.GitHub.Login}!";
 
             Program.Animator.HideSync(tablessControl1);
             tablessControl1.SelectedIndex = 3;
@@ -142,16 +128,18 @@ namespace WinPaletter
                 progressBar3.Maximum = expiresIn;
                 progressBar3.Value = expiresIn;
                 githubLbl_elapsedSec.Text = $"{expiresIn / 60:D2}:{expiresIn % 60:D2}";
-
-                Program.Animator.HideSync(tablessControl1);
-                tablessControl1.SelectedIndex = 2;
-                Program.Animator.ShowSync(tablessControl1);
             });
         }
 
         private void LoginManager_OnCountdownEnded()
         {
-            progressBar3.Visible = false;
+            // Invoke is needed because this event is raised from a non-UI thread
+            Invoke(() =>
+            {
+                progressBar3.Visible = false;
+                tablessControl1.SelectedIndex = 0;
+                signin_btn.Visible = true;
+            });
         }
 
         private void LoginManager_OnCountdownTick(int obj)
@@ -162,42 +150,26 @@ namespace WinPaletter
 
         private void LoginManager_OnCountdownStarted(int obj)
         {
-
-        }
-
-        private void LoginManager_OnSignedOut()
-        {
-            loggedInUser = null;
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = 2;
+            Program.Animator.ShowSync(tablessControl1);
         }
 
         private async void Button2_Click(object sender, EventArgs e)
         {
-            // If last tab, process and close
-            if (tablessControl1.SelectedIndex == tablessControl1.TabCount - 1)
-            {
-                canCloseWithoutMsg = true;
-                DialogResult = DialogResult.OK;
-                Close();
-                return;
-            }
+            Program.Animator.HideSync(tablessControl1);
 
-            if (tablessControl1.SelectedIndex == 0)
+            if (tablessControl1.SelectedIndex == 0) tablessControl1.SelectedIndex = 1;
+            else if (tablessControl1.SelectedIndex == 4) tablessControl1.SelectedIndex = 0;
+
+            Program.Animator.ShowSync(tablessControl1);
+
+            if (tablessControl1.SelectedIndex == 1)
             {
                 signin_btn.Visible = false;
                 progressBar2.Visible = true;
+                await Program.GitHub.StartLoggingInAsync();
             }
-            else if (tablessControl1.SelectedIndex == 2)
-            {
-               
-            }
-            else if (tablessControl1.SelectedIndex == 3)
-            {
-               
-            }
-
-            Program.Animator.HideSync(tablessControl1);
-            tablessControl1.SelectedIndex = tablessControl1.SelectedIndex + 1 > tablessControl1.TabCount - 1 ? tablessControl1.TabCount - 1 : tablessControl1.SelectedIndex + 1;
-            Program.Animator.ShowSync(tablessControl1);
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -214,32 +186,31 @@ namespace WinPaletter
         private async void tablessControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             back_btn.Enabled = tablessControl1.SelectedIndex > 0;
-
-            if (tablessControl1.SelectedIndex == 1)
-            {
-                // Begin authentication process
-                await loginManager.StartLoggingInAsync().ConfigureAwait(false);
-            }
         }
 
         /// <summary>
         /// Void to handle the form closing event.
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        protected override async void OnFormClosing(FormClosingEventArgs e)
         {
-            e.Cancel = false;
+            Program.GitHub?.OnCountdownStarted -= LoginManager_OnCountdownStarted;
+            Program.GitHub?.OnCountdownTick -= LoginManager_OnCountdownTick;
+            Program.GitHub?.OnCountdownEnded -= LoginManager_OnCountdownEnded;
+            Program.GitHub?.OnDeviceFlowInitiated -= LoginManager_OnDeviceFlowInitiated;
+            Program.GitHub?.OnAuthorizationSuccess -= LoginManager_OnAuthorizationSuccess;
+            Program.GitHub?.OnAuthorizationFailure -= LoginManager_OnAuthorizationFailure;
 
-            if (!canCloseWithoutMsg)
-            {
-                if (MsgBox(Program.Lang.Strings.Messages.CloseWizard, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
-            }
+            cts?.Cancel();
 
-            // Continue with the closing event if the user has not cancelled it.
-            if (!e.Cancel)
-            {
-                cts?.Cancel();
-            }
+            bool isLoggedIn = await Program.GitHub.IsLoggedInAsync().ConfigureAwait(false);
+            User.UpdateGitHubLoginStatus(isLoggedIn);
+
+            User.GitHub = isLoggedIn ? await Program.GitHub.Client.User.Current().ConfigureAwait(false) : null;
+
+            await Forms.UserSwitch.UpdateGitHubLoginData();
+
+            base.OnFormClosing(e);
         }
 
         private void button1_Click_1(object sender, EventArgs e)

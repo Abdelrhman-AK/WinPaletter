@@ -104,8 +104,8 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\3. Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FastCloner, Version=3.3.16.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastCloner.3.3.16\lib\net46\FastCloner.dll</HintPath>
+    <Reference Include="FastCloner, Version=3.3.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastCloner.3.3.17\lib\net46\FastCloner.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FluentTransitions, Version=2.0.3.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
@@ -124,6 +124,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -460,6 +464,7 @@
     </Compile>
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="ColorsAndPalettesHandlers\ColorEffect.cs" />
+    <Compile Include="Program\Classes\ClassicTheme.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\Logger.cs" />
@@ -479,12 +484,12 @@
     <Compile Include="Settings\Setup.Designer.cs">
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Store\GitHubAuth.cs" />
-    <Compile Include="Store\Login.cs">
+    <Compile Include="Program\Users\GitHubAuth.cs" />
+    <Compile Include="Users\GitHubLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Store\Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
+    <Compile Include="Users\GitHubLogin.Designer.cs">
+      <DependentUpon>GitHubLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Tabs\TabData.cs" />
     <Compile Include="Tabs\TabsContainer.cs">
@@ -662,10 +667,10 @@
     <Compile Include="Dialogs\ThemeLog.Designer.cs">
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\UserSwitch.cs">
+    <Compile Include="Users\UserSwitch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\UserSwitch.Designer.cs">
+    <Compile Include="Users\UserSwitch.Designer.cs">
       <DependentUpon>UserSwitch.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms.cs" />
@@ -1363,7 +1368,7 @@
     <EmbeddedResource Include="Dialogs\ThemeLog.resx">
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\UserSwitch.resx">
+    <EmbeddedResource Include="Users\UserSwitch.resx">
       <DependentUpon>UserSwitch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\AltTabEditor.resx">
@@ -1474,8 +1479,8 @@
     <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
       <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Store\Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
+    <EmbeddedResource Include="Users\GitHubLogin.resx">
+      <DependentUpon>GitHubLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\BorderlessForm.resx">
       <DependentUpon>BorderlessForm.cs</DependentUpon>

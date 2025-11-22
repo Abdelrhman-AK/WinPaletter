@@ -1,11 +1,14 @@
 ﻿using Microsoft.Win32;
 using Serilog.Events;
 using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Security.Principal;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -122,6 +125,14 @@ namespace WinPaletter
                 UpdateSysEventsSounds();
 
                 Wallpaper = FetchSuitableWallpaper(TM, WindowStyle);
+
+                GitHub = new();
+
+                Task.Run(async () =>
+                {
+                    bool isLoggedIn = await GitHub.IsLoggedInAsync().ConfigureAwait(false);
+                    User.UpdateGitHubLoginStatus(isLoggedIn);
+                });
 
                 wic.Undo();
             }

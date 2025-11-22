@@ -155,5 +155,26 @@ namespace WinPaletter.NativeMethods
         /// <param name="lParam"></param>
         /// <returns></returns>
         public delegate bool EnumResNameProcDelegate(IntPtr hModule, IntPtr lpszType, IntPtr lpszName, IntPtr lParam);
+
+        /// <summary>
+        /// Frees a memory object allocated by LocalAlloc, LocalReAlloc, or LocalFree in unmanaged code.
+        /// Typically used to release unmanaged memory allocated by Windows APIs, such as security descriptors or SDDL strings.
+        /// </summary>
+        /// <param name="hMem">
+        /// A handle to the local memory object to free. If <see cref="IntPtr.Zero"/>, the function does nothing and returns <see cref="IntPtr.Zero"/>.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, the return value is <see cref="IntPtr.Zero"/>.
+        /// If the function fails, the return value is a handle to the memory object that could not be freed.
+        /// Use <see cref="Marshal.GetLastWin32Error"/> to get extended error information.
+        /// </returns>
+        /// <remarks>
+        /// This function should be called for memory returned by unmanaged functions such as:
+        /// - ConvertStringSecurityDescriptorToSecurityDescriptor
+        /// - ConvertSecurityDescriptorToStringSecurityDescriptor
+        /// - Any other Win32 function that returns memory that must be freed by LocalFree.
+        /// </remarks>
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr LocalFree(IntPtr hMem);
     }
 }

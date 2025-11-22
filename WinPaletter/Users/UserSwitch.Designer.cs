@@ -30,20 +30,26 @@ namespace WinPaletter
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserSwitch));
             this.checkBox1 = new WinPaletter.UI.WP.CheckBox();
-            this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.title = new System.Windows.Forms.Label();
-            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.alertBox2 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox1 = new WinPaletter.UI.WP.AlertBox();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
-            this.AnimatedBox1.SuspendLayout();
+            this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
+            this.button3 = new WinPaletter.UI.WP.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
+            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.bottom_buttons.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -55,72 +61,45 @@ namespace WinPaletter
             this.checkBox1.ForeColor = System.Drawing.Color.White;
             this.checkBox1.Location = new System.Drawing.Point(12, 12);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(565, 24);
+            this.checkBox1.Size = new System.Drawing.Size(535, 24);
             this.checkBox1.TabIndex = 138;
             this.checkBox1.Text = "Show system profiles (HIGH RISK!)";
             this.checkBox1.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // AnimatedBox1
-            // 
-            this.AnimatedBox1.BackColor = System.Drawing.Color.Transparent;
-            this.AnimatedBox1.Color1 = System.Drawing.Color.DodgerBlue;
-            this.AnimatedBox1.Color2 = System.Drawing.Color.Crimson;
-            this.AnimatedBox1.Controls.Add(this.PictureBox1);
-            this.AnimatedBox1.Controls.Add(this.title);
-            this.AnimatedBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AnimatedBox1.Location = new System.Drawing.Point(0, 0);
-            this.AnimatedBox1.Name = "AnimatedBox1";
-            this.AnimatedBox1.Size = new System.Drawing.Size(825, 48);
-            this.AnimatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.SwapColors;
-            this.AnimatedBox1.TabIndex = 135;
             // 
             // PictureBox1
             // 
             this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(7, 7);
+            this.PictureBox1.Location = new System.Drawing.Point(6, 6);
             this.PictureBox1.Name = "PictureBox1";
-            this.PictureBox1.Size = new System.Drawing.Size(35, 35);
+            this.PictureBox1.Size = new System.Drawing.Size(55, 55);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox1.TabIndex = 0;
             this.PictureBox1.TabStop = false;
             // 
             // title
             // 
-            this.title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.title.BackColor = System.Drawing.Color.Transparent;
             this.title.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.title.Location = new System.Drawing.Point(48, 7);
+            this.title.Location = new System.Drawing.Point(67, 6);
             this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(765, 35);
+            this.title.Size = new System.Drawing.Size(728, 55);
             this.title.TabIndex = 85;
             this.title.Text = "Please select the Windows user profile that WinPaletter will access for retrievin" +
     "g and updating preferences";
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.groupBox1.Controls.Add(this.flowLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 57);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.groupBox1.Size = new System.Drawing.Size(801, 242);
-            this.groupBox1.TabIndex = 131;
-            this.groupBox1.Text = "groupBox1";
-            // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 67);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(795, 236);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(789, 225);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // Button2
@@ -133,7 +112,7 @@ namespace WinPaletter
             this.Button2.Image = null;
             this.Button2.ImageGlyph = null;
             this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(583, 7);
+            this.Button2.Location = new System.Drawing.Point(704, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(115, 34);
             this.Button2.TabIndex = 130;
@@ -152,7 +131,7 @@ namespace WinPaletter
             this.Button1.Image = global::WinPaletter.Properties.Resources.Login;
             this.Button1.ImageGlyph = null;
             this.Button1.ImageGlyphEnabled = false;
-            this.Button1.Location = new System.Drawing.Point(704, 7);
+            this.Button1.Location = new System.Drawing.Point(674, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(115, 34);
             this.Button1.TabIndex = 129;
@@ -171,9 +150,9 @@ namespace WinPaletter
             this.alertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox2.Image = null;
-            this.alertBox2.Location = new System.Drawing.Point(12, 307);
+            this.alertBox2.Location = new System.Drawing.Point(6, 299);
             this.alertBox2.Name = "alertBox2";
-            this.alertBox2.Size = new System.Drawing.Size(801, 63);
+            this.alertBox2.Size = new System.Drawing.Size(789, 63);
             this.alertBox2.TabIndex = 139;
             this.alertBox2.TabStop = false;
             this.alertBox2.Text = resources.GetString("alertBox2.Text");
@@ -188,9 +167,9 @@ namespace WinPaletter
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(12, 377);
+            this.AlertBox1.Location = new System.Drawing.Point(6, 368);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(801, 48);
+            this.AlertBox1.Size = new System.Drawing.Size(789, 48);
             this.AlertBox1.TabIndex = 137;
             this.AlertBox1.TabStop = false;
             this.AlertBox1.Text = resources.GetString("AlertBox1.Text");
@@ -200,12 +179,100 @@ namespace WinPaletter
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Controls.Add(this.checkBox1);
-            this.bottom_buttons.Controls.Add(this.Button2);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 434);
+            this.bottom_buttons.Location = new System.Drawing.Point(3, 422);
             this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(825, 48);
+            this.bottom_buttons.Size = new System.Drawing.Size(795, 48);
             this.bottom_buttons.TabIndex = 140;
+            this.bottom_buttons.UseDecorationPattern = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.pictureBox2);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3);
+            this.groupBox2.Size = new System.Drawing.Size(801, 67);
+            this.groupBox2.TabIndex = 141;
+            this.groupBox2.UseDecorationPattern = true;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button3.Image = null;
+            this.button3.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_GitHub;
+            this.button3.ImageGlyphEnabled = true;
+            this.button3.Location = new System.Drawing.Point(659, 16);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(125, 34);
+            this.button3.TabIndex = 0;
+            this.button3.Text = "0";
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(67, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(728, 55);
+            this.label2.TabIndex = 87;
+            this.label2.Text = "0";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(55, 55);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox3.Controls.Add(this.flowLayoutPanel1);
+            this.groupBox3.Controls.Add(this.bottom_buttons);
+            this.groupBox3.Controls.Add(this.AlertBox1);
+            this.groupBox3.Controls.Add(this.alertBox2);
+            this.groupBox3.Controls.Add(this.title);
+            this.groupBox3.Controls.Add(this.PictureBox1);
+            this.groupBox3.Location = new System.Drawing.Point(12, 89);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(3);
+            this.groupBox3.Size = new System.Drawing.Size(801, 473);
+            this.groupBox3.TabIndex = 142;
+            this.groupBox3.UseDecorationPattern = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.Button2);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox1.Location = new System.Drawing.Point(0, 571);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(825, 48);
+            this.groupBox1.TabIndex = 143;
+            this.groupBox1.UseDecorationPattern = false;
             // 
             // UserSwitch
             // 
@@ -213,28 +280,27 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(825, 482);
-            this.Controls.Add(this.alertBox2);
-            this.Controls.Add(this.AlertBox1);
-            this.Controls.Add(this.AnimatedBox1);
+            this.ClientSize = new System.Drawing.Size(825, 619);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.bottom_buttons);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox3);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(841, 449);
+            this.MinimumSize = new System.Drawing.Size(840, 449);
             this.Name = "UserSwitch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "User switch";
-            this.TopMost = true;
+            this.Text = "Users dashboard";
             this.Load += new System.EventHandler(this.UserSwitch_Load);
-            this.AnimatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.bottom_buttons.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -244,12 +310,16 @@ namespace WinPaletter
         internal System.Windows.Forms.Label title;
         internal UI.WP.Button Button2;
         internal UI.WP.Button Button1;
-        private UI.WP.GroupBox groupBox1;
         public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        internal UI.WP.AnimatedBox AnimatedBox1;
         private UI.WP.CheckBox checkBox1;
         internal UI.WP.AlertBox alertBox2;
         internal UI.WP.AlertBox AlertBox1;
         private UI.WP.GroupBox bottom_buttons;
+        private UI.WP.GroupBox groupBox2;
+        internal System.Windows.Forms.Label label2;
+        internal System.Windows.Forms.PictureBox pictureBox2;
+        private UI.WP.Button button3;
+        private UI.WP.GroupBox groupBox3;
+        private UI.WP.GroupBox groupBox1;
     }
 }

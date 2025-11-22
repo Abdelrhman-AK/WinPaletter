@@ -855,8 +855,16 @@ namespace WinPaletter.UI.WP
 
             Image img = !_imageGlyphEnabled ? Image : ImageGlyph;
 
+            Rectangle imageRect = Rectangle.Round(imageRectF);
+
+            if (!_imageGlyphEnabled)
+            {
+                imageRect.X++;
+                imageRect.Y++;
+            }
+
             // Draw image
-            if (img != null) G.DrawImage(img, Rectangle.Round(imageRectF));
+            if (img != null) G.DrawImage(img, Rectangle.Round(imageRect));
 
             // Draw text
             if (!string.IsNullOrEmpty(Text))

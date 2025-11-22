@@ -9,6 +9,7 @@
             /// </summary>
             public partial class Users_Cls
             {
+                public string GitHub_NotSigned { get; set; } = "You are not signed in to GitHub. Sign in for more features!";
                 public string Computer { get; set; } = "Computer";
                 public string OnComputer { get; set; } = "On computer: {0}";
                 public string TypeAdministrator { get; set; } = "Type: Administrator";

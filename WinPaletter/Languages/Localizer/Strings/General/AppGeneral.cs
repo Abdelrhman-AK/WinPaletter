@@ -48,6 +48,7 @@
                 public string MyTheme { get; set; } = "My theme";
                 public string Logoff { get; set; } = "Log off";
                 public string SignOut { get; set; } = "Sign out";
+                public string SignIn { get; set; } = "Sign in";
                 public string TBSizeUnit { get; set; } = "TB";
                 public string GBSizeUnit { get; set; } = "GB";
                 public string MBSizeUnit { get; set; } = "MB";
@@ -94,6 +95,7 @@
                 public string ClusteringColors { get; set; } = "Clustering colors";
                 public string SortingByDominance { get; set; } = "Sorting by dominance";
                 public string GeneratingColorsVariations { get; set; } = "Generating colors variations";
+                public string Welcome { get; set; } = "Welcome";
             }
         }
     }

@@ -24,9 +24,6 @@ namespace WinPaletter
     public partial class Store
     {
         #region Variables
-        private GitHubLoginManager loginManager;
-        private Octokit.User loggedInUser;
-        bool isLoggedIn;
 
         private bool StartedAsOnlineOrOffline = true;
         private bool FinishedLoadingInitialTMs;
@@ -272,21 +269,9 @@ namespace WinPaletter
             os_vista.Image = Assets.Store.DesignedForVista;
             os_xp.Image = Assets.Store.DesignedForXP;
 
-            loginManager = new();
-
-            loginManager.OnCountdownStarted += LoginManager_OnCountdownStarted;
-            loginManager.OnCountdownTick += LoginManager_OnCountdownTick;
-            loginManager.OnCountdownEnded += LoginManager_OnCountdownEnded;
-            loginManager.OnDeviceFlowInitiated += LoginManager_OnDeviceFlowInitiated;
-            loginManager.OnAuthorizationSuccess += LoginManager_OnAuthorizationSuccess;
-            loginManager.OnAuthorizationFailure += LoginManager_OnAuthorizationFailure;
-            loginManager.OnSignedOut += LoginManager_OnSignedOut;
-
-            isLoggedIn = await loginManager.IsLoggedInAsync().ConfigureAwait(false);
-
-            if (isLoggedIn)
+            if (User.GitHub_LoggedIn)
             {
-                loggedInUser = await loginManager.Client.User.Current().ConfigureAwait(false);
+                User.GitHub = await Program.GitHub.Client.User.Current().ConfigureAwait(false);
                 UpdateLoginData();
             }
 
@@ -639,10 +624,10 @@ namespace WinPaletter
         private void OfflineMode(string[] folders = null)
         {
             BeginInvoke(() =>
-                {
-                    ProgressBar1.Visible = true;
-                    store_container.Visible = false;
-                });
+            {
+                ProgressBar1.Visible = true;
+                store_container.Visible = false;
+            });
 
             int i = 0;
             int allProgress = 0;
@@ -718,10 +703,10 @@ namespace WinPaletter
             }
 
             BeginInvoke(() =>
-                {
-                    ProgressBar1.Visible = false;
-                    store_container.Visible = true;
-                });
+            {
+                ProgressBar1.Visible = false;
+                store_container.Visible = true;
+            });
 
             TMList.Clear();
 
@@ -854,19 +839,19 @@ namespace WinPaletter
                     if (!string.IsNullOrWhiteSpace(selectedItem.MD5_PackFile) && selectedItem.MD5_PackFile != "0")
                     {
                         Task.Run(() =>
-                                {
-                                    Invoke(() => progressBar_ResPack.Visible = true);
-                                    Invoke(() => respacksize_lbl.Visible = false);
+                        {
+                            Invoke(() => progressBar_ResPack.Visible = true);
+                            Invoke(() => respacksize_lbl.Visible = false);
 
-                                    long Pack_Size = DM.GetFileSizeFromUrl(selectedItem.URL_PackFile);
+                            long Pack_Size = DM.GetFileSizeFromUrl(selectedItem.URL_PackFile);
 
-                                    respacksize_lbl.SetText(Pack_Size > 0L ?
-                                        string.Format(Program.Lang.Strings.Store.ResourcesPackSize, Pack_Size.ToStringFileSize()) :
-                                        Program.Lang.Strings.Store.NoResourcesPack);
+                            respacksize_lbl.SetText(Pack_Size > 0L ?
+                                string.Format(Program.Lang.Strings.Store.ResourcesPackSize, Pack_Size.ToStringFileSize()) :
+                                Program.Lang.Strings.Store.NoResourcesPack);
 
-                                    Invoke(() => progressBar_ResPack.Visible = false);
-                                    Invoke(() => respacksize_lbl.Visible = true);
-                                });
+                            Invoke(() => progressBar_ResPack.Visible = false);
+                            Invoke(() => respacksize_lbl.Visible = true);
+                        });
                     }
                     else
                     {
@@ -1514,7 +1499,7 @@ namespace WinPaletter
             //progressBar2.Visible = true;
             //await loginManager.StartLoggingInAsync().ConfigureAwait(false);
 
-            using (Login logIn = new())
+            using (GitHubLogin logIn = new())
             {
                 logIn.ShowDialog();
             }
@@ -1522,7 +1507,7 @@ namespace WinPaletter
 
         private async void button9_Click(object sender, EventArgs e)
         {
-            await loginManager.SignOutAsync();
+            await Program.GitHub.SignOutAsync();
         }
 
         async void UpdateLoginData()
@@ -1531,14 +1516,8 @@ namespace WinPaletter
             {
                 tabs_github.SelectedIndex = 3;
 
-                labelAlt4.Text = loggedInUser.Login;
-
-                using (DownloadManager DM = new())
-                {
-                    byte[] data = await DM.ReadAsync(loggedInUser.AvatarUrl).ConfigureAwait(false);
-                    using MemoryStream ms = new System.IO.MemoryStream(data);
-                    pictureBox4.Image = System.Drawing.Image.FromStream(ms).Resize(32, 32);
-                }
+                labelAlt4.Text = User.GitHub.Login;
+                pictureBox4.Image = User.GitHub_Avatar.Resize(32, 32);
             }
             catch (Exception ex)
             {
@@ -1546,69 +1525,6 @@ namespace WinPaletter
                 labelAlt6.Text = ex.Message;
                 Forms.BugReport.ThrowError(ex);
             }
-        }
-
-        private void LoginManager_OnAuthorizationFailure(string obj)
-        {
-            tabs_github.SelectedIndex = 2;
-            progressBar3.Visible = false;
-            labelAlt6.Text = "Authentication failed. Please try again later.";
-        }
-
-        private async void LoginManager_OnAuthorizationSuccess(Octokit.User obj)
-        {
-            loggedInUser = await loginManager.Client.User.Current();
-            UpdateLoginData();
-        }
-
-        private void LoginManager_OnDeviceFlowInitiated(string arg1, int arg2, string arg3)
-        {
-            // Invoke is needed because this event is raised from a non-UI thread
-            Invoke(() =>
-            {
-                string code = arg1;
-                c0.Text = code[0].ToString();
-                c1.Text = code[1].ToString();
-                c2.Text = code[2].ToString();
-                c3.Text = code[3].ToString();
-                c4.Text = code[5].ToString();
-                c5.Text = code[6].ToString();
-                c6.Text = code[7].ToString();
-                c7.Text = code[8].ToString();
-
-                int expiresIn = arg2;
-                string verificationUrl = arg3;
-
-                progressBar3.Visible = true;
-                progressBar3.Maximum = expiresIn;
-                progressBar3.Value = expiresIn;
-                githubLbl_elapsedSec.Text = $"Code expires in {expiresIn / 60:D2}:{expiresIn % 60:D2}";
-
-                tabs_github.SelectedIndex = 1;
-            });
-        }
-
-        private void LoginManager_OnCountdownEnded()
-        {
-            tabs_github.SelectedIndex = 0;
-            progressBar3.Visible = false;
-        }
-
-        private void LoginManager_OnCountdownTick(int obj)
-        {
-            progressBar3.Value = obj;
-            githubLbl_elapsedSec.Text = $"Code expires in {obj / 60:D2}:{obj % 60:D2}";
-        }
-
-        private void LoginManager_OnCountdownStarted(int obj)
-        {
-
-        }
-
-        private void LoginManager_OnSignedOut()
-        {
-            tabs_github.SelectedIndex = 0;
-            loggedInUser = null;
         }
     }
 }

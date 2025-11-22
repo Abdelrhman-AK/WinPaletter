@@ -574,30 +574,32 @@ namespace WinPaletter.TypesExtensions
         /// corresponding components of <paramref name="tintColor"/>, while
         /// preserving the original alpha channel to keep smooth edges intact.
         /// </summary>
-        /// <param name="originalBitmap">The source bitmap. Cannot be null.</param>
+        /// <param name="bitmap">The source bitmap. Cannot be null.</param>
         /// <param name="tintColor">The color whose R, G, and B values are used as multipliers (0–255).</param>
-        /// <returns>A new <see cref="Bitmap"/> with the tint applied, or <c>null</c> if <paramref name="originalBitmap"/> is null.</returns>
-        public static Bitmap Tint(this Bitmap originalBitmap, Color tintColor)
+        /// <returns>A new <see cref="Bitmap"/> with the tint applied, or <c>null</c> if <paramref name="bitmap"/> is null.</returns>
+        public static Bitmap Tint(this Bitmap bitmap, Color tintColor)
         {
-            if (originalBitmap == null) return null;
+            if (bitmap == null) return null;
 
-            // Clone to ensure we can safely read the pixels
-            using Bitmap clone = originalBitmap.Clone(new Rectangle(0, 0, originalBitmap.Width, originalBitmap.Height), PixelFormat.Format32bppArgb);
+            // Always clone on the same thread the bitmap is used
+            Bitmap srcClone = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), PixelFormat.Format32bppArgb);
 
-            Bitmap tintedBitmap = new(clone.Width, clone.Height, PixelFormat.Format32bppArgb);
-            Rectangle rect = new(0, 0, clone.Width, clone.Height);
+            Bitmap tintedBitmap = new(srcClone.Width, srcClone.Height, PixelFormat.Format32bppArgb);
+            Rectangle rect = new(0, 0, srcClone.Width, srcClone.Height);
 
-            BitmapData srcData = clone.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            BitmapData dstData = tintedBitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            BitmapData srcData = null;
+            BitmapData dstData = null;
 
             try
             {
+                srcData = srcClone.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                dstData = tintedBitmap.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
                 int width = srcData.Width;
                 int height = srcData.Height;
                 int strideSrc = srcData.Stride;
                 int strideDst = dstData.Stride;
 
-                // Normalized multipliers for R, G, B only (leave alpha alone)
                 float rMul = tintColor.R / 255f;
                 float gMul = tintColor.G / 255f;
                 float bMul = tintColor.B / 255f;
@@ -607,7 +609,8 @@ namespace WinPaletter.TypesExtensions
                     byte* srcBase = (byte*)srcData.Scan0;
                     byte* dstBase = (byte*)dstData.Scan0;
 
-                    Parallel.For(0, height, y =>
+                    // Process each row safely
+                    Action<int> processRow = y =>
                     {
                         byte* srcRow = srcBase + y * strideSrc;
                         byte* dstRow = dstBase + y * strideDst;
@@ -616,21 +619,22 @@ namespace WinPaletter.TypesExtensions
                         {
                             int idx = x * 4;
 
-                            // Multiply R, G, B and round, clamp to 255
-                            dstRow[idx] = (byte)Math.Min(255, srcRow[idx] * bMul); // B
+                            dstRow[idx] = (byte)Math.Min(255, srcRow[idx] * bMul);     // B
                             dstRow[idx + 1] = (byte)Math.Min(255, srcRow[idx + 1] * gMul); // G
                             dstRow[idx + 2] = (byte)Math.Min(255, srcRow[idx + 2] * rMul); // R
-
-                            // Preserve original alpha to keep anti-aliased edges
-                            dstRow[idx + 3] = srcRow[idx + 3];
+                            dstRow[idx + 3] = srcRow[idx + 3]; // preserve alpha
                         }
-                    });
+                    };
+
+                    if (height >= 64) Parallel.For(0, height, processRow);
+                    else for (int y = 0; y < height; y++) processRow(y);
                 }
             }
             finally
             {
-                clone.UnlockBits(srcData);
-                tintedBitmap.UnlockBits(dstData);
+                if (srcData != null) srcClone.UnlockBits(srcData);
+                if (dstData != null) tintedBitmap.UnlockBits(dstData);
+                srcClone.Dispose(); // dispose cloned source after unlocking
             }
 
             return tintedBitmap;
@@ -652,9 +656,8 @@ namespace WinPaletter.TypesExtensions
             // Clamp opacity
             if (opacity <= 0f)
             {
-                var transparent = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
-                using (var g = Graphics.FromImage(transparent))
-                    g.Clear(Color.Transparent);
+                Bitmap transparent = new(source.Width, source.Height, PixelFormat.Format32bppArgb);
+                using (Graphics G = Graphics.FromImage(transparent)) G.Clear(Color.Transparent);
                 return transparent;
             }
 
@@ -663,27 +666,27 @@ namespace WinPaletter.TypesExtensions
                 return source.Clone(new Rectangle(0, 0, source.Width, source.Height), PixelFormat.Format32bppArgb);
             }
 
-            // Convert opacity to 8.8 fixed-point to avoid per-pixel float multiply.
+            // Convert opacity to 8.8 fixed-point
             int opQ = Math.Min(255, Math.Max(1, (int)(opacity * 256f)));
 
-            // Always clone the source to avoid locking a bitmap in use elsewhere
-            Bitmap src32 = source.PixelFormat == PixelFormat.Format32bppArgb
-                ? source.Clone(new Rectangle(0, 0, source.Width, source.Height), PixelFormat.Format32bppArgb)
-                : new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
+            // Always work on a clone to avoid threading issues
+            Bitmap src32 = source.Clone(new Rectangle(0, 0, source.Width, source.Height), PixelFormat.Format32bppArgb);
 
+            // If original source is not 32bpp, normalize
             if (source.PixelFormat != PixelFormat.Format32bppArgb)
             {
-                using (var g = Graphics.FromImage(src32))
+                using (Graphics G = Graphics.FromImage(src32))
                 {
-                    g.CompositingMode = CompositingMode.SourceCopy;
-                    g.DrawImageUnscaled(source, 0, 0);
+                    G.CompositingMode = CompositingMode.SourceCopy;
+                    G.DrawImageUnscaled(source, 0, 0);
                 }
             }
 
             Bitmap dest = new(src32.Width, src32.Height, PixelFormat.Format32bppArgb);
             Rectangle rect = new(0, 0, src32.Width, src32.Height);
 
-            BitmapData srcData = null, dstData = null;
+            BitmapData srcData = null;
+            BitmapData dstData = null;
 
             try
             {
@@ -715,18 +718,15 @@ namespace WinPaletter.TypesExtensions
                         }
                     };
 
-                    if (useParallel && height >= 64)
-                        Parallel.For(0, height, processRow);
-                    else
-                        for (int y = 0; y < height; y++)
-                            processRow(y);
+                    if (useParallel && height >= 64) Parallel.For(0, height, processRow);
+                    else for (int y = 0; y < height; y++) processRow(y);
                 }
             }
             finally
             {
                 if (srcData != null) src32.UnlockBits(srcData);
                 if (dstData != null) dest.UnlockBits(dstData);
-                src32.Dispose();
+                src32.Dispose(); // Dispose cloned source
             }
 
             return dest;
@@ -1449,38 +1449,79 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="source">Source bitmap.</param>
         /// <returns>Circular bitmap cropped and masked to the smallest dimension.</returns>
-        public static Bitmap ToCircular(this Bitmap source)
+        public static Bitmap ToCircular(this Bitmap bitmap, Color? lineColor = null)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (bitmap == null) return null;
 
-            int size = Math.Min(source.Width, source.Height);
-            int x = (source.Width - size) / 2;
-            int y = (source.Height - size) / 2;
+            Rectangle rect = new(1, 1, bitmap.Width - 2, bitmap.Height - 2);
 
-            Bitmap output = new(size, size, PixelFormat.Format32bppArgb);
+            Bitmap canvas = new(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
 
-            using (Graphics G = Graphics.FromImage(output))
+            using (Graphics G = Graphics.FromImage(canvas))
             {
                 G.SmoothingMode = SmoothingMode.AntiAlias;
-                G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
                 G.Clear(Color.Transparent);
 
                 using (GraphicsPath path = new())
                 {
-                    path.AddEllipse(0, 0, size, size);
+                    path.AddEllipse(rect);
                     G.SetClip(path);
+                    G.DrawImage(bitmap, rect);
+                    G.ResetClip();
+                }
 
-                    G.DrawImage(source, -x, -y, source.Width, source.Height);
+                Color penColor = lineColor ?? Program.Style.Schemes.Main.Colors.ForeColor;
 
-                    using (Pen pen = new(Program.Style.Schemes.Main.Colors.Line(5), 5f))
-                    {
-                        G.DrawEllipse(pen, -x, -y, source.Width, source.Height);
-                    }
+                using (Pen pen = new(penColor, 2f))
+                {
+                    RectangleF rect_border = new(0, 0, bitmap.Width - 1, bitmap.Height - 1);
+
+                    G.DrawEllipse(pen, rect_border);
                 }
             }
 
-            return output;
+            return canvas;
+        }
+
+        /// <summary>
+        /// Draws an overlay bitmap on top of the source bitmap at the specified location.
+        /// </summary>
+        /// <param name="source">The source bitmap to draw on.</param>
+        /// <param name="overlay">The bitmap to overlay.</param>
+        /// <param name="location">Top-left location on the source bitmap where the overlay will be drawn.</param>
+        /// <returns>A new bitmap with the overlay applied.</returns>
+        public static Bitmap Overlay(this Bitmap source, Bitmap overlay, PointF location)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (overlay == null) throw new ArgumentNullException(nameof(overlay));
+
+            // Determine new canvas bounds
+            float minX = Math.Min(0, location.X);
+            float minY = Math.Min(0, location.Y);
+            float maxX = Math.Max(source.Width, location.X + overlay.Width);
+            float maxY = Math.Max(source.Height, location.Y + overlay.Height);
+
+            int newWidth = (int)Math.Ceiling(maxX - minX);
+            int newHeight = (int)Math.Ceiling(maxY - minY);
+
+            Bitmap result = new(newWidth, newHeight, PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.CompositingQuality = CompositingQuality.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                // Draw the source bitmap at offset if minX or minY is negative
+                g.DrawImage(source, -minX, -minY, source.Width, source.Height);
+
+                // Draw the overlay at offset
+                g.DrawImage(overlay, location.X - minX, location.Y - minY, overlay.Width, overlay.Height);
+            }
+
+            return result;
         }
     }
 }

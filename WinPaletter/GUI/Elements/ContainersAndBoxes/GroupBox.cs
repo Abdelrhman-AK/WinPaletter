@@ -31,6 +31,18 @@ namespace WinPaletter.UI.WP
         [Bindable(true)]
         public override string Text { get; set; } = string.Empty;
 
+        public bool UseDecorationPattern
+        {
+            get => useDecorationPattern;
+            set
+            {
+                useDecorationPattern = value;
+                UpdatePattern(value ? Program.Style.Pattern : 0);
+                Invalidate();
+            }
+        }
+        private bool useDecorationPattern;
+
         #endregion
 
 
@@ -42,7 +54,6 @@ namespace WinPaletter.UI.WP
             parentLevel = this.Level();
         }
 
-
         public void UpdatePattern(int val)
         {
             Bitmap bmp;
@@ -51,7 +62,7 @@ namespace WinPaletter.UI.WP
             {
                 case 0:
                     {
-                        using (Bitmap x = new(Width, Height)) { bmp = (Bitmap)x.Clone(); }
+                        bmp = null;
                         break;
                     }
 
@@ -153,13 +164,14 @@ namespace WinPaletter.UI.WP
                 using (Bitmap bmpContrast = bmp?.Contrast(0.5f))
                 using (Bitmap bmpInvert = bmpContrast?.Invert())
                 {
-                    bmp = bmpInvert?.Fade(0.8f);
+                    if (bmpInvert is not null)
+                    {
+                        bmp = bmpInvert?.Fade(0.8f);
+                    }
                 }
             }
 
             if (bmp != null) pattern = new(bmp); else pattern = null;
-
-            Invalidate();
         }
 
 
