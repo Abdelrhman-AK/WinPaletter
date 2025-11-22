@@ -57,41 +57,50 @@ namespace WinPaletter
 
         public async Task UpdateGitHubLoginData()
         {
+            // Prepare the glyph bitmap safely
+            Image glyph = User.GitHub_LoggedIn ? (Image)Properties.Resources.Glyph_SignOut.Clone() : (Image)Properties.Resources.Glyph_GitHub.Clone();
+
+            // Update the label2 on UI thread
+            label2.Invoke(() =>
+            {
+                label2.Text = User.GitHub_LoggedIn ? User.GitHub?.Login ?? Program.Lang.Strings.Users.GitHub_NotSigned : Program.Lang.Strings.Users.GitHub_NotSigned;
+            });
+
+            // Update the button on UI thread
+            button3.Invoke(() =>
+            {
+                // Assign text
+                button3.Text = User.GitHub_LoggedIn ? Program.Lang.Strings.General.SignOut : Program.Lang.Strings.General.SignIn;
+
+                // Assign image safely
+                button3.ImageGlyph?.Dispose();
+                button3.ImageGlyph = glyph;
+            });
+
+
+            Bitmap avatar = null;
+
             if (User.GitHub_LoggedIn)
             {
-                label2.Text = User.GitHub?.Login;
-
-                // Start download only if avatar is null
+                // Wait for avatar to exist
                 if (User.GitHub_Avatar is null)
                 {
-                    // Run download in background, don't await
-                    _ = Task.Run(async () =>
-                    {
-                        await User.DownloadAvatarAsync().ConfigureAwait(false);
-
-                        // Update UI safely
-                        pictureBox2.Invoke(() =>
-                        {
-                            pictureBox2.Image = User.GitHub_Avatar?.ToCircular();
-                        });
-                    });
+                    await User.DownloadAvatarAsync();
                 }
-                else
+
+                if (User.GitHub_Avatar != null)
                 {
-                    pictureBox2.Image = User.GitHub_Avatar?.ToCircular();
+                    avatar = User.GitHub_Avatar.ToCircular();
                 }
-
-                button3.Text = Program.Lang.Strings.General.SignOut;
-                button3.ImageGlyph = Properties.Resources.Glyph_SignOut;
             }
-            else
+
+            if (avatar is null)
             {
-                label2.Text = Program.Lang.Strings.Users.GitHub_NotSigned;
-                pictureBox2.Image = Properties.Resources.GitHub_SignInForFeatures;
-
-                button3.Text = Program.Lang.Strings.General.SignIn;
-                button3.ImageGlyph = Properties.Resources.Glyph_GitHub;
+                avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
             }
+
+            pictureBox2.Image?.Dispose();
+            pictureBox2.Image = avatar;
         }
 
         private void ListUsers(Dictionary<string, string> UsersList)

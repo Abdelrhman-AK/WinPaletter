@@ -1,191 +1,145 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Drawing.Drawing2D;
+using System.Management.Instrumentation;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-    [Description("Themed GroupBox for WinPaletter UI")]
-    [DefaultEvent("Click")]
+    [Description("Themed GroupBox (fully optimized, memory-friendly)")]
     public class GroupBox : Panel
     {
         public GroupBox()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
-            DoubleBuffered = true;
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
+
             BackColor = Color.Transparent;
             Text = string.Empty;
         }
 
-        #region Properties
+        // ================================
+        // Cached pattern brush
+        // ================================
+        private TextureBrush _patternBrush;
+        private int _cachedPatternVal = -1;
+        private bool _cachedDarkMode = false;
+        private int parentLevel = 0;
 
-        private TextureBrush pattern;
-
-        [Browsable(true)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-        [Bindable(true)]
-        public override string Text { get; set; } = string.Empty;
-
+        // ================================
+        // Properties
+        // ================================
+        private bool useDecorationPattern;
         public bool UseDecorationPattern
         {
             get => useDecorationPattern;
             set
             {
                 useDecorationPattern = value;
-                UpdatePattern(value ? Program.Style.Pattern : 0);
+                UpdatePattern();
                 Invalidate();
             }
         }
-        private bool useDecorationPattern;
-
-        #endregion
-
-
-        int parentLevel = 0;
-        protected override void OnParentChanged(EventArgs e)
-        {
-            base.OnParentChanged(e);
-
-            parentLevel = this.Level();
-        }
-
-        public void UpdatePattern(int val)
-        {
-            Bitmap bmp;
-
-            switch (val)
-            {
-                case 0:
-                    {
-                        bmp = null;
-                        break;
-                    }
-
-                case 1:
-                    {
-                        bmp = Assets.Store.Pattern1;
-                        break;
-                    }
-                case 2:
-                    {
-                        bmp = Assets.Store.Pattern2;
-                        break;
-                    }
-                case 3:
-                    {
-                        bmp = Assets.Store.Pattern3;
-                        break;
-                    }
-                case 4:
-                    {
-                        bmp = Assets.Store.Pattern4;
-                        break;
-                    }
-                case 5:
-                    {
-                        bmp = Assets.Store.Pattern5;
-                        break;
-                    }
-                case 6:
-                    {
-                        bmp = Assets.Store.Pattern6;
-                        break;
-                    }
-                case 7:
-                    {
-                        bmp = Assets.Store.Pattern7;
-                        break;
-                    }
-                case 8:
-                    {
-                        bmp = Assets.Store.Pattern8;
-                        break;
-                    }
-                case 9:
-                    {
-                        bmp = Assets.Store.Pattern9;
-                        break;
-                    }
-                case 10:
-                    {
-                        bmp = Assets.Store.Pattern10;
-                        break;
-                    }
-                case 11:
-                    {
-                        bmp = Assets.Store.Pattern11;
-                        break;
-                    }
-                case 12:
-                    {
-                        bmp = Assets.Store.Pattern12;
-                        break;
-                    }
-                case 13:
-                    {
-                        bmp = Assets.Store.Pattern13;
-                        break;
-                    }
-                case 14:
-                    {
-                        bmp = Assets.Store.Pattern14;
-                        break;
-                    }
-                case 15:
-                    {
-                        bmp = Assets.Store.Pattern15;
-                        break;
-                    }
-                case 16:
-                    {
-                        bmp = Assets.Store.Pattern16;
-                        break;
-                    }
-                case 17:
-                    {
-                        bmp = Assets.Store.Pattern17;
-                        break;
-                    }
-                default:
-                    {
-                        bmp = null;
-                        break;
-                    }
-
-            }
-
-            if (!Program.Style.DarkMode)
-            {
-                using (Bitmap bmpContrast = bmp?.Contrast(0.5f))
-                using (Bitmap bmpInvert = bmpContrast?.Invert())
-                {
-                    if (bmpInvert is not null)
-                    {
-                        bmp = bmpInvert?.Fade(0.8f);
-                    }
-                }
-            }
-
-            if (bmp != null) pattern = new(bmp); else pattern = null;
-        }
-
 
         private bool useSharpStyle = false;
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
+        [Browsable(false)]
         public bool UseSharpStyle
         {
             get => useSharpStyle;
-            set
-            {
-                useSharpStyle = value;
-                Invalidate();
-            }
+            set { useSharpStyle = value; Invalidate(); }
         }
+
+        public override string Text { get; set; } = string.Empty;
+
+        // ================================
+        // Parent changes
+        // ================================
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            parentLevel = this.Level();
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            // Listen to global theme/pattern changes
+            Program.Style.PatternChanged += OnGlobalStyleChanged;
+
+            OnGlobalStyleChanged();
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Program.Style.PatternChanged -= OnGlobalStyleChanged;
+
+            base.OnHandleDestroyed(e); 
+        }
+
+        // ================================
+        // Update pattern brush
+        // ================================
+        public void UpdatePattern(int? patternNO = null)
+        {
+            patternNO ??= Program.Style.Pattern;
+            int val = (!DesignMode && useDecorationPattern) ? (int)patternNO : 0;
+
+            if (val == _cachedPatternVal && _cachedDarkMode == Program.Style.DarkMode) return;
+
+            _cachedPatternVal = val;
+            _cachedDarkMode = Program.Style.DarkMode;
+
+            _patternBrush?.Dispose();
+            _patternBrush = null;
+
+            if (val == 0) return;
+
+            Bitmap src = val switch
+            {
+                1 => Assets.Store.Pattern1,
+                2 => Assets.Store.Pattern2,
+                3 => Assets.Store.Pattern3,
+                4 => Assets.Store.Pattern4,
+                5 => Assets.Store.Pattern5,
+                6 => Assets.Store.Pattern6,
+                7 => Assets.Store.Pattern7,
+                8 => Assets.Store.Pattern8,
+                9 => Assets.Store.Pattern9,
+                10 => Assets.Store.Pattern10,
+                11 => Assets.Store.Pattern11,
+                12 => Assets.Store.Pattern12,
+                13 => Assets.Store.Pattern13,
+                14 => Assets.Store.Pattern14,
+                15 => Assets.Store.Pattern15,
+                16 => Assets.Store.Pattern16,
+                17 => Assets.Store.Pattern17,
+                _ => null
+            };
+
+            if (src == null) return;
+
+            Bitmap processed = src;
+            if (!Program.Style.DarkMode)
+                processed = processed.Contrast(0.5f)?.Invert()?.Fade(0.8f);
+
+            if (processed != null)
+                _patternBrush = new TextureBrush(processed, WrapMode.Tile);
+        }
+
+        // ================================
+        // Handle global style changes
+        // ================================
+        private void OnGlobalStyleChanged()
+        {
+            if (UseDecorationPattern) UpdatePattern(Program.Style.Pattern);
+        }
+
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
@@ -216,13 +170,13 @@ namespace WinPaletter.UI.WP
                     if (!useSharpStyle)
                     {
                         G.FillRoundedRect(br, Rect);
-                        if (pattern != null) G.FillRoundedRect(pattern, Rect);
+                        if (_patternBrush != null) G.FillRoundedRect(_patternBrush, Rect);
                         G.DrawRoundedRect(P, Rect);
                     }
                     else
                     {
                         G.FillRectangle(br, Rect);
-                        if (pattern != null) G.FillRectangle(pattern, Rect);
+                        if (_patternBrush != null) G.FillRectangle(_patternBrush, Rect);
                         G.DrawRectangle(P, Rect);
                     }
                 }
@@ -237,8 +191,17 @@ namespace WinPaletter.UI.WP
                     G.DrawRectangle(P, Rect);
                 }
             }
+        }
 
-            base.OnPaint(e);
+        // ================================
+        // Cleanup
+        // ================================
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                _patternBrush?.Dispose();
+
+            base.Dispose(disposing);
         }
     }
 }

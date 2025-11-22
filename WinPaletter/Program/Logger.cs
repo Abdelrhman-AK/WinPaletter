@@ -2,6 +2,7 @@
 using Serilog.Events;
 using Serilog.Formatting.Json;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -154,6 +155,16 @@ namespace WinPaletter
 
         public void Write(LogEventLevel level, string messageTemplate, System.Exception ex = null)
         {
+            if (ex is null)
+            {
+                Debugger.Log((int)level, level.ToString(), $"[{level}] {messageTemplate} \r\n");
+            }
+            else
+            {
+                Debugger.Log((int)level, level.ToString(), $"[{level}] {messageTemplate}; {ex.Message} \r\n");
+            }
+
+
             if (!_initialized) Initialize();
 
             if (Program.Settings.AppLog.Enabled)

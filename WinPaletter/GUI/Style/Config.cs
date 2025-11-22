@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using Serilog.Sinks.File;
+using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -57,10 +59,23 @@ namespace WinPaletter.UI.Style
         }
         private TextRenderingHint _renderingHint = TextRenderingHint.SystemDefault;
 
+        public event Action DarkModeChanged;
         /// <summary>
         /// Gets or sets the current theme of the application; true for dark mode, false for light mode
         /// </summary>
-        public bool DarkMode { get; set; } = true;
+        public bool DarkMode
+        {
+            get => _darkMode;
+            set
+            {
+                if (_darkMode != value)
+                {
+                    _darkMode = value;
+                    DarkModeChanged?.Invoke();
+                }
+            }
+        }
+        private bool _darkMode;
 
         /// <summary>
         /// Gets or sets the current theme of the application; true for rounded corners, false for square corners
@@ -207,6 +222,7 @@ namespace WinPaletter.UI.Style
         public Bitmap Texture => texture;
         private static Bitmap texture;
 
+        public event Action PatternChanged;
         public int Pattern
         {
             get => pattern;
@@ -217,6 +233,7 @@ namespace WinPaletter.UI.Style
                     pattern = value;
                     texture?.Dispose();
                     texture = GetTexture(value, !DarkMode);
+                    PatternChanged?.Invoke();
                 }
             }
         }

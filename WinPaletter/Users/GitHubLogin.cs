@@ -63,7 +63,7 @@ namespace WinPaletter
 
         private void LoginManager_OnAuthorizationFailure(string obj)
         {
-            Invoke(() =>  
+            Invoke(() =>
             {
                 label23.Text = obj;
                 signin_btn.Visible = true;
@@ -176,6 +176,11 @@ namespace WinPaletter
         {
             signin_btn.Visible = true;
 
+            if (tablessControl1.SelectedIndex == 1 || tablessControl1.SelectedIndex == 2)
+            {
+                Program.GitHub.CancelLogin();
+            }
+
             int amount = tablessControl1.SelectedIndex == 2 ? 2 : 1;
 
             Program.Animator.HideSync(tablessControl1);
@@ -194,6 +199,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         protected override async void OnFormClosing(FormClosingEventArgs e)
         {
+            // Detach events
             Program.GitHub?.OnCountdownStarted -= LoginManager_OnCountdownStarted;
             Program.GitHub?.OnCountdownTick -= LoginManager_OnCountdownTick;
             Program.GitHub?.OnCountdownEnded -= LoginManager_OnCountdownEnded;
@@ -201,13 +207,17 @@ namespace WinPaletter
             Program.GitHub?.OnAuthorizationSuccess -= LoginManager_OnAuthorizationSuccess;
             Program.GitHub?.OnAuthorizationFailure -= LoginManager_OnAuthorizationFailure;
 
-            cts?.Cancel();
+            Program.GitHub.CancelLogin();
 
-            bool isLoggedIn = await Program.GitHub.IsLoggedInAsync().ConfigureAwait(false);
+            // Keep continuation on UI thread
+            bool isLoggedIn = await Program.GitHub.IsLoggedInAsync();
+
             User.UpdateGitHubLoginStatus(isLoggedIn);
 
-            User.GitHub = isLoggedIn ? await Program.GitHub.Client.User.Current().ConfigureAwait(false) : null;
+            // Only assign after ensuring the user object is ready
+            User.GitHub = isLoggedIn ? await Program.GitHub.Client.User.Current() : null;
 
+            // Update UI safely
             await Forms.UserSwitch.UpdateGitHubLoginData();
 
             base.OnFormClosing(e);

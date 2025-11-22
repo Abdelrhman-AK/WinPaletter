@@ -95,7 +95,6 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 67);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(5);
@@ -185,6 +184,7 @@ namespace WinPaletter
             this.bottom_buttons.Size = new System.Drawing.Size(795, 48);
             this.bottom_buttons.TabIndex = 140;
             this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // groupBox2
             // 
@@ -200,6 +200,7 @@ namespace WinPaletter
             this.groupBox2.Size = new System.Drawing.Size(801, 67);
             this.groupBox2.TabIndex = 141;
             this.groupBox2.UseDecorationPattern = true;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // button3
             // 
@@ -262,6 +263,7 @@ namespace WinPaletter
             this.groupBox3.Size = new System.Drawing.Size(801, 473);
             this.groupBox3.TabIndex = 142;
             this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // groupBox1
             // 
@@ -273,6 +275,7 @@ namespace WinPaletter
             this.groupBox1.Size = new System.Drawing.Size(825, 48);
             this.groupBox1.TabIndex = 143;
             this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // UserSwitch
             // 

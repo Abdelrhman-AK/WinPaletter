@@ -1451,7 +1451,7 @@ namespace WinPaletter.TypesExtensions
         /// <returns>Circular bitmap cropped and masked to the smallest dimension.</returns>
         public static Bitmap ToCircular(this Bitmap bitmap, Color? lineColor = null)
         {
-            if (bitmap == null) return null;
+            if (bitmap is null) return null;
 
             Rectangle rect = new(1, 1, bitmap.Width - 2, bitmap.Height - 2);
 
@@ -1460,7 +1460,6 @@ namespace WinPaletter.TypesExtensions
             using (Graphics G = Graphics.FromImage(canvas))
             {
                 G.SmoothingMode = SmoothingMode.AntiAlias;
-
                 G.Clear(Color.Transparent);
 
                 using (GraphicsPath path = new())
@@ -1472,11 +1471,9 @@ namespace WinPaletter.TypesExtensions
                 }
 
                 Color penColor = lineColor ?? Program.Style.Schemes.Main.Colors.ForeColor;
-
                 using (Pen pen = new(penColor, 2f))
                 {
                     RectangleF rect_border = new(0, 0, bitmap.Width - 1, bitmap.Height - 1);
-
                     G.DrawEllipse(pen, rect_border);
                 }
             }

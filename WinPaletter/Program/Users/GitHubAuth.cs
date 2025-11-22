@@ -253,8 +253,14 @@ namespace WinPaletter
         /// </remarks>
         public void CancelLogin()
         {
-            _cancellationTokenSource?.Cancel();
-            OnLoginCanceled?.Invoke();
+            if (_cancellationTokenSource != null)
+            {
+                _cancellationTokenSource.Cancel();
+                _cancellationTokenSource.Dispose();
+                _cancellationTokenSource = null;
+
+                OnLoginCanceled?.Invoke();
+            }
         }
 
         #endregion
@@ -290,26 +296,30 @@ namespace WinPaletter
 
                 deviceFlow = await Client.Oauth.InitiateDeviceFlow(deviceFlowRequest).ConfigureAwait(false);
 
-                // Open verification URL, maximized, focused and brought to top
+                // Open verification URL
                 ProcessStartInfo pci = new() { FileName = deviceFlow.VerificationUri, UseShellExecute = true };
                 Process process = Process.Start(pci);
 
                 if (process != null)
                 {
-                    // Wait a bit for the window to appear
                     await Task.Delay(1000).ConfigureAwait(false);
-
-                    // Bring to front using Win32 API
                     NativeMethods.User32.SetForegroundWindow(process.Handle);
                 }
 
                 OnDeviceFlowInitiated?.Invoke(deviceFlow.UserCode, deviceFlow.ExpiresIn, deviceFlow.VerificationUri);
                 OnCountdownStarted?.Invoke(deviceFlow.ExpiresIn);
 
-                _cancellationTokenSource = new CancellationTokenSource();
-                await PollForAuthorizationAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                using (_cancellationTokenSource = new CancellationTokenSource())
+                {
+                    await PollForAuthorizationAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                }
 
                 return true;
+            }
+            catch (OperationCanceledException)
+            {
+                OnLoginCanceled?.Invoke();
+                return false;
             }
             catch (Exception ex)
             {
@@ -353,7 +363,7 @@ namespace WinPaletter
             OauthToken token = null;
             int remaining = deviceFlow.ExpiresIn;
 
-            // Start countdown task
+            // Countdown task
             var countdownTask = Task.Run(async () =>
             {
                 while (remaining > 0 && !cancellationToken.IsCancellationRequested)
@@ -362,53 +372,63 @@ namespace WinPaletter
                     await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
                     remaining--;
                 }
-                OnCountdownTick?.Invoke(0);
+
+                if (!cancellationToken.IsCancellationRequested)
+                    OnCountdownTick?.Invoke(0);
             }, cancellationToken);
 
-            // Polling loop
-            while (remaining > 0 && !cancellationToken.IsCancellationRequested)
+            try
             {
-                try
+                while (remaining > 0 && !cancellationToken.IsCancellationRequested)
                 {
-                    token = await Client.Oauth.CreateAccessTokenForDeviceFlow(ClientId, deviceFlow).ConfigureAwait(false);
-
-                    if (!string.IsNullOrEmpty(token.AccessToken))
+                    try
                     {
-                        Client.Credentials = new Credentials(token.AccessToken);
-                        Octokit.User user = await Client.User.Current().ConfigureAwait(false);
-                        OnAuthorizationSuccess?.Invoke(user);
+                        token = await Client.Oauth.CreateAccessTokenForDeviceFlow(ClientId, deviceFlow)
+                            .ConfigureAwait(false);
 
-                        SaveToken(token.AccessToken);
-                        return;
+                        if (!string.IsNullOrEmpty(token.AccessToken))
+                        {
+                            Client.Credentials = new Credentials(token.AccessToken);
+                            Octokit.User user = await Client.User.Current().ConfigureAwait(false);
+                            OnAuthorizationSuccess?.Invoke(user);
+
+                            SaveToken(token.AccessToken);
+                            return;
+                        }
                     }
-                }
-                catch (AuthorizationException ex)
-                {
-                    if (ex.Message.Contains("authorization_pending")) OnAuthorizationPending?.Invoke();
-                    else if (ex.Message.Contains("slow_down")) await Task.Delay(deviceFlow.Interval * 2000, cancellationToken).ConfigureAwait(false);
-                    else if (ex.Message.Contains("bad_verification_code"))
+                    catch (AuthorizationException ex)
                     {
-                        OnInsufficientPermissions?.Invoke();
-                        return;
+                        if (ex.Message.Contains("authorization_pending"))
+                            OnAuthorizationPending?.Invoke();
+                        else if (ex.Message.Contains("slow_down"))
+                            await Task.Delay(deviceFlow.Interval * 2000, cancellationToken).ConfigureAwait(false);
+                        else if (ex.Message.Contains("bad_verification_code"))
+                        {
+                            OnInsufficientPermissions?.Invoke();
+                            return;
+                        }
+                        else
+                        {
+                            OnAuthorizationFailure?.Invoke(ex.Message);
+                            return;
+                        }
                     }
-                    else
-                    {
-                        OnAuthorizationFailure?.Invoke(ex.Message);
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    OnUnexpectedError?.Invoke(ex.Message);
-                    return;
+                    await Task.Delay(deviceFlow.Interval * 1000, cancellationToken).ConfigureAwait(false);
                 }
 
-                // Wait the GitHub interval before next poll
-                await Task.Delay(deviceFlow.Interval * 1000, cancellationToken).ConfigureAwait(false);
+                if (!cancellationToken.IsCancellationRequested)
+                    OnLoginTimedOut?.Invoke();
+                else
+                    OnLoginCanceled?.Invoke();
             }
-
-            if (cancellationToken.IsCancellationRequested) OnLoginCanceled?.Invoke();
-            else OnLoginTimedOut?.Invoke();
+            catch (OperationCanceledException)
+            {
+                OnLoginCanceled?.Invoke();
+            }
+            finally
+            {
+                try { await countdownTask.ConfigureAwait(false); } catch { /* Ignore cancellation */ }
+            }
         }
 
         /// <summary>
