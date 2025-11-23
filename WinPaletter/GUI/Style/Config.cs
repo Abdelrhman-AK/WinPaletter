@@ -59,7 +59,7 @@ namespace WinPaletter.UI.Style
         }
         private TextRenderingHint _renderingHint = TextRenderingHint.SystemDefault;
 
-        public event Action DarkModeChanged;
+        public static event Action DarkModeChanged;
         /// <summary>
         /// Gets or sets the current theme of the application; true for dark mode, false for light mode
         /// </summary>
@@ -222,7 +222,7 @@ namespace WinPaletter.UI.Style
         public Bitmap Texture => texture;
         private static Bitmap texture;
 
-        public event Action PatternChanged;
+        public static event Action PatternChanged;
         public int Pattern
         {
             get => pattern;

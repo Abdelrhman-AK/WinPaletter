@@ -112,61 +112,109 @@ namespace WinPaletter
         /// <param name="e"></param>
         public async static void OnGitHubUserSwitch(GitHubUserChangeEventArgs e)
         {
-            if (e.IsLoggedIn)
+            try
             {
-                GitHub = await Program.GitHub.Client.User.Current();
-                GitHub_Avatar?.Dispose();
-                await DownloadAvatarAsync();
-            }
-            else
-            {
-                GitHub = null;
-                GitHub_Avatar?.Dispose();
-            }
+                Program.Log?.Write(LogEventLevel.Information, $"GitHub user switch event triggered. {nameof(e.IsLoggedIn)}: {e.IsLoggedIn}");
 
-            GitHubUserSwitch?.Invoke(e);
+                if (e.IsLoggedIn)
+                {
+                    if (!Program.IsNetworkAvailable)
+                    {
+                        Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Cannot load GitHub user.");
+                        return;
+                    }
+
+                    GitHub = await Program.GitHub.Client.User.Current().ConfigureAwait(false);
+                    Program.Log?.Write(LogEventLevel.Information, $"GitHub user loaded: {GitHub.Login}");
+
+                    GitHub_Avatar?.Dispose();
+                    await DownloadAvatarAsync().ConfigureAwait(false);
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub avatar downloaded successfully.");
+                }
+                else
+                {
+                    GitHub = null;
+                    GitHub_Avatar?.Dispose();
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub user logged out. Avatar disposed.");
+                }
+
+                GitHubUserSwitch?.Invoke(e);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, "Error during GitHub user switch.", ex);
+            }
         }
 
         private static readonly string AvatarCache = Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
         private static readonly string ETagPath = Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
 
+        /// <summary>
+        /// Downloads the GitHub user avatar asynchronously and caches it locally.
+        /// </summary>
         public static async Task DownloadAvatarAsync()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(AvatarCache)!);
-
-            string? savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
-
-            using (HttpClient client = new())
+            try
             {
-                if (!string.IsNullOrEmpty(savedETag)) client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(savedETag);
-
-                HttpResponseMessage response = await client.GetAsync(GitHub.AvatarUrl).ConfigureAwait(false);
-
-                if (response.StatusCode == System.Net.HttpStatusCode.NotModified && File.Exists(AvatarCache))
+                if (!Program.IsNetworkAvailable)
                 {
-                    // Load cached avatar
-                    using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
-                    {
-                        GitHub_Avatar = bmp.Resize(48, 48);
-                    }
+                    Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Cannot download GitHub avatar.");
                     return;
                 }
 
+                Program.Log?.Write(LogEventLevel.Information, "Starting GitHub avatar loading.");
 
-                using (DownloadManager DM = new())
+                Directory.CreateDirectory(Path.GetDirectoryName(AvatarCache)!);
+
+                string? savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
+                Program.Log?.Write(LogEventLevel.Information, $"Loaded saved ETag: {savedETag}");
+
+                using (HttpClient client = new())
                 {
-                    byte[] data = await DM.ReadAsync(GitHub.AvatarUrl);
-                    using (MemoryStream ms = new())
-                    using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
+                    if (!string.IsNullOrEmpty(savedETag))
                     {
-                        GitHub_Avatar = bmp.Resize(48, 48);
-                        // Save locally
-                        bmp.Save(AvatarCache, ImageFormat.Png);
+                        client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(savedETag);
+                        Program.Log?.Write(LogEventLevel.Information, "ETag added to request headers.");
+                    }
+
+                    HttpResponseMessage response = await client.GetAsync(GitHub.AvatarUrl).ConfigureAwait(false);
+                    Program.Log?.Write(LogEventLevel.Information, $"HTTP GET {GitHub.AvatarUrl} returned {response.StatusCode}");
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.NotModified && File.Exists(AvatarCache))
+                    {
+                        // Load cached avatar
+                        using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
+                        {
+                            GitHub_Avatar = bmp.Resize(48, 48);
+                            Program.Log?.Write(LogEventLevel.Information, "Cached GitHub avatar loaded.");
+                        }
+                        return;
+                    }
+
+                    using (DownloadManager DM = new())
+                    {
+                        byte[] data = await DM.ReadAsync(GitHub.AvatarUrl);
+                        using (MemoryStream ms = new(data))
+                        using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
+                        {
+                            GitHub_Avatar = bmp.Resize(48, 48);
+                            // Save locally
+                            bmp.Save(AvatarCache, ImageFormat.Png);
+                            Program.Log?.Write(LogEventLevel.Information, "GitHub avatar downloaded and saved locally.");
+                        }
+                    }
+
+                    // Save new ETag
+                    if (response.Headers.ETag is not null)
+                    {
+                        File.WriteAllText(ETagPath, response.Headers.ETag.Tag);
+                        Program.Log?.Write(LogEventLevel.Information, $"Saved new ETag: {response.Headers.ETag.Tag}");
                     }
                 }
-
-                // Save new ETag
-                if (response.Headers.ETag is not null) File.WriteAllText(ETagPath, response.Headers.ETag.Tag);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, "Error downloading GitHub avatar.", ex);
             }
         }
 

@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -45,7 +46,6 @@ namespace WinPaletter
         private readonly DownloadManager DM = new();
 
         private bool ApplyOrEditToggle = true;
-        private Settings.Structures.Appearance oldAppearance = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Store"/> class.
@@ -53,6 +53,7 @@ namespace WinPaletter
         public Store()
         {
             InitializeComponent();
+            this.Disposed += (s, e) => Config.DarkModeChanged -= SetAspectsIcons;
         }
         #endregion
 
@@ -227,17 +228,15 @@ namespace WinPaletter
             RemoveAllStoreItems(store_container);
 
             Tabs.SelectedIndex = 0;
+            back_btn.Visible = false;
 
-            oldAppearance.RoundedCorners = Program.Settings.Appearance.RoundedCorners;
-            oldAppearance.BackColor = Program.Settings.Appearance.BackColor;
-            oldAppearance.AccentColor = Program.Settings.Appearance.AccentColor;
-            oldAppearance.SecondaryColor = Program.Settings.Appearance.SecondaryColor;
-            oldAppearance.TertiaryColor = Program.Settings.Appearance.TertiaryColor;
-            oldAppearance.DisabledBackColor = Program.Settings.Appearance.DisabledBackColor;
-            oldAppearance.DisabledColor = Program.Settings.Appearance.DisabledColor;
-            oldAppearance.Animations = Program.Settings.Appearance.Animations;
-            oldAppearance.CustomColors = Program.Settings.Appearance.CustomColors;
-            oldAppearance.CustomTheme_DarkMode = Program.Settings.Appearance.CustomTheme_DarkMode;
+            using (Bitmap bmp = User.ProfilePicture.Resize(24, 24))
+            {
+                Invoke(() =>
+                {
+                    avatar_btn.Image = bmp.ToCircular();
+                });
+            }
 
             CenterToScreen();
 
@@ -259,6 +258,7 @@ namespace WinPaletter
             themeSize_lbl.Font = Fonts.Console;
             respacksize_lbl.Font = Fonts.Console;
             desc_txt.Font = Fonts.ConsoleLarge;
+            ver_lbl.Font = Fonts.Console;
 
             os_12.Image = Assets.Store.DesignedFor12;
             os_11.Image = Assets.Store.DesignedFor11;
@@ -269,15 +269,73 @@ namespace WinPaletter
             os_vista.Image = Assets.Store.DesignedForVista;
             os_xp.Image = Assets.Store.DesignedForXP;
 
+            SetAspectsIcons();
+
             if (User.GitHub_LoggedIn)
             {
-                User.GitHub = await Program.GitHub.Client.User.Current().ConfigureAwait(false);
                 UpdateLoginData();
             }
 
-            tabs_github.Visible = true;
-
             groupBox4.UpdatePattern(Program.TM.Info.Pattern);
+
+            Config.DarkModeChanged += SetAspectsIcons;
+        }
+
+        void SetAspectsIcons()
+        {
+            aspect_winTheme.Image?.Dispose();
+            aspect_winTheme.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_WindowsTheme : Assets.Store.StoreAspect_WindowsTheme.Invert();
+
+            aspect_lockScreen.Image?.Dispose();
+            aspect_lockScreen.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_LockScreen : Assets.Store.StoreAspect_LockScreen.Invert();
+
+            aspect_classicColors.Image?.Dispose();
+            aspect_classicColors.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_ClassicColors : Assets.Store.StoreAspect_ClassicColors.Invert();
+
+            aspect_cursors.Image?.Dispose();
+            aspect_cursors.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Cursors : Assets.Store.StoreAspect_Cursors.Invert();
+
+            aspect_Metrics.Image?.Dispose();
+            aspect_Metrics.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Metrics : Assets.Store.StoreAspect_Metrics.Invert();
+
+            aspect_cmd.Image?.Dispose();
+            aspect_cmd.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_CMD : Assets.Store.StoreAspect_CMD.Invert();
+
+            aspect_ps86.Image?.Dispose();
+            aspect_ps86.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_PS : Assets.Store.StoreAspect_PS.Invert();
+
+            aspect_ps64.Image?.Dispose();
+            aspect_ps64.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_PS64 : Assets.Store.StoreAspect_PS64.Invert();
+
+            aspect_terminal.Image?.Dispose();
+            aspect_terminal.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Terminal : Assets.Store.StoreAspect_Terminal.Invert();
+
+            aspect_terminalPreview.Image?.Dispose();
+            aspect_terminalPreview.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_TerminalPreview : Assets.Store.StoreAspect_TerminalPreview.Invert();
+
+            aspect_wallpaper.Image?.Dispose();
+            aspect_wallpaper.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Wallpaper : Assets.Store.StoreAspect_Wallpaper.Invert();
+
+            aspect_effects.Image?.Dispose();
+            aspect_effects.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Effects : Assets.Store.StoreAspect_Effects.Invert();
+
+            aspect_sounds.Image?.Dispose();
+            aspect_sounds.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Sounds : Assets.Store.StoreAspect_Sounds.Invert();
+
+            aspect_screenSaver.Image?.Dispose();
+            aspect_screenSaver.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_ScreenSaver : Assets.Store.StoreAspect_ScreenSaver.Invert();
+
+            aspect_altTab.Image?.Dispose();
+            aspect_altTab.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_AltTab : Assets.Store.StoreAspect_AltTab.Invert();
+
+            aspect_icons.Image?.Dispose();
+            aspect_icons.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Icons : Assets.Store.StoreAspect_Icons.Invert();
+
+            aspect_accessibility.Image?.Dispose();
+            aspect_accessibility.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_Accessibility : Assets.Store.StoreAspect_Accessibility.Invert();
+
+            aspect_winPaletterAppTheme.Image?.Dispose();
+            aspect_winPaletterAppTheme.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_WinPaletterAppTheme : Assets.Store.StoreAspect_WinPaletterAppTheme.Invert();
         }
 
         private void Store_Shown(object sender, EventArgs e)
@@ -288,17 +346,6 @@ namespace WinPaletter
 
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // To prevent effect of a store theme on the other forms
-            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
-            Program.Settings.Appearance = new();
-            Program.Settings.Appearance.Load();
-
-            // Reapply style to forms to prevent conflict with an open store theme
-            Program.Style.RoundedCorners = GetRoundedCorners();
-            GetDarkMode();
-            ApplyStyle(this, true);
-            Program.Settings.Appearance.CustomColors = oldAppearance.CustomColors;
-
             ThemesFetcher.CancelAsync();
             RemoveAllStoreItems(store_container);
             Tabs.SelectedIndex = 0;
@@ -787,36 +834,32 @@ namespace WinPaletter
                     Cursor = Cursors.AppStarting;
                     groupBox5.UpdatePattern(selectedItem.TM.Info.Pattern);
 
+                    Program.Animator.ShowSync(back_btn);
                     Program.Animator.HideSync(Tabs);
                     search_panel.Visible = false;
 
                     labelAlt3.Text = selectedItem.TM.Info.ThemeName;
                     author_lbl.Text = selectedItem.TM.Info.Author;
+                    ver_lbl.Text = selectedItem.TM.Info.ThemeVersion;
 
-                    // Make application theme is the same as the selected theme
-                    if (selectedItem.TM.AppTheme.Enabled)
-                    {
-                        Program.Settings.Appearance.CustomColors = selectedItem.TM.AppTheme.Enabled;
-                        Program.Settings.Appearance.CustomTheme_DarkMode = selectedItem.TM.AppTheme.DarkMode;
-                        Program.Settings.Appearance.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
-                        Program.Settings.Appearance.BackColor = selectedItem.TM.AppTheme.BackColor;
-                        Program.Settings.Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
-                        Program.Settings.Appearance.SecondaryColor = selectedItem.TM.AppTheme.SecondaryColor;
-                        Program.Settings.Appearance.TertiaryColor = selectedItem.TM.AppTheme.TertiaryColor;
-                        Program.Settings.Appearance.DisabledBackColor = selectedItem.TM.AppTheme.DisabledBackColor;
-                        Program.Settings.Appearance.DisabledColor = selectedItem.TM.AppTheme.DisabledColor;
-                        Program.Settings.Appearance.Animations = selectedItem.TM.AppTheme.Animations;
+                    Config style = new(selectedItem.TM.AppTheme.AccentColor, selectedItem.TM.AppTheme.SecondaryColor, selectedItem.TM.AppTheme.TertiaryColor, selectedItem.TM.AppTheme.DisabledColor, selectedItem.TM.AppTheme.BackColor, selectedItem.TM.AppTheme.DisabledBackColor, selectedItem.TM.AppTheme.DarkMode, selectedItem.TM.AppTheme.RoundCorners, selectedItem.TM.AppTheme.Animations);
+                    Color accentForeColor = style.Schemes.Main.Colors.ForeColor_Accent;
+                    Color accentBackColor = style.Schemes.Main.Colors.BackColor;
 
-                        ApplyStyle(this, true);
-                    }
+                    accentForeColor = Program.Style.DarkMode
+                        ? (accentForeColor.IsDark() ? accentForeColor.Light() : accentForeColor)
+                        : (!accentForeColor.IsDark() ? accentForeColor.Dark() : accentForeColor);
 
-                    Color accentForeColor = Program.Style.Schemes.Main.Colors.ForeColor_Accent;
-                    Color accentBackColor = Program.Style.Schemes.Main.Colors.BackColor;
+                    accentBackColor = Program.Style.DarkMode
+                        ? (accentBackColor.IsDark() ? accentBackColor.Light() : accentBackColor)
+                        : (!accentBackColor.IsDark() ? accentBackColor.Dark() : accentBackColor);
 
-                    back_btn.CustomColor = selectedItem.TM.Info.Color2;
+                    back_btn.CustomColor = style.Schemes.Main.Colors.Accent;
                     author_lbl.ForeColor = accentForeColor;
                     themeSize_lbl.ForeColor = accentForeColor;
                     respacksize_lbl.ForeColor = accentForeColor;
+                    ver_lbl.ForeColor = accentBackColor;
+                    ver_lbl.BackColor = accentForeColor;
 
                     FlowLayoutPanel1.ScrollControlIntoView(windowsDesktop1);
 
@@ -826,7 +869,6 @@ namespace WinPaletter
                     ApplyCMDPreview(CMD2, selectedItem.TM.PowerShellx86, true);
                     ApplyCMDPreview(CMD3, selectedItem.TM.PowerShellx64, true);
                     LoadCursorsFromTM(selectedItem.TM);
-                    Program.Style.TextRenderingHint = selectedItem.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
 
                     foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>().Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
                     {
@@ -858,7 +900,21 @@ namespace WinPaletter
                         respacksize_lbl.Text = Program.Lang.Strings.Store.NoResourcesPack;
                     }
 
-                    desc_txt.Text = selectedItem.TM.Info.Description;
+                    string description = selectedItem.TM.Info.Description;
+                    string[] lines = description.Split(["\r\n", "\n"], StringSplitOptions.None);
+
+                    // process each line separately
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        // split line into words, remove words starting with #
+                        string[] words = Regex.Split(lines[i], @"(\s+)"); // preserve spaces in array
+                        lines[i] = string.Concat(
+                            words.Where(w => !Regex.IsMatch(w, @"^\s*#")) // remove words starting with #
+                        ).TrimEnd(); // trim only line-ending spaces
+                    }
+
+                    // join lines back with original line breaks
+                    desc_txt.Text = string.Join(Environment.NewLine, lines).Trim();
 
                     // Extract tags from description
                     List<Control> toRemove = [.. flowLayoutPanel5.Controls.Cast<Control>().Where(c => c.Tag is not null)];
@@ -917,33 +973,38 @@ namespace WinPaletter
                     os_xp.Visible = selectedItem.TM.Info.DesignedFor_WinXP;
 
                     // Get Windows aspects that will be modified
-                    List<string> aspects_list = Store_CPToggles.EnabledAspects(selectedItem.TM);
+                    aspect_winTheme.Visible = selectedItem.TM.Windows12.Enabled && OS.W12
+                                           || selectedItem.TM.Windows11.Enabled && OS.W11
+                                           || selectedItem.TM.Windows10.Enabled && OS.W10
+                                           || selectedItem.TM.Windows81.Enabled && OS.W81
+                                           || selectedItem.TM.Windows8.Enabled && OS.W8
+                                           || selectedItem.TM.Windows7.Enabled && OS.W7
+                                           || selectedItem.TM.WindowsVista.Enabled && OS.WVista
+                                           || selectedItem.TM.WindowsXP.Enabled && OS.WXP;
 
-                    string aspects_format = string.Empty;
-                    if (aspects_list.Count == 1)
-                    {
-                        aspects_format = aspects_list[0];
-                    }
-                    else if (aspects_list.Count == 2)
-                    {
-                        aspects_format = $"{aspects_list[0]} {Program.Lang.Strings.General.And} {aspects_list[1]}";
-                    }
-                    else if (aspects_list.Count > 2)
-                    {
-                        for (int i = 0, loopTo = aspects_list.Count - 3; i <= loopTo; i++) aspects_format += $"{aspects_list[i]}, ";
-                        aspects_format += $"{aspects_list[aspects_list.Count - 2]} {Program.Lang.Strings.General.And} {aspects_list[aspects_list.Count - 1]}";
-                    }
+                    aspect_lockScreen.Visible = selectedItem.TM.LogonUI12.Enabled && OS.W12
+                                             || selectedItem.TM.LogonUI11.Enabled && OS.W11
+                                             || selectedItem.TM.LogonUI10.Enabled && OS.W10
+                                             || selectedItem.TM.LogonUI81.Enabled && OS.W81
+                                             || selectedItem.TM.LogonUI7.Enabled && OS.W7
+                                             || selectedItem.TM.LogonUIXP.Enabled && OS.WXP;
 
-                    aspects_lbl.Text = aspects_format;
-
-                    if (selectedItem.TM.AppTheme.Enabled)
-                    {
-                        desc_txt.ForeColor = selectedItem.TM.AppTheme.DarkMode ? Color.White : Color.Black;
-                    }
-                    else
-                    {
-                        desc_txt.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
-                    }
+                    aspect_classicColors.Visible = selectedItem.TM.Win32.Enabled;
+                    aspect_cursors.Visible = selectedItem.TM.Cursors.Enabled;
+                    aspect_Metrics.Visible = selectedItem.TM.MetricsFonts.Enabled;
+                    aspect_cmd.Visible = selectedItem.TM.CommandPrompt.Enabled;
+                    aspect_ps86.Visible = selectedItem.TM.PowerShellx86.Enabled;
+                    aspect_ps64.Visible = selectedItem.TM.PowerShellx64.Enabled;
+                    aspect_terminal.Visible = selectedItem.TM.Terminal.Enabled;
+                    aspect_terminalPreview.Visible = selectedItem.TM.TerminalPreview.Enabled;
+                    aspect_wallpaper.Visible = selectedItem.TM.Wallpaper.Enabled;
+                    aspect_effects.Visible = selectedItem.TM.WindowsEffects.Enabled;
+                    aspect_sounds.Visible = selectedItem.TM.Sounds.Enabled;
+                    aspect_screenSaver.Visible = selectedItem.TM.ScreenSaver.Enabled;
+                    aspect_altTab.Visible = selectedItem.TM.AltTab.Enabled;
+                    aspect_icons.Visible = selectedItem.TM.Icons.Enabled;
+                    aspect_accessibility.Visible = selectedItem.TM.Accessibility.Enabled;
+                    aspect_winPaletterAppTheme.Visible = selectedItem.TM.AppTheme.Enabled;
 
                     if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
                         windowsDesktop1.Visible = selectedItem.TM.Windows12.Enabled;
@@ -1001,7 +1062,6 @@ namespace WinPaletter
             Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
             Appearance.CustomTheme_DarkMode = selectedItem.TM.AppTheme.DarkMode;
             Appearance.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
-            oldAppearance = Appearance;
             ApplyStyle(null, true);
 
             using (Manager TMx = new(Manager.Source.File, selectedItem.FileName, false, true))
@@ -1126,7 +1186,7 @@ namespace WinPaletter
                 BeginInvoke(new Action(() => search_results.Controls.Add(ctrl)));
             }
 
-            Titlebar_lbl.Text = string.Format(Program.Lang.Strings.Store.SearchCount, foundCount);
+            titlebar_lbl.Text = string.Format(Program.Lang.Strings.Store.SearchCount, foundCount);
             Tabs.SelectTab(2);
         }
 
@@ -1138,7 +1198,7 @@ namespace WinPaletter
         /// </summary>
         private void UpdateTitlebarColors()
         {
-            Titlebar_lbl.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
+            titlebar_lbl.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
             search_box.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
         }
         #endregion
@@ -1179,25 +1239,13 @@ namespace WinPaletter
         private void Back_btn_Click(object sender, EventArgs e)
         {
             Program.Animator.HideSync(Tabs);
-            Program.Style.TextRenderingHint = Program.TM.MetricsFonts.Fonts_SingleBitPP ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
-
-            if (selectedItem is not null && selectedItem.TM.AppTheme.Enabled)
-            {
-                Program.Settings.Appearance = new();
-                Program.Settings.Appearance.Load();
-
-                Program.Style.RoundedCorners = GetRoundedCorners();
-                GetDarkMode();
-                ApplyStyle(this, true);
-            }
 
             RemoveAllStoreItems(search_results);
 
-            Titlebar_lbl.Font = new("Segoe UI", Titlebar_lbl.Font.Size, Titlebar_lbl.Font.Style);
+            titlebar_lbl.Font = new("Segoe UI", titlebar_lbl.Font.Size, titlebar_lbl.Font.Style);
             Tabs.SelectedIndex = 0;
-            Program.Animator.HideSync(back_btn);
 
-            Titlebar_lbl.Text = string.Empty;
+            titlebar_lbl.Text = string.Empty;
             Program.Animator.ShowSync(Tabs);
         }
 
@@ -1477,21 +1525,10 @@ namespace WinPaletter
                 if (MsgBox(Program.Lang.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
                 {
                     string url = selectedItem.TM.Info.AuthorSocialMediaLink;
-                    if (!url.StartsWith("https://") && !url.StartsWith("http://")) url += "https://";
+                    if (!url.StartsWith("https://") || !url.StartsWith("http://")) url = $"https://{url}";
                     Process.Start(url);
                 }
             }
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            tabs_github.SelectedIndex = 0;
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            string code = $"{c0.Text}{c1.Text}{c2.Text}{c3.Text}-{c4.Text}{c5.Text}{c6.Text}{c7.Text}";
-            Clipboard.SetText(code);
         }
 
         private async void button1_Click_1(object sender, EventArgs e)
@@ -1512,18 +1549,33 @@ namespace WinPaletter
 
         async void UpdateLoginData()
         {
-            try
-            {
-                tabs_github.SelectedIndex = 3;
+            Bitmap avatar_bmp = null;
 
-                labelAlt4.Text = User.GitHub.Login;
-                pictureBox4.Image = User.GitHub_Avatar.Resize(32, 32);
-            }
-            catch (Exception ex)
+            if (User.GitHub_LoggedIn)
             {
-                tabs_github.SelectedIndex = 2;
-                labelAlt6.Text = ex.Message;
-                Forms.BugReport.ThrowError(ex);
+                // Wait for avatar to exist
+                if (User.GitHub_Avatar is null)
+                {
+                    await User.DownloadAvatarAsync();
+                }
+
+                if (User.GitHub_Avatar != null)
+                {
+                    avatar_bmp = User.GitHub_Avatar;
+                }
+            }
+
+            if (avatar_bmp is null)
+            {
+                avatar_bmp = User.ProfilePicture;
+            }
+
+            using (Bitmap bmp = avatar_bmp.Resize(24, 24))
+            {
+                Invoke(() =>
+                {
+                    avatar_btn.Image = bmp.ToCircular();
+                });
             }
         }
     }

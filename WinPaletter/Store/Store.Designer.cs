@@ -44,11 +44,15 @@ namespace WinPaletter
             this.store_container = new WinPaletter.UI.WP.SmoothFlowLayoutPanel();
             this.TabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
+            this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.labelAlt3 = new WinPaletter.UI.WP.LabelAlt();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.author_lbl = new WinPaletter.UI.WP.LabelAlt();
+            this.separatorV3 = new WinPaletter.UI.WP.SeparatorV();
+            this.ver_lbl = new System.Windows.Forms.Label();
             this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
-            this.labelAlt3 = new WinPaletter.UI.WP.LabelAlt();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.os_12 = new System.Windows.Forms.PictureBox();
             this.os_11 = new System.Windows.Forms.PictureBox();
@@ -58,6 +62,25 @@ namespace WinPaletter
             this.os_7 = new System.Windows.Forms.PictureBox();
             this.os_vista = new System.Windows.Forms.PictureBox();
             this.os_xp = new System.Windows.Forms.PictureBox();
+            this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
+            this.aspect_winTheme = new System.Windows.Forms.PictureBox();
+            this.aspect_lockScreen = new System.Windows.Forms.PictureBox();
+            this.aspect_classicColors = new System.Windows.Forms.PictureBox();
+            this.aspect_cursors = new System.Windows.Forms.PictureBox();
+            this.aspect_Metrics = new System.Windows.Forms.PictureBox();
+            this.aspect_cmd = new System.Windows.Forms.PictureBox();
+            this.aspect_ps86 = new System.Windows.Forms.PictureBox();
+            this.aspect_ps64 = new System.Windows.Forms.PictureBox();
+            this.aspect_terminal = new System.Windows.Forms.PictureBox();
+            this.aspect_terminalPreview = new System.Windows.Forms.PictureBox();
+            this.aspect_wallpaper = new System.Windows.Forms.PictureBox();
+            this.aspect_effects = new System.Windows.Forms.PictureBox();
+            this.aspect_sounds = new System.Windows.Forms.PictureBox();
+            this.aspect_screenSaver = new System.Windows.Forms.PictureBox();
+            this.aspect_altTab = new System.Windows.Forms.PictureBox();
+            this.aspect_icons = new System.Windows.Forms.PictureBox();
+            this.aspect_accessibility = new System.Windows.Forms.PictureBox();
+            this.aspect_winPaletterAppTheme = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.themeSize_lbl = new System.Windows.Forms.Label();
@@ -65,11 +88,7 @@ namespace WinPaletter
             this.respacksize_lbl = new System.Windows.Forms.Label();
             this.progressBar_ResPack = new WinPaletter.UI.WP.ProgressBar();
             this.Apply_btn = new WinPaletter.UI.WP.Button();
-            this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
-            this.aspects_lbl = new System.Windows.Forms.Label();
             this.desc_txt = new WinPaletter.UI.WP.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.VersionAlert_lbl = new WinPaletter.UI.WP.AlertBox();
             this.previewContainer = new WinPaletter.UI.WP.GroupBox();
             this.PictureBox41 = new System.Windows.Forms.PictureBox();
@@ -127,6 +146,8 @@ namespace WinPaletter
             this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
+            this.titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
+            this.avatar_btn = new WinPaletter.UI.WP.Button();
             this.flowLayoutPanel2 = new WinPaletter.UI.WP.SmoothFlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.search_panel = new System.Windows.Forms.Panel();
@@ -134,36 +155,11 @@ namespace WinPaletter
             this.search_box = new WinPaletter.UI.WP.TextBox();
             this.search_filter_btn = new WinPaletter.UI.WP.Button();
             this.back_btn = new WinPaletter.UI.WP.Button();
-            this.Titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
-            this.tabs_github = new WinPaletter.UI.WP.TablessControl();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.button1 = new WinPaletter.UI.WP.Button();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.c7 = new WinPaletter.UI.WP.LabelAlt();
-            this.c6 = new WinPaletter.UI.WP.LabelAlt();
-            this.c5 = new WinPaletter.UI.WP.LabelAlt();
-            this.c4 = new WinPaletter.UI.WP.LabelAlt();
-            this.c3 = new WinPaletter.UI.WP.LabelAlt();
-            this.c2 = new WinPaletter.UI.WP.LabelAlt();
-            this.c1 = new WinPaletter.UI.WP.LabelAlt();
-            this.c0 = new WinPaletter.UI.WP.LabelAlt();
-            this.labelAlt7 = new WinPaletter.UI.WP.LabelAlt();
-            this.githubLbl_elapsedSec = new WinPaletter.UI.WP.LabelAlt();
-            this.progressBar3 = new WinPaletter.UI.WP.ProgressBar();
-            this.button10 = new WinPaletter.UI.WP.Button();
-            this.labelAlt5 = new WinPaletter.UI.WP.LabelAlt();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.button11 = new WinPaletter.UI.WP.Button();
-            this.labelAlt6 = new WinPaletter.UI.WP.LabelAlt();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.button9 = new WinPaletter.UI.WP.Button();
-            this.button8 = new WinPaletter.UI.WP.Button();
-            this.labelAlt4 = new WinPaletter.UI.WP.LabelAlt();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage3.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.flowLayoutPanel6.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.os_12)).BeginInit();
@@ -174,9 +170,25 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.os_7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.os_vista)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.os_xp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_winTheme)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_lockScreen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_classicColors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_cursors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_Metrics)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_cmd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_ps86)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_ps64)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_terminal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_terminalPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_wallpaper)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_effects)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_sounds)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_screenSaver)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_altTab)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_icons)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_accessibility)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_winPaletterAppTheme)).BeginInit();
             this.flowLayoutPanel3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.previewContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).BeginInit();
             this.FlowLayoutPanel1.SuspendLayout();
@@ -191,12 +203,6 @@ namespace WinPaletter
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.search_panel.SuspendLayout();
-            this.tabs_github.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.tabPage9.SuspendLayout();
-            this.tabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // ThemesFetcher
@@ -234,11 +240,11 @@ namespace WinPaletter
             this.Tabs.Controls.Add(this.tabPage2);
             this.Tabs.Controls.Add(this.tabPage4);
             this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Tabs.Location = new System.Drawing.Point(0, 122);
+            this.Tabs.Location = new System.Drawing.Point(0, 52);
             this.Tabs.Multiline = true;
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
-            this.Tabs.Size = new System.Drawing.Size(1329, 599);
+            this.Tabs.Size = new System.Drawing.Size(1329, 669);
             this.Tabs.TabIndex = 4;
             this.Tabs.SelectedIndexChanged += new System.EventHandler(this.Tabs_SelectedIndexChanged);
             // 
@@ -249,7 +255,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(4, 24);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(10);
-            this.TabPage1.Size = new System.Drawing.Size(1321, 571);
+            this.TabPage1.Size = new System.Drawing.Size(1321, 641);
             this.TabPage1.TabIndex = 0;
             this.TabPage1.Text = "0";
             // 
@@ -259,20 +265,20 @@ namespace WinPaletter
             this.store_container.Dock = System.Windows.Forms.DockStyle.Fill;
             this.store_container.Location = new System.Drawing.Point(10, 10);
             this.store_container.Name = "store_container";
-            this.store_container.Size = new System.Drawing.Size(1301, 551);
+            this.store_container.Size = new System.Drawing.Size(1301, 621);
             this.store_container.TabIndex = 3;
             // 
             // TabPage3
             // 
             this.TabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.TabPage3.Controls.Add(this.groupBox5);
-            this.TabPage3.Controls.Add(this.groupBox2);
+            this.TabPage3.Controls.Add(this.desc_txt);
             this.TabPage3.Controls.Add(this.VersionAlert_lbl);
             this.TabPage3.Controls.Add(this.previewContainer);
             this.TabPage3.Location = new System.Drawing.Point(4, 24);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(10);
-            this.TabPage3.Size = new System.Drawing.Size(1321, 571);
+            this.TabPage3.Size = new System.Drawing.Size(1321, 641);
             this.TabPage3.TabIndex = 2;
             this.TabPage3.Text = "1";
             // 
@@ -281,8 +287,8 @@ namespace WinPaletter
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox5.Controls.Add(this.flowLayoutPanel6);
             this.groupBox5.Controls.Add(this.flowLayoutPanel5);
-            this.groupBox5.Controls.Add(this.labelAlt3);
             this.groupBox5.Controls.Add(this.flowLayoutPanel4);
             this.groupBox5.Controls.Add(this.flowLayoutPanel3);
             this.groupBox5.Controls.Add(this.Apply_btn);
@@ -291,6 +297,43 @@ namespace WinPaletter
             this.groupBox5.Size = new System.Drawing.Size(1301, 130);
             this.groupBox5.TabIndex = 142;
             this.groupBox5.Text = "groupBox5";
+            this.groupBox5.UseDecorationPattern = true;
+            this.groupBox5.UseSharpStyle = false;
+            // 
+            // flowLayoutPanel6
+            // 
+            this.flowLayoutPanel6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel6.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel6.Controls.Add(this.panel4);
+            this.flowLayoutPanel6.Controls.Add(this.labelAlt3);
+            this.flowLayoutPanel6.Location = new System.Drawing.Point(2, 11);
+            this.flowLayoutPanel6.Name = "flowLayoutPanel6";
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(1057, 30);
+            this.flowLayoutPanel6.TabIndex = 153;
+            // 
+            // panel4
+            // 
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1, 20);
+            this.panel4.TabIndex = 15;
+            // 
+            // labelAlt3
+            // 
+            this.labelAlt3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelAlt3.AutoSize = true;
+            this.labelAlt3.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt3.DrawOnGlass = false;
+            this.labelAlt3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAlt3.Location = new System.Drawing.Point(10, 0);
+            this.labelAlt3.Name = "labelAlt3";
+            this.labelAlt3.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.labelAlt3.Size = new System.Drawing.Size(28, 25);
+            this.labelAlt3.TabIndex = 39;
+            this.labelAlt3.Text = "0";
+            this.labelAlt3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // flowLayoutPanel5
             // 
@@ -299,6 +342,8 @@ namespace WinPaletter
             this.flowLayoutPanel5.BackColor = System.Drawing.Color.Transparent;
             this.flowLayoutPanel5.Controls.Add(this.panel3);
             this.flowLayoutPanel5.Controls.Add(this.author_lbl);
+            this.flowLayoutPanel5.Controls.Add(this.separatorV3);
+            this.flowLayoutPanel5.Controls.Add(this.ver_lbl);
             this.flowLayoutPanel5.Controls.Add(this.separatorV1);
             this.flowLayoutPanel5.Location = new System.Drawing.Point(4, 40);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
@@ -314,7 +359,7 @@ namespace WinPaletter
             // 
             // author_lbl
             // 
-            this.author_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.author_lbl.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.author_lbl.AutoSize = true;
             this.author_lbl.BackColor = System.Drawing.Color.Transparent;
             this.author_lbl.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -323,37 +368,45 @@ namespace WinPaletter
             this.author_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.author_lbl.Location = new System.Drawing.Point(10, 5);
             this.author_lbl.Name = "author_lbl";
-            this.author_lbl.Size = new System.Drawing.Size(44, 15);
+            this.author_lbl.Size = new System.Drawing.Size(13, 15);
             this.author_lbl.TabIndex = 151;
-            this.author_lbl.Text = "Author";
+            this.author_lbl.Text = "0";
             this.author_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.author_lbl.Click += new System.EventHandler(this.labelAlt4_Click);
+            // 
+            // separatorV3
+            // 
+            this.separatorV3.AlternativeLook = false;
+            this.separatorV3.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV3.Location = new System.Drawing.Point(29, 3);
+            this.separatorV3.Name = "separatorV3";
+            this.separatorV3.Size = new System.Drawing.Size(1, 18);
+            this.separatorV3.TabIndex = 154;
+            this.separatorV3.TabStop = false;
+            this.separatorV3.Text = "separatorV3";
+            // 
+            // ver_lbl
+            // 
+            this.ver_lbl.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.ver_lbl.AutoSize = true;
+            this.ver_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.ver_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ver_lbl.Location = new System.Drawing.Point(36, 5);
+            this.ver_lbl.Name = "ver_lbl";
+            this.ver_lbl.Size = new System.Drawing.Size(13, 15);
+            this.ver_lbl.TabIndex = 155;
+            this.ver_lbl.Text = "0";
+            this.ver_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // separatorV1
             // 
             this.separatorV1.AlternativeLook = false;
             this.separatorV1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV1.Location = new System.Drawing.Point(60, 3);
+            this.separatorV1.Location = new System.Drawing.Point(55, 3);
             this.separatorV1.Name = "separatorV1";
             this.separatorV1.Size = new System.Drawing.Size(1, 18);
             this.separatorV1.TabIndex = 152;
             this.separatorV1.TabStop = false;
-            this.separatorV1.Text = "separatorV1";
-            // 
-            // labelAlt3
-            // 
-            this.labelAlt3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAlt3.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt3.DrawOnGlass = false;
-            this.labelAlt3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.labelAlt3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt3.Location = new System.Drawing.Point(13, 11);
-            this.labelAlt3.Name = "labelAlt3";
-            this.labelAlt3.Size = new System.Drawing.Size(1270, 25);
-            this.labelAlt3.TabIndex = 39;
-            this.labelAlt3.Text = "Theme name";
-            this.labelAlt3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // flowLayoutPanel4
             // 
@@ -368,6 +421,25 @@ namespace WinPaletter
             this.flowLayoutPanel4.Controls.Add(this.os_7);
             this.flowLayoutPanel4.Controls.Add(this.os_vista);
             this.flowLayoutPanel4.Controls.Add(this.os_xp);
+            this.flowLayoutPanel4.Controls.Add(this.separatorV2);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_winTheme);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_lockScreen);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_classicColors);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_cursors);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_Metrics);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_cmd);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_ps86);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_ps64);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_terminal);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_terminalPreview);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_wallpaper);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_effects);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_sounds);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_screenSaver);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_altTab);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_icons);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_accessibility);
+            this.flowLayoutPanel4.Controls.Add(this.aspect_winPaletterAppTheme);
             this.flowLayoutPanel4.Location = new System.Drawing.Point(11, 89);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
             this.flowLayoutPanel4.Size = new System.Drawing.Size(1048, 30);
@@ -375,7 +447,6 @@ namespace WinPaletter
             // 
             // os_12
             // 
-            this.os_12.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_12.Location = new System.Drawing.Point(3, 3);
             this.os_12.Name = "os_12";
             this.os_12.Size = new System.Drawing.Size(24, 24);
@@ -385,7 +456,6 @@ namespace WinPaletter
             // 
             // os_11
             // 
-            this.os_11.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_11.Location = new System.Drawing.Point(33, 3);
             this.os_11.Name = "os_11";
             this.os_11.Size = new System.Drawing.Size(24, 24);
@@ -395,7 +465,6 @@ namespace WinPaletter
             // 
             // os_10
             // 
-            this.os_10.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_10.Location = new System.Drawing.Point(63, 3);
             this.os_10.Name = "os_10";
             this.os_10.Size = new System.Drawing.Size(24, 24);
@@ -405,7 +474,6 @@ namespace WinPaletter
             // 
             // os_81
             // 
-            this.os_81.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_81.Location = new System.Drawing.Point(93, 3);
             this.os_81.Name = "os_81";
             this.os_81.Size = new System.Drawing.Size(24, 24);
@@ -415,7 +483,6 @@ namespace WinPaletter
             // 
             // os_8
             // 
-            this.os_8.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_8.Location = new System.Drawing.Point(123, 3);
             this.os_8.Name = "os_8";
             this.os_8.Size = new System.Drawing.Size(24, 24);
@@ -425,7 +492,6 @@ namespace WinPaletter
             // 
             // os_7
             // 
-            this.os_7.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_7.Location = new System.Drawing.Point(153, 3);
             this.os_7.Name = "os_7";
             this.os_7.Size = new System.Drawing.Size(24, 24);
@@ -435,7 +501,6 @@ namespace WinPaletter
             // 
             // os_vista
             // 
-            this.os_vista.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_vista.Location = new System.Drawing.Point(183, 3);
             this.os_vista.Name = "os_vista";
             this.os_vista.Size = new System.Drawing.Size(24, 24);
@@ -445,13 +510,185 @@ namespace WinPaletter
             // 
             // os_xp
             // 
-            this.os_xp.Image = global::WinPaletter.Properties.Resources.BackgroundOpacity;
             this.os_xp.Location = new System.Drawing.Point(213, 3);
             this.os_xp.Name = "os_xp";
             this.os_xp.Size = new System.Drawing.Size(24, 24);
             this.os_xp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_xp.TabIndex = 157;
             this.os_xp.TabStop = false;
+            // 
+            // separatorV2
+            // 
+            this.separatorV2.AlternativeLook = false;
+            this.separatorV2.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV2.Location = new System.Drawing.Point(243, 3);
+            this.separatorV2.Name = "separatorV2";
+            this.separatorV2.Size = new System.Drawing.Size(1, 18);
+            this.separatorV2.TabIndex = 158;
+            this.separatorV2.TabStop = false;
+            this.separatorV2.Text = "separatorV2";
+            // 
+            // aspect_winTheme
+            // 
+            this.aspect_winTheme.Location = new System.Drawing.Point(250, 3);
+            this.aspect_winTheme.Name = "aspect_winTheme";
+            this.aspect_winTheme.Size = new System.Drawing.Size(24, 24);
+            this.aspect_winTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_winTheme.TabIndex = 159;
+            this.aspect_winTheme.TabStop = false;
+            // 
+            // aspect_lockScreen
+            // 
+            this.aspect_lockScreen.Location = new System.Drawing.Point(280, 3);
+            this.aspect_lockScreen.Name = "aspect_lockScreen";
+            this.aspect_lockScreen.Size = new System.Drawing.Size(24, 24);
+            this.aspect_lockScreen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_lockScreen.TabIndex = 160;
+            this.aspect_lockScreen.TabStop = false;
+            // 
+            // aspect_classicColors
+            // 
+            this.aspect_classicColors.Location = new System.Drawing.Point(310, 3);
+            this.aspect_classicColors.Name = "aspect_classicColors";
+            this.aspect_classicColors.Size = new System.Drawing.Size(24, 24);
+            this.aspect_classicColors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_classicColors.TabIndex = 161;
+            this.aspect_classicColors.TabStop = false;
+            // 
+            // aspect_cursors
+            // 
+            this.aspect_cursors.Location = new System.Drawing.Point(340, 3);
+            this.aspect_cursors.Name = "aspect_cursors";
+            this.aspect_cursors.Size = new System.Drawing.Size(24, 24);
+            this.aspect_cursors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_cursors.TabIndex = 162;
+            this.aspect_cursors.TabStop = false;
+            // 
+            // aspect_Metrics
+            // 
+            this.aspect_Metrics.Location = new System.Drawing.Point(370, 3);
+            this.aspect_Metrics.Name = "aspect_Metrics";
+            this.aspect_Metrics.Size = new System.Drawing.Size(24, 24);
+            this.aspect_Metrics.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_Metrics.TabIndex = 163;
+            this.aspect_Metrics.TabStop = false;
+            // 
+            // aspect_cmd
+            // 
+            this.aspect_cmd.Location = new System.Drawing.Point(400, 3);
+            this.aspect_cmd.Name = "aspect_cmd";
+            this.aspect_cmd.Size = new System.Drawing.Size(24, 24);
+            this.aspect_cmd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_cmd.TabIndex = 164;
+            this.aspect_cmd.TabStop = false;
+            // 
+            // aspect_ps86
+            // 
+            this.aspect_ps86.Location = new System.Drawing.Point(430, 3);
+            this.aspect_ps86.Name = "aspect_ps86";
+            this.aspect_ps86.Size = new System.Drawing.Size(24, 24);
+            this.aspect_ps86.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_ps86.TabIndex = 165;
+            this.aspect_ps86.TabStop = false;
+            // 
+            // aspect_ps64
+            // 
+            this.aspect_ps64.Location = new System.Drawing.Point(460, 3);
+            this.aspect_ps64.Name = "aspect_ps64";
+            this.aspect_ps64.Size = new System.Drawing.Size(24, 24);
+            this.aspect_ps64.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_ps64.TabIndex = 166;
+            this.aspect_ps64.TabStop = false;
+            // 
+            // aspect_terminal
+            // 
+            this.aspect_terminal.Location = new System.Drawing.Point(490, 3);
+            this.aspect_terminal.Name = "aspect_terminal";
+            this.aspect_terminal.Size = new System.Drawing.Size(24, 24);
+            this.aspect_terminal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_terminal.TabIndex = 167;
+            this.aspect_terminal.TabStop = false;
+            // 
+            // aspect_terminalPreview
+            // 
+            this.aspect_terminalPreview.Location = new System.Drawing.Point(520, 3);
+            this.aspect_terminalPreview.Name = "aspect_terminalPreview";
+            this.aspect_terminalPreview.Size = new System.Drawing.Size(24, 24);
+            this.aspect_terminalPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_terminalPreview.TabIndex = 168;
+            this.aspect_terminalPreview.TabStop = false;
+            // 
+            // aspect_wallpaper
+            // 
+            this.aspect_wallpaper.Location = new System.Drawing.Point(550, 3);
+            this.aspect_wallpaper.Name = "aspect_wallpaper";
+            this.aspect_wallpaper.Size = new System.Drawing.Size(24, 24);
+            this.aspect_wallpaper.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_wallpaper.TabIndex = 169;
+            this.aspect_wallpaper.TabStop = false;
+            // 
+            // aspect_effects
+            // 
+            this.aspect_effects.Location = new System.Drawing.Point(580, 3);
+            this.aspect_effects.Name = "aspect_effects";
+            this.aspect_effects.Size = new System.Drawing.Size(24, 24);
+            this.aspect_effects.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_effects.TabIndex = 170;
+            this.aspect_effects.TabStop = false;
+            // 
+            // aspect_sounds
+            // 
+            this.aspect_sounds.Location = new System.Drawing.Point(610, 3);
+            this.aspect_sounds.Name = "aspect_sounds";
+            this.aspect_sounds.Size = new System.Drawing.Size(24, 24);
+            this.aspect_sounds.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_sounds.TabIndex = 171;
+            this.aspect_sounds.TabStop = false;
+            // 
+            // aspect_screenSaver
+            // 
+            this.aspect_screenSaver.Location = new System.Drawing.Point(640, 3);
+            this.aspect_screenSaver.Name = "aspect_screenSaver";
+            this.aspect_screenSaver.Size = new System.Drawing.Size(24, 24);
+            this.aspect_screenSaver.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_screenSaver.TabIndex = 172;
+            this.aspect_screenSaver.TabStop = false;
+            // 
+            // aspect_altTab
+            // 
+            this.aspect_altTab.Location = new System.Drawing.Point(670, 3);
+            this.aspect_altTab.Name = "aspect_altTab";
+            this.aspect_altTab.Size = new System.Drawing.Size(24, 24);
+            this.aspect_altTab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_altTab.TabIndex = 173;
+            this.aspect_altTab.TabStop = false;
+            // 
+            // aspect_icons
+            // 
+            this.aspect_icons.Location = new System.Drawing.Point(700, 3);
+            this.aspect_icons.Name = "aspect_icons";
+            this.aspect_icons.Size = new System.Drawing.Size(24, 24);
+            this.aspect_icons.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_icons.TabIndex = 174;
+            this.aspect_icons.TabStop = false;
+            // 
+            // aspect_accessibility
+            // 
+            this.aspect_accessibility.Location = new System.Drawing.Point(730, 3);
+            this.aspect_accessibility.Name = "aspect_accessibility";
+            this.aspect_accessibility.Size = new System.Drawing.Size(24, 24);
+            this.aspect_accessibility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_accessibility.TabIndex = 175;
+            this.aspect_accessibility.TabStop = false;
+            // 
+            // aspect_winPaletterAppTheme
+            // 
+            this.aspect_winPaletterAppTheme.Location = new System.Drawing.Point(760, 3);
+            this.aspect_winPaletterAppTheme.Name = "aspect_winPaletterAppTheme";
+            this.aspect_winPaletterAppTheme.Size = new System.Drawing.Size(24, 24);
+            this.aspect_winPaletterAppTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.aspect_winPaletterAppTheme.TabIndex = 176;
+            this.aspect_winPaletterAppTheme.TabStop = false;
             // 
             // flowLayoutPanel3
             // 
@@ -483,16 +720,16 @@ namespace WinPaletter
             this.themeSize_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.themeSize_lbl.Location = new System.Drawing.Point(10, 5);
             this.themeSize_lbl.Name = "themeSize_lbl";
-            this.themeSize_lbl.Size = new System.Drawing.Size(23, 15);
+            this.themeSize_lbl.Size = new System.Drawing.Size(13, 15);
             this.themeSize_lbl.TabIndex = 13;
-            this.themeSize_lbl.Text = "0 B";
+            this.themeSize_lbl.Text = "0";
             this.themeSize_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SeparatorVertical1
             // 
             this.SeparatorVertical1.AlternativeLook = false;
             this.SeparatorVertical1.BackColor = System.Drawing.Color.Transparent;
-            this.SeparatorVertical1.Location = new System.Drawing.Point(39, 3);
+            this.SeparatorVertical1.Location = new System.Drawing.Point(29, 3);
             this.SeparatorVertical1.Name = "SeparatorVertical1";
             this.SeparatorVertical1.Size = new System.Drawing.Size(1, 18);
             this.SeparatorVertical1.TabIndex = 143;
@@ -505,18 +742,18 @@ namespace WinPaletter
             this.respacksize_lbl.AutoSize = true;
             this.respacksize_lbl.BackColor = System.Drawing.Color.Transparent;
             this.respacksize_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.respacksize_lbl.Location = new System.Drawing.Point(46, 5);
+            this.respacksize_lbl.Location = new System.Drawing.Point(36, 5);
             this.respacksize_lbl.Name = "respacksize_lbl";
-            this.respacksize_lbl.Size = new System.Drawing.Size(118, 15);
+            this.respacksize_lbl.Size = new System.Drawing.Size(13, 15);
             this.respacksize_lbl.TabIndex = 16;
-            this.respacksize_lbl.Text = "0 B of resources pack";
+            this.respacksize_lbl.Text = "0";
             this.respacksize_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // progressBar_ResPack
             // 
             this.progressBar_ResPack.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
             this.progressBar_ResPack.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar_ResPack.Location = new System.Drawing.Point(170, 3);
+            this.progressBar_ResPack.Location = new System.Drawing.Point(55, 3);
             this.progressBar_ResPack.Name = "progressBar_ResPack";
             this.progressBar_ResPack.Size = new System.Drawing.Size(18, 18);
             this.progressBar_ResPack.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
@@ -544,39 +781,12 @@ namespace WinPaletter
             this.Apply_btn.UseVisualStyleBackColor = false;
             this.Apply_btn.Click += new System.EventHandler(this.Apply_Edit_btn_Click);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.groupBox2.Controls.Add(this.aspects_lbl);
-            this.groupBox2.Controls.Add(this.desc_txt);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Location = new System.Drawing.Point(10, 522);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1301, 71);
-            this.groupBox2.TabIndex = 141;
-            this.groupBox2.Text = "groupBox2";
-            // 
-            // aspects_lbl
-            // 
-            this.aspects_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.aspects_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.aspects_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aspects_lbl.Location = new System.Drawing.Point(33, 33);
-            this.aspects_lbl.Name = "aspects_lbl";
-            this.aspects_lbl.Size = new System.Drawing.Size(1264, 30);
-            this.aspects_lbl.TabIndex = 8;
-            this.aspects_lbl.Text = "0";
-            // 
             // desc_txt
             // 
             this.desc_txt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.desc_txt.Location = new System.Drawing.Point(948, 3);
+            this.desc_txt.Location = new System.Drawing.Point(10, 522);
             this.desc_txt.MaxLength = 32767;
             this.desc_txt.Multiline = true;
             this.desc_txt.Name = "desc_txt";
@@ -585,43 +795,19 @@ namespace WinPaletter
             this.desc_txt.SelectedText = "";
             this.desc_txt.SelectionLength = 0;
             this.desc_txt.SelectionStart = 0;
-            this.desc_txt.Size = new System.Drawing.Size(349, 155);
+            this.desc_txt.Size = new System.Drawing.Size(1301, 71);
             this.desc_txt.TabIndex = 147;
             this.desc_txt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.desc_txt.UseSystemPasswordChar = false;
             this.desc_txt.WordWrap = true;
             // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(33, 3);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(1264, 24);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "This theme will modify the following Windows aspects:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // VersionAlert_lbl
             // 
             this.VersionAlert_lbl.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Adaptive;
-            this.VersionAlert_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.VersionAlert_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.VersionAlert_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.VersionAlert_lbl.CenterText = true;
+            this.VersionAlert_lbl.CenterText = false;
             this.VersionAlert_lbl.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.VersionAlert_lbl.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.VersionAlert_lbl.Image = ((System.Drawing.Image)(resources.GetObject("VersionAlert_lbl.Image")));
@@ -646,6 +832,8 @@ namespace WinPaletter
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);
             this.previewContainer.Size = new System.Drawing.Size(1301, 370);
             this.previewContainer.TabIndex = 131;
+            this.previewContainer.UseDecorationPattern = false;
+            this.previewContainer.UseSharpStyle = false;
             // 
             // PictureBox41
             // 
@@ -1744,7 +1932,7 @@ namespace WinPaletter
             this.TabPage5.Location = new System.Drawing.Point(4, 24);
             this.TabPage5.Name = "TabPage5";
             this.TabPage5.Padding = new System.Windows.Forms.Padding(10);
-            this.TabPage5.Size = new System.Drawing.Size(1321, 571);
+            this.TabPage5.Size = new System.Drawing.Size(1321, 641);
             this.TabPage5.TabIndex = 3;
             this.TabPage5.Text = "2";
             // 
@@ -1754,7 +1942,7 @@ namespace WinPaletter
             this.search_results.Dock = System.Windows.Forms.DockStyle.Fill;
             this.search_results.Location = new System.Drawing.Point(10, 10);
             this.search_results.Name = "search_results";
-            this.search_results.Size = new System.Drawing.Size(1301, 551);
+            this.search_results.Size = new System.Drawing.Size(1301, 621);
             this.search_results.TabIndex = 4;
             // 
             // tabPage2
@@ -1778,7 +1966,7 @@ namespace WinPaletter
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1321, 571);
+            this.tabPage2.Size = new System.Drawing.Size(1321, 641);
             this.tabPage2.TabIndex = 4;
             this.tabPage2.Text = "3";
             // 
@@ -1830,6 +2018,8 @@ namespace WinPaletter
             this.groupBox4.Size = new System.Drawing.Size(1310, 107);
             this.groupBox4.TabIndex = 14;
             this.groupBox4.Text = "groupBox4";
+            this.groupBox4.UseDecorationPattern = true;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // labelAlt1
             // 
@@ -2000,7 +2190,7 @@ namespace WinPaletter
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1321, 571);
+            this.tabPage4.Size = new System.Drawing.Size(1321, 641);
             this.tabPage4.TabIndex = 5;
             this.tabPage4.Text = "4";
             // 
@@ -2068,9 +2258,10 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
+            this.titlebarExtender1.Controls.Add(this.titlebar_lbl);
+            this.titlebarExtender1.Controls.Add(this.avatar_btn);
             this.titlebarExtender1.Controls.Add(this.flowLayoutPanel2);
             this.titlebarExtender1.Controls.Add(this.back_btn);
-            this.titlebarExtender1.Controls.Add(this.Titlebar_lbl);
             this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
@@ -2080,6 +2271,38 @@ namespace WinPaletter
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             this.titlebarExtender1.Click += new System.EventHandler(this.titlebarExtender1_Click);
             // 
+            // titlebar_lbl
+            // 
+            this.titlebar_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.titlebar_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.titlebar_lbl.DrawOnGlass = false;
+            this.titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.titlebar_lbl.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titlebar_lbl.Location = new System.Drawing.Point(53, 8);
+            this.titlebar_lbl.Name = "titlebar_lbl";
+            this.titlebar_lbl.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.titlebar_lbl.Size = new System.Drawing.Size(789, 36);
+            this.titlebar_lbl.TabIndex = 131;
+            this.titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // avatar_btn
+            // 
+            this.avatar_btn.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.avatar_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.avatar_btn.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.avatar_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.avatar_btn.ForeColor = System.Drawing.Color.White;
+            this.avatar_btn.Image = null;
+            this.avatar_btn.ImageGlyph = null;
+            this.avatar_btn.ImageGlyphEnabled = false;
+            this.avatar_btn.Location = new System.Drawing.Point(1284, 6);
+            this.avatar_btn.Name = "avatar_btn";
+            this.avatar_btn.Size = new System.Drawing.Size(40, 40);
+            this.avatar_btn.TabIndex = 130;
+            this.avatar_btn.UseVisualStyleBackColor = false;
+            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -2087,7 +2310,7 @@ namespace WinPaletter
             this.flowLayoutPanel2.Controls.Add(this.search_panel);
             this.flowLayoutPanel2.Controls.Add(this.ProgressBar1);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(895, 8);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(848, 8);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(430, 36);
             this.flowLayoutPanel2.TabIndex = 129;
@@ -2192,386 +2415,7 @@ namespace WinPaletter
             this.back_btn.Size = new System.Drawing.Size(40, 40);
             this.back_btn.TabIndex = 36;
             this.back_btn.UseVisualStyleBackColor = false;
-            this.back_btn.Visible = false;
             this.back_btn.Click += new System.EventHandler(this.Back_btn_Click);
-            // 
-            // Titlebar_lbl
-            // 
-            this.Titlebar_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.Titlebar_lbl.BackColor = System.Drawing.Color.Transparent;
-            this.Titlebar_lbl.DrawOnGlass = false;
-            this.Titlebar_lbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Titlebar_lbl.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Titlebar_lbl.Location = new System.Drawing.Point(57, 6);
-            this.Titlebar_lbl.Name = "Titlebar_lbl";
-            this.Titlebar_lbl.Size = new System.Drawing.Size(832, 40);
-            this.Titlebar_lbl.TabIndex = 38;
-            this.Titlebar_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Titlebar_lbl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseDown);
-            this.Titlebar_lbl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CustomTitlebar_MouseMove);
-            // 
-            // tabs_github
-            // 
-            this.tabs_github.Controls.Add(this.tabPage6);
-            this.tabs_github.Controls.Add(this.tabPage8);
-            this.tabs_github.Controls.Add(this.tabPage9);
-            this.tabs_github.Controls.Add(this.tabPage7);
-            this.tabs_github.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabs_github.Location = new System.Drawing.Point(0, 52);
-            this.tabs_github.Multiline = true;
-            this.tabs_github.Name = "tabs_github";
-            this.tabs_github.SelectedIndex = 0;
-            this.tabs_github.Size = new System.Drawing.Size(1329, 70);
-            this.tabs_github.TabIndex = 117;
-            this.tabs_github.Visible = false;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage6.Controls.Add(this.button1);
-            this.tabPage6.Location = new System.Drawing.Point(4, 24);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1321, 42);
-            this.tabPage6.TabIndex = 0;
-            this.tabPage6.Text = "0";
-            // 
-            // button1
-            // 
-            this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.Image = null;
-            this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageGlyph")));
-            this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(4, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(151, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Sign in by GitHub";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // tabPage8
-            // 
-            this.tabPage8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage8.Controls.Add(this.c7);
-            this.tabPage8.Controls.Add(this.c6);
-            this.tabPage8.Controls.Add(this.c5);
-            this.tabPage8.Controls.Add(this.c4);
-            this.tabPage8.Controls.Add(this.c3);
-            this.tabPage8.Controls.Add(this.c2);
-            this.tabPage8.Controls.Add(this.c1);
-            this.tabPage8.Controls.Add(this.c0);
-            this.tabPage8.Controls.Add(this.labelAlt7);
-            this.tabPage8.Controls.Add(this.githubLbl_elapsedSec);
-            this.tabPage8.Controls.Add(this.progressBar3);
-            this.tabPage8.Controls.Add(this.button10);
-            this.tabPage8.Controls.Add(this.labelAlt5);
-            this.tabPage8.Location = new System.Drawing.Point(4, 24);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(1321, 42);
-            this.tabPage8.TabIndex = 2;
-            this.tabPage8.Text = "1";
-            // 
-            // c7
-            // 
-            this.c7.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c7.BackColor = System.Drawing.Color.Transparent;
-            this.c7.DrawOnGlass = false;
-            this.c7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c7.Location = new System.Drawing.Point(691, 5);
-            this.c7.Name = "c7";
-            this.c7.Size = new System.Drawing.Size(19, 28);
-            this.c7.TabIndex = 55;
-            this.c7.Text = "0";
-            this.c7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c6
-            // 
-            this.c6.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c6.BackColor = System.Drawing.Color.Transparent;
-            this.c6.DrawOnGlass = false;
-            this.c6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c6.Location = new System.Drawing.Point(666, 5);
-            this.c6.Name = "c6";
-            this.c6.Size = new System.Drawing.Size(19, 28);
-            this.c6.TabIndex = 54;
-            this.c6.Text = "0";
-            this.c6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c5
-            // 
-            this.c5.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c5.BackColor = System.Drawing.Color.Transparent;
-            this.c5.DrawOnGlass = false;
-            this.c5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c5.Location = new System.Drawing.Point(641, 5);
-            this.c5.Name = "c5";
-            this.c5.Size = new System.Drawing.Size(19, 28);
-            this.c5.TabIndex = 53;
-            this.c5.Text = "0";
-            this.c5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c4
-            // 
-            this.c4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c4.BackColor = System.Drawing.Color.Transparent;
-            this.c4.DrawOnGlass = false;
-            this.c4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c4.Location = new System.Drawing.Point(616, 5);
-            this.c4.Name = "c4";
-            this.c4.Size = new System.Drawing.Size(19, 28);
-            this.c4.TabIndex = 52;
-            this.c4.Text = "0";
-            this.c4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c3
-            // 
-            this.c3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c3.BackColor = System.Drawing.Color.Transparent;
-            this.c3.DrawOnGlass = false;
-            this.c3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c3.Location = new System.Drawing.Point(566, 5);
-            this.c3.Name = "c3";
-            this.c3.Size = new System.Drawing.Size(19, 28);
-            this.c3.TabIndex = 51;
-            this.c3.Text = "0";
-            this.c3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c2
-            // 
-            this.c2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c2.BackColor = System.Drawing.Color.Transparent;
-            this.c2.DrawOnGlass = false;
-            this.c2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c2.Location = new System.Drawing.Point(541, 5);
-            this.c2.Name = "c2";
-            this.c2.Size = new System.Drawing.Size(19, 28);
-            this.c2.TabIndex = 50;
-            this.c2.Text = "0";
-            this.c2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c1
-            // 
-            this.c1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c1.BackColor = System.Drawing.Color.Transparent;
-            this.c1.DrawOnGlass = false;
-            this.c1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c1.Location = new System.Drawing.Point(516, 5);
-            this.c1.Name = "c1";
-            this.c1.Size = new System.Drawing.Size(19, 28);
-            this.c1.TabIndex = 49;
-            this.c1.Text = "0";
-            this.c1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // c0
-            // 
-            this.c0.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.c0.BackColor = System.Drawing.Color.Transparent;
-            this.c0.DrawOnGlass = false;
-            this.c0.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.c0.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.c0.Location = new System.Drawing.Point(491, 5);
-            this.c0.Name = "c0";
-            this.c0.Size = new System.Drawing.Size(19, 28);
-            this.c0.TabIndex = 48;
-            this.c0.Text = "0";
-            this.c0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelAlt7
-            // 
-            this.labelAlt7.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt7.DrawOnGlass = false;
-            this.labelAlt7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.labelAlt7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt7.Location = new System.Drawing.Point(8, 5);
-            this.labelAlt7.Name = "labelAlt7";
-            this.labelAlt7.Size = new System.Drawing.Size(350, 28);
-            this.labelAlt7.TabIndex = 47;
-            this.labelAlt7.Text = "Copy this code into your browser and complete authentication:";
-            this.labelAlt7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // githubLbl_elapsedSec
-            // 
-            this.githubLbl_elapsedSec.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.githubLbl_elapsedSec.BackColor = System.Drawing.Color.Transparent;
-            this.githubLbl_elapsedSec.DrawOnGlass = false;
-            this.githubLbl_elapsedSec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.githubLbl_elapsedSec.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.githubLbl_elapsedSec.Location = new System.Drawing.Point(986, 5);
-            this.githubLbl_elapsedSec.Name = "githubLbl_elapsedSec";
-            this.githubLbl_elapsedSec.Size = new System.Drawing.Size(297, 28);
-            this.githubLbl_elapsedSec.TabIndex = 46;
-            this.githubLbl_elapsedSec.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // progressBar3
-            // 
-            this.progressBar3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar3.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
-            this.progressBar3.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar3.Location = new System.Drawing.Point(1289, 5);
-            this.progressBar3.Name = "progressBar3";
-            this.progressBar3.Size = new System.Drawing.Size(28, 28);
-            this.progressBar3.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Error;
-            this.progressBar3.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-            this.progressBar3.TabIndex = 45;
-            this.progressBar3.TaskbarBroadcast = true;
-            this.progressBar3.Visible = false;
-            // 
-            // button10
-            // 
-            this.button10.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button10.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.button10.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button10.Image = null;
-            this.button10.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
-            this.button10.ImageGlyphEnabled = true;
-            this.button10.Location = new System.Drawing.Point(716, 5);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(33, 28);
-            this.button10.TabIndex = 41;
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // labelAlt5
-            // 
-            this.labelAlt5.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.labelAlt5.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt5.DrawOnGlass = false;
-            this.labelAlt5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.labelAlt5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt5.Location = new System.Drawing.Point(591, 5);
-            this.labelAlt5.Name = "labelAlt5";
-            this.labelAlt5.Size = new System.Drawing.Size(19, 28);
-            this.labelAlt5.TabIndex = 40;
-            this.labelAlt5.Text = "-";
-            this.labelAlt5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage9.Controls.Add(this.button11);
-            this.tabPage9.Controls.Add(this.labelAlt6);
-            this.tabPage9.Location = new System.Drawing.Point(4, 24);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(1321, 42);
-            this.tabPage9.TabIndex = 3;
-            this.tabPage9.Text = "2";
-            // 
-            // button11
-            // 
-            this.button11.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
-            this.button11.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
-            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button11.ForeColor = System.Drawing.Color.White;
-            this.button11.Image = null;
-            this.button11.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button11.ImageGlyph")));
-            this.button11.ImageGlyphEnabled = true;
-            this.button11.Location = new System.Drawing.Point(9, 6);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(40, 30);
-            this.button11.TabIndex = 41;
-            this.button11.UseVisualStyleBackColor = false;
-            this.button11.Visible = false;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // labelAlt6
-            // 
-            this.labelAlt6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAlt6.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt6.DrawOnGlass = false;
-            this.labelAlt6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.labelAlt6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt6.Location = new System.Drawing.Point(55, 6);
-            this.labelAlt6.Name = "labelAlt6";
-            this.labelAlt6.Size = new System.Drawing.Size(1256, 30);
-            this.labelAlt6.TabIndex = 40;
-            this.labelAlt6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tabPage7
-            // 
-            this.tabPage7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage7.Controls.Add(this.button9);
-            this.tabPage7.Controls.Add(this.button8);
-            this.tabPage7.Controls.Add(this.labelAlt4);
-            this.tabPage7.Controls.Add(this.pictureBox4);
-            this.tabPage7.Location = new System.Drawing.Point(4, 24);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(1321, 42);
-            this.tabPage7.TabIndex = 1;
-            this.tabPage7.Text = "3";
-            // 
-            // button9
-            // 
-            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.button9.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button9.Image = null;
-            this.button9.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button9.ImageGlyph")));
-            this.button9.ImageGlyphEnabled = true;
-            this.button9.Location = new System.Drawing.Point(1030, 4);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(108, 34);
-            this.button9.TabIndex = 41;
-            this.button9.Text = "Sign out";
-            this.button9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // button8
-            // 
-            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button8.Image = null;
-            this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageGlyph")));
-            this.button8.ImageGlyphEnabled = true;
-            this.button8.Location = new System.Drawing.Point(1144, 4);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(174, 34);
-            this.button8.TabIndex = 40;
-            this.button8.Text = "Manage my themes";
-            this.button8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // labelAlt4
-            // 
-            this.labelAlt4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAlt4.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt4.DrawOnGlass = false;
-            this.labelAlt4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.labelAlt4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt4.Location = new System.Drawing.Point(44, 7);
-            this.labelAlt4.Name = "labelAlt4";
-            this.labelAlt4.Size = new System.Drawing.Size(980, 28);
-            this.labelAlt4.TabIndex = 39;
-            this.labelAlt4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Location = new System.Drawing.Point(3, 4);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(35, 35);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox4.TabIndex = 0;
-            this.pictureBox4.TabStop = false;
             // 
             // Store
             // 
@@ -2580,7 +2424,6 @@ namespace WinPaletter
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1329, 721);
             this.Controls.Add(this.Tabs);
-            this.Controls.Add(this.tabs_github);
             this.Controls.Add(this.titlebarExtender1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
@@ -2599,6 +2442,8 @@ namespace WinPaletter
             this.TabPage1.ResumeLayout(false);
             this.TabPage3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
+            this.flowLayoutPanel6.ResumeLayout(false);
+            this.flowLayoutPanel6.PerformLayout();
             this.flowLayoutPanel5.ResumeLayout(false);
             this.flowLayoutPanel5.PerformLayout();
             this.flowLayoutPanel4.ResumeLayout(false);
@@ -2610,10 +2455,26 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.os_7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.os_vista)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.os_xp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_winTheme)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_lockScreen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_classicColors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_cursors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_Metrics)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_cmd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_ps86)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_ps64)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_terminal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_terminalPreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_wallpaper)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_effects)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_sounds)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_screenSaver)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_altTab)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_icons)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_accessibility)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspect_winPaletterAppTheme)).EndInit();
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.previewContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox41)).EndInit();
             this.FlowLayoutPanel1.ResumeLayout(false);
@@ -2628,12 +2489,6 @@ namespace WinPaletter
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.search_panel.ResumeLayout(false);
-            this.tabs_github.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage9.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2643,7 +2498,6 @@ namespace WinPaletter
         internal TabPage TabPage3;
         internal UI.WP.Button back_btn;
         internal System.ComponentModel.BackgroundWorker ThemesFetcher;
-        internal UI.WP.LabelAlt Titlebar_lbl;
         internal Label themeSize_lbl;
         internal UI.WP.GroupBox previewContainer;
         internal PictureBox PictureBox41;
@@ -2689,10 +2543,6 @@ namespace WinPaletter
         public Tabs.TitlebarExtender titlebarExtender1;
         internal UI.WP.Button pin_button;
         private SmoothFlowLayoutPanel flowLayoutPanel2;
-        internal UI.WP.GroupBox groupBox2;
-        internal Label aspects_lbl;
-        internal Label label2;
-        internal PictureBox pictureBox1;
         private UI.WP.NumericUpDown numericUpDown1;
         private TabPage tabPage2;
         private PictureBox pictureBox2;
@@ -2736,30 +2586,30 @@ namespace WinPaletter
         private FlowLayoutPanel flowLayoutPanel5;
         private Panel panel3;
         internal SeparatorV separatorV1;
-        private TablessControl tabs_github;
-        private TabPage tabPage6;
-        private UI.WP.Button button1;
-        private TabPage tabPage7;
-        private PictureBox pictureBox4;
-        private UI.WP.Button button9;
-        private UI.WP.Button button8;
-        internal LabelAlt labelAlt4;
-        private TabPage tabPage8;
-        private UI.WP.Button button10;
-        internal LabelAlt labelAlt5;
-        internal UI.WP.ProgressBar progressBar3;
-        private TabPage tabPage9;
-        internal UI.WP.Button button11;
-        internal LabelAlt labelAlt6;
-        internal LabelAlt githubLbl_elapsedSec;
-        internal LabelAlt labelAlt7;
-        internal LabelAlt c0;
-        internal LabelAlt c7;
-        internal LabelAlt c6;
-        internal LabelAlt c5;
-        internal LabelAlt c4;
-        internal LabelAlt c3;
-        internal LabelAlt c2;
-        internal LabelAlt c1;
+        internal SeparatorV separatorV2;
+        internal PictureBox aspect_winTheme;
+        internal PictureBox aspect_lockScreen;
+        internal PictureBox aspect_classicColors;
+        internal PictureBox aspect_cursors;
+        internal PictureBox aspect_Metrics;
+        internal PictureBox aspect_cmd;
+        internal PictureBox aspect_ps86;
+        internal PictureBox aspect_ps64;
+        internal PictureBox aspect_terminal;
+        internal PictureBox aspect_terminalPreview;
+        internal PictureBox aspect_wallpaper;
+        internal PictureBox aspect_effects;
+        internal PictureBox aspect_sounds;
+        internal PictureBox aspect_screenSaver;
+        internal PictureBox aspect_altTab;
+        internal PictureBox aspect_icons;
+        internal PictureBox aspect_accessibility;
+        internal PictureBox aspect_winPaletterAppTheme;
+        internal SeparatorV separatorV3;
+        internal Label ver_lbl;
+        private FlowLayoutPanel flowLayoutPanel6;
+        private Panel panel4;
+        internal LabelAlt titlebar_lbl;
+        internal UI.WP.Button avatar_btn;
     }
 }

@@ -70,14 +70,14 @@ namespace WinPaletter.UI.WP
             base.OnHandleCreated(e);
 
             // Listen to global theme/pattern changes
-            Program.Style.PatternChanged += OnGlobalStyleChanged;
+            Config.PatternChanged += OnGlobalStyleChanged;
 
             OnGlobalStyleChanged();
         }
 
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            Program.Style.PatternChanged -= OnGlobalStyleChanged;
+            Config.PatternChanged -= OnGlobalStyleChanged;
 
             base.OnHandleDestroyed(e); 
         }

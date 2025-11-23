@@ -1,4 +1,5 @@
 ﻿using Octokit;
+using Serilog.Events;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -202,25 +203,41 @@ namespace WinPaletter
         /// </remarks>
         public async Task<bool> IsLoggedInAsync()
         {
+            // Check network first
+            if (!Program.IsNetworkAvailable)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "Cannot check login: Network unavailable.");
+                OnNetworkError?.Invoke("Network unavailable.");
+                return false;
+            }
+
             string token = LoadToken();
-            if (string.IsNullOrEmpty(token)) return false;
+            if (string.IsNullOrEmpty(token))
+            {
+                Program.Log?.Write(LogEventLevel.Information, "No saved GitHub token found.");
+                return false;
+            }
 
             Client.Credentials = new Credentials(token);
             OnTokenLoaded?.Invoke(token);
+            Program.Log?.Write(LogEventLevel.Information, "Token loaded from local storage.");
 
             try
             {
                 Octokit.User user = await Client.User.Current().ConfigureAwait(false);
+                Program.Log?.Write(LogEventLevel.Information, $"Logged in as {user.Login}.");
                 return true;
             }
             catch (AuthorizationException)
             {
+                Program.Log?.Write(LogEventLevel.Warning, "Saved token invalid or expired.");
                 OnTokenInvalid?.Invoke();
                 DeleteToken();
                 return false;
             }
             catch (Exception ex)
             {
+                Program.Log?.Write(LogEventLevel.Error, "Unexpected error during IsLoggedInAsync.", ex);
                 OnUnexpectedError?.Invoke(ex.Message);
                 return false;
             }
@@ -239,7 +256,15 @@ namespace WinPaletter
         /// </remarks>
         public async Task StartLoggingInAsync()
         {
+            if (!Program.IsNetworkAvailable)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "Cannot start login: Network unavailable.");
+                OnNetworkError?.Invoke("Network unavailable.");
+                return;
+            }
+
             OnLoginInProgress?.Invoke();
+            Program.Log?.Write(LogEventLevel.Information, "Starting GitHub Device Flow login.");
             await InitiateDeviceFlowLoginAsync().ConfigureAwait(false);
         }
 
@@ -255,11 +280,18 @@ namespace WinPaletter
         {
             if (_cancellationTokenSource != null)
             {
+                Program.Log?.Write(LogEventLevel.Information, "Cancelling ongoing GitHub Device Flow login...");
+
                 _cancellationTokenSource.Cancel();
                 _cancellationTokenSource.Dispose();
                 _cancellationTokenSource = null;
 
+                Program.Log?.Write(LogEventLevel.Information, "GitHub Device Flow login cancelled successfully.");
                 OnLoginCanceled?.Invoke();
+            }
+            else
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "CancelLogin called but no ongoing login was found.");
             }
         }
 
@@ -304,6 +336,7 @@ namespace WinPaletter
                 {
                     await Task.Delay(1000).ConfigureAwait(false);
                     NativeMethods.User32.SetForegroundWindow(process.Handle);
+                    Program.Log?.Write(LogEventLevel.Information, $"Opened verification URL: {deviceFlow.VerificationUri}");
                 }
 
                 OnDeviceFlowInitiated?.Invoke(deviceFlow.UserCode, deviceFlow.ExpiresIn, deviceFlow.VerificationUri);
@@ -318,11 +351,13 @@ namespace WinPaletter
             }
             catch (OperationCanceledException)
             {
+                Program.Log?.Write(LogEventLevel.Information, "Device Flow login canceled by user.");
                 OnLoginCanceled?.Invoke();
                 return false;
             }
             catch (Exception ex)
             {
+                Program.Log?.Write(LogEventLevel.Error, "Device Flow initiation failed.", ex);
                 OnDeviceFlowInitiationFailed?.Invoke();
                 OnUnexpectedError?.Invoke(ex.Message);
                 return false;
@@ -356,6 +391,7 @@ namespace WinPaletter
         {
             if (deviceFlow == null)
             {
+                Program.Log?.Write(LogEventLevel.Warning, "PollForAuthorizationAsync called but deviceFlow is null.");
                 OnDeviceFlowNotInitiated?.Invoke();
                 return;
             }
@@ -391,6 +427,7 @@ namespace WinPaletter
                             Client.Credentials = new Credentials(token.AccessToken);
                             Octokit.User user = await Client.User.Current().ConfigureAwait(false);
                             OnAuthorizationSuccess?.Invoke(user);
+                            Program.Log?.Write(LogEventLevel.Information, $"Authorization successful for {user.Login}.");
 
                             SaveToken(token.AccessToken);
                             return;
@@ -399,31 +436,48 @@ namespace WinPaletter
                     catch (AuthorizationException ex)
                     {
                         if (ex.Message.Contains("authorization_pending"))
+                        {
                             OnAuthorizationPending?.Invoke();
+                            Program.Log?.Write(LogEventLevel.Information, "Authorization pending.");
+                        }
                         else if (ex.Message.Contains("slow_down"))
+                        {
+                            OnLoginRetry?.Invoke();
+                            Program.Log?.Write(LogEventLevel.Information, "GitHub requested slow_down, retrying...");
                             await Task.Delay(deviceFlow.Interval * 2000, cancellationToken).ConfigureAwait(false);
+                        }
                         else if (ex.Message.Contains("bad_verification_code"))
                         {
                             OnInsufficientPermissions?.Invoke();
+                            Program.Log?.Write(LogEventLevel.Warning, "Bad verification code: insufficient permissions.");
                             return;
                         }
                         else
                         {
                             OnAuthorizationFailure?.Invoke(ex.Message);
+                            Program.Log?.Write(LogEventLevel.Error, "Authorization failed.", ex);
                             return;
                         }
                     }
+
                     await Task.Delay(deviceFlow.Interval * 1000, cancellationToken).ConfigureAwait(false);
                 }
 
                 if (!cancellationToken.IsCancellationRequested)
+                {
                     OnLoginTimedOut?.Invoke();
+                    Program.Log?.Write(LogEventLevel.Warning, "Device Flow login timed out.");
+                }
                 else
+                {
                     OnLoginCanceled?.Invoke();
+                    Program.Log?.Write(LogEventLevel.Information, "Device Flow login canceled.");
+                }
             }
             catch (OperationCanceledException)
             {
                 OnLoginCanceled?.Invoke();
+                Program.Log?.Write(LogEventLevel.Information, "Polling canceled.");
             }
             finally
             {
@@ -452,17 +506,33 @@ namespace WinPaletter
         {
             try
             {
+                Program.Log?.Write(LogEventLevel.Information, "Attempting GitHub sign out...");
+
+                // Check network availability
+                if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Sign-out will continue locally.");
+                }
+
                 // Cancel ongoing login if any
-                _cancellationTokenSource?.Cancel();
+                if (_cancellationTokenSource != null)
+                {
+                    Program.Log?.Write(LogEventLevel.Information, "Cancelling any ongoing GitHub login before sign-out...");
+                    _cancellationTokenSource.Cancel();
+                    _cancellationTokenSource.Dispose();
+                    _cancellationTokenSource = null;
+                }
 
                 // Simulate async operation (optional, e.g., if you later want server calls)
                 await Task.Delay(100).ConfigureAwait(false);
 
                 // Delete local token
+                Program.Log?.Write(LogEventLevel.Information, "Deleting local GitHub OAuth token...");
                 DeleteToken();
 
                 // Reset credentials
                 Client.Credentials = Credentials.Anonymous;
+                Program.Log?.Write(LogEventLevel.Information, "GitHub client credentials reset to anonymous.");
 
                 // Open GitHub applications settings page for user to revoke token manually, maximized, focused and brought to top
                 ProcessStartInfo pci = new() { FileName = "https://github.com/settings/applications", UseShellExecute = true };
@@ -475,17 +545,21 @@ namespace WinPaletter
 
                     // Bring to front using Win32 API
                     NativeMethods.User32.SetForegroundWindow(process.Handle);
+                    Program.Log?.Write(LogEventLevel.Information, "Opened GitHub applications settings page in browser.");
                 }
 
+                // Update user info
                 User.UpdateGitHubLoginStatus(false);
                 User.GitHub = null;
                 await Forms.UserSwitch.UpdateGitHubLoginData().ConfigureAwait(false);
 
                 // Fire signed out event
+                Program.Log?.Write(LogEventLevel.Information, "GitHub sign out completed successfully.");
                 OnSignedOut?.Invoke();
             }
             catch (Exception ex)
             {
+                Program.Log?.Write(LogEventLevel.Error, "GitHub sign out failed.", ex);
                 OnSignOutFailed?.Invoke(ex.Message);
             }
         }
@@ -513,6 +587,8 @@ namespace WinPaletter
         /// </remarks>
         public static void SaveToken(string token)
         {
+            Program.Log?.Write(LogEventLevel.Information, "Saving GitHub OAuth token to Windows Credential Manager...");
+
             byte[] byteArray = Encoding.Unicode.GetBytes(token);
             IntPtr blob = Marshal.AllocHGlobal(byteArray.Length);
             Marshal.Copy(byteArray, 0, blob, byteArray.Length);
@@ -527,9 +603,21 @@ namespace WinPaletter
                 UserName = "GitHubToken"
             };
 
-            if (!NativeMethods.ADVAPI.CredWrite(ref credential, 0)) throw new Exception("Failed to save credential. Error code: " + Marshal.GetLastWin32Error());
+            try
+            {
+                if (!NativeMethods.ADVAPI.CredWrite(ref credential, 0))
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    Program.Log?.Write(LogEventLevel.Error, $"Failed to save GitHub token. Win32 Error Code: {error}");
+                    throw new Exception("Failed to save credential. Error code: " + error);
+                }
 
-            Marshal.FreeHGlobal(blob);
+                Program.Log?.Write(LogEventLevel.Information, "GitHub OAuth token saved successfully.");
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(blob);
+            }
         }
 
         /// <summary>
@@ -544,15 +632,32 @@ namespace WinPaletter
         /// </remarks>
         public static string LoadToken()
         {
+            Program.Log?.Write(LogEventLevel.Information, "Attempting to load GitHub OAuth token from Windows Credential Manager...");
+
             if (NativeMethods.ADVAPI.CredRead(Target, NativeMethods.ADVAPI.CRED_TYPE_GENERIC, 0, out IntPtr credPtr))
             {
-                NativeMethods.ADVAPI.CREDENTIAL cred = (NativeMethods.ADVAPI.CREDENTIAL)Marshal.PtrToStructure(credPtr, typeof(NativeMethods.ADVAPI.CREDENTIAL));
-                byte[] blob = new byte[cred.CredentialBlobSize];
-                Marshal.Copy(cred.CredentialBlob, blob, 0, cred.CredentialBlobSize);
-                string token = Encoding.Unicode.GetString(blob);
-                NativeMethods.ADVAPI.CredFree(credPtr);
-                return token;
+                try
+                {
+                    NativeMethods.ADVAPI.CREDENTIAL cred = (NativeMethods.ADVAPI.CREDENTIAL)Marshal.PtrToStructure(credPtr, typeof(NativeMethods.ADVAPI.CREDENTIAL));
+                    byte[] blob = new byte[cred.CredentialBlobSize];
+                    Marshal.Copy(cred.CredentialBlob, blob, 0, cred.CredentialBlobSize);
+                    string token = Encoding.Unicode.GetString(blob);
+
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub OAuth token loaded successfully.");
+                    return token;
+                }
+                catch (Exception ex)
+                {
+                    Program.Log?.Write(LogEventLevel.Error, "Error loading GitHub OAuth token.", ex);
+                    return null;
+                }
+                finally
+                {
+                    NativeMethods.ADVAPI.CredFree(credPtr);
+                }
             }
+
+            Program.Log?.Write(LogEventLevel.Warning, "No GitHub OAuth token found in Windows Credential Manager.");
             return null;
         }
 
@@ -565,7 +670,21 @@ namespace WinPaletter
         /// </remarks>
         public static void DeleteToken()
         {
-            NativeMethods.ADVAPI.CredDelete(Target, NativeMethods.ADVAPI.CRED_TYPE_GENERIC, 0);
+            try
+            {
+                Program.Log?.Write(LogEventLevel.Information, "Attempting to delete GitHub OAuth token from Windows Credential Manager...");
+
+                bool result = NativeMethods.ADVAPI.CredDelete(Target, NativeMethods.ADVAPI.CRED_TYPE_GENERIC, 0);
+
+                if (result)
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub OAuth token deleted successfully.");
+                else
+                    Program.Log?.Write(LogEventLevel.Warning, "GitHub OAuth token not found or could not be deleted.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, "Error occurred while deleting GitHub OAuth token.", ex);
+            }
         }
 
         #endregion
