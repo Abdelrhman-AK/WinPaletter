@@ -572,7 +572,7 @@ namespace WinPaletter.UI.WP
             {
                 if (MenuSplitterRectangle.Contains(PointToClient(MousePosition)))
                 {
-                    Menu.Show(this, new Point(15, Height));
+                    Menu.Show(this, new Point(Width - Menu.Width, Height));
                 }
                 else
                 {

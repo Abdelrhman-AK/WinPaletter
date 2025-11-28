@@ -283,6 +283,26 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Menu_Edit {
+            get {
+                object obj = ResourceManager.GetObject("Menu_Edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Menu_SaveAs {
+            get {
+                object obj = ResourceManager.GetObject("Menu_SaveAs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Pattern1 {
             get {
                 object obj = ResourceManager.GetObject("Pattern1", resourceCulture);

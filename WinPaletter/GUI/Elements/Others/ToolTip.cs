@@ -165,7 +165,7 @@ namespace WinPaletter.UI.WP
 
         #region Methods
 
-        public new void Show(Control control, string title, string text, Image image, Point location_to_control, int duration = 5000)
+        public void Show(Control control, string title, string text, Image image, Point location_to_control, int duration = 5000)
         {
             ToolTipTitle = title;
             ToolTipText = text;
@@ -175,7 +175,7 @@ namespace WinPaletter.UI.WP
             base.Show(".", control, location_to_control.X, location_to_control.Y, duration);
         }
 
-        public new void Show(Control control, string title, string text, Color badgeColor, Point location_to_control, int duration = 5000)
+        public void Show(Control control, string title, string text, Color badgeColor, Point location_to_control, int duration = 5000)
         {
             ToolTipTitle = title;
             ToolTipText = text;

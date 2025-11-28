@@ -185,6 +185,11 @@ namespace libmsstyle
                 this.reserved == other.reserved &&
                 this.sizeInBytes == other.sizeInBytes;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     };
 
     public class StyleProperty
@@ -389,6 +394,11 @@ namespace libmsstyle
             StyleProperty other = (StyleProperty)o;
             return this.Header.Equals(other.Header) &&
                 this.GetValue().Equals(other.GetValue());
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

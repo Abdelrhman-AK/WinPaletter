@@ -2855,7 +2855,7 @@ namespace WinPaletter
         internal UI.WP.Button button25;
         internal UI.WP.Button button24;
         internal UI.WP.Button button26;
-        internal PictureBox checker_img;
+        internal new PictureBox checker_img;
         private UI.WP.Button button7;
         private UI.WP.TablessControl tablessControl1;
         private TabPage tabPage4;

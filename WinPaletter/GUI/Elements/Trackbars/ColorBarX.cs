@@ -17,7 +17,7 @@ namespace WinPaletter.UI.WP
         }
 
         public event EventHandler ValueChanged;
-        public event EventHandler Scroll;
+        public new event EventHandler Scroll;
 
         public int Value
         {

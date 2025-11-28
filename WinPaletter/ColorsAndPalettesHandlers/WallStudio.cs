@@ -105,7 +105,7 @@ namespace WinPaletter
                 label16.Text = EffectsSummary();
             }
 
-            Forms.GlassWindow.Show();
+            Forms.GlassWindow.ShowWithGlassFocusedOnParent(Forms.MainForm);
         }
 
         private void toggle1_CheckedChanged(object sender, EventArgs e)
@@ -273,7 +273,7 @@ namespace WinPaletter
             else if (tablessControl1.SelectedIndex == 3)
             {
                 CheckedListBox1.Items.Clear();
-                CheckedListBox1.Items.AddRange([.. Store_CPToggles.EnabledAspects(TM, true)]);
+                CheckedListBox1.Items.AddRange([.. EnabledAspects(TM, true)]);
 
                 for (int i = 0, loopTo = CheckedListBox1.Items.Count - 1; i <= loopTo; i++) CheckedListBox1.SetItemChecked(i, true);
             }
@@ -461,6 +461,54 @@ namespace WinPaletter
         }
 
         #region Helpers
+
+        /// <summary>
+        /// Gets the list of enabled aspects but not the disabled ones in the <see cref="Theme.Manager"/> instance depending on the current OS and by using strings from <see cref="Program.Lang"/>.
+        /// </summary>
+        /// <param name="TM"></param>
+        /// <returns></returns>
+        public static List<string> EnabledAspects(Manager TM, bool ignoreOS = false)
+        {
+            List<string> aspects_list = [];
+            aspects_list.Clear();
+
+            if ((OS.W12 || ignoreOS) && TM.Windows12.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12));
+            if ((OS.W11 || ignoreOS) && TM.Windows11.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11));
+            if ((OS.W10 || ignoreOS) && TM.Windows10.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10));
+            if ((OS.W81 || ignoreOS) && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81));
+            if ((OS.W8 || ignoreOS) && TM.Windows8.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8));
+            if ((OS.W7 || ignoreOS) && TM.Windows7.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7));
+            if ((OS.WVista || ignoreOS) && TM.WindowsVista.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista));
+            if ((OS.WXP || ignoreOS) && TM.WindowsXP.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP));
+
+            if (OS.W12 && TM.LogonUI12.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+            if (OS.W11 && TM.LogonUI11.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+            if (OS.W10 && TM.LogonUI10.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+
+            if (TM.LogonUI81.Enabled & (OS.W8x)) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+            if (TM.LogonUI7.Enabled & (OS.W7)) aspects_list.Add(Program.Lang.Strings.Aspects.LogonUI);
+            if (TM.LogonUIXP.Enabled & OS.WXP) aspects_list.Add(Program.Lang.Strings.Aspects.LogonUI);
+
+            if (TM.Win32.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.ClassicColors);
+
+            if (TM.Cursors.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Cursors);
+            if (TM.Wallpaper.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Wallpaper);
+            if (TM.Sounds.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Sounds);
+            if (TM.ScreenSaver.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.ScreenSaver);
+            if (TM.MetricsFonts.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.MetricsFonts);
+            if (TM.CommandPrompt.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.CommandPrompt);
+            if (TM.PowerShellx86.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.PowerShellx86);
+            if (TM.PowerShellx64.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.PowerShellx64);
+            if (TM.Terminal.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.TerminalStable);
+            if (TM.TerminalPreview.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.TerminalPreview);
+            if (TM.WindowsEffects.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.WinEffects);
+            if (TM.AltTab.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.AltTab);
+            if (TM.Icons.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Icons);
+            if (TM.Accessibility.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Accessibility);
+            if (TM.AppTheme.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.AppTheme);
+
+            return aspects_list;
+        }
 
         void ApplyEffects()
         {

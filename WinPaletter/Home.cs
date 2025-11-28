@@ -206,7 +206,7 @@ namespace WinPaletter
 
                         using (Bitmap resized_avatar = User.GitHub_Avatar?.Resize(32, 32))
                         using (Bitmap resized_user = User.ProfilePicture?.Resize(16, 16))
-                        using (Bitmap circular_avatar = resized_avatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+                        using (Bitmap circular_avatar = resized_avatar.ToCircular(true))
                         using (Bitmap circular_user = resized_user.ToCircular())
                         {
                             PointF rect_overlay = new(circular_avatar.Width - circular_user.Width, circular_avatar.Height - circular_user.Height);
@@ -218,7 +218,7 @@ namespace WinPaletter
                 {
                     using (Bitmap resized_avatar = User.GitHub_Avatar?.Resize(32, 32))
                     using (Bitmap resized_user = User.ProfilePicture?.Resize(16, 16))
-                    using (Bitmap circular_avatar = resized_avatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+                    using (Bitmap circular_avatar = resized_avatar.ToCircular(true))
                     using (Bitmap circular_user = resized_user.ToCircular())
                     {
                         PointF rect_overlay = new(circular_avatar.Width - circular_user.Width, circular_avatar.Height - circular_user.Height);

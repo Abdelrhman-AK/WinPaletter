@@ -851,11 +851,6 @@ namespace WinPaletter.Tabs
         public delegate void FormClosingDelegate(object sender, TabDataEventArgs e);
 
         /// <summary>
-        /// Associated form in tab is being closed
-        /// </summary>
-        public event FormClosingDelegate FormClosing;
-
-        /// <summary>
         /// Delegate to FormTextChanged event
         /// </summary>
         /// <param name="sender"></param>

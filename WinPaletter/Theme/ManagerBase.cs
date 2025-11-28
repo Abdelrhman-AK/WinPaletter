@@ -162,7 +162,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="left">The first <see cref="ManagerBase{T}"/> instance to compare, or <see langword="null"/>.</param>
         /// <param name="right">The second <see cref="ManagerBase{T}"/> instance to compare, or <see langword="null"/>.</param>
         /// <returns><see langword="true"/> if the two instances are not equal; otherwise, <see langword="false"/>.</returns>
-        public static bool operator !=(ManagerBase<T>? left, ManagerBase<T>? right) => !(left == right);
+        public static bool operator !=(ManagerBase<T> left, ManagerBase<T> right) => !(left == right);
 
         #endregion
 

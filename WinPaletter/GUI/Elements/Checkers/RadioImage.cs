@@ -28,8 +28,11 @@ namespace WinPaletter.UI.WP
             _alpha = 0; _alpha2 = _checked ? 255 : 0;
         }
 
+
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
+
+        public bool _useAsCheckBox = false;
 
         public MouseState State = MouseState.None;
 
@@ -55,7 +58,7 @@ namespace WinPaletter.UI.WP
                 if (value != _checked)
                 {
                     _checked = value;
-                    if (_checked) { UncheckOthersOnChecked(); }
+                    if (_checked && !_useAsCheckBox) { UncheckOthersOnChecked(); }
 
                     if (CanAnimate)
                     {
@@ -120,7 +123,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            Checked = true;
+            Checked = _useAsCheckBox ? !_checked : true;
             State = MouseState.Down;
 
             if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }

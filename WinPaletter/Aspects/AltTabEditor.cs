@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme;
@@ -162,8 +163,8 @@ namespace WinPaletter
 
             RadioImage2.Image = WinLogos.WinXP;
 
-            pnl_preview1.BackgroundImage = Program.Wallpaper;
-            Classic_Preview1.BackgroundImage = Program.Wallpaper;
+            pnl_preview1.BackgroundImage = Program.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            Classic_Preview1.BackgroundImage = pnl_preview1.BackgroundImage.Clone() as Bitmap;
 
             SetClassicPanelRaisedRColors(Program.TM, PanelRRaised1);
             SetClassicPanelColors(Program.TM, PanelR1);

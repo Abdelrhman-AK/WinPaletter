@@ -58,7 +58,7 @@ namespace WinPaletter.UI.WP
 
         public MouseState State = MouseState.None;
 
-        private LinearGradientBrush? backBrushCache;
+        private LinearGradientBrush backBrushCache;
 
         public enum MouseState { None, Over, Down }
         public enum ModesList { Hue, Saturation, Light }
@@ -170,7 +170,7 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events
-        public event ScrollEventHandler? Scroll;
+        public event ScrollEventHandler Scroll;
         public delegate void ScrollEventHandler(object sender);
         #endregion
 

@@ -466,7 +466,7 @@ namespace WinPaletter.Theme.Structures
         /// Retrun MetricsFonts structure into a string in format of Microsoft theme File (*.theme)
         /// </summary>
         /// <param name="win32UI">Win32UI structure to be included in the string</param>
-        public string ToString(Win32UI? win32UI = null)
+        public string ToString(Win32UI win32UI = null)
         {
             StringBuilder s = new();
             s.Clear();

@@ -104,8 +104,8 @@ namespace WinPaletter.Tabs
 
                 if (OS.WVista || OS.W7 || OS.W8x) return TitlebarTypes.DWM;
 
-                // Windows 10/11
-                if (AccentOnTitlebars && isCompositionEnabled) return TitlebarTypes.DWM_Aero;
+                // Windows 10/11/12
+                if (AccentOnTitlebars && isCompositionEnabled) return Transparency ? TitlebarTypes.DWM_Aero : TitlebarTypes.ColorPrevalence;
 
                 if (AccentOnTitlebars && !isCompositionEnabled) return TitlebarTypes.ColorPrevalence;
 
@@ -202,8 +202,8 @@ namespace WinPaletter.Tabs
         {
             if (FindForm() != null)
             {
-                FindForm().Activated -= Form_Activated;
-                FindForm().Deactivate -= Form_Deactivate;
+                FindForm()?.Activated -= Form_Activated;
+                FindForm()?.Deactivate -= Form_Deactivate;
                 SystemEvents.UserPreferenceChanged -= OnSystemSettingsUpdated;
             }
 
@@ -327,8 +327,9 @@ namespace WinPaletter.Tabs
             base.OnMouseMove(e);
         }
 
-        private TitlebarTypes _lastBackdropType = (TitlebarTypes)(-1);
+        private TitlebarTypes? _lastBackdropType = null;
         private Padding _lastBackdropPadding = Padding.Empty;
+        private bool? _lastFocused = null;
 
         /// <summary>
         /// Updates the backdrop of the control.
@@ -359,7 +360,7 @@ namespace WinPaletter.Tabs
             TitlebarTypes type = TitlebarType;
 
             // Apply only if changed
-            bool needsRedraw = type != _lastBackdropType || p != _lastBackdropPadding;
+            bool needsRedraw = type != _lastBackdropType || p != _lastBackdropPadding || _lastFocused != _formFocused;
 
             switch (type)
             {
@@ -399,6 +400,7 @@ namespace WinPaletter.Tabs
 
             _lastBackdropType = type;
             _lastBackdropPadding = p;
+            _lastFocused = _formFocused;
         }
 
         /// <summary>

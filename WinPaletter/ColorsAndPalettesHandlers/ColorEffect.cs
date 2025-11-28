@@ -595,7 +595,6 @@ namespace WinPaletter
             }
         }
         private float _scrollbarValue;
-        private bool disposedValue;
 
         /// <summary>
         /// Fired when the <see cref="ScrollbarValue"/> property changes.

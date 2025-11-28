@@ -1229,8 +1229,8 @@ namespace WinPaletter.TypesExtensions
             public bool SortByDominance { get; set; } = true;
             public bool DisableTransparency { get; set; } = true;
             public bool IncludeVariations { get; set; } = true;
-            public IProgress<float>? Progress { get; set; }
-            public IProgress<string>? Status { get; set; }
+            public IProgress<float> Progress { get; set; }
+            public IProgress<string> Status { get; set; }
             public CancellationToken CancellationToken { get; set; } = default;
             public Color? AccentColor { get; set; } = null;
             public float AccentWeight { get; set; } = 2f;
@@ -1449,17 +1449,18 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="source">Source bitmap.</param>
         /// <returns>Circular bitmap cropped and masked to the smallest dimension.</returns>
-        public static Bitmap ToCircular(this Bitmap bitmap, Color? lineColor = null)
+        public static Bitmap ToCircular(this Bitmap bitmap, bool hot = false)
         {
             if (bitmap is null) return null;
 
-            Rectangle rect = new(1, 1, bitmap.Width - 2, bitmap.Height - 2);
+            Rectangle rect = new(2, 1, bitmap.Width - 3, bitmap.Height - 3);
 
             Bitmap canvas = new(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
 
             using (Graphics G = Graphics.FromImage(canvas))
             {
                 G.SmoothingMode = SmoothingMode.AntiAlias;
+
                 G.Clear(Color.Transparent);
 
                 using (GraphicsPath path = new())
@@ -1470,15 +1471,13 @@ namespace WinPaletter.TypesExtensions
                     G.ResetClip();
                 }
 
-                Color penColor = lineColor ?? Program.Style.Schemes.Main.Colors.ForeColor;
-                using (Pen pen = new(penColor, 2f))
-                {
-                    RectangleF rect_border = new(0, 0, bitmap.Width - 1, bitmap.Height - 1);
-                    G.DrawEllipse(pen, rect_border);
-                }
+                //G.DrawImage(hot ? Resources.UserFrame_Hot : Resources.UserFrame, rect.X, rect.Y, rect.Width, rect.Height);
             }
 
-            return canvas;
+            using (Bitmap frame = (hot ? Resources.UserFrame_Hot : Resources.UserFrame).Resize(bitmap.Size))
+            {
+                return canvas.Overlay(frame, new(0, 0));
+            }
         }
 
         /// <summary>

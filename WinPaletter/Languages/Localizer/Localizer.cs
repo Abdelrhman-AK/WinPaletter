@@ -194,7 +194,7 @@ namespace WinPaletter
             Value = string.Empty;
 
             // Loop through all forms nodes in JObj
-            foreach (KeyValuePair<string, JToken?> F in JSON_Forms)
+            foreach (KeyValuePair<string, JToken> F in JSON_Forms)
             {
                 // Get one sub_form node
                 // There is only one specific property "Text"
@@ -222,7 +222,7 @@ namespace WinPaletter
                     if (J_Specific_Form.ContainsKey("CONTROLS")) J_Controls = (JObject)J_Specific_Form["CONTROLS"];
 
                     // Loop through all child controls JObj nodes
-                    foreach (KeyValuePair<string, JToken?> ctrl in J_Controls)
+                    foreach (KeyValuePair<string, JToken> ctrl in J_Controls)
                     {
                         // If there is a dot in JObj node value, then there is a specific mentioned property,
                         // if not, then it is a "Text" property only.
@@ -262,7 +262,7 @@ namespace WinPaletter
             Value = string.Empty;
 
             // Loop through all forms nodes in JObj
-            foreach (KeyValuePair<string, JToken?> F in JSON_Form)
+            foreach (KeyValuePair<string, JToken> F in JSON_Form)
             {
                 ControlName = string.Empty;
                 Prop = "Text";
@@ -285,7 +285,7 @@ namespace WinPaletter
                     if (JSON_Form.ContainsKey("CONTROLS")) J_Controls = (JObject)JSON_Form["CONTROLS"];
 
                     // Loop through all child controls JObj nodes
-                    foreach (KeyValuePair<string, JToken?> ctrl in J_Controls)
+                    foreach (KeyValuePair<string, JToken> ctrl in J_Controls)
                     {
                         // If there is a dot in JObj node value, then there is a specific mentioned property,
                         // if not, then it is a "Text" property only.

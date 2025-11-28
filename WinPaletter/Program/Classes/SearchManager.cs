@@ -87,7 +87,7 @@ namespace WinPaletter
             _debounceTimer.Start();
         }
 
-        private void DebounceTimer_Tick(object? sender, EventArgs e)
+        private void DebounceTimer_Tick(object sender, EventArgs e)
         {
             _debounceTimer.Stop();
             ApplyFilter(_searchBox.Text);

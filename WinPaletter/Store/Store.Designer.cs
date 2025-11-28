@@ -38,7 +38,6 @@ namespace WinPaletter
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Store));
             this.ThemesFetcher = new System.ComponentModel.BackgroundWorker();
             this.Cursor_Timer = new System.Windows.Forms.Timer(this.components);
-            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.Tabs = new WinPaletter.UI.WP.TablessControl();
             this.TabPage1 = new System.Windows.Forms.TabPage();
             this.store_container = new WinPaletter.UI.WP.SmoothFlowLayoutPanel();
@@ -81,6 +80,8 @@ namespace WinPaletter
             this.aspect_icons = new System.Windows.Forms.PictureBox();
             this.aspect_accessibility = new System.Windows.Forms.PictureBox();
             this.aspect_winPaletterAppTheme = new System.Windows.Forms.PictureBox();
+            this.separatorV4 = new WinPaletter.UI.WP.SeparatorV();
+            this.lbl_hint = new System.Windows.Forms.Label();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.themeSize_lbl = new System.Windows.Forms.Label();
@@ -145,6 +146,34 @@ namespace WinPaletter
             this.button6 = new WinPaletter.UI.WP.Button();
             this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.button1 = new WinPaletter.UI.WP.Button();
+            this.button8 = new WinPaletter.UI.WP.Button();
+            this.button9 = new WinPaletter.UI.WP.Button();
+            this.button10 = new WinPaletter.UI.WP.Button();
+            this.smoothFlowLayoutPanel1 = new WinPaletter.UI.WP.SmoothFlowLayoutPanel();
+            this.toggle_theme = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_classicColors = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_lockScreen = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_cursors = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_metrics = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_cmd = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_ps86 = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_ps64 = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_terminal = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_terminalPreview = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_wallpaper = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_effects = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_sounds = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_screenSaver = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_altTab = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_icons = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_accessibility = new WinPaletter.UI.WP.CheckImage();
+            this.toggle_winPaletterTheme = new WinPaletter.UI.WP.CheckImage();
+            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.labelAlt4 = new WinPaletter.UI.WP.LabelAlt();
+            this.pictureBox1 = new WinPaletter.UI.WP.TransparentPictureBox();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.titlebar_lbl = new WinPaletter.UI.WP.LabelAlt();
             this.avatar_btn = new WinPaletter.UI.WP.Button();
@@ -154,6 +183,7 @@ namespace WinPaletter
             this.search_btn = new WinPaletter.UI.WP.Button();
             this.search_box = new WinPaletter.UI.WP.TextBox();
             this.search_filter_btn = new WinPaletter.UI.WP.Button();
+            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.back_btn = new WinPaletter.UI.WP.Button();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
@@ -200,6 +230,11 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            this.bottom_buttons.SuspendLayout();
+            this.smoothFlowLayoutPanel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.search_panel.SuspendLayout();
@@ -218,20 +253,6 @@ namespace WinPaletter
             this.Cursor_Timer.Interval = 35;
             this.Cursor_Timer.Tick += new System.EventHandler(this.Cursor_Timer_Tick);
             // 
-            // ProgressBar1
-            // 
-            this.ProgressBar1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
-            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressBar1.Location = new System.Drawing.Point(8, 3);
-            this.ProgressBar1.Name = "ProgressBar1";
-            this.ProgressBar1.Size = new System.Drawing.Size(30, 30);
-            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
-            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-            this.ProgressBar1.TabIndex = 43;
-            this.ProgressBar1.TaskbarBroadcast = true;
-            this.ProgressBar1.Visible = false;
-            // 
             // Tabs
             // 
             this.Tabs.Controls.Add(this.TabPage1);
@@ -239,6 +260,7 @@ namespace WinPaletter
             this.Tabs.Controls.Add(this.TabPage5);
             this.Tabs.Controls.Add(this.tabPage2);
             this.Tabs.Controls.Add(this.tabPage4);
+            this.Tabs.Controls.Add(this.tabPage6);
             this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Tabs.Location = new System.Drawing.Point(0, 52);
             this.Tabs.Multiline = true;
@@ -309,7 +331,7 @@ namespace WinPaletter
             this.flowLayoutPanel6.Controls.Add(this.labelAlt3);
             this.flowLayoutPanel6.Location = new System.Drawing.Point(2, 11);
             this.flowLayoutPanel6.Name = "flowLayoutPanel6";
-            this.flowLayoutPanel6.Size = new System.Drawing.Size(1057, 30);
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(1090, 30);
             this.flowLayoutPanel6.TabIndex = 153;
             // 
             // panel4
@@ -347,7 +369,7 @@ namespace WinPaletter
             this.flowLayoutPanel5.Controls.Add(this.separatorV1);
             this.flowLayoutPanel5.Location = new System.Drawing.Point(4, 40);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(1055, 25);
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(1088, 25);
             this.flowLayoutPanel5.TabIndex = 152;
             // 
             // panel3
@@ -440,82 +462,100 @@ namespace WinPaletter
             this.flowLayoutPanel4.Controls.Add(this.aspect_icons);
             this.flowLayoutPanel4.Controls.Add(this.aspect_accessibility);
             this.flowLayoutPanel4.Controls.Add(this.aspect_winPaletterAppTheme);
+            this.flowLayoutPanel4.Controls.Add(this.separatorV4);
+            this.flowLayoutPanel4.Controls.Add(this.lbl_hint);
             this.flowLayoutPanel4.Location = new System.Drawing.Point(11, 89);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(1048, 30);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(1081, 30);
             this.flowLayoutPanel4.TabIndex = 150;
             // 
             // os_12
             // 
+            this.os_12.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_12.Location = new System.Drawing.Point(3, 3);
             this.os_12.Name = "os_12";
             this.os_12.Size = new System.Drawing.Size(24, 24);
             this.os_12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_12.TabIndex = 150;
             this.os_12.TabStop = false;
+            this.os_12.Tag = "Modifies Windows 12\'s preferences";
             // 
             // os_11
             // 
+            this.os_11.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_11.Location = new System.Drawing.Point(33, 3);
             this.os_11.Name = "os_11";
             this.os_11.Size = new System.Drawing.Size(24, 24);
             this.os_11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_11.TabIndex = 151;
             this.os_11.TabStop = false;
+            this.os_11.Tag = "Modifies Windows 11\'s preferences";
             // 
             // os_10
             // 
+            this.os_10.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_10.Location = new System.Drawing.Point(63, 3);
             this.os_10.Name = "os_10";
             this.os_10.Size = new System.Drawing.Size(24, 24);
             this.os_10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_10.TabIndex = 152;
             this.os_10.TabStop = false;
+            this.os_10.Tag = "Modifies Windows 10\'s preferences";
             // 
             // os_81
             // 
+            this.os_81.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_81.Location = new System.Drawing.Point(93, 3);
             this.os_81.Name = "os_81";
             this.os_81.Size = new System.Drawing.Size(24, 24);
             this.os_81.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_81.TabIndex = 153;
             this.os_81.TabStop = false;
+            this.os_81.Tag = "Modifies Windows 8.1\'s preferences";
             // 
             // os_8
             // 
+            this.os_8.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_8.Location = new System.Drawing.Point(123, 3);
             this.os_8.Name = "os_8";
             this.os_8.Size = new System.Drawing.Size(24, 24);
             this.os_8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_8.TabIndex = 154;
             this.os_8.TabStop = false;
+            this.os_8.Tag = "Modifies Windows 8\'s preferences";
             // 
             // os_7
             // 
+            this.os_7.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_7.Location = new System.Drawing.Point(153, 3);
             this.os_7.Name = "os_7";
             this.os_7.Size = new System.Drawing.Size(24, 24);
             this.os_7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_7.TabIndex = 155;
             this.os_7.TabStop = false;
+            this.os_7.Tag = "Modifies Windows 7\'s preferences";
             // 
             // os_vista
             // 
+            this.os_vista.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_vista.Location = new System.Drawing.Point(183, 3);
             this.os_vista.Name = "os_vista";
             this.os_vista.Size = new System.Drawing.Size(24, 24);
             this.os_vista.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_vista.TabIndex = 156;
             this.os_vista.TabStop = false;
+            this.os_vista.Tag = "Modifies Windows Vista\'s preferences";
             // 
             // os_xp
             // 
+            this.os_xp.Cursor = System.Windows.Forms.Cursors.Help;
             this.os_xp.Location = new System.Drawing.Point(213, 3);
             this.os_xp.Name = "os_xp";
             this.os_xp.Size = new System.Drawing.Size(24, 24);
             this.os_xp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.os_xp.TabIndex = 157;
             this.os_xp.TabStop = false;
+            this.os_xp.Tag = "Modifies Windows XP\'s preferences";
             // 
             // separatorV2
             // 
@@ -523,172 +563,232 @@ namespace WinPaletter
             this.separatorV2.BackColor = System.Drawing.Color.Transparent;
             this.separatorV2.Location = new System.Drawing.Point(243, 3);
             this.separatorV2.Name = "separatorV2";
-            this.separatorV2.Size = new System.Drawing.Size(1, 18);
+            this.separatorV2.Size = new System.Drawing.Size(1, 24);
             this.separatorV2.TabIndex = 158;
             this.separatorV2.TabStop = false;
             this.separatorV2.Text = "separatorV2";
             // 
             // aspect_winTheme
             // 
+            this.aspect_winTheme.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_winTheme.Location = new System.Drawing.Point(250, 3);
             this.aspect_winTheme.Name = "aspect_winTheme";
             this.aspect_winTheme.Size = new System.Drawing.Size(24, 24);
             this.aspect_winTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_winTheme.TabIndex = 159;
             this.aspect_winTheme.TabStop = false;
+            this.aspect_winTheme.Tag = "Modifies Windows Theme";
             // 
             // aspect_lockScreen
             // 
+            this.aspect_lockScreen.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_lockScreen.Location = new System.Drawing.Point(280, 3);
             this.aspect_lockScreen.Name = "aspect_lockScreen";
             this.aspect_lockScreen.Size = new System.Drawing.Size(24, 24);
             this.aspect_lockScreen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_lockScreen.TabIndex = 160;
             this.aspect_lockScreen.TabStop = false;
+            this.aspect_lockScreen.Tag = "Modifies Lock Screen";
             // 
             // aspect_classicColors
             // 
+            this.aspect_classicColors.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_classicColors.Location = new System.Drawing.Point(310, 3);
             this.aspect_classicColors.Name = "aspect_classicColors";
             this.aspect_classicColors.Size = new System.Drawing.Size(24, 24);
             this.aspect_classicColors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_classicColors.TabIndex = 161;
             this.aspect_classicColors.TabStop = false;
+            this.aspect_classicColors.Tag = "Modifies Classic Colors";
             // 
             // aspect_cursors
             // 
+            this.aspect_cursors.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_cursors.Location = new System.Drawing.Point(340, 3);
             this.aspect_cursors.Name = "aspect_cursors";
             this.aspect_cursors.Size = new System.Drawing.Size(24, 24);
             this.aspect_cursors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_cursors.TabIndex = 162;
             this.aspect_cursors.TabStop = false;
+            this.aspect_cursors.Tag = "Modifies Cursors";
             // 
             // aspect_Metrics
             // 
+            this.aspect_Metrics.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_Metrics.Location = new System.Drawing.Point(370, 3);
             this.aspect_Metrics.Name = "aspect_Metrics";
             this.aspect_Metrics.Size = new System.Drawing.Size(24, 24);
             this.aspect_Metrics.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_Metrics.TabIndex = 163;
             this.aspect_Metrics.TabStop = false;
+            this.aspect_Metrics.Tag = "Modifies Metrics & Fonts";
             // 
             // aspect_cmd
             // 
+            this.aspect_cmd.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_cmd.Location = new System.Drawing.Point(400, 3);
             this.aspect_cmd.Name = "aspect_cmd";
             this.aspect_cmd.Size = new System.Drawing.Size(24, 24);
             this.aspect_cmd.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_cmd.TabIndex = 164;
             this.aspect_cmd.TabStop = false;
+            this.aspect_cmd.Tag = "Modifies Command Prompt\'s appearance";
             // 
             // aspect_ps86
             // 
+            this.aspect_ps86.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_ps86.Location = new System.Drawing.Point(430, 3);
             this.aspect_ps86.Name = "aspect_ps86";
             this.aspect_ps86.Size = new System.Drawing.Size(24, 24);
             this.aspect_ps86.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_ps86.TabIndex = 165;
             this.aspect_ps86.TabStop = false;
+            this.aspect_ps86.Tag = "Modifies PowerShell x86\'s appearance";
             // 
             // aspect_ps64
             // 
+            this.aspect_ps64.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_ps64.Location = new System.Drawing.Point(460, 3);
             this.aspect_ps64.Name = "aspect_ps64";
             this.aspect_ps64.Size = new System.Drawing.Size(24, 24);
             this.aspect_ps64.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_ps64.TabIndex = 166;
             this.aspect_ps64.TabStop = false;
+            this.aspect_ps64.Tag = "Modifies PowerShell x64\'s appearance";
             // 
             // aspect_terminal
             // 
+            this.aspect_terminal.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_terminal.Location = new System.Drawing.Point(490, 3);
             this.aspect_terminal.Name = "aspect_terminal";
             this.aspect_terminal.Size = new System.Drawing.Size(24, 24);
             this.aspect_terminal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_terminal.TabIndex = 167;
             this.aspect_terminal.TabStop = false;
+            this.aspect_terminal.Tag = "Modifies Microsoft Terminal\'s appearance";
             // 
             // aspect_terminalPreview
             // 
+            this.aspect_terminalPreview.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_terminalPreview.Location = new System.Drawing.Point(520, 3);
             this.aspect_terminalPreview.Name = "aspect_terminalPreview";
             this.aspect_terminalPreview.Size = new System.Drawing.Size(24, 24);
             this.aspect_terminalPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_terminalPreview.TabIndex = 168;
             this.aspect_terminalPreview.TabStop = false;
+            this.aspect_terminalPreview.Tag = "Modifies Microsoft Terminal Preview\'s appearance";
             // 
             // aspect_wallpaper
             // 
+            this.aspect_wallpaper.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_wallpaper.Location = new System.Drawing.Point(550, 3);
             this.aspect_wallpaper.Name = "aspect_wallpaper";
             this.aspect_wallpaper.Size = new System.Drawing.Size(24, 24);
             this.aspect_wallpaper.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_wallpaper.TabIndex = 169;
             this.aspect_wallpaper.TabStop = false;
+            this.aspect_wallpaper.Tag = "Modifies Wallpaper";
             // 
             // aspect_effects
             // 
+            this.aspect_effects.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_effects.Location = new System.Drawing.Point(580, 3);
             this.aspect_effects.Name = "aspect_effects";
             this.aspect_effects.Size = new System.Drawing.Size(24, 24);
             this.aspect_effects.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_effects.TabIndex = 170;
             this.aspect_effects.TabStop = false;
+            this.aspect_effects.Tag = "Modifies Windows Effects";
             // 
             // aspect_sounds
             // 
+            this.aspect_sounds.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_sounds.Location = new System.Drawing.Point(610, 3);
             this.aspect_sounds.Name = "aspect_sounds";
             this.aspect_sounds.Size = new System.Drawing.Size(24, 24);
             this.aspect_sounds.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_sounds.TabIndex = 171;
             this.aspect_sounds.TabStop = false;
+            this.aspect_sounds.Tag = "Modifies Sounds schemes";
             // 
             // aspect_screenSaver
             // 
+            this.aspect_screenSaver.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_screenSaver.Location = new System.Drawing.Point(640, 3);
             this.aspect_screenSaver.Name = "aspect_screenSaver";
             this.aspect_screenSaver.Size = new System.Drawing.Size(24, 24);
             this.aspect_screenSaver.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_screenSaver.TabIndex = 172;
             this.aspect_screenSaver.TabStop = false;
+            this.aspect_screenSaver.Tag = "Modifies Screen Saver";
             // 
             // aspect_altTab
             // 
+            this.aspect_altTab.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_altTab.Location = new System.Drawing.Point(670, 3);
             this.aspect_altTab.Name = "aspect_altTab";
             this.aspect_altTab.Size = new System.Drawing.Size(24, 24);
             this.aspect_altTab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_altTab.TabIndex = 173;
             this.aspect_altTab.TabStop = false;
+            this.aspect_altTab.Tag = "Modifies Windows Switcher (Alt+Tab)\'s appearamce";
             // 
             // aspect_icons
             // 
+            this.aspect_icons.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_icons.Location = new System.Drawing.Point(700, 3);
             this.aspect_icons.Name = "aspect_icons";
             this.aspect_icons.Size = new System.Drawing.Size(24, 24);
             this.aspect_icons.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_icons.TabIndex = 174;
             this.aspect_icons.TabStop = false;
+            this.aspect_icons.Tag = "Modifies Windows Icons";
             // 
             // aspect_accessibility
             // 
+            this.aspect_accessibility.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_accessibility.Location = new System.Drawing.Point(730, 3);
             this.aspect_accessibility.Name = "aspect_accessibility";
             this.aspect_accessibility.Size = new System.Drawing.Size(24, 24);
             this.aspect_accessibility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_accessibility.TabIndex = 175;
             this.aspect_accessibility.TabStop = false;
+            this.aspect_accessibility.Tag = "Modifies Accessibility";
             // 
             // aspect_winPaletterAppTheme
             // 
+            this.aspect_winPaletterAppTheme.Cursor = System.Windows.Forms.Cursors.Help;
             this.aspect_winPaletterAppTheme.Location = new System.Drawing.Point(760, 3);
             this.aspect_winPaletterAppTheme.Name = "aspect_winPaletterAppTheme";
             this.aspect_winPaletterAppTheme.Size = new System.Drawing.Size(24, 24);
             this.aspect_winPaletterAppTheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_winPaletterAppTheme.TabIndex = 176;
             this.aspect_winPaletterAppTheme.TabStop = false;
+            this.aspect_winPaletterAppTheme.Tag = "Modifies WinPaletter Application theme";
+            // 
+            // separatorV4
+            // 
+            this.separatorV4.AlternativeLook = false;
+            this.separatorV4.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV4.Location = new System.Drawing.Point(790, 3);
+            this.separatorV4.Name = "separatorV4";
+            this.separatorV4.Size = new System.Drawing.Size(1, 24);
+            this.separatorV4.TabIndex = 177;
+            this.separatorV4.TabStop = false;
+            this.separatorV4.Text = "separatorV4";
+            // 
+            // lbl_hint
+            // 
+            this.lbl_hint.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lbl_hint.AutoSize = true;
+            this.lbl_hint.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_hint.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_hint.Location = new System.Drawing.Point(797, 7);
+            this.lbl_hint.Name = "lbl_hint";
+            this.lbl_hint.Size = new System.Drawing.Size(10, 15);
+            this.lbl_hint.TabIndex = 178;
+            this.lbl_hint.Text = " ";
+            this.lbl_hint.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel3
             // 
@@ -702,7 +802,7 @@ namespace WinPaletter
             this.flowLayoutPanel3.Controls.Add(this.progressBar_ResPack);
             this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 63);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(1055, 25);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(1088, 25);
             this.flowLayoutPanel3.TabIndex = 149;
             // 
             // panel2
@@ -772,9 +872,9 @@ namespace WinPaletter
             this.Apply_btn.Image = null;
             this.Apply_btn.ImageGlyph = null;
             this.Apply_btn.ImageGlyphEnabled = false;
-            this.Apply_btn.Location = new System.Drawing.Point(1065, 44);
+            this.Apply_btn.Location = new System.Drawing.Point(1101, 44);
             this.Apply_btn.Name = "Apply_btn";
-            this.Apply_btn.Size = new System.Drawing.Size(201, 42);
+            this.Apply_btn.Size = new System.Drawing.Size(165, 42);
             this.Apply_btn.TabIndex = 134;
             this.Apply_btn.Text = "Apply";
             this.Apply_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -2027,7 +2127,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt1.DrawOnGlass = false;
-            this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAlt1.Location = new System.Drawing.Point(112, 34);
             this.labelAlt1.Name = "labelAlt1";
             this.labelAlt1.Size = new System.Drawing.Size(1195, 39);
@@ -2255,6 +2355,466 @@ namespace WinPaletter
             this.pictureBox3.TabIndex = 1;
             this.pictureBox3.TabStop = false;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage6.Controls.Add(this.bottom_buttons);
+            this.tabPage6.Controls.Add(this.smoothFlowLayoutPanel1);
+            this.tabPage6.Controls.Add(this.groupBox1);
+            this.tabPage6.Location = new System.Drawing.Point(4, 24);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1321, 641);
+            this.tabPage6.TabIndex = 6;
+            this.tabPage6.Text = "5";
+            // 
+            // bottom_buttons
+            // 
+            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.button1);
+            this.bottom_buttons.Controls.Add(this.button8);
+            this.bottom_buttons.Controls.Add(this.button9);
+            this.bottom_buttons.Controls.Add(this.button10);
+            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottom_buttons.Location = new System.Drawing.Point(3, 590);
+            this.bottom_buttons.Name = "bottom_buttons";
+            this.bottom_buttons.Size = new System.Drawing.Size(1315, 48);
+            this.bottom_buttons.TabIndex = 213;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
+            // 
+            // button1
+            // 
+            this.button1.CustomColor = System.Drawing.Color.Empty;
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Image = null;
+            this.button1.ImageGlyph = null;
+            this.button1.ImageGlyphEnabled = false;
+            this.button1.Location = new System.Drawing.Point(122, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(108, 34);
+            this.button1.TabIndex = 214;
+            this.button1.Text = "Unselect all";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button8
+            // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button8.CustomColor = System.Drawing.Color.Empty;
+            this.button8.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
+            this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button8.ForeColor = System.Drawing.Color.White;
+            this.button8.Image = null;
+            this.button8.ImageGlyph = null;
+            this.button8.ImageGlyphEnabled = false;
+            this.button8.Location = new System.Drawing.Point(991, 7);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(97, 34);
+            this.button8.TabIndex = 208;
+            this.button8.Text = "Cancel";
+            this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.CustomColor = System.Drawing.Color.Empty;
+            this.button9.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button9.ForeColor = System.Drawing.Color.White;
+            this.button9.Image = null;
+            this.button9.ImageGlyph = null;
+            this.button9.ImageGlyphEnabled = false;
+            this.button9.Location = new System.Drawing.Point(8, 7);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(108, 34);
+            this.button9.TabIndex = 213;
+            this.button9.Text = "Select all";
+            this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button10
+            // 
+            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button10.CustomColor = System.Drawing.Color.Empty;
+            this.button10.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button10.ForeColor = System.Drawing.Color.White;
+            this.button10.Image = null;
+            this.button10.ImageGlyph = null;
+            this.button10.ImageGlyphEnabled = false;
+            this.button10.Location = new System.Drawing.Point(1094, 7);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(215, 34);
+            this.button10.TabIndex = 1;
+            this.button10.Text = "Proceed with current selections";
+            this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // smoothFlowLayoutPanel1
+            // 
+            this.smoothFlowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.smoothFlowLayoutPanel1.AutoScroll = true;
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_theme);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_classicColors);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_lockScreen);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_cursors);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_metrics);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_cmd);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_ps86);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_ps64);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_terminal);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_terminalPreview);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_wallpaper);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_effects);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_sounds);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_screenSaver);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_altTab);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_icons);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_accessibility);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.toggle_winPaletterTheme);
+            this.smoothFlowLayoutPanel1.Location = new System.Drawing.Point(5, 93);
+            this.smoothFlowLayoutPanel1.Name = "smoothFlowLayoutPanel1";
+            this.smoothFlowLayoutPanel1.Size = new System.Drawing.Size(1310, 489);
+            this.smoothFlowLayoutPanel1.TabIndex = 16;
+            // 
+            // toggle_theme
+            // 
+            this.toggle_theme.Checked = true;
+            this.toggle_theme.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_theme.ForeColor = System.Drawing.Color.White;
+            this.toggle_theme.Image = null;
+            this.toggle_theme.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_theme.Location = new System.Drawing.Point(3, 3);
+            this.toggle_theme.Name = "toggle_theme";
+            this.toggle_theme.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_theme.Size = new System.Drawing.Size(370, 75);
+            this.toggle_theme.TabIndex = 215;
+            this.toggle_theme.Text = "Windows Theme\r\n- Control Windows\' look using accent colors and\r\nvisual styles";
+            this.toggle_theme.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_theme.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_classicColors
+            // 
+            this.toggle_classicColors.Checked = true;
+            this.toggle_classicColors.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_classicColors.ForeColor = System.Drawing.Color.White;
+            this.toggle_classicColors.Image = ((System.Drawing.Image)(resources.GetObject("toggle_classicColors.Image")));
+            this.toggle_classicColors.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_classicColors.Location = new System.Drawing.Point(379, 3);
+            this.toggle_classicColors.Name = "toggle_classicColors";
+            this.toggle_classicColors.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_classicColors.Size = new System.Drawing.Size(370, 75);
+            this.toggle_classicColors.TabIndex = 216;
+            this.toggle_classicColors.Text = "Classic Colors\r\n- Revamp the look of classic Windows elements,\r\nincluding 3D obje" +
+    "cts and more";
+            this.toggle_classicColors.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_classicColors.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_lockScreen
+            // 
+            this.toggle_lockScreen.Checked = true;
+            this.toggle_lockScreen.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_lockScreen.ForeColor = System.Drawing.Color.White;
+            this.toggle_lockScreen.Image = null;
+            this.toggle_lockScreen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_lockScreen.Location = new System.Drawing.Point(755, 3);
+            this.toggle_lockScreen.Name = "toggle_lockScreen";
+            this.toggle_lockScreen.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_lockScreen.Size = new System.Drawing.Size(370, 75);
+            this.toggle_lockScreen.TabIndex = 217;
+            this.toggle_lockScreen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_lockScreen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_cursors
+            // 
+            this.toggle_cursors.Checked = true;
+            this.toggle_cursors.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_cursors.ForeColor = System.Drawing.Color.White;
+            this.toggle_cursors.Image = ((System.Drawing.Image)(resources.GetObject("toggle_cursors.Image")));
+            this.toggle_cursors.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_cursors.Location = new System.Drawing.Point(3, 84);
+            this.toggle_cursors.Name = "toggle_cursors";
+            this.toggle_cursors.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_cursors.Size = new System.Drawing.Size(370, 75);
+            this.toggle_cursors.TabIndex = 218;
+            this.toggle_cursors.Text = "Cursors\r\n- Customize colors, styles, backgrounds, borders, and\r\nloading circles";
+            this.toggle_cursors.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_cursors.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_metrics
+            // 
+            this.toggle_metrics.Checked = true;
+            this.toggle_metrics.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_metrics.ForeColor = System.Drawing.Color.White;
+            this.toggle_metrics.Image = ((System.Drawing.Image)(resources.GetObject("toggle_metrics.Image")));
+            this.toggle_metrics.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_metrics.Location = new System.Drawing.Point(379, 84);
+            this.toggle_metrics.Name = "toggle_metrics";
+            this.toggle_metrics.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_metrics.Size = new System.Drawing.Size(370, 75);
+            this.toggle_metrics.TabIndex = 232;
+            this.toggle_metrics.Text = "Metrics && Fonts\r\n- Adjust font styles, sizes, and layout metrics for\r\noptimal re" +
+    "adability and aesthetics";
+            this.toggle_metrics.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_metrics.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_cmd
+            // 
+            this.toggle_cmd.Checked = true;
+            this.toggle_cmd.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_cmd.ForeColor = System.Drawing.Color.White;
+            this.toggle_cmd.Image = ((System.Drawing.Image)(resources.GetObject("toggle_cmd.Image")));
+            this.toggle_cmd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_cmd.Location = new System.Drawing.Point(755, 84);
+            this.toggle_cmd.Name = "toggle_cmd";
+            this.toggle_cmd.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_cmd.Size = new System.Drawing.Size(370, 75);
+            this.toggle_cmd.TabIndex = 219;
+            this.toggle_cmd.Text = "Command Prompt\r\n- Personalize your terminal\'s colors and appearance";
+            this.toggle_cmd.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_cmd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_ps86
+            // 
+            this.toggle_ps86.Checked = true;
+            this.toggle_ps86.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_ps86.ForeColor = System.Drawing.Color.White;
+            this.toggle_ps86.Image = ((System.Drawing.Image)(resources.GetObject("toggle_ps86.Image")));
+            this.toggle_ps86.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_ps86.Location = new System.Drawing.Point(3, 165);
+            this.toggle_ps86.Name = "toggle_ps86";
+            this.toggle_ps86.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_ps86.Size = new System.Drawing.Size(370, 75);
+            this.toggle_ps86.TabIndex = 220;
+            this.toggle_ps86.Text = "PowerShell x86\r\n- Personalize your terminal\'s colors and appearance";
+            this.toggle_ps86.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_ps86.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_ps64
+            // 
+            this.toggle_ps64.Checked = true;
+            this.toggle_ps64.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_ps64.ForeColor = System.Drawing.Color.White;
+            this.toggle_ps64.Image = ((System.Drawing.Image)(resources.GetObject("toggle_ps64.Image")));
+            this.toggle_ps64.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_ps64.Location = new System.Drawing.Point(379, 165);
+            this.toggle_ps64.Name = "toggle_ps64";
+            this.toggle_ps64.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_ps64.Size = new System.Drawing.Size(370, 75);
+            this.toggle_ps64.TabIndex = 221;
+            this.toggle_ps64.Text = "PowerShell x64\r\n- Personalize your terminal\'s colors and appearance";
+            this.toggle_ps64.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_ps64.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_terminal
+            // 
+            this.toggle_terminal.Checked = true;
+            this.toggle_terminal.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_terminal.ForeColor = System.Drawing.Color.White;
+            this.toggle_terminal.Image = ((System.Drawing.Image)(resources.GetObject("toggle_terminal.Image")));
+            this.toggle_terminal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_terminal.Location = new System.Drawing.Point(755, 165);
+            this.toggle_terminal.Name = "toggle_terminal";
+            this.toggle_terminal.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_terminal.Size = new System.Drawing.Size(370, 75);
+            this.toggle_terminal.TabIndex = 222;
+            this.toggle_terminal.Text = "Microsoft Terminal\r\n- Personalize your terminal\'s colors and appearance";
+            this.toggle_terminal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_terminal.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_terminalPreview
+            // 
+            this.toggle_terminalPreview.Checked = true;
+            this.toggle_terminalPreview.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_terminalPreview.ForeColor = System.Drawing.Color.White;
+            this.toggle_terminalPreview.Image = ((System.Drawing.Image)(resources.GetObject("toggle_terminalPreview.Image")));
+            this.toggle_terminalPreview.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_terminalPreview.Location = new System.Drawing.Point(3, 246);
+            this.toggle_terminalPreview.Name = "toggle_terminalPreview";
+            this.toggle_terminalPreview.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_terminalPreview.Size = new System.Drawing.Size(370, 75);
+            this.toggle_terminalPreview.TabIndex = 223;
+            this.toggle_terminalPreview.Text = "Microsoft Terminal Preview\r\n- Personalize your terminal\'s colors and appearance";
+            this.toggle_terminalPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_terminalPreview.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_wallpaper
+            // 
+            this.toggle_wallpaper.Checked = true;
+            this.toggle_wallpaper.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_wallpaper.ForeColor = System.Drawing.Color.White;
+            this.toggle_wallpaper.Image = ((System.Drawing.Image)(resources.GetObject("toggle_wallpaper.Image")));
+            this.toggle_wallpaper.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_wallpaper.Location = new System.Drawing.Point(379, 246);
+            this.toggle_wallpaper.Name = "toggle_wallpaper";
+            this.toggle_wallpaper.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_wallpaper.Size = new System.Drawing.Size(370, 75);
+            this.toggle_wallpaper.TabIndex = 224;
+            this.toggle_wallpaper.Text = "Wallpaper\r\n- Revitalize your screen with an image";
+            this.toggle_wallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_wallpaper.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_effects
+            // 
+            this.toggle_effects.Checked = true;
+            this.toggle_effects.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_effects.ForeColor = System.Drawing.Color.White;
+            this.toggle_effects.Image = ((System.Drawing.Image)(resources.GetObject("toggle_effects.Image")));
+            this.toggle_effects.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_effects.Location = new System.Drawing.Point(755, 246);
+            this.toggle_effects.Name = "toggle_effects";
+            this.toggle_effects.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_effects.Size = new System.Drawing.Size(370, 75);
+            this.toggle_effects.TabIndex = 225;
+            this.toggle_effects.Text = "Windows Effects\r\n- Change effects of your Windows, including\r\nanimations and shad" +
+    "ows";
+            this.toggle_effects.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_effects.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_sounds
+            // 
+            this.toggle_sounds.Checked = true;
+            this.toggle_sounds.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_sounds.ForeColor = System.Drawing.Color.White;
+            this.toggle_sounds.Image = ((System.Drawing.Image)(resources.GetObject("toggle_sounds.Image")));
+            this.toggle_sounds.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_sounds.Location = new System.Drawing.Point(3, 327);
+            this.toggle_sounds.Name = "toggle_sounds";
+            this.toggle_sounds.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_sounds.Size = new System.Drawing.Size(370, 75);
+            this.toggle_sounds.TabIndex = 226;
+            this.toggle_sounds.Text = "Sounds\r\n- Immerse yourself in a customized auditory experience\r\nwith personalized" +
+    " sounds";
+            this.toggle_sounds.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_sounds.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_screenSaver
+            // 
+            this.toggle_screenSaver.Checked = true;
+            this.toggle_screenSaver.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_screenSaver.ForeColor = System.Drawing.Color.White;
+            this.toggle_screenSaver.Image = ((System.Drawing.Image)(resources.GetObject("toggle_screenSaver.Image")));
+            this.toggle_screenSaver.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_screenSaver.Location = new System.Drawing.Point(379, 327);
+            this.toggle_screenSaver.Name = "toggle_screenSaver";
+            this.toggle_screenSaver.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_screenSaver.Size = new System.Drawing.Size(370, 75);
+            this.toggle_screenSaver.TabIndex = 227;
+            this.toggle_screenSaver.Text = "Screen Saver\r\n- Use a personalized screensaver for the best\r\nCRT monitor experien" +
+    "ce";
+            this.toggle_screenSaver.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_screenSaver.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_altTab
+            // 
+            this.toggle_altTab.Checked = true;
+            this.toggle_altTab.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_altTab.ForeColor = System.Drawing.Color.White;
+            this.toggle_altTab.Image = ((System.Drawing.Image)(resources.GetObject("toggle_altTab.Image")));
+            this.toggle_altTab.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_altTab.Location = new System.Drawing.Point(755, 327);
+            this.toggle_altTab.Name = "toggle_altTab";
+            this.toggle_altTab.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_altTab.Size = new System.Drawing.Size(370, 75);
+            this.toggle_altTab.TabIndex = 228;
+            this.toggle_altTab.Text = "Windows Switcher\r\n- Modify preferences of Windows Switcher (Alt+Tab)";
+            this.toggle_altTab.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_altTab.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_icons
+            // 
+            this.toggle_icons.Checked = true;
+            this.toggle_icons.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_icons.ForeColor = System.Drawing.Color.White;
+            this.toggle_icons.Image = ((System.Drawing.Image)(resources.GetObject("toggle_icons.Image")));
+            this.toggle_icons.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_icons.Location = new System.Drawing.Point(3, 408);
+            this.toggle_icons.Name = "toggle_icons";
+            this.toggle_icons.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_icons.Size = new System.Drawing.Size(370, 75);
+            this.toggle_icons.TabIndex = 229;
+            this.toggle_icons.Text = "Windows Icons\r\n- Replace common Windows icons without patching\r\nsystem files";
+            this.toggle_icons.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_icons.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_accessibility
+            // 
+            this.toggle_accessibility.Checked = true;
+            this.toggle_accessibility.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_accessibility.ForeColor = System.Drawing.Color.White;
+            this.toggle_accessibility.Image = ((System.Drawing.Image)(resources.GetObject("toggle_accessibility.Image")));
+            this.toggle_accessibility.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_accessibility.Location = new System.Drawing.Point(379, 408);
+            this.toggle_accessibility.Name = "toggle_accessibility";
+            this.toggle_accessibility.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_accessibility.Size = new System.Drawing.Size(370, 75);
+            this.toggle_accessibility.TabIndex = 230;
+            this.toggle_accessibility.Text = "Accessibility\r\n- Enable High Contrast Mode and edit color filters";
+            this.toggle_accessibility.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_accessibility.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // toggle_winPaletterTheme
+            // 
+            this.toggle_winPaletterTheme.Checked = true;
+            this.toggle_winPaletterTheme.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toggle_winPaletterTheme.ForeColor = System.Drawing.Color.White;
+            this.toggle_winPaletterTheme.Image = ((System.Drawing.Image)(resources.GetObject("toggle_winPaletterTheme.Image")));
+            this.toggle_winPaletterTheme.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toggle_winPaletterTheme.Location = new System.Drawing.Point(755, 408);
+            this.toggle_winPaletterTheme.Name = "toggle_winPaletterTheme";
+            this.toggle_winPaletterTheme.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toggle_winPaletterTheme.Size = new System.Drawing.Size(370, 75);
+            this.toggle_winPaletterTheme.TabIndex = 231;
+            this.toggle_winPaletterTheme.Text = "WinPaletter Application Theme\r\n- Modify the look of WinPaletter to make it suits " +
+    "your\r\ntheme";
+            this.toggle_winPaletterTheme.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.toggle_winPaletterTheme.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.labelAlt4);
+            this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Location = new System.Drawing.Point(5, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1310, 82);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.UseDecorationPattern = true;
+            this.groupBox1.UseSharpStyle = false;
+            // 
+            // labelAlt4
+            // 
+            this.labelAlt4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelAlt4.BackColor = System.Drawing.Color.Transparent;
+            this.labelAlt4.DrawOnGlass = false;
+            this.labelAlt4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAlt4.Location = new System.Drawing.Point(80, 21);
+            this.labelAlt4.Name = "labelAlt4";
+            this.labelAlt4.Size = new System.Drawing.Size(1227, 39);
+            this.labelAlt4.TabIndex = 2;
+            this.labelAlt4.Text = "These aspects will be edited during theme apply process. To prevent unintended ac" +
+    "tions, uncheck aspects you want not to be modified.";
+            this.labelAlt4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(71, 74);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
@@ -2269,7 +2829,6 @@ namespace WinPaletter
             this.titlebarExtender1.Size = new System.Drawing.Size(1329, 52);
             this.titlebarExtender1.TabIndex = 116;
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-            this.titlebarExtender1.Click += new System.EventHandler(this.titlebarExtender1_Click);
             // 
             // titlebar_lbl
             // 
@@ -2310,7 +2869,7 @@ namespace WinPaletter
             this.flowLayoutPanel2.Controls.Add(this.search_panel);
             this.flowLayoutPanel2.Controls.Add(this.ProgressBar1);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(848, 8);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(852, 8);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(430, 36);
             this.flowLayoutPanel2.TabIndex = 129;
@@ -2400,6 +2959,19 @@ namespace WinPaletter
             this.search_filter_btn.UseVisualStyleBackColor = false;
             this.search_filter_btn.Click += new System.EventHandler(this.Search_filter_btn_Click);
             // 
+            // ProgressBar1
+            // 
+            this.ProgressBar1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
+            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.ProgressBar1.Location = new System.Drawing.Point(8, 3);
+            this.ProgressBar1.Name = "ProgressBar1";
+            this.ProgressBar1.Size = new System.Drawing.Size(30, 30);
+            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Marquee;
+            this.ProgressBar1.TabIndex = 43;
+            this.ProgressBar1.TaskbarBroadcast = true;
+            // 
             // back_btn
             // 
             this.back_btn.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -2447,6 +3019,7 @@ namespace WinPaletter
             this.flowLayoutPanel5.ResumeLayout(false);
             this.flowLayoutPanel5.PerformLayout();
             this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.os_12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.os_11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.os_10)).EndInit();
@@ -2486,6 +3059,11 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            this.bottom_buttons.ResumeLayout(false);
+            this.smoothFlowLayoutPanel1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.search_panel.ResumeLayout(false);
@@ -2611,5 +3189,35 @@ namespace WinPaletter
         private Panel panel4;
         internal LabelAlt titlebar_lbl;
         internal UI.WP.Button avatar_btn;
+        private TabPage tabPage6;
+        private UI.WP.GroupBox groupBox1;
+        private LabelAlt labelAlt4;
+        private UI.WP.TransparentPictureBox pictureBox1;
+        private UI.WP.GroupBox bottom_buttons;
+        internal UI.WP.Button button1;
+        internal UI.WP.Button button8;
+        internal UI.WP.Button button9;
+        internal UI.WP.Button button10;
+        internal SmoothFlowLayoutPanel smoothFlowLayoutPanel1;
+        private CheckImage toggle_theme;
+        private CheckImage toggle_classicColors;
+        private CheckImage toggle_lockScreen;
+        private CheckImage toggle_cursors;
+        private CheckImage toggle_cmd;
+        private CheckImage toggle_ps86;
+        private CheckImage toggle_ps64;
+        private CheckImage toggle_terminal;
+        private CheckImage toggle_terminalPreview;
+        private CheckImage toggle_wallpaper;
+        private CheckImage toggle_effects;
+        private CheckImage toggle_sounds;
+        private CheckImage toggle_screenSaver;
+        private CheckImage toggle_altTab;
+        private CheckImage toggle_icons;
+        private CheckImage toggle_accessibility;
+        private CheckImage toggle_winPaletterTheme;
+        private CheckImage toggle_metrics;
+        internal SeparatorV separatorV4;
+        internal Label lbl_hint;
     }
 }

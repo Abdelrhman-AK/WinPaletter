@@ -366,7 +366,7 @@
 
         #endregion
         internal UI.WP.TransparentPictureBox RetroShadow1;
-        internal UI.Retro.ContextMenuR ContextMenu;
+        internal new UI.Retro.ContextMenuR ContextMenu;
         internal UI.Retro.WindowR WindowR3;
         internal UI.Retro.ButtonR ButtonR1;
         internal UI.Retro.WindowR WindowR2;

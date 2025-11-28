@@ -19,7 +19,7 @@ namespace WinPaletter.Assets {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ColorItemContextMenu {
@@ -57,26 +57,6 @@ namespace WinPaletter.Assets {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap _265Colors {
-            get {
-                object obj = ResourceManager.GetObject("_265Colors", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Blend {
-            get {
-                object obj = ResourceManager.GetObject("Blend", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -153,26 +133,6 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FrutigerAero {
-            get {
-                object obj = ResourceManager.GetObject("FrutigerAero", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Grayscale {
-            get {
-                object obj = ResourceManager.GetObject("Grayscale", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap icons8_32_bit_20px {
             get {
                 object obj = ResourceManager.GetObject("icons8_32_bit_20px", resourceCulture);
@@ -193,69 +153,9 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Invert {
-            get {
-                object obj = ResourceManager.GetObject("Invert", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Lighten {
             get {
                 object obj = ResourceManager.GetObject("Lighten", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap M2015 {
-            get {
-                object obj = ResourceManager.GetObject("M2015", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap macOS {
-            get {
-                object obj = ResourceManager.GetObject("macOS", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ME3 {
-            get {
-                object obj = ResourceManager.GetObject("ME3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Metro {
-            get {
-                object obj = ResourceManager.GetObject("Metro", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Monochrome {
-            get {
-                object obj = ResourceManager.GetObject("Monochrome", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -276,46 +176,6 @@ namespace WinPaletter.Assets {
         internal static System.Drawing.Bitmap Reset {
             get {
                 object obj = ResourceManager.GetObject("Reset", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Reverse {
-            get {
-                object obj = ResourceManager.GetObject("Reverse", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RotateHue {
-            get {
-                object obj = ResourceManager.GetObject("RotateHue", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Sepia {
-            get {
-                object obj = ResourceManager.GetObject("Sepia", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap WebSafe {
-            get {
-                object obj = ResourceManager.GetObject("WebSafe", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

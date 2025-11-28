@@ -19,6 +19,7 @@
                 public string SearchCount { get; set; } = "Search results ({0})";
                 public string NoResourcesPack { get; set; } = "No resources pack";
                 public string ResourcesPackSize { get; set; } = "{0} resource pack";
+                public string DownloadResourcesPack { get; set; } = "Download resource pack";
             }
         }
     }

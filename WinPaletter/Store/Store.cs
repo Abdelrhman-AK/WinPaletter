@@ -1,13 +1,15 @@
-﻿using Ookii.Dialogs.WinForms;
+using FluentTransitions;
+using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -16,6 +18,7 @@ using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Simulation;
 using WinPaletter.UI.WP;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -46,6 +49,7 @@ namespace WinPaletter
         private readonly DownloadManager DM = new();
 
         private bool ApplyOrEditToggle = true;
+        private DialogResult togglesCheck = DialogResult.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Store"/> class.
@@ -255,10 +259,13 @@ namespace WinPaletter
             labelAlt2.Text = string.Format(Program.Lang.Strings.Store.WontWork_Protocol, OS.WXP ? Program.Lang.Strings.Windows.WXP : Program.Lang.Strings.Windows.WVista);
             if (OS.WXP || OS.WVista) Tabs.SelectedIndex = 4;
 
+            if (ProgressBar1.Style != UI.WP.ProgressBar.ProgressBarStyle.Marquee) ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
+
             themeSize_lbl.Font = Fonts.Console;
             respacksize_lbl.Font = Fonts.Console;
             desc_txt.Font = Fonts.ConsoleLarge;
             ver_lbl.Font = Fonts.Console;
+            lbl_hint.Font = Fonts.Console;
 
             os_12.Image = Assets.Store.DesignedFor12;
             os_11.Image = Assets.Store.DesignedFor11;
@@ -269,6 +276,8 @@ namespace WinPaletter
             os_vista.Image = Assets.Store.DesignedForVista;
             os_xp.Image = Assets.Store.DesignedForXP;
 
+            LoadTogglesData();
+
             SetAspectsIcons();
 
             if (User.GitHub_LoggedIn)
@@ -278,7 +287,216 @@ namespace WinPaletter
 
             groupBox4.UpdatePattern(Program.TM.Info.Pattern);
 
+            System.Windows.Forms.ToolStripMenuItem edit_btn = new() { Text = Program.Lang.Strings.General.Edit, Image = Assets.Store.Menu_Edit };
+            System.Windows.Forms.ToolStripMenuItem save_as = new() { Text = Program.Lang.Strings.General.SaveAs, Image = Assets.Store.Menu_SaveAs };
+
+            edit_btn.Click -= Edit_btn_Click;
+            save_as.Click -= Save_as_Click;
+            edit_btn.Click += Edit_btn_Click;
+            save_as.Click += Save_as_Click;
+
+            foreach (PictureBox pictureBox in flowLayoutPanel4.Controls.OfType<PictureBox>()) 
+            {
+                pictureBox.MouseEnter -= PictureBox_MouseEnter;
+                pictureBox.MouseEnter += PictureBox_MouseEnter;
+
+                pictureBox.MouseLeave -= PictureBox_MouseLeave;
+                pictureBox.MouseLeave += PictureBox_MouseLeave;
+            }
+
+            Apply_btn.Menu.Items.Add(edit_btn);
+            Apply_btn.Menu.Items.Add(save_as);
+
             Config.DarkModeChanged += SetAspectsIcons;
+        }
+
+        private void PictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            Transition.With(lbl_hint, nameof(lbl_hint.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+        }
+
+        private void PictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            Transition.With(lbl_hint, nameof(lbl_hint.Text), ((sender as PictureBox).Tag ?? string.Empty).ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+        }
+
+        private void LoadTogglesData()
+        {
+            if (OS.W12)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_12.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_12.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+            }
+            else if (OS.W11)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_11.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_11.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+            }
+            else if (OS.W10)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_10.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_10.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+            }
+            else if (OS.W81)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_8_1.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_8x.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+            }
+            else if (OS.W8)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_8.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_8x.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+            }
+            else if (OS.W7)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_7.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_7.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LogonUI}\r\n-{Program.Lang.Strings.Aspects.LogonUI_Description}";
+            }
+            else if (OS.WVista)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_Vista.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_Vista.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LogonUI}\r\n-{Program.Lang.Strings.Aspects.LogonUI_Description}";
+            }
+            else if (OS.WXP)
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_XP.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_XP.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LogonUI}\r\n-{Program.Lang.Strings.Aspects.LogonUI_Description}";
+            }
+            else
+            {
+                toggle_theme.Image = Assets.Themes_Banners.Theme_12.Resize(48, 48);
+                toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_12.Resize(48, 48);
+                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+            }
+
+            toggle_altTab.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista;
+            toggle_lockScreen.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8;
+        }
+
+        private void Save_as_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
+            {
+                Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
+                if (!(Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK))
+                    return;
+            }
+
+            string selectedPath = string.Empty;
+
+            if (!OS.WXP)
+            {
+                using (VistaFolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
+                }
+            }
+            else
+            {
+                using (FolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(selectedPath) && Directory.Exists(selectedPath))
+            {
+                string themeFileName = new FileInfo(selectedItem.FileName).Name;
+                string filename = $"{selectedPath}\\{themeFileName}";
+
+                if (!Directory.Exists(selectedPath)) Directory.CreateDirectory(selectedPath);
+                if (File.Exists(filename)) File.Delete(filename);
+
+                File.Copy(selectedItem.FileName, filename);
+
+                if (selectedItem.MD5_PackFile != "0")
+                {
+                    string themepackfilename = $@"{selectedPath}\{new FileInfo(selectedItem.FileName).Name}";
+                    themepackfilename = themepackfilename.Replace(themepackfilename.Split('.').Last(), "wptp");
+
+                    Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
+                    Forms.Store_DownloadProgress.File = themepackfilename;
+                    Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
+                    Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
+                    Forms.Store_DownloadProgress.ShowDialog();
+                }
+            }
+        }
+
+        private void Edit_btn_Click(object sender, EventArgs e)
+        {
+            ApplyOrEditToggle = sender == Apply_btn;
+
+            if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
+            {
+                Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
+                if (!(Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK)) return;
+            }
+
+            if (StartedAsOnlineOrOffline)
+            {
+                // Online mode
+
+                string temp = selectedItem.URL_PackFile.Replace("?raw=true", string.Empty);
+                string FileName = temp.Split('/').Last();
+                temp = temp.Replace($"/{FileName}", string.Empty);
+                string FolderName = temp.Split('/').Last();
+                string Dir;
+                if (File.Exists(selectedItem.FileName))
+                {
+                    Dir = new FileInfo(selectedItem.FileName).Directory.FullName;
+                }
+                else
+                {
+                    Dir = selectedItem.FileName.Replace($@"\{selectedItem.FileName.Split('\\').Last()}", string.Empty);
+                }
+                if (!Directory.Exists(Dir))
+                    Directory.CreateDirectory(Dir);
+
+                if (selectedItem.MD5_PackFile != "0")
+                {
+                    if (File.Exists($@"{Dir}\{FileName}") && (Program.CalculateMD5($"{Dir}\\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !File.Exists($@"{Dir}\{FileName}"))
+                    {
+                        Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
+                        Forms.Store_DownloadProgress.File = $@"{Dir}\{FileName}";
+                        Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
+                        Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
+                        if (Forms.Store_DownloadProgress.ShowDialog() == DialogResult.OK) DoActionsAfterPackDownload();
+                    }
+                    else
+                    {
+                        DoActionsAfterPackDownload();
+                    }
+                }
+
+                else
+                {
+                    if (File.Exists($@"{Dir}\{FileName}"))
+                    {
+                        try
+                        {
+                            File.Delete($@"{Dir}\{FileName}");
+                        }
+                        catch { } // Couldn't delete the File
+                    }
+
+                    DoActionsAfterPackDownload();
+                }
+            }
+            else
+            {
+                // Offline mode, do actions directly.
+                DoActionsAfterPackDownload();
+            }
+
         }
 
         void SetAspectsIcons()
@@ -484,6 +702,7 @@ namespace WinPaletter
 
             if (store_container.Controls.Count == 0 || allThemes.Count == 0)
             {
+                ProgressBar1.Visible = false;
                 Tabs.SelectedIndex = 3;
             }
 
@@ -716,7 +935,10 @@ namespace WinPaletter
                         i += 1;
 
                         if (allProgress > 0)
+                        {
+                            if (ProgressBar1.Style != UI.WP.ProgressBar.ProgressBarStyle.Continuous) ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
                             ProgressBar1.Value = Math.Max(Math.Min((int)(i / (float)allProgress * 100f), ProgressBar1.Maximum), ProgressBar1.Minimum);
+                        }
                     }
                 }
             }
@@ -746,7 +968,10 @@ namespace WinPaletter
                 i += 1;
 
                 if (allProgress > 0)
+                {
+                    if (ProgressBar1.Style != UI.WP.ProgressBar.ProgressBarStyle.Continuous) ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
                     ProgressBar1.Value = Math.Max(Math.Min((int)(i / (float)allProgress * 100f), ProgressBar1.Maximum), ProgressBar1.Minimum);
+                }
             }
 
             BeginInvoke(() =>
@@ -767,6 +992,7 @@ namespace WinPaletter
                 if (!Program.IsNetworkAvailable)
                 {
                     StartedAsOnlineOrOffline = false;
+                    ProgressBar1.Visible = false;
                     Tabs.SelectedIndex = 3;
                 }
                 else
@@ -784,6 +1010,7 @@ namespace WinPaletter
 
         private void FilesFetcher_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            if (ProgressBar1.Style != UI.WP.ProgressBar.ProgressBarStyle.Continuous) ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
             ProgressBar1.Value = Math.Max(Math.Min(e.ProgressPercentage, ProgressBar1.Maximum), ProgressBar1.Minimum);
         }
 
@@ -833,6 +1060,7 @@ namespace WinPaletter
                     selectedItem = sender as StoreItem;
                     Cursor = Cursors.AppStarting;
                     groupBox5.UpdatePattern(selectedItem.TM.Info.Pattern);
+                    groupBox1.UpdatePattern(selectedItem.TM.Info.Pattern);
 
                     Program.Animator.ShowSync(back_btn);
                     Program.Animator.HideSync(Tabs);
@@ -860,7 +1088,7 @@ namespace WinPaletter
                     respacksize_lbl.ForeColor = accentForeColor;
                     ver_lbl.ForeColor = accentBackColor;
                     ver_lbl.BackColor = accentForeColor;
-
+                    
                     FlowLayoutPanel1.ScrollControlIntoView(windowsDesktop1);
 
                     // Start processing the preview from the selected theme
@@ -915,6 +1143,7 @@ namespace WinPaletter
 
                     // join lines back with original line breaks
                     desc_txt.Text = string.Join(Environment.NewLine, lines).Trim();
+                    desc_txt.Visible = !string.IsNullOrEmpty(desc_txt.Text);
 
                     // Extract tags from description
                     List<Control> toRemove = [.. flowLayoutPanel5.Controls.Cast<Control>().Where(c => c.Tag is not null)];
@@ -973,21 +1202,21 @@ namespace WinPaletter
                     os_xp.Visible = selectedItem.TM.Info.DesignedFor_WinXP;
 
                     // Get Windows aspects that will be modified
-                    aspect_winTheme.Visible = selectedItem.TM.Windows12.Enabled && OS.W12
-                                           || selectedItem.TM.Windows11.Enabled && OS.W11
-                                           || selectedItem.TM.Windows10.Enabled && OS.W10
-                                           || selectedItem.TM.Windows81.Enabled && OS.W81
-                                           || selectedItem.TM.Windows8.Enabled && OS.W8
-                                           || selectedItem.TM.Windows7.Enabled && OS.W7
-                                           || selectedItem.TM.WindowsVista.Enabled && OS.WVista
-                                           || selectedItem.TM.WindowsXP.Enabled && OS.WXP;
+                    aspect_winTheme.Visible = (selectedItem.TM.Windows12.Enabled && OS.W12)
+                                           || (selectedItem.TM.Windows11.Enabled && OS.W11)
+                                           || (selectedItem.TM.Windows10.Enabled && OS.W10)
+                                           || (selectedItem.TM.Windows81.Enabled && OS.W81)
+                                           || (selectedItem.TM.Windows8.Enabled && OS.W8)
+                                           || (selectedItem.TM.Windows7.Enabled && OS.W7)
+                                           || (selectedItem.TM.WindowsVista.Enabled && OS.WVista)
+                                           || (selectedItem.TM.WindowsXP.Enabled && OS.WXP);
 
-                    aspect_lockScreen.Visible = selectedItem.TM.LogonUI12.Enabled && OS.W12
-                                             || selectedItem.TM.LogonUI11.Enabled && OS.W11
-                                             || selectedItem.TM.LogonUI10.Enabled && OS.W10
-                                             || selectedItem.TM.LogonUI81.Enabled && OS.W81
-                                             || selectedItem.TM.LogonUI7.Enabled && OS.W7
-                                             || selectedItem.TM.LogonUIXP.Enabled && OS.WXP;
+                    aspect_lockScreen.Visible = (selectedItem.TM.LogonUI12.Enabled && OS.W12)
+                                             || (selectedItem.TM.LogonUI11.Enabled && OS.W11)
+                                             || (selectedItem.TM.LogonUI10.Enabled && OS.W10)
+                                             || (selectedItem.TM.LogonUI81.Enabled && OS.W81)
+                                             || (selectedItem.TM.LogonUI7.Enabled && OS.W7)
+                                             || (selectedItem.TM.LogonUIXP.Enabled && OS.WXP);
 
                     aspect_classicColors.Visible = selectedItem.TM.Win32.Enabled;
                     aspect_cursors.Visible = selectedItem.TM.Cursors.Enabled;
@@ -1056,23 +1285,21 @@ namespace WinPaletter
         // Apply the theme of the selected store item
         private void Apply_Theme()
         {
-            ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
-            Appearance.CustomColors = selectedItem.TM.AppTheme.Enabled;
-            Appearance.BackColor = selectedItem.TM.AppTheme.BackColor;
-            Appearance.AccentColor = selectedItem.TM.AppTheme.AccentColor;
-            Appearance.CustomTheme_DarkMode = selectedItem.TM.AppTheme.DarkMode;
-            Appearance.RoundedCorners = selectedItem.TM.AppTheme.RoundCorners;
-            ApplyStyle(null, true);
+            Manager TMx = new(Manager.Source.File, selectedItem.FileName, false, true);
 
-            using (Manager TMx = new(Manager.Source.File, selectedItem.FileName, false, true))
-            {
-                if (selectedItem.DoneByWinPaletter)
-                    TMx.Info.Author = Application.CompanyName;
+            if (selectedItem.DoneByWinPaletter) selectedItem.TM.Info.Author = Application.CompanyName;
 
-                Forms.ThemeLog.Apply_Theme(TMx, true);
+            Program.TM = selectedItem.TM;
+            Program.TM_Original = Program.TM.Clone();
+            Forms.Home.LoadFromTM(Program.TM);
+            Forms.Home.Text = Path.GetFileName(selectedItem.FileName);
 
-                Program.TM_Original = TMx.Clone();
-            }
+            Invoke(() => Forms.ThemeLog.Apply_Theme(Program.TM, true));
+
+            // Revert modifications done by toggles selections
+            selectedItem.TM = TMx.Clone();
+
+            TMx?.Dispose();
         }
 
         // After a pack is doenloaded, there are two remaining action; either apply the theme or edit it.
@@ -1081,17 +1308,104 @@ namespace WinPaletter
             if (ApplyOrEditToggle)
             {
                 // Apply button is pressed
-                Forms.Store_CPToggles.TM = selectedItem.TM;
-                if (Forms.Store_CPToggles.ShowDialog() == DialogResult.OK)
+
+                togglesCheck = DialogResult.None;
+
+                // List the enabled theme aspects
+                toggle_theme.Visible = (selectedItem.TM.Windows12.Enabled && OS.W12)
+                                       || (selectedItem.TM.Windows11.Enabled && OS.W11)
+                                       || (selectedItem.TM.Windows10.Enabled && OS.W10)
+                                       || (selectedItem.TM.Windows81.Enabled && OS.W81)
+                                       || (selectedItem.TM.Windows8.Enabled && OS.W8)
+                                       || (selectedItem.TM.Windows7.Enabled && OS.W7)
+                                       || (selectedItem.TM.WindowsVista.Enabled && OS.WVista)
+                                       || (selectedItem.TM.WindowsXP.Enabled && OS.WXP);
+
+                toggle_lockScreen.Visible = (selectedItem.TM.LogonUI12.Enabled && OS.W12)
+                                         || (selectedItem.TM.LogonUI11.Enabled && OS.W11)
+                                         || (selectedItem.TM.LogonUI10.Enabled && OS.W10)
+                                         || (selectedItem.TM.LogonUI81.Enabled && OS.W81)
+                                         || (selectedItem.TM.LogonUI7.Enabled && OS.W7)
+                                         || (selectedItem.TM.LogonUIXP.Enabled && OS.WXP);
+
+                toggle_classicColors.Visible = selectedItem.TM.Win32.Enabled;
+                toggle_cursors.Visible = selectedItem.TM.Cursors.Enabled;
+                toggle_metrics.Visible = selectedItem.TM.MetricsFonts.Enabled;
+                toggle_cmd.Visible = selectedItem.TM.CommandPrompt.Enabled;
+                toggle_ps86.Visible = selectedItem.TM.PowerShellx86.Enabled;
+                toggle_ps64.Visible = selectedItem.TM.PowerShellx64.Enabled;
+                toggle_terminal.Visible = selectedItem.TM.Terminal.Enabled;
+                toggle_terminalPreview.Visible = selectedItem.TM.TerminalPreview.Enabled;
+                toggle_wallpaper.Visible = selectedItem.TM.Wallpaper.Enabled;
+                toggle_effects.Visible = selectedItem.TM.WindowsEffects.Enabled;
+                toggle_sounds.Visible = selectedItem.TM.Sounds.Enabled;
+                toggle_screenSaver.Visible = selectedItem.TM.ScreenSaver.Enabled;
+                toggle_altTab.Visible = selectedItem.TM.AltTab.Enabled;
+                toggle_icons.Visible = selectedItem.TM.Icons.Enabled;
+                toggle_accessibility.Visible = selectedItem.TM.Accessibility.Enabled;
+                toggle_winPaletterTheme.Visible = selectedItem.TM.AppTheme.Enabled;
+
+                // Check the enabled theme aspects
+                // Never depend on controls that are not visible yet in a tabpage not selected
+                toggle_theme.Checked = (selectedItem.TM.Windows12.Enabled && OS.W12)
+                                       || (selectedItem.TM.Windows11.Enabled && OS.W11)
+                                       || (selectedItem.TM.Windows10.Enabled && OS.W10)
+                                       || (selectedItem.TM.Windows81.Enabled && OS.W81)
+                                       || (selectedItem.TM.Windows8.Enabled && OS.W8)
+                                       || (selectedItem.TM.Windows7.Enabled && OS.W7)
+                                       || (selectedItem.TM.WindowsVista.Enabled && OS.WVista)
+                                       || (selectedItem.TM.WindowsXP.Enabled && OS.WXP);
+
+                toggle_lockScreen.Checked = (selectedItem.TM.LogonUI12.Enabled && OS.W12)
+                                         || (selectedItem.TM.LogonUI11.Enabled && OS.W11)
+                                         || (selectedItem.TM.LogonUI10.Enabled && OS.W10)
+                                         || (selectedItem.TM.LogonUI81.Enabled && OS.W81)
+                                         || (selectedItem.TM.LogonUI7.Enabled && OS.W7)
+                                         || (selectedItem.TM.LogonUIXP.Enabled && OS.WXP);
+
+                toggle_classicColors.Checked = selectedItem.TM.Win32.Enabled;
+                toggle_cursors.Checked = selectedItem.TM.Cursors.Enabled;
+                toggle_metrics.Checked = selectedItem.TM.MetricsFonts.Enabled;
+                toggle_cmd.Checked = selectedItem.TM.CommandPrompt.Enabled;
+                toggle_ps86.Checked = selectedItem.TM.PowerShellx86.Enabled;
+                toggle_ps64.Checked = selectedItem.TM.PowerShellx64.Enabled;
+                toggle_terminal.Checked = selectedItem.TM.Terminal.Enabled;
+                toggle_terminalPreview.Checked = selectedItem.TM.TerminalPreview.Enabled;
+                toggle_wallpaper.Checked = selectedItem.TM.Wallpaper.Enabled;
+                toggle_effects.Checked = selectedItem.TM.WindowsEffects.Enabled;
+                toggle_sounds.Checked = selectedItem.TM.Sounds.Enabled;
+                toggle_screenSaver.Checked = selectedItem.TM.ScreenSaver.Enabled;
+                toggle_altTab.Checked = selectedItem.TM.AltTab.Enabled;
+                toggle_icons.Checked = selectedItem.TM.Icons.Enabled;
+                toggle_accessibility.Checked = selectedItem.TM.Accessibility.Enabled;
+                toggle_winPaletterTheme.Checked = selectedItem.TM.AppTheme.Enabled;
+
+                Program.Animator.HideSync(Tabs);
+
+                Tabs.SelectedIndex = 5;
+
+                SystemSounds.Exclamation.Play();
+
+                Program.Animator.ShowSync(Tabs);
+
+                Task.Run(async () =>
                 {
-                    Apply_Theme();
-                    if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
-                    Program.TM = selectedItem.TM;
-                    Program.TM_Original = Program.TM.Clone();
-                    Forms.Home.LoadFromTM(Program.TM);
-                    Forms.Home.Text = Path.GetFileName(selectedItem.FileName);
-                    UpdateTitlebarColors();
-                }
+                    while (togglesCheck == DialogResult.None)
+                    {
+                        Thread.Sleep(100);
+                    }
+
+                    if (togglesCheck == DialogResult.OK)
+                    {
+                        this.Invoke(() =>
+                        {
+                            Apply_Theme();
+                            Tabs.SelectedIndex = 1;
+                            if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
+                            UpdateTitlebarColors();
+                        });
+                    }
+                });
             }
             else
             {
@@ -1242,8 +1556,8 @@ namespace WinPaletter
 
             RemoveAllStoreItems(search_results);
 
-            titlebar_lbl.Font = new("Segoe UI", titlebar_lbl.Font.Size, titlebar_lbl.Font.Style);
-            Tabs.SelectedIndex = 0;
+            Tabs.SelectedIndex = Tabs.SelectedIndex != 5 ? 0 : 1;
+            togglesCheck = DialogResult.None;
 
             titlebar_lbl.Text = string.Empty;
             Program.Animator.ShowSync(Tabs);
@@ -1319,11 +1633,6 @@ namespace WinPaletter
 
         }
 
-        private void RestartExplorer_Click(object sender, EventArgs e)
-        {
-            Program.RestartExplorer();
-        }
-
         #endregion
 
         #region    Search
@@ -1374,79 +1683,6 @@ namespace WinPaletter
             if (e.KeyChar == '\r') PerformSearch();
         }
 
-        private Point newPoint = new();
-        private Point oldPoint = new();
-
-        private void CustomTitlebar_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (Parent is not TabPage) oldPoint = MousePosition - (Size)Location;
-        }
-
-        private void CustomTitlebar_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (Parent is not TabPage && e.Button == MouseButtons.Left)
-            {
-                newPoint = MousePosition - (Size)oldPoint;
-                Location = newPoint;
-            }
-        }
-
-        /// <summary>
-        /// Save the theme as a file to be used later
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button1_Click(object sender, EventArgs e)
-        {
-
-            if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
-            {
-                Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
-                if (!(Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK))
-                    return;
-            }
-
-            string selectedPath = string.Empty;
-
-            if (!OS.WXP)
-            {
-                using (VistaFolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(selectedPath) && Directory.Exists(selectedPath))
-            {
-                string themeFileName = new FileInfo(selectedItem.FileName).Name;
-                string filename = $"{selectedPath}\\{themeFileName}";
-
-                if (!Directory.Exists(selectedPath)) Directory.CreateDirectory(selectedPath);
-                if (File.Exists(filename)) File.Delete(filename);
-
-                File.Copy(selectedItem.FileName, filename);
-
-                if (selectedItem.MD5_PackFile != "0")
-                {
-                    string themepackfilename = $@"{selectedPath}\{new FileInfo(selectedItem.FileName).Name}";
-                    themepackfilename = themepackfilename.Replace(themepackfilename.Split('.').Last(), "wptp");
-
-                    Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
-                    Forms.Store_DownloadProgress.File = themepackfilename;
-                    Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
-                    Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
-                    Forms.Store_DownloadProgress.ShowDialog();
-                }
-            }
-        }
-
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
@@ -1490,11 +1726,6 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void titlebarExtender1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
@@ -1531,22 +1762,6 @@ namespace WinPaletter
             }
         }
 
-        private async void button1_Click_1(object sender, EventArgs e)
-        {
-            //progressBar2.Visible = true;
-            //await loginManager.StartLoggingInAsync().ConfigureAwait(false);
-
-            using (GitHubLogin logIn = new())
-            {
-                logIn.ShowDialog();
-            }
-        }
-
-        private async void button9_Click(object sender, EventArgs e)
-        {
-            await Program.GitHub.SignOutAsync();
-        }
-
         async void UpdateLoginData()
         {
             Bitmap avatar_bmp = null;
@@ -1578,5 +1793,74 @@ namespace WinPaletter
                 });
             }
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            foreach (CheckImage checkImage in smoothFlowLayoutPanel1.Controls.OfType<CheckImage>().Where(c => c.Visible))
+            {
+                checkImage.Checked = true;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (CheckImage checkImage in smoothFlowLayoutPanel1.Controls.OfType<CheckImage>().Where(c => c.Visible))
+            {
+                checkImage.Checked = false;
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (toggle_theme.Visible)
+            {
+                selectedItem.TM.Windows12.Enabled = OS.W12 && toggle_theme.Checked;
+                selectedItem.TM.Windows11.Enabled = OS.W11 && toggle_theme.Checked;
+                selectedItem.TM.Windows10.Enabled = OS.W10 && toggle_theme.Checked;
+                selectedItem.TM.Windows81.Enabled = OS.W81 && toggle_theme.Checked;
+                selectedItem.TM.Windows8.Enabled = OS.W8 && toggle_theme.Checked;
+                selectedItem.TM.Windows7.Enabled = OS.W7 && toggle_theme.Checked;
+                selectedItem.TM.WindowsVista.Enabled = OS.WVista && toggle_theme.Checked;
+                selectedItem.TM.WindowsXP.Enabled = OS.WXP && toggle_theme.Checked;
+            }
+
+            if (toggle_lockScreen.Visible)
+            {
+                selectedItem.TM.LogonUI12.Enabled = OS.W12 && toggle_lockScreen.Checked;
+                selectedItem.TM.LogonUI11.Enabled = OS.W11 && toggle_lockScreen.Checked;
+                selectedItem.TM.LogonUI10.Enabled = OS.W10 && toggle_lockScreen.Checked;
+                selectedItem.TM.LogonUI81.Enabled = OS.W81 && toggle_lockScreen.Checked;
+                selectedItem.TM.LogonUI7.Enabled = OS.W7 && toggle_lockScreen.Checked;
+                selectedItem.TM.LogonUIXP.Enabled = OS.WXP && toggle_lockScreen.Checked;
+            }
+
+            if (toggle_classicColors.Visible) selectedItem.TM.Win32.Enabled = toggle_classicColors.Checked;
+            if (toggle_cursors.Visible) selectedItem.TM.Cursors.Enabled = toggle_cursors.Checked;
+            if (toggle_metrics.Visible) selectedItem.TM.MetricsFonts.Enabled = toggle_metrics.Checked;
+            if (toggle_cmd.Visible) selectedItem.TM.CommandPrompt.Enabled = toggle_cmd.Checked;
+            if (toggle_ps86.Visible) selectedItem.TM.PowerShellx86.Enabled = toggle_ps86.Checked;
+            if (toggle_ps64.Visible) selectedItem.TM.PowerShellx64.Enabled = toggle_ps64.Checked;
+            if (toggle_terminal.Visible) selectedItem.TM.Terminal.Enabled = toggle_terminal.Checked;
+            if (toggle_terminalPreview.Visible) selectedItem.TM.TerminalPreview.Enabled = toggle_terminalPreview.Checked;
+            if (toggle_wallpaper.Visible) selectedItem.TM.Wallpaper.Enabled = toggle_wallpaper.Checked;
+            if (toggle_effects.Visible) selectedItem.TM.WindowsEffects.Enabled = toggle_effects.Checked;
+            if (toggle_sounds.Visible) selectedItem.TM.Sounds.Enabled = toggle_sounds.Checked;
+            if (toggle_screenSaver.Visible) selectedItem.TM.ScreenSaver.Enabled = toggle_screenSaver.Checked;
+            if (toggle_altTab.Visible) selectedItem.TM.AltTab.Enabled = toggle_altTab.Checked;
+            if (toggle_icons.Visible) selectedItem.TM.Icons.Enabled = toggle_icons.Checked;
+            if (toggle_accessibility.Visible) selectedItem.TM.Accessibility.Enabled = toggle_accessibility.Checked;
+            if (toggle_winPaletterTheme.Visible) selectedItem.TM.AppTheme.Enabled = toggle_winPaletterTheme.Checked;
+
+            togglesCheck = DialogResult.OK;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Program.Animator.HideSync(Tabs);
+            Tabs.SelectedIndex = 1;
+            Program.Animator.ShowSync(Tabs);
+            togglesCheck = DialogResult.Cancel;
+        }
+
     }
 }

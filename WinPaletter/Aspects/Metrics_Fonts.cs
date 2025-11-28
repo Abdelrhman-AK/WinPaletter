@@ -10,9 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.Templates;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Retro;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -486,8 +488,10 @@ namespace WinPaletter
             string metrics = SelectedTheme.Split('|').Where(s => s.ToLower().StartsWith("nonclientmetrics")).FirstOrDefault();
             string icon = SelectedTheme.Split('|').Where(s => s.ToLower().StartsWith("iconmetrics")).FirstOrDefault();
 
-            using (Manager TMx = Default.Get(Program.WindowStyle))
+            using (Manager TM_Default = Default.Get(Program.WindowStyle))
+            using (Manager TMx = Program.TM.Clone())
             {
+                TMx.MetricsFonts = TM_Default.MetricsFonts;
                 TMx.MetricsFonts.Enabled = AspectEnabled;
 
                 if (!string.IsNullOrWhiteSpace(metrics) && metrics.Contains("="))

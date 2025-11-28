@@ -1094,7 +1094,7 @@ namespace WinPaletter
         internal UI.WP.AlertBox AlertBox21;
         internal UI.WP.CheckBox CheckBox7;
         internal PictureBox PictureBox42;
-        internal UI.WP.Button pin_button;
+        internal new UI.WP.Button pin_button;
         private UI.Controllers.TrackBarX trackBarX1;
         internal PictureBox pictureBox19;
         internal UI.WP.CheckBox checkBox8;

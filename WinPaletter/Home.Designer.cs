@@ -118,6 +118,7 @@
             this.groupBox1.Size = new System.Drawing.Size(1176, 70);
             this.groupBox1.TabIndex = 161;
             this.groupBox1.UseDecorationPattern = true;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // flowLayoutPanel3
             // 
@@ -404,6 +405,7 @@
             this.bottom_buttons.Size = new System.Drawing.Size(1176, 49);
             this.bottom_buttons.TabIndex = 152;
             this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // apply_btn
             // 

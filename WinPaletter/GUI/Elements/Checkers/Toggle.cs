@@ -38,7 +38,6 @@ namespace WinPaletter.UI.WP
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         private RectangleF CheckC = new(4, 4, 11, 11);
-        private int MouseState = 0;
         private bool WasMoving = false;
         private readonly int DarkLight_TogglerSize = 13;
         #endregion
@@ -129,8 +128,6 @@ namespace WinPaletter.UI.WP
                 // Only consider it a drag if it moves more than 2 pixels
                 if (i - CheckerX > 2f) WasMoving = true;
 
-                MouseState = 1;
-
                 if (i <= 4) _checkerX = 4;
                 else if (i >= Width - 17) _checkerX = Width - 17;
                 else _checkerX = i;
@@ -146,7 +143,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            MouseState = 0;
             CheckC.Width = DarkLight_Toggler ? DarkLight_TogglerSize : 11;
             CheckC.Height = DarkLight_Toggler ? DarkLight_TogglerSize : 11;
 
@@ -169,7 +165,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            MouseState = 1;
             CheckC.Width = 13;
 
             Invalidate();

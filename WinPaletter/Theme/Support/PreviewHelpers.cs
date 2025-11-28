@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme;
 using WinPaletter.Theme.Structures;
+using WinPaletter.TypesExtensions;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 
@@ -508,7 +509,12 @@ namespace WinPaletter
             // Title scheme for measuring
             string TitleScheme = "ABCabc0123xYz.#";
             float Title_x_Height = TitleScheme.Measure(font).Height;
-            float Title_9_Height = TitleScheme.Measure(new Font(font.Name, 9f, font.Style)).Height;
+            float Title_9_Height;
+
+            using (Font f = new(font.Name, 9f, font.Style))
+            {
+                Title_9_Height = TitleScheme.Measure(f).Height;
+            }
 
             // Return correct height of a titlebar
             return Math.Max(0, Title_x_Height - Title_9_Height - 5);

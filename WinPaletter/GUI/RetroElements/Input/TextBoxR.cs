@@ -20,8 +20,6 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public TextBoxR()
         {
-            _BaseColor = BackColor;
-            _TextColor = ForeColor;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
             DoubleBuffered = true;
             ForeColor = SystemColors.WindowText;
@@ -61,32 +59,6 @@ namespace WinPaletter.UI.Retro
         }
 
         #region Variables
-
-        private readonly Color _BaseColor;
-        private readonly Color _TextColor;
-
-        private MouseState State = MouseState.None;
-
-        /// <summary>
-        /// Mouse states for the control
-        /// </summary>
-        public enum MouseState : byte
-        {
-            /// <summary>
-            /// Mouse is not over the control
-            /// </summary>
-            None = 0,
-
-            /// <summary>
-            /// Mouse is over the control
-            /// </summary>
-            Over = 1,
-
-            /// <summary>
-            /// Mouse is pressing the control
-            /// </summary>
-            Down = 2,
-        }
 
         private TextBox _TB;
         /// <summary>
@@ -375,7 +347,6 @@ namespace WinPaletter.UI.Retro
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            State = MouseState.Down;
             Invalidate();
             TB.Focus();
         }
@@ -387,7 +358,6 @@ namespace WinPaletter.UI.Retro
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            State = MouseState.Over;
             TB.Focus();
             Invalidate();
         }
@@ -399,7 +369,6 @@ namespace WinPaletter.UI.Retro
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            State = MouseState.Over;
             Invalidate();
         }
 
@@ -410,7 +379,6 @@ namespace WinPaletter.UI.Retro
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            State = MouseState.None;
             Invalidate();
         }
 
@@ -507,7 +475,6 @@ namespace WinPaletter.UI.Retro
         /// <param name="e"></param>
         private void TB_MouseDown(object sender, MouseEventArgs e)
         {
-            State = MouseState.Down;
             Invalidate();
         }
 
@@ -518,7 +485,6 @@ namespace WinPaletter.UI.Retro
         /// <param name="e"></param>
         private void TB_MouseEnter(object sender, EventArgs e)
         {
-            State = MouseState.Over;
             Invalidate();
         }
 
@@ -529,7 +495,6 @@ namespace WinPaletter.UI.Retro
         /// <param name="e"></param>
         private void TB_MouseLeave(object sender, EventArgs e)
         {
-            State = MouseState.None;
             Invalidate();
         }
 
@@ -540,7 +505,6 @@ namespace WinPaletter.UI.Retro
         /// <param name="e"></param>
         private void TB_LostFocus(object sender, EventArgs e)
         {
-            State = MouseState.None;
             Invalidate();
         }
 

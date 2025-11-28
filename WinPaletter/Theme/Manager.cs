@@ -381,7 +381,7 @@ namespace WinPaletter.Theme
         {
             Program.Log?.Write(LogEventLevel.Information, $"Mergeing default theme data into current theme data to make a new WinPaletter with new features can load a WinPaletter theme made by an old WinPaletter");
 
-            foreach (KeyValuePair<string, JToken?> item in defaults)
+            foreach (KeyValuePair<string, JToken> item in defaults)
             {
                 if (current[item.Key] is null && defaults[item.Key] is not null) current[item.Key] = defaults[item.Key];
 

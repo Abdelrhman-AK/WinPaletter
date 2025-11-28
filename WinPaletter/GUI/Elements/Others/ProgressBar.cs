@@ -34,7 +34,7 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Events/Overrides
-        public event EventHandler StyleChanged;
+        public new event EventHandler StyleChanged;
         public event EventHandler ValueChanged;
 
         protected override void OnHandleCreated(EventArgs e)
@@ -72,7 +72,7 @@ namespace WinPaletter.UI.WP
             base.OnHandleDestroyed(e);
         }
 
-        protected virtual async void OnStyleChanged(EventArgs e)
+        protected virtual async new void OnStyleChanged(EventArgs e)
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
@@ -96,7 +96,7 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
-                Transition t1 = Transition.With(this, nameof(Value_Animation), Maximum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation2).Build(new ThrowAndCatch(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
+                Transition t1 = Transition.With(this, nameof(Value_Animation), Maximum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation2).Build(new CriticalDamping(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                 t1.Run();
             }
         }
@@ -105,7 +105,7 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode && Style == ProgressBarStyle.Marquee)
             {
-                Transition t1 = Transition.With(this, nameof(Value_Animation), Minimum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation1).Build(new ThrowAndCatch(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
+                Transition t1 = Transition.With(this, nameof(Value_Animation), Minimum).HookOnCompletionInUiThread(SynchronizationContext.Current, DoMarqueeAnimation1).Build(new CriticalDamping(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
                 t1.Run();
             }
         }
@@ -140,7 +140,7 @@ namespace WinPaletter.UI.WP
         #region Properties
 
         private int _value = 0;
-        public int Value
+        public new int Value
         {
             get => _value;
             set
@@ -316,7 +316,7 @@ namespace WinPaletter.UI.WP
             Value += Step;
         }
 
-        public new void PerformStep(int step)
+        public void PerformStep(int step)
         {
             Value += step;
         }

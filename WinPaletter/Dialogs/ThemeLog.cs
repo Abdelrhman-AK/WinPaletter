@@ -73,7 +73,7 @@ namespace WinPaletter
 
         private void ThemeLog_Closing(object sender, FormClosingEventArgs e)
         {
-            if (Apply_Thread.IsAlive)
+            if (Apply_Thread is not null && Apply_Thread.IsAlive)
             {
                 if (MsgBox(Program.Lang.Strings.ThemeManager.Actions.CloseOnApplying0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.Strings.ThemeManager.Actions.CloseOnApplying1) == DialogResult.No)
                 {
@@ -86,13 +86,13 @@ namespace WinPaletter
                 }
             }
 
-            if (Program.ProgramsRunning(SysPaths.Explorer).Count == 0)
+            Task.Run(() =>
             {
-                Task.Run(() => 
-                { 
+                if (Program.ProgramsRunning(SysPaths.Explorer).Count == 0)
+                {
                     Program.SendCommand(SysPaths.Explorer, false, true);
-                });
-            }
+                }
+            });
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 using WinPaletter.Theme;
 using WinPaletter.UI.WP;
+using static WinPaletter.PreviewHelpers;
 using static WinPaletter.TypesExtensions.ColorsExtensions;
 
 namespace WinPaletter

@@ -32,6 +32,8 @@
                 public string Paste { get; set; } = "Paste";
                 public string Cut { get; set; } = "Cut";
                 public string Delete { get; set; } = "Delete";
+                public string Edit { get; set; } = "Edit";
+                public string SaveAs { get; set; } = "Save as ...";
                 public string Invert { get; set; } = "Invert";
                 public string Darken { get; set; } = "Darken";
                 public string Lighten { get; set; } = "Lighten";

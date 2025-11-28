@@ -455,6 +455,7 @@ namespace WinPaletter
             {
                 if (fs.Length != data.Length)
                 {
+                    fs.Close();
                     Log?.Write(LogEventLevel.Information, $"A file has been updated: {file}");
                     File.WriteAllBytes(file, data);
                     return;
@@ -470,6 +471,7 @@ namespace WinPaletter
                         if (buffer[i] != data[offset + i])
                         {
                             Log?.Write(LogEventLevel.Information, $"A file has been updated: {file}");
+                            fs.Close();
                             File.WriteAllBytes(file, data);
                             return;
                         }
@@ -510,7 +512,7 @@ namespace WinPaletter
                         string destinationPath = Path.Combine(SysPaths.Theme_Dir_WP, entry.FullName);
 
                         // Ensure directory exists
-                        string? destDir = Path.GetDirectoryName(destinationPath);
+                        string destDir = Path.GetDirectoryName(destinationPath);
                         if (!string.IsNullOrEmpty(destDir) && !Directory.Exists(destDir))
                         {
                             Directory.CreateDirectory(destDir);
@@ -560,7 +562,7 @@ namespace WinPaletter
             }
         }
 
-        private static byte[]? cachedSound;
+        private static byte[] cachedSound;
 
         /// <summary>
         /// Creates a backup of the Windows startup sound if it does not already exist.
@@ -763,6 +765,10 @@ namespace WinPaletter
             try
             {
                 Program.Log?.Write(LogEventLevel.Information, $"Pinging URL: {url}");
+
+                Stopwatch sw = new();
+                sw.Reset();  sw.Start();
+
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Timeout = Timeout;
                 request.AllowAutoRedirect = false;
@@ -770,7 +776,8 @@ namespace WinPaletter
 
                 using (request.GetResponse())
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Ping to URL `{url}` was successful.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Ping to URL `{url}` was successful ({sw.ElapsedMilliseconds} ms).");
+                    sw.Stop();
                     return true;
                 }
             }

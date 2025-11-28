@@ -283,12 +283,6 @@ namespace WinPaletter
         /// </summary>
         public static Store Store => (_Store == null || _Store.IsDisposed) ? (_Store = CreateInstance(_Store)) : _Store;
 
-        private static Store_CPToggles _Store_CPToggles;
-        /// <summary>
-        /// Gets the instance of the form <see cref="Store_CPToggles"/> to manage WinPaletter store edited features toggles (secure locks).
-        /// </summary>
-        public static Store_CPToggles Store_CPToggles => (_Store_CPToggles == null || _Store_CPToggles.IsDisposed) ? (_Store_CPToggles = CreateInstance(_Store_CPToggles)) : _Store_CPToggles;
-
         private static Store_DownloadProgress _Store_DownloadProgress;
         /// <summary>
         /// Gets the instance of the form <see cref="Store_DownloadProgress"/> to show the store theme download progress.

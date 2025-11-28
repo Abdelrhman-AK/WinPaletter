@@ -636,6 +636,26 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StartBtn_7 {
+            get {
+                object obj = ResourceManager.GetObject("StartBtn_7", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StartBtn_XP {
+            get {
+                object obj = ResourceManager.GetObject("StartBtn_XP", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon ThemesResIcon {
@@ -651,6 +671,26 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap User {
             get {
                 object obj = ResourceManager.GetObject("User", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UserFrame {
+            get {
+                object obj = ResourceManager.GetObject("UserFrame", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UserFrame_Hot {
+            get {
+                object obj = ResourceManager.GetObject("UserFrame_Hot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

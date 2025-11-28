@@ -166,7 +166,7 @@ namespace WinPaletter
 
                 Directory.CreateDirectory(Path.GetDirectoryName(AvatarCache)!);
 
-                string? savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
+                string savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
                 Program.Log?.Write(LogEventLevel.Information, $"Loaded saved ETag: {savedETag}");
 
                 using (HttpClient client = new())

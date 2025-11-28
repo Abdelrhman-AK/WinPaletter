@@ -113,7 +113,19 @@ namespace WinPaletter
         /// <summary>
         /// Global variables to manage WinPaletter theme
         /// </summary>
-        public static Manager TM = new(Manager.Source.Empty);
+        public static Manager TM
+        {
+            get => tm;
+            set
+            {
+                if (tm != value)
+                {
+                    tm = value;
+                    Wallpaper = FetchSuitableWallpaper(value, Program.WindowStyle);
+                }
+            }
+        }
+        private static Manager tm = new(Manager.Source.Empty);
 
         /// <summary>
         /// Represents the original instance of the <see cref="Manager"/> class.

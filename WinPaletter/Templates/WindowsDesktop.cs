@@ -2244,7 +2244,7 @@ namespace WinPaletter.Templates
                         start.Left = 0;
                         start.Top = taskbar.Top - start.Height;
 
-                        ButtonR2.Image = WinLogos.Win7.Resize(18, 16);
+                        ButtonR2.Image = Properties.Resources.StartBtn_7;
                         break;
                     }
 
@@ -2256,7 +2256,7 @@ namespace WinPaletter.Templates
                         start.Left = 0;
                         start.Top = taskbar.Top - start.Height;
 
-                        ButtonR2.Image = WinLogos.WinXP.Resize(18, 16);
+                        ButtonR2.Image = Properties.Resources.StartBtn_XP;
                         break;
                     }
 
@@ -2269,7 +2269,7 @@ namespace WinPaletter.Templates
                 ClassicTaskbar.Height = 44;
                 ButtonR3.Image = Resources.SampleApp_Active;
                 ButtonR4.Image = Resources.SampleApp_Inactive;
-                ButtonR2.Image = WinLogos.Win7.Resize(18, 16);
+                ButtonR2.Image = Properties.Resources.StartBtn_7;
                 ButtonR3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 ButtonR4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 ButtonR3.Width = 48;

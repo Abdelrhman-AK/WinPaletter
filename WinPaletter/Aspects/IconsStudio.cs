@@ -211,7 +211,7 @@ namespace WinPaletter
                 {
                     if (!_shell32IconCache.TryGetValue(i, out Bitmap iconBmp))
                     {
-                        using Icon? ico = PE.GetIcon(shell32, i);
+                        using Icon ico = PE.GetIcon(shell32, i);
                         iconBmp = ico?.ToBitmap();
                         if (iconBmp != null) _shell32IconCache[i] = iconBmp;
                     }
@@ -260,7 +260,7 @@ namespace WinPaletter
                 {
                     var (clsid, name, defaultIconPath) = clsidList[i];
 
-                    Bitmap? iconBmp = null;
+                    Bitmap iconBmp = null;
 
                     if (!string.IsNullOrWhiteSpace(defaultIconPath))
                     {
@@ -321,7 +321,7 @@ namespace WinPaletter
                 {
                     var (clsid, name, defaultIconPath) = clsidList[i];
 
-                    Bitmap? iconBmp = null;
+                    Bitmap iconBmp = null;
 
                     if (!string.IsNullOrWhiteSpace(defaultIconPath))
                     {
@@ -362,7 +362,7 @@ namespace WinPaletter
             }
         }
 
-        private static Bitmap? TryExtractBitmap(string iconPath)
+        private static Bitmap TryExtractBitmap(string iconPath)
         {
             try
             {
@@ -378,7 +378,7 @@ namespace WinPaletter
                     return ico.ToBitmap();
                 }
 
-                using Icon? extracted = PE.GetIcon(path, index);
+                using Icon extracted = PE.GetIcon(path, index);
                 return extracted?.ToBitmap();
             }
             catch

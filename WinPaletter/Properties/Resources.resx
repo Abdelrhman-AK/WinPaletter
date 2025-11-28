@@ -2924,7 +2924,7 @@
 </value>
   </data>
   <data name="GitHub_SignInForFeatures" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>C:\Users\Abd-Elrhman\Desktop\GitHub_SignInForFeatures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\GitHub_SignInForFeatures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Add" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -9374,6 +9374,12 @@
         PMqUKVOmTJkyZcqUKVOmTJkyZcqUKVOmTJmy+jCL5f8D4kjEezOTWpQAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="StartBtn_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StartBtn_7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StartBtn_XP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StartBtn_XP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ThemesResIcon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAgAEBAAAAEAIABoBAAAhgAAABgYAAABACAAiAkAAO4EAAAgIAAAAQAgAKgQAAB2DgAAMDAAAAEA
@@ -12594,6 +12600,12 @@
         /TTf+oulO91tK63n+8cLP6/wdP/sfPvJ6VkHE/jjfvvS6WKe2Lr35fl/KW1d8o/a60sLj/Q985/PkWC9
         gnjzZSzZfxZP7vT1xb1qu/5YblHrI5mFf2J/wx9mSlOa0vj1f1HjbjVJ3jHaAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="UserFrame" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UserFrame.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="UserFrame_Hot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\UserFrame_Hot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WinPaletter_SysEventsSounds" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WinPaletter.SysEventsSounds.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

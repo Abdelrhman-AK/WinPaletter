@@ -186,7 +186,7 @@ namespace WinPaletter.UI.WP
             base.OnHandleDestroyed(e);
         }
 
-        private Form? _hookedForm;
+        private Form _hookedForm;
 
         /// <summary>
         /// Hooks form events for both current form and topmost parent form.
@@ -196,8 +196,8 @@ namespace WinPaletter.UI.WP
             UnhookFormEvents();
 
             // Start from this control
-            Control? current = this;
-            Form? topForm = null;
+            Control current = this;
+            Form topForm = null;
 
             while (current != null)
             {
@@ -258,7 +258,7 @@ namespace WinPaletter.UI.WP
         /// </summary>
         private bool IsInInactiveTabPage()
         {
-            Control? current = this;
+            Control current = this;
 
             while (current != null)
             {
@@ -286,7 +286,7 @@ namespace WinPaletter.UI.WP
                 shouldAnimate = false;
 
             // Stop if any parent is invisible
-            Control? p = Parent;
+            Control p = Parent;
             while (shouldAnimate && p != null)
             {
                 if (!p.Visible)
@@ -321,7 +321,7 @@ namespace WinPaletter.UI.WP
         /// <summary>
         /// Hooks into TabControl events and parent visibility changes dynamically.
         /// </summary>
-        private void HookParentEvents(Control? control)
+        private void HookParentEvents(Control control)
         {
             while (control != null)
             {
@@ -349,48 +349,48 @@ namespace WinPaletter.UI.WP
             UpdateTimerState();
         }
 
-        private void Parent_VisibleChanged(object? sender, EventArgs e)
+        private void Parent_VisibleChanged(object sender, EventArgs e)
         {
             UpdateTimerState();
         }
 
-        private void AnimatedBox_VisibleChanged(object? sender, EventArgs e)
+        private void AnimatedBox_VisibleChanged(object sender, EventArgs e)
         {
             UpdateTimerState();
         }
 
-        private void Tab_SelectedIndexChanged(object? sender, EventArgs e)
+        private void Tab_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateTimerState();
         }
 
-        private void Tab_Selecting(object? sender, TabControlCancelEventArgs e)
+        private void Tab_Selecting(object sender, TabControlCancelEventArgs e)
         {
             // Stop animations immediately when switching starts
             Timer.Stop();
             Timer.Enabled = false;
         }
 
-        private void Form_Activated(object? sender, EventArgs e)
+        private void Form_Activated(object sender, EventArgs e)
         {
             _Focused = true;
             UpdateTimerState();
         }
 
-        private void Form_Deactivate(object? sender, EventArgs e)
+        private void Form_Deactivate(object sender, EventArgs e)
         {
             _Focused = false;
             UpdateTimerState();
         }
 
-        private void Form_Shown(object? sender, EventArgs e)
+        private void Form_Shown(object sender, EventArgs e)
         {
             _Focused = true;
             SetColors();
             UpdateTimerState();
         }
 
-        private void Form_Resize(object? sender, EventArgs e)
+        private void Form_Resize(object sender, EventArgs e)
         {
             // Stop when minimized, resume when restored
             if (FindForm() is Form f)

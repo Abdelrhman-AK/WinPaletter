@@ -495,7 +495,7 @@ namespace WinPaletter
         /// </param>
         /// <returns>The corresponding RegistryValueKind.</returns>
         /// <exception cref="ArgumentException">Thrown when the type is not supported.</exception>
-        public static RegistryValueKind GetRegistryValueKind(object? value, bool preferQWord = false)
+        public static RegistryValueKind GetRegistryValueKind(object value, bool preferQWord = false)
         {
             if (value is null)
                 return RegistryValueKind.String; // null => treat as empty string
@@ -575,11 +575,6 @@ namespace WinPaletter
         private static RegistryValueKind FloatKind(double number, bool preferQWord)
         {
             // Check for whole numbers only, because registry DWORD/QWORD are integers.
-            if (Math.Floor(number) != number)
-                throw new ArgumentException(
-                    $"Floating-point value {number} cannot be stored losslessly as a DWORD/QWORD.",
-                    nameof(number));
-
             if (number >= int.MinValue && number <= int.MaxValue)
                 return RegistryValueKind.DWord;
 
@@ -1040,7 +1035,7 @@ namespace WinPaletter
         /// value is <see langword="null"/>.</param>
         /// <returns>The value retrieved from the registry, or <paramref name="DefaultValue"/> if the value does not exist, is <see
         /// langword="null"/>,  or an error occurs (depending on the value of <paramref name="IfNullReturnDefaultValue"/>).</returns>
-        private static object? ReadRegRaw(string Key, string ValueName, object? DefaultValue, bool RaiseExceptions = false, bool IfNullReturnDefaultValue = true)
+        private static object ReadRegRaw(string Key, string ValueName, object DefaultValue, bool RaiseExceptions = false, bool IfNullReturnDefaultValue = true)
         {
             object Result = null;
             RegistryKey R = null;

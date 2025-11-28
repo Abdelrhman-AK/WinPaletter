@@ -24,7 +24,7 @@ namespace WinPaletter.UI.Controllers
         WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
         ToolStripMenuItem darken = new() { Image = ColorItemContextMenu.Darken };
         ToolStripMenuItem lighten = new() { Image = ColorItemContextMenu.Lighten };
-        ToolStripMenuItem invert = new() { Image = ColorItemContextMenu.Invert };
+        ToolStripMenuItem invert = new() { Image = ColorEffects.Invert_24 };
         ToolStripMenuItem copy = new() { Image = ColorItemContextMenu.Copy };
         ToolStripMenuItem paste = new();
         ToolStripMenuItem cut = new() { Image = ColorItemContextMenu.Cut };
@@ -524,8 +524,8 @@ namespace WinPaletter.UI.Controllers
 
                 blend.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 blend.Image = blend.Enabled
-                    ? ColorItemContextMenu.Blend
-                    : ColorItemContextMenu.Blend.Grayscale();
+                    ? ColorEffects.Blend_24
+                    : ColorEffects.Blend_24.Grayscale();
 
                 string clipBoard = Clipboard.GetText();
                 bool clipBoardHasColor = clipBoard?.IsHexColor() ?? false;

@@ -65,7 +65,7 @@ namespace WinPaletter.UI.WP
         }
 
         private Image _image;
-        public new Image Image { get => _image; set => _image = value; }
+        public Image Image { get => _image; set => _image = value; }
         public Color CustomColor { get; set; }
         public bool CenterText { get; set; } = false;
 

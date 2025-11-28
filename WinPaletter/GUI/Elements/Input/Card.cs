@@ -65,7 +65,7 @@ namespace WinPaletter.UI.WP
         public new Color BackColor { get => Color.Transparent; set {; } }
 
         private Image _image;
-        public new Image Image
+        public Image Image
         {
             get => _image;
             set
@@ -263,7 +263,7 @@ namespace WinPaletter.UI.WP
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
-        public string Tag { get; set; }
+        public new string Tag { get; set; }
 
         #region Animator
         private void Animate()

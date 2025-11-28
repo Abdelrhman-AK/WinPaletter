@@ -59,12 +59,12 @@ namespace WinPaletter
             }
             catch (FileNotFoundException ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Image file is not found: {filePath}");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Image file is not found: {filePath}", ex);
                 return null;
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error loading image: {filePath}");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error loading image: {filePath}", ex);
                 return null;
             }
         }

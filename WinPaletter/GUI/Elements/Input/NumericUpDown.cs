@@ -25,15 +25,6 @@ namespace WinPaletter.UI.WP
 
         private Rectangle SideRect = new();
 
-        private MouseState State = MouseState.None;
-
-        public enum MouseState
-        {
-            None,
-            Over,
-            Down
-        }
-
         #endregion
 
         #region Properties
@@ -126,8 +117,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            State = MouseState.Over;
-
             if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 255; }
 
@@ -136,8 +125,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            State = MouseState.None;
-
             if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
 
@@ -146,9 +133,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            State = MouseState.Over;
-
-
             if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = ContainsFocus ? 255 : 0; }
 
@@ -176,8 +160,6 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            State = MouseState.Down;
-
             if (Enabled & SideRect.Contains(e.Location))
             {
                 if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }

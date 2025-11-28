@@ -559,7 +559,7 @@ namespace WinPaletter.UI.Controllers
         }
 
         private bool _focused = false;
-        public bool Focused
+        public new bool Focused
         {
             get => _focused;
             set

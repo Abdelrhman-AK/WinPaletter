@@ -103,16 +103,6 @@ namespace WinPaletter.UI.Style
             public Color Accent { get; set; } = DefaultColors.PrimaryColor_Dark;
 
             /// <summary>
-            /// Default method that will be used to change the accent color to be an another color
-            /// </summary>
-            private readonly Method Accent_Method;
-
-            /// <summary>
-            /// Default factor that will be used by <see cref="Accent_Method"/>  to change the accent color to be an another color
-            /// </summary>
-            private readonly float Accent_Factor;
-
-            /// <summary>
             /// Default alternative accent color
             /// </summary>
             public Color AccentAlt { get; set; } = DefaultColors.PrimaryColor_Dark.Light(0.5f);
@@ -131,16 +121,6 @@ namespace WinPaletter.UI.Style
             /// Default background color
             /// </summary>
             public Color BackColor { get; set; } = DefaultColors.BackColor_Dark;
-
-            /// <summary>
-            /// Default method that will be used to change the background color to be an another color
-            /// </summary>
-            private readonly Method BackColor_Method;
-
-            /// <summary>
-            /// Default factor that will be used by <see cref="BackColor_Method"/>  to change the background color to be an another color
-            /// </summary>
-            private readonly float BackColor_Factor;
 
             /// <summary>
             /// Default button color
@@ -374,12 +354,8 @@ namespace WinPaletter.UI.Style
 
                 if (Dark)
                 {
-                    Accent_Method = Method.CB;
-                    Accent_Factor = 0f;
                     AccentAlt_Method = Method.Light;
                     AccentAlt_Factor = 0.6f;
-                    BackColor_Method = Method.CB;
-                    BackColor_Factor = 0f;
                     Button_Method = Method.Light;
                     Button_Factor = 0.15f;
                     Button_Over_Method = Method.Light;
@@ -418,13 +394,8 @@ namespace WinPaletter.UI.Style
                     Line_Hover_Method = Method.CB;
                     Line_Hover_Factor = -0.15f;
 
-                    Accent_Method = Method.CB;
-                    Accent_Factor = 0f;
                     AccentAlt_Method = Method.CB;
                     AccentAlt_Factor = 0.6f;
-
-                    BackColor_Method = Method.CB;
-                    BackColor_Factor = 0f;
 
                     Button_Method = Method.Light;
                     Button_Factor = -0.24f;
