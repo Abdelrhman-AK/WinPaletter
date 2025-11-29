@@ -1449,35 +1449,34 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="source">Source bitmap.</param>
         /// <returns>Circular bitmap cropped and masked to the smallest dimension.</returns>
-        public static Bitmap ToCircular(this Bitmap bitmap, bool hot = false)
+        public static Bitmap ToCircular(this Bitmap bitmap, Color? lineColor = null)
         {
             if (bitmap is null) return null;
+            lineColor ??= Program.Style.Schemes.Main.Colors.ForeColor;
+            Color lineColorValue = lineColor.Value;
 
-            Rectangle rect = new(2, 1, bitmap.Width - 3, bitmap.Height - 3);
+            float penThickness = 2f;
+            Rectangle rect = new(0, 0, bitmap.Width - 1, bitmap.Height - 1);
+            RectangleF rect_pen = new(0, 0, rect.Width - 0.5f, rect.Height - 0.5f);
 
             Bitmap canvas = new(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
 
             using (Graphics G = Graphics.FromImage(canvas))
+            using (GraphicsPath path = new())
             {
                 G.SmoothingMode = SmoothingMode.AntiAlias;
-
                 G.Clear(Color.Transparent);
+                path.AddEllipse(rect);
 
-                using (GraphicsPath path = new())
+                using (TextureBrush brush = new(bitmap))
+                using (Pen p = new(lineColorValue, penThickness))
                 {
-                    path.AddEllipse(rect);
-                    G.SetClip(path);
-                    G.DrawImage(bitmap, rect);
-                    G.ResetClip();
+                    G.FillPath(brush, path);
+                    G.DrawEllipse(p, rect_pen);
                 }
-
-                //G.DrawImage(hot ? Resources.UserFrame_Hot : Resources.UserFrame, rect.X, rect.Y, rect.Width, rect.Height);
             }
 
-            using (Bitmap frame = (hot ? Resources.UserFrame_Hot : Resources.UserFrame).Resize(bitmap.Size))
-            {
-                return canvas.Overlay(frame, new(0, 0));
-            }
+            return canvas;
         }
 
         /// <summary>

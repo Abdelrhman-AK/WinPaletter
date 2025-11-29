@@ -1,4 +1,6 @@
-﻿namespace WinPaletter
+﻿using static Localizer.Strings_Cls;
+
+namespace WinPaletter
 {
     public partial class Localizer
     {
@@ -11,6 +13,11 @@
             /// A class that contains all the general strings used in the application.
             /// </summary>
             public General_Cls General { get; set; } = new();
+
+            /// <summary>
+            /// A class that contains all the general strings used in the application.
+            /// </summary>
+            public GitHubStrings_Cls GitHubStrings { get; set; } = new();
 
             /// <summary>
             /// A class that contains all the general strings used in the application.

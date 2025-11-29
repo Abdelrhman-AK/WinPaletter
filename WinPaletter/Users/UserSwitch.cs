@@ -60,19 +60,11 @@ namespace WinPaletter
             // Prepare the glyph bitmap safely
             Image glyph = User.GitHub_LoggedIn ? (Image)Properties.Resources.Glyph_SignOut.Clone() : (Image)Properties.Resources.Glyph_GitHub.Clone();
 
-            // Update the label2 on UI thread
-            label2.Invoke(() =>
+            Forms.MainForm.Invoke(() =>
             {
                 label2.Text = User.GitHub_LoggedIn ? User.GitHub?.Login ?? Program.Lang.Strings.Users.GitHub_NotSigned : Program.Lang.Strings.Users.GitHub_NotSigned;
-            });
-
-            // Update the button on UI thread
-            button3.Invoke(() =>
-            {
-                // Assign text
                 button3.Text = User.GitHub_LoggedIn ? Program.Lang.Strings.General.SignOut : Program.Lang.Strings.General.SignIn;
 
-                // Assign image safely
                 button3.ImageGlyph?.Dispose();
                 button3.ImageGlyph = glyph;
             });

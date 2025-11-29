@@ -82,6 +82,7 @@
             this.tip_label = new System.Windows.Forms.Label();
             this.userButton = new WinPaletter.UI.WP.Button();
             this.winEdition = new WinPaletter.UI.WP.Button();
+            this.button15 = new WinPaletter.UI.WP.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -395,6 +396,7 @@
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.button15);
             this.bottom_buttons.Controls.Add(this.apply_btn);
             this.bottom_buttons.Controls.Add(this.Button13);
             this.bottom_buttons.Controls.Add(this.restartExplorer_btn);
@@ -944,6 +946,24 @@
             this.winEdition.UseVisualStyleBackColor = false;
             this.winEdition.Click += new System.EventHandler(this.winEdition_Click);
             // 
+            // button15
+            // 
+            this.button15.CustomColor = System.Drawing.Color.Empty;
+            this.button15.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
+            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button15.ForeColor = System.Drawing.Color.White;
+            this.button15.Image = ((System.Drawing.Image)(resources.GetObject("button15.Image")));
+            this.button15.ImageGlyph = null;
+            this.button15.ImageGlyphEnabled = false;
+            this.button15.Location = new System.Drawing.Point(9, 6);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(130, 37);
+            this.button15.TabIndex = 35;
+            this.button15.Text = "Exit";
+            this.button15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button15.UseVisualStyleBackColor = false;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1034,5 +1054,6 @@
         public System.Windows.Forms.Panel panel1;
         internal UI.WP.Button button4;
         internal UI.WP.Button button14;
+        internal UI.WP.Button button15;
     }
 }

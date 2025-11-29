@@ -185,7 +185,7 @@ namespace WinPaletter
                         // Load cached avatar
                         using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
                         {
-                            GitHub_Avatar = bmp.Resize(48, 48);
+                            GitHub_Avatar = bmp.Resize(256, 256);
                             Program.Log?.Write(LogEventLevel.Information, "Cached GitHub avatar loaded.");
                         }
                         return;
@@ -197,7 +197,7 @@ namespace WinPaletter
                         using (MemoryStream ms = new(data))
                         using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
                         {
-                            GitHub_Avatar = bmp.Resize(48, 48);
+                            GitHub_Avatar = bmp.Resize(256, 256);
                             // Save locally
                             bmp.Save(AvatarCache, ImageFormat.Png);
                             Program.Log?.Write(LogEventLevel.Information, "GitHub avatar downloaded and saved locally.");
@@ -583,6 +583,8 @@ namespace WinPaletter
             }
         }
         private static Octokit.User gitHub;
+
+        public static GitHubRepoManager RepoManager { get; set; } = new();
 
         /// <summary>
         /// A boolean that represents if the user is logged in to GitHub or not
