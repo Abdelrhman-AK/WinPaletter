@@ -137,7 +137,7 @@ namespace WinPaletter
         /// <param name="url"></param>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public async Task DownloadFileAsync(string url, string destinationPath)
+        public async Task DownloadFileAsync(string url, string destinationPath, CancellationTokenSource cts = null)
         {
             if (url.Contains("github.com"))
             {
@@ -151,7 +151,7 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cancellationTokenSource = new();
+            cancellationTokenSource = cts ?? new();
 
             try
             {

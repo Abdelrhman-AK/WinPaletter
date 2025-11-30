@@ -584,7 +584,7 @@ namespace WinPaletter
         }
         private static Octokit.User gitHub;
 
-        public static GitHubRepoManager RepoManager { get; set; } = new();
+        public static GitHub.Repository RepoManager { get; set; } = new();
 
         /// <summary>
         /// A boolean that represents if the user is logged in to GitHub or not

@@ -486,8 +486,8 @@
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\GlobalVariables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
-    <Compile Include="Users\GitHubRepoExplorer.cs" />
-    <Compile Include="Users\GitHubRepoManager.cs" />
+    <Compile Include="Users\GitHubPath.cs" />
+    <Compile Include="Users\Repository.cs" />
     <Compile Include="Settings\Setup.cs">
       <SubType>Form</SubType>
     </Compile>

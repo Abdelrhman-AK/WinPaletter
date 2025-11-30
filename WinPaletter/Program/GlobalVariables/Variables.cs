@@ -27,7 +27,7 @@ namespace WinPaletter
         /// <summary>
         /// GitHub Login Manager
         /// </summary>
-        public static GitHubLoginManager GitHub { get; set; }
+        public static GitHub.LoginManager GitHub { get; set; }
 
         /// <summary>
         /// Gets the file path for the log file, including the current timestamp in the file name.

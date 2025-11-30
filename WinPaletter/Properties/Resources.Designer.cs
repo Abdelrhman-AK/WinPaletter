@@ -283,6 +283,66 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Explorer_Back {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Explorer_Back", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Explorer_Forward {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Explorer_Forward", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Explorer_Refresh {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Explorer_Refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Explorer_Stop {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Explorer_Stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Explorer_Up {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Explorer_Up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Explorer_View {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Explorer_View", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Glyph_Forward {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Forward", resourceCulture);
@@ -446,6 +506,16 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap Glyph_Update_Dot {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Update_Dot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Wait {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Wait", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

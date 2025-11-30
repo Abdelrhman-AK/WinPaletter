@@ -1,78 +1,303 @@
-﻿using System;
+﻿using FluentTransitions;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.WP
 {
-    public partial class BreadcrumbControl : UserControl
+    /// <summary>
+    /// A custom breadcrumb control for navigation and progress display.
+    /// </summary>
+    public partial class Breadcrumb : UserControl
     {
-        private FlowLayoutPanel breadcrumbPanel;
+        #region Fields
+
+        private SmoothFlowLayoutPanel breadcrumbPanel;
         private TextBox pathTextBox;
+        private Button overflowButton;
+
+        private int paddingStart = 28;
+        private Bitmap icon_dark = Properties.Resources.Glyph_Browse;
+        private Bitmap icon_light = Properties.Resources.Glyph_Browse.Invert();
+        private Bitmap icon_wait_dark = Properties.Resources.Glyph_Wait;
+        private Bitmap icon_wait_light = Properties.Resources.Glyph_Wait.Invert();
+
+        private bool _isMarquee;
+        private float _marqueeOffset = 0;
+        private Timer _marqueeTimer;
+        private bool hasPaths = false;
 
         private TreeView boundTreeView;
+        private float progressValue;
+        private float progressMinimum = 0;
+        private float progressMaximum = 100;
+        private float _animatedValue = 0;
+        private int _alpha = 255;
+        private int parentLevel = 0;
+        private UI.WP.Button btn_Stop;
+    
+        public event Action StopRequested;
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Determines if animations are allowed.
+        /// </summary>
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
+
+        /// <summary>
+        /// The TreeView bound to this breadcrumb control.
+        /// </summary>
         public TreeView BoundTreeView
         {
             get => boundTreeView;
             set
             {
-                if (boundTreeView != null)
-                    boundTreeView.AfterSelect -= TreeView_AfterSelect;
+                hasPaths = false;
+
+                if (boundTreeView != null) boundTreeView.AfterSelect -= TreeView_AfterSelect;
 
                 boundTreeView = value;
 
                 if (boundTreeView != null)
+                {
                     boundTreeView.AfterSelect += TreeView_AfterSelect;
+
+                    // Auto-select root if nothing is selected
+                    if (boundTreeView.SelectedNode == null)
+                    {
+                        TreeNode root = boundTreeView.TopNode ?? boundTreeView.Nodes.Cast<TreeNode>().FirstOrDefault();
+                        if (root != null)
+                        {
+                            boundTreeView.SelectedNode = root;
+                            root.Expand();
+                        }
+                    }
+                }
 
                 UpdateBreadcrumb(boundTreeView?.SelectedNode);
             }
         }
 
-        public BreadcrumbControl()
+        /// <summary>
+        /// Minimum progress value.
+        /// </summary>
+        public float Minimum
         {
-            InitializeControls();
+            get => progressMinimum;
+            set
+            {
+                if (value > progressMaximum) value = progressMaximum;
+                if (value != progressMaximum)
+                {
+                    progressMinimum = value;
+                    if (progressValue < progressMinimum) progressValue = progressMinimum;
+                    Invalidate();
+                }
+            }
         }
 
+        /// <summary>
+        /// Maximum progress value.
+        /// </summary>
+        public float Maximum
+        {
+            get => progressMaximum;
+            set
+            {
+                if (value < progressMinimum) value = progressMinimum;
+                if (value != progressMinimum)
+                {
+                    progressMaximum = value;
+                    if (progressValue > progressMaximum) progressValue = progressMaximum;
+                    Invalidate();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Current progress value.
+        /// </summary>
+        public float Value
+        {
+            get => progressValue;
+            set
+            {
+                if (value != progressValue)
+                {
+                    progressValue = Math.Max(progressMinimum, Math.Min(progressMaximum, value));
+
+                    if (CanAnimate)
+                        Transition.With(this, nameof(Value_Animation), progressValue).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    else
+                        Value_Animation = progressValue;
+
+                    if (value > progressMinimum && value < progressMaximum) btn_Stop.Visible = true;
+                    else btn_Stop.Visible = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Animated progress value for smooth transitions.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public float Value_Animation
+        {
+            get => _animatedValue;
+            set
+            {
+                if (value != _animatedValue)
+                {
+                    _animatedValue = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Alpha transparency for progress bar rendering.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public int Alpha
+        {
+            get => _alpha;
+            set
+            {
+                if (value != _alpha)
+                {
+                    _alpha = value;
+                    Invalidate();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Breadcrumb"/> class.
+        /// </summary>
+        public Breadcrumb()
+        {
+            DoubleBuffered = true;
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            BackColor = Color.Transparent;
+
+            InitializeControls();
+            Resize += (s, e) => UpdateBreadcrumb(boundTreeView?.SelectedNode);
+        }
+
+        #endregion
+
+        #region Initialization
+
+        /// <summary>
+        /// Initializes child controls for the breadcrumb.
+        /// </summary>
         private void InitializeControls()
         {
-            // FlowLayoutPanel
-            breadcrumbPanel = new FlowLayoutPanel
+            breadcrumbPanel = new()
             {
-                Dock = DockStyle.Fill,
+                Location = new Point(paddingStart, 0),
                 AutoSize = true,
-                WrapContents = false
+                WrapContents = false,
+                Height = this.Height,
+                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                BackColor = Color.Transparent
             };
-            breadcrumbPanel.Click += BreadcrumbPanel_Click;
-            this.Controls.Add(breadcrumbPanel);
+            breadcrumbPanel.MouseDown += BreadcrumbPanel_MouseDown;
+            Controls.Add(breadcrumbPanel);
 
-            // TextBox
-            pathTextBox = new TextBox
+            btn_Stop = new()
+            {
+                ImageGlyphEnabled = true,
+                ImageGlyph = Properties.Resources.Glyph_Explorer_Stop,
+                Flag = Button.Flags.CustomColorOnHover,
+                CustomColor = Color.FromArgb(193, 18, 31),
+                Anchor = AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,
+                Height = Height - 4,
+                Width = 28,
+                Visible = true,
+                Location = new Point(this.Width - 30, 2),
+            };
+            btn_Stop.Click += (s, e) =>
+            {
+                StopRequested?.Invoke();
+            };
+
+            overflowButton = new()
+            {
+                Text = "...",
+                AutoSize = true,
+                Visible = false,
+                Flag = Button.Flags.TintedOnHover,
+                ImageGlyphEnabled = true,
+                CustomColor = Program.Style.Schemes.Main.Colors.Accent,
+                Width = 10
+            };
+            overflowButton.Click += (s, e) => overflowButton.Menu.Show(overflowButton, MousePosition);
+            breadcrumbPanel.Controls.Add(overflowButton);
+
+            pathTextBox = new UI.WP.TextBox
             {
                 Visible = false,
-                Dock = DockStyle.Fill
             };
-            pathTextBox.KeyDown += PathTextBox_KeyDown;
-            pathTextBox.LostFocus += PathTextBox_LostFocus;
-            this.Controls.Add(pathTextBox);
+
+            pathTextBox.TB.AutoCompleteMode = AutoCompleteMode.Suggest;
+            pathTextBox.TB.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            pathTextBox.TB.AcceptsReturn = true;
+            pathTextBox.TB.KeyUp += TB_KeyUp;
+
+            Controls.Add(pathTextBox);
+            Controls.Add(btn_Stop);
+            btn_Stop.BringToFront();
         }
 
-        private void TreeView_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            UpdateBreadcrumb(e.Node);
-        }
+        #endregion
 
+        #region Breadcrumb Update
+
+        /// <summary>
+        /// Updates the breadcrumb buttons for the specified <see cref="TreeNode"/>.
+        /// </summary>
+        /// <param name="node">The current node.</param>
         public void UpdateBreadcrumb(TreeNode node)
         {
+            breadcrumbPanel.SuspendLayout();
             breadcrumbPanel.Controls.Clear();
+            breadcrumbPanel.Controls.Add(overflowButton);
+            overflowButton.Visible = false;
+            overflowButton.Menu.Items.Clear();
 
-            if (node == null) return;
+            breadcrumbPanel.Location = new Point(paddingStart, 0);
+            breadcrumbPanel.Height = this.Height;
+            breadcrumbPanel.Width = Math.Max(0, this.Width - breadcrumbPanel.Left - 4);
 
-            var pathNodes = node.FullPath.Split('\\');
-
-            TreeNode current = boundTreeView.TopNode;
-            for (int i = 0; i < pathNodes.Length; i++)
+            if (node == null)
             {
-                string segment = pathNodes[i];
-                TreeNode matching = current.Nodes.Cast<TreeNode>().FirstOrDefault(n => n.Text == segment) ?? current;
+                breadcrumbPanel.ResumeLayout();
+                return;
+            }
+
+            List<Button> buttons = [];
+            string[] pathSegments = node.FullPath.Split('\\');
+            hasPaths = pathSegments.Length > 0;
+
+            TreeNode current = boundTreeView?.TopNode ?? boundTreeView?.Nodes.Cast<TreeNode>().FirstOrDefault();
+
+            for (int i = 0; i < pathSegments.Length; i++)
+            {
+                string segment = pathSegments[i];
+                TreeNode matching = current?.Nodes.Cast<TreeNode>().FirstOrDefault(n => n.Text == segment) ?? current;
 
                 Button btn = new()
                 {
@@ -81,108 +306,370 @@ namespace WinPaletter.UI.WP
                     Tag = matching,
                     Flag = Button.Flags.TintedOnHover,
                     ImageGlyphEnabled = true,
-                    CustomColor = Program.Style.Schemes.Main.Colors.Accent
+                    CustomColor = Program.Style.Schemes.Main.Colors.Accent,
+                    Menu = new ContextMenuStrip()
                 };
-
-                btn.Width = (int)btn.Text.Measure(btn.Font).Width + 5;
-                btn.Click += Btn_Click;
-                breadcrumbPanel.Controls.Add(btn);
-
-                // Add separator only if it's NOT the last segment
-                if (i < pathNodes.Length - 1 && matching.Nodes.Count > 0)
+                if (matching != null && matching.Nodes.Count > 0)
                 {
-                    AlertBox sep = new()
+                    foreach (TreeNode child in matching.Nodes)
                     {
-                        Text = "▶",
-                        AutoSize = true,
-                        CenterText = true,
-                        AlertStyle = AlertBox.Style.Simple,
-                        Size = new(16, btn.Height),
-                        Font = Fonts.ConsoleMedium
-                    };
-                    breadcrumbPanel.Controls.Add(sep);
+                        System.Windows.Forms.ToolStripMenuItem item = new(child.Text) { Tag = child };
+                        item.Click += (s, e) =>
+                        {
+                            TreeNode tn = ((ToolStripMenuItem)s).Tag as TreeNode;
+                            if (boundTreeView != null) boundTreeView.SelectedNode = tn;
+                        };
+                        btn.Menu.Items.Add(item);
+                    }
                 }
+                btn.Click += Btn_Click;
+
+                int textWidth = (int)btn.Text.Measure(btn.Font).Width;
+                btn.Width = textWidth + (btn.Menu.Items.Count > 0 ? 20 : 0);
+
+                buttons.Add(btn);
+                breadcrumbPanel.Controls.Add(btn);
 
                 current = matching;
             }
+
+            breadcrumbPanel.ResumeLayout();
+            ApplyOverflow(buttons);
+            Invalidate();
         }
+
+        /// <summary>
+        /// Applies overflow logic when breadcrumb buttons exceed available width.
+        /// </summary>
+        /// <param name="buttons">List of buttons in breadcrumb.</param>
+        private void ApplyOverflow(List<Button> buttons)
+        {
+            if (buttons == null || buttons.Count == 0) { overflowButton.Visible = false; return; }
+
+            int spacing = 2;
+            int totalW = 0;
+            foreach (Control c in breadcrumbPanel.Controls) totalW += c.Width + spacing;
+            totalW += paddingStart + 10;
+
+            if (totalW <= this.Width)
+            {
+                overflowButton.Visible = false;
+                foreach (Button b in buttons) b.Visible = true;
+                return;
+            }
+
+            overflowButton.Visible = true;
+            overflowButton.Menu.Items.Clear();
+
+            int available = this.Width - paddingStart - 8 - overflowButton.Width - 8;
+            if (available < 0) available = 0;
+
+            int accumulated = 0;
+            int keepFromIndex = buttons.Count;
+            for (int i = buttons.Count - 1; i >= 0; i--)
+            {
+                Button b = buttons[i];
+                int w = b.Width + spacing;
+                if (accumulated + w > available)
+                {
+                    keepFromIndex = i + 1;
+                    break;
+                }
+                accumulated += w;
+                keepFromIndex = i;
+            }
+
+            if (keepFromIndex >= buttons.Count) keepFromIndex = buttons.Count - 1;
+
+            for (int i = 0; i < buttons.Count; i++)
+                buttons[i].Visible = i >= keepFromIndex;
+
+            for (int i = 0; i < keepFromIndex; i++)
+            {
+                Button hidden = buttons[i];
+                System.Windows.Forms.ToolStripMenuItem item = new(hidden.Text) { Tag = hidden.Tag };
+                item.Click += (s, e) =>
+                {
+                    TreeNode tn = (s as ToolStripMenuItem).Tag as TreeNode;
+                    if (boundTreeView != null) boundTreeView.SelectedNode = tn;
+                };
+                overflowButton.Menu.Items.Add(item);
+            }
+        }
+
+        #endregion
+
+        #region Marquee & Animation
+
+        /// <summary>
+        /// Starts a marquee animation for indeterminate progress.
+        /// </summary>
+        public void StartMarquee()
+        {
+            if (_marqueeTimer != null) return;
+
+            _isMarquee = true;
+
+            _marqueeTimer = new() { Interval = 10 };
+            _marqueeTimer.Tick += (s, e) =>
+            {
+                _marqueeOffset += 0.01f;
+                if (_marqueeOffset > 1) _marqueeOffset = 0;
+                Invalidate();
+            };
+            _marqueeTimer.Start();
+            btn_Stop.Visible = true;
+        }
+
+        /// <summary>
+        /// Stops the marquee animation.
+        /// </summary>
+        public void StopMarquee()
+        {
+            _marqueeTimer?.Stop();
+            _marqueeTimer?.Dispose();
+            _marqueeTimer = null;
+            _isMarquee = false;
+            _marqueeOffset = 0;
+            Invalidate();
+            btn_Stop.Visible = false;
+        }
+
+        /// <summary>
+        /// Performs the finish-loading animation (hides progress bar).
+        /// </summary>
+        public void FinishLoadingAnimation()
+        {
+            if (CanAnimate)
+            {
+                Transition.With(this, nameof(Alpha), 0)
+                          .HookOnCompletion(() =>
+                          {
+                              progressValue = 0;
+                              _animatedValue = 0;
+                              Invalidate();
+                              _alpha = 255;
+                          })
+                          .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                Alpha = 0;
+                progressValue = 0;
+                _animatedValue = 0;
+                Invalidate();
+                _alpha = 255;
+            }
+            btn_Stop.Visible = false;
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        private void TreeView_AfterSelect(object sender, TreeViewEventArgs e) => UpdateBreadcrumb(e.Node);
 
         private void Btn_Click(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.Tag is TreeNode node)
+                if (boundTreeView != null) boundTreeView.SelectedNode = node;
+        }
+
+        private void BreadcrumbPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_isMarquee || _animatedValue > progressMinimum && _animatedValue < progressMaximum) return;
+
+            Control child = breadcrumbPanel.GetChildAtPoint(e.Location);
+            if (child == null && e.Button == MouseButtons.Left)
             {
-                boundTreeView.SelectedNode = node;
+                pathTextBox.Bounds = new Rectangle(breadcrumbPanel.Left + 6, breadcrumbPanel.Top + 4, Math.Max(120, breadcrumbPanel.Width - 6), 22);
+                pathTextBox.Text = string.Join("\\", GetCurrentPathNodes());
+
+                PopulateAutoComplete();
+
+                pathTextBox.Visible = true;
+                pathTextBox.BringToFront();
+                pathTextBox.Focus();
+                pathTextBox.SelectionStart = 0;
+                pathTextBox.SelectionLength = pathTextBox.Text.Length;
             }
         }
 
-        private void BreadcrumbPanel_Click(object sender, EventArgs e)
+        private void TB_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e is MouseEventArgs me)
+            if (e.KeyCode == Keys.Return)
             {
-                if (breadcrumbPanel.GetChildAtPoint(me.Location) == null)
-                {
-                    pathTextBox.Text = string.Join("\\", GetCurrentPathNodes());
-                    pathTextBox.Visible = true;
-                    pathTextBox.BringToFront();
-                    pathTextBox.Focus();
-                    pathTextBox.SelectedText = pathTextBox.Text;
-                }
-            }
-        }
-
-        private void PathTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                NavigateToPath(pathTextBox.Text);
+                e.Handled = true;
+                string path = pathTextBox.Text;
                 pathTextBox.Visible = false;
+                NavigateToPath(path);
             }
             else if (e.KeyCode == Keys.Escape)
             {
+                e.Handled = true;
                 pathTextBox.Visible = false;
             }
         }
 
-        private void PathTextBox_LostFocus(object sender, EventArgs e)
+        protected override void OnLeave(EventArgs e)
         {
-            pathTextBox.Visible = false;
+            base.OnLeave(e);
+            if (pathTextBox.Visible) pathTextBox.Visible = false;
+        }
+
+        #endregion
+
+        #region Navigation
+
+        private void PopulateAutoComplete()
+        {
+            if (boundTreeView == null) return;
+
+            AutoCompleteStringCollection ac = new();
+            foreach (TreeNode root in boundTreeView.Nodes) AddNodesToAutoComplete(root, "", ac);
+
+            pathTextBox.TB.AutoCompleteCustomSource = ac;
+        }
+
+        private void AddNodesToAutoComplete(TreeNode node, string prefix, AutoCompleteStringCollection ac)
+        {
+            string path = string.IsNullOrEmpty(prefix) ? node.Text : prefix + "\\" + node.Text;
+            ac.Add(path);
+
+            foreach (TreeNode child in node.Nodes) AddNodesToAutoComplete(child, path, ac);
         }
 
         private void NavigateToPath(string path)
         {
-            if (boundTreeView == null || boundTreeView.TopNode == null) return;
+            if (boundTreeView == null || boundTreeView.Nodes.Count == 0) return;
 
-            TreeNode node = FindNodeByPath(path.Split('\\'), boundTreeView.TopNode);
+            path = path?.Trim();
+            if (string.IsNullOrWhiteSpace(path) || path.Trim('\\', '/').Length == 0)
+            {
+                TreeNode root = boundTreeView.TopNode ?? boundTreeView.Nodes.Cast<TreeNode>().FirstOrDefault();
+                if (root != null)
+                {
+                    boundTreeView.SelectedNode = root;
+                    root.Expand();
+                }
+                return;
+            }
+
+            string[] segs = path.Split(['\\', '/'], StringSplitOptions.RemoveEmptyEntries);
+            TreeNode rootNode = boundTreeView.TopNode ?? boundTreeView.Nodes.Cast<TreeNode>().FirstOrDefault();
+            TreeNode node = FindNodeByPath(segs, 0, rootNode);
+
             if (node != null)
             {
                 boundTreeView.SelectedNode = node;
+                boundTreeView.SelectedNode.Expand();
             }
             else
             {
-                MessageBox.Show("Path not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Explorer_FileNotFound, Application.ProductName, path), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private TreeNode FindNodeByPath(string[] segments, TreeNode current)
+        private TreeNode FindNodeByPath(string[] segments, int index, TreeNode current)
         {
-            if (current == null || segments.Length == 0) return null;
+            if (current == null || index >= segments.Length) return null;
+            if (!string.Equals(current.Text, segments[index], StringComparison.OrdinalIgnoreCase)) return null;
+            if (index == segments.Length - 1) return current;
 
-            if (current.Text != segments[0]) return null;
-
-            if (segments.Length == 1) return current;
-
-            var next = current.Nodes.Cast<TreeNode>()
-                .FirstOrDefault(n => n.Text == segments[1]);
-
-            return FindNodeByPath(segments.Skip(1).ToArray(), next);
+            TreeNode next = current.Nodes.Cast<TreeNode>().FirstOrDefault(n => string.Equals(n.Text, segments[index + 1], StringComparison.OrdinalIgnoreCase));
+            return FindNodeByPath(segments, index + 1, next);
         }
 
         private string[] GetCurrentPathNodes()
         {
-            if (boundTreeView?.SelectedNode == null)
-                return new string[0];
-
+            if (boundTreeView?.SelectedNode == null) return Array.Empty<string>();
             return boundTreeView.SelectedNode.FullPath.Split('\\');
         }
+
+        #endregion
+
+        #region Overrides
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            parentLevel = this.Level();
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e) { }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            // Let parent paint behind and hence transparent background
+            if (Parent != null)
+            {
+                GraphicsState state = e.Graphics.Save();
+                e.Graphics.TranslateTransform(-Left, -Top);
+                PaintEventArgs pea = new(e.Graphics, new Rectangle(Point.Empty, Parent.Size));
+                InvokePaintBackground(Parent, pea);
+                InvokePaint(Parent, pea);
+                e.Graphics.Restore(state);
+            }
+
+            Graphics G = e.Graphics;
+            Rectangle rect = new(0, 0, Width - 1, Height - 1);
+            bool isInProgress = _animatedValue > progressMinimum;
+
+            using (SolidBrush br = new(Program.Style.Schemes.Main.Colors.Back(parentLevel)))
+            using (Pen p = new(Program.Style.Schemes.Main.Colors.Line_Hover(parentLevel)))
+            {
+                G.FillRoundedRect(br, rect);
+                G.DrawRoundedRect(p, rect);
+            }
+
+            float progressWidth;
+
+            if (_isMarquee)
+            {
+                float segmentWidth = rect.Width * 0.25f;
+                float offsetX = rect.Width * _marqueeOffset;
+
+                if (offsetX + segmentWidth > rect.Width)
+                {
+                    RectangleF leftRect = new(offsetX, 0, rect.Width - offsetX, Height - 1);
+                    G.FillRoundedRect(new SolidBrush(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)), leftRect);
+                    G.DrawRoundedRect(new Pen(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)), leftRect);
+
+                    RectangleF rightRect = new(0, 0, segmentWidth - (rect.Width - offsetX), Height - 1);
+                    G.FillRoundedRect(new SolidBrush(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)), rightRect);
+                    G.DrawRoundedRect(new Pen(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)), rightRect);
+                }
+                else
+                {
+                    RectangleF progRect = new(offsetX, 0, segmentWidth, Height - 1);
+                    G.FillRoundedRect(new SolidBrush(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)), progRect);
+                    G.DrawRoundedRect(new Pen(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)), progRect);
+                }
+            }
+            else if (_animatedValue > progressMinimum)
+            {
+                progressWidth = rect.Width * (_animatedValue - progressMinimum) / (progressMaximum - progressMinimum);
+                RectangleF progRect = new(0, 0, progressWidth, Height - 1);
+                using (SolidBrush br = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)))
+                using (Pen p = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)))
+                {
+                    G.FillRoundedRect(br, progRect);
+                    G.DrawRoundedRect(p, progRect);
+                }
+            }
+
+            Bitmap img = !isInProgress && !_isMarquee
+                ? hasPaths ? Program.Style.DarkMode ? icon_dark : icon_light : null
+                : Program.Style.DarkMode ? icon_wait_dark : icon_wait_light;
+
+            if (img is not null)
+            {
+                int imageWidth = 16;
+                RectangleF imageRect = new(2f + (paddingStart - imageWidth) / 2f, (rect.Height - imageWidth) / 2f, imageWidth, imageWidth);
+                G.DrawImage(img, imageRect);
+            }
+        }
+
+        #endregion
     }
 }

@@ -76,8 +76,8 @@ namespace WinPaletter.UI.WP
 
                 Rectangle itemRectangle = e.Item.ContentRectangle;
 
-                G.FillRoundedRect(Program.Style.Schemes.Tertiary.Brushes.Back_Checked_Hover, itemRectangle);
-                G.DrawRoundedRectBeveled(Program.Style.Schemes.Tertiary.Pens.Line_Checked_Hover, itemRectangle);
+                G.FillRoundedRect(Program.Style.Schemes.Tertiary.Brushes.Accent, itemRectangle);
+                G.DrawRoundedRectBeveled(Program.Style.Schemes.Tertiary.Pens.AccentAlt, itemRectangle);
             }
         }
 

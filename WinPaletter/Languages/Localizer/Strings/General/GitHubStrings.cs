@@ -10,19 +10,24 @@ public partial class Localizer
     {
         public partial class GitHubStrings_Cls
         {
-            public string NoEmail { get; set; } = "There is no provided e-mail";
-            public string NoLocation { get; set; } = "There is no provided location";
-            public string Second { get; set; } = "second";
-            public string Seconds { get; set; } = "seconds";
-            public string Minute { get; set; } = "minute";
-            public string Minutes { get; set; } = "minutes";
-            public string Hour { get; set; } = "hour";
-            public string Hours { get; set; } = "hours";
-            public string Ago { get; set; } = "ago";
-            public string Today { get; set; } = "Today";
-            public string Yesterday { get; set; } = "Yesterday";
-            public string Tomorrow { get; set; } = "Tomorrow";
-
+            public string Overview_NoEmail { get; set; } = "There is no provided e-mail";
+            public string Overview_NoLocation { get; set; } = "There is no provided location";
+            public string Timing_Second { get; set; } = "second";
+            public string Timing_Seconds { get; set; } = "seconds";
+            public string Timing_Minute { get; set; } = "minute";
+            public string Timing_Minutes { get; set; } = "minutes";
+            public string Timing_Hour { get; set; } = "hour";
+            public string Timing_Hours { get; set; } = "hours";
+            public string Timing_Ago { get; set; } = "ago";
+            public string Timing_Today { get; set; } = "Today";
+            public string Timing_Yesterday { get; set; } = "Yesterday";
+            public string Timing_Tomorrow { get; set; } = "Tomorrow";
+            public string Explorer_FileNotFound { get; set; } = "{0} can't find '{1}'. Check the spelling and try again.";
+            public string Explorer_View_LargeIcons { get; set; } = "Large Icons";
+            public string Explorer_View_SmallIcons { get; set; } = "Small Icons";
+            public string Explorer_View_List { get; set; } = "List";
+            public string Explorer_View_Details { get; set; } = "Details";
+            public string Explorer_View_Tiles { get; set; } = "Tiles";
         }
     }
 }

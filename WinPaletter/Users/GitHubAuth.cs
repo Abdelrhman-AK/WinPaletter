@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WinPaletter
+namespace WinPaletter.GitHub
 {
-    public class GitHubLoginManager : IDisposable
+    public class LoginManager : IDisposable
     {
         /// <summary>
         /// Client used for GitHub API interactions.
@@ -21,11 +21,11 @@ namespace WinPaletter
         private CancellationTokenSource _cancellationTokenSource;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GitHubLoginManager"/> class.
+        /// Creates a new instance of the <see cref="LoginManager"/> class.
         /// </summary>
-        public GitHubLoginManager()
+        public LoginManager()
         {
-            Client = new GitHubClient(new ProductHeaderValue(System.Windows.Forms.Application.ProductName));
+            Client = new(new ProductHeaderValue(System.Windows.Forms.Application.ProductName));
         }
 
         #region Events
@@ -218,7 +218,7 @@ namespace WinPaletter
                 return false;
             }
 
-            Client.Credentials = new Credentials(token);
+            Client.Credentials = new(token);
             OnTokenLoaded?.Invoke(token);
             Program.Log?.Write(LogEventLevel.Information, "Token loaded from local storage.");
 
@@ -321,10 +321,7 @@ namespace WinPaletter
         {
             try
             {
-                var deviceFlowRequest = new OauthDeviceFlowRequest(ClientId)
-                {
-                    Scopes = { "repo" }
-                };
+                OauthDeviceFlowRequest deviceFlowRequest = new(ClientId) { Scopes = { "repo" } };
 
                 deviceFlow = await Client.Oauth.InitiateDeviceFlow(deviceFlowRequest).ConfigureAwait(false);
 
@@ -400,7 +397,7 @@ namespace WinPaletter
             int remaining = deviceFlow.ExpiresIn;
 
             // Countdown task
-            var countdownTask = Task.Run(async () =>
+            Task countdownTask = Task.Run(async () =>
             {
                 while (remaining > 0 && !cancellationToken.IsCancellationRequested)
                 {
@@ -409,8 +406,7 @@ namespace WinPaletter
                     remaining--;
                 }
 
-                if (!cancellationToken.IsCancellationRequested)
-                    OnCountdownTick?.Invoke(0);
+                if (!cancellationToken.IsCancellationRequested) OnCountdownTick?.Invoke(0);
             }, cancellationToken);
 
             try
@@ -419,8 +415,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        token = await Client.Oauth.CreateAccessTokenForDeviceFlow(ClientId, deviceFlow)
-                            .ConfigureAwait(false);
+                        token = await Client.Oauth.CreateAccessTokenForDeviceFlow(ClientId, deviceFlow).ConfigureAwait(false);
 
                         if (!string.IsNullOrEmpty(token.AccessToken))
                         {
@@ -714,7 +709,7 @@ namespace WinPaletter
             GC.SuppressFinalize(this);
         }
 
-        ~GitHubLoginManager()
+        ~LoginManager()
         {
             Dispose(false);
         }

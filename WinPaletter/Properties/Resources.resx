@@ -3030,6 +3030,24 @@
         f69/4cE5sEvv6lTCo8da4oaHjQOwApa5z+BeGGLcgK56DVl5AxK8fVT1Wx83AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="Glyph_Explorer_Back" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Explorer_Back.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_Explorer_Forward" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Explorer_Forward.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_Explorer_Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Explorer_Refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_Explorer_Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Explorer_Stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_Explorer_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Explorer_Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_Explorer_View" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Explorer_View.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Glyph_Forward" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAANRJREFUOE+1
@@ -3172,6 +3190,9 @@
         h3mpqaztAEvibSl8w1lsjoduKdbggNHRbNyq6ezZRfwXnKr9+LppNLJxqx5lv75gRXNabuA53uE2zhkb
         O9HDvNTO7PPHqKodZeJyLbHOnPk/wU/BQJOudSo2ZgAAAABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="Glyph_Wait" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Wait.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Icon_Uninstall" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
