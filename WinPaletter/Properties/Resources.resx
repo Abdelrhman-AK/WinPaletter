@@ -2923,11 +2923,17 @@
         SEhISEhISEhIVDcikf8HeryAK0GrNa8AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="FileIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FileIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="file_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Folder.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="file_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\file_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder_web_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder_web_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folder_web_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder_web_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GitHub_SignInForFeatures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GitHub_SignInForFeatures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

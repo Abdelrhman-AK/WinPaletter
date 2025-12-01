@@ -1,11 +1,16 @@
 ﻿using Octokit;
+using Serilog.Events;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,10 +23,60 @@ namespace WinPaletter.GitHub.IO
     /// </summary>
     public static class Path
     {
-        public static IReadOnlyList<RepositoryContent> CachedEntries { get; private set; }
+        public class GitHubFileSystemEntry
+        {
+            public string Name => Content?.Name ?? System.IO.Path.GetFileName(Path);
+            public long Size => Content?.Size ?? 0;
+            public string Path { get; set; }
+            public ElementType Type { get; set; } // File, Dir, Symlink, Submodule
+            public RepositoryContent Content { get; set; } // Only for files
+            public string CommitSha { get; set; }
+            public string Author { get; set; }
+            public DateTimeOffset? LastModified { get; set; }
+            public IReadOnlyList<GitHubFileSystemEntry> Children { get; set; } // Only for directories
 
+            public static async Task<GitHubFileSystemEntry> FromRepositoryContent(RepositoryContent content, string path)
+            {
+                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, _repo, new CommitRequest { Path = path })).FirstOrDefault();
+
+                ElementType type = content.Type.StringValue.ToLowerInvariant() switch
+                {
+                    "file" => ElementType.File,
+                    "dir" => ElementType.Dir,
+                    "symlink" => ElementType.Symlink,
+                    "submodule" => ElementType.Submodule,
+                    _ => ElementType.Unknown
+                };
+
+                GitHubFileSystemEntry entry = new()
+                {
+                    Path = content.Path,
+                    Type = type,
+                    Content = content.Type == Octokit.ContentType.File ? content : null,
+                    CommitSha = latestCommit?.Sha,
+                    Author = latestCommit?.Commit.Author?.Name,
+                    LastModified = latestCommit?.Commit.Author?.Date
+                };
+
+                return entry;
+            }
+        }
+
+        public static IReadOnlyList<RepositoryContent> CachedEntries { get; private set; }
         private static readonly Dictionary<string, List<RepositoryContent>> DirectoryMap = new(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly ConcurrentDictionary<string, IReadOnlyList<RepositoryContent>> DirectoryContentCache = new();
+        private static readonly Dictionary<string, string> DirectoryShaCache = [];
+        private static readonly SemaphoreSlim _semaphore = new(5);
+        private static readonly ConcurrentDictionary<string, GitHubFileSystemEntry> _fileCache = new();
+        private static readonly ConcurrentDictionary<string, GitHubFileSystemEntry> _dirCache = new();
+        private static readonly ConcurrentDictionary<string, string> _dirShaCache = new();
+        private static readonly ConcurrentDictionary<string, (GitHubFileSystemEntry entry, DateTime fetched)> _infoCache = new();
+        private static readonly ConcurrentDictionary<string, (List<GitHubFileSystemEntry> entries, DateTime fetched)> _dirsCache = new();
+        private static readonly TimeSpan CacheTTL = TimeSpan.FromSeconds(30); // short TTL for update checks
+
+        private static UI.WP.ListView _boundList;
+        private static UI.WP.TreeView _boundTree;
 
         private static string _owner => User.GitHub.Login;
         private const string _repo = "WinPaletter-Store";
@@ -35,60 +90,11 @@ namespace WinPaletter.GitHub.IO
         private static Stack<string> forwardStack = new();
         private static string currentPath = Path._root; // initial root path
 
+        private static readonly ConcurrentDictionary<string, string> ShaMd5Cache = new();
         public static bool CanGoBack => backStack.Count > 0;
         public static bool CanGoForward => forwardStack.Count > 0;
         public static bool CanGoUp => !string.IsNullOrEmpty(currentPath) && currentPath != _root;
-
-        private static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
-        {
-            if (entry.Type == ContentType.Dir) return Program.Lang.Strings.GitHubStrings.Explorer_Type_Folder;
-            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterTheme;
-            if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterResourcesPack;
-            return NativeMethods.Shlwapi.GetFriendlyTypeName(entry.Name);
-        };
-
-        public static async Task PopulateRepositoryAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null, Action<int> reportProgress = null)
-        {
-            cts ??= new();
-
-            ResetTree(tree, list);
-            InitializeImageLists(list, tree);
-
-            breadCrumb?.StartMarquee();
-
-            List<RepositoryContent> entries = [];
-
-            try
-            {
-                breadCrumb?.StartMarquee();
-                breadCrumb.Value = breadCrumb.Minimum;
-
-                await FetchRecursive(_root, entries, null, cts);
-
-                CachedEntries = entries;
-
-                BuildDirectoryMap();
-                BuildFolderSizes(_root);
-
-                void UpdateUI()
-                {
-                    BuildTree(tree);
-                    tree.Nodes[0].Expand();
-                    _ = PopulateListViewAsync(list, _root, cts);
-                    HookEvents(tree, list);
-                    breadCrumb?.FinishLoadingAnimation();
-                    breadCrumb.BoundTreeView = tree;
-                }
-
-                if (tree.InvokeRequired) tree.Invoke((MethodInvoker)UpdateUI);
-                else UpdateUI();
-            }
-            catch (OperationCanceledException) 
-            {
-                breadCrumb?.FinishLoadingAnimation();
-                breadCrumb.Value = breadCrumb.Minimum;
-            }
-        }
+        public enum ElementType { File, Dir, Symlink, Submodule, Unknown }
 
         static void ResetTree(UI.WP.TreeView tree, UI.WP.ListView list)
         {
@@ -98,81 +104,44 @@ namespace WinPaletter.GitHub.IO
             list.Items.Clear();
         }
 
-        private static async Task FetchRecursive(string path, List<RepositoryContent> output, Action<RepositoryContent> reportProgress = null, CancellationTokenSource cts = null)
-        {
-            cts ??= new();
-            cts.Token.ThrowIfCancellationRequested();
-
-        retry:
-            IReadOnlyList<RepositoryContent> items;
-            try
-            {
-                items = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path);
-            }
-            catch (RateLimitExceededException)
-            {
-                await Task.Delay(1500, cts.Token);
-                goto retry;
-            }
-            catch (NotFoundException)
-            {
-                return;
-            }
-
-            foreach (RepositoryContent entry in items)
-            {
-                output.Add(entry);
-                reportProgress?.Invoke(entry);
-            }
-
-            foreach (RepositoryContent dir in items.Where(i => i.Type == ContentType.Dir))
-            {
-                cts.Token.ThrowIfCancellationRequested();
-                await FetchRecursive(dir.Path, output, reportProgress, cts);
-            }
-        }
-
-        private static async Task NavigateTo(string newPath, UI.WP.ListView list, UI.WP.TreeView tree, bool updateStacks = true)
-        {
-            if (string.IsNullOrEmpty(newPath) || newPath == currentPath) return;
-
-            if (updateStacks && !string.IsNullOrEmpty(currentPath))
-            {
-                backStack.Push(currentPath);
-                forwardStack.Clear();
-            }
-
-            currentPath = newPath;
-            await PopulateListViewAsync(list, currentPath);
-            SelectTreeNode(list, tree, currentPath);
-        }
-
         private static void SelectTreeNode(UI.WP.ListView list, UI.WP.TreeView tree, string path)
         {
-            if (tree.Nodes.Count == 0) return;
+            Program.Log?.Write(LogEventLevel.Information, $"SelectTreeNode called for path='{path}'");
+
+            if (tree.Nodes.Count == 0)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "SelectTreeNode aborted: tree has no nodes");
+                return;
+            }
 
             string[] segments = path.Split('/');
             TreeNode currentNode = tree.Nodes[0];
 
-            // Ensure root node matches
-            if (!string.Equals(currentNode.Tag as string, segments[0], StringComparison.OrdinalIgnoreCase)) return;
+            if (!string.Equals(currentNode.Tag as string, segments[0], StringComparison.OrdinalIgnoreCase))
+            {
+                Program.Log?.Write(LogEventLevel.Warning, $"SelectTreeNode: root mismatch (expected '{segments[0]}')");
+                return;
+            }
 
-            // Walk segments and create missing nodes
             string fullPath = segments[0];
+
             for (int i = 1; i < segments.Length; i++)
             {
                 fullPath += "/" + segments[i];
+
                 TreeNode childNode = currentNode.Nodes.Cast<TreeNode>().FirstOrDefault(n => string.Equals(n.Tag as string, fullPath, StringComparison.OrdinalIgnoreCase));
 
                 if (childNode == null)
                 {
-                    // Node doesn't exist yet, create it dynamically
+                    Program.Log?.Write(LogEventLevel.Information, $"Creating missing node '{fullPath}' dynamically");
+
                     childNode = new TreeNode(segments[i])
                     {
                         Tag = fullPath,
                         ImageKey = "folder",
                         SelectedImageKey = "folder"
                     };
+
                     currentNode.Nodes.Add(childNode);
                 }
 
@@ -180,118 +149,104 @@ namespace WinPaletter.GitHub.IO
                 currentNode = childNode;
             }
 
-            // Select the final node
             tree.SelectedNode = currentNode;
             currentNode.EnsureVisible();
+
+            Program.Log?.Write(LogEventLevel.Information, $"SelectTreeNode completed, selected '{currentNode.Tag}'");
+        }
+
+        private static async Task NavigateTo(string newPath, UI.WP.ListView list, UI.WP.TreeView tree, bool updateStacks = true)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"NavigateTo called for '{newPath}'");
+
+            if (string.IsNullOrEmpty(newPath) || newPath == currentPath)
+            {
+                Program.Log?.Write(LogEventLevel.Information, "NavigateTo aborted: path null/empty or unchanged");
+                return;
+            }
+
+            if (updateStacks && !string.IsNullOrEmpty(currentPath))
+            {
+                backStack.Push(currentPath);
+                forwardStack.Clear();
+
+                Program.Log?.Write(LogEventLevel.Information, $"NavigateTo: pushed '{currentPath}' to backStack and cleared forwardStack");
+            }
+
+            currentPath = newPath;
+
+            try
+            {
+                await PopulateListViewAsync(list, currentPath);
+                SelectTreeNode(list, tree, currentPath);
+
+                Program.Log?.Write(LogEventLevel.Information, $"Navigation complete: now at '{currentPath}'");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"NavigateTo failed for '{newPath}'", ex);
+                throw;
+            }
         }
 
         public static async Task GoBack(UI.WP.TreeView tree, UI.WP.ListView list)
         {
-            if (backStack.Count == 0) return;
+            Program.Log?.Write(LogEventLevel.Information, "GoBack invoked");
+
+            if (backStack.Count == 0)
+            {
+                Program.Log?.Write(LogEventLevel.Information, "GoBack aborted: backStack empty");
+                return;
+            }
 
             forwardStack.Push(currentPath);
             string previousPath = backStack.Pop();
+
+            Program.Log?.Write(LogEventLevel.Information, $"GoBack: navigating to '{previousPath}'");
+
             await NavigateTo(previousPath, list, tree, updateStacks: false);
         }
 
         public static async Task GoForward(UI.WP.TreeView tree, UI.WP.ListView list)
         {
-            if (forwardStack.Count == 0) return;
+            Program.Log?.Write(LogEventLevel.Information, "GoForward invoked");
+
+            if (forwardStack.Count == 0)
+            {
+                Program.Log?.Write(LogEventLevel.Information, "GoForward aborted: forwardStack empty");
+                return;
+            }
 
             backStack.Push(currentPath);
             string nextPath = forwardStack.Pop();
+
+            Program.Log?.Write(LogEventLevel.Information, $"GoForward: navigating to '{nextPath}'");
+
             await NavigateTo(nextPath, list, tree, updateStacks: false);
         }
 
         public static async Task GoUp(UI.WP.TreeView tree, UI.WP.ListView list)
         {
-            if (string.IsNullOrEmpty(currentPath) || currentPath == _root) return;
+            Program.Log?.Write(LogEventLevel.Information, "GoUp invoked");
+
+            if (string.IsNullOrEmpty(currentPath) || currentPath == _root)
+            {
+                Program.Log?.Write(LogEventLevel.Information, "GoUp aborted: at root or no currentPath");
+                return;
+            }
 
             string parent = GetParent(currentPath);
+
             if (!string.IsNullOrEmpty(parent))
             {
+                Program.Log?.Write(LogEventLevel.Information, $"GoUp: navigating to parent '{parent}'");
                 forwardStack.Clear();
                 await NavigateTo(parent, list, tree);
             }
-        }
-
-        public static async Task RefreshAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null)
-        {
-            cts ??= new();
-
-            // Remember current path
-            string pathBeforeRefresh = currentPath;
-
-            // Clear cached entries
-            CachedEntries = null;
-            DirectoryMap.Clear();
-            FolderSizeMap.Clear();
-
-            // Optionally reset UI elements
-            breadCrumb?.StartMarquee();
-
-            try
+            else
             {
-                // Re-fetch all repository entries
-                List<RepositoryContent> entries = [];
-                await FetchRecursive(_root, entries, null, cts);
-                CachedEntries = entries;
-
-                // Rebuild directory map and folder sizes
-                BuildDirectoryMap();
-                BuildFolderSizes(_root);
-
-                // Rebuild tree
-                if (tree.InvokeRequired) tree.Invoke(new MethodInvoker(() => BuildTree(tree)));
-                else BuildTree(tree);
-
-                // Navigate back to current path
-                await NavigateTo(pathBeforeRefresh, list, tree, updateStacks: false);
+                Program.Log?.Write(LogEventLevel.Warning, $"GoUp failed: no parent found for '{currentPath}'");
             }
-            finally
-            {
-                breadCrumb?.StopMarquee();
-                breadCrumb?.FinishLoadingAnimation();
-                breadCrumb.BoundTreeView = tree;
-                HookEvents(tree, list);
-                _ = PopulateListViewAsync(list, pathBeforeRefresh, cts);
-                if (tree.Nodes[0] is not null) tree.SelectedNode = tree.Nodes[0];
-                else
-                {
-                    tree.Nodes.Clear();
-                    list.Items.Clear();
-                }
-            }
-        }
-
-        private static void BuildDirectoryMap()
-        {
-            DirectoryMap.Clear();
-            foreach (RepositoryContent entry in CachedEntries)
-            {
-                string parent = GetParent(entry.Path);
-                if (!DirectoryMap.ContainsKey(parent)) DirectoryMap[parent] = [];
-                DirectoryMap[parent].Add(entry);
-            }
-        }
-
-        private static string GetParent(string path)
-        {
-            int i = path.LastIndexOf('/');
-            return i < 0 ? string.Empty : path.Substring(0, i);
-        }
-
-        private static long BuildFolderSizes(string path)
-        {
-            if (!DirectoryMap.ContainsKey(path)) return 0;
-            long total = 0;
-            foreach (RepositoryContent entry in DirectoryMap[path])
-            {
-                if (entry.Type == ContentType.Dir) total += BuildFolderSizes(entry.Path);
-                else total += entry.Size;
-            }
-            FolderSizeMap[path] = total;
-            return total;
         }
 
         private static void InitializeImageLists(UI.WP.ListView list, UI.WP.TreeView tree)
@@ -311,14 +266,25 @@ namespace WinPaletter.GitHub.IO
 
         private static void AddIcons(ImageList imgList, int size)
         {
-            using (Icon ico = Properties.Resources.Folder.FromSize(size)) imgList.Images.Add("folder", ico.ToBitmap());
-            using (Icon ico = Properties.Resources.FileIcon.FromSize(size)) imgList.Images.Add("file", ico.ToBitmap());
-            using (Icon ico = Properties.Resources.fileextension.FromSize(size)) imgList.Images.Add("wpth", ico.ToBitmap());
-            using (Icon ico = Properties.Resources.ThemesResIcon.FromSize(size)) imgList.Images.Add("wptp", ico.ToBitmap());
+            if (size == 16)
+            {
+                imgList.AddWithAlpha("folder", Properties.Resources.folder_web_16);
+                imgList.AddWithAlpha("file", Properties.Resources.file_16);
+            }
+            else
+            {
+                imgList.AddWithAlpha("folder", Properties.Resources.folder_web_48);
+                imgList.AddWithAlpha("file", Properties.Resources.file_48);
+            }
+
+            using (Icon ico = Properties.Resources.fileextension.FromSize(size)) imgList.AddWithAlpha("wpth", ico.ToBitmap());
+            using (Icon ico = Properties.Resources.ThemesResIcon.FromSize(size)) imgList.AddWithAlpha("wptp", ico.ToBitmap());
         }
 
         private static void BuildTree(UI.WP.TreeView tree)
         {
+            Program.Log?.Write(LogEventLevel.Information, "BuildTree started");
+
             tree.BeginUpdate();
             tree.Nodes.Clear();
 
@@ -331,14 +297,23 @@ namespace WinPaletter.GitHub.IO
             tree.Nodes.Add(root);
 
             AddChildren(root, _root);
+
             tree.EndUpdate();
+
+            Program.Log?.Write(LogEventLevel.Information, "BuildTree finished");
         }
 
         private static void AddChildren(TreeNode parentNode, string parentPath)
         {
-            if (!DirectoryMap.ContainsKey(parentPath)) return;
+            Program.Log?.Write(LogEventLevel.Information, $"AddChildren called for '{parentPath}'");
 
-            foreach (RepositoryContent dir in DirectoryMap[parentPath].Where(d => d.Type == ContentType.Dir).OrderBy(d => d.Name))
+            if (!DirectoryMap.ContainsKey(parentPath))
+            {
+                Program.Log?.Write(LogEventLevel.Information, $"AddChildren: no entries for '{parentPath}'");
+                return;
+            }
+
+            foreach (RepositoryContent dir in DirectoryMap[parentPath].Where(d => d.Type == Octokit.ContentType.Dir).OrderBy(d => d.Name))
             {
                 TreeNode node = new(dir.Name)
                 {
@@ -351,8 +326,435 @@ namespace WinPaletter.GitHub.IO
             }
         }
 
+        private static string GetParent(string path)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"GetParent called for '{path}'");
+
+            int i = path.LastIndexOf('/');
+            string result = i < 0 ? string.Empty : path.Substring(0, i);
+
+            Program.Log?.Write(LogEventLevel.Information, $"GetParent: result='{result}'");
+
+            return result;
+        }
+
+        private static string ShaToMd5(string sha)
+        {
+            if (string.IsNullOrEmpty(sha)) return string.Empty;
+
+            if (ShaMd5Cache.TryGetValue(sha, out string cached)) return cached;
+
+            using MD5 md5 = MD5.Create();
+            byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sha));
+            string result = string.Concat(hashBytes.Select(b => b.ToString("x2")));
+            ShaMd5Cache[sha] = result;
+            return result;
+        }
+
+        private static void HookEvents(UI.WP.TreeView tree, UI.WP.ListView list)
+        {
+            Program.Log?.Write(LogEventLevel.Information, "HookEvents attaching");
+
+            tree.AfterSelect -= Tree_AfterSelect;
+            list.DoubleClick -= List_DoubleClick;
+
+            _boundList = list;
+            _boundTree = tree;
+
+            tree.AfterSelect += Tree_AfterSelect;
+            list.DoubleClick += List_DoubleClick;
+
+            Program.Log?.Write(LogEventLevel.Information, "HookEvents attached");
+        }
+
+        private static async void Tree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node == null || _boundList == null)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "Tree_AfterSelect: Node or list is null.");
+                return;
+            }
+
+            string newPath = e.Node.Tag as string;
+
+            if (string.IsNullOrEmpty(newPath))
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "Tree_AfterSelect: Path is null or empty.");
+                return;
+            }
+
+            if (newPath == currentPath)
+            {
+                return;
+            }
+
+            backStack.Push(currentPath);
+            forwardStack.Clear();
+            currentPath = newPath;
+
+            await PopulateListViewAsync(_boundList, newPath);
+        }
+
+        private static async void List_DoubleClick(object sender, EventArgs e)
+        {
+            if (_boundList == null || _boundTree == null)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "List_DoubleClick: List or tree is null.");
+                return;
+            }
+
+            if (_boundList.SelectedItems.Count == 0)
+            {
+                Program.Log?.Write(LogEventLevel.Information, "List_DoubleClick: No item selected.");
+                return;
+            }
+
+            if (_boundList.SelectedItems[0].Tag is not RepositoryContent entry)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "List_DoubleClick: Selected item has no RepositoryContent tag.");
+                return;
+            }
+
+            if (entry.Type.Value != Octokit.ContentType.Dir) return;
+
+            await NavigateTo(entry.Path, _boundList, _boundTree);
+        }
+
+        private static TreeNode FindNode(TreeNode node, string path)
+        {
+            if (node == null) return null;
+
+            if ((node.Tag as string) == path) return node;
+
+            foreach (TreeNode child in node.Nodes)
+            {
+                TreeNode match = FindNode(child, path);
+                if (match != null)
+                {
+                    return match;
+                }
+            }
+
+            return null;
+        }
+
+        private static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
+        {
+            if (entry.Type == Octokit.ContentType.Dir) return Program.Lang.Strings.GitHubStrings.Explorer_Type_Folder;
+            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterTheme;
+            if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterResourcesPack;
+            return NativeMethods.Shlwapi.GetFriendlyTypeName(entry.Name);
+        };
+
+        public static async Task PopulateRepositoryAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        {
+            Program.Log?.Write(LogEventLevel.Information, "PopulateRepositoryAsync started");
+
+            cts ??= new();
+
+            try
+            {
+                Program.Log?.Write(LogEventLevel.Information, "Resetting Tree and List controls");
+
+                ResetTree(tree, list);
+                InitializeImageLists(list, tree);
+
+                breadCrumb?.StartMarquee();
+                breadCrumb.Value = breadCrumb.Minimum;
+
+                Program.Log?.Write(LogEventLevel.Information, "Fetching repository data recursively");
+
+                List<RepositoryContent> entries = [];
+
+                await FetchRecursive(_root, entries, null, cts);
+
+                Program.Log?.Write(LogEventLevel.Information, $"Fetched {entries.Count} entries");
+
+                CachedEntries = entries;
+
+                Program.Log?.Write(LogEventLevel.Information, "Building directory map");
+                BuildDirectoryMap();
+
+                Program.Log?.Write(LogEventLevel.Information, "Calculating folder sizes");
+                BuildFolderSizes(_root);
+
+                void UpdateUI()
+                {
+                    try
+                    {
+                        Program.Log?.Write(LogEventLevel.Information, "Building TreeView");
+                        BuildTree(tree);
+
+                        tree.Nodes[0].Expand();
+
+                        Program.Log?.Write(LogEventLevel.Information, "Populating ListView");
+                        _ = PopulateListViewAsync(list, _root, cts);
+
+                        Program.Log?.Write(LogEventLevel.Information, "Hooking Tree/List events");
+                        HookEvents(tree, list);
+
+                        breadCrumb?.FinishLoadingAnimation();
+                        breadCrumb.BoundTreeView = tree;
+
+                        Program.Log?.Write(LogEventLevel.Information, "UI updated successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        Program.Log?.Write(LogEventLevel.Error, "Error while updating UI", ex);
+                        throw;
+                    }
+                }
+
+                if (tree.InvokeRequired)
+                {
+                    tree.Invoke((MethodInvoker)UpdateUI);
+                }
+                else
+                {
+                    UpdateUI();
+                }
+
+                Program.Log?.Write(LogEventLevel.Information, "PopulateRepositoryAsync completed successfully");
+            }
+            catch (OperationCanceledException ex)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "PopulateRepositoryAsync cancelled", ex);
+
+                breadCrumb?.FinishLoadingAnimation();
+                breadCrumb.Value = breadCrumb.Minimum;
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, "Unhandled error in PopulateRepositoryAsync", ex);
+
+                breadCrumb?.FinishLoadingAnimation();
+                breadCrumb.Value = breadCrumb.Minimum;
+
+                throw;
+            }
+        }
+
+        private static async Task<IReadOnlyList<RepositoryContent>> GetContentsCachedAsync(string path)
+        {
+            if (DirectoryContentCache.TryGetValue(path, out var cached))
+            {
+                try
+                {
+                    var currentContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path, "main");
+                    var currentSha = currentContents.FirstOrDefault()?.Sha ?? string.Empty;
+
+                    if (DirectoryShaCache.TryGetValue(path, out var cachedSha) && cachedSha == currentSha)
+                        return cached;
+
+                    DirectoryContentCache[path] = currentContents;
+                    DirectoryShaCache[path] = currentSha;
+                    return currentContents;
+                }
+                catch
+                {
+                    return cached;
+                }
+            }
+
+            var contents = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path);
+            DirectoryContentCache[path] = contents;
+            DirectoryShaCache[path] = contents.FirstOrDefault()?.Sha ?? string.Empty;
+            return contents;
+        }
+
+        private static async Task FetchRecursive(string path, List<RepositoryContent> output, Action<RepositoryContent> reportProgress = null, CancellationTokenSource cts = default, int maxDepth = -1, int currentDepth = 0)
+        {
+            if (cts.IsCancellationRequested) return;
+            if (maxDepth >= 0 && currentDepth > maxDepth) return;
+
+            IReadOnlyList<RepositoryContent> items;
+
+            try
+            {
+                await _semaphore.WaitAsync(cts.Token); // wait for slot
+                items = await GetContentsCachedAsync(path);   // cached fetch
+            }
+            catch
+            {
+                return; // ignore failures
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+
+            var subDirs = new List<string>();
+
+            foreach (var entry in items)
+            {
+                if (cts.IsCancellationRequested) return;
+
+                output.Add(entry);
+                reportProgress?.Invoke(entry);
+
+                if (entry.Type == Octokit.ContentType.Dir)
+                    subDirs.Add(entry.Path);
+            }
+
+            var tasks = subDirs.Select(subDir => FetchRecursive(subDir, output, reportProgress, cts, maxDepth, currentDepth + 1));
+
+            await Task.WhenAll(tasks);
+        }
+
+        private static async Task FetchRecursive(string path, List<string> output, CancellationTokenSource cts, bool onlyDirs, Action<int> reportProgress = null, int maxDepth = -1, int currentDepth = 0)
+        {
+            cts ??= new();
+            if (maxDepth >= 0 && currentDepth > maxDepth) return;
+
+            IReadOnlyList<RepositoryContent> items;
+            try { items = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path); }
+            catch { return; }
+
+            int total = items.Count;
+            int processed = 0;
+            foreach (var entry in items)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+
+                if ((onlyDirs && entry.Type == Octokit.ContentType.Dir) || (!onlyDirs && entry.Type != Octokit.ContentType.Dir))
+                    output.Add(entry.Path);
+
+                if (entry.Type == Octokit.ContentType.Dir)
+                    await FetchRecursive(entry.Path, output, cts, onlyDirs, reportProgress, maxDepth, currentDepth + 1);
+
+                processed++;
+                reportProgress?.Invoke((int)((processed * 100L) / total));
+            }
+        }
+
+        public static async Task RefreshAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null)
+        {
+            Program.Log?.Write(LogEventLevel.Information, "RefreshAsync started");
+
+            cts ??= new();
+
+            string pathBeforeRefresh = currentPath;
+
+            CachedEntries = null;
+            DirectoryMap.Clear();
+            FolderSizeMap.Clear();
+
+            breadCrumb?.StartMarquee();
+
+            try
+            {
+                Program.Log?.Write(LogEventLevel.Information, "Refreshing: FetchRecursive started");
+
+                List<RepositoryContent> entries = [];
+                await FetchRecursive(_root, entries, null, cts);
+                CachedEntries = entries;
+
+                Program.Log?.Write(LogEventLevel.Information, $"RefreshAsync: fetched {entries.Count} entries");
+
+                Program.Log?.Write(LogEventLevel.Information, "Rebuilding directory map");
+                BuildDirectoryMap();
+
+                Program.Log?.Write(LogEventLevel.Information, "Rebuilding folder sizes");
+                BuildFolderSizes(_root);
+
+                if (tree.InvokeRequired)
+                {
+                    Program.Log?.Write(LogEventLevel.Information, "Invoking BuildTree on UI thread");
+                    tree.Invoke(new MethodInvoker(() => BuildTree(tree)));
+                }
+                else
+                {
+                    Program.Log?.Write(LogEventLevel.Information, "Building tree on same thread");
+                    BuildTree(tree);
+                }
+
+                Program.Log?.Write(LogEventLevel.Information, $"Navigating back to '{pathBeforeRefresh}'");
+                await NavigateTo(pathBeforeRefresh, list, tree, updateStacks: false);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, "RefreshAsync failed", ex);
+                throw;
+            }
+            finally
+            {
+                Program.Log?.Write(LogEventLevel.Information, "RefreshAsync UI finalization");
+
+                breadCrumb?.StopMarquee();
+                breadCrumb?.FinishLoadingAnimation();
+                breadCrumb.BoundTreeView = tree;
+
+                HookEvents(tree, list);
+
+                _ = PopulateListViewAsync(list, pathBeforeRefresh, cts);
+
+                if (tree.Nodes[0] is not null)
+                {
+                    tree.SelectedNode = tree.Nodes[0];
+                }
+                else
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "Tree is empty after refresh; clearing UI lists");
+                    tree.Nodes.Clear();
+                    list.Items.Clear();
+                }
+
+                Program.Log?.Write(LogEventLevel.Information, "RefreshAsync completed");
+            }
+        }
+
+        private static void BuildDirectoryMap()
+        {
+            Program.Log?.Write(LogEventLevel.Information, "BuildDirectoryMap started");
+
+            DirectoryMap.Clear();
+
+            foreach (RepositoryContent entry in CachedEntries)
+            {
+                string parent = GetParent(entry.Path);
+                if (!DirectoryMap.ContainsKey(parent)) DirectoryMap[parent] = [];
+
+                DirectoryMap[parent].Add(entry);
+            }
+
+            Program.Log?.Write(LogEventLevel.Information, $"BuildDirectoryMap completed: {DirectoryMap.Count} directory entries");
+        }
+
+        private static long BuildFolderSizes(string path)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes started for '{path}'");
+
+            if (!DirectoryMap.ContainsKey(path))
+            {
+                Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes: no entries for '{path}'");
+                return 0;
+            }
+
+            long total = 0;
+
+            foreach (RepositoryContent entry in DirectoryMap[path])
+            {
+                if (entry.Type == Octokit.ContentType.Dir)
+                {
+                    total += BuildFolderSizes(entry.Path);
+                }
+                else
+                {
+                    total += entry.Size;
+                }
+            }
+
+            FolderSizeMap[path] = total;
+
+            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes completed for '{path}', size={total}");
+
+            return total;
+        }
+
         public static async Task PopulateListViewAsync(UI.WP.ListView list, string path, CancellationTokenSource cts = null)
         {
+            Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync started for '{path}'");
+
             cts ??= new();
 
             if (list.InvokeRequired)
@@ -366,24 +768,27 @@ namespace WinPaletter.GitHub.IO
                 list.Cursor = Cursors.WaitCursor;
                 list.BeginUpdate();
 
-                // Initialize columns once
                 if (list.Columns.Count == 0)
                 {
+                    Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
+
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
                     list.Columns.Add("MD5", 120);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_APIURL, 120);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
                 }
 
                 if (!DirectoryMap.ContainsKey(path))
                 {
+                    Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
                     list.Items.Clear();
                     return;
                 }
 
-                // Sort: directories first, then files, alphabetically
-                List<RepositoryContent> entries = [.. DirectoryMap[path].OrderBy(e => e.Type == ContentType.Dir ? 0 : 1).ThenBy(e => e.Name)];
+                List<RepositoryContent> entries = [.. DirectoryMap[path].OrderBy(e => e.Type == Octokit.ContentType.Dir ? 0 : 1).ThenBy(e => e.Name)];
+
+                Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync: {entries.Count} entries for '{path}'");
 
                 list.Items.Clear();
 
@@ -394,206 +799,396 @@ namespace WinPaletter.GitHub.IO
 
                     ListViewItem item = new(entry.Name) { Tag = entry };
 
-                    // Subitems for Details view
                     item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
 
-                    long size = entry.Type == ContentType.Dir && FolderSizeMap.ContainsKey(entry.Path) ? FolderSizeMap[entry.Path] : entry.Size;
+                    long size = entry.Type == Octokit.ContentType.Dir && FolderSizeMap.ContainsKey(entry.Path) ? FolderSizeMap[entry.Path] : entry.Size;
 
                     item.SubItems.Add(size.ToStringFileSize());
                     item.SubItems.Add(ShaToMd5(entry.Sha).ToUpper());
-                    item.SubItems.Add(entry.Url);
+                    item.SubItems.Add(entry.HtmlUrl);
+                    item.SubItems.Add(entry.Content);
 
-                    // Image assignment
-                    if (entry.Type == ContentType.Dir) item.ImageKey = "folder";
+                    if (entry.Type == Octokit.ContentType.Dir) item.ImageKey = "folder";
                     else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
                     else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
                     else item.ImageKey = "file";
 
                     list.Items.Add(item);
 
-                    // Yield occasionally to avoid UI freezing
                     count++;
                     if (count % 50 == 0) await Task.Yield();
                 }
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
             }
             finally
             {
                 list.EndUpdate();
                 list.Cursor = Cursors.Default;
+                Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync finished for '{path}'");
             }
         }
 
-        private static string ShaToMd5(string sha)
+        private static async Task<GitHubFileSystemEntry> GetFromCacheValidatedAsync(string path)
         {
-            if (string.IsNullOrEmpty(sha)) return string.Empty;
-            using MD5 md5 = MD5.Create();
-            byte[] inputBytes = Encoding.UTF8.GetBytes(sha);
-            byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-            StringBuilder sb = new();
-            foreach (byte b in hashBytes) sb.Append(b.ToString("x2"));
-            return sb.ToString();
-        }
-
-        private static UI.WP.ListView _boundList;
-        private static UI.WP.TreeView _boundTree;
-
-        private static void HookEvents(UI.WP.TreeView tree, UI.WP.ListView list)
-        {
-            // Remove previous handlers
-            tree.AfterSelect -= Tree_AfterSelect;
-            list.DoubleClick -= List_DoubleClick;
-
-            // Store references
-            _boundList = list;
-            _boundTree = tree;
-
-            // Add handlers
-            tree.AfterSelect += Tree_AfterSelect;
-            list.DoubleClick += List_DoubleClick;
-        }
-
-        private static async void Tree_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node == null || _boundList == null) return;
-
-            string newPath = e.Node.Tag as string;
-            if (string.IsNullOrEmpty(newPath) || newPath == currentPath) return;
-
-            backStack.Push(currentPath);
-            forwardStack.Clear();
-            currentPath = newPath;
-
-            await PopulateListViewAsync(_boundList, newPath);
-        }
-
-        private static async void List_DoubleClick(object sender, EventArgs e)
-        {
-            if (_boundList == null || _boundTree == null || _boundList.SelectedItems.Count == 0) return;
-
-            if (_boundList.SelectedItems[0].Tag is not RepositoryContent entry) return;
-            if (entry.Type != ContentType.Dir) return;
-
-            await NavigateTo(entry.Path, _boundList, _boundTree);
-        }
-
-        private static TreeNode FindNode(TreeNode node, string path)
-        {
-            if ((node.Tag as string) == path) return node;
-            foreach (TreeNode child in node.Nodes)
+            // Check file cache first
+            if (_fileCache.TryGetValue(path, out var fileEntry))
             {
-                TreeNode match = FindNode(child, path);
-                if (match != null) return match;
+                try
+                {
+                    var latest = (await Program.GitHub.Client.Repository.Commit
+                        .GetAll(_owner, _repo, new CommitRequest { Path = path }))
+                        .FirstOrDefault();
+
+                    if (latest != null && latest.Sha == fileEntry.CommitSha)
+                        return fileEntry;
+
+                    ClearCache(path);
+                }
+                catch
+                {
+                    // fallback to cache on API error
+                    return fileEntry;
+                }
+                return null;
             }
+
+            // Check directory cache
+            if (_dirCache.TryGetValue(path, out var dirEntry))
+            {
+                if (dirEntry.Children == null || dirEntry.Children.Count == 0)
+                    return dirEntry; // empty directory
+
+                // Validate child SHAs in bulk
+                var childPaths = dirEntry.Children.Select(c => c.Path).ToList();
+                var latestShas = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+                try
+                {
+                    foreach (var childPath in childPaths)
+                    {
+                        var latest = (await Program.GitHub.Client.Repository.Commit
+                            .GetAll(_owner, _repo, new CommitRequest { Path = childPath }))
+                            .FirstOrDefault();
+                        if (latest != null) latestShas[childPath] = latest.Sha;
+                    }
+                }
+                catch
+                {
+                    return dirEntry; // fallback on API error
+                }
+
+                foreach (var child in dirEntry.Children)
+                {
+                    if (child.Type == ElementType.Dir)
+                    {
+                        if (!_dirCache.TryGetValue(child.Path, out var cachedChild) ||
+                            (latestShas.TryGetValue(child.Path, out var latestSha) && cachedChild.CommitSha != latestSha))
+                        {
+                            ClearCache(path);
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        if (!_fileCache.TryGetValue(child.Path, out var cachedChild) ||
+                            (latestShas.TryGetValue(child.Path, out var latestSha) && cachedChild.CommitSha != latestSha))
+                        {
+                            ClearCache(path);
+                            return null;
+                        }
+                    }
+                }
+
+                return dirEntry;
+            }
+
             return null;
         }
 
-        public static async Task<RepositoryContent> GetFileInfoAsync(string path)
+        private static async Task<GitHubFileSystemEntry> GetInfoAsync(string path, int maxDepth = 5, bool useCache = true)
         {
-            try
+            if (string.IsNullOrEmpty(path)) return null;
+
+            if (useCache)
             {
-                IEnumerable<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path).ConfigureAwait(false);
-                return contents.FirstOrDefault();
+                var cached = await GetFromCacheValidatedAsync(path);
+                if (cached != null) return cached;
             }
+
+            IReadOnlyList<RepositoryContent> contents;
+            try { contents = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path); }
             catch { return null; }
+            if (contents.Count == 0) return null;
+
+            var firstItem = contents.First();
+            GitHubFileSystemEntry entry = await GitHubFileSystemEntry.FromRepositoryContent(firstItem, path);
+
+            if (entry.Type == ElementType.Dir && maxDepth > 0)
+            {
+                var children = new List<GitHubFileSystemEntry>();
+                var childPaths = contents.Select(c => c.Path).ToList();
+                var childShas = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+                // Bulk fetch all latest commits for child paths in parallel
+                try
+                {
+                    var commitTasks = childPaths.Select(p => Program.GitHub.Client.Repository.Commit.GetAll(_owner, _repo, new CommitRequest { Path = p }));
+                    var commitResults = await Task.WhenAll(commitTasks);
+                    for (int i = 0; i < childPaths.Count; i++)
+                    {
+                        var latest = commitResults[i].FirstOrDefault();
+                        if (latest != null) childShas[childPaths[i]] = latest.Sha;
+                    }
+                }
+                catch { /* fallback silently */ }
+
+                foreach (var item in contents)
+                {
+                    GitHubFileSystemEntry childEntry = null;
+
+                    if (useCache)
+                    {
+                        if (item.Type == Octokit.ContentType.Dir)
+                            _dirCache.TryGetValue(item.Path, out childEntry);
+                        else
+                            _fileCache.TryGetValue(item.Path, out childEntry);
+
+                        if (childEntry != null &&
+                            childShas.TryGetValue(item.Path, out var latestSha) &&
+                            childEntry.CommitSha != latestSha)
+                        {
+                            childEntry = null;
+                        }
+                    }
+
+                    if (childEntry == null)
+                    {
+                        if (item.Type == Octokit.ContentType.Dir)
+                            childEntry = await GetInfoAsync(item.Path, maxDepth - 1, useCache);
+                        else
+                            childEntry = await GitHubFileSystemEntry.FromRepositoryContent(item, item.Path);
+                    }
+
+                    if (childEntry != null)
+                        children.Add(childEntry);
+                }
+
+                entry.Children = children;
+            }
+
+            if (useCache) StoreInCache(entry);
+            return entry;
         }
 
-        public static async Task<IReadOnlyList<RepositoryContent>> GetDirectoryInfoAsync(string path)
+        public static async Task<GitHubFileSystemEntry> GetInfoCachedAsync(string path, bool forceRefresh = false)
         {
+            if (!forceRefresh && _infoCache.TryGetValue(path, out var cached) && DateTime.UtcNow - cached.fetched < CacheTTL)
+                return cached.entry;
+
             try
             {
-                return await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path).ConfigureAwait(false);
+                var contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path);
+                var entry = new GitHubFileSystemEntry
+                {
+                    Content = contents.FirstOrDefault(),
+                    Type = contents.FirstOrDefault()?.Type == Octokit.ContentType.Dir ? ElementType.Dir : ElementType.File
+                };
+
+                if (entry != null)
+                    _infoCache[path] = (entry, DateTime.UtcNow);
+
+                return entry;
             }
-            catch { return []; }
+            catch
+            {
+                _infoCache.TryRemove(path, out _);
+                return null;
+            }
         }
 
-        public static async Task<List<string>> GetFilesAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async Task<List<GitHubFileSystemEntry>> GetEntriesCachedAsync(string path, bool forceRefresh = false)
         {
-            cts ??= new();
-            List<string> result = [];
-            await FetchRecursive(path, result, cts, false, reportProgress);
-            return result;
-        }
+            if (!forceRefresh && _dirsCache.TryGetValue(path, out var cached) && DateTime.UtcNow - cached.fetched < CacheTTL)
+                return cached.entries;
 
-        public static async Task<List<string>> GetDirectoriesAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null)
-        {
-            cts ??= new();
-            List<string> result = [];
-            await FetchRecursive(path, result, cts, true, reportProgress);
-            return result;
-        }
-
-        private static async Task FetchRecursive(string path, List<string> output, CancellationTokenSource cts, bool onlyDirs, Action<int> reportProgress = null)
-        {
-            IReadOnlyList<RepositoryContent> items;
             try
             {
-                items = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path).ConfigureAwait(false);
-            }
-            catch { return; }
+                var contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path);
+                var entries = contents.Select(c => new GitHubFileSystemEntry
+                {
+                    Content = c,
+                    Type = c.Type == Octokit.ContentType.Dir ? ElementType.Dir : ElementType.File
+                }).ToList();
 
-            int total = items.Count;
+                _dirsCache[path] = (entries, DateTime.UtcNow);
+                return entries;
+            }
+            catch
+            {
+                _dirsCache.TryRemove(path, out _);
+                return new List<GitHubFileSystemEntry>();
+            }
+        }
+
+        private static async Task CollectEntriesRecursive(string path, bool includeFiles, bool includeDirs, List<string> output, CancellationTokenSource cts, Action<int> reportProgress, int maxDepth, int currentDepth)
+        {
+            if (cts.IsCancellationRequested || (maxDepth >= 0 && currentDepth > maxDepth)) return;
+
+            var entry = await GetInfoAsync(path, maxDepth: 1, useCache: true);
+            if (entry?.Children == null) return;
+
+            int total = entry.Children.Count;
             int processed = 0;
 
-            try
+            foreach (var child in entry.Children)
             {
-                foreach (RepositoryContent entry in items)
+                cts.Token.ThrowIfCancellationRequested();
+
+                if ((includeFiles && child.Type == ElementType.File) ||
+                    (includeDirs && child.Type == ElementType.Dir))
                 {
-                    cts.Token.ThrowIfCancellationRequested();
-
-                    if ((onlyDirs && entry.Type == ContentType.Dir) || (!onlyDirs && entry.Type != ContentType.Dir)) output.Add(entry.Path);
-
-                    if (entry.Type == ContentType.Dir) await FetchRecursive(entry.Path, output, cts, onlyDirs, reportProgress);
-
-                    processed++;
-                    reportProgress?.Invoke((int)((processed * 100L) / total));
+                    output.Add(child.Path);
                 }
+
+                if (child.Type == ElementType.Dir)
+                    await CollectEntriesRecursive(child.Path, includeFiles, includeDirs, output, cts, reportProgress, maxDepth, currentDepth + 1);
+
+                processed++;
+                reportProgress?.Invoke(total > 0 ? (int)((processed * 100L) / total) : 100);
             }
-            catch (OperationCanceledException) { /* ignore if canceled */ }
         }
 
-        public static async Task<string> ReadFileAsync(string path)
-        {
-            RepositoryContent file = await GetFileInfoAsync(path);
-            if (file == null || file.Type != ContentType.File) return null;
-
-            byte[] contentBytes = Convert.FromBase64String(file.Content);
-            return Encoding.UTF8.GetString(contentBytes);
-        }
-
-        public static async Task UploadFileAsync(string githubPath, string localFilePathOrContent, bool isLocalFile = true, string commitMessage = "Upload via GitHub.IO.Path", CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async Task<List<string>> GetEntriesAsync(string path, bool includeFiles = true, bool includeDirs = true, CancellationTokenSource cts = null, Action<int> reportProgress = null, int maxDepth = -1)
         {
             cts ??= new();
+            var output = new List<string>();
+            await CollectEntriesRecursive(path, includeFiles, includeDirs, output, cts, reportProgress, maxDepth, 0);
+            return output;
+        }
+
+        private static void StoreInCache(GitHubFileSystemEntry entry, bool storeChildren = true)
+        {
+            if (entry == null) return;
+
+            if (entry.Type == ElementType.File)
+                _fileCache[entry.Path] = entry;
+            else if (entry.Type == ElementType.Dir)
+                _dirCache[entry.Path] = entry;
+
+            if (storeChildren && entry.Children != null)
+            {
+                foreach (var child in entry.Children)
+                    StoreInCache(child, storeChildren: false);
+            }
+        }
+
+        private static void ClearCache(string path = null)
+        {
+            if (path == null)
+            {
+                _fileCache.Clear();
+                _dirCache.Clear();
+                _dirShaCache.Clear();
+            }
+            else
+            {
+                _fileCache.TryRemove(path, out _);
+                _dirCache.TryRemove(path, out _);
+                _dirShaCache.TryRemove(path, out _);
+
+                foreach (var key in _fileCache.Keys.Where(k => k.StartsWith(path + "/")).ToList())
+                    _fileCache.TryRemove(key, out _);
+
+                foreach (var key in _dirCache.Keys.Where(k => k.StartsWith(path + "/")).ToList())
+                    _dirCache.TryRemove(key, out _);
+            }
+        }
+
+        private static string GetRelativePath(string fullPath)
+        {
+            if (fullPath.StartsWith(_root + "/") || fullPath.StartsWith(_root + "\\")) return fullPath.Substring(_root.Length + 1);
+            return fullPath;
+        }
+
+        private static string GetAbsolutePath(string relativePath)
+        {
+            if (string.IsNullOrEmpty(relativePath)) return _root;
+            return _root + "/" + relativePath.Replace("\\", "/");
+        }
+
+        public static async Task<List<string>> GetFilesAsync(string path, CancellationTokenSource cts = null) => await GetEntriesAsync(path, includeFiles: true, includeDirs: false, cts);
+
+        public static async Task<List<string>> GetFilesAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null) => await GetEntriesAsync(path, includeFiles: true, includeDirs: false, cts, reportProgress);
+
+        public static async Task<List<string>> GetDirectoriesAsync(string path, CancellationTokenSource cts = null) => await GetEntriesAsync(path, includeFiles: false, includeDirs: true, cts);
+
+        public static async Task<List<string>> GetDirectoriesAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null) => await GetEntriesAsync(path, includeFiles: false, includeDirs: true, cts, reportProgress);
+
+        public static async Task<List<string>> SearchFilesAsync(string pattern, string path = null, ListView list = null, CancellationTokenSource cts = null)
+        {
+            cts ??= new();
+            path ??= _root;
+            List<string> allFiles = await GetFilesAsync(path, cts);
+            string regexPattern = "^" + Regex.Escape(pattern).Replace("\\*", ".*") + "$";
+            Regex regex = new(regexPattern, RegexOptions.IgnoreCase);
+
+            var result = allFiles.Where(f => regex.IsMatch(Path.GetRelativePath(f))).ToList();
+
+            if (list != null)
+            {
+                list.Items.Clear();
+                foreach (var file in result)
+                {
+                    ListViewItem item = new(file) { Tag = file };
+                    list.Items.Add(item);
+                }
+            }
+
+            return result;
+        }
+
+        public static async Task<bool> FileExistsAsync(string path)
+        {
+            var file = await GetInfoCachedAsync(path, forceRefresh: true); // always check updates first
+            return file != null && file.Type == ElementType.File;
+        }
+
+        public static async Task<bool> DirectoryExistsAsync(string path)
+        {
+            var dir = await GetInfoCachedAsync(path, forceRefresh: true);
+            return dir != null && dir.Type == ElementType.Dir;
+        }
+
+        public static async Task UploadFileAsync(string githubPath, string localFilePathOrContent, bool isLocalFile = true, string commitMessage = null, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        {
+            cts ??= new();
+            commitMessage ??= $"Uploaded `{localFilePathOrContent}` into `{githubPath}` by {_owner}";
             reportProgress?.Invoke(0);
 
             try
             {
-                // Read content (raw string or file)
                 string base64;
 
                 if (isLocalFile)
                 {
-                    using (FileStream fs = new(localFilePathOrContent, System.IO.FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
+                    using FileStream fs = new(localFilePathOrContent, System.IO.FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
+                    byte[] buff = new byte[fs.Length];
+                    int total = buff.Length;
+                    int read = 0;
+
+                    while (read < total)
                     {
-                        byte[] buff = new byte[fs.Length];
-                        int total = buff.Length;
-                        int read = 0;
-
-                        // Progressive file read
-                        while (read < total)
-                        {
-                            cts.Token.ThrowIfCancellationRequested();
-
-                            int chunk = await fs.ReadAsync(buff, read, total - read, cts.Token).ConfigureAwait(false);
-
-                            if (chunk == 0) break;
-                            read += chunk;
-
-                            reportProgress?.Invoke((int)(read * 100L / total));
-                        }
-
-                        base64 = Convert.ToBase64String(buff);
+                        cts.Token.ThrowIfCancellationRequested();
+                        int chunk = await fs.ReadAsync(buff, read, total - read, cts.Token).ConfigureAwait(false);
+                        if (chunk == 0) break;
+                        read += chunk;
+                        reportProgress?.Invoke((int)(read * 100L / total));
                     }
+
+                    base64 = Convert.ToBase64String(buff);
                 }
                 else
                 {
@@ -601,17 +1196,18 @@ namespace WinPaletter.GitHub.IO
                 }
 
                 IRepositoryContentsClient client = Program.GitHub.Client.Repository.Content;
-                RepositoryContent existing = await GetFileInfoAsync(githubPath);
+                GitHubFileSystemEntry existing = await GetInfoCachedAsync(githubPath, forceRefresh: true); // update check
 
-                if (existing == null)
+                if (existing.Content == null)
                 {
                     await client.CreateFile(_owner, _repo, githubPath, new(commitMessage, base64));
                 }
                 else
                 {
-                    await client.UpdateFile(_owner, _repo, githubPath, new(commitMessage, base64, existing.Sha));
+                    await client.UpdateFile(_owner, _repo, githubPath, new(commitMessage, base64, existing.Content.Sha));
                 }
 
+                _infoCache.TryRemove(githubPath, out _); // refresh cache
                 reportProgress?.Invoke(100);
             }
             catch
@@ -625,94 +1221,273 @@ namespace WinPaletter.GitHub.IO
             cts ??= new();
             reportProgress?.Invoke(0);
 
-            try
+            var file = await GetInfoCachedAsync(githubPath, forceRefresh: true);
+            if (file == null || file.Type != ElementType.File) return;
+
+            byte[] bytes = Convert.FromBase64String(file.Content.Content);
+            using FileStream fs = new(localSavePath, System.IO.FileMode.Create, FileAccess.Write, FileShare.None);
+            int total = bytes.Length, written = 0, chunkSize = 4096;
+
+            while (written < total)
             {
-                RepositoryContent file = await GetFileInfoAsync(githubPath);
-                if (file == null || file.Type != ContentType.File) return;
-
-                if (!string.IsNullOrEmpty(file.DownloadUrl))
-                {
-                    // Use DownloadManager (progress built-in)
-                    using DownloadManager dm = new();
-                    dm.DownloadProgressChanged += (s, e) => reportProgress?.Invoke((int)e.ProgressPercentage);
-                    dm.DownloadFileCompleted += (s, e) => reportProgress?.Invoke(100);
-                    dm.DownloadErrorOccurred += (s, e) => reportProgress?.Invoke(0);
-
-                    await dm.DownloadFileAsync(file.DownloadUrl, localSavePath, cts);
-                    return;
-                }
-
-                // Fallback: base64 decode manually
-                byte[] bytes = Convert.FromBase64String(file.Content);
-
-                using (FileStream fs = new(localSavePath, System.IO.FileMode.Create, FileAccess.Write, FileShare.None))
-                {
-                    int total = bytes.Length;
-                    int written = 0;
-                    int chunkSize = 4096;
-
-                    while (written < total)
-                    {
-                        cts.Token.ThrowIfCancellationRequested();
-
-                        int size = Math.Min(chunkSize, total - written);
-                        await fs.WriteAsync(bytes, written, size, cts.Token).ConfigureAwait(false);
-                        written += size;
-
-                        reportProgress?.Invoke((int)(written * 100L / total));
-                    }
-                }
-
-                reportProgress?.Invoke(100);
+                cts.Token.ThrowIfCancellationRequested();
+                int size = Math.Min(chunkSize, total - written);
+                await fs.WriteAsync(bytes, written, size, cts.Token);
+                written += size;
+                reportProgress?.Invoke((int)(written * 100L / total));
             }
-            catch
+
+            reportProgress?.Invoke(100);
+        }
+
+        public static async Task UploadDirectoryAsync(string localPath, string githubPath, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        {
+            cts ??= new();
+            var files = Directory.GetFiles(localPath, "*", SearchOption.AllDirectories);
+            int total = files.Length, processed = 0;
+
+            foreach (var file in files)
             {
-                reportProgress?.Invoke(0);
+                cts.Token.ThrowIfCancellationRequested();
+                string relative = file.Substring(localPath.Length).TrimStart('\\', '/').Replace("\\", "/");
+                string githubFile = $"{githubPath}/{relative}";
+
+                await UploadFileAsync(githubFile, file, true, "Bulk upload", cts, progress => { });
+                processed++;
+                reportProgress?.Invoke((int)(processed * 100L / total));
             }
         }
 
-        public static async Task<bool> FileExistsAsync(string path, CancellationTokenSource cts = null)
+        public static async Task DownloadDirectoryAsync(string githubPath, string localPath, CancellationTokenSource cts = null, Action<int> reportProgress = null)
         {
-            RepositoryContent file = await GetFileInfoAsync(path);
-            return file != null && file.Type == ContentType.File;
+            cts ??= new();
+            var entries = await GetEntriesCachedAsync(githubPath, forceRefresh: true);
+            int total = entries.Count, processed = 0;
+
+            foreach (var entry in entries)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+                string relative = entry.Path.Substring(githubPath.Length).TrimStart('/');
+                string localFile = System.IO.Path.Combine(localPath, relative.Replace("/", "\\"));
+
+                if (entry.Type == ElementType.Dir)
+                {
+                    Directory.CreateDirectory(localFile);
+                    await DownloadDirectoryAsync(entry.Path, localFile, cts, progress => { });
+                }
+                else
+                {
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(localFile));
+                    await DownloadFileAsync(entry.Path, localFile, cts, progress => { });
+                }
+
+                processed++;
+                reportProgress?.Invoke((int)(processed * 100L / total));
+            }
         }
 
-        public static async Task<bool> DirectoryExistsAsync(string path, CancellationTokenSource cts = null)
+        public static async Task MoveDirectoryAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = null)
         {
-            IReadOnlyList<RepositoryContent> dir = await GetDirectoryInfoAsync(path);
-            return dir != null && dir.Count > 0;
+            cts ??= new();
+            reportProgress?.Invoke(0);
+
+            var entries = new List<GitHubFileSystemEntry>();
+            await foreach (var entry in EnumerateEntriesAsync(sourcePath, recursive: true, ct: cts.Token))
+            {
+                entries.Add(entry);
+            }
+
+            int total = entries.Count, processed = 0;
+
+            foreach (var entry in entries)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+                string relative = entry.Path.Substring(sourcePath.Length).TrimStart('/');
+                string targetPath = $"{destPath}/{relative}";
+
+                if (entry.Type == ElementType.Dir)
+                    await CreateDirectoryAsync(targetPath);
+                else
+                    await CopyFileAsync(entry.Path, targetPath, null, cts);
+
+                processed++;
+                reportProgress?.Invoke((int)((long)processed * 100 / total));
+            }
+
+            await DeleteDirectoryAsync(sourcePath, null, cts);
+            reportProgress?.Invoke(100);
+        }
+
+        public static async Task CopyDirectoryAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = null)
+        {
+            cts ??= new();
+            reportProgress?.Invoke(0);
+
+            var entries = new List<GitHubFileSystemEntry>();
+            await foreach (var entry in EnumerateEntriesAsync(sourcePath, recursive: true, ct: cts.Token))
+            {
+                entries.Add(entry);
+            }
+
+            int total = entries.Count, processed = 0;
+
+            foreach (var entry in entries)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+                string relative = entry.Path.Substring(sourcePath.Length).TrimStart('/');
+                string targetPath = $"{destPath}/{relative}";
+
+                if (entry.Type == ElementType.Dir)
+                    await CreateDirectoryAsync(targetPath);
+                else
+                    await CopyFileAsync(entry.Path, targetPath, null, cts);
+
+                processed++;
+                reportProgress?.Invoke((int)((long)processed * 100 / total));
+            }
+
+            reportProgress?.Invoke(100);
         }
 
         public static async Task DeleteFileAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null)
         {
-            RepositoryContent file = await GetFileInfoAsync(path);
-            if (file != null)
+            cts ??= new();
+            reportProgress?.Invoke(0);
+
+            var file = await GetInfoCachedAsync(path, forceRefresh: true);
+            if (file == null || file.Type != ElementType.File)
             {
-                await Program.GitHub.Client.Repository.Content.DeleteFile(_owner, _repo, path, new($"{_owner} deleted `{path}`", file.Sha));
                 reportProgress?.Invoke(100);
+                return;
+            }
+
+            await Program.GitHub.Client.Repository.Content.DeleteFile(_owner, _repo, path, new($"{_owner} deleted `{path}`", file.CommitSha));
+            _infoCache.TryRemove(path, out _);
+            reportProgress?.Invoke(100);
+        }
+
+        public static async Task DeleteDirectoryAsync(string path, Action<int> reportProgress = null, CancellationTokenSource cts = null)
+        {
+            cts ??= new();
+            reportProgress?.Invoke(0);
+
+            // Collect entries manually
+            var entries = new List<GitHubFileSystemEntry>();
+            await foreach (var entry in EnumerateEntriesAsync(path, recursive: true, ct: cts.Token))
+            {
+                entries.Add(entry);
+            }
+
+            int total = entries.Count;
+            int processed = 0;
+
+            foreach (var entry in entries)
+            {
+                cts.Token.ThrowIfCancellationRequested();
+                if (entry.Type == ElementType.File)
+                    await DeleteFileAsync(entry.Path, cts, reportProgress);
+
+                processed++;
+                reportProgress?.Invoke((int)((long)processed * 100 / total));
+            }
+
+            // Delete placeholder directory if any
+            await DeleteFileAsync(path, cts, reportProgress);
+            reportProgress?.Invoke(100);
+        }
+
+        public static async Task<string> ReadFileAsync(string path, Encoding encoding = null)
+        {
+            encoding ??= Encoding.UTF8;
+            var entry = await GetInfoCachedAsync(path, forceRefresh: true);
+            if (entry?.Type != ElementType.File || string.IsNullOrEmpty(entry.Content?.Content))
+                return null;
+
+            byte[] bytes = Convert.FromBase64String(entry.Content.Content);
+            return encoding.GetString(bytes);
+        }
+
+        public static async Task<byte[]> ReadFileBytesAsync(string path)
+        {
+            var entry = await GetInfoCachedAsync(path, forceRefresh: true);
+            if (entry?.Type != ElementType.File || string.IsNullOrEmpty(entry.Content?.Content))
+                return null;
+            return Convert.FromBase64String(entry.Content.Content);
+        }
+
+        public static async Task MoveFileAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = default)
+        {
+            reportProgress?.Invoke(0);
+            var contents = await ReadFileAsync(sourcePath);
+            if (contents != null)
+            {
+                await UploadFileAsync(destPath, contents, false, commitMessage: $"Move `{sourcePath}` → `{destPath}` by {_owner}", cts, reportProgress);
+                await DeleteFileAsync(sourcePath, cts, reportProgress);
+            }
+            reportProgress?.Invoke(100);
+        }
+
+        public static async Task CopyFileAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = default)
+        {
+            reportProgress?.Invoke(0);
+            var contents = await ReadFileAsync(sourcePath);
+            if (contents != null)
+                await UploadFileAsync(destPath, contents, false, commitMessage: $"Copy `{sourcePath}` → `{destPath}` by {_owner}", cts, reportProgress);
+            reportProgress?.Invoke(100);
+        }
+
+        public static async Task CreateDirectoryAsync(string path)
+        {
+            // GitHub does not allow empty directories; create a placeholder file
+            string placeholder = $"{path}/.gitkeep";
+            if (!await FileExistsAsync(placeholder)) await UploadFileAsync(placeholder, string.Empty, isLocalFile: false, commitMessage: $"Create directory `{path}` by {_owner}");
+        }
+
+        public static async IAsyncEnumerable<string> EnumerateFilesAsync(string path, string searchPattern = "*", bool recursive = false, [EnumeratorCancellation] CancellationToken ct = default)
+        {
+            Regex regex = new("^" + Regex.Escape(searchPattern).Replace("\\*", ".*").Replace("\\?", ".") + "$", RegexOptions.IgnoreCase);
+
+            var entries = await GetEntriesCachedAsync(path, forceRefresh: true);
+            foreach (var entry in entries)
+            {
+                ct.ThrowIfCancellationRequested();
+
+                if (entry.Type == ElementType.File && regex.IsMatch(System.IO.Path.GetFileName(entry.Path)))
+                    yield return entry.Path;
+
+                if (recursive && entry.Type == ElementType.Dir)
+                    await foreach (var sub in EnumerateFilesAsync(entry.Path, searchPattern, true, ct))
+                        yield return sub;
             }
         }
 
-        public static async Task DeleteDirectoryAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async IAsyncEnumerable<string> EnumerateDirectoriesAsync(string path, bool recursive = false, [EnumeratorCancellation] CancellationToken ct = default)
         {
-            IReadOnlyList<RepositoryContent> items = await GetDirectoryInfoAsync(path);
-            int total = items.Count;
-            int processed = 0;
-
-            try
+            var entries = await GetEntriesCachedAsync(path, forceRefresh: true);
+            foreach (var entry in entries)
             {
-                foreach (RepositoryContent entry in items)
+                ct.ThrowIfCancellationRequested();
+                if (entry.Type == ElementType.Dir)
                 {
-                    cts.Token.ThrowIfCancellationRequested();
-
-                    if (entry.Type == ContentType.Dir) await DeleteDirectoryAsync(entry.Path, cts, reportProgress);
-                    else await DeleteFileAsync(entry.Path, cts, reportProgress);
-
-                    processed++;
-                    reportProgress?.Invoke((int)((processed * 100L) / total));
+                    yield return entry.Path;
+                    if (recursive)
+                        await foreach (var sub in EnumerateDirectoriesAsync(entry.Path, true, ct))
+                            yield return sub;
                 }
             }
-            catch (OperationCanceledException) { /* ignore if canceled */ }
+        }
+
+        public static async IAsyncEnumerable<GitHubFileSystemEntry> EnumerateEntriesAsync(string path, bool recursive = false, [EnumeratorCancellation] CancellationToken ct = default)
+        {
+            var entries = await GetEntriesCachedAsync(path, forceRefresh: true);
+            foreach (var entry in entries)
+            {
+                ct.ThrowIfCancellationRequested();
+                yield return entry;
+                if (recursive && entry.Type == ElementType.Dir)
+                    await foreach (var sub in EnumerateEntriesAsync(entry.Path, true, ct))
+                        yield return sub;
+            }
         }
     }
 }

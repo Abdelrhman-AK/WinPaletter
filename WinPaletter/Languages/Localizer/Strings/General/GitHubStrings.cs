@@ -32,7 +32,7 @@ public partial class Localizer
             public string Explorer_DetailsHeader_Name { get; set; } = "Name";
             public string Explorer_DetailsHeader_Type { get; set; } = "Type";
             public string Explorer_DetailsHeader_Size { get; set; } = "Size";
-            public string Explorer_DetailsHeader_APIURL { get; set; } = "API URL";
+            public string Explorer_DetailsHeader_URL { get; set; } = "URL";
         }
     }
 }

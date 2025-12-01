@@ -37,6 +37,7 @@ namespace WinPaletter.UI.WP
         private float progressMaximum = 100;
         private float _animatedValue = 0;
         private int _alpha = 255;
+        private int _hoverAlpha = 0;
         private int parentLevel = 0;
         private UI.WP.Button btn_Stop;
     
@@ -179,6 +180,24 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        /// <summary>
+        /// Alpha transparency for progress bar rendering.
+        /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Browsable(false)]
+        public int HoverAlpha
+        {
+            get => _hoverAlpha;
+            set
+            {
+                if (value != _hoverAlpha)
+                {
+                    _hoverAlpha = value;
+                    Invalidate();
+                }
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -194,6 +213,7 @@ namespace WinPaletter.UI.WP
 
             InitializeControls();
             Resize += (s, e) => UpdateBreadcrumb(boundTreeView?.SelectedNode);
+            SubscribeHoverEvents(this);
         }
 
         #endregion
@@ -244,7 +264,11 @@ namespace WinPaletter.UI.WP
                 CustomColor = Program.Style.Schemes.Main.Colors.Accent,
                 Width = 10
             };
-            overflowButton.Click += (s, e) => overflowButton.Menu.Show(overflowButton, MousePosition);
+            overflowButton.Click += (s, e) =>
+            {
+                overflowButton.Menu.Show(overflowButton, MousePosition);
+                AnimateHover(false);
+            };
             breadcrumbPanel.Controls.Add(overflowButton);
 
             pathTextBox = new UI.WP.TextBox
@@ -316,7 +340,8 @@ namespace WinPaletter.UI.WP
                         System.Windows.Forms.ToolStripMenuItem item = new(child.Text) { Tag = child };
                         item.Click += (s, e) =>
                         {
-                            TreeNode tn = ((ToolStripMenuItem)s).Tag as TreeNode;
+                            AnimateHover(false);
+                            TreeNode tn = ((System.Windows.Forms.ToolStripMenuItem)s).Tag as TreeNode;
                             if (boundTreeView != null) boundTreeView.SelectedNode = tn;
                         };
                         btn.Menu.Items.Add(item);
@@ -465,6 +490,45 @@ namespace WinPaletter.UI.WP
             btn_Stop.Visible = false;
         }
 
+        /// <summary>
+        /// Subscribes the specified control and all of its child controls to hover event handlers that trigger hover
+        /// animations when the mouse enters or leaves the control.
+        /// </summary>
+        /// <remarks>This method recursively attaches event handlers to the provided control and its
+        /// children to ensure consistent hover animation behavior throughout the control hierarchy.</remarks>
+        /// <param name="ctrl">The control to which hover event handlers will be attached, including all of its child controls. Cannot be
+        /// null.</param>
+        private void SubscribeHoverEvents(Control ctrl)
+        {
+            ctrl.MouseEnter += (s, e) => AnimateHover(true);
+            ctrl.MouseLeave += (s, e) =>
+            {
+                // Check if mouse is still inside main control
+                Point pt = this.PointToClient(Cursor.Position);
+                if (!this.ClientRectangle.Contains(pt)) AnimateHover(false);
+            };
+
+            foreach (Control child in ctrl.Controls) SubscribeHoverEvents(child);
+        }
+
+        /// <summary>
+        /// Animates the hover effect by transitioning the hover alpha value when the pointer enters or leaves the
+        /// control.
+        /// </summary>
+        /// <param name="enter">Indicates whether the pointer is entering (<see langword="true"/>) or leaving (<see langword="false"/>) the
+        /// control. If <see langword="true"/>, the hover effect is shown; otherwise, it is hidden.</param>
+        private void AnimateHover(bool enter)
+        {
+            if (CanAnimate)
+            {
+                Transition.With(this, nameof(HoverAlpha), enter ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                HoverAlpha = enter ? 255 : 0;
+            }
+        }
+
         #endregion
 
         #region Event Handlers
@@ -475,6 +539,8 @@ namespace WinPaletter.UI.WP
         {
             if (sender is Button btn && btn.Tag is TreeNode node)
                 if (boundTreeView != null) boundTreeView.SelectedNode = node;
+
+            AnimateHover(false);
         }
 
         private void BreadcrumbPanel_MouseDown(object sender, MouseEventArgs e)
@@ -619,9 +685,13 @@ namespace WinPaletter.UI.WP
 
             using (SolidBrush br = new(Program.Style.Schemes.Main.Colors.Back(parentLevel)))
             using (Pen p = new(Program.Style.Schemes.Main.Colors.Line_Hover(parentLevel)))
+            using (SolidBrush br_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Back_Checked)))
+            using (Pen p_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Line_Checked)))
             {
                 G.FillRoundedRect(br, rect);
+                G.FillRoundedRect(br_hover, rect);
                 G.DrawRoundedRect(p, rect);
+                G.DrawRoundedRect(p_hover, rect);
             }
 
             float progressWidth;
