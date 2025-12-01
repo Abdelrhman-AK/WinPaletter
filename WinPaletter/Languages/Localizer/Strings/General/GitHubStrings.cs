@@ -28,6 +28,11 @@ public partial class Localizer
             public string Explorer_View_List { get; set; } = "List";
             public string Explorer_View_Details { get; set; } = "Details";
             public string Explorer_View_Tiles { get; set; } = "Tiles";
+            public string Explorer_Type_Folder { get; set; } = "File folder";
+            public string Explorer_DetailsHeader_Name { get; set; } = "Name";
+            public string Explorer_DetailsHeader_Type { get; set; } = "Type";
+            public string Explorer_DetailsHeader_Size { get; set; } = "Size";
+            public string Explorer_DetailsHeader_APIURL { get; set; } = "API URL";
         }
     }
 }

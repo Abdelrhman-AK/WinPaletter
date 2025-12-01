@@ -16,6 +16,7 @@
                 public string SupportedThemes { get; set; } = "Supported Windows theme files";
                 public string Themes { get; set; } = "Windows theme files";
                 public string VisualStyles { get; set; } = "Visual styles files";
+                public string File { get; set; } = "File";
                 public string Text { get; set; } = "Text files";
                 public string Cursors { get; set; } = "Cursors";
                 public string Cur { get; set; } = "Windows cursor files";

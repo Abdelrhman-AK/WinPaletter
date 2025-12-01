@@ -41,9 +41,9 @@ namespace WinPaletter.GitHub.IO
 
         private static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
         {
-            if (entry.Type == ContentType.Dir) return "File folder";
-            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return "WinPaletter Theme file";
-            if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return "WinPaletter Theme Resources Pack";
+            if (entry.Type == ContentType.Dir) return Program.Lang.Strings.GitHubStrings.Explorer_Type_Folder;
+            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterTheme;
+            if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterResourcesPack;
             return NativeMethods.Shlwapi.GetFriendlyTypeName(entry.Name);
         };
 
@@ -60,26 +60,10 @@ namespace WinPaletter.GitHub.IO
 
             try
             {
-                List<RepositoryContent> allEntries = await Task.Run(async () =>
-                {
-                    List<RepositoryContent> content = [];
-                    await FetchRecursive(_root, content, null, cts);
-                    return content;
-                }, cts.Token);
-
-                int totalItems = allEntries.Count;
-                int fetchedCount = 0;
-
-                breadCrumb?.StopMarquee();
+                breadCrumb?.StartMarquee();
                 breadCrumb.Value = breadCrumb.Minimum;
 
-                await FetchRecursive(_root, entries, e =>
-                {
-                    fetchedCount++;
-                    int percent = (int)((fetchedCount * 100L) / totalItems);
-                    reportProgress?.Invoke(percent);
-                    breadCrumb.Value = percent;
-                }, cts);
+                await FetchRecursive(_root, entries, null, cts);
 
                 CachedEntries = entries;
 
@@ -101,8 +85,8 @@ namespace WinPaletter.GitHub.IO
             }
             catch (OperationCanceledException) 
             {
-                breadCrumb?.StopMarquee();
-                breadCrumb.Value = 0;
+                breadCrumb?.FinishLoadingAnimation();
+                breadCrumb.Value = breadCrumb.Minimum;
             }
         }
 
@@ -385,11 +369,11 @@ namespace WinPaletter.GitHub.IO
                 // Initialize columns once
                 if (list.Columns.Count == 0)
                 {
-                    list.Columns.Add("Name", 230);
-                    list.Columns.Add("Type", 200);
-                    list.Columns.Add("Size", 80);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
                     list.Columns.Add("MD5", 120);
-                    list.Columns.Add("URL", 120);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_APIURL, 120);
                 }
 
                 if (!DirectoryMap.ContainsKey(path))
@@ -411,7 +395,7 @@ namespace WinPaletter.GitHub.IO
                     ListViewItem item = new(entry.Name) { Tag = entry };
 
                     // Subitems for Details view
-                    item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? "File");
+                    item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
 
                     long size = entry.Type == ContentType.Dir && FolderSizeMap.ContainsKey(entry.Path) ? FolderSizeMap[entry.Path] : entry.Size;
 
@@ -699,17 +683,17 @@ namespace WinPaletter.GitHub.IO
             return dir != null && dir.Count > 0;
         }
 
-        public static async Task DeleteFileAsync(string path, string commitMessage = "Delete file via GitHub.IO.Path", CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async Task DeleteFileAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null)
         {
             RepositoryContent file = await GetFileInfoAsync(path);
             if (file != null)
             {
-                await Program.GitHub.Client.Repository.Content.DeleteFile(_owner, _repo, path, new(commitMessage, file.Sha));
+                await Program.GitHub.Client.Repository.Content.DeleteFile(_owner, _repo, path, new($"{_owner} deleted `{path}`", file.Sha));
                 reportProgress?.Invoke(100);
             }
         }
 
-        public static async Task DeleteDirectoryAsync(string path, string commitMessage = "Delete directory via GitHub.IO.Path", CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async Task DeleteDirectoryAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null)
         {
             IReadOnlyList<RepositoryContent> items = await GetDirectoryInfoAsync(path);
             int total = items.Count;
@@ -721,8 +705,8 @@ namespace WinPaletter.GitHub.IO
                 {
                     cts.Token.ThrowIfCancellationRequested();
 
-                    if (entry.Type == ContentType.Dir) await DeleteDirectoryAsync(entry.Path, commitMessage, cts, reportProgress);
-                    else await DeleteFileAsync(entry.Path, commitMessage, cts, reportProgress);
+                    if (entry.Type == ContentType.Dir) await DeleteDirectoryAsync(entry.Path, cts, reportProgress);
+                    else await DeleteFileAsync(entry.Path, cts, reportProgress);
 
                     processed++;
                     reportProgress?.Invoke((int)((processed * 100L) / total));

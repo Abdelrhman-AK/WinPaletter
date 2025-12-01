@@ -30,19 +30,19 @@ namespace WinPaletter.NativeMethods
 
         public static string GetFriendlyTypeName(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName)) return "File";
+            if (string.IsNullOrEmpty(fileName)) return Program.Lang.Strings.Extensions.File;
 
             string ext = System.IO.Path.GetExtension(fileName);
-            if (string.IsNullOrEmpty(ext)) return "File";
+            if (string.IsNullOrEmpty(ext)) return Program.Lang.Strings.Extensions.File;
 
             uint length = 0;
             AssocQueryString(AssocF.None, AssocStr.FriendlyDocName, ext, null, null, ref length);
-            if (length == 0) return "File";
+            if (length == 0) return Program.Lang.Strings.Extensions.File;
 
-            StringBuilder sb = new StringBuilder((int)length);
+            StringBuilder sb = new((int)length);
             int ret = AssocQueryString(AssocF.None, AssocStr.FriendlyDocName, ext, null, sb, ref length);
 
-            return ret == S_OK ? sb.ToString() : "File";
+            return ret == S_OK ? sb.ToString() : Program.Lang.Strings.Extensions.File;
         }
     }
 }

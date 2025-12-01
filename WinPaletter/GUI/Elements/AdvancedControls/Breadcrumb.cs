@@ -449,6 +449,7 @@ namespace WinPaletter.UI.WP
                               _animatedValue = 0;
                               Invalidate();
                               _alpha = 255;
+                              StopMarquee();
                           })
                           .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
@@ -459,6 +460,7 @@ namespace WinPaletter.UI.WP
                 _animatedValue = 0;
                 Invalidate();
                 _alpha = 255;
+                StopMarquee();
             }
             btn_Stop.Visible = false;
         }
