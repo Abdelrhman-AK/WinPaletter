@@ -60,7 +60,7 @@ namespace WinPaletter
             public bool Administrator => IsAdmin(SID);
 
             /// <summary>
-            /// Path of user profile picture that invoked the event
+            /// FileSystem of user profile picture that invoked the event
             /// </summary>
             public string ProfilePicturePath => Shell32.GetUserTilePath(UserName);
 
@@ -612,12 +612,12 @@ namespace WinPaletter
         public static bool Administrator => IsAdmin(SID);
 
         /// <summary>
-        /// Path of current user profile picture
+        /// FileSystem of current user profile picture
         /// </summary>
         public static string ProfilePicturePath => Shell32.GetUserTilePath(Name);
 
         /// <summary>
-        /// Path of current user profile picture
+        /// FileSystem of current user profile picture
         /// </summary>
         public static Bitmap ProfilePicture => Shell32.GetUserAccountPicture(Name) as Bitmap;
 

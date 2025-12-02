@@ -13,7 +13,7 @@ namespace WinPaletter
         /// <summary>
         /// Loads a bitmap from file without locking the file and with optimized performance
         /// </summary>
-        /// <param name="filePath">Path to the image file</param>
+        /// <param name="filePath">FileSystem to the image file</param>
         /// <returns>Loaded Bitmap or null if failed</returns>
         public static Bitmap Load(string filePath)
         {

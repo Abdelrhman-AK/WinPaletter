@@ -15,7 +15,7 @@ namespace WinPaletter
     public class INI(string File) : ICloneable, IDisposable
     {
         /// <summary>
-        /// Path to the INI file
+        /// FileSystem to the INI file
         /// </summary>
         public string path = File;
         private bool disposedValue;

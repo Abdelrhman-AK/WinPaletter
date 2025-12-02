@@ -26,7 +26,7 @@ namespace WinPaletter
 
             await UpdateGitHubLoginData(); // Aasync login method
 
-            await GitHub.IO.Path.PopulateRepositoryAsync(treeView1, listView1, breadcrumbControl1, cts);
+            await GitHub.FileSystem.PopulateRepositoryAsync(treeView1, listView1, breadcrumbControl1, cts);
 
             // After populating the tree for the first time
             UpdateNavigationButtons();
@@ -186,26 +186,26 @@ namespace WinPaletter
 
         private void UpdateNavigationButtons()
         {
-            button2.Enabled = GitHub.IO.Path.CanGoBack;
-            button4.Enabled = GitHub.IO.Path.CanGoForward;
-            button5.Enabled = GitHub.IO.Path.CanGoUp;
+            button2.Enabled = GitHub.FileSystem.CanGoBack;
+            button4.Enabled = GitHub.FileSystem.CanGoForward;
+            button5.Enabled = GitHub.FileSystem.CanGoUp;
         }
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            await GitHub.IO.Path.GoBack(treeView1, listView1);
+            await GitHub.FileSystem.GoBack(treeView1, listView1);
             UpdateNavigationButtons();
         }
 
         private async void button4_Click(object sender, EventArgs e)
         {
-            await GitHub.IO.Path.GoForward(treeView1, listView1);
+            await GitHub.FileSystem.GoForward(treeView1, listView1);
             UpdateNavigationButtons();
         }
 
         private async void button5_Click(object sender, EventArgs e)
         {
-            await GitHub.IO.Path.GoUp(treeView1, listView1);
+            await GitHub.FileSystem.GoUp(treeView1, listView1);
             UpdateNavigationButtons();
         }
 
@@ -216,7 +216,7 @@ namespace WinPaletter
 
         private async void button6_Click(object sender, EventArgs e)
         {
-            await GitHub.IO.Path.RefreshAsync(treeView1, listView1, breadcrumbControl1, cts);
+            await GitHub.FileSystem.RefreshAsync(treeView1, listView1, breadcrumbControl1, cts);
         }
 
         private void breadcrumbControl1_StopRequested()

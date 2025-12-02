@@ -1656,7 +1656,7 @@
             this.SelectedImage.ReadOnly = true;
             this.SelectedImage.Width = 45;
             // 
-            // Path
+            // FileSystem
             // 
             this.Path.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Path.HeaderText = "New icon path";

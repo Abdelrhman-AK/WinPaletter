@@ -3,76 +3,40 @@ using Serilog.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinPaletter.GitHub.IO
+namespace WinPaletter.GitHub
 {
     /// <summary>
-    /// Combines GitHub repository exploration and GitHub.IO.Path operations.
-    /// Provides async methods to explore, read, download, upload, and manage files/directories in GitHub.
+    /// Provides static methods and properties for navigating, displaying, and managing the contents of a GitHub
+    /// repository in a tree and list view interface. Supports repository traversal, caching, and UI integration for
+    /// efficient browsing and manipulation of repository files and folders.
     /// </summary>
-    public static class Path
+    /// <remarks>The FileSystem class is designed for use in applications that present a hierarchical view of a
+    /// GitHub repository, such as file explorers or resource managers. It maintains internal caches to optimize
+    /// repeated access to repository data and provides navigation methods (back, forward, up) for user-friendly
+    /// traversal. Thread safety is ensured for concurrent operations involving repository data. Most members are
+    /// intended to be used in conjunction with UI controls such as TreeView, ListView, and Breadcrumb, and require
+    /// proper initialization and event handling for correct operation.</remarks>
+    public static partial class FileSystem
     {
-        public class GitHubFileSystemEntry
-        {
-            public string Name => Content?.Name ?? System.IO.Path.GetFileName(Path);
-            public long Size => Content?.Size ?? 0;
-            public string Path { get; set; }
-            public ElementType Type { get; set; } // File, Dir, Symlink, Submodule
-            public RepositoryContent Content { get; set; } // Only for files
-            public string CommitSha { get; set; }
-            public string Author { get; set; }
-            public DateTimeOffset? LastModified { get; set; }
-            public IReadOnlyList<GitHubFileSystemEntry> Children { get; set; } // Only for directories
-
-            public static async Task<GitHubFileSystemEntry> FromRepositoryContent(RepositoryContent content, string path)
-            {
-                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, _repo, new CommitRequest { Path = path })).FirstOrDefault();
-
-                ElementType type = content.Type.StringValue.ToLowerInvariant() switch
-                {
-                    "file" => ElementType.File,
-                    "dir" => ElementType.Dir,
-                    "symlink" => ElementType.Symlink,
-                    "submodule" => ElementType.Submodule,
-                    _ => ElementType.Unknown
-                };
-
-                GitHubFileSystemEntry entry = new()
-                {
-                    Path = content.Path,
-                    Type = type,
-                    Content = content.Type == Octokit.ContentType.File ? content : null,
-                    CommitSha = latestCommit?.Sha,
-                    Author = latestCommit?.Commit.Author?.Name,
-                    LastModified = latestCommit?.Commit.Author?.Date
-                };
-
-                return entry;
-            }
-        }
-
         public static IReadOnlyList<RepositoryContent> CachedEntries { get; private set; }
         private static readonly Dictionary<string, List<RepositoryContent>> DirectoryMap = new(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
         private static readonly ConcurrentDictionary<string, IReadOnlyList<RepositoryContent>> DirectoryContentCache = new();
         private static readonly Dictionary<string, string> DirectoryShaCache = [];
         private static readonly SemaphoreSlim _semaphore = new(5);
-        private static readonly ConcurrentDictionary<string, GitHubFileSystemEntry> _fileCache = new();
-        private static readonly ConcurrentDictionary<string, GitHubFileSystemEntry> _dirCache = new();
+        private static readonly ConcurrentDictionary<string, Entry> _fileCache = new();
+        private static readonly ConcurrentDictionary<string, Entry> _dirCache = new();
         private static readonly ConcurrentDictionary<string, string> _dirShaCache = new();
-        private static readonly ConcurrentDictionary<string, (GitHubFileSystemEntry entry, DateTime fetched)> _infoCache = new();
-        private static readonly ConcurrentDictionary<string, (List<GitHubFileSystemEntry> entries, DateTime fetched)> _dirsCache = new();
+        private static readonly ConcurrentDictionary<string, (Entry entry, DateTime fetched)> _infoCache = new();
+        private static readonly ConcurrentDictionary<string, (List<Entry> entries, DateTime fetched)> _dirsCache = new();
         private static readonly TimeSpan CacheTTL = TimeSpan.FromSeconds(30); // short TTL for update checks
 
         private static UI.WP.ListView _boundList;
@@ -80,6 +44,7 @@ namespace WinPaletter.GitHub.IO
 
         private static string _owner => User.GitHub.Login;
         private const string _repo = "WinPaletter-Store";
+        private const string _branch = "main";
         private const string _root = "Themes";
 
         private static ImageList _smallIcons;
@@ -88,7 +53,7 @@ namespace WinPaletter.GitHub.IO
 
         private static Stack<string> backStack = new();
         private static Stack<string> forwardStack = new();
-        private static string currentPath = Path._root; // initial root path
+        private static string currentPath = _root;
 
         private static readonly ConcurrentDictionary<string, string> ShaMd5Cache = new();
         public static bool CanGoBack => backStack.Count > 0;
@@ -540,7 +505,7 @@ namespace WinPaletter.GitHub.IO
             {
                 try
                 {
-                    var currentContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path, "main");
+                    var currentContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path, _branch);
                     var currentSha = currentContents.FirstOrDefault()?.Sha ?? string.Empty;
 
                     if (DirectoryShaCache.TryGetValue(path, out var cachedSha) && cachedSha == currentSha)
@@ -831,7 +796,7 @@ namespace WinPaletter.GitHub.IO
             }
         }
 
-        private static async Task<GitHubFileSystemEntry> GetFromCacheValidatedAsync(string path)
+        private static async Task<Entry> GetFromCacheValidatedAsync(string path)
         {
             // Check file cache first
             if (_fileCache.TryGetValue(path, out var fileEntry))
@@ -908,7 +873,7 @@ namespace WinPaletter.GitHub.IO
             return null;
         }
 
-        private static async Task<GitHubFileSystemEntry> GetInfoAsync(string path, int maxDepth = 5, bool useCache = true)
+        private static async Task<Entry> GetInfoAsync(string path, int maxDepth = 5, bool useCache = true)
         {
             if (string.IsNullOrEmpty(path)) return null;
 
@@ -924,11 +889,11 @@ namespace WinPaletter.GitHub.IO
             if (contents.Count == 0) return null;
 
             var firstItem = contents.First();
-            GitHubFileSystemEntry entry = await GitHubFileSystemEntry.FromRepositoryContent(firstItem, path);
+            Entry entry = await Entry.FromRepositoryContent(firstItem, path);
 
             if (entry.Type == ElementType.Dir && maxDepth > 0)
             {
-                var children = new List<GitHubFileSystemEntry>();
+                var children = new List<Entry>();
                 var childPaths = contents.Select(c => c.Path).ToList();
                 var childShas = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
@@ -947,7 +912,7 @@ namespace WinPaletter.GitHub.IO
 
                 foreach (var item in contents)
                 {
-                    GitHubFileSystemEntry childEntry = null;
+                    Entry childEntry = null;
 
                     if (useCache)
                     {
@@ -969,7 +934,7 @@ namespace WinPaletter.GitHub.IO
                         if (item.Type == Octokit.ContentType.Dir)
                             childEntry = await GetInfoAsync(item.Path, maxDepth - 1, useCache);
                         else
-                            childEntry = await GitHubFileSystemEntry.FromRepositoryContent(item, item.Path);
+                            childEntry = await Entry.FromRepositoryContent(item, item.Path);
                     }
 
                     if (childEntry != null)
@@ -983,18 +948,27 @@ namespace WinPaletter.GitHub.IO
             return entry;
         }
 
-        public static async Task<GitHubFileSystemEntry> GetInfoCachedAsync(string path, bool forceRefresh = false)
+        public static async Task<Entry> GetInfoCachedAsync(string path, bool forceRefresh = false, CancellationTokenSource cts = null)
         {
+            cts ??= new();
+            cts.Token.ThrowIfCancellationRequested();
+
             if (!forceRefresh && _infoCache.TryGetValue(path, out var cached) && DateTime.UtcNow - cached.fetched < CacheTTL)
                 return cached.entry;
 
             try
             {
-                var contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path);
-                var entry = new GitHubFileSystemEntry
+                var contents = await Task.Run(() =>
                 {
-                    Content = contents.FirstOrDefault(),
-                    Type = contents.FirstOrDefault()?.Type == Octokit.ContentType.Dir ? ElementType.Dir : ElementType.File
+                    cts.Token.ThrowIfCancellationRequested();
+                    return Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path);
+                }, cts.Token);
+
+                var content = contents.FirstOrDefault();
+                var entry = new Entry
+                {
+                    Content = content,
+                    Type = content?.Type == Octokit.ContentType.Dir ? ElementType.Dir : ElementType.File
                 };
 
                 if (entry != null)
@@ -1009,15 +983,23 @@ namespace WinPaletter.GitHub.IO
             }
         }
 
-        public static async Task<List<GitHubFileSystemEntry>> GetEntriesCachedAsync(string path, bool forceRefresh = false)
+        public static async Task<List<Entry>> GetEntriesCachedAsync(string path, bool forceRefresh = false, CancellationTokenSource cts = null)
         {
+            cts ??= new();
+            cts.Token.ThrowIfCancellationRequested();
+
             if (!forceRefresh && _dirsCache.TryGetValue(path, out var cached) && DateTime.UtcNow - cached.fetched < CacheTTL)
                 return cached.entries;
 
             try
             {
-                var contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path);
-                var entries = contents.Select(c => new GitHubFileSystemEntry
+                var contents = await Task.Run(() =>
+                {
+                    cts.Token.ThrowIfCancellationRequested();
+                    return Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path);
+                }, cts.Token);
+
+                var entries = contents.Select(c => new Entry
                 {
                     Content = c,
                     Type = c.Type == Octokit.ContentType.Dir ? ElementType.Dir : ElementType.File
@@ -1029,7 +1011,7 @@ namespace WinPaletter.GitHub.IO
             catch
             {
                 _dirsCache.TryRemove(path, out _);
-                return new List<GitHubFileSystemEntry>();
+                return new List<Entry>();
             }
         }
 
@@ -1069,7 +1051,7 @@ namespace WinPaletter.GitHub.IO
             return output;
         }
 
-        private static void StoreInCache(GitHubFileSystemEntry entry, bool storeChildren = true)
+        private static void StoreInCache(Entry entry, bool storeChildren = true)
         {
             if (entry == null) return;
 
@@ -1104,389 +1086,6 @@ namespace WinPaletter.GitHub.IO
 
                 foreach (var key in _dirCache.Keys.Where(k => k.StartsWith(path + "/")).ToList())
                     _dirCache.TryRemove(key, out _);
-            }
-        }
-
-        private static string GetRelativePath(string fullPath)
-        {
-            if (fullPath.StartsWith(_root + "/") || fullPath.StartsWith(_root + "\\")) return fullPath.Substring(_root.Length + 1);
-            return fullPath;
-        }
-
-        private static string GetAbsolutePath(string relativePath)
-        {
-            if (string.IsNullOrEmpty(relativePath)) return _root;
-            return _root + "/" + relativePath.Replace("\\", "/");
-        }
-
-        public static async Task<List<string>> GetFilesAsync(string path, CancellationTokenSource cts = null) => await GetEntriesAsync(path, includeFiles: true, includeDirs: false, cts);
-
-        public static async Task<List<string>> GetFilesAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null) => await GetEntriesAsync(path, includeFiles: true, includeDirs: false, cts, reportProgress);
-
-        public static async Task<List<string>> GetDirectoriesAsync(string path, CancellationTokenSource cts = null) => await GetEntriesAsync(path, includeFiles: false, includeDirs: true, cts);
-
-        public static async Task<List<string>> GetDirectoriesAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null) => await GetEntriesAsync(path, includeFiles: false, includeDirs: true, cts, reportProgress);
-
-        public static async Task<List<string>> SearchFilesAsync(string pattern, string path = null, ListView list = null, CancellationTokenSource cts = null)
-        {
-            cts ??= new();
-            path ??= _root;
-            List<string> allFiles = await GetFilesAsync(path, cts);
-            string regexPattern = "^" + Regex.Escape(pattern).Replace("\\*", ".*") + "$";
-            Regex regex = new(regexPattern, RegexOptions.IgnoreCase);
-
-            var result = allFiles.Where(f => regex.IsMatch(Path.GetRelativePath(f))).ToList();
-
-            if (list != null)
-            {
-                list.Items.Clear();
-                foreach (var file in result)
-                {
-                    ListViewItem item = new(file) { Tag = file };
-                    list.Items.Add(item);
-                }
-            }
-
-            return result;
-        }
-
-        public static async Task<bool> FileExistsAsync(string path)
-        {
-            var file = await GetInfoCachedAsync(path, forceRefresh: true); // always check updates first
-            return file != null && file.Type == ElementType.File;
-        }
-
-        public static async Task<bool> DirectoryExistsAsync(string path)
-        {
-            var dir = await GetInfoCachedAsync(path, forceRefresh: true);
-            return dir != null && dir.Type == ElementType.Dir;
-        }
-
-        public static async Task UploadFileAsync(string githubPath, string localFilePathOrContent, bool isLocalFile = true, string commitMessage = null, CancellationTokenSource cts = null, Action<int> reportProgress = null)
-        {
-            cts ??= new();
-            commitMessage ??= $"Uploaded `{localFilePathOrContent}` into `{githubPath}` by {_owner}";
-            reportProgress?.Invoke(0);
-
-            try
-            {
-                string base64;
-
-                if (isLocalFile)
-                {
-                    using FileStream fs = new(localFilePathOrContent, System.IO.FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
-                    byte[] buff = new byte[fs.Length];
-                    int total = buff.Length;
-                    int read = 0;
-
-                    while (read < total)
-                    {
-                        cts.Token.ThrowIfCancellationRequested();
-                        int chunk = await fs.ReadAsync(buff, read, total - read, cts.Token).ConfigureAwait(false);
-                        if (chunk == 0) break;
-                        read += chunk;
-                        reportProgress?.Invoke((int)(read * 100L / total));
-                    }
-
-                    base64 = Convert.ToBase64String(buff);
-                }
-                else
-                {
-                    base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(localFilePathOrContent));
-                }
-
-                IRepositoryContentsClient client = Program.GitHub.Client.Repository.Content;
-                GitHubFileSystemEntry existing = await GetInfoCachedAsync(githubPath, forceRefresh: true); // update check
-
-                if (existing.Content == null)
-                {
-                    await client.CreateFile(_owner, _repo, githubPath, new(commitMessage, base64));
-                }
-                else
-                {
-                    await client.UpdateFile(_owner, _repo, githubPath, new(commitMessage, base64, existing.Content.Sha));
-                }
-
-                _infoCache.TryRemove(githubPath, out _); // refresh cache
-                reportProgress?.Invoke(100);
-            }
-            catch
-            {
-                reportProgress?.Invoke(0);
-            }
-        }
-
-        public static async Task DownloadFileAsync(string githubPath, string localSavePath, CancellationTokenSource cts = null, Action<int> reportProgress = null)
-        {
-            cts ??= new();
-            reportProgress?.Invoke(0);
-
-            var file = await GetInfoCachedAsync(githubPath, forceRefresh: true);
-            if (file == null || file.Type != ElementType.File) return;
-
-            byte[] bytes = Convert.FromBase64String(file.Content.Content);
-            using FileStream fs = new(localSavePath, System.IO.FileMode.Create, FileAccess.Write, FileShare.None);
-            int total = bytes.Length, written = 0, chunkSize = 4096;
-
-            while (written < total)
-            {
-                cts.Token.ThrowIfCancellationRequested();
-                int size = Math.Min(chunkSize, total - written);
-                await fs.WriteAsync(bytes, written, size, cts.Token);
-                written += size;
-                reportProgress?.Invoke((int)(written * 100L / total));
-            }
-
-            reportProgress?.Invoke(100);
-        }
-
-        public static async Task UploadDirectoryAsync(string localPath, string githubPath, CancellationTokenSource cts = null, Action<int> reportProgress = null)
-        {
-            cts ??= new();
-            var files = Directory.GetFiles(localPath, "*", SearchOption.AllDirectories);
-            int total = files.Length, processed = 0;
-
-            foreach (var file in files)
-            {
-                cts.Token.ThrowIfCancellationRequested();
-                string relative = file.Substring(localPath.Length).TrimStart('\\', '/').Replace("\\", "/");
-                string githubFile = $"{githubPath}/{relative}";
-
-                await UploadFileAsync(githubFile, file, true, "Bulk upload", cts, progress => { });
-                processed++;
-                reportProgress?.Invoke((int)(processed * 100L / total));
-            }
-        }
-
-        public static async Task DownloadDirectoryAsync(string githubPath, string localPath, CancellationTokenSource cts = null, Action<int> reportProgress = null)
-        {
-            cts ??= new();
-            var entries = await GetEntriesCachedAsync(githubPath, forceRefresh: true);
-            int total = entries.Count, processed = 0;
-
-            foreach (var entry in entries)
-            {
-                cts.Token.ThrowIfCancellationRequested();
-                string relative = entry.Path.Substring(githubPath.Length).TrimStart('/');
-                string localFile = System.IO.Path.Combine(localPath, relative.Replace("/", "\\"));
-
-                if (entry.Type == ElementType.Dir)
-                {
-                    Directory.CreateDirectory(localFile);
-                    await DownloadDirectoryAsync(entry.Path, localFile, cts, progress => { });
-                }
-                else
-                {
-                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(localFile));
-                    await DownloadFileAsync(entry.Path, localFile, cts, progress => { });
-                }
-
-                processed++;
-                reportProgress?.Invoke((int)(processed * 100L / total));
-            }
-        }
-
-        public static async Task MoveDirectoryAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = null)
-        {
-            cts ??= new();
-            reportProgress?.Invoke(0);
-
-            var entries = new List<GitHubFileSystemEntry>();
-            await foreach (var entry in EnumerateEntriesAsync(sourcePath, recursive: true, ct: cts.Token))
-            {
-                entries.Add(entry);
-            }
-
-            int total = entries.Count, processed = 0;
-
-            foreach (var entry in entries)
-            {
-                cts.Token.ThrowIfCancellationRequested();
-                string relative = entry.Path.Substring(sourcePath.Length).TrimStart('/');
-                string targetPath = $"{destPath}/{relative}";
-
-                if (entry.Type == ElementType.Dir)
-                    await CreateDirectoryAsync(targetPath);
-                else
-                    await CopyFileAsync(entry.Path, targetPath, null, cts);
-
-                processed++;
-                reportProgress?.Invoke((int)((long)processed * 100 / total));
-            }
-
-            await DeleteDirectoryAsync(sourcePath, null, cts);
-            reportProgress?.Invoke(100);
-        }
-
-        public static async Task CopyDirectoryAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = null)
-        {
-            cts ??= new();
-            reportProgress?.Invoke(0);
-
-            var entries = new List<GitHubFileSystemEntry>();
-            await foreach (var entry in EnumerateEntriesAsync(sourcePath, recursive: true, ct: cts.Token))
-            {
-                entries.Add(entry);
-            }
-
-            int total = entries.Count, processed = 0;
-
-            foreach (var entry in entries)
-            {
-                cts.Token.ThrowIfCancellationRequested();
-                string relative = entry.Path.Substring(sourcePath.Length).TrimStart('/');
-                string targetPath = $"{destPath}/{relative}";
-
-                if (entry.Type == ElementType.Dir)
-                    await CreateDirectoryAsync(targetPath);
-                else
-                    await CopyFileAsync(entry.Path, targetPath, null, cts);
-
-                processed++;
-                reportProgress?.Invoke((int)((long)processed * 100 / total));
-            }
-
-            reportProgress?.Invoke(100);
-        }
-
-        public static async Task DeleteFileAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null)
-        {
-            cts ??= new();
-            reportProgress?.Invoke(0);
-
-            var file = await GetInfoCachedAsync(path, forceRefresh: true);
-            if (file == null || file.Type != ElementType.File)
-            {
-                reportProgress?.Invoke(100);
-                return;
-            }
-
-            await Program.GitHub.Client.Repository.Content.DeleteFile(_owner, _repo, path, new($"{_owner} deleted `{path}`", file.CommitSha));
-            _infoCache.TryRemove(path, out _);
-            reportProgress?.Invoke(100);
-        }
-
-        public static async Task DeleteDirectoryAsync(string path, Action<int> reportProgress = null, CancellationTokenSource cts = null)
-        {
-            cts ??= new();
-            reportProgress?.Invoke(0);
-
-            // Collect entries manually
-            var entries = new List<GitHubFileSystemEntry>();
-            await foreach (var entry in EnumerateEntriesAsync(path, recursive: true, ct: cts.Token))
-            {
-                entries.Add(entry);
-            }
-
-            int total = entries.Count;
-            int processed = 0;
-
-            foreach (var entry in entries)
-            {
-                cts.Token.ThrowIfCancellationRequested();
-                if (entry.Type == ElementType.File)
-                    await DeleteFileAsync(entry.Path, cts, reportProgress);
-
-                processed++;
-                reportProgress?.Invoke((int)((long)processed * 100 / total));
-            }
-
-            // Delete placeholder directory if any
-            await DeleteFileAsync(path, cts, reportProgress);
-            reportProgress?.Invoke(100);
-        }
-
-        public static async Task<string> ReadFileAsync(string path, Encoding encoding = null)
-        {
-            encoding ??= Encoding.UTF8;
-            var entry = await GetInfoCachedAsync(path, forceRefresh: true);
-            if (entry?.Type != ElementType.File || string.IsNullOrEmpty(entry.Content?.Content))
-                return null;
-
-            byte[] bytes = Convert.FromBase64String(entry.Content.Content);
-            return encoding.GetString(bytes);
-        }
-
-        public static async Task<byte[]> ReadFileBytesAsync(string path)
-        {
-            var entry = await GetInfoCachedAsync(path, forceRefresh: true);
-            if (entry?.Type != ElementType.File || string.IsNullOrEmpty(entry.Content?.Content))
-                return null;
-            return Convert.FromBase64String(entry.Content.Content);
-        }
-
-        public static async Task MoveFileAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = default)
-        {
-            reportProgress?.Invoke(0);
-            var contents = await ReadFileAsync(sourcePath);
-            if (contents != null)
-            {
-                await UploadFileAsync(destPath, contents, false, commitMessage: $"Move `{sourcePath}` → `{destPath}` by {_owner}", cts, reportProgress);
-                await DeleteFileAsync(sourcePath, cts, reportProgress);
-            }
-            reportProgress?.Invoke(100);
-        }
-
-        public static async Task CopyFileAsync(string sourcePath, string destPath, Action<int> reportProgress = null, CancellationTokenSource cts = default)
-        {
-            reportProgress?.Invoke(0);
-            var contents = await ReadFileAsync(sourcePath);
-            if (contents != null)
-                await UploadFileAsync(destPath, contents, false, commitMessage: $"Copy `{sourcePath}` → `{destPath}` by {_owner}", cts, reportProgress);
-            reportProgress?.Invoke(100);
-        }
-
-        public static async Task CreateDirectoryAsync(string path)
-        {
-            // GitHub does not allow empty directories; create a placeholder file
-            string placeholder = $"{path}/.gitkeep";
-            if (!await FileExistsAsync(placeholder)) await UploadFileAsync(placeholder, string.Empty, isLocalFile: false, commitMessage: $"Create directory `{path}` by {_owner}");
-        }
-
-        public static async IAsyncEnumerable<string> EnumerateFilesAsync(string path, string searchPattern = "*", bool recursive = false, [EnumeratorCancellation] CancellationToken ct = default)
-        {
-            Regex regex = new("^" + Regex.Escape(searchPattern).Replace("\\*", ".*").Replace("\\?", ".") + "$", RegexOptions.IgnoreCase);
-
-            var entries = await GetEntriesCachedAsync(path, forceRefresh: true);
-            foreach (var entry in entries)
-            {
-                ct.ThrowIfCancellationRequested();
-
-                if (entry.Type == ElementType.File && regex.IsMatch(System.IO.Path.GetFileName(entry.Path)))
-                    yield return entry.Path;
-
-                if (recursive && entry.Type == ElementType.Dir)
-                    await foreach (var sub in EnumerateFilesAsync(entry.Path, searchPattern, true, ct))
-                        yield return sub;
-            }
-        }
-
-        public static async IAsyncEnumerable<string> EnumerateDirectoriesAsync(string path, bool recursive = false, [EnumeratorCancellation] CancellationToken ct = default)
-        {
-            var entries = await GetEntriesCachedAsync(path, forceRefresh: true);
-            foreach (var entry in entries)
-            {
-                ct.ThrowIfCancellationRequested();
-                if (entry.Type == ElementType.Dir)
-                {
-                    yield return entry.Path;
-                    if (recursive)
-                        await foreach (var sub in EnumerateDirectoriesAsync(entry.Path, true, ct))
-                            yield return sub;
-                }
-            }
-        }
-
-        public static async IAsyncEnumerable<GitHubFileSystemEntry> EnumerateEntriesAsync(string path, bool recursive = false, [EnumeratorCancellation] CancellationToken ct = default)
-        {
-            var entries = await GetEntriesCachedAsync(path, forceRefresh: true);
-            foreach (var entry in entries)
-            {
-                ct.ThrowIfCancellationRequested();
-                yield return entry;
-                if (recursive && entry.Type == ElementType.Dir)
-                    await foreach (var sub in EnumerateEntriesAsync(entry.Path, true, ct))
-                        yield return sub;
             }
         }
     }

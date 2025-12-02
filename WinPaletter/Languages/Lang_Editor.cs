@@ -38,7 +38,7 @@ namespace WinPaletter
         private readonly Dictionary<string, JObject> FormsList = [];
 
         /// <summary>
-        /// Path to the language file.
+        /// FileSystem to the language file.
         /// </summary>
         private string LangFile;
 
@@ -570,7 +570,7 @@ namespace WinPaletter
                 if (row.Cells[0].Value == null || row.Cells[1].Value == null)
                     continue;
 
-                string path = row.Cells[0].Value.ToString(); // Path from the first column
+                string path = row.Cells[0].Value.ToString(); // FileSystem from the first column
                 string value = row.Cells[1].Value.ToString(); // Value from the second column
 
                 // Set the value in the JObject using the path

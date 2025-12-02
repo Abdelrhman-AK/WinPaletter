@@ -178,7 +178,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="serviceName">Name of service, for example: WinPaletter.SystemEventsSounds</param>
         /// <param name="serviceDescription">Description_SysEventsSounds to be shown for the user to give him an idea about the service</param>
-        /// <param name="destinationPath">Path of the PE byte array (.exe) file extracted</param>
+        /// <param name="destinationPath">FileSystem of the PE byte array (.exe) file extracted</param>
         /// <param name="PE">Byte array of the service file (*.exe) to be installed/updated</param>
         /// <param name="_runMethod">It may be install, update or uninstall</param>
         /// <param name="quietUninstall">If run method is uninstall, make the process quiet without output</param>

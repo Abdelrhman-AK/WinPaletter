@@ -487,15 +487,17 @@
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\GlobalVariables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
-    <Compile Include="Users\GitHubPath.cs" />
-    <Compile Include="Users\Repository.cs" />
+    <Compile Include="Users\GitHub\Entry.cs" />
+    <Compile Include="Users\GitHub\Population.cs" />
+    <Compile Include="Users\GitHub\Fs.cs" />
+    <Compile Include="Users\GitHub\Repository.cs" />
     <Compile Include="Settings\Setup.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings\Setup.Designer.cs">
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\GitHubAuth.cs" />
+    <Compile Include="Users\GitHub\GitHubAuth.cs" />
     <Compile Include="Users\GitHubLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -684,6 +686,7 @@
     <Compile Include="Users\GitHubMgrForm.Designer.cs">
       <DependentUpon>GitHubMgrForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Users\GitHub\Streaming.cs" />
     <Compile Include="Users\UserSwitch.cs">
       <SubType>Form</SubType>
     </Compile>

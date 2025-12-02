@@ -112,32 +112,32 @@ namespace WinPaletter.Theme.Structures
         public Dictionary<string, string> ExplorerWrapper = [];
 
         /// <summary>
-        /// Path to Computer icon
+        /// FileSystem to Computer icon
         /// </summary>
         public string Computer = DesktopCLSIDs.ElementAt(0).Item3;
 
         /// <summary>
-        /// Path to Control Panel icon
+        /// FileSystem to Control Panel icon
         /// </summary>
         public string ControlPanel = DesktopCLSIDs.ElementAt(1).Item3;
 
         /// <summary>
-        /// Path to Network icon
+        /// FileSystem to Network icon
         /// </summary>
         public string Network = DesktopCLSIDs.ElementAt(2).Item3;
 
         /// <summary>
-        /// Path to User icon
+        /// FileSystem to User icon
         /// </summary>
         public string User = DesktopCLSIDs.ElementAt(3).Item3;
 
         /// <summary>
-        /// Path to Recycle Bin empty icon
+        /// FileSystem to Recycle Bin empty icon
         /// </summary>
         public string RecycleBinEmpty = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[0];
 
         /// <summary>
-        /// Path to Recycle Bin full icon
+        /// FileSystem to Recycle Bin full icon
         /// </summary>
         public string RecycleBinFull = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[1];
 
