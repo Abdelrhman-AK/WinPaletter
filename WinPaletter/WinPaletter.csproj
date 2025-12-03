@@ -488,8 +488,9 @@
     <Compile Include="Program\GlobalVariables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
     <Compile Include="Users\GitHub\Entry.cs" />
-    <Compile Include="Users\GitHub\Population.cs" />
-    <Compile Include="Users\GitHub\Fs.cs" />
+    <Compile Include="Users\GitHub\Navigation.cs" />
+    <Compile Include="Users\GitHub\VirtualRepositoryExplorer.cs" />
+    <Compile Include="Users\GitHub\FileSystem.cs" />
     <Compile Include="Users\GitHub\Repository.cs" />
     <Compile Include="Settings\Setup.cs">
       <SubType>Form</SubType>
