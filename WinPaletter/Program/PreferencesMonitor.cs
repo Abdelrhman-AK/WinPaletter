@@ -140,30 +140,28 @@ namespace WinPaletter
         /// <param name="TM"></param>
         /// <param name="previewConfig"></param>
         /// <returns></returns>
-        public static Bitmap FetchSuitableWallpaper(Manager TM, PreviewHelpers.WindowStyle previewConfig)
+        public static Bitmap FetchSuitableWallpaper(Manager themeMgr, PreviewHelpers.WindowStyle previewConfig)
         {
             Log?.Write(LogEventLevel.Information, $"Fetching suitable wallpaper for {previewConfig}");
 
             // Create a PictureBox to mimic the Windows desktop ratio and wallpaper style
-            using (PictureBox picbox = new() { Size = Program.PreviewSize, BackColor = TM.Win32.Background })
+            using (PictureBox picbox = new() { Size = PreviewSize, BackColor = themeMgr.Win32.Background })
             {
                 Bitmap wallpaper;
 
-                if (!TM.Wallpaper.Enabled)
+                if (!themeMgr.Wallpaper.Enabled)
                 {
                     wallpaper = ThumbnailWallpaper;
                 }
                 else
                 {
                     // If the theme has a tinted wallpaper, use it. Otherwise, use the theme's wallpaper. This function will return null if wallpaper tint is not enabled.
-                    wallpaper = GetTintedWallpaper(TM, previewConfig);
-
                     // If the wallpaper is not tinted, get the wallpaper according to the theme manager settings.
-                    wallpaper ??= TM.Wallpaper.WallpaperType switch
+                    wallpaper = GetTintedWallpaper(themeMgr, previewConfig) ?? themeMgr.Wallpaper.WallpaperType switch
                     {
-                        Theme.Structures.Wallpaper.WallpaperTypes.Picture when File.Exists(TM.Wallpaper.ImageFile) => BitmapMgr.Load(TM.Wallpaper.ImageFile),
+                        Theme.Structures.Wallpaper.WallpaperTypes.Picture when File.Exists(themeMgr.Wallpaper.ImageFile) => BitmapMgr.Load(themeMgr.Wallpaper.ImageFile),
                         Theme.Structures.Wallpaper.WallpaperTypes.SolidColor => null,
-                        Theme.Structures.Wallpaper.WallpaperTypes.SlideShow => FetchSlideShowWallpaper(TM),
+                        Theme.Structures.Wallpaper.WallpaperTypes.SlideShow => FetchSlideShowWallpaper(themeMgr),
                         _ => ThumbnailWallpaper
                     };
                 }
@@ -171,7 +169,7 @@ namespace WinPaletter
                 // If the wallpaper is not null, apply the wallpaper style (fill/fit/stretch/tile/...).
                 if (wallpaper != null)
                 {
-                    wallpaper = ApplyStyleToWallpaper(wallpaper, picbox.Size, TM.Wallpaper.WallpaperStyle);
+                    wallpaper = ApplyStyleToWallpaper(wallpaper, picbox.Size, themeMgr.Wallpaper.WallpaperStyle);
                 }
 
                 picbox.Image = wallpaper;
@@ -201,6 +199,11 @@ namespace WinPaletter
             {
                 Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 10's section.");
                 return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W10);
+            }
+            else if (previewConfig == PreviewHelpers.WindowStyle.W8 && TM.WallpaperTone_W8.Enabled)
+            {
+                Log?.Write(LogEventLevel.Information, "Fetching a tinted wallpaper for preview as it is enabled in the theme manager of Windows 8's section.");
+                return PreviewHelpers.GetTintedWallpaper(TM.WallpaperTone_W81);
             }
             else if (previewConfig == PreviewHelpers.WindowStyle.W81 && TM.WallpaperTone_W81.Enabled)
             {

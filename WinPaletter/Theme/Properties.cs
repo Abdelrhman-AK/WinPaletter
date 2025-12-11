@@ -65,6 +65,11 @@ namespace WinPaletter.Theme
         public Windows81 Windows81 { get; set; } = new();
 
         /// <summary>
+        /// Structure instance that contains data about Windows 8.1 LogonUI appearance, and it can be customized.
+        /// </summary>
+        public Structures.LogonUI81 LogonUI81 { get; set; } = new();
+
+        /// <summary>
         /// Structure instance that contains data about Windows 8 colors and appearance, and it can be customized.
         /// </summary>
         public Windows8 Windows8 { get; set; } = new();
@@ -73,6 +78,11 @@ namespace WinPaletter.Theme
         /// Structure instance that contains data about Windows 7 colors and appearance, and it can be customized.
         /// </summary>
         public Windows7 Windows7 { get; set; } = new();
+
+        /// <summary>
+        /// Structure instance that contains data about Windows 7 LogonUI appearance, and it can be customized.
+        /// </summary>
+        public Structures.LogonUI7 LogonUI7 { get; set; } = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows Vista colors and appearance, and it can be customized.
@@ -85,6 +95,11 @@ namespace WinPaletter.Theme
         public WindowsXP WindowsXP { get; set; } = new();
 
         /// <summary>
+        /// Structure instance that contains data about Windows XP LogonUI appearance, and it can be customized.
+        /// </summary>
+        public Structures.LogonUIXP LogonUIXP { get; set; } = new();
+
+        /// <summary>
         /// Structure instance that contains data about classic Windows colors, and it can be customized.
         /// </summary>
         public Structures.Win32UI Win32 { get; set; } = new();
@@ -93,21 +108,6 @@ namespace WinPaletter.Theme
         /// Structure instance that contains data about Windows Accessibility, and it can be customized.
         /// </summary>
         public Accessibility Accessibility { get; set; } = new();
-
-        /// <summary>
-        /// Structure instance that contains data about Windows 8.1 LogonUI appearance, and it can be customized.
-        /// </summary>
-        public Structures.LogonUI81 LogonUI81 { get; set; } = new();
-
-        /// <summary>
-        /// Structure instance that contains data about Windows 7 LogonUI appearance, and it can be customized.
-        /// </summary>
-        public Structures.LogonUI7 LogonUI7 { get; set; } = new();
-
-        /// <summary>
-        /// Structure instance that contains data about Windows XP LogonUI appearance, and it can be customized.
-        /// </summary>
-        public Structures.LogonUIXP LogonUIXP { get; set; } = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows wallpaper, and it can be customized.

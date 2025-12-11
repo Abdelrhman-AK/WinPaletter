@@ -68,7 +68,6 @@ namespace WinPaletter.Theme
                                 LogonUI11.Load("11", @default.LogonUI11);
                                 LogonUI10.Load("10", @default.LogonUI10);
                                 LogonUI81.Load(@default.LogonUI81);
-                                //LogonUI8.Load(@default.LogonUI8);
                                 LogonUI7.Load(@default.LogonUI7);
                                 LogonUIXP.Load(@default.LogonUIXP);
                                 Win32.Load();
@@ -219,7 +218,7 @@ namespace WinPaletter.Theme
                                     ExtendTerminalComptability(ref json);
 
                                     // Set the value of the current instance's field from theme File JSON data
-                                    SetThemeValues(json);
+                                    JsonConvert.PopulateObject(json.ToString(), this);
                                 }
                                 else if (GetEdition(File) == Editions.Legacy)
                                 {
@@ -591,30 +590,6 @@ namespace WinPaletter.Theme
                     ((JObject)json[edition]).Remove("Profiles");
 
                     json[edition]["profiles"] = JObject.FromObject(Profiles);
-                }
-            }
-        }
-
-        private void SetThemeValues(JObject json)
-        {
-            Manager mgr = json.ToObject<Manager>();
-
-            if (mgr == null) return;
-
-            // Copy all writable public properties
-            foreach (PropertyInfo prop in typeof(Manager).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanWrite))
-            {
-                try
-                {
-                    //Program.Log?.Write(LogEventLevel.Information, $"Setting field `{prop.Name}` with value `{json[prop.Name]}` of type `{prop.Name}` from theme File JSON data.");
-                    prop.SetValue(this, prop.GetValue(mgr));
-                }
-
-                catch (Exception ex)
-                {
-                    Program.Log?.Write(LogEventLevel.Error, $"Error setting field `{prop.Name}`: {ex.Message}");
-                    // Handle exceptions and add them to the error list
-                    Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
             }
         }
