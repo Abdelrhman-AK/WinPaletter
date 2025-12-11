@@ -485,7 +485,7 @@
     <Compile Include="Program\TypesExtensions\Types.cs" />
     <Compile Include="Program\Classes\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
-    <Compile Include="Program\GlobalVariables\Links.cs" />
+    <Compile Include="Program\Variables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
     <Compile Include="Users\GitHub\Entry.cs" />
     <Compile Include="Users\GitHub\Navigation.cs" />
@@ -697,12 +697,12 @@
     <Compile Include="Forms.cs" />
     <Compile Include="Program\Classes\DWM.cs" />
     <Compile Include="Program\Classes\RGBComparer.cs" />
-    <Compile Include="Program\GlobalVariables\ColorClipboard.cs" />
-    <Compile Include="Program\GlobalVariables\Exceptions.cs" />
-    <Compile Include="Program\GlobalVariables\Fonts.cs" />
-    <Compile Include="Program\GlobalVariables\ImageLists.cs" />
-    <Compile Include="Program\GlobalVariables\SysPaths.cs" />
-    <Compile Include="Program\GlobalVariables\OS.cs" />
+    <Compile Include="Program\Variables\ColorClipboard.cs" />
+    <Compile Include="Program\Variables\Exceptions.cs" />
+    <Compile Include="Program\Variables\Fonts.cs" />
+    <Compile Include="Program\Variables\ImageLists.cs" />
+    <Compile Include="Program\Variables\SysPaths.cs" />
+    <Compile Include="Program\Variables\OS.cs" />
     <Compile Include="Program\Arguments.cs" />
     <Compile Include="Program\AssemblyLoader.cs" />
     <Compile Include="Program\ExceptionsHandler.cs" />
@@ -714,7 +714,7 @@
     <Compile Include="Program\PreferencesMonitor.cs" />
     <Compile Include="Program\Tasks.cs" />
     <Compile Include="Program\Uninstaller.cs" />
-    <Compile Include="Program\GlobalVariables\Variables.cs" />
+    <Compile Include="Program\Variables\Variables.cs" />
     <Compile Include="GUI\Style\DefaultColors.cs" />
     <Compile Include="GUI\Style\Dialogs\InputBox.cs" />
     <Compile Include="GUI\Style\Dialogs\MsgBox.cs" />

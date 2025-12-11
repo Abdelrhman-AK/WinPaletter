@@ -189,7 +189,7 @@
             this.Window2.Metrics_CaptionHeight = 22;
             this.Window2.Metrics_PaddedBorderWidth = 4;
             this.Window2.Name = "Window2";
-            this.Window2.Padding = new System.Windows.Forms.Padding(4, 40, 4, 4);
+            this.Window2.Padding = new System.Windows.Forms.Padding(11, 40, 11, 11);
             this.Window2.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W11;
             this.Window2.Radius = 5;
             this.Window2.Shadow = true;
@@ -223,7 +223,7 @@
             this.Window1.Metrics_CaptionHeight = 22;
             this.Window1.Metrics_PaddedBorderWidth = 4;
             this.Window1.Name = "Window1";
-            this.Window1.Padding = new System.Windows.Forms.Padding(4, 40, 4, 4);
+            this.Window1.Padding = new System.Windows.Forms.Padding(11, 40, 11, 11);
             this.Window1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W11;
             this.Window1.Radius = 5;
             this.Window1.Shadow = true;
@@ -244,10 +244,10 @@
             this.Panel3.Controls.Add(this.Label8);
             this.Panel3.Controls.Add(this.setting_icon_preview);
             this.Panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Panel3.Location = new System.Drawing.Point(4, 40);
+            this.Panel3.Location = new System.Drawing.Point(11, 40);
             this.Panel3.Name = "Panel3";
             this.Panel3.Padding = new System.Windows.Forms.Padding(1);
-            this.Panel3.Size = new System.Drawing.Size(181, 78);
+            this.Panel3.Size = new System.Drawing.Size(167, 71);
             this.Panel3.TabIndex = 0;
             // 
             // Label8
@@ -259,7 +259,7 @@
             this.Label8.ForeColor = System.Drawing.Color.White;
             this.Label8.Location = new System.Drawing.Point(1, 46);
             this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(179, 31);
+            this.Label8.Size = new System.Drawing.Size(165, 24);
             this.Label8.TabIndex = 15;
             this.Label8.Text = "This is a setting icon";
             this.Label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -273,7 +273,7 @@
             this.setting_icon_preview.ForeColor = System.Drawing.Color.DodgerBlue;
             this.setting_icon_preview.Location = new System.Drawing.Point(1, 1);
             this.setting_icon_preview.Name = "setting_icon_preview";
-            this.setting_icon_preview.Size = new System.Drawing.Size(179, 45);
+            this.setting_icon_preview.Size = new System.Drawing.Size(165, 45);
             this.setting_icon_preview.TabIndex = 14;
             this.setting_icon_preview.Text = "";
             this.setting_icon_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -286,9 +286,9 @@
             this.lnk_preview.DrawOnGlass = false;
             this.lnk_preview.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lnk_preview.ForeColor = System.Drawing.Color.Brown;
-            this.lnk_preview.Location = new System.Drawing.Point(4, 118);
+            this.lnk_preview.Location = new System.Drawing.Point(11, 111);
             this.lnk_preview.Name = "lnk_preview";
-            this.lnk_preview.Size = new System.Drawing.Size(181, 25);
+            this.lnk_preview.Size = new System.Drawing.Size(167, 25);
             this.lnk_preview.TabIndex = 16;
             this.lnk_preview.Text = "Settings link preview";
             this.lnk_preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -300,6 +300,7 @@
             this.tabs_preview.Controls.Add(this.TabPage7);
             this.tabs_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs_preview.Location = new System.Drawing.Point(0, 0);
+            this.tabs_preview.Multiline = true;
             this.tabs_preview.Name = "tabs_preview";
             this.tabs_preview.SelectedIndex = 0;
             this.tabs_preview.Size = new System.Drawing.Size(528, 297);
@@ -319,7 +320,7 @@
             // pnl_preview
             // 
             this.pnl_preview.BackColor = System.Drawing.Color.Black;
-            this.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnl_preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pnl_preview.Controls.Add(this.WXP_Alert);
             this.pnl_preview.Controls.Add(this.Window2);
             this.pnl_preview.Controls.Add(this.ActionCenter);
@@ -345,7 +346,7 @@
             // pnl_preview_classic
             // 
             this.pnl_preview_classic.BackColor = System.Drawing.Color.Black;
-            this.pnl_preview_classic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnl_preview_classic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pnl_preview_classic.Controls.Add(this.ClassicWindow1);
             this.pnl_preview_classic.Controls.Add(this.ClassicWindow2);
             this.pnl_preview_classic.Controls.Add(this.ClassicTaskbar);

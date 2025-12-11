@@ -206,7 +206,7 @@ namespace WinPaletter.Theme
                                     // Replace %WinPaletterAppData% variable with a valid AppData folder path
                                     ReplaceWPAppData(ref content_list);
 
-                                    // reset content as content_list has been modified
+                                    // Reset content as content_list has been modified
                                     content = string.Join("\r\n", content_list);
 
                                     // Parse the decompressed content_list as JSON

@@ -1,4 +1,5 @@
 ﻿using FluentTransitions;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using WinPaletter.Theme;
+using WinPaletter.Theme.Structures;
 using WinPaletter.TypesExtensions;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;

@@ -155,15 +155,25 @@ namespace WinPaletter
                 }
                 else
                 {
-                    // If the theme has a tinted wallpaper, use it. Otherwise, use the theme's wallpaper. This function will return null if wallpaper tint is not enabled.
-                    // If the wallpaper is not tinted, get the wallpaper according to the theme manager settings.
-                    wallpaper = GetTintedWallpaper(themeMgr, previewConfig) ?? themeMgr.Wallpaper.WallpaperType switch
+                    // Try tinted wallpaper first
+                    Bitmap tinted = GetTintedWallpaper(themeMgr, previewConfig);
+                    if (tinted != null) return tinted;
+
+                    // Determine wallpaper type
+                    switch (themeMgr.Wallpaper.WallpaperType)
                     {
-                        Theme.Structures.Wallpaper.WallpaperTypes.Picture when File.Exists(themeMgr.Wallpaper.ImageFile) => BitmapMgr.Load(themeMgr.Wallpaper.ImageFile),
-                        Theme.Structures.Wallpaper.WallpaperTypes.SolidColor => null,
-                        Theme.Structures.Wallpaper.WallpaperTypes.SlideShow => FetchSlideShowWallpaper(themeMgr),
-                        _ => ThumbnailWallpaper
-                    };
+                        case Theme.Structures.Wallpaper.WallpaperTypes.Picture:
+                            return BitmapMgr.Load(themeMgr.Wallpaper.ImageFile);
+
+                        case Theme.Structures.Wallpaper.WallpaperTypes.SlideShow:
+                            return FetchSlideShowWallpaper(themeMgr);
+
+                        case Theme.Structures.Wallpaper.WallpaperTypes.SolidColor:
+                            return null;
+                    }
+
+                    // Fallback
+                    return ThumbnailWallpaper;
                 }
 
                 // If the wallpaper is not null, apply the wallpaper style (fill/fit/stretch/tile/...).
