@@ -33,6 +33,12 @@ public partial class Localizer
             public string Explorer_DetailsHeader_Type { get; set; } = "Type";
             public string Explorer_DetailsHeader_Size { get; set; } = "Size";
             public string Explorer_DetailsHeader_URL { get; set; } = "URL";
+            public string Explorer_Items { get; set; } = "items";
+            public string Explorer_Item { get; set; } = "item";
+            public string Explorer_Selected { get; set; } = "selected";
+            public string ExplorerStatus_Forked { get; set; } = "Themes repository is forked.";
+            public string ExplorerStatus_NotForked { get; set; } = "Themes repository is not forked.";
+            public string ExplorerStatus_SyncAndForkToManage { get; set; } = "Fork to manage your uploaded themes.";
         }
     }
 }

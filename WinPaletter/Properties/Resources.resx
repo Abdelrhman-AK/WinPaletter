@@ -2929,12 +2929,6 @@
   <data name="file_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\file_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="folder_web_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\folder_web_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="folder_web_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\folder_web_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="GitHub_SignInForFeatures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GitHub_SignInForFeatures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -3050,9 +3044,6 @@
   </data>
   <data name="Glyph_Explorer_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Glyph_Explorer_Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Glyph_Explorer_View" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Glyph_Explorer_View.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Forward" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Advanced Windows Appearance Editor")]
 [assembly: AssemblyCompany("Abdelrhman-AK")]
 [assembly: AssemblyProduct("WinPaletter")]
-[assembly: AssemblyCopyright("Copyright ©  2022-2025")]
+[assembly: AssemblyCopyright("Copyright ©  2022-2026")]
 [assembly: AssemblyTrademark("WinPaletter")]
 
 [assembly: ComVisible(false)]

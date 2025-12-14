@@ -320,6 +320,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ColorItemContextMenu.resx</DependentUpon>
     </Compile>
+    <Compile Include="Assets\GitHubMgr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GitHubMgr.resx</DependentUpon>
+    </Compile>
     <Compile Include="Assets\Store.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1286,6 +1291,10 @@
     <EmbeddedResource Include="Assets\ColorItemContextMenu.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ColorItemContextMenu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\GitHubMgr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GitHubMgr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Themes_Banners.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -163,26 +163,6 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap folder_web_16 {
-            get {
-                object obj = ResourceManager.GetObject("folder_web_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap folder_web_48 {
-            get {
-                object obj = ResourceManager.GetObject("folder_web_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap GitHub_SignInForFeatures {
             get {
                 object obj = ResourceManager.GetObject("GitHub_SignInForFeatures", resourceCulture);
@@ -346,16 +326,6 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap Glyph_Explorer_Up {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Explorer_Up", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Glyph_Explorer_View {
-            get {
-                object obj = ResourceManager.GetObject("Glyph_Explorer_View", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

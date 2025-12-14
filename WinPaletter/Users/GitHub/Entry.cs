@@ -72,6 +72,11 @@ namespace WinPaletter.GitHub
             public RepositoryContent Content { get; set; }
 
             /// <summary>
+            /// Gets or sets the content information for this entry.
+            /// </summary>
+            public RepositoryContentInfo ContentInfo { get; set; }
+
+            /// <summary>
             /// Gets or sets the SHA of the latest commit affecting this entry.
             /// </summary>
             /// <seealso cref="Octokit.GitHubCommit"/>
@@ -144,7 +149,7 @@ namespace WinPaletter.GitHub
             public static async Task<Entry> FromRepositoryContent(RepositoryContent content, string path)
             {
                 GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit
-                    .GetAll(_owner, _repo, new CommitRequest { Path = path }))
+                    .GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = path }))
                     .FirstOrDefault();
 
                 EntryType type = content.Type.StringValue.ToLowerInvariant() switch
@@ -161,6 +166,7 @@ namespace WinPaletter.GitHub
                     Path = content.Path,
                     Type = type,
                     Content = content.Type == Octokit.ContentType.File ? content : null,
+                    ContentInfo = new RepositoryContentInfo(content.Name, content.Path, content.Sha, content.Size, content.Type.Value, content.DownloadUrl, content.Url, content.GitUrl, content.HtmlUrl),
                     CommitSha = latestCommit?.Sha,
                     Author = latestCommit?.Commit.Author?.Name,
                     LastModified = latestCommit?.Commit.Author?.Date,

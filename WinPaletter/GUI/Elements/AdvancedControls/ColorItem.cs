@@ -236,7 +236,6 @@ namespace WinPaletter.UI.Controllers
             Mix
         }
 
-
         protected override void OnMouseMove(MouseEventArgs e)
         {
             mousePosition_afterDrag = MousePosition;

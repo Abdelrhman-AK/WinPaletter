@@ -11,7 +11,7 @@ Please review both licenses below.
 MIT License
 ===========
 
-Copyright (c) 2022–2025 Abdelrhman-AK
+Copyright (c) 2022–2026 Abdelrhman-AK
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the “Software”), to deal

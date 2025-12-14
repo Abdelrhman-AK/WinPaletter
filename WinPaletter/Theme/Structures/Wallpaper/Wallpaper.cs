@@ -113,6 +113,7 @@ namespace WinPaletter.Theme.Structures
             Wallpaper_Slideshow_Images = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Wallpaper", "Wallpaper_Slideshow_Images", @default.Wallpaper_Slideshow_Images);
 
             ImageFile = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", @default.ImageFile);
+            WallpaperType = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", @default.WallpaperType);
 
             string slideshow_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper";
             string spotlight_img = $@"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets";
@@ -121,6 +122,7 @@ namespace WinPaletter.Theme.Structures
             if (ImageFile.StartsWith(slideshow_img, StringComparison.OrdinalIgnoreCase) || ImageFile.StartsWith(spotlight_img, StringComparison.OrdinalIgnoreCase) || !File.Exists(ImageFile))
             {
                 ImageFile = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "CurrentWallpaperPath", @default.ImageFile);
+                if (WallpaperType == WallpaperTypes.SlideShow && string.IsNullOrWhiteSpace(ImageFile)) ImageFile = slideshow_img;
             }
 
             if (ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0") == "1")
@@ -132,11 +134,8 @@ namespace WinPaletter.Theme.Structures
                 WallpaperStyle = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", @default.WallpaperStyle);
             }
 
-            WallpaperType = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", @default.WallpaperType);
-
             Wallpaper_Slideshow_Interval = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Interval", @default.Wallpaper_Slideshow_Interval);
             Wallpaper_Slideshow_Shuffle = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Personalization\Desktop Slideshow", "Shuffle", @default.Wallpaper_Slideshow_Shuffle);
-
         }
 
         /// <summary>

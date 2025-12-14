@@ -53,11 +53,11 @@ namespace WinPaletter.GitHub
             string base64Content = Convert.ToBase64String(ms.ToArray());
 
             var blob = new Octokit.NewBlob { Content = base64Content, Encoding = Octokit.EncodingType.Base64 };
-            var blobRef = await client.Git.Blob.Create(_owner, _repo, blob);
+            var blobRef = await client.Git.Blob.Create(_owner, GitHub.Repository.repositoryName, blob);
 
-            var masterRef = await client.Git.Reference.Get(_owner, _repo, $"heads/{_branch}");
-            var latestCommit = await client.Git.Commit.Get(_owner, _repo, masterRef.Object.Sha);
-            var baseTree = await client.Git.Tree.Get(_owner, _repo, latestCommit.Tree.Sha);
+            var masterRef = await client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
+            var latestCommit = await client.Git.Commit.Get(_owner, GitHub.Repository.repositoryName, masterRef.Object.Sha);
+            var baseTree = await client.Git.Tree.Get(_owner, GitHub.Repository.repositoryName, latestCommit.Tree.Sha);
 
             var newTree = new Octokit.NewTree { BaseTree = baseTree.Sha };
             newTree.Tree.Add(new Octokit.NewTreeItem
@@ -68,13 +68,13 @@ namespace WinPaletter.GitHub
                 Sha = blobRef.Sha
             });
 
-            var createdTree = await client.Git.Tree.Create(_owner, _repo, newTree);
+            var createdTree = await client.Git.Tree.Create(_owner, GitHub.Repository.repositoryName, newTree);
             var newCommit = new Octokit.NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
-            var commit = await client.Git.Commit.Create(_owner, _repo, newCommit);
-            await client.Git.Reference.Update(_owner, _repo, $"heads/{_branch}", new Octokit.ReferenceUpdate(commit.Sha));
+            var commit = await client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, newCommit);
+            await client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new Octokit.ReferenceUpdate(commit.Sha));
 
             // Update cache and maps using helper
-            var content = await client.Repository.Content.GetAllContentsByRef(_owner, _repo, githubPath, _branch);
+            var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, githubPath, GitHub.Repository.branch);
             var entry = new Entry { Path = githubPath, Type = EntryType.File, Content = content[0], FetchedAt = DateTime.UtcNow };
             _cache[githubPath] = (entry, DateTime.UtcNow);
 
@@ -112,9 +112,9 @@ namespace WinPaletter.GitHub
                 return;
             }
 
-            var masterRef = await client.Git.Reference.Get(_owner, _repo, $"heads/{_branch}");
-            var latestCommit = await client.Git.Commit.Get(_owner, _repo, masterRef.Object.Sha);
-            var baseTree = await client.Git.Tree.Get(_owner, _repo, latestCommit.Tree.Sha);
+            var masterRef = await client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
+            var latestCommit = await client.Git.Commit.Get(_owner, GitHub.Repository.repositoryName, masterRef.Object.Sha);
+            var baseTree = await client.Git.Tree.Get(_owner, GitHub.Repository.repositoryName, latestCommit.Tree.Sha);
             var newTree = new Octokit.NewTree { BaseTree = baseTree.Sha };
 
             int totalFiles = files.Length;
@@ -142,7 +142,7 @@ namespace WinPaletter.GitHub
 
                 string base64 = Convert.ToBase64String(buffer);
                 var blob = new Octokit.NewBlob { Content = base64, Encoding = Octokit.EncodingType.Base64 };
-                var blobRef = await client.Git.Blob.Create(_owner, _repo, blob);
+                var blobRef = await client.Git.Blob.Create(_owner, GitHub.Repository.repositoryName, blob);
 
                 newTree.Tree.Add(new Octokit.NewTreeItem
                 {
@@ -153,7 +153,7 @@ namespace WinPaletter.GitHub
                 });
 
                 // Update cache and maps
-                var content = await client.Repository.Content.GetAllContentsByRef(_owner, _repo, targetPath, _branch);
+                var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, targetPath, GitHub.Repository.branch);
                 var entry = new Entry { Path = targetPath, Type = EntryType.File, Content = content[0], FetchedAt = DateTime.UtcNow };
                 _cache[targetPath] = (entry, DateTime.UtcNow);
 
@@ -164,10 +164,10 @@ namespace WinPaletter.GitHub
                 reportProgress?.Invoke((int)((long)processedFiles * 100 / totalFiles));
             }
 
-            var createdTree = await client.Git.Tree.Create(_owner, _repo, newTree);
+            var createdTree = await client.Git.Tree.Create(_owner, GitHub.Repository.repositoryName, newTree);
             var newCommit = new Octokit.NewCommit($"Upload directory `{githubPath}` by {_owner}", createdTree.Sha, latestCommit.Sha);
-            var commit = await client.Git.Commit.Create(_owner, _repo, newCommit);
-            await client.Git.Reference.Update(_owner, _repo, $"heads/{_branch}", new Octokit.ReferenceUpdate(commit.Sha));
+            var commit = await client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, newCommit);
+            await client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new Octokit.ReferenceUpdate(commit.Sha));
 
             reportProgress?.Invoke(100);
         }
@@ -190,7 +190,7 @@ namespace WinPaletter.GitHub
         public static async Task DownloadFileAsync(string githubPath, string localSavePath, CancellationTokenSource cts = null, Action<int> reportProgress = null, Action onCompleted = null, Action<Exception> onError = null, Action onCancelled = null)
         {
             cts ??= new();
-            string url = $"https://raw.githubusercontent.com/{_owner}/{_repo}/{_branch}/{githubPath}";
+            string url = $"https://raw.githubusercontent.com/{_owner}/{GitHub.Repository.repositoryName}/{GitHub.Repository.branch}/{githubPath}";
 
             using DownloadManager dm = new();
 
@@ -216,85 +216,85 @@ namespace WinPaletter.GitHub
             }
         }
 
-        /// <summary>
-        /// Downloads an entire directory (recursive) from the GitHub repository
-        /// and recreates its structure locally.
-        /// </summary>
-        /// <param name="githubPath">Repository path of the directory to download.</param>
-        /// <param name="localPath">Local base directory where files will be saved.</param>
-        /// <param name="cts">Optional cancellation token source used to stop the operation.</param>
-        /// <param name="overallProgress">Callback reporting total accumulated progress percentage (0–100).</param>
-        /// <param name="fileCompleted">Callback executed when a file finishes downloading.</param>
-        /// <param name="fileError">Callback invoked when an error occurs downloading a specific file.</param>
-        /// <param name="fileCancelled">Callback invoked when downloading a specific file is cancelled.</param>
-        /// <param name="onCompleted">Callback invoked when all files are downloaded successfully.</param>
-        /// <param name="onCancelled">Callback invoked if the directory download is cancelled.</param>
-        /// <returns>A task representing the directory download process.</returns>
-        /// <remarks>
-        /// This method enumerates all entries under the GitHub path, calculates the total byte size,
-        /// downloads each file while tracking cumulative progress, creates missing local directories,
-        /// and triggers callbacks for completion, cancellation, and errors per file.
-        /// </remarks>
-        public static async Task DownloadDirectoryAsync(string githubPath, string localPath, CancellationTokenSource cts = null, Action<int> overallProgress = null, Action<string> fileCompleted = null, Action<string, Exception> fileError = null, Action<string> fileCancelled = null, Action onCompleted = null, Action onCancelled = null)
-        {
-            cts ??= new();
+        ///// <summary>
+        ///// Downloads an entire directory (recursive) from the GitHub repository
+        ///// and recreates its structure locally.
+        ///// </summary>
+        ///// <param name="githubPath">Repository path of the directory to download.</param>
+        ///// <param name="localPath">Local base directory where files will be saved.</param>
+        ///// <param name="cts">Optional cancellation token source used to stop the operation.</param>
+        ///// <param name="overallProgress">Callback reporting total accumulated progress percentage (0–100).</param>
+        ///// <param name="fileCompleted">Callback executed when a file finishes downloading.</param>
+        ///// <param name="fileError">Callback invoked when an error occurs downloading a specific file.</param>
+        ///// <param name="fileCancelled">Callback invoked when downloading a specific file is cancelled.</param>
+        ///// <param name="onCompleted">Callback invoked when all files are downloaded successfully.</param>
+        ///// <param name="onCancelled">Callback invoked if the directory download is cancelled.</param>
+        ///// <returns>A task representing the directory download process.</returns>
+        ///// <remarks>
+        ///// This method enumerates all entries under the GitHub path, calculates the total byte size,
+        ///// downloads each file while tracking cumulative progress, creates missing local directories,
+        ///// and triggers callbacks for completion, cancellation, and errors per file.
+        ///// </remarks>
+        //public static async Task DownloadDirectoryAsync(string githubPath, string localPath, CancellationTokenSource cts = null, Action<int> overallProgress = null, Action<string> fileCompleted = null, Action<string, Exception> fileError = null, Action<string> fileCancelled = null, Action onCompleted = null, Action onCancelled = null)
+        //{
+        //    cts ??= new();
 
-            long totalBytes = 0;
-            long downloadedBytes = 0;
+        //    long totalBytes = 0;
+        //    long downloadedBytes = 0;
 
-            var allEntries = new List<Entry>();
-            await foreach (var entry in EnumerateEntriesAsync(githubPath, recursive: true, ct: cts.Token))
-            {
-                allEntries.Add(entry);
-                if (entry.Type == EntryType.File && entry.Size > 0) totalBytes += entry.Size;
-            }
+        //    var allEntries = new List<Entry>();
+        //    await foreach (var entry in EnumerateEntriesAsync(githubPath, recursive: true, ct: cts.Token))
+        //    {
+        //        allEntries.Add(entry);
+        //        if (entry.Type == EntryType.File && entry.Size > 0) totalBytes += entry.Size;
+        //    }
 
-            foreach (var entry in allEntries)
-            {
-                cts?.Token.ThrowIfCancellationRequested();
+        //    foreach (var entry in allEntries)
+        //    {
+        //        cts?.Token.ThrowIfCancellationRequested();
 
-                string relativePath = entry.Path.Substring(githubPath.Length).TrimStart('/', '\\');
-                string localFile = Path.Combine(localPath, relativePath.Replace("/", "\\"));
+        //        string relativePath = entry.Path.Substring(githubPath.Length).TrimStart('/', '\\');
+        //        string localFile = Path.Combine(localPath, relativePath.Replace("/", "\\"));
 
-                try
-                {
-                    if (entry.Type == EntryType.Dir)
-                    {
-                        Directory.CreateDirectory(localFile);
-                    }
-                    else
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(localFile));
+        //        try
+        //        {
+        //            if (entry.Type == EntryType.Dir)
+        //            {
+        //                Directory.CreateDirectory(localFile);
+        //            }
+        //            else
+        //            {
+        //                Directory.CreateDirectory(Path.GetDirectoryName(localFile));
 
-                        using DownloadManager dm = new();
-                        dm.DownloadProgressChanged += (s, e) =>
-                        {
-                            long fileDownloaded = e.BytesReceived;
-                            long prevDownloaded = Interlocked.Read(ref downloadedBytes);
-                            Interlocked.Add(ref downloadedBytes, fileDownloaded - prevDownloaded);
-                            overallProgress?.Invoke(totalBytes > 0 ? (int)(downloadedBytes * 100 / totalBytes) : 0);
-                        };
-                        dm.DownloadFileCompleted += (s, e) => fileCompleted?.Invoke(localFile);
-                        dm.DownloadErrorOccurred += (s, msg) => fileError?.Invoke(localFile, new Exception(msg));
+        //                using DownloadManager dm = new();
+        //                dm.DownloadProgressChanged += (s, e) =>
+        //                {
+        //                    long fileDownloaded = e.BytesReceived;
+        //                    long prevDownloaded = Interlocked.Read(ref downloadedBytes);
+        //                    Interlocked.Add(ref downloadedBytes, fileDownloaded - prevDownloaded);
+        //                    overallProgress?.Invoke(totalBytes > 0 ? (int)(downloadedBytes * 100 / totalBytes) : 0);
+        //                };
+        //                dm.DownloadFileCompleted += (s, e) => fileCompleted?.Invoke(localFile);
+        //                dm.DownloadErrorOccurred += (s, msg) => fileError?.Invoke(localFile, new Exception(msg));
 
-                        await dm.DownloadFileAsync($"https://raw.githubusercontent.com/{_owner}/{_repo}/{_branch}/{entry.Path}", localFile, cts);
+        //                await dm.DownloadFileAsync($"https://raw.githubusercontent.com/{_owner}/{GitHub.Repository.repositoryName}/{GitHub.Repository.branch}/{entry.Path}", localFile, cts);
 
-                        Interlocked.Add(ref downloadedBytes, entry.Size);
-                        overallProgress?.Invoke(totalBytes > 0 ? (int)(downloadedBytes * 100 / totalBytes) : 0);
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    fileCancelled?.Invoke(localFile);
-                }
-                catch (Exception ex)
-                {
-                    fileError?.Invoke(localFile, ex);
-                }
-            }
+        //                Interlocked.Add(ref downloadedBytes, entry.Size);
+        //                overallProgress?.Invoke(totalBytes > 0 ? (int)(downloadedBytes * 100 / totalBytes) : 0);
+        //            }
+        //        }
+        //        catch (OperationCanceledException)
+        //        {
+        //            fileCancelled?.Invoke(localFile);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            fileError?.Invoke(localFile, ex);
+        //        }
+        //    }
 
-            if (cts.Token.IsCancellationRequested) onCancelled?.Invoke();
-            else onCompleted?.Invoke();
-        }
+        //    if (cts.Token.IsCancellationRequested) onCancelled?.Invoke();
+        //    else onCompleted?.Invoke();
+        //}
     }
 }

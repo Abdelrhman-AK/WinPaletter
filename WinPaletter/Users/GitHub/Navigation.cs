@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -63,9 +64,14 @@ namespace WinPaletter.GitHub
         private static Stack<string> forwardStack = new();
 
         /// <summary>
+        /// Gets the root path of the repository.
+        /// </summary>
+        public const string _root = $"Themes";
+
+        /// <summary>
         /// Gets or sets the current repository path being viewed.
         /// </summary>
-        private static string currentPath = _root;
+        public static string currentPath = _root;
 
         /// <summary>
         /// Gets whether backward navigation is possible.
@@ -81,6 +87,26 @@ namespace WinPaletter.GitHub
         /// Gets whether navigation to the parent directory is possible.
         /// </summary>
         public static bool CanGoUp => !string.IsNullOrEmpty(currentPath) && currentPath != _root;
+
+        /// <summary>
+        /// Set the branch to use for repository access.
+        /// </summary>
+        /// <param name="branch"></param>
+        public static async void SetBranch(string branch)
+        {
+            GitHub.Repository.branch = branch;
+            ClearAllCaches();
+        }
+
+        /// <summary>
+        /// Set the branch to use for repository access.
+        /// </summary>
+        /// <param name="branch"></param>
+        public static async void SetBranch(string branch, UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null)
+        {
+            SetBranch(branch);
+            await PopulateRepositoryAsync(tree, list, breadCrumb, cts);
+        }
 
         /// <summary>
         /// Converts a GitHub SHA string into a deterministic MD5 hash for UI and caching purposes.
@@ -110,6 +136,16 @@ namespace WinPaletter.GitHub
         /// <param name="cts">Optional cancellation token source.</param>
         /// <param name="reportProgress">Optional callback reporting fetch progress.</param>
         /// <returns>A task that completes when repository data is fully loaded.</returns>
+        /// <summary>
+        /// Fetches the entire repository hierarchy recursively, builds internal caches,
+        /// constructs the TreeView structure, and populates the ListView with the root directory.
+        /// </summary>
+        /// <param name="tree">TreeView control to populate.</param>
+        /// <param name="list">ListView control to populate.</param>
+        /// <param name="breadCrumb">Breadcrumb control used for displaying paths.</param>
+        /// <param name="cts">Optional cancellation token source.</param>
+        /// <param name="reportProgress">Optional callback reporting fetch progress.</param>
+        /// <returns>A task that completes when repository data is fully loaded.</returns>
         public static async Task PopulateRepositoryAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null, Action<int> reportProgress = null)
         {
             Program.Log?.Write(LogEventLevel.Information, "PopulateRepositoryAsync started");
@@ -129,6 +165,9 @@ namespace WinPaletter.GitHub
                 Program.Log?.Write(LogEventLevel.Information, "Fetching repository data recursively");
 
                 List<RepositoryContent> entries = [];
+
+                bool rootExists = await DirectoryExistsAsync($"{_root}/{_owner}", cts);
+                if (!rootExists) await CreateDirectoryAsync($"{_root}/{_owner}", cts: cts);
 
                 await FetchRecursive(_root, entries, null, cts);
 
@@ -234,7 +273,7 @@ namespace WinPaletter.GitHub
         /// <param name="tree">The tree view in which to select the node. Must contain at least one node; otherwise, no selection is made.</param>
         /// <param name="path">The hierarchical path, delimited by '/', identifying the node to select. If nodes along the path do not
         /// exist, they are created dynamically.</param>
-        private static void SelectTreeNode(UI.WP.ListView list, UI.WP.TreeView tree, string path)
+        public static void SelectTreeNode(UI.WP.ListView list, UI.WP.TreeView tree, string path)
         {
             Program.Log?.Write(LogEventLevel.Information, $"SelectTreeNode called for path='{path}'");
 
@@ -441,13 +480,15 @@ namespace WinPaletter.GitHub
         {
             if (size == 16)
             {
-                imgList.AddWithAlpha("folder", Properties.Resources.folder_web_16);
+                imgList.AddWithAlpha("folder", Assets.GitHubMgr.folder_web_16);
                 imgList.AddWithAlpha("file", Properties.Resources.file_16);
+                imgList.AddWithAlpha("home", Assets.GitHubMgr.home_16);
             }
             else
             {
-                imgList.AddWithAlpha("folder", Properties.Resources.folder_web_48);
+                imgList.AddWithAlpha("folder", Assets.GitHubMgr.folder_web_48);
                 imgList.AddWithAlpha("file", Properties.Resources.file_48);
+                imgList.AddWithAlpha("home", Assets.GitHubMgr.home_48);
             }
 
             using (Icon ico = Properties.Resources.fileextension.FromSize(size)) imgList.AddWithAlpha("wpth", ico.ToBitmap());
@@ -472,8 +513,8 @@ namespace WinPaletter.GitHub
             TreeNode root = new(_root)
             {
                 Tag = _root,
-                ImageKey = "folder",
-                SelectedImageKey = "folder"
+                ImageKey = "home",
+                SelectedImageKey = "home"
             };
             tree.Nodes.Add(root);
 
@@ -809,6 +850,137 @@ namespace WinPaletter.GitHub
                 }
 
                 Program.Log?.Write(LogEventLevel.Information, "RefreshAsync completed");
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously searches cached repository entries under the current path
+        /// for entries whose names match the specified keyword pattern. Supports wildcards '*' and '?'.
+        /// </summary>
+        /// <param name="list">The ListView control to populate with search results.</param>
+        /// <param name="keyword">The search keyword. Can include '*' and '?' as wildcards.</param>
+        /// <param name="cts">Optional cancellation token source to cancel the search.</param>
+        /// <returns>A task representing the asynchronous search operation.</returns>
+        public static async Task SearchAsync(UI.WP.ListView list, string keyword, CancellationTokenSource cts = null)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"SearchAsync started for keyword='{keyword}' in currentPath='{currentPath}'");
+
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                // Reset view to current path
+                await PopulateListViewAsync(list, currentPath, cts);
+                return;
+            }
+
+            cts ??= new();
+
+            if (list.InvokeRequired)
+            {
+                list.Invoke(new Func<Task>(() => SearchAsync(list, keyword, cts)));
+                return;
+            }
+
+            try
+            {
+                list.Cursor = Cursors.WaitCursor;
+                list.BeginUpdate();
+
+                if (list.Columns.Count == 0)
+                {
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
+                    list.Columns.Add("MD5", 120);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
+                }
+
+                bool hasWildcard = keyword.Contains("*") || keyword.Contains("?");
+
+                List<RepositoryContent> matches = new();
+
+                await Task.Run(() =>
+                {
+                    if (hasWildcard)
+                    {
+                        string pattern = "^" + Regex.Escape(keyword).Replace(@"\*", ".*").Replace(@"\?", ".") + "$";
+                        Regex rx = null;
+                        try { rx = new Regex(pattern, RegexOptions.IgnoreCase); } catch { }
+
+                        foreach (var entry in _cache.Values.Select(v => v.entry.Content))
+                        {
+                            cts.Token.ThrowIfCancellationRequested();
+                            if (entry == null) continue;
+
+                            string name = entry.Name;
+
+                            if ((rx != null && rx.IsMatch(name)) || (rx == null && name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0))
+                                matches.Add(entry);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var entry in _cache.Values.Select(v => v.entry.Content))
+                        {
+                            cts.Token.ThrowIfCancellationRequested();
+                            if (entry == null) continue;
+
+                            if (entry.Name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+                                matches.Add(entry);
+                        }
+                    }
+                });
+
+                matches = matches
+                    .Where(e => e.Path.StartsWith(currentPath, StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(e => e.Type == Octokit.ContentType.Dir ? 0 : 1)
+                    .ThenBy(e => e.Name)
+                    .ToList();
+
+                Program.Log?.Write(LogEventLevel.Information, $"SearchAsync found {matches.Count} matching entries under '{currentPath}'");
+
+                list.Items.Clear();
+
+                int count = 0;
+                foreach (var entry in matches)
+                {
+                    cts.Token.ThrowIfCancellationRequested();
+
+                    ListViewItem item = new(entry.Name) { Tag = entry };
+                    item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
+
+                    long size = entry.Type == Octokit.ContentType.Dir && FolderSizeMap.ContainsKey(entry.Path)
+                        ? FolderSizeMap[entry.Path]
+                        : entry.Size;
+
+                    item.SubItems.Add(size.ToStringFileSize());
+                    item.SubItems.Add(ShaToMd5(entry.Sha).ToUpper());
+                    item.SubItems.Add(entry.HtmlUrl);
+                    item.SubItems.Add(entry.Content);
+
+                    if (entry.Type == Octokit.ContentType.Dir) item.ImageKey = "folder";
+                    else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
+                    else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
+                    else item.ImageKey = "file";
+
+                    list.Items.Add(item);
+
+                    count++;
+                    if (count % 50 == 0) await Task.Yield();
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, $"SearchAsync cancelled for keyword='{keyword}'");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"SearchAsync failed for keyword='{keyword}'", ex);
+            }
+            finally
+            {
+                list.EndUpdate();
+                list.Cursor = Cursors.Default;
+                Program.Log?.Write(LogEventLevel.Information, $"SearchAsync finished for keyword='{keyword}' in currentPath='{currentPath}'");
             }
         }
     }

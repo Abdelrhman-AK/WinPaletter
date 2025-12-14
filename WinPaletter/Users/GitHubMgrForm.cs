@@ -1,16 +1,34 @@
-﻿using System;
+﻿using Octokit;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.GitHub;
 
 namespace WinPaletter
 {
     public partial class GitHubMgrForm : Form
     {
         CancellationTokenSource cts = new();
+
+        private readonly List<(string, Bitmap, Bitmap, View)> views = new()
+            {
+                { (Program.Lang.Strings.GitHubStrings.Explorer_View_LargeIcons, Assets.GitHubMgr.Icons_Large, Assets.GitHubMgr.Glyph_View_Large, View.LargeIcon) },
+                { (Program.Lang.Strings.GitHubStrings.Explorer_View_SmallIcons, Assets.GitHubMgr.Icons_Small, Assets.GitHubMgr.Glyph_View_Small, View.SmallIcon) },
+                { (Program.Lang.Strings.GitHubStrings.Explorer_View_List, Assets.GitHubMgr.Icons_List, Assets.GitHubMgr.Glyph_View_List, View.List) },
+                { (Program.Lang.Strings.GitHubStrings.Explorer_View_Details, Assets.GitHubMgr.Icons_Details, Assets.GitHubMgr.Glyph_View_Details, View.Details) },
+                { (Program.Lang.Strings.GitHubStrings.Explorer_View_Tiles, Assets.GitHubMgr.Icons_Tile, Assets.GitHubMgr.Glyph_View_Tile, View.Tile) }
+            };
+
+        UI.WP.ContextMenuStrip contextMenu_all = new();
+        UI.WP.ContextMenuStrip contextMenu_item = new();
 
         public GitHubMgrForm()
         {
@@ -23,37 +41,39 @@ namespace WinPaletter
             this.LoadLanguage();
 
             AddViewsToButton();
+            InitializeMenus();
 
-            await UpdateGitHubLoginData(); // Aasync login method
+            await UpdateGitHubLoginData();
 
-            await GitHub.FileSystem.PopulateRepositoryAsync(treeView1, listView1, breadcrumbControl1, cts);
+            bool forked = await GitHub.Repository.ExistsAsync();
+
+            label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
+            groupBox6.Enabled = forked;
+
+            if (forked)
+            {
+                List<string> branches = await GitHub.Repository.GetBranchesAsync();
+                branches.Remove("main");
+                comboBox1.Items.AddRange([.. branches]);
+            }
 
             // After populating the tree for the first time
-            UpdateNavigationButtons();
+            UpdateExplorerLayout();
         }
 
         void AddViewsToButton()
         {
             button7.Menu.Items.Clear();
 
-            // Define the possible ListView views
-            Dictionary<string, View> views = new()
-            {
-                { Program.Lang.Strings.GitHubStrings.Explorer_View_LargeIcons, View.LargeIcon },
-                { Program.Lang.Strings.GitHubStrings.Explorer_View_SmallIcons, View.SmallIcon },
-                { Program.Lang.Strings.GitHubStrings.Explorer_View_List, View.List },
-                { Program.Lang.Strings.GitHubStrings.Explorer_View_Details, View.Details },
-                { Program.Lang.Strings.GitHubStrings.Explorer_View_Tiles, View.Tile }
-            };
-
             // Create ToolStripMenuItems as radio buttons
-            foreach (KeyValuePair<string, View> kvp in views)
+            foreach ((string, Bitmap, Bitmap, View) view in views)
             {
-                ToolStripMenuItem item = new(kvp.Key)
+                ToolStripMenuItem item = new(view.Item1)
                 {
                     CheckOnClick = true,
-                    Checked = listView1.View == kvp.Value,
-                    Tag = kvp.Value // store the View enum in Tag for easy access
+                    Image = view.Item2,
+                    Checked = listView1.View == view.Item4,
+                    Tag = view // store the View in Tag for easy access
                 };
 
                 // Click handler
@@ -62,12 +82,12 @@ namespace WinPaletter
                     // Uncheck all other items
                     foreach (ToolStripMenuItem other in button7.Menu.Items)
                     {
-                        if (other != item)
-                            other.Checked = false;
+                        if (other != item) other.Checked = false;
                     }
 
                     // Set the ListView view
-                    listView1.View = (View)item.Tag;
+                    listView1.View = (((string, Bitmap, Bitmap, View))item.Tag).Item4;
+                    button7.ImageGlyph = (((string, Bitmap, Bitmap, View))item.Tag).Item3;
 
                     // Ensure this one is checked
                     item.Checked = true;
@@ -80,7 +100,7 @@ namespace WinPaletter
         private void button7_Click(object sender, EventArgs e)
         {
             // Define the ordered views
-            View[] views = { View.LargeIcon, View.SmallIcon, View.List, View.Details, View.Tile };
+            View[] views = [View.LargeIcon, View.SmallIcon, View.List, View.Details, View.Tile];
 
             // Find the index of the current view
             int currentIndex = Array.IndexOf(views, listView1.View);
@@ -91,7 +111,19 @@ namespace WinPaletter
             listView1.View = nextView;
 
             // Update the menu items to match
-            foreach (ToolStripMenuItem item in button7.Menu.Items) item.Checked = (View)item.Tag == nextView;
+            foreach (ToolStripMenuItem item in button7.Menu.Items)
+            {
+                (string, Bitmap, Bitmap, View) view = ((string, Bitmap, Bitmap, View))item.Tag;
+                if (view.Item4 == nextView)
+                {
+                    item.Checked = true;
+                    button7.ImageGlyph = view.Item3;
+                }
+                else
+                {
+                    item.Checked = false;
+                }
+            }
         }
 
         public async Task UpdateGitHubLoginData()
@@ -184,34 +216,38 @@ namespace WinPaletter
             Process.Start(url);
         }
 
-        private void UpdateNavigationButtons()
+        private void UpdateExplorerLayout()
         {
             button2.Enabled = GitHub.FileSystem.CanGoBack;
             button4.Enabled = GitHub.FileSystem.CanGoForward;
             button5.Enabled = GitHub.FileSystem.CanGoUp;
+
+            button7.ImageGlyph = views.Find(v => v.Item4 == listView1.View).Item3;
+
+            UpdateStatusSelections();
         }
 
         private async void button2_Click(object sender, EventArgs e)
         {
             await GitHub.FileSystem.GoBack(treeView1, listView1);
-            UpdateNavigationButtons();
+            UpdateExplorerLayout();
         }
 
         private async void button4_Click(object sender, EventArgs e)
         {
             await GitHub.FileSystem.GoForward(treeView1, listView1);
-            UpdateNavigationButtons();
+            UpdateExplorerLayout();
         }
 
         private async void button5_Click(object sender, EventArgs e)
         {
             await GitHub.FileSystem.GoUp(treeView1, listView1);
-            UpdateNavigationButtons();
+            UpdateExplorerLayout();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            UpdateNavigationButtons();
+            UpdateExplorerLayout();
         }
 
         private async void button6_Click(object sender, EventArgs e)
@@ -228,6 +264,448 @@ namespace WinPaletter
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             explorer_controls.Visible = tabControl1.SelectedIndex == 1;
+        }
+
+        private async void button8_Click(object sender, EventArgs e)
+        {
+            breadcrumbControl1.StartMarquee();
+            await GitHub.FileSystem.SearchAsync(listView1, textBox1.Text);
+            breadcrumbControl1.StopMarquee();
+        }
+
+        private async void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox1.Text)) await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath);
+        }
+
+        /// <summary>
+        /// Update status label after selection status change
+        /// </summary>
+        public void UpdateStatusSelections()
+        {
+            if (listView1.Items.Count == 0)
+            {
+                status_lbl.Text = $"0 {Program.Lang.Strings.GitHubStrings.Explorer_Item} |";
+                return;
+            }
+
+            int totalItems = listView1.Items.Count;
+            int selectedItems = listView1.SelectedItems.Count;
+            long selectedSize = 0;
+
+            foreach (ListViewItem item in listView1.SelectedItems)
+            {
+                if (item.Tag is RepositoryContent entry)
+                {
+                    if (entry.Type == ContentType.File)
+                    {
+                        selectedSize += entry.Size;
+                    }
+                    else if (entry.Type == ContentType.Dir)
+                    {
+                        if (GitHub.FileSystem.FolderSizeMap.TryGetValue(entry.Path, out long folderSize))
+                            selectedSize += folderSize;
+                    }
+                }
+            }
+
+
+            string itemsText = $"{totalItems} {(totalItems > 1 ? Program.Lang.Strings.GitHubStrings.Explorer_Items : Program.Lang.Strings.GitHubStrings.Explorer_Item)} |";
+
+            if (selectedItems == 0)
+            {
+                status_lbl.Text = itemsText;
+            }
+            else
+            {
+                string selectedText = $"{selectedItems} {(selectedItems > 1 ? Program.Lang.Strings.GitHubStrings.Explorer_Items : Program.Lang.Strings.GitHubStrings.Explorer_Item)} {Program.Lang.Strings.GitHubStrings.Explorer_Selected}";
+                status_lbl.Text = $"{itemsText} {selectedText} {selectedSize.ToStringFileSize()} |";
+            }
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateStatusSelections();
+        }
+
+        private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            UpdateStatusSelections();
+        }
+
+        private void listView1_ItemActivate(object sender, EventArgs e)
+        {
+            UpdateStatusSelections();
+        }
+
+        private async void button9_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            breadcrumbControl1.StartMarquee();
+
+            groupBox3.Enabled = false;
+
+            bool forked = await GitHub.Repository.ExistsAsync();
+            if (!forked) await GitHub.Repository.ForkAsync();
+            forked = await GitHub.Repository.ExistsAsync();
+
+            label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
+            if (forked)
+            {
+                List<string> branches = await GitHub.Repository.GetBranchesAsync();
+                branches.Remove("main");
+                comboBox1.Items.AddRange([.. branches]);
+            }
+            groupBox6.Enabled = forked;
+
+            groupBox3.Enabled = true;
+
+            breadcrumbControl1.StopMarquee();
+            Cursor = Cursors.Default;
+        }
+
+        private async void button11_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = 1;
+            GitHub.FileSystem.SetBranch(comboBox1.SelectedItem?.ToString(), treeView1, listView1, breadcrumbControl1, cts);
+            Program.Animator.ShowSync(tablessControl1);
+
+            Cursor = Cursors.Default;
+        }
+
+        private async void button12_Click(object sender, EventArgs e)
+        {
+        Retry:
+            string branchName = InputBox("Create a new themes upload session branch", string.Empty, "Name your new branch for this theme upload. You can continue editing this branch until your Pull Request is approved.");
+            branchName = Regex.Replace(branchName.ToLowerInvariant(), @"[^a-z0-9\-_/]", "-");
+
+            if (!string.IsNullOrWhiteSpace(branchName))
+            {
+                if (!comboBox1.Items.Contains(branchName))
+                {
+                    Cursor = Cursors.WaitCursor;
+                    breadcrumbControl1.StartMarquee();
+                    groupBox6.Enabled = false;
+
+                    // Main should be synched before each new branch
+                    bool syncSuccess = await GitHub.Repository.IsSyncedAsync() || await GitHub.Repository.SyncAsync();
+                    bool createBranchSuccess = await GitHub.Repository.CreateBranchAsync(branchName);
+                    bool success = syncSuccess && createBranchSuccess;
+
+                    breadcrumbControl1.StopMarquee();
+                    Cursor = Cursors.Default;
+
+                    if (success)
+                    {
+                        comboBox1.Items.Add(branchName);
+                        comboBox1.SelectedItem = branchName;
+                    }
+                    else
+                    {
+                        MsgBox($"Couldn't create branch `{branchName}`. Try creating it manually in your browser.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    groupBox6.Enabled = true;
+                }
+                else
+                {
+                    MsgBox("Your forked repository already has this branch. Try again with another branch name.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    goto Retry;
+                }
+            }
+        }
+
+        private async void button10_Click(object sender, EventArgs e)
+        {
+            string branchName = comboBox1.SelectedItem.ToString();
+            if (MsgBox($"Are you sure you want to delete branch `{branchName}`?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Cursor = Cursors.WaitCursor;
+                breadcrumbControl1.StartMarquee();
+
+                bool success = await GitHub.Repository.DeleteBranchAsync(branchName);
+
+                if (success)
+                {
+                    comboBox1.Items.Remove(branchName);
+                }
+                else
+                {
+                    MsgBox($"Couldn't delete branch `{branchName}`. Try deleting it manually in your browser.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                breadcrumbControl1.StopMarquee();
+                Cursor = Cursors.Default;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            groupBox5.Enabled = comboBox1.SelectedItem is not null;
+        }
+
+        private async void button14_Click(object sender, EventArgs e)
+        {
+            await GitHub.Repository.CommitAsync("newCommit", GitHub.FileSystem.BuildChangesFromCache());
+            GitHub.FileSystem.ClearAllCaches();
+        }
+
+        private async void button13_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            breadcrumbControl1.StartMarquee();
+
+            bool canCreatePullRequest = await GitHub.Repository.CanCreatePullRequestAsync();
+
+            if (canCreatePullRequest)
+            {
+                string title = $"Update theme: {User.GitHub.Login} ({DateTime.Now:yyyy-MM-dd HH:mm})";
+
+                string body = $@"
+**Author:** {User.GitHub.Login}
+**WinPaletter Version:** {Program.Version}
+Generated automatically by WinPaletter.";
+
+                await GitHub.Repository.CreatePullRequestAsync(title, body);
+            }
+
+            breadcrumbControl1.StopMarquee();
+            Cursor = Cursors.Default;
+        }
+
+        private void listView1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                // Hit test to check if mouse is over an item
+                var info = listView1.HitTest(e.Location);
+                if (info.Item != null)
+                {
+                    // Right-click on an item
+
+                }
+                else
+                {
+                    // Right-click on empty space
+                    contextMenu_all.Show(listView1, e.Location);
+                }
+            }
+        }
+
+        void InitializeMenus()
+        {
+            (string, Bitmap, Bitmap, View) view = views.Where(v => v.Item4 == View.LargeIcon).FirstOrDefault();
+            ToolStripMenuItem menu_largeIconsView = new(view.Item1, view.Item2)
+            {
+                CheckOnClick = true,
+                Checked = listView1.View == view.Item4,
+                Tag = view
+            };
+
+            view = views.Where(v => v.Item4 == View.SmallIcon).FirstOrDefault();
+            ToolStripMenuItem menu_smallIconsView = new(view.Item1, view.Item2)
+            {
+                CheckOnClick = true,
+                Checked = listView1.View == view.Item4,
+                Tag = view
+            };
+
+            view = views.Where(v => v.Item4 == View.List).FirstOrDefault();
+            ToolStripMenuItem menu_listView = new(view.Item1, view.Item2)
+            {
+                CheckOnClick = true,
+                Checked = listView1.View == view.Item4,
+                Tag = view
+            };
+
+            view = views.Where(v => v.Item4 == View.Details).FirstOrDefault();
+            ToolStripMenuItem menu_detailsView = new(view.Item1, view.Item2)
+            {
+                CheckOnClick = true,
+                Checked = listView1.View == view.Item4,
+                Tag = view
+            };
+
+            view = views.Where(v => v.Item4 == View.Tile).FirstOrDefault();
+            ToolStripMenuItem menu_tileView = new(view.Item1, view.Item2)
+            {
+                CheckOnClick = true,
+                Checked = listView1.View == view.Item4,
+                Tag = view
+            };
+
+            ToolStripMenuItem menu_view = new("View")
+            {
+                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
+            };
+
+            menu_view.DropDown.Items.AddRange(
+            [
+                menu_largeIconsView,
+                menu_smallIconsView,
+                menu_listView,
+                menu_detailsView,
+                menu_tileView
+            ]);
+
+            foreach (ToolStripMenuItem item in menu_view.DropDown.Items)
+            {
+                // Click handler
+                item.Click += (s, e) =>
+                {
+                    // Uncheck all other items
+                    foreach (ToolStripMenuItem other in menu_view.DropDown.Items)
+                    {
+                        if (other != item) other.Checked = false;
+                    }
+                    // Set the ListView view
+                    listView1.View = (((string, Bitmap, Bitmap, View))item.Tag).Item4;
+                    button7.ImageGlyph = (((string, Bitmap, Bitmap, View))item.Tag).Item3;
+                    // Ensure this one is checked
+                    item.Checked = true;
+                };
+            }
+
+            ToolStripSeparator separator_0 = new();
+
+            ToolStripMenuItem menu_paste = new("Paste") { Enabled = false };
+
+            ToolStripSeparator separator_1 = new();
+
+            ToolStripMenuItem menu_newItem = new("New")
+            {
+                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
+            };
+
+            ToolStripMenuItem menu_newTheme;
+            using (Icon ico = Properties.Resources.fileextension.FromSize(20))
+            {
+                menu_newTheme = new(Program.Lang.Strings.Extensions.WinPaletterTheme, ico.ToBitmap());
+            }
+
+            ToolStripMenuItem menu_newFolder = new(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(20, 20));
+
+            menu_newFolder.Click += async (s, e) =>
+            {
+                ListViewItem item = new("New Folder");
+                item.ImageKey = "folder"; // optional
+                item.Tag = "NEWFOLDER_PENDING";
+                listView1.Items.Add(item);
+                item.Selected = true;
+                item.Focused = true;
+                item.BeginEdit();
+            };
+
+            menu_newItem.DropDown.Items.AddRange(
+            [
+                menu_newFolder,
+                menu_newTheme,
+            ]);
+
+            ToolStripSeparator separator_2 = new();
+
+            ToolStripMenuItem menu_properties = new("Properties");
+
+            contextMenu_all.Items.AddRange(
+            [
+                menu_view,
+                separator_0,
+                menu_paste,
+                separator_1,
+                menu_newItem,
+                separator_2,
+                menu_properties
+            ]);
+        }
+
+        private async void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            if (e.Label == null) return; // user pressed Esc
+
+            string newName = e.Label.Trim();
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                e.CancelEdit = true;
+                return;
+            }
+
+            ListViewItem item = listView1.Items[e.Item];
+
+            if (item.Tag is string str_tag && str_tag == "NEWFOLDER_PENDING")
+            {
+                NewDirectory(item, e);
+            }
+
+            if (item.Tag is FileSystem.Entry entry)
+            {
+                if (entry.Type == FileSystem.EntryType.Dir)
+                {
+                    RenameDirectory(item, e);
+                }
+            }
+        }
+
+        async void NewDirectory(ListViewItem item, LabelEditEventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            breadcrumbControl1.StartMarquee();
+
+            string path = $"{GitHub.FileSystem.currentPath}/{e.Label.Trim()}";
+
+            try
+            {
+                await GitHub.FileSystem.CreateDirectoryAsync(path, item);
+
+                //await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem._root);
+                //GitHub.FileSystem.SelectTreeNode(listView1, treeView1, GitHub.FileSystem.currentPath);
+            }
+            catch
+            {
+                e.CancelEdit = true;
+            }
+            finally
+            {
+                breadcrumbControl1.StopMarquee();
+                Cursor = Cursors.Default;
+            }
+            return;
+        }
+
+        async void RenameDirectory(ListViewItem item, LabelEditEventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            breadcrumbControl1.StartMarquee();
+
+            string oldPath = (item.Tag as FileSystem.Entry).Path;
+            string newPath = oldPath.Substring(0, oldPath.LastIndexOf('/') + 1) + e.Label.Trim();
+
+            try
+            {
+                await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath);
+
+                FileSystem.Entry entry = await GitHub.FileSystem.GetDirectoryInfo(newPath);
+                item.Tag = entry.Content;
+
+                await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath);
+                GitHub.FileSystem.SelectTreeNode(listView1, treeView1, GitHub.FileSystem.currentPath);
+            }
+            catch
+            {
+                e.CancelEdit = true;
+            }
+            finally
+            {
+                breadcrumbControl1.StopMarquee();
+                Cursor = Cursors.Default;
+            }
+        }
+
+        private async void button15_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

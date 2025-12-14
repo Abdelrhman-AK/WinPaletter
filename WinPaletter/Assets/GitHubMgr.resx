@@ -117,60 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label12.Text" xml:space="preserve">
-    <value>Each theme upload session uses its own branch. Edit your branch, upload your theme, create a pull request, and wait for approval by Abdelrhman-AK. You are not allowed to modify main branch. Create a new branch for your next session. You can continue modifying a pull request as long as it has not been approved yet.</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="folder_web_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder_web_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pictureBox6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAArxJREFUSEvt
-        ll1IU2EYgKeIUGpKapp/jcTpctn8geiiEqkuCrqriy7C9PMHSjxniCA7B75+LHMipVKYkD/YBEFYuQYO
-        dQpCRBcVJIQrf3JbTqYzKzLF3lB0Hd/m2tZ25wPf1ft838N3zsU5ItEOG6QbZkMz9fbzsudzFyW9lig8
-        9wtZw1+lcv38pExrg9QeKxzs+jwnbp3OxZ7PkevnhwRRSGo3wf5Hn6ZEFAKxi8k0LORk6GxKqWb2qkTt
-        wZPKNUCQTGtbRlGIbpqA8FpjMvaFZA7YyzJ0c6tSzSykdM+AuNNsjWu1pGFvW1J7rNM4GlH/cSVG9TYE
-        u5tkGxajMnS2JUEUEh5PQ8yDiWfY3ZZktaUERSGsZkyFPSGHdfaTf0UfTkLk/XEzdl2S1vCmRHZ3GCR3
-        RkBG+9pFAAHYESLptcWndM+soiiE1RkHseuS4nKaRFgO1lYhwxfguTMOdJprhdE9KuOPXbeNx7DnEm/C
-        a5yo1jzJutUHOfTpr9ia0XQ8/yfehomCU2/ss+CZW3gTvlJWFU1YbnFtTxHLdeC5W3gavkBpMGF5zeYe
-        wnB52HELT8KE5Y8TlnvhiCq4Tuy4zXZhSmkgYTgpUfCXi1hlI2G5947g+lL2F1RWhm09zQOE4SKWv05Y
-        rpaw3MjmO3SyvhWy/E1KaRA+yyOEYRfrO2G5IaJQMqUVdB8+wyuchJfXb6zgmgoZnhQo+CP/fTtn5F+r
-        SnNEGe51PkMjsOMXShkq/nNbvhjP/cbpjldnz7QMQF7zEJy6p63Hc7+QPfjlnFxvX3H8hagtkNhmrsCe
-        z5Hr7e+2Rk0Q2zy1FNds2Y1d3wEQINPafqIoRDaMQ2id8RDWfUpqj/UljoarPiyI6Ggwdn2KuGvmaGKb
-        yS6ILodUj13Cnl+IbzEl7G2cKA9XGatCbxg9/6DvgPgN/5/2niQ2jDQAAAAASUVORK5CYII=
-</value>
+  <data name="folder_web_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folder_web_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pictureBox5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAA2BJREFUSEvt
-        0mlsiwEcx/Hn9QyRYHawZYlzZMy1xcM2RJgjgjjmmBgWErIMy1xhziFWsrBNsZKqZR2ykV2EMNNWbdVt
-        1pSFLWi22uFY1z6Ptj95nqTV53laWgkv8E++L5o8//8nfVqC+D//zBilRJJRShS2S4min3ShTUpE8/d/
-        aV6LiYDWSwR8yNJSQCTw7/g8ulwiTH+egI9Zmi/6p3RXxcR6U9fdqaTxQYQ/B9aIiDCtiIAv6fL6gqpL
-        BHQpXkfVJdLGIhdccZwIU2UR8DbN2T6wqJcDTck+Z7g9kXTCuoLwccaKWHyojPMqqnYF8GL9L9V60wVm
-        PqBxLf5EXLgokkTDKniTRpOBndUlWP34FTYpOpD6qAHPVRmC5zzFWFy4fjl+VI92HZLVDRjziIbf7V4M
-        KjFhi8qKhEoL+uS3Yb38Hro1GwR7/HhwBAntUniK0q5Cmu4zduttiK2mMaHKjKE3PmNuhQX9xEb0zTFg
-        ttyM+YVGUNqVgn3XGIsLP18MTx2rV2PfSxvm1NAILjUhurwXfpJO+OW3wz/HgAHZ7zCr0IzZ12lsl90X
-        7LsmhDUL4C67ZhF26L4ivdGGzU+tSFFakVxtxRBJB4v2O/0WkeIuFp1xhcaUvC+w1i4S3HHEg0eQ9rp5
-        cJe6dg+LptbZ2N90VpkZoVc7nWiIyICZMopFo8UUos5ReFKVKrjjiLG4cO0cuKtcdYJFlz2kseQe5Xy9
-        DNr/eAsm5Hdz0LFnLJDJjwjuOOLB4aT92Uy4S69Yg2kVvYi61YNBl7+/XgYNzGrFdAnFQYeftEBZtkVw
-        xxFjfYdl4aRdHQt32dRxGC7VI7CgAzPkPZh+vQchovcYcKgZAQebMfJkO8ac6nai4Zkf8VUVL7jjiLG4
-        8FMSnjp7J4v9pvGFJiQU04i7ZsZokRED05swOLUBQ7bVs2joEQs2Zt8S7LvGg4eRdlUMPEUrSSy8VIZR
-        uR+c/97xOZ9YNGCrBoEbn2HY3i5E7H8DSkEK9l1jLC6snIwfZaohkSS+waKTck0I2qV3oiFJSqw4UIyu
-        h/GCPX48OIi0K6LgTSUl6UjLvYzEo1exJlOCw9lH0Vi6UPCcpxjLCRtkQaPsTyLx26uJBGM5YWbaioPz
-        O0pDm35nbfLgPA76f/7q+QaZ/F70tUJgngAAAABJRU5ErkJggg==
-</value>
+  <data name="Glyph_View_Details" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_View_Details.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAkJJREFUSEvt
-        1s1uElEYBuDeiTfQCzBhmhL+ZwY602FGZqAIqI3d26gJVkkAG7WaqHFHPBdQ22KF8iP/1EpT0aik1Zpq
-        Q8VGSUqUhUZTP9NNqTMJcUSPG9/kXZ2T71mcb3H6+v7nX0U6tkhIvvK6e7Sy6g82d9T0XGj7y0S48X0i
-        9BbCl6uQK7785hmrbnCuFY3cUUT0liOSrwzu0eUtf7AJvbRW24Qr118AKy5H5I4ioncRid4SuE5Ueoaf
-        PnsDV2/swRUkdxRxeErIcbQIruMPccMFJLgL4PQt4YXtrjziR/Ig+R7sw4Hbdbi2tQKh2CvF8G5VCWcR
-        58yB6Cnvw2cySzD+bhpOP08ohnerKpgTs2hYyoLgLnXgqTqcjKbg1K01xfBuVQWzYgaxjgzwI0W8b8w4
-        MmjoyH2wuzDDNiGNbHwaOGcB73LR9iSi7SngpDze5aK4JKKGk8CKObzLRXEJRLIJYIQs3je2MHFkZhZg
-        iM/ghc1MHJlscaD5NN7lMtIxZLDGgLZ3YCzLpadjSE/dA4pL4V0uHTWPdOQ8kGwH/t2qgy1RpDXfBQuT
-        xAsPmqNo0DQHJmsCM2ycQwOGWTBaF/DChH4mQuhnQE/He4ZVffYIwyyh0d2pGah4xR9qbgQCjddT44/r
-        Bzt5dnVz70ze8+FGKzBZ/3rhYn03eOnJbr64/tk79mjtl7638mz3E9r3/Ro42A/9mrz83h9Pi7BqdwYo
-        +Lnk34c/ko7DbVKotmleaFHcoTYt3PxEC9Pye2rzA7JZ6PQwjT14AAAAAElFTkSuQmCC
-</value>
+  <data name="Glyph_View_Large" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_View_Large.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_View_List" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_View_List.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_View_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_View_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Glyph_View_Tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_View_Tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="home_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\home_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="home_48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\home_48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icons_Details" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons_Details.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icons_Large" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons_Large.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icons_List" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons_List.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icons_Small" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons_Small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icons_Tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icons_Tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -337,7 +337,7 @@ namespace WinPaletter.UI.WP
                 {
                     foreach (TreeNode child in matching.Nodes)
                     {
-                        System.Windows.Forms.ToolStripMenuItem item = new(child.Text) { Tag = child };
+                        System.Windows.Forms.ToolStripMenuItem item = new(child.Text) { Tag = child, Image = Assets.GitHubMgr.folder_web_16 };
                         item.Click += (s, e) =>
                         {
                             AnimateHover(false);
@@ -412,7 +412,7 @@ namespace WinPaletter.UI.WP
             for (int i = 0; i < keepFromIndex; i++)
             {
                 Button hidden = buttons[i];
-                System.Windows.Forms.ToolStripMenuItem item = new(hidden.Text) { Tag = hidden.Tag };
+                System.Windows.Forms.ToolStripMenuItem item = new(hidden.Text) { Tag = hidden.Tag, Image = Assets.GitHubMgr.folder_web_16 };
                 item.Click += (s, e) =>
                 {
                     TreeNode tn = (s as ToolStripMenuItem).Tag as TreeNode;

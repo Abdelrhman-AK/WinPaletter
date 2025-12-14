@@ -41,7 +41,7 @@ namespace WinPaletter.GitHub
         /// <remarks>This dictionary uses <see cref="StringComparer.OrdinalIgnoreCase"/> to ensure that
         /// folder names are compared without regard to case. This is useful when folder names may vary in casing but
         /// should be treated equivalently.</remarks>
-        private static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
+        public static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Provides a thread-safe cache for directory contents and their associated SHA values, keyed by directory
@@ -86,21 +86,6 @@ namespace WinPaletter.GitHub
         /// Gets the GitHub login name of the current user.
         /// </summary>
         private static string _owner => User.GitHub.Login;
-
-        /// <summary>
-        /// Gets the name of the GitHub repository being accessed.
-        /// </summary>
-        private const string _repo = "WinPaletter-Store";
-
-        /// <summary>
-        /// Gets the branch name of the GitHub repository being accessed.
-        /// </summary>
-        private const string _branch = "main";
-
-        /// <summary>
-        /// Gets the root path of the repository.
-        /// </summary>
-        private const string _root = "Themes";
 
         /// <summary>
         /// Recursively fetches repository contents starting at the specified path,
@@ -169,7 +154,7 @@ namespace WinPaletter.GitHub
             if (maxDepth >= 0 && currentDepth > maxDepth) return;
 
             IReadOnlyList<RepositoryContent> items;
-            try { items = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path); }
+            try { items = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch); }
             catch { return; }
 
             int total = items.Count;
@@ -261,7 +246,7 @@ namespace WinPaletter.GitHub
             try
             {
                 // Fetch latest commits for this path
-                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, _repo, new CommitRequest { Path = path })).FirstOrDefault();
+                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = path })).FirstOrDefault();
 
                 // File entry validation
                 if (cachedEntry.Type == EntryType.File)
@@ -281,7 +266,7 @@ namespace WinPaletter.GitHub
                     // Fetch latest SHAs for all children
                     foreach (string childPath in childPaths)
                     {
-                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, _repo, new CommitRequest { Path = childPath })).FirstOrDefault();
+                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = childPath })).FirstOrDefault();
                         if (latest != null) latestShas[childPath] = latest.Sha;
                     }
 
@@ -346,7 +331,7 @@ namespace WinPaletter.GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path, _branch);
+                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
             }
             catch
             {
@@ -372,7 +357,7 @@ namespace WinPaletter.GitHub
                     if (useShaValidation && _cache.TryGetValue(item.Path, out (Entry, DateTime) cachedChildTuple))
                     {
                         Entry cachedChild = cachedChildTuple.Item1;
-                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, _repo, new CommitRequest { Path = item.Path })).FirstOrDefault();
+                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = item.Path })).FirstOrDefault();
 
                         if (latest != null && cachedChild.CommitSha == latest.Sha) childEntry = cachedChild;
                     }
@@ -410,7 +395,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Force refresh the entry with optional recursion.
         /// </summary>
-        public static Task<Entry> GetInfoRefreshAsync(string path, bool recursive = true, int maxDepth = 20, CancellationToken token = default) =>  GetInfoAsync(path, recursive, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, token: token);
+        public static Task<Entry> GetInfoRefreshAsync(string path, bool recursive = true, int maxDepth = 20, CancellationToken token = default) => GetInfoAsync(path, recursive, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, token: token);
 
         /// <summary>
         /// Recursively retrieves repository entry information for the specified path with caching and TTL validation.
@@ -436,7 +421,7 @@ namespace WinPaletter.GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path, _branch);
+                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
             }
             catch (Octokit.NotFoundException)
             {
@@ -491,7 +476,7 @@ namespace WinPaletter.GitHub
             {
                 try
                 {
-                    IReadOnlyList<RepositoryContent> currentContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, _repo, path, _branch);
+                    IReadOnlyList<RepositoryContent> currentContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
                     string currentSha = currentContents.FirstOrDefault()?.Sha ?? string.Empty;
 
                     if (cached.Item2 == currentSha) return cached.Item1;
@@ -505,7 +490,7 @@ namespace WinPaletter.GitHub
                 }
             }
 
-            IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, path);
+            IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
             string sha = contents.FirstOrDefault()?.Sha ?? string.Empty;
             DirectoryCache[path] = (contents, sha);
             return contents;
@@ -585,13 +570,36 @@ namespace WinPaletter.GitHub
         }
 
         /// <summary>
+        /// Clears all cached data in the FileSystem, including entries, directory maps, folder sizes, and SHA/MD5 caches.
+        /// Intended to be called before switching branches to prevent stale data usage.
+        /// </summary>
+        public static void ClearAllCaches()
+        {
+            // Clear main entry cache
+            _cache.Clear();
+
+            // Clear directory map and folder size map
+            DirectoryMap.Clear();
+            FolderSizeMap.Clear();
+
+            // Clear directory content cache
+            DirectoryCache.Clear();
+
+            // Clear SHA/MD5 hash cache
+            ShaMd5Cache.Clear();
+
+            // Optional: log the cache clearing
+            Program.Log?.Write(LogEventLevel.Information, "All FileSystem caches have been cleared.");
+        }
+
+        /// <summary>
         /// Updates internal directory maps when an entry is added or modified.
         /// </summary>
         /// <param name="directory"></param>
         /// <param name="entry"></param>
         private static void UpdateDirectoryMaps(string directory, Entry entry)
         {
-            directory = directory?.TrimEnd('/') ?? string.Empty;
+            directory = NormalizePath(directory);
 
             // Get or create the directory list
             if (!DirectoryMap.TryGetValue(directory, out List<RepositoryContent> list))
@@ -659,6 +667,85 @@ namespace WinPaletter.GitHub
 
             // Remove from DirectoryCache
             DirectoryCache.TryRemove(directory, out _);
+        }
+
+        /// <summary>
+        /// Builds a dictionary of changes from the FileSystem cache.
+        /// Key = repository path, Value = new content (null if deleted)
+        /// </summary>
+        public static Dictionary<string, string> BuildChangesFromCache()
+        {
+            var changes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var kv in FileSystem._cache)
+            {
+                Entry entry = kv.Value.entry;
+
+                if (entry.Type == EntryType.File)
+                {
+                    string currentContent = entry.Content?.Content;
+                    string lastSha = entry.CommitSha;
+
+                    if (currentContent == null)
+                    {
+                        // File removed from UI
+                        changes[entry.Path] = null;
+                    }
+                    else
+                    {
+                        string contentSha = ComputeSha1(currentContent);
+
+                        // New file or modified content
+                        if (string.IsNullOrEmpty(lastSha) || lastSha != contentSha)
+                            changes[entry.Path] = currentContent;
+                    }
+                }
+                else if (entry.Type == EntryType.Dir && entry.Children != null)
+                {
+                    // Recurse into children
+                    foreach (Entry child in entry.Children)
+                        RecurseEntry(child, changes);
+                }
+            }
+
+            return changes;
+        }
+
+        private static void RecurseEntry(Entry entry, Dictionary<string, string> changes)
+        {
+            if (entry.Type == EntryType.File)
+            {
+                string currentContent = entry.Content?.Content;
+                string lastSha = entry.CommitSha;
+
+                if (currentContent == null)
+                {
+                    changes[entry.Path] = null;
+                }
+                else
+                {
+                    string contentSha = ComputeSha1(currentContent);
+                    if (string.IsNullOrEmpty(lastSha) || lastSha != contentSha)
+                        changes[entry.Path] = currentContent;
+                }
+            }
+            else if (entry.Type == EntryType.Dir && entry.Children != null)
+            {
+                foreach (Entry child in entry.Children)
+                    RecurseEntry(child, changes);
+            }
+        }
+
+        private static string ComputeSha1(string content)
+        {
+            if (string.IsNullOrEmpty(content)) return string.Empty;
+
+            using (SHA1 sha1 = SHA1.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(content);
+                byte[] hash = sha1.ComputeHash(bytes);
+                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            }
         }
     }
 }
