@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static WinPaletter.GitHub.FileSystem;
 
 namespace WinPaletter.GitHub
 {
@@ -69,7 +70,7 @@ namespace WinPaletter.GitHub
 
             return result;
         }
-        
+
         private static string GetParent(string path)
         {
             int i = path.LastIndexOf('/');
@@ -77,6 +78,32 @@ namespace WinPaletter.GitHub
 
             return result;
         }
+
+        public static bool IsValidGitWindowsUrlSafeName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+
+            if (InvalidFileNames.Contains(name, StringComparer.OrdinalIgnoreCase)) return false;
+            if (name.StartsWith(" ") || name.EndsWith(" ") || name.StartsWith(".") || name.EndsWith(".")) return false;
+
+            // Convert string array of single-character strings to char[]
+            char[] invalidChars = [.. InvalidFileNameChars.Select(s => s[0])];
+            return name.IndexOfAny(invalidChars) < 0;
+        }
+
+        public static readonly string[] InvalidFileNameChars = ["<", ">", ":", "\"", "/", "\\", "|", "?", "*", "\0"];
+
+        public static readonly string[] InvalidFileNames =
+        [
+            ".", "..", ".lock",
+            "CON","PRN","AUX","NUL",
+            "COM1","COM2","COM3","COM4","COM5","COM6","COM7","COM8","COM9",
+            "LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9"
+        ];
+
+        public static string InvalidCharsToolTip => $"{Program.Lang.Strings.GitHubStrings.Explorer_NotAllowedChars}: {string.Join(" ", InvalidFileNameChars.Select(c => c == "\0" ? "\\0" : $"'{c}'"))}";
+
+        public static string InvalidNamesToolTip => $"{Program.Lang.Strings.GitHubStrings.Explorer_ReversedWords}: {string.Join(", ", InvalidFileNames)}";
 
         public static async Task<bool> FileExistsAsync(string path, CancellationTokenSource cts = null)
         {
@@ -189,111 +216,87 @@ namespace WinPaletter.GitHub
 
             string normalizedPath = NormalizePath(githubPath);
 
-            try
+            // Read local file if needed
+            string contentToSend = contentOrPath;
+            if (isLocalFile)
             {
-                cts?.Token.ThrowIfCancellationRequested();
+                byte[] fileBytes = File.ReadAllBytes(contentOrPath);
+                contentToSend = Encoding.UTF8.GetString(fileBytes);
+            }
 
-                IRepositoryContentsClient client = Program.GitHub.Client.Repository.Content;
+            IRepositoryContentsClient client = Program.GitHub.Client.Repository.Content;
 
-                // Fetch existing entry if present
-                var existing = await FileSystem.GetInfoRefreshAsync(normalizedPath, recursive: false, token: cts.Token);
+            const int MaxRetries = 3;
+            int attempt = 0;
 
-                // Only read bytes for local files
-                byte[] fileBytes = null;
-                string contentToSend = contentOrPath;
-
-                if (isLocalFile)
+            while (true)
+            {
+                attempt++;
+                try
                 {
-                    using var fs = new FileStream(contentOrPath, System.IO.FileMode.Open, FileAccess.Read, FileShare.Read);
-                    fileBytes = new byte[fs.Length];
-                    int offset = 0;
-                    while (offset < fs.Length)
+                    cts.Token.ThrowIfCancellationRequested();
+
+                    // Fetch existing entry
+                    var existing = await FileSystem.GetInfoRefreshAsync(normalizedPath, recursive: false, token: cts.Token);
+
+                    if (existing == null)
                     {
-                        int read = await fs.ReadAsync(fileBytes, offset, (int)(fs.Length - offset), cts.Token);
-                        if (read == 0) break;
-                        offset += read;
-                    }
-
-                    // Convert local file bytes to string for GitHub
-                    contentToSend = Encoding.UTF8.GetString(fileBytes);
-                }
-
-                // Then pass the string directly:
-                if (existing == null)
-                {
-                    await client.CreateFile(
-                        _owner,
-                        GitHub.Repository.repositoryName,
-                        normalizedPath,
-                        new CreateFileRequest(commitMessage, contentToSend)
-                        {
-                            Branch = GitHub.Repository.branch
-                        });
-                }
-                else
-                {
-                    string sha = existing.Content.Sha;
-                    if (string.IsNullOrEmpty(sha))
-                    {
-                        var remote = await client.GetAllContentsByRef(
+                        await client.CreateFile(
                             _owner,
                             GitHub.Repository.repositoryName,
                             normalizedPath,
-                            GitHub.Repository.branch);
-                        sha = remote[0].Sha;
+                            new CreateFileRequest(commitMessage, contentToSend) { Branch = GitHub.Repository.branch });
+                    }
+                    else
+                    {
+                        string sha = existing.Content?.Sha;
+
+                        if (string.IsNullOrEmpty(sha) || attempt > 1)
+                        {
+                            var remote = await client.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, normalizedPath, GitHub.Repository.branch);
+                            sha = remote[0].Sha;
+                        }
+
+                        await client.UpdateFile(
+                            _owner,
+                            GitHub.Repository.repositoryName,
+                            normalizedPath,
+                            new UpdateFileRequest(commitMessage, contentToSend, sha) { Branch = GitHub.Repository.branch });
                     }
 
-                    await client.UpdateFile(
-                        _owner,
-                        GitHub.Repository.repositoryName,
-                        normalizedPath,
-                        new UpdateFileRequest(commitMessage, contentToSend, sha)
-                        {
-                            Branch = GitHub.Repository.branch
-                        });
-                }
-
-                // Fetch updated content and update cache
-                var updatedContent = await client.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, normalizedPath, GitHub.Repository.branch);
-                if (updatedContent.Count > 0)
-                {
-                    var entry = new Entry
+                    // Update cache
+                    var updatedContent = await client.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, normalizedPath, GitHub.Repository.branch);
+                    if (updatedContent.Count > 0)
                     {
-                        Path = normalizedPath,
-                        Type = EntryType.File,
-                        Content = updatedContent[0],
-                        FetchedAt = DateTime.UtcNow
-                    };
+                        var entry = new Entry
+                        {
+                            Path = normalizedPath,
+                            Type = EntryType.File,
+                            Content = updatedContent[0],
+                            FetchedAt = DateTime.UtcNow
+                        };
 
-                    // Update unified cache
-                    _cache[normalizedPath] = (entry, DateTime.UtcNow);
-                    UpdateDirectoryMaps(Path.GetDirectoryName(normalizedPath), entry);
+                        _cache[normalizedPath] = (entry, DateTime.UtcNow);
+                        UpdateDirectoryMaps(Path.GetDirectoryName(normalizedPath), entry);
+                        ClearEntryCache(NormalizePath(Path.GetDirectoryName(normalizedPath)));
+                    }
 
-                    // Invalidate parent directory cache
-                    string parentDir = NormalizePath(Path.GetDirectoryName(normalizedPath));
-                    if (!string.IsNullOrEmpty(parentDir))
-                        ClearEntryCache(parentDir);
+                    reportProgress?.Invoke(100);
+                    break;
                 }
-
-                reportProgress?.Invoke(100);
+                catch (Octokit.ApiValidationException ex) when (ex.Message.Contains("SHA") && attempt < MaxRetries)
+                {
+                    await Task.Delay(100);
+                }
+                catch (OperationCanceledException)
+                {
+                    reportProgress?.Invoke(0);
+                    throw;
+                }
             }
-            catch (OperationCanceledException)
-            {
-                reportProgress?.Invoke(0);
-                throw;
-            }
-            //catch (Exception ex)
-            //{
-            //    Program.Log?.Write(LogEventLevel.Error, $"WriteFileAsync failed for `{normalizedPath}`", ex);
-            //    reportProgress?.Invoke(0);
-            //    throw;
-            //}
         }
 
-        public static async Task CreateDirectoryAsync(
-       string path,
-       ListViewItem listViewItem = null,
-       CancellationTokenSource cts = null)
+        public static async Task CreateDirectoryAsync(string path, ListViewItem listViewItem = null, CancellationTokenSource cts = null)
         {
             cts ??= new();
             cts.Token.ThrowIfCancellationRequested();
@@ -301,65 +304,78 @@ namespace WinPaletter.GitHub
             string normalizedPath = NormalizePath(path);
             string parentDir = GetParent(normalizedPath);
 
-            try
+            const int MaxRetries = 3;
+            int attempt = 0;
+
+            while (true)
             {
-                // 1️⃣ Check if directory already exists in cache
-                if (await GetEntryCachedAsync(normalizedPath, forceRefresh: true, cts: cts) != null)
-                    return;
-
-                // 2️⃣ Create via .gitkeep
-                await WriteFileAsync(
-                    $"{normalizedPath}/.gitkeep",
-                    string.Empty,
-                    false,
-                    $"Create directory {normalizedPath} by {_owner}",
-                    cts
-                );
-
-                // 3️⃣ Invalidate ONLY fetch caches
-                ClearEntryCache(normalizedPath);
-                DirectoryCache.TryRemove(parentDir, out _);
-
-                // 4️⃣ Fetch fresh RepositoryContent
-                IReadOnlyList<RepositoryContent> parentContents = await GetContentsCachedAsync(parentDir);
-                RepositoryContent dirContent = parentContents
-                    .FirstOrDefault(c => c.Type == ContentType.Dir && string.Equals(c.Path, normalizedPath, StringComparison.OrdinalIgnoreCase));
-
-                if (dirContent == null)
-                    throw new InvalidOperationException("GitHub did not return new directory.");
-
-                // 5️⃣ Patch DirectoryMap (DO NOT REMOVE)
-                if (!DirectoryMap.TryGetValue(parentDir, out var list))
+                attempt++;
+                try
                 {
-                    list = new List<RepositoryContent>();
-                    DirectoryMap[parentDir] = list;
+                    cts.Token.ThrowIfCancellationRequested();
+
+                    // Check if directory exists
+                    if (await GetEntryCachedAsync(normalizedPath, forceRefresh: true, cts: cts) != null)
+                        return;
+
+                    // Create .gitkeep file
+                    await WriteFileAsync($"{normalizedPath}/.gitkeep", string.Empty, false, $"Create directory {normalizedPath} by {_owner}", cts);
+
+                    // Refresh cache
+                    ClearEntryCache(normalizedPath);
+                    DirectoryCache.TryRemove(parentDir, out _);
+
+                    // Fetch fresh contents
+                    IReadOnlyList<RepositoryContent> parentContents = await GetContentsCachedAsync(parentDir);
+                    var dirContent = parentContents.FirstOrDefault(c => c.Type == ContentType.Dir && string.Equals(c.Path, normalizedPath, StringComparison.OrdinalIgnoreCase));
+
+                    if (dirContent == null)
+                        throw new InvalidOperationException("GitHub did not return new directory.");
+
+                    // Patch directory map
+                    if (!DirectoryMap.TryGetValue(parentDir, out var list))
+                    {
+                        list = new List<RepositoryContent>();
+                        DirectoryMap[parentDir] = list;
+                    }
+                    if (!list.Any(c => c.Path.Equals(dirContent.Path, StringComparison.OrdinalIgnoreCase)))
+                        list.Add(dirContent);
+
+                    // Store entry
+                    StoreEntryInCache(new Entry
+                    {
+                        Path = normalizedPath,
+                        Type = EntryType.Dir,
+                        Content = dirContent,
+                        Children = new List<Entry>(),
+                        FetchedAt = DateTime.UtcNow
+                    });
+
+                    if (listViewItem != null)
+                    {
+                        listViewItem.Tag = dirContent;
+
+                        listViewItem.SubItems.Add(FileTypeProvider?.Invoke(dirContent) ?? Program.Lang.Strings.Extensions.File);
+
+                        long size = dirContent.Type == Octokit.ContentType.Dir && FolderSizeMap.ContainsKey(dirContent.Path) ? FolderSizeMap[dirContent.Path] : dirContent.Size;
+
+                        listViewItem.SubItems.Add(size.ToStringFileSize());
+                        listViewItem.SubItems.Add(ShaToMd5(dirContent.Sha).ToUpper());
+                        listViewItem.SubItems.Add(dirContent.HtmlUrl);
+                        listViewItem.SubItems.Add(dirContent.Content);
+                    }
+
+                    Program.Log?.Write(LogEventLevel.Information, $"Directory {normalizedPath} created");
+                    break;
                 }
-                if (!list.Any(c => c.Path.Equals(dirContent.Path, StringComparison.OrdinalIgnoreCase)))
-                    list.Add(dirContent);
-
-                // 6️⃣ Store Entry
-                StoreEntryInCache(new Entry
+                catch (Octokit.ApiValidationException ex) when (ex.Message.Contains("SHA") && attempt < MaxRetries)
                 {
-                    Path = normalizedPath,
-                    Type = EntryType.Dir,
-                    Content = dirContent,
-                    Children = new List<Entry>(),
-                    FetchedAt = DateTime.UtcNow
-                });
-
-                if (listViewItem is not null)
-                    listViewItem.Tag = dirContent;
-
-                Program.Log?.Write(LogEventLevel.Information, $"Directory {normalizedPath} created");
-            }
-            catch (OperationCanceledException)
-            {
-                // Ignore cancellations
-            }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Error, $"CreateDirectoryAsync failed for {normalizedPath}", ex);
-                throw;
+                    await Task.Delay(100); // retry after slight delay
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
             }
         }
 

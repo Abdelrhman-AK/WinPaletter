@@ -18,6 +18,7 @@
                 public string VisualStyles { get; set; } = "Visual styles files";
                 public string File { get; set; } = "File";
                 public string Folder { get; set; } = "Folder";
+                public string NewFolder { get; set; } = "New Folder";
                 public string Text { get; set; } = "Text files";
                 public string Cursors { get; set; } = "Cursors";
                 public string Cur { get; set; } = "Windows cursor files";

@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.GitHub;
+using static WinPaletter.Theme.Structures.WinTerminal;
 
 namespace WinPaletter
 {
@@ -29,6 +30,7 @@ namespace WinPaletter
 
         UI.WP.ContextMenuStrip contextMenu_all = new();
         UI.WP.ContextMenuStrip contextMenu_item = new();
+        ListViewItem itemBeingEdited;
 
         public GitHubMgrForm()
         {
@@ -476,6 +478,53 @@ Generated automatically by WinPaletter.";
             Cursor = Cursors.Default;
         }
 
+        private static string GetAvailableItemText(string baseName, ListView listView)
+        {
+            string name = baseName;
+            int i = 1;
+
+            bool Exists(string text)
+            {
+                foreach (ListViewItem it in listView.Items)
+                    if (string.Equals(it.Text, text, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                return false;
+            }
+
+            while (Exists(name))
+            {
+                i++;
+                name = $"{baseName} ({i})";
+            }
+
+            return name;
+        }
+
+        static TreeNode FindTreeNodeByPath(TreeNodeCollection nodes, string path)
+        {
+            if (string.IsNullOrEmpty(path) || path == "/") return null;
+
+            string[] parts = path.Trim('/').Split('/');
+            if (parts[0] == "Themes" && parts[1] == User.GitHub.Login)
+            {
+                parts = [.. parts.Skip(1)];
+            }
+
+            TreeNode current = null;
+            TreeNodeCollection currentNodes = nodes;
+
+            foreach (string part in parts)
+            {
+                current = currentNodes.Cast<TreeNode>().FirstOrDefault(n => n.Text.Equals(part, StringComparison.OrdinalIgnoreCase));
+
+                if (current == null) return null;
+
+                currentNodes = current.Nodes;
+            }
+
+            return current;
+        }
+
         private void listView1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -588,16 +637,7 @@ Generated automatically by WinPaletter.";
 
             ToolStripMenuItem menu_newFolder = new(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(20, 20));
 
-            menu_newFolder.Click += async (s, e) =>
-            {
-                ListViewItem item = new("New Folder");
-                item.ImageKey = "folder"; // optional
-                item.Tag = "NEWFOLDER_PENDING";
-                listView1.Items.Add(item);
-                item.Selected = true;
-                item.Focused = true;
-                item.BeginEdit();
-            };
+            menu_newFolder.Click += async (s, e) => NewDirectoryInit();
 
             menu_newItem.DropDown.Items.AddRange(
             [
@@ -623,16 +663,37 @@ Generated automatically by WinPaletter.";
 
         private async void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            if (e.Label == null) return; // user pressed Esc
+            ListViewItem item = listView1.Items[e.Item];
 
-            string newName = e.Label.Trim();
+            string newName;
+            if (e.Label == null)
+            {
+                // return will cancel the operation
+                // but Windows continues creating the folder with the same name
+                // so we will simulate what Windows does
+
+                newName = GetAvailableItemText(Program.Lang.Strings.Extensions.NewFolder, listView1);
+            }
+            else
+            {
+                newName = e.Label.Trim();
+            }
+
             if (string.IsNullOrWhiteSpace(newName))
             {
                 e.CancelEdit = true;
                 return;
             }
+            else if (!GitHub.FileSystem.IsValidGitWindowsUrlSafeName(newName))
+            {
+                Program.ToolTip.Show(treeView1, Program.Lang.Strings.GitHubStrings.Explorer_InvalidCharToolTip,
+                    $"{GitHub.FileSystem.InvalidCharsToolTip}\r\n{GitHub.FileSystem.InvalidNamesToolTip}",
+                    Properties.Resources.checker_disabled, item.Bounds.Location);
 
-            ListViewItem item = listView1.Items[e.Item];
+                item?.Remove();
+                e.CancelEdit = true;
+                return;
+            }
 
             if (item.Tag is string str_tag && str_tag == "NEWFOLDER_PENDING")
             {
@@ -648,23 +709,40 @@ Generated automatically by WinPaletter.";
             }
         }
 
-        async void NewDirectory(ListViewItem item, LabelEditEventArgs e)
+        /// <summary>
+        /// Initiate creation of a new directory with beginning of label edit
+        /// </summary>
+        void NewDirectoryInit()
+        {
+            ListViewItem item = new(GetAvailableItemText(Program.Lang.Strings.Extensions.NewFolder, listView1))
+            {
+                ImageKey = "folder",
+                Tag = "NEWFOLDER_PENDING",
+                Selected = true,
+                Focused = true
+            };
+
+            listView1.Items.Add(item);
+            item.Selected = true;
+            item.Focused = true;
+            item.BeginEdit();
+        }
+
+        async void NewDirectory(ListViewItem item, LabelEditEventArgs e = null)
         {
             Cursor = Cursors.WaitCursor;
             breadcrumbControl1.StartMarquee();
 
-            string path = $"{GitHub.FileSystem.currentPath}/{e.Label.Trim()}";
+            string path = $"{GitHub.FileSystem.currentPath}/{item.Text.Trim()}";
 
             try
             {
-                await GitHub.FileSystem.CreateDirectoryAsync(path, item);
-
-                //await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem._root);
-                //GitHub.FileSystem.SelectTreeNode(listView1, treeView1, GitHub.FileSystem.currentPath);
+                await GitHub.FileSystem.CreateDirectoryAsync(path, item, cts);
+                GitHub.FileSystem.UpdateTreeNode(treeView1, path, false);
             }
             catch
             {
-                e.CancelEdit = true;
+                e?.CancelEdit = true;
             }
             finally
             {
@@ -680,17 +758,17 @@ Generated automatically by WinPaletter.";
             breadcrumbControl1.StartMarquee();
 
             string oldPath = (item.Tag as FileSystem.Entry).Path;
-            string newPath = oldPath.Substring(0, oldPath.LastIndexOf('/') + 1) + e.Label.Trim();
+            string newPath = oldPath.Substring(0, oldPath.LastIndexOf('/') + 1) + item.Text.Trim();
 
             try
             {
-                await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath);
+                await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath, cts);
 
-                FileSystem.Entry entry = await GitHub.FileSystem.GetDirectoryInfo(newPath);
+                FileSystem.Entry entry = await GitHub.FileSystem.GetDirectoryInfo(newPath, cts);
                 item.Tag = entry.Content;
 
-                await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath);
-                GitHub.FileSystem.SelectTreeNode(listView1, treeView1, GitHub.FileSystem.currentPath);
+                await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
+                GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
             }
             catch
             {
@@ -703,9 +781,100 @@ Generated automatically by WinPaletter.";
             }
         }
 
+        private async void listView1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ListViewItem item = listView1.SelectedItems.Count > 0 ? listView1.SelectedItems[0] : null;
+
+                if (itemBeingEdited is not null && item is not null)
+                {
+                    item?.EndEdit();
+                    e.Handled = true; // prevent beep sound
+                }
+                else if (listView1.SelectedItems.Count > 0 && item.Tag is RepositoryContent rc)
+                {
+                    // Navigate into directory
+                    await GitHub.FileSystem.NavigateTo(rc.Path, listView1, treeView1);
+                }
+
+                itemBeingEdited = null;
+            }
+            else if (e.KeyCode == Keys.F2 || (e.Control && e.KeyCode == Keys.R))
+            {
+                if (listView1.SelectedItems.Count > 0)
+                {
+                    // Rename selected file or directory
+                    ListViewItem item = listView1.SelectedItems[0];
+                    item.BeginEdit();
+                }
+            }
+            else if (e.KeyCode == Keys.Back || (e.Alt && e.KeyCode == Keys.Left))
+            {
+                // Navigate backward
+                if (FileSystem.CanGoBack) await GitHub.FileSystem.GoBack(treeView1, listView1);
+            }
+            else if (e.Alt && e.KeyCode == Keys.Right)
+            {
+                // Navigate forward
+                if (FileSystem.CanGoForward) await GitHub.FileSystem.GoForward(treeView1, listView1);
+            }
+            else if (e.Control && e.KeyCode == Keys.A)
+            {
+                // Select all items
+                foreach (ListViewItem item in listView1.Items) item.Selected = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.N)
+            {
+                // Initiate new directory creation
+                NewDirectoryInit();
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                // Delete selected file or directory
+            }
+            else if (e.KeyCode == Keys.F5)
+            {
+                // Refresh current directory
+            }
+            else if (e.Control && e.KeyCode == Keys.C)
+            {
+                // Copy selected item(s)
+            }
+            else if (e.Control && e.KeyCode == Keys.X)
+            {
+                // Cut selected item(s)
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                // Paste item(s)
+            }
+            else if (e.Control && e.KeyCode == Keys.Shift && e.KeyCode == Keys.N)
+            {
+                // Create new file
+            }
+            else if (e.Alt && e.KeyCode == Keys.Enter)
+            {
+                // Show properties/details of selected item
+            }
+            else if (e.Control && e.KeyCode == Keys.F)
+            {
+                // Search in current directory
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                // Cancel current operation or clear selection
+            }
+        }
+
         private async void button15_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void listView1_BeforeLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            itemBeingEdited = listView1.Items[e.Item];
         }
     }
 }

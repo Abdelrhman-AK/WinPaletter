@@ -39,6 +39,9 @@ public partial class Localizer
             public string ExplorerStatus_Forked { get; set; } = "Themes repository is forked.";
             public string ExplorerStatus_NotForked { get; set; } = "Themes repository is not forked.";
             public string ExplorerStatus_SyncAndForkToManage { get; set; } = "Fork to manage your uploaded themes.";
+            public string Explorer_NotAllowedChars { get; set; } = "Not allowed characters";
+            public string Explorer_ReversedWords { get; set; } = "Reserved or invalid names";
+            public string Explorer_InvalidCharToolTip { get; set; } = "You have entered an invalid character or a reserved word.";
         }
     }
 }

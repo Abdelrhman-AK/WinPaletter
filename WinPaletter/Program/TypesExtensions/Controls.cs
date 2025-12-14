@@ -342,5 +342,21 @@ namespace WinPaletter.TypesExtensions
                 return true;
             }
         }
+
+        public static void EndEdit(this ListViewItem item)
+        {
+            if (item?.ListView == null) return;
+
+            ListView listView = item.ListView;
+
+            // Ensure the ListView has focus
+            if (!listView.Focused) listView?.Focus();
+
+            // Move focus to the parent form to commit the edit
+            Form parentForm = listView.FindForm();
+            parentForm?.ActiveControl = listView; // temporarily focus the ListView
+
+            item?.Selected = true;
+        }
     }
 }
