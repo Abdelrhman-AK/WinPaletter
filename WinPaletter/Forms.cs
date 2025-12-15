@@ -132,6 +132,12 @@ namespace WinPaletter
         /// </summary>
         public static GitHubLogin GitHubLogin => (_GitHubLogin == null || _GitHubLogin.IsDisposed) ? (_GitHubLogin = CreateInstance(_GitHubLogin)) : _GitHubLogin;
 
+        private static GitHub_FileAction _GitHub_FileAction;
+        /// <summary>
+        /// Gets the instance of the form <see cref="GitHubLogin"/> to switch user.
+        /// </summary>
+        public static GitHub_FileAction GitHub_FileAction => (_GitHub_FileAction == null || _GitHub_FileAction.IsDisposed) ? (_GitHub_FileAction = CreateInstance(_GitHub_FileAction)) : _GitHub_FileAction;
+
         private static GitHubMgrForm _GitHubMgrForm;
         /// <summary>
         /// Gets the instance of the form <see cref="GitHubMgrForm"/> to switch user.

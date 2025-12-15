@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using static WinPaletter.NativeMethods.GDI32;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.NativeMethods
 {
@@ -183,6 +184,127 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
+        /// Sends the specified message to a window or windows.
+        /// </summary>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        /// <summary>
+        /// Set a new IntPtr to a hwnd
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nIndex"></param>
+        /// <param name="dwNewLong"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        /// <summary>
+        /// Passes a window message to the specified window procedure for processing.
+        /// </summary>
+        /// <param name="lpPrevWndFunc">
+        /// A pointer to the previous window procedure. This value is typically obtained by calling
+        /// <c>SetWindowLongPtr</c> or <c>GetWindowLongPtr</c> with <c>GWLP_WNDPROC</c>.
+        /// </param>
+        /// <param name="hWnd">
+        /// A handle to the window procedure that will receive the message.
+        /// </param>
+        /// <param name="msg">
+        /// The message identifier. This value specifies the message being sent.
+        /// </param>
+        /// <param name="wParam">
+        /// Additional message-specific information. The meaning of this parameter depends on the value of <paramref name="msg"/>.
+        /// </param>
+        /// <param name="lParam">
+        /// Additional message-specific information. The meaning of this parameter depends on the value of <paramref name="msg"/>.
+        /// </param>
+        /// <returns>
+        /// The return value depends on the message being processed. This value is returned directly from
+        /// the window procedure specified by <paramref name="lpPrevWndFunc"/>.
+        /// </returns>
+        /// <remarks>
+        /// This function is commonly used when subclassing a window to forward messages that are not
+        /// explicitly handled by the custom window procedure to the original (previous) window procedure.
+        /// Failing to call the previous window procedure for unhandled messages may result in undefined
+        /// behavior or broken window functionality.
+        /// </remarks>
+        /// <seealso href="https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-callwindowprocw"/>
+        [DllImport("user32.dll")]
+        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Represents a window procedure callback used to process messages sent to a window.
+        /// </summary>
+        /// <param name="hWnd">
+        /// A handle to the window receiving the message.
+        /// </param>
+        /// <param name="msg">
+        /// The message identifier that specifies the message being processed.
+        /// </param>
+        /// <param name="wParam">
+        /// Additional message-specific information. The meaning of this parameter depends on the value of <paramref name="msg"/>.
+        /// </param>
+        /// <param name="lParam">
+        /// Additional message-specific information. The meaning of this parameter depends on the value of <paramref name="msg"/>.
+        /// </param>
+        /// <returns>
+        /// The result of the message processing, which depends on the message being handled.
+        /// </returns>
+        /// <remarks>
+        /// This delegate is typically used when subclassing a window in managed code, allowing a custom
+        /// window procedure to intercept and handle Windows messages before optionally forwarding them
+        /// to the original window procedure via <c>CallWindowProc</c>.
+        /// </remarks>
+        public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Marks the specified window's client area (or a portion of it) for repainting.
+        /// </summary>
+        /// <param name="hWnd">
+        /// A handle to the window whose client area is to be invalidated. If this parameter is <see cref="IntPtr.Zero"/>,
+        /// the entire screen is invalidated.
+        /// </param>
+        /// <param name="lpRect">
+        /// A pointer to a <c>RECT</c> structure that specifies the client area to be invalidated.
+        /// If this parameter is <see cref="IntPtr.Zero"/>, the entire client area is invalidated.
+        /// </param>
+        /// <param name="bErase">
+        /// Specifies whether the background should be erased when the window is repainted.
+        /// <c>true</c> erases the background; <c>false</c> does not.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the function succeeds; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>
+        /// Invalidating a rectangle does not cause an immediate repaint. Instead, it signals the system
+        /// that the window needs repainting, which results in a <c>WM_PAINT</c> message being posted to the window.
+        /// </remarks>
+        /// <seealso href="https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-invalidaterect"/>
+        [DllImport("user32.dll")]
+        public static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
+
+        /// <summary>
+        /// Retrieves the coordinates of a window's client area.
+        /// </summary>
+        /// <param name="hWnd">
+        /// A handle to the window whose client area coordinates are to be retrieved.
+        /// </param>
+        /// <param name="lpRect">
+        /// When this method returns, contains a <c>RECT</c> structure that receives the client coordinates.
+        /// The coordinates are relative to the upper-left corner of the client area.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the function succeeds; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>
+        /// The client area excludes non-client elements such as the title bar, borders, and scroll bars.
+        /// The returned coordinates are expressed in client coordinates, not screen coordinates.
+        /// </remarks>
+        /// <seealso href="https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-getclientrect"/>
+        [DllImport("user32.dll")]
+        public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+
+        /// <summary>
         /// Updates the system parameters for the current user.
         /// </summary>
         /// <remarks>This method is a wrapper for the native <c>UpdatePerUserSystemParameters</c> function
@@ -195,12 +317,6 @@ namespace WinPaletter.NativeMethods
         /// langword="false"/>.</returns>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool UpdatePerUserSystemParameters(uint flags, bool force);
-
-        /// <summary>
-        /// Sends the specified message to a window or windows.
-        /// </summary>
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         /// <summary>
         /// Represents a callback method used to process each window enumerated by the <see cref="EnumWindows"/>

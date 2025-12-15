@@ -42,6 +42,13 @@ public partial class Localizer
             public string Explorer_NotAllowedChars { get; set; } = "Not allowed characters";
             public string Explorer_ReversedWords { get; set; } = "Reserved or invalid names";
             public string Explorer_InvalidCharToolTip { get; set; } = "You have entered an invalid character or a reserved word.";
+            public string Explorer_EntryExists { get; set; } = "You have entered a name of an existing entry";
+
+            public string Explorer_Confirmation_DeleteFile { get; set; } = "Are you sure you want to permanently delete this file?";
+            public string Explorer_Confirmation_Title_DeleteFile { get; set; } = "Delete file";
+            public string Explorer_Confirmation_DeleteFolder { get; set; } = "Are you sure you want to permanently delete this folder?";
+            public string Explorer_Confirmation_Title_DeleteFolder { get; set; } = "Delete folder";
+
         }
     }
 }

@@ -609,6 +609,7 @@
             this.tablessControl1.SelectedIndex = 0;
             this.tablessControl1.Size = new System.Drawing.Size(845, 566);
             this.tablessControl1.TabIndex = 4;
+            this.tablessControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage3
             // 
@@ -1015,7 +1016,6 @@
             this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(177, 450);
             this.treeView1.TabIndex = 0;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // separatorV1
             // 
@@ -1039,6 +1039,7 @@
             this.listView1.LabelEdit = true;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
+            this.listView1.RowHeight = 24;
             this.listView1.Size = new System.Drawing.Size(643, 450);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;

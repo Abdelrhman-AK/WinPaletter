@@ -71,7 +71,7 @@ namespace WinPaletter.GitHub
             return result;
         }
 
-        private static string GetParent(string path)
+        public static string GetParent(string path)
         {
             int i = path.LastIndexOf('/');
             string result = i < 0 ? string.Empty : path.Substring(0, i);
@@ -646,8 +646,7 @@ namespace WinPaletter.GitHub
                         UpdateDirectoryMaps(Path.GetDirectoryName(targetPath), dirEntry);
 
                         // Remove old directory from cache / maps
-                        RemoveDirectoryMaps(Path.GetDirectoryName(entry.Path), entry);
-                        _cache.TryRemove(entry.Path, out _);
+                        RemoveDirectoryFromAllCaches(entry.Path);
                     }
                 }
 
@@ -736,17 +735,15 @@ namespace WinPaletter.GitHub
             {
                 cts.Token.ThrowIfCancellationRequested();
 
-                // 1️⃣ Get the branch reference and latest commit
+                // Get the branch reference and latest commit
                 var branchRef = await Program.GitHub.Client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
                 var latestCommit = await Program.GitHub.Client.Git.Commit.Get(_owner, GitHub.Repository.repositoryName, branchRef.Object.Sha);
 
-                // 2️⃣ Get the full repository tree recursively
+                // Get the full repository tree recursively
                 var tree = await Program.GitHub.Client.Git.Tree.GetRecursive(_owner, GitHub.Repository.repositoryName, latestCommit.Tree.Sha);
 
-                // 3️⃣ Collect all files under the directory to delete
-                var filesToDelete = tree.Tree
-                    .Where(t => t.Type == TreeType.Blob && NormalizePath(t.Path).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
-                    .ToList();
+                // Collect all files under the directory to delete
+                var filesToDelete = tree.Tree.Where(t => t.Type == TreeType.Blob && NormalizePath(t.Path).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase)).ToList();
 
                 if (!filesToDelete.Any())
                 {
@@ -757,7 +754,7 @@ namespace WinPaletter.GitHub
                 int total = filesToDelete.Count;
                 int processed = 0;
 
-                // 4️⃣ Build new tree entries with SHA = null to delete files
+                // Build new tree entries with SHA = null to delete files
                 var newTree = new NewTree { BaseTree = latestCommit.Tree.Sha };
                 foreach (var file in filesToDelete)
                 {
@@ -773,21 +770,19 @@ namespace WinPaletter.GitHub
                     reportProgress?.Invoke(processed * 100 / total);
                 }
 
-                // 5️⃣ Create the new tree
+                // Create the new tree
                 var createdTree = await Program.GitHub.Client.Git.Tree.Create(_owner, GitHub.Repository.repositoryName, newTree);
 
-                // 6️⃣ Create a commit pointing to the new tree
+                // Create a commit pointing to the new tree
                 var commitMessage = $"Delete directory `{normalizedPath}` recursively by {_owner}";
                 var newCommit = new NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
                 var commit = await Program.GitHub.Client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, newCommit);
 
-                // 7️⃣ Update branch reference to the new commit
-                await Program.GitHub.Client.Git.Reference.Update(
-                    _owner,
-                    GitHub.Repository.repositoryName,
-                    $"heads/{GitHub.Repository.branch}",
-                    new ReferenceUpdate(commit.Sha)
-                );
+                // Update branch reference to the new commit
+                await Program.GitHub.Client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new ReferenceUpdate(commit.Sha));
+
+                // Remove directory from cache
+                RemoveDirectoryFromAllCaches(normalizedPath);
 
                 reportProgress?.Invoke(100);
             }
@@ -805,17 +800,10 @@ namespace WinPaletter.GitHub
             }
         }
 
-        public static async IAsyncEnumerable<Entry> EnumerateEntriesAsync(
-            string path,
-            EnumerateType type = EnumerateType.Both,
-            string searchPattern = "*",
-            bool recursive = false,
-            [EnumeratorCancellation] CancellationToken ct = default)
+        public static async IAsyncEnumerable<Entry> EnumerateEntriesAsync(string path, EnumerateType type = EnumerateType.Both, string searchPattern = "*", bool recursive = false, [EnumeratorCancellation] CancellationToken ct = default)
         {
-            if (Program.GitHub.Client == null)
-                throw new InvalidOperationException("GitHub client is null.");
-            if (string.IsNullOrEmpty(_owner) || string.IsNullOrEmpty(GitHub.Repository.repositoryName) || string.IsNullOrEmpty(GitHub.Repository.branch))
-                throw new InvalidOperationException("Owner, repository, or branch not set.");
+            if (Program.GitHub.Client == null) throw new InvalidOperationException("GitHub client is null.");
+            if (string.IsNullOrEmpty(_owner) || string.IsNullOrEmpty(GitHub.Repository.repositoryName) || string.IsNullOrEmpty(GitHub.Repository.branch))  throw new InvalidOperationException("Owner, repository, or branch not set.");
 
             path = NormalizePath(path); // normalize slashes
 

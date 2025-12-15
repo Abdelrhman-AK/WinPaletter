@@ -669,6 +669,56 @@ namespace WinPaletter.GitHub
             DirectoryCache.TryRemove(directory, out _);
         }
 
+        private static void RemoveDirectoryFromAllCaches(string dirPath)
+        {
+            dirPath = NormalizePath(dirPath).TrimEnd('/');
+
+            // 1. Remove Entry cache (dir + all children)
+            foreach (string key in _cache.Keys
+                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
+                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                _cache.TryRemove(key, out _);
+            }
+
+            // 2. Remove DirectoryCache entries
+            foreach (string key in DirectoryCache.Keys
+                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
+                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                DirectoryCache.TryRemove(key, out _);
+            }
+
+            // 3. Remove FolderSizeMap entries
+            foreach (string key in FolderSizeMap.Keys
+                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
+                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                FolderSizeMap.Remove(key);
+            }
+
+            // 4. Remove DirectoryMap entries
+            foreach (string key in DirectoryMap.Keys
+                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
+                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                DirectoryMap.Remove(key);
+            }
+
+            // 5. Remove directory from its parent list
+            string parent = GetParent(dirPath);
+            if (DirectoryMap.TryGetValue(parent, out List<RepositoryContent> list))
+            {
+                list.RemoveAll(c =>
+                    c.Type == ContentType.Dir &&
+                    string.Equals(c.Path, dirPath, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
         /// <summary>
         /// Builds a dictionary of changes from the FileSystem cache.
         /// Key = repository path, Value = new content (null if deleted)

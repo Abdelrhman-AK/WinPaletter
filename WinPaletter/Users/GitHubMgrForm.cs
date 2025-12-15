@@ -30,6 +30,9 @@ namespace WinPaletter
 
         UI.WP.ContextMenuStrip contextMenu_all = new();
         UI.WP.ContextMenuStrip contextMenu_item = new();
+        List<ListViewItem> cutItems;
+        List<ListViewItem> copiedItems;
+
         ListViewItem itemBeingEdited;
 
         public GitHubMgrForm()
@@ -59,7 +62,14 @@ namespace WinPaletter
                 comboBox1.Items.AddRange([.. branches]);
             }
 
+            GitHub.FileSystem.Navigated += FileSystem_Navigated;
+
             // After populating the tree for the first time
+            UpdateExplorerLayout();
+        }
+
+        private void FileSystem_Navigated(object sender, string path)
+        {
             UpdateExplorerLayout();
         }
 
@@ -232,24 +242,16 @@ namespace WinPaletter
         private async void button2_Click(object sender, EventArgs e)
         {
             await GitHub.FileSystem.GoBack(treeView1, listView1);
-            UpdateExplorerLayout();
         }
 
         private async void button4_Click(object sender, EventArgs e)
         {
             await GitHub.FileSystem.GoForward(treeView1, listView1);
-            UpdateExplorerLayout();
         }
 
         private async void button5_Click(object sender, EventArgs e)
         {
             await GitHub.FileSystem.GoUp(treeView1, listView1);
-            UpdateExplorerLayout();
-        }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            UpdateExplorerLayout();
         }
 
         private async void button6_Click(object sender, EventArgs e)
@@ -265,7 +267,7 @@ namespace WinPaletter
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            explorer_controls.Visible = tabControl1.SelectedIndex == 1;
+            explorer_controls.Visible = tabControl1.SelectedIndex == 1 && tablessControl1.SelectedIndex == 1;
         }
 
         private async void button8_Click(object sender, EventArgs e)
@@ -637,7 +639,7 @@ Generated automatically by WinPaletter.";
 
             ToolStripMenuItem menu_newFolder = new(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(20, 20));
 
-            menu_newFolder.Click += async (s, e) => NewDirectoryInit();
+            menu_newFolder.Click += async (s, e) => Init_NewDirectory();
 
             menu_newItem.DropDown.Items.AddRange(
             [
@@ -672,7 +674,7 @@ Generated automatically by WinPaletter.";
                 // but Windows continues creating the folder with the same name
                 // so we will simulate what Windows does
 
-                newName = GetAvailableItemText(Program.Lang.Strings.Extensions.NewFolder, listView1);
+                newName = item.Text;
             }
             else
             {
@@ -694,9 +696,18 @@ Generated automatically by WinPaletter.";
                 e.CancelEdit = true;
                 return;
             }
+            else if (listView1.Items.Cast<ListViewItem>().Any(i => i != item && string.Equals(i.Text, newName, StringComparison.OrdinalIgnoreCase)))
+            {
+                Program.ToolTip.Show(treeView1, Program.Lang.Strings.GitHubStrings.Explorer_EntryExists, string.Empty, Properties.Resources.checker_disabled, item.Bounds.Location);
+
+                item?.Remove();
+                e.CancelEdit = true;
+                return;
+            }
 
             if (item.Tag is string str_tag && str_tag == "NEWFOLDER_PENDING")
             {
+                item.Text = newName;
                 NewDirectory(item, e);
             }
 
@@ -712,7 +723,7 @@ Generated automatically by WinPaletter.";
         /// <summary>
         /// Initiate creation of a new directory with beginning of label edit
         /// </summary>
-        void NewDirectoryInit()
+        void Init_NewDirectory()
         {
             ListViewItem item = new(GetAvailableItemText(Program.Lang.Strings.Extensions.NewFolder, listView1))
             {
@@ -726,6 +737,42 @@ Generated automatically by WinPaletter.";
             item.Selected = true;
             item.Focused = true;
             item.BeginEdit();
+        }
+
+        void Init_Cut()
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                copiedItems?.Clear();
+                cutItems?.Clear();
+                cutItems = [.. listView1.SelectedItems.Cast<ListViewItem>()];
+
+                foreach (ListViewItem cutItem in listView1.SelectedItems)
+                {
+                    if (cutItem is not null && !cutItem.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase))
+                        cutItem?.ImageKey = $"ghost_{cutItem?.ImageKey}";
+                }
+
+                foreach (ListViewItem notCutItem in listView1.Items.Cast<ListViewItem>().Where(i => !i.Selected && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
+                {
+                    notCutItem.ImageKey = notCutItem.ImageKey.Replace("ghost_", string.Empty);
+                }
+            }
+        }
+
+        void Init_Copy()
+        {
+            foreach (ListViewItem item in listView1.Items.Cast<ListViewItem>().Where(i => i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
+            {
+                item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
+            }
+
+            if (listView1.SelectedItems.Count > 0)
+            {
+                cutItems?.Clear();
+                copiedItems?.Clear();
+                copiedItems = [.. listView1.SelectedItems.Cast<ListViewItem>()];
+            }
         }
 
         async void NewDirectory(ListViewItem item, LabelEditEventArgs e = null)
@@ -781,12 +828,54 @@ Generated automatically by WinPaletter.";
             }
         }
 
+        async void DeleteElement(ListViewItem item)
+        {
+            if (item?.Tag is null) return;
+
+            if (item.Tag is RepositoryContent rc)
+            {
+                Cursor = Cursors.WaitCursor;
+                breadcrumbControl1.StartMarquee();
+
+                if (rc.Type == ContentType.Dir && Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, GitHub.FileSystem.FolderSizeMap[rc.Path]) == DialogResult.Yes)
+                {
+                    await GitHub.FileSystem.DeleteDirectoryAsync(rc.Path);
+                    item.Remove();
+                    GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, true);
+                }
+                else if (rc.Type != ContentType.Dir)
+                {
+                    if (Forms.GitHub_FileAction.ConfirmFileDelete(rc.Name, GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Lang.Strings.Extensions.File, rc.Size, listView1.LargeImageList.Images[item.ImageKey] as Bitmap) == DialogResult.Yes)
+                    {
+                        await GitHub.FileSystem.DeleteFileAsync(rc.Path);
+                        item.Remove();
+                    }
+                }
+
+                breadcrumbControl1.StopMarquee();
+                Cursor = Cursors.Default;
+            }
+
+        }
+
+        async void Paste()
+        {
+            if (copiedItems is not null && copiedItems.Count > 0)
+            {
+
+            }
+            else if (cutItems is not null && cutItems.Count > 0)
+            {
+
+            }
+        }
+
         private async void listView1_KeyUp(object sender, KeyEventArgs e)
         {
+            ListViewItem item = listView1.SelectedItems.Count > 0 ? listView1.SelectedItems[0] : null;
+
             if (e.KeyCode == Keys.Enter)
             {
-                ListViewItem item = listView1.SelectedItems.Count > 0 ? listView1.SelectedItems[0] : null;
-
                 if (itemBeingEdited is not null && item is not null)
                 {
                     item?.EndEdit();
@@ -802,12 +891,8 @@ Generated automatically by WinPaletter.";
             }
             else if (e.KeyCode == Keys.F2 || (e.Control && e.KeyCode == Keys.R))
             {
-                if (listView1.SelectedItems.Count > 0)
-                {
-                    // Rename selected file or directory
-                    ListViewItem item = listView1.SelectedItems[0];
-                    item.BeginEdit();
-                }
+                // Rename selected file or directory
+                item?.BeginEdit();
             }
             else if (e.KeyCode == Keys.Back || (e.Alt && e.KeyCode == Keys.Left))
             {
@@ -822,32 +907,37 @@ Generated automatically by WinPaletter.";
             else if (e.Control && e.KeyCode == Keys.A)
             {
                 // Select all items
-                foreach (ListViewItem item in listView1.Items) item.Selected = true;
+                foreach (ListViewItem childItem in listView1.Items) childItem.Selected = true;
             }
             else if (e.Control && e.KeyCode == Keys.N)
             {
                 // Initiate new directory creation
-                NewDirectoryInit();
+                Init_NewDirectory();
             }
             else if (e.KeyCode == Keys.Delete)
             {
                 // Delete selected file or directory
+                DeleteElement(item);
             }
             else if (e.KeyCode == Keys.F5)
             {
                 // Refresh current directory
+                await GitHub.FileSystem.RefreshAsync(treeView1, listView1, breadcrumbControl1, cts);
             }
             else if (e.Control && e.KeyCode == Keys.C)
             {
                 // Copy selected item(s)
+                Init_Copy();
             }
             else if (e.Control && e.KeyCode == Keys.X)
             {
                 // Cut selected item(s)
+                Init_Cut();
             }
             else if (e.Control && e.KeyCode == Keys.V)
             {
                 // Paste item(s)
+                Paste();
             }
             else if (e.Control && e.KeyCode == Keys.Shift && e.KeyCode == Keys.N)
             {
@@ -864,6 +954,7 @@ Generated automatically by WinPaletter.";
             else if (e.KeyCode == Keys.Escape)
             {
                 // Cancel current operation or clear selection
+                cts?.Cancel();
             }
         }
 

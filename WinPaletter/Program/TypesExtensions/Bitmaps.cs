@@ -1518,5 +1518,26 @@ namespace WinPaletter.TypesExtensions
 
             return result;
         }
+
+        /// <summary>
+        /// Makes a ghost effect to a Bitmap, mimmics a Windows Explorer file icon being 'Cut'
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
+        public static Bitmap Ghost(this Bitmap bitmap)
+        {
+            Bitmap bmp = new(bitmap.Width, bitmap.Height);
+            using (Graphics G = Graphics.FromImage(bmp))
+            {
+                ColorMatrix cm = new()
+                {
+                    Matrix33 = 0.6f
+                };
+                ImageAttributes ia = new();
+                ia.SetColorMatrix(cm, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+                G.DrawImage(bitmap, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, ia);
+            }
+            return bmp;
+        }
     }
 }

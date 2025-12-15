@@ -16,18 +16,4 @@ namespace WinPaletter.UI.WP
             }
         }
     }
-
-    [Description("ListView fixed to respect dark/light mode")]
-    public class ListView : System.Windows.Forms.ListView
-    {
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams parms = base.CreateParams;
-                parms.Style |= 0x80;
-                return parms;
-            }
-        }
-    }
 }

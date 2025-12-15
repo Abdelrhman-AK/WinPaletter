@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.TypesExtensions;
 
 namespace WinPaletter.GitHub
 {
@@ -19,7 +20,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Provides a function to determine the file type description for a given repository content entry.
         /// </summary>
-        private static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
+        public static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
         {
             if (entry.Type == Octokit.ContentType.Dir) return Program.Lang.Strings.GitHubStrings.Explorer_Type_Folder;
             if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterTheme;
@@ -94,6 +95,20 @@ namespace WinPaletter.GitHub
         /// Gets whether navigation to the parent directory is possible.
         /// </summary>
         public static bool CanGoUp => !string.IsNullOrEmpty(currentPath) && currentPath != _root;
+
+        /// <summary>
+        /// Event triggered whenever navigation occurs.
+        /// </summary>
+        public static event EventHandler<string> Navigated;
+
+        /// <summary>
+        /// Invokes the Navigated event.
+        /// </summary>
+        /// <param name="path">The path that was navigated to.</param>
+        private static void OnNavigated(string path)
+        {
+            Navigated?.Invoke(null, path);
+        }
 
         /// <summary>
         /// Set the branch to use for repository access.
@@ -282,44 +297,64 @@ namespace WinPaletter.GitHub
         /// exist, they are created dynamically.</param>
         public static void UpdateTreeNode(UI.WP.TreeView tree, string path, bool selectAfterUpdate)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"SelectTreeNode called for path='{path}'");
+            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Called for path='{path}'");
 
             if (tree.Nodes.Count == 0)
             {
-                Program.Log?.Write(LogEventLevel.Warning, "SelectTreeNode aborted: tree has no nodes");
+                Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Tree has no nodes, exiting");
                 return;
             }
 
             TreeNode rootNode = tree.Nodes[0];
-
             if (rootNode.Tag == null) rootNode.Tag = _root;
 
-            // Special case: selecting root
+            // Normalize path first
+            if (!path.StartsWith(_root + "/", StringComparison.OrdinalIgnoreCase))
+                path = _root + "/" + path.TrimStart('/');
+
+            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Normalized path='{path}'");
+
+            // Check if path is exactly root
             if (string.Equals(path, _root, StringComparison.OrdinalIgnoreCase))
             {
                 tree.SelectedNode = rootNode;
                 rootNode.EnsureVisible();
+                Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Path is root, selected root node");
+                // Prune deleted nodes even if root is selected
+                PruneDeletedNodes(rootNode);
                 return;
             }
-
-            // Normalize path: ensure it starts with _root
-            if (!path.StartsWith(_root + "/", StringComparison.OrdinalIgnoreCase))
-                path = _root + "/" + path.TrimStart('/');
 
             string relativePath = path.Substring(_root.Length + 1);
             string[] segments = relativePath.Split('/');
 
             TreeNode currentNode = rootNode;
 
+            // Initial pruning before traversal
+            Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Pruning deleted nodes before traversal");
+            PruneDeletedNodes(rootNode);
+
             foreach (var segment in segments)
             {
+                Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Processing segment='{segment}'");
+
+                // Remove child nodes that no longer exist in cache
+                foreach (TreeNode child in currentNode.Nodes.Cast<TreeNode>().ToList())
+                {
+                    string childPath = child.Tag as string;
+                    if (!_cache.ContainsKey(childPath))
+                    {
+                        Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Removing deleted node '{childPath}'");
+                        currentNode.Nodes.Remove(child);
+                    }
+                }
+
+                // Find existing child or create dynamically
                 TreeNode childNode = currentNode.Nodes.Cast<TreeNode>()
                     .FirstOrDefault(n => string.Equals(n.Text, segment, StringComparison.OrdinalIgnoreCase));
 
                 if (childNode == null)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Creating missing node '{segment}' dynamically");
-
                     string parentTag = currentNode.Tag as string ?? _root;
                     string fullTag = parentTag + "/" + segment;
 
@@ -331,16 +366,42 @@ namespace WinPaletter.GitHub
                     };
 
                     currentNode.Nodes.Add(childNode);
+                    Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Created missing node '{fullTag}' dynamically");
                 }
 
                 currentNode.Expand();
                 currentNode = childNode;
             }
 
-            if (selectAfterUpdate) tree.SelectedNode = currentNode;
-            currentNode.EnsureVisible();
+            // Final pruning to remove any nodes deleted during traversal
+            Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Pruning deleted nodes after traversal");
+            PruneDeletedNodes(rootNode);
 
-            Program.Log?.Write(LogEventLevel.Information, $"SelectTreeNode completed, selected '{currentNode.Tag}'");
+            if (selectAfterUpdate)
+            {
+                tree.SelectedNode = currentNode;
+                Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Selected node '{currentNode.Tag}'");
+            }
+
+            currentNode.EnsureVisible();
+            Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] UpdateTreeNode completed");
+        }
+
+        private static void PruneDeletedNodes(TreeNode node)
+        {
+            foreach (TreeNode child in node.Nodes.Cast<TreeNode>().ToList())
+            {
+                string childPath = child.Tag as string;
+                if (!_cache.ContainsKey(childPath))
+                {
+                    Program.Log?.Write(LogEventLevel.Information, $"[PruneDeletedNodes] Pruning deleted node '{childPath}'");
+                    node.Nodes.Remove(child);
+                }
+                else
+                {
+                    PruneDeletedNodes(child);
+                }
+            }
         }
 
         /// <summary>
@@ -352,148 +413,103 @@ namespace WinPaletter.GitHub
         /// <param name="tree">The TreeView to update.</param>
         /// <param name="updateStacks">Whether to update back/forward navigation history.</param>
         /// <returns>A task representing the navigation operation.</returns>
-        public static async Task NavigateTo(string newPath, UI.WP.ListView list, UI.WP.TreeView tree, bool updateStacks = true, bool isBackNavigation = false)
+        /// <summary>
+        /// Central method to navigate to a new path. Handles stack updates consistently.
+        /// </summary>
+        // <summary>
+        /// Central method to navigate to a new path. Handles stack updates consistently.
+        /// </summary>
+        public static async Task NavigateTo(string newPath, UI.WP.ListView list, UI.WP.TreeView tree, bool addToHistory = true)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"NavigateTo called for '{newPath}'");
+            if (string.IsNullOrEmpty(newPath)) return;
 
-            if (string.IsNullOrEmpty(newPath) || newPath.Equals(currentPath, StringComparison.OrdinalIgnoreCase))
+            // Normalize
+            if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase))
+                newPath = _root + "/" + newPath.TrimStart('/');
+
+            // Resolve
+            string resolvedPath = newPath;
+            while (!DirectoryMap.ContainsKey(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
+                resolvedPath = UppermostRoot(resolvedPath) ?? _root;
+
+            // Already at target
+            if (string.Equals(resolvedPath, currentPath, StringComparison.OrdinalIgnoreCase))
             {
-                Program.Log?.Write(LogEventLevel.Information, "NavigateTo aborted: path null/empty or unchanged");
+                if (addToHistory) forwardStack.Clear(); // re-click: clear forward
                 return;
             }
 
-            // Normalize path
-            if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase)) newPath = _root + "/" + newPath.TrimStart('/');
-
-            // Update navigation stacks
-            if (updateStacks && !string.IsNullOrEmpty(currentPath))
+            // Update stacks
+            if (addToHistory)
             {
-                backStack.Push(currentPath);
-                forwardStack.Clear();
-                Program.Log?.Write(LogEventLevel.Information, $"NavigateTo: pushed '{currentPath}' to backStack and cleared forwardStack");
+                backStack.Push(currentPath);   // previous path goes to back
+                forwardStack.Clear();          // new navigation clears forward
             }
 
-            currentPath = newPath;
+            currentPath = resolvedPath;
 
-            // If path does not exist in DirectoryMap, fallback to root
-            if (!DirectoryMap.ContainsKey(newPath) && !string.Equals(newPath, _root, StringComparison.OrdinalIgnoreCase))
-            {
-                Program.Log?.Write(LogEventLevel.Warning, $"NavigateTo: '{newPath}' not found, falling back to root");
-                currentPath = _root;
-            }
+            // Fire event
+            OnNavigated(currentPath);
 
             await PopulateListViewAsync(list, currentPath);
             UpdateTreeNode(tree, currentPath, true);
-
-            // Selection logic
-            if (isBackNavigation && !string.IsNullOrEmpty(_lastEnteredFolder))
-            {
-                // Select the folder we came from
-                var item = list.Items
-                    .Cast<ListViewItem>()
-                    .FirstOrDefault(i =>
-                        i.Text.Equals(_lastEnteredFolder, StringComparison.OrdinalIgnoreCase) &&
-                        i.Tag is RepositoryContent rc &&
-                        rc.Type.Value == Octokit.ContentType.Dir);
-
-                if (item != null) item.Selected = true;
-            }
-            else
-            {
-                // Forward navigation → select first folder
-                var firstFolder = list.Items
-                    .Cast<ListViewItem>()
-                    .FirstOrDefault(i =>
-                        i.Tag is RepositoryContent rc &&
-                        rc.Type.Value == Octokit.ContentType.Dir);
-
-                if (firstFolder != null) firstFolder.Selected = true;
-            }
-
-            Program.Log?.Write(LogEventLevel.Information, $"Navigation complete: now at '{currentPath}'");
         }
 
         /// <summary>
-        /// Navigates to the previously visited repository path, if available.
+        /// Go back in history.
         /// </summary>
-        /// <param name="tree">The TreeView bound to the explorer.</param>
-        /// <param name="list">The ListView bound to the explorer.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
         public static async Task GoBack(UI.WP.TreeView tree, UI.WP.ListView list)
         {
-            Program.Log?.Write(LogEventLevel.Information, "GoBack invoked");
+            if (!CanGoBack) return;
 
-            if (backStack.Count == 0)
-            {
-                Program.Log?.Write(LogEventLevel.Information, "GoBack aborted: backStack empty");
-                return;
-            }
+            string previous = backStack.Pop();
+            forwardStack.Push(currentPath); // current path goes to forwardStack
 
-            forwardStack.Push(currentPath);
-            string previousPath = backStack.Pop();
-
-            Program.Log?.Write(LogEventLevel.Information, $"GoBack: navigating to '{previousPath}'");
-
-            await NavigateTo(previousPath, list, tree, updateStacks: false, isBackNavigation: true);
+            await NavigateTo(previous, list, tree, addToHistory: false);
         }
 
         /// <summary>
-        /// Navigates forward in history to the next repository path, if available.
+        /// Go forward in history.
         /// </summary>
-        /// <param name="tree">The TreeView bound to the explorer.</param>
-        /// <param name="list">The ListView bound to the explorer.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
         public static async Task GoForward(UI.WP.TreeView tree, UI.WP.ListView list)
         {
-            Program.Log?.Write(LogEventLevel.Information, "GoForward invoked");
+            if (!CanGoForward) return;
 
-            if (forwardStack.Count == 0)
-            {
-                Program.Log?.Write(LogEventLevel.Information, "GoForward aborted: forwardStack empty");
-                return;
-            }
+            string next = forwardStack.Pop();
+            backStack.Push(currentPath);  // current path goes to backStack
 
-            backStack.Push(currentPath);
-            string nextPath = forwardStack.Pop();
-
-            Program.Log?.Write(LogEventLevel.Information, $"GoForward: navigating to '{nextPath}'");
-
-            await NavigateTo(nextPath, list, tree, updateStacks: false);
+            await NavigateTo(next, list, tree, addToHistory: false);
         }
 
         /// <summary>
-        /// Navigates to the parent directory of the current repository path.
+        /// Navigate to parent directory.
         /// </summary>
-        /// <param name="tree">The TreeView instance to update.</param>
-        /// <param name="list">The ListView instance to update.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
         public static async Task GoUp(UI.WP.TreeView tree, UI.WP.ListView list)
         {
-            Program.Log?.Write(LogEventLevel.Information, "GoUp invoked");
+            if (!CanGoUp) return;
 
-            if (string.IsNullOrEmpty(currentPath) || currentPath.Equals(_root, StringComparison.OrdinalIgnoreCase))
-            {
-                Program.Log?.Write(LogEventLevel.Information, "GoUp aborted: at root or no currentPath");
-                return;
-            }
+            string parent = GetParent(currentPath) ?? _root;
 
-            string parent = GetParent(currentPath);
-
-            if (string.IsNullOrEmpty(parent))
-            {
-                Program.Log?.Write(LogEventLevel.Warning, $"GoUp failed: no parent found for '{currentPath}'");
-                return;
-            }
-
-            // Ensure parent exists in DirectoryMap
-            if (!DirectoryMap.ContainsKey(parent))
-            {
-                Program.Log?.Write(LogEventLevel.Warning, $"GoUp: parent '{parent}' not found in DirectoryMap, using root");
-                parent = _root;
-            }
-
+            backStack.Push(currentPath);
             forwardStack.Clear();
-            await NavigateTo(parent, list, tree);
+
+            await NavigateTo(parent, list, tree, addToHistory: false);
+        }
+
+        /// <summary>
+        /// Gets the correct root to be used in navigation
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string UppermostRoot(string path)
+        {
+            if (string.IsNullOrEmpty(path) || path == _root)
+                return null;
+
+            int lastSlash = path.LastIndexOf('/');
+            if (lastSlash < _root.Length) return _root; // important: < instead of <=
+
+            return path.Substring(0, lastSlash);
         }
 
         /// <summary>
@@ -529,6 +545,8 @@ namespace WinPaletter.GitHub
         /// <param name="size">The size, in pixels, of the icons to add. Typically 16 or 48.</param>
         private static void AddIcons(ImageList imgList, int size)
         {
+            imgList.Images.Clear();
+
             if (size == 16)
             {
                 imgList.AddWithAlpha("folder", Assets.GitHubMgr.folder_web_16);
@@ -544,6 +562,14 @@ namespace WinPaletter.GitHub
 
             using (Icon ico = Properties.Resources.fileextension.FromSize(size)) imgList.AddWithAlpha("wpth", ico.ToBitmap());
             using (Icon ico = Properties.Resources.ThemesResIcon.FromSize(size)) imgList.AddWithAlpha("wptp", ico.ToBitmap());
+
+            int count = imgList.Images.Count;
+            for (int i = 0; i < count; i++)
+            {
+                string key = $"ghost_{imgList.Images.Keys[i]}";
+                Bitmap ghost = (imgList.Images[i] as Bitmap).Ghost();
+                imgList.AddWithAlpha(key, ghost);
+            }
         }
 
         /// <summary>
@@ -639,30 +665,16 @@ namespace WinPaletter.GitHub
         /// <param name="e"></param>
         private static async void Tree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node == null || _boundList == null)
-            {
-                Program.Log?.Write(LogEventLevel.Warning, "Tree_AfterSelect: Node or list is null.");
-                return;
-            }
+            if (e.Node == null || _boundList == null || _boundTree == null) return;
 
             string newPath = e.Node.Tag as string;
+            if (string.IsNullOrEmpty(newPath)) return;
 
-            if (string.IsNullOrEmpty(newPath))
-            {
-                Program.Log?.Write(LogEventLevel.Warning, "Tree_AfterSelect: Path is null or empty.");
-                return;
-            }
+            // If the user selects the currently shown folder, do nothing
+            if (newPath == currentPath) return;
 
-            if (newPath == currentPath)
-            {
-                return;
-            }
-
-            backStack.Push(currentPath);
-            forwardStack.Clear();
-            currentPath = newPath;
-
-            await PopulateListViewAsync(_boundList, newPath);
+            // Navigate properly: update history
+            await NavigateTo(newPath, _boundList, _boundTree, true);
         }
 
         /// <summary>
@@ -672,28 +684,15 @@ namespace WinPaletter.GitHub
         /// <param name="e"></param>
         private static async void List_DoubleClick(object sender, EventArgs e)
         {
-            if (_boundList == null || _boundTree == null)
-            {
-                Program.Log?.Write(LogEventLevel.Warning, "List_DoubleClick: List or tree is null.");
-                return;
-            }
-
-            if (_boundList.SelectedItems.Count == 0)
-            {
-                Program.Log?.Write(LogEventLevel.Information, "List_DoubleClick: No item selected.");
-                return;
-            }
-
-            if (_boundList.SelectedItems[0].Tag is not RepositoryContent entry)
-            {
-                Program.Log?.Write(LogEventLevel.Warning, "List_DoubleClick: Selected item has no RepositoryContent tag.");
-                return;
-            }
-
+            if (_boundList == null || _boundTree == null) return;
+            if (_boundList.SelectedItems.Count == 0) return;
+            if (_boundList.SelectedItems[0].Tag is not RepositoryContent entry) return;
             if (entry.Type.Value != Octokit.ContentType.Dir) return;
 
-            _lastEnteredFolder = entry.Name; // remember clicked folder
-            await NavigateTo(entry.Path, _boundList, _boundTree);
+            _lastEnteredFolder = entry.Name;
+
+            // Navigate normally, history will be updated inside NavigateTo
+            await NavigateTo(entry.Path, _boundList, _boundTree, addToHistory: true);
         }
 
         /// <summary>
@@ -874,7 +873,7 @@ namespace WinPaletter.GitHub
                 }
 
                 Program.Log?.Write(LogEventLevel.Information, $"Navigating back to '{pathBeforeRefresh}'");
-                await NavigateTo(pathBeforeRefresh, list, tree, updateStacks: false);
+                await NavigateTo(pathBeforeRefresh, list, tree, false);
             }
             catch (Exception ex)
             {
