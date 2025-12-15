@@ -240,7 +240,7 @@ namespace WinPaletter.UI.WP
             btn_Stop = new()
             {
                 ImageGlyphEnabled = true,
-                ImageGlyph = Properties.Resources.Glyph_Explorer_Stop,
+                ImageGlyph = Properties.Resources.Glyph_Cancel,
                 Flag = Button.Flags.CustomColorOnHover,
                 CustomColor = Color.FromArgb(193, 18, 31),
                 Anchor = AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,

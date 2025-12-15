@@ -70,9 +70,10 @@ namespace WinPaletter.UI.WP
             if (_rowHeight <= 0) return;
 
             var oldList = SmallImageList;
+            var paddingHorizontal = 1; // small horizontal padding
             var newList = new ImageList
             {
-                ImageSize = new(oldList.ImageSize.Width, _rowHeight),
+                ImageSize = new(oldList.ImageSize.Width + paddingHorizontal * 2, _rowHeight),
                 ColorDepth = oldList.ColorDepth
             };
 
@@ -83,11 +84,13 @@ namespace WinPaletter.UI.WP
                     string key = oldList.Images.Keys.Count > i ? oldList.Images.Keys[i] : null;
 
                     int extraHeight = _rowHeight - img.Height;
-                    Bitmap padded = new(img.Width, _rowHeight);
+                    int paddedWidth = img.Width + paddingHorizontal * 2;
+
+                    Bitmap padded = new(paddedWidth, _rowHeight);
                     using (Graphics G = Graphics.FromImage(padded))
                     {
                         G.Clear(Color.Transparent);
-                        G.DrawImage(img, 0, extraHeight / 2, img.Width, img.Height); // center icon vertically
+                        G.DrawImage(img, paddingHorizontal, extraHeight / 2, img.Width, img.Height); // left padding, vertical centered
                     }
 
                     if (!string.IsNullOrEmpty(key)) newList.Images.Add(key, padded);
@@ -98,6 +101,7 @@ namespace WinPaletter.UI.WP
             base.SmallImageList?.Dispose();
             base.SmallImageList = newList;
         }
+
 
         protected override void OnHandleCreated(EventArgs e)
         {

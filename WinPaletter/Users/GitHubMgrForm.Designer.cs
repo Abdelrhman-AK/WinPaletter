@@ -82,9 +82,7 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
-            this.button15 = new WinPaletter.UI.WP.Button();
             this.button7 = new WinPaletter.UI.WP.Button();
-            this.button14 = new WinPaletter.UI.WP.Button();
             this.button13 = new WinPaletter.UI.WP.Button();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.status_lbl = new System.Windows.Forms.Label();
@@ -196,7 +194,7 @@
             this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.Image = null;
-            this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Explorer_Back;
+            this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Back;
             this.button2.ImageGlyphEnabled = true;
             this.button2.Location = new System.Drawing.Point(7, 8);
             this.button2.Name = "button2";
@@ -228,7 +226,7 @@
             this.button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button5.Image = null;
-            this.button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Explorer_Up;
+            this.button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Up;
             this.button5.ImageGlyphEnabled = true;
             this.button5.Location = new System.Drawing.Point(81, 8);
             this.button5.Name = "button5";
@@ -246,7 +244,7 @@
             this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.Image = null;
-            this.button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Explorer_Forward;
+            this.button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Forward;
             this.button4.ImageGlyphEnabled = true;
             this.button4.Location = new System.Drawing.Point(44, 8);
             this.button4.Name = "button4";
@@ -264,7 +262,7 @@
             this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button6.Image = null;
-            this.button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Explorer_Refresh;
+            this.button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Refresh;
             this.button6.ImageGlyphEnabled = true;
             this.button6.Location = new System.Drawing.Point(118, 8);
             this.button6.Name = "button6";
@@ -865,9 +863,7 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox4.Controls.Add(this.button15);
             this.groupBox4.Controls.Add(this.button7);
-            this.groupBox4.Controls.Add(this.button14);
             this.groupBox4.Controls.Add(this.button13);
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
@@ -875,23 +871,6 @@
             this.groupBox4.TabIndex = 4;
             this.groupBox4.UseDecorationPattern = false;
             this.groupBox4.UseSharpStyle = false;
-            // 
-            // button15
-            // 
-            this.button15.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button15.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.button15.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button15.Image = null;
-            this.button15.ImageGlyph = null;
-            this.button15.ImageGlyphEnabled = true;
-            this.button15.Location = new System.Drawing.Point(422, 3);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(77, 26);
-            this.button15.TabIndex = 16;
-            this.button15.Text = "Close";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // button7
             // 
@@ -912,23 +891,6 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // button14
-            // 
-            this.button14.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button14.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.button14.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button14.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button14.Image = null;
-            this.button14.ImageGlyph = null;
-            this.button14.ImageGlyphEnabled = true;
-            this.button14.Location = new System.Drawing.Point(505, 3);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(77, 26);
-            this.button14.TabIndex = 15;
-            this.button14.Text = "Commit";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
-            // 
             // button13
             // 
             this.button13.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -938,11 +900,11 @@
             this.button13.Image = null;
             this.button13.ImageGlyph = null;
             this.button13.ImageGlyphEnabled = true;
-            this.button13.Location = new System.Drawing.Point(588, 3);
+            this.button13.Location = new System.Drawing.Point(671, 3);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(189, 26);
+            this.button13.Size = new System.Drawing.Size(106, 26);
             this.button13.TabIndex = 14;
-            this.button13.Text = "Commit && send a pull request";
+            this.button13.Text = "Submit changes";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
@@ -1160,9 +1122,7 @@
         private System.Windows.Forms.PictureBox pictureBox6;
         private UI.WP.ComboBox comboBox1;
         private UI.WP.Button button10;
-        private UI.WP.Button button14;
         private UI.WP.Button button13;
-        private UI.WP.Button button15;
         private UI.WP.GroupBox groupBox4;
         private UI.WP.SeparatorH separatorH1;
     }

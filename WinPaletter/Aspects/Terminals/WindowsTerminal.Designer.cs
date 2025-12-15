@@ -368,7 +368,7 @@ namespace WinPaletter
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
+            this.Button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button3.ImageGlyph")));
             this.Button3.ImageGlyphEnabled = true;
             this.Button3.Location = new System.Drawing.Point(425, 43);
             this.Button3.Name = "Button3";
@@ -422,6 +422,8 @@ namespace WinPaletter
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.Size = new System.Drawing.Size(517, 48);
             this.groupBox15.TabIndex = 241;
+            this.groupBox15.UseDecorationPattern = false;
+            this.groupBox15.UseSharpStyle = false;
             // 
             // TerMode
             // 
@@ -470,6 +472,8 @@ namespace WinPaletter
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(517, 48);
             this.groupBox9.TabIndex = 237;
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
             // 
             // PictureBox1
             // 
@@ -522,6 +526,8 @@ namespace WinPaletter
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(517, 48);
             this.groupBox12.TabIndex = 240;
+            this.groupBox12.UseDecorationPattern = false;
+            this.groupBox12.UseSharpStyle = false;
             // 
             // PictureBox3
             // 
@@ -574,6 +580,8 @@ namespace WinPaletter
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(517, 48);
             this.groupBox10.TabIndex = 238;
+            this.groupBox10.UseDecorationPattern = false;
+            this.groupBox10.UseSharpStyle = false;
             // 
             // PictureBox2
             // 
@@ -626,6 +634,8 @@ namespace WinPaletter
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(517, 48);
             this.groupBox11.TabIndex = 239;
+            this.groupBox11.UseDecorationPattern = false;
+            this.groupBox11.UseSharpStyle = false;
             // 
             // PictureBox4
             // 
@@ -679,6 +689,8 @@ namespace WinPaletter
             this.GroupBox22.Padding = new System.Windows.Forms.Padding(1);
             this.GroupBox22.Size = new System.Drawing.Size(512, 301);
             this.GroupBox22.TabIndex = 195;
+            this.GroupBox22.UseDecorationPattern = false;
+            this.GroupBox22.UseSharpStyle = false;
             // 
             // Terminal1
             // 
@@ -918,7 +930,7 @@ namespace WinPaletter
             this.Button12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button12.ForeColor = System.Drawing.Color.White;
             this.Button12.Image = null;
-            this.Button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button12.ImageGlyph")));
+            this.Button12.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.Button12.ImageGlyphEnabled = true;
             this.Button12.Location = new System.Drawing.Point(425, 43);
             this.Button12.Name = "Button12";
@@ -1351,6 +1363,8 @@ namespace WinPaletter
             this.GroupBox13.Name = "GroupBox13";
             this.GroupBox13.Size = new System.Drawing.Size(1150, 40);
             this.GroupBox13.TabIndex = 117;
+            this.GroupBox13.UseDecorationPattern = false;
+            this.GroupBox13.UseSharpStyle = false;
             // 
             // Button6
             // 
@@ -1454,7 +1468,7 @@ namespace WinPaletter
             this.Button13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button13.ForeColor = System.Drawing.Color.White;
             this.Button13.Image = null;
-            this.Button13.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button13.ImageGlyph")));
+            this.Button13.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.Button13.ImageGlyphEnabled = true;
             this.Button13.Location = new System.Drawing.Point(1045, 5);
             this.Button13.Name = "Button13";
@@ -1545,6 +1559,8 @@ namespace WinPaletter
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(517, 76);
             this.groupBox8.TabIndex = 207;
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // TerDeleteScheme
             // 
@@ -1555,7 +1571,7 @@ namespace WinPaletter
             this.TerDeleteScheme.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TerDeleteScheme.ForeColor = System.Drawing.Color.White;
             this.TerDeleteScheme.Image = null;
-            this.TerDeleteScheme.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Remove;
+            this.TerDeleteScheme.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("TerDeleteScheme.ImageGlyph")));
             this.TerDeleteScheme.ImageGlyphEnabled = true;
             this.TerDeleteScheme.Location = new System.Drawing.Point(243, 43);
             this.TerDeleteScheme.Name = "TerDeleteScheme";
@@ -1612,6 +1628,8 @@ namespace WinPaletter
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(517, 160);
             this.groupBox2.TabIndex = 203;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // pictureBox6
             // 
@@ -1727,6 +1745,8 @@ namespace WinPaletter
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(517, 311);
             this.groupBox1.TabIndex = 202;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // pictureBox12
             // 
@@ -1997,6 +2017,8 @@ namespace WinPaletter
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(517, 76);
             this.groupBox7.TabIndex = 236;
+            this.groupBox7.UseDecorationPattern = false;
+            this.groupBox7.UseSharpStyle = false;
             // 
             // TerDeleteTheme
             // 
@@ -2007,7 +2029,7 @@ namespace WinPaletter
             this.TerDeleteTheme.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TerDeleteTheme.ForeColor = System.Drawing.Color.White;
             this.TerDeleteTheme.Image = null;
-            this.TerDeleteTheme.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Remove;
+            this.TerDeleteTheme.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("TerDeleteTheme.ImageGlyph")));
             this.TerDeleteTheme.ImageGlyphEnabled = true;
             this.TerDeleteTheme.Location = new System.Drawing.Point(243, 43);
             this.TerDeleteTheme.Name = "TerDeleteTheme";
@@ -2065,6 +2087,8 @@ namespace WinPaletter
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(517, 48);
             this.groupBox6.TabIndex = 209;
+            this.groupBox6.UseDecorationPattern = false;
+            this.groupBox6.UseSharpStyle = false;
             // 
             // pictureBox38
             // 
@@ -2118,6 +2142,8 @@ namespace WinPaletter
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(517, 48);
             this.groupBox5.TabIndex = 208;
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // pictureBox39
             // 
@@ -2158,6 +2184,8 @@ namespace WinPaletter
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(517, 103);
             this.groupBox4.TabIndex = 207;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // toggle1
             // 
@@ -2268,6 +2296,8 @@ namespace WinPaletter
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(517, 48);
             this.groupBox3.TabIndex = 211;
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // Label14
             // 
@@ -2305,6 +2335,8 @@ namespace WinPaletter
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(517, 48);
             this.groupBox14.TabIndex = 210;
+            this.groupBox14.UseDecorationPattern = false;
+            this.groupBox14.UseSharpStyle = false;
             // 
             // Label60
             // 
@@ -2372,6 +2404,8 @@ namespace WinPaletter
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(517, 48);
             this.groupBox18.TabIndex = 211;
+            this.groupBox18.UseDecorationPattern = false;
+            this.groupBox18.UseSharpStyle = false;
             // 
             // TerOpacityBar
             // 
@@ -2403,6 +2437,8 @@ namespace WinPaletter
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Size = new System.Drawing.Size(517, 48);
             this.groupBox17.TabIndex = 210;
+            this.groupBox17.UseDecorationPattern = false;
+            this.groupBox17.UseSharpStyle = false;
             // 
             // PictureBox16
             // 
@@ -2459,6 +2495,8 @@ namespace WinPaletter
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.Size = new System.Drawing.Size(517, 76);
             this.groupBox16.TabIndex = 209;
+            this.groupBox16.UseDecorationPattern = false;
+            this.groupBox16.UseSharpStyle = false;
             // 
             // PictureBox13
             // 
@@ -2477,6 +2515,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1174, 761);
             this.Controls.Add(this.GroupBox22);
             this.Controls.Add(this.TabControl1);

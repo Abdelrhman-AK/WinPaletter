@@ -2932,23 +2932,11 @@
   <data name="GitHub_SignInForFeatures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GitHub_SignInForFeatures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Glyph_Add" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAMtJREFUOE+1
-        0ktKQ0EQheEsIGJWIYLBbMChO3KgxEl05CaMCTgSXIqPRUTRRegnJRXSlD0y+sOBvtWnDtTtGgz+A0xw
-        idvUBQ6r7wcY4V6fT9xht/Z9gx08164OjxjW/ghYVife8F6LuK7N+/iorpw9VAnvXhtwXh3JLNXjrA2Y
-        NxcvmOIUR6k4R+218W3GwE1zscJV6ji1/o7wNfM2YOsRtvuJGfL7Z8yAWKSn6uzw0F2kIC6wyLWtRC1e
-        q9/cgjFO8nVCcT6ovj/hC7HQaNmk/TwrAAAAAElFTkSuQmCC
-</value>
+  <data name="Glyph_Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Glyph_Back" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAANpJREFUOE+1
-        0s8qxVEUxfH7AISZ+wJSxEh5rztARryHizJS3uHG1L8R3kIy5qOtXc5vO3fGt06d1l571T77jEb/AbZx
-        jIs8R9iqvl9gGVf6fOISS7XvGyzisXZ1uMdC7Y+A8+pMnvBetJPavI6PYgpuMMZL0cO71gYcFkMQzau4
-        roVkvw2YluIzVjAresvPGDgtxTfsYK/oLdM2oDfCa4Yc1EIyGGHeI0bILm6LPnzEDJm3xh7DNWZAfKSH
-        6uxw1/1IQRRwlt+2Elpsq9/cgk1Mcjtx4r5RfX/CF8f/bIQcFRDsAAAAAElFTkSuQmCC
-</value>
+  <data name="Glyph_Back" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Back.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Browse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2958,23 +2946,11 @@
         eYJZz6Td+i74KjdYvzQGMSpmGgAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="Glyph_Cancel" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAANtJREFUOE+1
-        lEsKwkAMhrsWKSKiZ1AXnkVc6DV8nMOFmyKeQBQVvY+PW+jqk0iETBylaP0gkKbJz8zfziTJvwEqwAAY
-        a/Sl5vveAjSAOXDjFallQN3PBQBt4OKnI5yBlp9/ANSAk5/4wBGoeh0RWvjOHGReRIz1nnSAnXneas1y
-        BVIr1HMNwgooAQdgr/naNwFdKySfN8ZSBSQkjzG0QhP/VpGVpBqyshgjKxTb2gYom61JLj55gq3FzG5G
-        zJaaJTRbxWauKQ/TQESFivkhhUKOyJNCDq3l52vkW+4d3gzBcVFangAAAABJRU5ErkJggg==
-</value>
+  <data name="Glyph_Cancel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Cancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Glyph_Check" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAONJREFUOE+1
-        0r0uRFEUxfF5ABKVWhRISATFNF5KhEzoVCqtymCi9QQaEa3wFBofLyD85NzsK8d2DQX/5CYne6+1su/Z
-        p9f7D7CMPZzhFFuYzbovYArnunnFqGiyrwGTuMuuDi6ytyFG/YlnrGE9mxdixHE8YTXu4wUzdcBuVice
-        sYLtqrZRBxxXjcx9TLif6ofjAvq4xEOsdJD6hWEdkH/hCtOYx07qtQzqgK5LvMZBqrUU7dxHQIT8Zo0t
-        R5/MEVAe0m1WdnCDiexvKA2c4C27ojb81lyDJWzGdspXzotZ9ye8A8b3ZhURZcsdAAAAAElFTkSuQmCC
-</value>
+  <data name="Glyph_Check" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Check.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Compact" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3002,15 +2978,8 @@
         5q2aha3qdcBhNRJjzFanBw7wmsSYdgyw2/NvxIa1jxMfaFjzP+cTdFP6IvEW3oQAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Glyph_Down" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAANZJREFUOE+10l0qhVEUxvEzAGIUUsREKMrJQNyIG8zDOZQrZSgOU+HO509L+9Q6
-        6329N/jXqt3az/PU2nuNRv8BNnCEaas4b1ZdByxhgk9doncVmur7ppnvq6uHByxXfwRcVuUA19W8ho+q
-        GiC06zngOF0+4wSvqRfnMzyl3mkOiIebE+lj7OGl1T4O8J500xxQ539rITvYbeboZSY5II8wJwyHrao5
-        WBjhd4/YQuoYQyx+YwuIRZpVZQ+PvYsUYAW3P6xycIfV6uuALZzjptUFtqvuT/gCLtZse8P6L/EAAAAA
-        SUVORK5CYII=
-</value>
+  <data name="Glyph_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Edit" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3030,41 +2999,17 @@
         f69/4cE5sEvv6lTCo8da4oaHjQOwApa5z+BeGGLcgK56DVl5AxK8fVT1Wx83AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="Glyph_Explorer_Back" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Glyph_Explorer_Back.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Glyph_Explorer_Forward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Glyph_Explorer_Forward.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Glyph_Explorer_Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Glyph_Explorer_Refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Glyph_Explorer_Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Glyph_Explorer_Stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Glyph_Explorer_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Glyph_Explorer_Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Glyph_Forward" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAANRJREFUOE+1
-        0kFKQ0EQhOEcIGJOoLsgGPQcLhW8gZ7AjeDK3CNR0ZXgUTSuxZMo+klLB95rx7fSHwaG6aqCnu7R6D/A
-        Pua4y3OJvar7ASZ40OYT99isvm+wgefqavCEcfVHwE1D+F7e1iyqeQcfRXSC419CQjvtBlxUBd5wNBBy
-        3g1Y1moSIQc4rYVeG7iq1eQFWznKyrIb0GrhFdu4rYWk10LrEw8HzP1PzJA6xiH6Y8yAWKRVVTZ4bC5S
-        EAVc59pW4i2m1TZ3wQxnOZ04cd+tuj/hC8+ubIQmxEy7AAAAAElFTkSuQmCC
-</value>
+  <data name="Glyph_Forward" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Forward.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_GitHub" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Glyph_GitHub.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Glyph_Help" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOJJREFUOE+1
-        0j0uhVEQxvHbI6wCCaFRikXchSBRkKjYh69EJbGDawk+tkChVGn5ycgp3vu8p+SfnORk5pnnZGbOZPIf
-        YBvnuG3nDFupG4EV3OvzjTssZ90vWMJLVnV4wmLWl8FNCN9xgMN2H3KRxev4CtFuKy6TvciVdnVocBqC
-        Yq0JP7CQSZwMDS4z26jB7WOaibk2cJXZRq1wB5+ZqEeHBr0WigfMMtiYa6E3xOIVbxkcDbGZ5BqL43op
-        g6M1NoP6SM+p7PDY/UhFJXDdpp9UrLbVLx6CTRy17dSp+0bq/oQfscNqbzZrkEgAAAAASUVORK5CYII=
-</value>
+  <data name="Glyph_Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Menu" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3100,14 +3045,8 @@
         QmCC
 </value>
   </data>
-  <data name="Glyph_Remove" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAALlJREFUOE+1
-        0l1KAkAUxXEXUOgqJEhycT4U+lRPbsKPwKegpZQuotxF/eLKSMNtlND6w4Vh7jkHZu7tdP4DDPGAVal7
-        3GTdD9DDszafeEI3+3bgEpvsavCKi+yPgMesPMIsm6/wkVVHCG2/DphkxS+4qwPmVeMdY9ymirttpft+
-        BhZV4w3TAxXhe+Z1wNlPOO8TS8jpYywBsUjrrGzw0lykIBpYlrXNxF1Mq22uwQCjMp2oOF9n3Z/wBWqe
-        biVJvnjCAAAAAElFTkSuQmCC
-</value>
+  <data name="Glyph_Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Reset" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3154,14 +3093,8 @@
         JAa4w1zuGynyOe4xn/tGMIWLX8kBtvGEbu5+RPkrszn/cz4A1mIdFLV3bnYAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Glyph_Up" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAANFJREFUOE+1
-        0ktKA0AQhOEcQImnEMGgF1FQMHiQbEQ36j2MCq4Ej2L0KrqLr09aBmzbIQsfPzQM3VUFPTODwX+ATZzi
-        qtUJNqruG1jBjT5vuMaw+j7AMu6rq8MMS9UfAZdVuYCzal7Da1UtILSrOeCoKvCM/VZxrhzkgGkZhmEP
-        29jCuBPyuQbO0+ClmXcxb7XTQvKa0xyQV3jAMZ5SL86HeEy9Lyv87hJbyM+fsQXER7qryg633Y8UxAAX
-        7dtWohev1TdnMMKkvU5UnNer7k94BwX9bHsZX3eOAAAAAElFTkSuQmCC
-</value>
+  <data name="Glyph_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Glyph_Up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Glyph_Update" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
