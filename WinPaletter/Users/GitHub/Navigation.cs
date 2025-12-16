@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -26,7 +28,7 @@ namespace WinPaletter.GitHub
             if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterTheme;
             if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterResourcesPack;
             if (entry.Name.EndsWith(".gitkeep", StringComparison.OrdinalIgnoreCase)) return ".gitkeep file";
-            return NativeMethods.Shlwapi.GetFriendlyTypeName(entry.Name);
+            return NativeMethods.Shell32.GetExtensionDescription(GetExtension(entry.Name));
         };
 
         /// <summary>

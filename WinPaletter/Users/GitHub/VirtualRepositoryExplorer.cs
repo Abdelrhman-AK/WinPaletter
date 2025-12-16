@@ -304,10 +304,10 @@ namespace WinPaletter.GitHub
         /// <param name="maxDepth">Max recursion depth (-1 = unlimited).</param>
         /// <param name="token">Optional cancellation token.</param>
         /// <returns>The repository Entry for the path.</returns>
-        public static async Task<Entry> GetInfoAsync(string path, bool recursive = true, bool useShaValidation = true, bool useTtlCache = true, bool forceRefresh = false, int maxDepth = 20, CancellationToken token = default)
+        public static async Task<Entry> GetInfoAsync(string path, bool recursive = true, bool useShaValidation = true, bool useTtlCache = true, bool forceRefresh = false, int maxDepth = 20, CancellationTokenSource cts = default)
         {
             if (string.IsNullOrEmpty(path)) return null;
-            token.ThrowIfCancellationRequested();
+            cts?.Token.ThrowIfCancellationRequested();
 
             // 1. Check cache
             if (!forceRefresh && _cache.TryGetValue(path, out (Entry, DateTime) cachedTuple))
@@ -366,7 +366,7 @@ namespace WinPaletter.GitHub
                     if (childEntry == null)
                     {
                         if (item.Type == Octokit.ContentType.Dir)
-                            childEntry = await GetInfoAsync(item.Path, true, useShaValidation, useTtlCache, forceRefresh, maxDepth - 1, token);
+                            childEntry = await GetInfoAsync(item.Path, true, useShaValidation, useTtlCache, forceRefresh, maxDepth - 1, cts);
                         else
                             childEntry = await Entry.FromRepositoryContent(item, item.Path);
                     }
@@ -385,17 +385,17 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Quick shallow lookup of a single path with TTL caching.
         /// </summary>
-        public static Task<Entry> GetInfoFastAsync(string path, CancellationToken token = default) => GetInfoAsync(path, recursive: false, useShaValidation: false, useTtlCache: true, forceRefresh: false, maxDepth: 0, token: token);
+        public static Task<Entry> GetInfoFastAsync(string path, CancellationTokenSource cts = default) => GetInfoAsync(path, recursive: false, useShaValidation: false, useTtlCache: true, forceRefresh: false, maxDepth: 0, cts: cts);
 
         /// <summary>
         /// Accurate full recursive fetch with SHA validation.
         /// </summary>
-        public static Task<Entry> GetInfoAccurateAsync(string path, int maxDepth = 20, CancellationToken token = default) => GetInfoAsync(path, recursive: true, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, token: token);
+        public static Task<Entry> GetInfoAccurateAsync(string path, int maxDepth = 20, CancellationTokenSource cts = default) => GetInfoAsync(path, recursive: true, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, cts: cts);
 
         /// <summary>
         /// Force refresh the entry with optional recursion.
         /// </summary>
-        public static Task<Entry> GetInfoRefreshAsync(string path, bool recursive = true, int maxDepth = 20, CancellationToken token = default) => GetInfoAsync(path, recursive, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, token: token);
+        public static Task<Entry> GetInfoRefreshAsync(string path, bool recursive = true, int maxDepth = 20, CancellationTokenSource cts = default) => GetInfoAsync(path, recursive, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, cts: cts);
 
         /// <summary>
         /// Recursively retrieves repository entry information for the specified path with caching and TTL validation.
@@ -601,36 +601,41 @@ namespace WinPaletter.GitHub
         {
             directory = NormalizePath(directory);
 
-            // Get or create the directory list
             if (!DirectoryMap.TryGetValue(directory, out List<RepositoryContent> list))
-            {
-                list = [];
-                DirectoryMap[directory] = list;
-            }
+                DirectoryMap[directory] = list = new();
 
             if (entry.Type == EntryType.File && entry.Content != null)
             {
-                // Check if file already exists and remove it
-                RepositoryContent existing = list.FirstOrDefault(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
-                if (existing != null)
+                // Only add files that belong to this directory directly
+                if (GetParent(entry.Path) == directory)
                 {
-                    // Subtract old file size from folder size
-                    FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - existing.Size : 0);
+                    var existing = list.FirstOrDefault(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
+                    if (existing != null)
+                    {
+                        list.Remove(existing);
+                        FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - existing.Size : 0);
+                    }
 
-                    list.Remove(existing);
+                    list.Add(entry.Content);
+                    FolderSizeMap[directory] = FolderSizeMap.TryGetValue(directory, out long current) ? current + entry.Content.Size : entry.Content.Size;
                 }
-
-                // Add the new file
-                list.Add(entry.Content);
-
-                // Add new file size
-                FolderSizeMap[directory] = FolderSizeMap.TryGetValue(directory, out long current) ? current + entry.Content.Size : entry.Content.Size;
             }
 
             if (entry.Type == EntryType.Dir)
             {
-                // Ensure FolderSizeMap entry exists
+                // Ensure FolderSizeMap entry exists, but do not add children to the list
                 if (!FolderSizeMap.ContainsKey(directory)) FolderSizeMap[directory] = 0;
+
+                // Only add this directory as a reference in parent
+                string parent = GetParent(entry.Path);
+                if (!string.IsNullOrEmpty(parent) && DirectoryMap.TryGetValue(parent, out var parentList))
+                {
+                    if (!parentList.Any(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        // Use the existing cached content of the directory
+                        if (entry.Content != null) parentList.Add(entry.Content);
+                    }
+                }
             }
 
             // Update DirectoryCache
@@ -717,6 +722,34 @@ namespace WinPaletter.GitHub
                     c.Type == ContentType.Dir &&
                     string.Equals(c.Path, dirPath, StringComparison.OrdinalIgnoreCase));
             }
+        }
+
+        private static void RemoveFileFromAllCaches(string filePath)
+        {
+            filePath = NormalizePath(filePath);
+
+            // Remove from entry cache
+            _cache.TryRemove(filePath, out _);
+
+            // Remove from DirectoryMap
+            string parentDir = GetParent(filePath);
+            if (DirectoryMap.TryGetValue(parentDir, out List<RepositoryContent> list))
+            {
+                list.RemoveAll(c => string.Equals(c.Path, filePath, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Remove from FolderSizeMap
+            if (FolderSizeMap.TryGetValue(parentDir, out long size))
+            {
+                // Optional: subtract file size if known
+                if (_cache.TryGetValue(filePath, out var cached))
+                    FolderSizeMap[parentDir] = Math.Max(0, size - (cached.entry.Content?.Size ?? 0));
+                else
+                    FolderSizeMap[parentDir] = size;
+            }
+
+            // Remove from DirectoryCache
+            DirectoryCache.TryRemove(parentDir, out _);
         }
 
         /// <summary>

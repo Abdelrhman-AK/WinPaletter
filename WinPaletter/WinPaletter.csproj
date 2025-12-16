@@ -104,16 +104,16 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\3. Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FastCloner, Version=3.3.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastCloner.3.3.17\lib\net46\FastCloner.dll</HintPath>
+    <Reference Include="FastCloner, Version=3.3.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastCloner.3.3.20\lib\net46\FastCloner.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FluentTransitions, Version=2.0.3.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentTransitions.2.0.3\lib\net48\FluentTransitions.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -150,8 +150,8 @@
       <HintPath>..\packages\Serilog.4.3.1-dev-02395\lib\net471\Serilog.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Serilog.Sinks.File, Version=7.0.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.File.7.0.1-dev-02315\lib\net471\Serilog.Sinks.File.dll</HintPath>
+    <Reference Include="Serilog.Sinks.File, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.8.0.0-dev-02318\lib\net471\Serilog.Sinks.File.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
@@ -161,16 +161,16 @@
       <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Collections.Immutable, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.10.0.0\lib\net462\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Collections.Immutable, Version=10.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.10.0.1\lib\net462\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Design">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.10.0.0\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.10.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.DirectoryServices.AccountManagement">
@@ -179,8 +179,12 @@
     <Reference Include="System.Drawing">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Formats.Nrbf, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Formats.Nrbf.10.0.0\lib\net462\System.Formats.Nrbf.dll</HintPath>
+    <Reference Include="System.Drawing.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.10.0.1\lib\net462\System.Drawing.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Formats.Nrbf, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Formats.Nrbf.10.0.1\lib\net462\System.Formats.Nrbf.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Compression">
@@ -201,12 +205,12 @@
       <HintPath>..\packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Reflection.Metadata, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.10.0.0\lib\net462\System.Reflection.Metadata.dll</HintPath>
+    <Reference Include="System.Reflection.Metadata, Version=10.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.10.0.1\lib\net462\System.Reflection.Metadata.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Resources.Extensions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Resources.Extensions.10.0.0\lib\net462\System.Resources.Extensions.dll</HintPath>
+    <Reference Include="System.Resources.Extensions, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Resources.Extensions.10.0.1\lib\net462\System.Resources.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -214,8 +218,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Security" />
-    <Reference Include="System.Threading.Channels, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.10.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
+    <Reference Include="System.Threading.Channels, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.10.0.1\lib\net462\System.Threading.Channels.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -485,7 +489,6 @@
     <Compile Include="Program\Logger.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\NTDLL.cs" />
-    <Compile Include="Program\NativeMethods\Shlwapi.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
     <Compile Include="Program\TypesExtensions\ImageList.cs" />
     <Compile Include="Program\TypesExtensions\Images.cs" />

@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -750,7 +752,9 @@ Generated automatically by WinPaletter.";
                 foreach (ListViewItem cutItem in listView1.SelectedItems)
                 {
                     if (cutItem is not null && !cutItem.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase))
+                    {
                         cutItem?.ImageKey = $"ghost_{cutItem?.ImageKey}";
+                    }
                 }
 
                 foreach (ListViewItem notCutItem in listView1.Items.Cast<ListViewItem>().Where(i => !i.Selected && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
@@ -866,7 +870,66 @@ Generated automatically by WinPaletter.";
             }
             else if (cutItems is not null && cutItems.Count > 0)
             {
+                Cursor = Cursors.WaitCursor;
+                breadcrumbControl1.StartMarquee();
 
+                string targetPath = GitHub.FileSystem.currentPath;
+
+                foreach (ListViewItem item in cutItems)
+                {
+                    if (item.Tag is RepositoryContent rc)
+                    {
+                        if (rc.Type == ContentType.Dir)
+                        {
+                            // Move the directory on GitHub
+                            await GitHub.FileSystem.MoveDirectoryAsync(rc.Path, targetPath, cts);
+
+                            // Compute new path after move
+                            string srcDirName = Path.GetFileName(rc.Path);
+                            string relative = rc.Path.Substring(rc.Path.LastIndexOf('/') + 1).TrimStart('/', '\\');
+                            string newPath = GitHub.FileSystem.NormalizePath($"{targetPath}/{srcDirName}/{relative}");
+
+                            // Retrieve the moved directory's entry from cache
+                            FileSystem.Entry entry = await GitHub.FileSystem.GetInfoRefreshAsync(newPath, cts: cts);
+
+                            // Update the UI item
+                            item.Tag = entry?.Content;
+
+                            await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
+                            GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
+                        }
+                        else
+                        {
+                            // Get the file name
+                            string fileName = Path.GetFileName(rc.Path);
+
+                            // Construct the new path
+                            string newPath = GitHub.FileSystem.NormalizePath($"{targetPath}/{fileName}");
+
+                            // Move the file
+                            await GitHub.FileSystem.MoveFileAsync(rc.Path, newPath, cts);
+
+                            // Refresh the cache for the moved file
+                            FileSystem.Entry entry = await GitHub.FileSystem.GetInfoRefreshAsync(newPath, cts: cts);
+
+                            // Update the UI item
+                            item.Tag = entry?.Content;
+
+                            // Refresh the ListView and TreeView
+                            await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
+                            GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
+                        }
+                    }
+
+                    item?.Remove();
+                    item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
+                }
+
+                cutItems?.Clear();
+                FileSystem.UpdateTreeNode(treeView1, targetPath, false);
+
+                breadcrumbControl1.StopMarquee();
+                Cursor = Cursors.Default;
             }
         }
 

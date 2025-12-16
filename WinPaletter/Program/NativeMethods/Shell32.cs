@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Web;
 
 namespace WinPaletter.NativeMethods
 {
@@ -89,6 +91,44 @@ namespace WinPaletter.NativeMethods
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
         [DllImport("shell32.dll", SetLastError = false)]
         public static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
+
+        private const uint SHGFI_TYPENAME = 0x000000400;
+        private const uint SHGFI_USEFILEATTRIBUTES = 0x000000010;
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        private struct SHFILEINFO
+        {
+            public IntPtr hIcon;
+            public IntPtr iIcon;
+            public uint dwAttributes;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string szDisplayName;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+            public string szTypeName;
+        }
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
+
+        /// <summary>
+        /// Gets the description of a file extension as registered in the Windows shell.
+        /// </summary>
+        /// <param name="extension">File extension including the dot (e.g., ".txt").</param>
+        /// <returns>Human-readable type description, e.g., "Text Document".</returns>
+        public static string GetExtensionDescription(string extension)
+        {
+            if (string.IsNullOrWhiteSpace(extension)) return Program.Lang.Strings.Extensions.File;
+            if (!extension.StartsWith(".")) extension = $".{extension}";
+
+            SHFILEINFO shfi = new();
+            IntPtr result = SHGetFileInfo(extension, 0, ref shfi, (uint)Marshal.SizeOf<SHFILEINFO>(), SHGFI_TYPENAME | SHGFI_USEFILEATTRIBUTES);
+
+            if (!string.IsNullOrEmpty(shfi.szTypeName)) return shfi.szTypeName;
+
+            return $"{extension} {Program.Lang.Strings.Extensions.File}";
+        }
 
         /// <summary>
         /// Retrieves the path to the user's account picture.
