@@ -705,6 +705,18 @@
     <Compile Include="Users\GitHub_FileAction.Designer.cs">
       <DependentUpon>GitHub_FileAction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Users\GitHub_FileConflict.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Users\GitHub_FileConflict.Designer.cs">
+      <DependentUpon>GitHub_FileConflict.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Users\GitHub_FilesCompare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Users\GitHub_FilesCompare.Designer.cs">
+      <DependentUpon>GitHub_FilesCompare.cs</DependentUpon>
+    </Compile>
     <Compile Include="Users\UserSwitch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1409,6 +1421,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Users\GitHub_FileAction.resx">
       <DependentUpon>GitHub_FileAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Users\GitHub_FileConflict.resx">
+      <DependentUpon>GitHub_FileConflict.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Users\GitHub_FilesCompare.resx">
+      <DependentUpon>GitHub_FilesCompare.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\UserSwitch.resx">
       <DependentUpon>UserSwitch.cs</DependentUpon>

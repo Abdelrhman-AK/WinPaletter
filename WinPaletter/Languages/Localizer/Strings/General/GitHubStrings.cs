@@ -43,12 +43,27 @@ public partial class Localizer
             public string Explorer_ReversedWords { get; set; } = "Reserved or invalid names";
             public string Explorer_InvalidCharToolTip { get; set; } = "You have entered an invalid character or a reserved word.";
             public string Explorer_EntryExists { get; set; } = "You have entered a name of an existing entry";
-
             public string Explorer_Confirmation_DeleteFile { get; set; } = "Are you sure you want to permanently delete this file?";
             public string Explorer_Confirmation_Title_DeleteFile { get; set; } = "Delete file";
             public string Explorer_Confirmation_DeleteFolder { get; set; } = "Are you sure you want to permanently delete this folder?";
             public string Explorer_Confirmation_Title_DeleteFolder { get; set; } = "Delete folder";
-
+            public string Explorer_Compare_FilesFrom { get; set; } = "Files from";
+            public string Explorer_Compare_FilesAlreadyIn { get; set; } = "Files already in";
+            public string Explorer_Compare_SelectFiles { get; set; } = "Select which file you want to keep";
+            public string Explorer_Files { get; set; } = "files";
+            public string Explorer_File { get; set; } = "file";
+            public string Explorer_Conflict_Copying { get; set; } = "Copying";
+            public string Explorer_Conflict_Moving { get; set; } = "Moving";
+            public string Explorer_Conflict_From { get; set; } = "from";
+            public string Explorer_Conflict_To { get; set; } = "to";
+            public string Explorer_Conflict_DestHasFile { get; set; } = $"The destination already has a file named \"{0}\".";
+            public string Explorer_Conflict_DestHasFiles { get; set; } = $"The destination already has these {0} files.";
+            public string Explorer_Conflict_Replace2Files { get; set; } = "Replace the file in the destination";
+            public string Explorer_Conflict_Skip2Files { get; set; } = "Skip this file";
+            public string Explorer_Conflict_Compare2Files { get; set; } = "Compare info for both files";
+            public string Explorer_Conflict_ReplaceFiles { get; set; } = "Replace the files in the destination";
+            public string Explorer_Conflict_SkipFiles { get; set; } = "Skip these files";
+            public string Explorer_Conflict_CompareFiles { get; set; } = "Compare info for the files";
         }
     }
 }

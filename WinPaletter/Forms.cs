@@ -107,7 +107,6 @@ namespace WinPaletter
         /// </summary>
         public static ThemeLog ThemeLog => (_ThemeLog == null || _ThemeLog.IsDisposed) ? (_ThemeLog = CreateInstance(_ThemeLog)) : _ThemeLog;
 
-
         private static SOS _SOS;
         /// <summary>
         /// Gets the instance of the form <see cref="SOS"/> to utilize Windows rescue tools.
@@ -137,6 +136,18 @@ namespace WinPaletter
         /// Gets the instance of the form <see cref="GitHubLogin"/> to switch user.
         /// </summary>
         public static GitHub_FileAction GitHub_FileAction => (_GitHub_FileAction == null || _GitHub_FileAction.IsDisposed) ? (_GitHub_FileAction = CreateInstance(_GitHub_FileAction)) : _GitHub_FileAction;
+
+        private static GitHub_FileConflict _GitHub_FileConflict;
+        /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_FileConflict"/> to switch user.
+        /// </summary>
+        public static GitHub_FileConflict GitHub_FileConflict => (_GitHub_FileConflict == null || _GitHub_FileConflict.IsDisposed) ? (_GitHub_FileConflict = CreateInstance(_GitHub_FileConflict)) : _GitHub_FileConflict;
+
+        private static GitHub_FilesCompare _GitHub_FilesCompare;
+        /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_FilesCompare"/> to switch user.
+        /// </summary>
+        public static GitHub_FilesCompare GitHub_FilesCompare => (_GitHub_FilesCompare == null || _GitHub_FilesCompare.IsDisposed) ? (_GitHub_FilesCompare = CreateInstance(_GitHub_FilesCompare)) : _GitHub_FilesCompare;
 
         private static GitHubMgrForm _GitHubMgrForm;
         /// <summary>

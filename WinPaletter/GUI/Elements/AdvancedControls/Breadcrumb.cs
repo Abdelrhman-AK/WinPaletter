@@ -26,7 +26,6 @@ namespace WinPaletter.UI.WP
         private Bitmap icon_wait_dark = Properties.Resources.Glyph_Wait;
         private Bitmap icon_wait_light = Properties.Resources.Glyph_Wait.Invert();
 
-        private bool _isMarquee;
         private float _marqueeOffset = 0;
         private Timer _marqueeTimer;
         private bool hasPaths = false;
@@ -40,7 +39,7 @@ namespace WinPaletter.UI.WP
         private int _hoverAlpha = 0;
         private int parentLevel = 0;
         private UI.WP.Button btn_Stop;
-    
+
         public event Action StopRequested;
         #endregion
 
@@ -143,6 +142,9 @@ namespace WinPaletter.UI.WP
                 }
             }
         }
+
+        public bool IsMarquee => _isMarquee;
+        private bool _isMarquee;
 
         /// <summary>
         /// Animated progress value for smooth transitions.

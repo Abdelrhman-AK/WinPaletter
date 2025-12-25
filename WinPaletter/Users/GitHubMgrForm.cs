@@ -504,31 +504,6 @@ Generated automatically by WinPaletter.";
             return name;
         }
 
-        static TreeNode FindTreeNodeByPath(TreeNodeCollection nodes, string path)
-        {
-            if (string.IsNullOrEmpty(path) || path == "/") return null;
-
-            string[] parts = path.Trim('/').Split('/');
-            if (parts[0] == "Themes" && parts[1] == User.GitHub.Login)
-            {
-                parts = [.. parts.Skip(1)];
-            }
-
-            TreeNode current = null;
-            TreeNodeCollection currentNodes = nodes;
-
-            foreach (string part in parts)
-            {
-                current = currentNodes.Cast<TreeNode>().FirstOrDefault(n => n.Text.Equals(part, StringComparison.OrdinalIgnoreCase));
-
-                if (current == null) return null;
-
-                currentNodes = current.Nodes;
-            }
-
-            return current;
-        }
-
         private void listView1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -712,12 +687,52 @@ Generated automatically by WinPaletter.";
                 item.Text = newName;
                 NewDirectory(item, e);
             }
-
-            if (item.Tag is FileSystem.Entry entry)
+            else
             {
-                if (entry.Type == FileSystem.EntryType.Dir)
+                item.Text = newName;
+            }
+
+            if (item.Tag is RepositoryContent content)
+            {
+                if (content.Type == ContentType.Dir)
                 {
                     RenameDirectory(item, e);
+                }
+                else if (content.Type == ContentType.File)
+                {
+                    //string filename = content.Name;
+                    //string filenameWithoutExt = Path.GetFileNameWithoutExtension(filename);
+                    //string ext = Path.GetExtension(filename);
+                    //string dir = GitHub.FileSystem.GetParent(content.Path);
+
+                    //if (string.Equals(".wpth", ext, StringComparison.OrdinalIgnoreCase))
+                    //{
+                    //    string wptp = $"{dir}/{filenameWithoutExt}.wptp";
+                    //    if (await GitHub.FileSystem.FileExistsAsync(wptp, cts))
+                    //    {
+                    //        ListViewItem wptpItem = listView1.Items.Cast<ListViewItem>().Where(i => i.Text.ToLower() == $"{filenameWithoutExt.ToLower()}.wptp").FirstOrDefault();
+                    //        if (wptpItem != null)
+                    //        {
+                    //            wptpItem.Text = $"{filenameWithoutExt}.wptp";
+                    //            RenameFile(wptpItem, new(listView1.Items.IndexOf(wptpItem)));
+                    //        }
+                    //    }
+                    //}
+                    //else if (string.Equals(".wptp", ext, StringComparison.OrdinalIgnoreCase))
+                    //{
+                    //    string wpth = $"{dir}/{filenameWithoutExt}.wpth";
+                    //    if (await GitHub.FileSystem.FileExistsAsync(wpth, cts))
+                    //    {
+                    //        ListViewItem wpthItem = listView1.Items.Cast<ListViewItem>().Where(i => i.Text.ToLower() == $"{filenameWithoutExt.ToLower()}.wpth").FirstOrDefault();
+                    //        if (wpthItem != null)
+                    //        {
+                    //            wpthItem.Text = $"{filenameWithoutExt}.wpth";
+                    //            RenameFile(wpthItem, new(listView1.Items.IndexOf(wpthItem)));
+                    //        }
+                    //    }
+                    //}
+
+                    RenameFile(item, e);
                 }
             }
         }
@@ -808,14 +823,14 @@ Generated automatically by WinPaletter.";
             Cursor = Cursors.WaitCursor;
             breadcrumbControl1.StartMarquee();
 
-            string oldPath = (item.Tag as FileSystem.Entry).Path;
+            string oldPath = (item.Tag as RepositoryContent).Path;
             string newPath = oldPath.Substring(0, oldPath.LastIndexOf('/') + 1) + item.Text.Trim();
 
             try
             {
                 await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath, cts);
 
-                FileSystem.Entry entry = await GitHub.FileSystem.GetDirectoryInfo(newPath, cts);
+                RepositoryContent entry = (await GitHub.FileSystem.GetDirectoryInfo(newPath, cts)).Content;
                 item.Tag = entry.Content;
 
                 await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
@@ -832,104 +847,225 @@ Generated automatically by WinPaletter.";
             }
         }
 
-        async void DeleteElement(ListViewItem item)
+        async void RenameFile(ListViewItem item, LabelEditEventArgs e)
         {
-            if (item?.Tag is null) return;
+            Cursor = Cursors.WaitCursor;
+            breadcrumbControl1.StartMarquee();
 
-            if (item.Tag is RepositoryContent rc)
+            string oldPath = (item.Tag as RepositoryContent).Path;
+            string newPath = $"{GitHub.FileSystem.GetParent(oldPath)}/{item.Text.Trim()}";
+
+            try
             {
-                Cursor = Cursors.WaitCursor;
-                breadcrumbControl1.StartMarquee();
+                await GitHub.FileSystem.MoveFileAsync(oldPath, newPath, cts);
 
-                if (rc.Type == ContentType.Dir && Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, GitHub.FileSystem.FolderSizeMap[rc.Path]) == DialogResult.Yes)
-                {
-                    await GitHub.FileSystem.DeleteDirectoryAsync(rc.Path);
-                    item.Remove();
-                    GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, true);
-                }
-                else if (rc.Type != ContentType.Dir)
-                {
-                    if (Forms.GitHub_FileAction.ConfirmFileDelete(rc.Name, GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Lang.Strings.Extensions.File, rc.Size, listView1.LargeImageList.Images[item.ImageKey] as Bitmap) == DialogResult.Yes)
-                    {
-                        await GitHub.FileSystem.DeleteFileAsync(rc.Path);
-                        item.Remove();
-                    }
-                }
+                RepositoryContent entry = (await GitHub.FileSystem.GetFileInfo(newPath, cts)).Content;
+                item.Tag = entry.Content;
 
+                await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
+                GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
+            }
+            catch
+            {
+                e.CancelEdit = true;
+            }
+            finally
+            {
                 breadcrumbControl1.StopMarquee();
                 Cursor = Cursors.Default;
             }
+        }
 
+        async Task DeleteElementsAsync(IList<ListViewItem> items, CancellationTokenSource cts = null)
+        {
+            if (items == null || items.Count == 0) return;
+
+            cts ??= new();
+
+            string currentPath = GitHub.FileSystem.currentPath;
+            string destDir = GitHub.FileSystem.NormalizePath(currentPath);
+
+            try
+            {
+                // Separate files and directories
+                var filePaths = items
+                    .Select(i => i.Tag as RepositoryContent)
+                    .Where(rc => rc != null && rc.Type != ContentType.Dir)
+                    .Where(rc => Forms.GitHub_FileAction.ConfirmFileDelete(
+                        rc.Name,
+                        GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Lang.Strings.Extensions.File,
+                        rc.Size,
+                        listView1.LargeImageList.Images[items.FirstOrDefault(x => (x.Tag as RepositoryContent)?.Path == rc.Path)?.ImageKey] as Bitmap
+                    ) == DialogResult.Yes)
+                    .Select(rc => rc.Path)
+                    .ToList();
+
+                var dirPaths = items
+                    .Select(i => i.Tag as RepositoryContent)
+                    .Where(rc => rc != null && rc.Type == ContentType.Dir)
+                    .Where(rc => Forms.GitHub_FileAction.ConfirmFolderDelete(
+                        rc.Name,
+                        GitHub.FileSystem.FolderSizeMap[rc.Path]
+                    ) == DialogResult.Yes)
+                    .Select(rc => rc.Path)
+                    .ToList();
+
+                // Helper to process deletion with progress
+                async Task ProcessDeletionAsync(List<string> paths, bool isDirectory)
+                {
+                    int total = paths.Count;
+                    int processed = 0;
+
+                    if (total == 0) return;
+
+                    Cursor = Cursors.WaitCursor;
+                    breadcrumbControl1.Value = 0;
+                    breadcrumbControl1.StartMarquee();
+
+                    Action<int> progressCallback = progress =>
+                    {
+                        if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
+                        breadcrumbControl1.Value = progress;
+                    };
+
+                    if (isDirectory)
+                        await GitHub.FileSystem.DeleteDirectoriesAsync(paths, cts, progressCallback);
+                    else
+                        await GitHub.FileSystem.DeleteFilesAsync(paths, cts, progressCallback);
+
+                    foreach (var path in paths)
+                    {
+                        var item = items.FirstOrDefault(i => (i.Tag as RepositoryContent)?.Path == path);
+                        item?.Remove();
+                        processed++;
+                        progressCallback(processed * 100 / total);
+                    }
+
+                    if (isDirectory) GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, true);
+
+                    breadcrumbControl1.StopMarquee();
+                    Cursor = Cursors.Default;
+                }
+
+                // Delete files first
+                if (filePaths.Count > 0) await ProcessDeletionAsync(filePaths, isDirectory: false);
+
+                // Then delete directories
+                if (dirPaths.Count > 0) await ProcessDeletionAsync(dirPaths, isDirectory: true);
+
+                items.Clear();
+
+                // Refresh UI
+                await GitHub.FileSystem.PopulateListViewAsync(listView1, currentPath, cts);
+                GitHub.FileSystem.UpdateTreeNode(treeView1, currentPath, false);
+            }
+            finally
+            {
+                breadcrumbControl1.StopMarquee();
+                Cursor = Cursors.Default;
+            }
         }
 
         async void Paste()
         {
-            if (copiedItems is not null && copiedItems.Count > 0)
+            if ((copiedItems?.Count ?? 0) > 0 || (cutItems?.Count ?? 0) > 0)
             {
-
-            }
-            else if (cutItems is not null && cutItems.Count > 0)
-            {
-                Cursor = Cursors.WaitCursor;
-                breadcrumbControl1.StartMarquee();
-
                 string targetPath = GitHub.FileSystem.currentPath;
+                string destDir = GitHub.FileSystem.NormalizePath(targetPath);
 
-                foreach (ListViewItem item in cutItems)
+                // Helper to process items
+                async Task ProcessItemsAsync(IList<ListViewItem> items, bool isCopy)
                 {
-                    if (item.Tag is RepositoryContent rc)
+                    Cursor = Cursors.WaitCursor;
+                    breadcrumbControl1.Value = 0;
+                    breadcrumbControl1.StartMarquee();
+
+                    // Separate files and directories
+                    var filePaths = items
+                        .Select(i => i.Tag as RepositoryContent)
+                        .Where(rc => rc != null && rc.Type == ContentType.File)
+                        .Select(rc => rc.Path)
+                        .ToArray();
+
+                    var dirPaths = items
+                        .Select(i => i.Tag as RepositoryContent)
+                        .Where(rc => rc != null && rc.Type == ContentType.Dir)
+                        .Select(rc => rc.Path)
+                        .ToArray();
+
+                    // Files
+                    if (filePaths.Length > 0)
                     {
-                        if (rc.Type == ContentType.Dir)
+                        if (isCopy)
                         {
-                            // Move the directory on GitHub
-                            await GitHub.FileSystem.MoveDirectoryAsync(rc.Path, targetPath, cts);
-
-                            // Compute new path after move
-                            string srcDirName = Path.GetFileName(rc.Path);
-                            string relative = rc.Path.Substring(rc.Path.LastIndexOf('/') + 1).TrimStart('/', '\\');
-                            string newPath = GitHub.FileSystem.NormalizePath($"{targetPath}/{srcDirName}/{relative}");
-
-                            // Retrieve the moved directory's entry from cache
-                            FileSystem.Entry entry = await GitHub.FileSystem.GetInfoRefreshAsync(newPath, cts: cts);
-
-                            // Update the UI item
-                            item.Tag = entry?.Content;
-
-                            await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
-                            GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
+                            await GitHub.FileSystem.CopyFilesAsync(filePaths, destDir, cts, progress =>
+                            {
+                                if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
+                                breadcrumbControl1.Value = progress;
+                            });
                         }
                         else
                         {
-                            // Get the file name
-                            string fileName = Path.GetFileName(rc.Path);
-
-                            // Construct the new path
-                            string newPath = GitHub.FileSystem.NormalizePath($"{targetPath}/{fileName}");
-
-                            // Move the file
-                            await GitHub.FileSystem.MoveFileAsync(rc.Path, newPath, cts);
-
-                            // Refresh the cache for the moved file
-                            FileSystem.Entry entry = await GitHub.FileSystem.GetInfoRefreshAsync(newPath, cts: cts);
-
-                            // Update the UI item
-                            item.Tag = entry?.Content;
-
-                            // Refresh the ListView and TreeView
-                            await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
-                            GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
+                            await GitHub.FileSystem.MoveFilesAsync(filePaths, destDir, cts, progress =>
+                            {
+                                if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
+                                breadcrumbControl1.Value = progress;
+                            });
                         }
                     }
 
-                    item?.Remove();
-                    item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
+                    // Directories
+                    if (dirPaths.Length > 0)
+                    {
+                        if (isCopy)
+                        {
+                            await GitHub.FileSystem.CopyDirectoriesAsync(dirPaths, destDir, cts, progress =>
+                            {
+                                if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
+                                breadcrumbControl1.Value = progress;
+                            });
+                        }
+                        else
+                        {
+                            await GitHub.FileSystem.MoveDirectoriesAsync(dirPaths, destDir, cts, progress =>
+                            {
+                                if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
+                                breadcrumbControl1.Value = progress;
+                            });
+                        }
+                    }
+
+                    // Update ListView items
+                    foreach (ListViewItem item in items)
+                    {
+                        if (item.Tag is RepositoryContent rc)
+                        {
+                            string newPath = GitHub.FileSystem.NormalizePath($"{destDir}/{Path.GetFileName(rc.Path)}");
+                            var entry = await GitHub.FileSystem.GetInfoRefreshAsync(newPath, cts: cts);
+                            item.Tag = entry?.Content;
+                        }
+
+                        item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
+                        if (!isCopy) item.Remove();
+                    }
+
+                    breadcrumbControl1.StopMarquee();
+                    Cursor = Cursors.Default;
                 }
 
-                cutItems?.Clear();
-                FileSystem.UpdateTreeNode(treeView1, targetPath, false);
+                // Process copied items
+                if ((copiedItems?.Count ?? 0) > 0) await ProcessItemsAsync(copiedItems, isCopy: true);
 
-                breadcrumbControl1.StopMarquee();
-                Cursor = Cursors.Default;
+                // Process cut items
+                if ((cutItems?.Count ?? 0) > 0)
+                {
+                    await ProcessItemsAsync(cutItems, isCopy: false);
+                    cutItems.Clear();
+                }
+
+                // Refresh UI
+                await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
+                GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
             }
         }
 
@@ -980,7 +1116,7 @@ Generated automatically by WinPaletter.";
             else if (e.KeyCode == Keys.Delete)
             {
                 // Delete selected file or directory
-                DeleteElement(item);
+                await DeleteElementsAsync(listView1.SelectedItems as IList<ListViewItem>, cts);
             }
             else if (e.KeyCode == Keys.F5)
             {
