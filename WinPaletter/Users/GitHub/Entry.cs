@@ -49,7 +49,7 @@ namespace WinPaletter.GitHub
             /// If it is a folder, the method falls back to calculating the total size of all
             /// contained subfolders and files.
             /// </remarks>
-            public long Size => Type == EntryType.File ? Content?.Size ?? GetFoldersSize(Path, false) : 0;
+            public long Size => Type == EntryType.File ? Content?.Size ?? Cache.GetSize(Path) : 0;
 
             /// <summary>
             /// Gets or sets the full path of the entry within the repository.
@@ -98,7 +98,7 @@ namespace WinPaletter.GitHub
             /// <remarks>
             /// Populated only for directory entries. Each child is an <see cref="Entry"/> representing files or subdirectories.
             /// </remarks>
-            public IReadOnlyList<Entry> Children { get; set; }
+            public List<Entry> Children { get; set; }
 
             /// <summary>
             /// Gets or sets the SHA of the content itself.
@@ -166,7 +166,7 @@ namespace WinPaletter.GitHub
                     Path = content.Path,
                     Type = type,
                     Content = content.Type == Octokit.ContentType.File ? content : null,
-                    ContentInfo = new RepositoryContentInfo(content.Name, content.Path, content.Sha, content.Size, content.Type.Value, content.DownloadUrl, content.Url, content.GitUrl, content.HtmlUrl),
+                    ContentInfo = new(content.Name, content.Path, content.Sha, content.Size, content.Type.Value, content.DownloadUrl, content.Url, content.GitUrl, content.HtmlUrl),
                     CommitSha = latestCommit?.Sha,
                     Author = latestCommit?.Commit.Author?.Name,
                     LastModified = latestCommit?.Commit.Author?.Date,

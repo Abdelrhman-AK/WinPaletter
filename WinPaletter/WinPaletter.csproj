@@ -498,6 +498,7 @@
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\Variables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
+    <Compile Include="Users\GitHub\Cache.cs" />
     <Compile Include="Users\GitHub\Entry.cs" />
     <Compile Include="Users\GitHub\Navigation.cs" />
     <Compile Include="Users\GitHub\VirtualRepositoryExplorer.cs" />

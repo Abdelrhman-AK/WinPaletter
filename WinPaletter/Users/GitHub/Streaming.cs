@@ -76,10 +76,10 @@ namespace WinPaletter.GitHub
             // Update cache and maps using helper
             var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, githubPath, GitHub.Repository.branch);
             var entry = new Entry { Path = githubPath, Type = EntryType.File, Content = content[0], FetchedAt = DateTime.UtcNow };
-            _cache[githubPath] = (entry, DateTime.UtcNow);
 
+            Cache.Add(githubPath, entry);
             string directory = Path.GetDirectoryName(githubPath)?.Replace('\\', '/') ?? string.Empty;
-            UpdateDirectoryMaps(directory, entry);
+            Cache.Add(directory, entry);
 
             reportProgress?.Invoke(100);
         }
@@ -155,10 +155,12 @@ namespace WinPaletter.GitHub
                 // Update cache and maps
                 var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, targetPath, GitHub.Repository.branch);
                 var entry = new Entry { Path = targetPath, Type = EntryType.File, Content = content[0], FetchedAt = DateTime.UtcNow };
-                _cache[targetPath] = (entry, DateTime.UtcNow);
 
-                string directory = Path.GetDirectoryName(targetPath)?.Replace('\\', '/') ?? string.Empty;
-                UpdateDirectoryMaps(directory, entry);
+                Cache.Add(targetPath, entry);
+
+                string directory = DirectoryName(targetPath);
+
+                Cache.Add(directory, entry);
 
                 processedFiles++;
                 reportProgress?.Invoke((int)((long)processedFiles * 100 / totalFiles));

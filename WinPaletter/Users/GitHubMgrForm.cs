@@ -309,8 +309,7 @@ namespace WinPaletter
                     }
                     else if (entry.Type == ContentType.Dir)
                     {
-                        if (GitHub.FileSystem.FolderSizeMap.TryGetValue(entry.Path, out long folderSize))
-                            selectedSize += folderSize;
+                        selectedSize += WinPaletter.GitHub.Cache.GetSize(entry.Path);
                     }
                 }
             }
@@ -455,8 +454,8 @@ namespace WinPaletter
 
         private async void button14_Click(object sender, EventArgs e)
         {
-            await GitHub.Repository.CommitAsync("newCommit", GitHub.FileSystem.BuildChangesFromCache());
-            GitHub.FileSystem.ClearAllCaches();
+            await GitHub.Repository.CommitAsync("newCommit", GitHub.Cache.BuildChanges());
+            GitHub.Cache.Clear();
         }
 
         private async void button13_Click(object sender, EventArgs e)
@@ -905,7 +904,7 @@ Generated automatically by WinPaletter.";
                     .Where(rc => rc != null && rc.Type == ContentType.Dir)
                     .Where(rc => Forms.GitHub_FileAction.ConfirmFolderDelete(
                         rc.Name,
-                        GitHub.FileSystem.FolderSizeMap[rc.Path]
+                        GitHub.Cache.GetDirectorySize(rc.Path)
                     ) == DialogResult.Yes)
                     .Select(rc => rc.Path)
                     .ToList();

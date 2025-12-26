@@ -418,7 +418,6 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Central method to navigate to a new path. Handles stack updates consistently.
         /// </summary>
-        // <summary>
         /// Central method to navigate to a new path. Handles stack updates consistently.
         /// </summary>
         public static async Task NavigateTo(string newPath, UI.WP.ListView list, UI.WP.TreeView tree, bool addToHistory = true)
