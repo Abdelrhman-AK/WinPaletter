@@ -3,6 +3,7 @@ using Serilog.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -51,11 +52,6 @@ namespace WinPaletter.GitHub
         private static readonly ConcurrentDictionary<string, string> ShaMd5Cache = new();
 
         /// <summary>
-        /// Mapping of directory paths to their immediate children.
-        /// </summary>
-        private static readonly Dictionary<string, List<RepositoryContent>> DirectoryMap = new(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
         /// Mapping of directory paths to total byte size of their contents.
         /// </summary>
         private static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
@@ -83,40 +79,59 @@ namespace WinPaletter.GitHub
         {
             if (string.IsNullOrEmpty(path) || entry == null) return;
 
+            path = NormalizePath(path);
             entry.Path = path;
+            entry.FetchedAt = DateTime.UtcNow;
 
-            // Add or update cache
-            _cache.AddOrUpdate(path,
-                _ => new CacheData { Entry = entry, Fetched = DateTime.UtcNow },
-                (_, old) =>
+            // Remove old entry if exists to avoid duplicates
+            _cache.TryRemove(path, out _);
+
+            // Insert fresh entry
+            _cache[path] = new CacheData { Entry = entry, Fetched = DateTime.UtcNow };
+
+            // Recursively add children if directory
+            if (entry.Type == EntryType.Dir && entry.Children != null)
+            {
+                foreach (var child in entry.Children)
                 {
-                    old.Entry = entry;
-                    old.Fetched = DateTime.UtcNow;
-                    return old;
-                });
+                    Add(child); // recursively replaces old child entries
+                }
+            }
 
-            // Update directory mapping for parent and children
-            UpdateDirectoryMap(entry);
-
-            // Invalidate cached size for this path and all parents
+            // Invalidate cached size for this path and all parent directories
             InvalidateSize(path);
         }
 
         /// <summary>
-        /// Stores or updates an Entry recursively in cache.
+        /// Stores or updates an Entry recursively in cache, replacing existing entries by path.
+        /// Prevents duplicates.
         /// </summary>
         public static void Add(Entry entry)
         {
             if (entry == null) return;
 
             entry.FetchedAt = DateTime.UtcNow;
-            _cache[entry.Path] = new() { Entry = entry, Fetched = DateTime.UtcNow };
 
+            string path = NormalizePath(entry.Path);
+
+            // Remove old entry if exists
+            if (_cache.ContainsKey(path))
+                _cache.TryRemove(path, out _);
+
+            // Insert fresh entry
+            _cache[path] = new CacheData { Entry = entry, Fetched = DateTime.UtcNow };
+
+            // Recursively add children (fully replace old children)
             if (entry.Type == EntryType.Dir && entry.Children != null)
+            {
                 foreach (var child in entry.Children)
-                    Add(child);
+                {
+                    Add(child); // recursive, replaces old child entries
+                }
+            }
 
-            UpdateDirectoryMap(entry);
+            // Invalidate cached size for this path and all parent directories
+            InvalidateSize(path);
         }
 
         /// <summary>
@@ -127,6 +142,9 @@ namespace WinPaletter.GitHub
         {
             if (string.IsNullOrEmpty(path)) return;
 
+            path = NormalizePath(path);
+
+            // Remove from _cache recursively (file or directory)
             foreach (var key in _cache.Keys
                 .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
                 .ToList())
@@ -134,6 +152,7 @@ namespace WinPaletter.GitHub
                 _cache.TryRemove(key, out _);
             }
 
+            // Remove from DirectoryCache recursively
             foreach (var key in DirectoryCache.Keys
                 .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
                 .ToList())
@@ -141,19 +160,91 @@ namespace WinPaletter.GitHub
                 DirectoryCache.TryRemove(key, out _);
             }
 
+            // Remove from FolderSizeMap recursively
             foreach (var key in FolderSizeMap.Keys
                 .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
                 .ToList())
             {
                 FolderSizeMap.Remove(key);
             }
+        }
 
-            foreach (var key in DirectoryMap.Keys
-                .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
-                .ToList())
+        public enum EntryFilter
+        {
+            Both,
+            FilesOnly,
+            FoldersOnly
+        }
+
+        public enum EntrySort
+        {
+            /// <summary>
+            /// Directories first, then files, then by name
+            /// </summary>
+            Default,
+            NameAsc,
+            NameDesc,
+            SizeAsc,
+            SizeDesc,
+            Custom          // Use a provided comparison delegate: var custom = GetSubEntries(path, EntryFilter.Both, EntrySort.Custom, (a, b) => a.Name.Length.CompareTo(b.Name.Length));
+        }
+
+        /// <summary>
+        /// Gets direct child entries from cache with filtering and sorting options.
+        /// </summary>
+        /// <param name="path">Parent directory path.</param>
+        /// <param name="filter">Filter for files, folders, or both.</param>
+        /// <param name="sort">Sorting option.</param>
+        /// <param name="customSort">Optional custom comparison if sort is EntrySort.Custom.</param>
+        /// <returns>List of filtered and sorted entries.</returns>
+        public static List<Entry> GetSubEntries(string path, EntryFilter filter = EntryFilter.Both,EntrySort sort = EntrySort.Default, Comparison<Entry> customSort = null)
+        {
+            if (string.IsNullOrEmpty(path)) return new List<Entry>();
+
+            string normalizedPath = NormalizePath(path).TrimEnd('/');
+
+            var entries = _cache
+                .Select(c => c.Value.Entry)
+                .Where(e => e != null && e.Content != null)
+                .Where(e =>
+                {
+                    string parent = GetParent(NormalizePath(e.Path).TrimEnd('/'));
+                    return parent != null && parent.Equals(normalizedPath, StringComparison.OrdinalIgnoreCase);
+                });
+
+            // Apply filtering
+            entries = filter switch
             {
-                DirectoryMap.Remove(key);
+                EntryFilter.FilesOnly => entries.Where(e => e.Type == EntryType.File),
+                EntryFilter.FoldersOnly => entries.Where(e => e.Type == EntryType.Dir),
+                _ => entries
+            };
+
+            // Apply sorting
+            List<Entry> result = entries.ToList();
+            switch (sort)
+            {
+                case EntrySort.Default:
+                    result = [.. result.OrderBy(e => e.Type == EntryType.Dir ? 0 : 1).ThenBy(e => e.Name)];
+                    break;
+                case EntrySort.NameAsc:
+                    result = result.OrderBy(e => e.Name).ToList();
+                    break;
+                case EntrySort.NameDesc:
+                    result = result.OrderByDescending(e => e.Name).ToList();
+                    break;
+                case EntrySort.SizeAsc:
+                    result = result.OrderBy(e => e.Size).ToList();
+                    break;
+                case EntrySort.SizeDesc:
+                    result = result.OrderByDescending(e => e.Size).ToList();
+                    break;
+                case EntrySort.Custom:
+                    if (customSort != null) result.Sort(customSort);
+                    break;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -177,8 +268,7 @@ namespace WinPaletter.GitHub
             // Clear main entry cache
             _cache.Clear();
 
-            // Clear directory map and folder size map
-            DirectoryMap.Clear();
+            // Clear folder size map
             FolderSizeMap.Clear();
 
             // Clear directory content cache
@@ -189,37 +279,6 @@ namespace WinPaletter.GitHub
 
             // Optional: log the cache clearing
             Program.Log?.Write(LogEventLevel.Information, "All FileSystem caches have been cleared.");
-        }
-
-        /// <summary>
-        /// Updates DirectoryMap and FolderSizeMap after storing or modifying an entry.
-        /// </summary>
-        private static void UpdateDirectoryMap(Entry entry)
-        {
-            string directory = NormalizePath(GetParent(entry.Path));
-
-            if (!DirectoryMap.TryGetValue(directory, out var list))
-                DirectoryMap[directory] = list = new();
-
-            if (entry.Type == EntryType.File && entry.Content != null)
-            {
-                var existing = list.FirstOrDefault(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
-                if (existing != null)
-                {
-                    list.Remove(existing);
-                    FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - existing.Size : 0);
-                }
-
-                list.Add(entry.Content);
-                FolderSizeMap[directory] = FolderSizeMap.TryGetValue(directory, out long current) ? current + entry.Content.Size : entry.Content.Size;
-            }
-
-            if (entry.Type == EntryType.Dir)
-            {
-                if (!FolderSizeMap.ContainsKey(entry.Path)) FolderSizeMap[entry.Path] = 0;
-            }
-
-            DirectoryCache[directory] = (list.AsReadOnly(), entry.Content?.Sha);
         }
 
         /// <summary>
@@ -248,67 +307,6 @@ namespace WinPaletter.GitHub
         }
 
         /// <summary>
-        /// Retrieves directory contents from cache if SHA matches.
-        /// </summary>
-        public static IReadOnlyList<RepositoryContent> GetDirectory(string path)
-        {
-            if (DirectoryMap.TryGetValue(path, out var cached))
-            {
-                return cached;
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Moves an entry (file or directory) from oldPath to newPath in the cache and updates directory maps.
-        /// Optionally provide the Entry fetched from Octokit to avoid lookup.
-        /// </summary>
-        public static void MoveEntry(string oldPath, string newPath, Entry entry = null)
-        {
-            if (string.IsNullOrEmpty(oldPath) || string.IsNullOrEmpty(newPath)) return;
-            if (string.Equals(oldPath, newPath, StringComparison.OrdinalIgnoreCase)) return;
-
-            entry ??= GetEntry(oldPath);
-            if (entry == null) return;
-
-            // Remove old entry from maps/cache
-            Remove(oldPath);
-
-            // Update path
-            entry.Path = newPath;
-
-            // Recursively update children's paths for directories
-            if (entry.Type == EntryType.Dir && entry.Children != null)
-            {
-                foreach (var child in entry.Children)
-                {
-                    string childTargetPath = newPath + child.Path.Substring(oldPath.Length);
-                    MoveEntry(child.Path, childTargetPath, child);
-                }
-            }
-
-            // Store updated entry and update maps
-            Add(entry);
-            UpdateDirectoryMaps(GetParent(newPath), entry);
-        }
-
-        /// <summary>
-        /// Retrieves an Entry from the cache by path.
-        /// Returns null if the entry is not cached.
-        /// </summary>
-        /// <param name="path">Path of the file or directory in the repository.</param>
-        /// <returns>The cached Entry or null if not found.</returns>
-        private static Entry GetEntry(string path)
-        {
-            if (string.IsNullOrEmpty(path)) return null;
-
-            if (_cache.TryGetValue(path, out var cached))
-                return cached.Entry;
-
-            return null;
-        }
-
-        /// <summary>
         /// Checks if an entry exists in the cache (file or directory).
         /// </summary>
         /// <param name="path">Path of the file or directory.</param>
@@ -319,77 +317,6 @@ namespace WinPaletter.GitHub
             path = NormalizePath(path);
 
             return _cache.ContainsKey(path);
-        }
-
-        /// <summary>
-        /// Checks if an entry exists in the cache (file or directory).
-        /// </summary>
-        /// <param name="path">Path of the file or directory.</param>
-        /// <returns>True if cached, false otherwise.</returns>
-        public static bool ContainsInDirectoryMap(string path)
-        {
-            if (string.IsNullOrEmpty(path)) return false;
-            path = NormalizePath(path);
-
-            return DirectoryMap.ContainsKey(path);
-        }
-
-        /// <summary>
-        /// Creates an internal lookup table mapping each directory path to its immediate children.
-        /// </summary>
-        public static void BuildDirectoryMap()
-        {
-            Program.Log?.Write(LogEventLevel.Information, "BuildDirectoryMap started");
-
-            DirectoryMap.Clear();
-
-            foreach (CacheData tuple in _cache.Values)
-            {
-                Entry entry = tuple.Entry;
-                if (entry.Content == null) continue; // skip entries without RepositoryContent
-
-                string parent = GetParent(entry.Path);
-                if (!DirectoryMap.ContainsKey(parent)) DirectoryMap[parent] = [];
-
-                DirectoryMap[parent].Add(entry.Content);
-            }
-
-            Program.Log?.Write(LogEventLevel.Information, $"BuildDirectoryMap completed: {DirectoryMap.Count} directory entries");
-        }
-
-        /// <summary>
-        /// Computes and stores the total byte size of each directory based on its contents.
-        /// </summary>
-        /// <param name="path">The directory path to evaluate.</param>
-        public static long GetFoldersSize(string path, bool addToFolderSizeMap = true)
-        {
-            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes started for '{path}'");
-
-            if (!DirectoryMap.ContainsKey(path))
-            {
-                Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes: no entries for '{path}'");
-                return 0;
-            }
-
-            long total = 0;
-
-            foreach (RepositoryContent entry in DirectoryMap[path])
-            {
-                if (entry.Type == Octokit.ContentType.Dir)
-                {
-                    total += GetFoldersSize(entry.Path);
-                }
-                else
-                {
-                    total += entry.Size;
-                }
-            }
-
-            if (addToFolderSizeMap) FolderSizeMap[path] = total;
-
-            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes completed for '{path}', size={total}");
-
-            return total;
         }
 
         /// <summary>
@@ -422,56 +349,6 @@ namespace WinPaletter.GitHub
                 FolderSizeMap.Remove(path);
                 path = GetParent(path);
             }
-        }
-
-        /// <summary>
-        /// Updates internal directory maps when an entry is added or modified.
-        /// </summary>
-        /// <param name="directory"></param>
-        /// <param name="entry"></param>
-        private static void UpdateDirectoryMaps(string directory, Entry entry)
-        {
-            directory = NormalizePath(directory);
-
-            if (!DirectoryMap.TryGetValue(directory, out List<RepositoryContent> list))
-                DirectoryMap[directory] = list = new();
-
-            if (entry.Type == EntryType.File && entry.Content != null)
-            {
-                // Only add files that belong to this directory directly
-                if (GetParent(entry.Path) == directory)
-                {
-                    var existing = list.FirstOrDefault(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
-                    if (existing != null)
-                    {
-                        list.Remove(existing);
-                        FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - existing.Size : 0);
-                    }
-
-                    list.Add(entry.Content);
-                    FolderSizeMap[directory] = FolderSizeMap.TryGetValue(directory, out long current) ? current + entry.Content.Size : entry.Content.Size;
-                }
-            }
-
-            if (entry.Type == EntryType.Dir)
-            {
-                // Ensure FolderSizeMap entry exists, but do not add children to the list
-                if (!FolderSizeMap.ContainsKey(directory)) FolderSizeMap[directory] = 0;
-
-                // Only add this directory as a reference in parent
-                string parent = GetParent(entry.Path);
-                if (!string.IsNullOrEmpty(parent) && DirectoryMap.TryGetValue(parent, out var parentList))
-                {
-                    if (!parentList.Any(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        // Use the existing cached content of the directory
-                        if (entry.Content != null) parentList.Add(entry.Content);
-                    }
-                }
-            }
-
-            // Update DirectoryCache
-            DirectoryCache[directory] = (list.AsReadOnly(), entry.Content?.Sha);
         }
 
         /// <summary>
@@ -601,11 +478,6 @@ namespace WinPaletter.GitHub
         }
 
         /// <summary>
-        /// Normalizes a path for consistent storage.
-        /// </summary>
-        private static string NormalizePath(string path) => path?.Replace("\\", "/").TrimEnd('/') ?? string.Empty;
-
-        /// <summary>
         /// Converts a GitHub SHA string into a deterministic MD5 hash for UI and caching purposes.
         /// </summary>
         /// <param name="sha">The SHA string.</param>
@@ -621,16 +493,6 @@ namespace WinPaletter.GitHub
             string result = string.Concat(hashBytes.Select(b => b.ToString("x2")));
             ShaMd5Cache[sha] = result;
             return result;
-        }
-
-        /// <summary>
-        /// Gets the parent directory of a path.
-        /// </summary>
-        private static string GetParent(string path)
-        {
-            if (string.IsNullOrEmpty(path)) return string.Empty;
-            int idx = path.LastIndexOf('/');
-            return idx <= 0 ? string.Empty : path.Substring(0, idx);
         }
     }
 }

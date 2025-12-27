@@ -193,12 +193,6 @@ namespace WinPaletter.GitHub
                     Cache.Add(e);
                 }
 
-                Program.Log?.Write(LogEventLevel.Information, "Rebuilding directory map");
-                Cache.BuildDirectoryMap();
-
-                Program.Log?.Write(LogEventLevel.Information, "Rebuilding folder sizes");
-                Cache.GetFoldersSize(_root);
-
                 void UpdateUI()
                 {
                     try
@@ -413,7 +407,7 @@ namespace WinPaletter.GitHub
 
             // Resolve
             string resolvedPath = newPath;
-            while (!Cache.ContainsInDirectoryMap(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
+            while (!Cache.Contains(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
                 resolvedPath = UppermostRoot(resolvedPath) ?? _root;
 
             // Already at target
@@ -602,13 +596,15 @@ namespace WinPaletter.GitHub
         {
             Program.Log?.Write(LogEventLevel.Information, $"AddChildren called for '{parentPath}'");
 
-            if (!Cache.ContainsInDirectoryMap(parentPath))
+            parentPath = NormalizePath(parentPath).TrimEnd('/');
+
+            if (!Cache.Contains(parentPath))
             {
                 Program.Log?.Write(LogEventLevel.Information, $"AddChildren: no entries for '{parentPath}'");
                 return;
             }
 
-            foreach (RepositoryContent dir in Cache.GetDirectory(parentPath).Where(d => d.Type == Octokit.ContentType.Dir).OrderBy(d => d.Name))
+            foreach (var dir in Cache.GetSubEntries(NormalizePath(parentPath)))
             {
                 TreeNode node = new(dir.Name)
                 {
@@ -617,7 +613,7 @@ namespace WinPaletter.GitHub
                     SelectedImageKey = "folder"
                 };
                 parentNode.Nodes.Add(node);
-                AddChildren(node, dir.Path);
+                AddChildren(node, dir.Path); // recurse
             }
         }
 
@@ -703,6 +699,12 @@ namespace WinPaletter.GitHub
             return null;
         }
 
+        public static async Task UpdateExplorerView(UI.WP.TreeView tree, UI.WP.ListView list, string path, CancellationTokenSource cts = null)
+        {
+            await PopulateListViewAsync(list, path, cts);
+            UpdateTreeNode(tree, path, false);
+        }
+
         /// <summary>
         /// Populates the ListView with the files and directories inside a specified repository path.
         /// </summary>
@@ -738,36 +740,34 @@ namespace WinPaletter.GitHub
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
                 }
 
-                if (!Cache.ContainsInDirectoryMap(path))
+                if (!Cache.Contains(path))
                 {
                     Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
                     list.Items.Clear();
                     return;
                 }
 
-                List<RepositoryContent> entries = [.. Cache.GetDirectory(path).OrderBy(e => e.Type == Octokit.ContentType.Dir ? 0 : 1).ThenBy(e => e.Name)];
-
-                Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync: {entries.Count} entries for '{path}'");
-
                 list.Items.Clear();
 
                 int count = 0;
-                foreach (RepositoryContent entry in entries)
+                foreach (Entry entry in Cache.GetSubEntries(NormalizePath(path), sort: Cache.EntrySort.Default))
                 {
+                    if (entry.Content is null) continue;
+
                     cts?.Token.ThrowIfCancellationRequested();
 
-                    ListViewItem item = new(entry.Name) { Tag = entry };
+                    ListViewItem item = new(entry.Name) { Tag = entry.Content };
 
-                    item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
+                    item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
 
-                    long size = entry.Type == Octokit.ContentType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
+                    long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
 
                     item.SubItems.Add(size.ToStringFileSize());
-                    item.SubItems.Add(Cache.ShaToMd5(entry.Sha).ToUpper());
-                    item.SubItems.Add(entry.HtmlUrl);
-                    item.SubItems.Add(entry.Content);
+                    item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
+                    item.SubItems.Add(entry.Content.HtmlUrl);
+                    item.SubItems.Add(entry.Content.Content);
 
-                    if (entry.Type == Octokit.ContentType.Dir) item.ImageKey = "folder";
+                    if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
                     else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
                     else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
                     else item.ImageKey = "file";
@@ -780,6 +780,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception ex)
             {
+                Forms.BugReport.ThrowError(ex);
                 Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
             }
             finally
@@ -836,12 +837,6 @@ namespace WinPaletter.GitHub
                 }
 
                 Program.Log?.Write(LogEventLevel.Information, $"RefreshAsync: fetched {entries.Count} entries");
-
-                Program.Log?.Write(LogEventLevel.Information, "Rebuilding directory map");
-                Cache.BuildDirectoryMap();
-
-                Program.Log?.Write(LogEventLevel.Information, "Rebuilding folder sizes");
-                Cache.GetFoldersSize(_root);
 
                 if (tree.InvokeRequired)
                 {

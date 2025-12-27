@@ -856,17 +856,13 @@ Generated automatically by WinPaletter.";
 
             try
             {
-                await GitHub.FileSystem.MoveFileAsync(oldPath, newPath, cts);
-
-                RepositoryContent entry = (await GitHub.FileSystem.GetFileInfo(newPath, cts)).Content;
-                item.Tag = entry.Content;
-
-                await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
-                GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
+                item.Tag = (await GitHub.FileSystem.MoveFileAsync(oldPath, newPath, cts)).Content;
+                await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, GitHub.FileSystem.currentPath, cts);
             }
-            catch
+            catch(Exception ex)
             {
                 e.CancelEdit = true;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in renaming file {oldPath} to {item.Text.Trim()}", ex);
             }
             finally
             {
@@ -972,6 +968,9 @@ Generated automatically by WinPaletter.";
                 string targetPath = GitHub.FileSystem.currentPath;
                 string destDir = GitHub.FileSystem.NormalizePath(targetPath);
 
+                breadcrumbControl1.Value = 0;
+                breadcrumbControl1.StartMarquee();
+
                 // Helper to process items
                 async Task ProcessItemsAsync(IList<ListViewItem> items, bool isCopy)
                 {
@@ -1002,6 +1001,8 @@ Generated automatically by WinPaletter.";
                                 if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
                                 breadcrumbControl1.Value = progress;
                             });
+
+                            if (!breadcrumbControl1.IsMarquee) breadcrumbControl1.StartMarquee();
                         }
                         else
                         {
@@ -1010,6 +1011,8 @@ Generated automatically by WinPaletter.";
                                 if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
                                 breadcrumbControl1.Value = progress;
                             });
+
+                            if (!breadcrumbControl1.IsMarquee) breadcrumbControl1.StartMarquee();
                         }
                     }
 
@@ -1023,6 +1026,8 @@ Generated automatically by WinPaletter.";
                                 if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
                                 breadcrumbControl1.Value = progress;
                             });
+
+                            if (!breadcrumbControl1.IsMarquee) breadcrumbControl1.StartMarquee();
                         }
                         else
                         {
@@ -1031,6 +1036,8 @@ Generated automatically by WinPaletter.";
                                 if (breadcrumbControl1.IsMarquee) breadcrumbControl1.StopMarquee();
                                 breadcrumbControl1.Value = progress;
                             });
+
+                            if (!breadcrumbControl1.IsMarquee) breadcrumbControl1.StartMarquee();
                         }
                     }
 
@@ -1062,9 +1069,10 @@ Generated automatically by WinPaletter.";
                     cutItems.Clear();
                 }
 
+                breadcrumbControl1.FinishLoadingAnimation();
+
                 // Refresh UI
-                await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath, cts);
-                GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, false);
+                await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, GitHub.FileSystem.currentPath, cts);
             }
         }
 

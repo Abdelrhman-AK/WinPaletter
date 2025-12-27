@@ -809,7 +809,7 @@ namespace WinPaletter.GitHub
 
             reportProgress?.Invoke(100);
         }
-        public static async Task MoveFileAsync(string sourcePath, string destPath, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async Task<Entry> MoveFileAsync(string sourcePath, string destPath, CancellationTokenSource cts = null, Action<int> reportProgress = null)
         {
             if (string.IsNullOrWhiteSpace(sourcePath)) throw new ArgumentException(nameof(sourcePath));
             if (string.IsNullOrWhiteSpace(destPath)) throw new ArgumentException(nameof(destPath));
@@ -840,7 +840,7 @@ namespace WinPaletter.GitHub
             cts.Token.ThrowIfCancellationRequested();
 
             Entry srcEntry = await GetInfoRefreshAsync(src, false, cts: cts);
-            if (srcEntry == null || srcEntry.Type != EntryType.File) return;
+            if (srcEntry == null || srcEntry.Type != EntryType.File) return srcEntry;
 
             Entry destEntry = await GetInfoRefreshAsync(dest, false, cts: cts);
 
@@ -861,14 +861,14 @@ namespace WinPaletter.GitHub
 
                     FileConflictAction action = FileOperationDialogs.ResolveConflict(conflictInfo);
 
-                    if (action == FileConflictAction.Skip) return;
+                    if (action == FileConflictAction.Skip) return destEntry;
                     if (action == FileConflictAction.ReplaceAll) replaceAll = true;
 
                     if (action == FileConflictAction.Filter)
                     {
                         string name = FileName(srcEntry.Path);
                         if (conflictInfo.ReplaceMap != null && conflictInfo.ReplaceMap.TryGetValue(name, out bool replace) && !replace)
-                            return;
+                            return destEntry;
                     }
                 }
             }
@@ -876,14 +876,7 @@ namespace WinPaletter.GitHub
             newTree.Tree.Add(new NewTreeItem { Path = dest, Mode = "100644", Type = TreeType.Blob, Sha = srcEntry.Content.Sha });
             newTree.Tree.Add(new NewTreeItem { Path = srcEntry.Path, Mode = "100644", Type = TreeType.Blob, Sha = string.Empty });
 
-            Cache.Remove(srcEntry.Path);
-            Cache.Add(dest, new Entry
-            {
-                Path = dest,
-                Type = EntryType.File,
-                Content = srcEntry.Content,
-                FetchedAt = DateTime.UtcNow
-            });
+            Cache.Remove(src);
 
             reportProgress?.Invoke(50);
 
@@ -893,10 +886,18 @@ namespace WinPaletter.GitHub
             await Program.GitHub.Client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new ReferenceUpdate(createdCommit.Sha));
 
             reportProgress?.Invoke(100);
+
+            // This adds the new entry in cache too
+            Entry updatedEntry = await GetInfoRefreshAsync(dest, false, cts: cts);
+
+            return updatedEntry;
         }
 
-        public static async Task MoveDirectoryAsync(string sourceDir, string destDirectory, CancellationTokenSource cts = null, Action<int> reportProgress = null) => await MoveDirectoriesAsync([sourceDir], destDirectory, cts, reportProgress);
-        public static async Task MoveDirectoriesAsync(IReadOnlyList<string> sourceDirs, string destDirectory, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async Task MoveDirectoriesAsync(
+            IReadOnlyList<string> sourceDirs,
+            string destDirectory,
+            CancellationTokenSource cts = null,
+            Action<int> reportProgress = null)
         {
             if (sourceDirs == null || sourceDirs.Count == 0)
                 throw new ArgumentException("No source directories provided.");
@@ -921,6 +922,7 @@ namespace WinPaletter.GitHub
                 };
             }
 
+            // Get latest commit
             var masterRef = await Program.GitHub.Client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
             var latestCommit = await Program.GitHub.Client.Git.Commit.Get(_owner, GitHub.Repository.repositoryName, masterRef.Object.Sha);
             var newTree = new NewTree { BaseTree = latestCommit.Tree.Sha };
@@ -928,41 +930,179 @@ namespace WinPaletter.GitHub
             bool replaceAll = false;
             bool skipAll = false;
 
-            // 1. Collect all files from all directories
-            var allEntries = new List<(Entry srcEntry, string destPath, Entry destEntry)>();
-            var allSourceFiles = new List<Entry>();
-            var allDestFiles = new List<Entry>();
+            // 1. Collect all files recursively from source directories
+            var allEntries = new List<(string srcPath, string destPath, Entry destEntry)>();
 
             foreach (var sourceDir in sourceDirs)
             {
                 cts.Token.ThrowIfCancellationRequested();
 
                 string srcDir = NormalizePath(sourceDir).TrimEnd('/');
-                string dstRootFull = destDirRoot + "/" + Path.GetFileName(srcDir);
+                string destRootFull = destDirRoot + "/" + Path.GetFileName(srcDir);
 
                 await foreach (var file in EnumerateEntriesAsync(srcDir, EnumerateType.Files, recursive: true, ct: cts.Token))
                 {
                     if (file == null) continue;
 
                     string relative = file.Path.Substring(srcDir.Length).TrimStart('/', '\\');
-                    string destPath = NormalizePath($"{dstRootFull}/{relative}");
+                    string destPath = NormalizePath($"{destRootFull}/{relative}");
                     Entry destEntry = await GetInfoRefreshAsync(destPath, false, cts: cts);
 
-                    allEntries.Add(new(file, destPath, destEntry));
-                    allSourceFiles.Add(file);
-                    if (destEntry != null) allDestFiles.Add(destEntry);
+                    allEntries.Add((file.Path, destPath, destEntry));
                 }
             }
 
             int totalItems = allEntries.Count;
             int processedItems = 0;
 
-            // 2. Handle conflicts and build tree
-            foreach (var (srcEntry, destPathOriginal, destEntry) in allEntries)
+            // 2. Handle conflicts and prepare Git tree
+            foreach (var (srcPath, destPath, destEntry) in allEntries)
             {
-                if (cts.Token.IsCancellationRequested) throw new OperationCanceledException();
+                cts.Token.ThrowIfCancellationRequested();
 
-                string destPath = destPathOriginal;
+                Entry freshSrcEntry = await GetInfoRefreshAsync(srcPath, false, cts: cts);
+                if (freshSrcEntry == null || freshSrcEntry.Type != EntryType.File)
+                {
+                    processedItems++;
+                    reportProgress?.Invoke(processedItems * 100 / totalItems);
+                    continue;
+                }
+
+                // Conflict handling
+                if (destEntry != null)
+                {
+                    if (skipAll) { processedItems++; reportProgress?.Invoke(processedItems * 100 / totalItems); continue; }
+
+                    if (!replaceAll)
+                    {
+                        var conflictInfo = new FileConflictInfo
+                        {
+                            TotalCount = totalItems,
+                            SourcePath = freshSrcEntry.Path,
+                            DestinationPath = destPath,
+                            SourceSize = freshSrcEntry.Content.Size,
+                            DestinationSize = destEntry.Content.Size,
+                            SourceFiles = allEntries.Select(e => Cache.TryGetEntry(e.srcPath, out var entry) ? entry : null).Where(e => e != null).ToList(),
+                            DestinationFiles = allEntries.Where(e => e.destEntry != null).Select(e => e.destEntry).ToList()
+                        };
+
+                        FileConflictAction action = FileOperationDialogs.ResolveConflict(conflictInfo);
+
+                        if (action == FileConflictAction.Skip) { skipAll = true; processedItems++; reportProgress?.Invoke(processedItems * 100 / totalItems); continue; }
+                        if (action == FileConflictAction.ReplaceAll) replaceAll = true;
+
+                        if (action == FileConflictAction.Filter)
+                        {
+                            string name = FileName(freshSrcEntry.Path);
+                            if (conflictInfo.ReplaceMap != null && conflictInfo.ReplaceMap.TryGetValue(name, out bool replace) && !replace)
+                            {
+                                processedItems++;
+                                reportProgress?.Invoke(processedItems * 100 / totalItems);
+                                continue;
+                            }
+                        }
+                    }
+                }
+
+                // Add to Git tree
+                newTree.Tree.Add(new NewTreeItem
+                {
+                    Path = destPath,
+                    Mode = "100644",
+                    Type = TreeType.Blob,
+                    Sha = freshSrcEntry.Content.Sha
+                });
+                newTree.Tree.Add(new NewTreeItem
+                {
+                    Path = freshSrcEntry.Path,
+                    Mode = "100644",
+                    Type = TreeType.Blob,
+                    Sha = string.Empty
+                });
+
+                processedItems++;
+                reportProgress?.Invoke(processedItems * 100 / totalItems);
+            }
+
+            // 3. Commit changes and update cache
+            if (totalItems > 0)
+            {
+                TreeResponse createdTree = await Program.GitHub.Client.Git.Tree.Create(_owner, GitHub.Repository.repositoryName, newTree);
+                NewCommit commit = new($"Move {totalItems} item(s) to `{destDirRoot}` by {_owner}", createdTree.Sha, latestCommit.Sha);
+                Commit createdCommit = await Program.GitHub.Client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, commit);
+                await Program.GitHub.Client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new ReferenceUpdate(createdCommit.Sha));
+
+                // Update cache for all moved directories
+                foreach (var sourceDir in sourceDirs)
+                {
+                    string srcDir = NormalizePath(sourceDir).TrimEnd('/');
+                    string destDir = destDirRoot + "/" + Path.GetFileName(srcDir);
+
+                    // Remove source directory from cache
+                    Cache.Remove(srcDir);
+
+                    // Add destination directory and all children
+                    IAsyncEnumerable<Entry> movedEntries = EnumerateEntriesAsync(destDir, recursive: true);
+
+                    Entry rootMoved = new() { Path = destDir, Type = EntryType.Dir, Content = await GetRepositoryContentAsync(destDir) };
+                    Cache.Add(rootMoved);
+
+                    await foreach (Entry entry in movedEntries)
+                    {
+                        Cache.Add(entry);
+                    }
+                }
+            }
+
+            reportProgress?.Invoke(100);
+        }
+        public static async Task<Entry> MoveDirectoryAsync(string sourceDir, string destDirectory, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        {
+            if (string.IsNullOrWhiteSpace(sourceDir)) throw new ArgumentException(nameof(sourceDir));
+            if (string.IsNullOrWhiteSpace(destDirectory)) throw new ArgumentException(nameof(destDirectory));
+
+            cts ??= new();
+            reportProgress?.Invoke(0);
+
+            string srcDir = NormalizePath(sourceDir).TrimEnd('/');
+            string dstRootFull = NormalizePath(destDirectory).TrimEnd('/') + "/" + Path.GetFileName(srcDir);
+
+            var masterRef = await Program.GitHub.Client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
+            var latestCommit = await Program.GitHub.Client.Git.Commit.Get(_owner, GitHub.Repository.repositoryName, masterRef.Object.Sha);
+            var newTree = new NewTree { BaseTree = latestCommit.Tree.Sha };
+
+            bool replaceAll = false;
+            bool skipAll = false;
+
+            if (FileOperationDialogs.ResolveConflict == null)
+            {
+                FileOperationDialogs.ResolveConflict = info =>
+                {
+                    Forms.GitHub_FileConflict.ShowInfo(info, GitHub_FileConflict.Operation.Move);
+                    if (Forms.GitHub_FileConflict.ShowDialog() != DialogResult.OK) return FileConflictAction.Skip;
+                    return Forms.GitHub_FileConflict.Action;
+                };
+            }
+
+            // Enumerate all files in directory recursively
+            var allEntries = new List<(Entry srcEntry, string destPath, Entry destEntry)>();
+            await foreach (var file in EnumerateEntriesAsync(srcDir, EnumerateType.Files, recursive: true, ct: cts.Token))
+            {
+                if (file == null) continue;
+
+                string relative = file.Path.Substring(srcDir.Length).TrimStart('/', '\\');
+                string destPath = NormalizePath($"{dstRootFull}/{relative}");
+                Entry destEntry = await GetInfoRefreshAsync(destPath, false, cts: cts);
+
+                allEntries.Add((file, destPath, destEntry));
+            }
+
+            int totalItems = allEntries.Count;
+            int processedItems = 0;
+
+            foreach (var (srcEntry, destPath, destEntry) in allEntries)
+            {
+                cts.Token.ThrowIfCancellationRequested();
 
                 if (destEntry != null)
                 {
@@ -977,13 +1117,13 @@ namespace WinPaletter.GitHub
                             DestinationPath = destPath,
                             SourceSize = srcEntry.Content.Size,
                             DestinationSize = destEntry.Content.Size,
-                            SourceFiles = [.. allSourceFiles],
-                            DestinationFiles = [.. allDestFiles]
+                            SourceFiles = [srcEntry],
+                            DestinationFiles = [destEntry]
                         };
 
                         FileConflictAction action = FileOperationDialogs.ResolveConflict(conflictInfo);
 
-                        if (action == FileConflictAction.Skip) { skipAll = true; processedItems++; continue; }
+                        if (action == FileConflictAction.Skip) { processedItems++; continue; }
                         if (action == FileConflictAction.ReplaceAll) replaceAll = true;
 
                         if (action == FileConflictAction.Filter)
@@ -1002,7 +1142,7 @@ namespace WinPaletter.GitHub
                 newTree.Tree.Add(new NewTreeItem { Path = destPath, Mode = "100644", Type = TreeType.Blob, Sha = srcEntry.Content.Sha });
                 newTree.Tree.Add(new NewTreeItem { Path = srcEntry.Path, Mode = "100644", Type = TreeType.Blob, Sha = string.Empty });
 
-                // Update caches
+                // Update cache
                 Cache.Remove(srcEntry.Path);
                 Cache.Add(destPath, new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
 
@@ -1010,16 +1150,24 @@ namespace WinPaletter.GitHub
                 reportProgress?.Invoke(processedItems * 100 / totalItems);
             }
 
-            // 3. Commit all changes at once
+            // Remove original directory from cache
+            Cache.Remove(srcDir);
+            Entry updatedEntry = await GetInfoRefreshAsync(dstRootFull, false, cts: cts);
+            Cache.Add(updatedEntry);
+
+            // Commit changes
             if (totalItems > 0)
             {
                 TreeResponse createdTree = await Program.GitHub.Client.Git.Tree.Create(_owner, GitHub.Repository.repositoryName, newTree);
-                NewCommit commit = new($"Move {totalItems} item(s) to `{destDirRoot}` by {_owner}", createdTree.Sha, latestCommit.Sha);
+                NewCommit commit = new($"Move directory `{Path.GetFileName(srcDir)}` to `{destDirectory}` by {_owner}", createdTree.Sha, latestCommit.Sha);
                 Commit createdCommit = await Program.GitHub.Client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, commit);
                 await Program.GitHub.Client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new ReferenceUpdate(createdCommit.Sha));
             }
 
             reportProgress?.Invoke(100);
+
+            // Return the new directory entry
+            return updatedEntry;
         }
 
         public static async Task DeleteFileAsync(string path, CancellationTokenSource cts = null, Action<int> reportProgress = null) => await DeleteFilesAsync([path], cts, reportProgress);

@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -121,6 +122,29 @@ namespace WinPaletter.GitHub
 
                 processed++;
                 reportProgress?.Invoke((int)((processed * 100L) / total));
+            }
+        }
+
+        public static async Task<RepositoryContent> GetRepositoryContentAsync(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return null;
+
+            try
+            {
+                // Get the contents of the parent directory
+                string parent = Path.GetDirectoryName(path)?.Replace("\\", "/") ?? "";
+                string name = Path.GetFileName(path);
+
+                IReadOnlyList<RepositoryContent> parentContents =
+                    await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                        _owner, Repository.repositoryName, parent, Repository.branch);
+
+                // Find the exact item in the parent folder
+                return parentContents.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            }
+            catch (Octokit.NotFoundException)
+            {
+                return null; // path does not exist
             }
         }
 
@@ -284,27 +308,103 @@ namespace WinPaletter.GitHub
         /// </summary>
         public static Task<Entry> GetInfoRefreshAsync(string path, bool recursive = true, int maxDepth = 20, CancellationTokenSource cts = default) => GetInfoAsync(path, recursive, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, cts: cts);
 
-        /// <summary>
-        /// Recursively retrieves repository entry information for the specified path with caching and TTL validation.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="forceRefresh"></param>
-        /// <param name="maxDepth"></param>
-        /// <param name="cts"></param>
-        /// <returns></returns>
         private static async Task<Entry> GetEntryCachedAsync(string path, bool forceRefresh = false, int maxDepth = 5, CancellationTokenSource cts = null)
         {
             if (string.IsNullOrEmpty(path)) return null;
 
             cts ??= new();
-            cts?.Token.ThrowIfCancellationRequested();
+            cts.Token.ThrowIfCancellationRequested();
 
             // Return cached entry if fresh
-            if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple) && DateTime.UtcNow - cachedTuple.Fetched < Cache.CacheTTL)
+            if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple) &&
+                DateTime.UtcNow - cachedTuple.Fetched < Cache.CacheTTL)
             {
                 return cachedTuple.Entry;
             }
 
+            Entry entry = null;
+
+            try
+            {
+                // Attempt to get directory contents
+                IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
+
+                // If the path is empty or contains multiple children → directory
+                entry = new Entry
+                {
+                    Path = path,
+                    Type = EntryType.Dir,
+                    FetchedAt = DateTime.UtcNow,
+                    Children = []
+                };
+
+                if (maxDepth > 0)
+                {
+                    foreach (var item in contents)
+                    {
+                        cts.Token.ThrowIfCancellationRequested();
+                        Entry childEntry = await GetEntryCachedAsync(item.Path, forceRefresh, maxDepth - 1, cts);
+                        if (childEntry != null) entry.Children.Add(childEntry);
+                    }
+                }
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // If not found as directory, try as file
+                try
+                {
+                    var fileContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
+
+                    if (fileContents.Count == 1)
+                    {
+                        entry = new Entry
+                        {
+                            Path = path,
+                            Type = EntryType.File,
+                            Content = fileContents[0],
+                            FetchedAt = DateTime.UtcNow
+                        };
+                    }
+                }
+                catch (Octokit.NotFoundException)
+                {
+                    // Path does not exist
+                    return null;
+                }
+            }
+
+            // Store in cache
+            if (entry != null) Cache.Add(entry);
+
+            return entry;
+        }
+
+        private static async Task<List<Entry>> GetEntriesCachedAsync(string path, bool forceRefresh = false, CancellationTokenSource cts = null)
+        {
+            cts ??= new();
+            cts.Token.ThrowIfCancellationRequested();
+
+            var result = new List<Entry>();
+
+            // Try to get cached entry
+            Entry entry = await GetEntryCachedAsync(path, forceRefresh, maxDepth: 0, cts);
+
+            // If not cached, create a directory entry manually
+            if (entry == null)
+            {
+                entry = new Entry
+                {
+                    Path = path,
+                    Type = EntryType.Dir,
+                    Content = null,
+                    FetchedAt = DateTime.UtcNow
+                };
+            }
+
+            // Add the directory itself
+            result.Add(entry);
+
+            // Fetch children from GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
@@ -312,43 +412,30 @@ namespace WinPaletter.GitHub
             }
             catch (Octokit.NotFoundException)
             {
-                return null; // Path does not exist
+                return result; // directory exists but empty
             }
 
-            RepositoryContent firstItem = contents.FirstOrDefault();
-            if (firstItem == null) return null;
-
-            Entry entry = await Entry.FromRepositoryContent(firstItem, path);
-            entry.FetchedAt = DateTime.UtcNow;
-
-            // Recursively process directories
-            if (entry.Type == EntryType.Dir && maxDepth > 0)
+            foreach (var item in contents)
             {
-                List<Entry> children = [];
-                foreach (RepositoryContent item in contents)
+                var childEntry = new Entry
                 {
-                    Entry child = await GetEntryCachedAsync(item.Path, forceRefresh, maxDepth - 1, cts);
-                    if (child != null) children.Add(child);
+                    Path = item.Path,
+                    Type = item.Type == ContentType.Dir ? EntryType.Dir : EntryType.File,
+                    Content = item,
+                    FetchedAt = DateTime.UtcNow
+                };
+
+                result.Add(childEntry);
+
+                // Recurse if child is a directory
+                if (childEntry.Type == EntryType.Dir)
+                {
+                    var subChildren = await GetEntriesCachedAsync(item.Path, forceRefresh, cts);
+                    result.AddRange(subChildren.Skip(1)); // skip subdirectory itself, already added
                 }
-                entry.Children = children;
             }
 
-            // Store in _infoCache
-            Cache.Add(entry);
-            return entry;
-        }
-
-        /// <summary>
-        /// Retrieves repository entry information for the specified path with caching and TTL validation.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="forceRefresh"></param>
-        /// <param name="cts"></param>
-        /// <returns></returns>
-        private static async Task<List<Entry>> GetEntriesCachedAsync(string path, bool forceRefresh = false, CancellationTokenSource cts = null)
-        {
-            Entry entry = await GetEntryCachedAsync(path, forceRefresh, 1, cts);
-            return (entry?.Children ?? []) as List<Entry>;
+            return result;
         }
 
         /// <summary>

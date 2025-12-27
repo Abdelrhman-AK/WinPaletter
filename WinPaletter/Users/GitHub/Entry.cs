@@ -118,6 +118,39 @@ namespace WinPaletter.GitHub
             /// Creates an <see cref="Entry"/> from a given <see cref="RepositoryContent"/> object and path.
             /// </summary>
             /// <param name="content">The Octokit <see cref="RepositoryContent"/> object representing the file or directory.</param>
+            /// <returns>
+            /// A <see cref="Task{TResult}"/> representing the asynchronous operation.
+            /// The task result contains the fully populated <see cref="Entry"/> object including commit metadata.
+            /// </returns>
+            /// <remarks>
+            /// This method retrieves the latest commit for the given path to populate <see cref="CommitSha"/>, <see cref="Author"/>, 
+            /// and <see cref="LastModified"/>. It also maps the Octokit <see cref="ContentType"/> to the <see cref="EntryType"/>.
+            /// </remarks>
+            /// <example>
+            /// <code>
+            /// // Convert RepositoryContent to Entry asynchronously
+            /// var content = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, "folder/file.txt");
+            /// Entry fileEntry = await Entry.FromRepositoryContent(content.First(), "folder/file.txt");
+            /// Console.WriteLine($&quot;File Name: {fileEntry.Name}, Commit SHA: {fileEntry.CommitSha}&quot;);
+            /// 
+            /// // For directories, fetch children recursively
+            /// var folderContent = await Program.GitHub.Client.Repository.Content.GetAllContents(_owner, _repo, "folder");
+            /// Entry folderEntry = await Entry.FromRepositoryContent(folderContent.First(), "folder");
+            /// if (folderEntry.Children != null)
+            /// {
+            ///     foreach (var child in folderEntry.Children)
+            ///         Console.WriteLine($&quot;Child: {child.Name}, Type: {child.Type}&quot;);
+            /// }
+            /// </code>
+            /// </example>
+            /// <seealso cref="Octokit.RepositoryContent"/>
+            /// <seealso cref="Octokit.GitHubCommit"/>
+            public static async Task<Entry> FromRepositoryContent(RepositoryContent content) => await FromRepositoryContent(content, content.Path);
+
+            /// <summary>
+            /// Creates an <see cref="Entry"/> from a given <see cref="RepositoryContent"/> object and path.
+            /// </summary>
+            /// <param name="content">The Octokit <see cref="RepositoryContent"/> object representing the file or directory.</param>
             /// <param name="path">The path to the content within the repository.</param>
             /// <returns>
             /// A <see cref="Task{TResult}"/> representing the asynchronous operation.
@@ -148,9 +181,7 @@ namespace WinPaletter.GitHub
             /// <seealso cref="Octokit.GitHubCommit"/>
             public static async Task<Entry> FromRepositoryContent(RepositoryContent content, string path)
             {
-                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit
-                    .GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = path }))
-                    .FirstOrDefault();
+                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = path })).FirstOrDefault();
 
                 EntryType type = content.Type.StringValue.ToLowerInvariant() switch
                 {
@@ -171,6 +202,7 @@ namespace WinPaletter.GitHub
                     Author = latestCommit?.Commit.Author?.Name,
                     LastModified = latestCommit?.Commit.Author?.Date,
                     ContentSha = content?.Sha ?? string.Empty,
+                    Children = content?.Type == Octokit.ContentType.Dir ? EnumerateEntriesAsync(content.Path) as List<Entry> : null,
                 };
 
                 return entry;
