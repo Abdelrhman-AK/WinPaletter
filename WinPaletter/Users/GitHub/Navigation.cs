@@ -604,7 +604,7 @@ namespace WinPaletter.GitHub
                 return;
             }
 
-            foreach (var dir in Cache.GetSubEntries(NormalizePath(parentPath)))
+            foreach (var dir in Cache.GetSubEntries(NormalizePath(parentPath), Cache.EntryFilter.DirectoriesOnly))
             {
                 TreeNode node = new(dir.Name)
                 {

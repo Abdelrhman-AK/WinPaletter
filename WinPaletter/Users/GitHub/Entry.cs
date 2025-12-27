@@ -196,13 +196,13 @@ namespace WinPaletter.GitHub
                 {
                     Path = content.Path,
                     Type = type,
-                    Content = content.Type == Octokit.ContentType.File ? content : null,
+                    Content = content,
                     ContentInfo = new(content.Name, content.Path, content.Sha, content.Size, content.Type.Value, content.DownloadUrl, content.Url, content.GitUrl, content.HtmlUrl),
                     CommitSha = latestCommit?.Sha,
                     Author = latestCommit?.Commit.Author?.Name,
                     LastModified = latestCommit?.Commit.Author?.Date,
                     ContentSha = content?.Sha ?? string.Empty,
-                    Children = content?.Type == Octokit.ContentType.Dir ? EnumerateEntriesAsync(content.Path) as List<Entry> : null,
+                    Children = content?.Type == Octokit.ContentType.Dir ? EnumerateEntriesAsync(content.Path) as List<Entry> : [],
                 };
 
                 return entry;

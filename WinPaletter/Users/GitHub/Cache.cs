@@ -47,14 +47,14 @@ namespace WinPaletter.GitHub
         private static readonly ConcurrentDictionary<string, (IReadOnlyList<RepositoryContent> contents, string sha)> DirectoryCache = new();
 
         /// <summary>
+        /// Cached folder sizes for fast repeated access.
+        /// </summary>
+        private static readonly ConcurrentDictionary<string, long> FolderSizeMap = new();
+
+        /// <summary>
         /// Thread-safe cache for computed SHA/MD5 hash values keyed by string.
         /// </summary>
         private static readonly ConcurrentDictionary<string, string> ShaMd5Cache = new();
-
-        /// <summary>
-        /// Mapping of directory paths to total byte size of their contents.
-        /// </summary>
-        private static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// TTL duration for cached entries.
@@ -159,21 +159,13 @@ namespace WinPaletter.GitHub
             {
                 DirectoryCache.TryRemove(key, out _);
             }
-
-            // Remove from FolderSizeMap recursively
-            foreach (var key in FolderSizeMap.Keys
-                .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
-                .ToList())
-            {
-                FolderSizeMap.Remove(key);
-            }
         }
 
         public enum EntryFilter
         {
             Both,
             FilesOnly,
-            FoldersOnly
+            DirectoriesOnly
         }
 
         public enum EntrySort
@@ -186,7 +178,7 @@ namespace WinPaletter.GitHub
             NameDesc,
             SizeAsc,
             SizeDesc,
-            Custom          // Use a provided comparison delegate: var custom = GetSubEntries(path, EntryFilter.Both, EntrySort.Custom, (a, b) => a.Name.Length.CompareTo(b.Name.Length));
+            Custom // Use a provided comparison delegate: var custom = GetSubEntries(path, EntryFilter.Both, EntrySort.Custom, (a, b) => a.Name.Length.CompareTo(b.Name.Length));
         }
 
         /// <summary>
@@ -216,7 +208,7 @@ namespace WinPaletter.GitHub
             entries = filter switch
             {
                 EntryFilter.FilesOnly => entries.Where(e => e.Type == EntryType.File),
-                EntryFilter.FoldersOnly => entries.Where(e => e.Type == EntryType.Dir),
+                EntryFilter.DirectoriesOnly => entries.Where(e => e.Type == EntryType.Dir),
                 _ => entries
             };
 
@@ -248,16 +240,45 @@ namespace WinPaletter.GitHub
         }
 
         /// <summary>
-        /// Retrieves the cached size of an entry. Returns 0 if entry is not tracked.
+        /// Retrieves the size of a file or folder by summing all cached entries under the path.
         /// </summary>
         /// <param name="path">The entry path.</param>
-        /// <returns>The total size in bytes.</returns>
+        /// <returns>Total size in bytes.</returns>
         public static long GetSize(string path)
         {
             if (string.IsNullOrEmpty(path)) return 0;
 
             path = NormalizePath(path);
-            return FolderSizeMap.TryGetValue(path, out long size) ? size : 0;
+
+            // Return cached folder size if available
+            if (FolderSizeMap.TryGetValue(path, out long cachedSize))
+                return cachedSize;
+
+            long size = 0;
+
+            if (TryGetEntry(path, out Entry entry))
+            {
+                if (entry.Type == EntryType.File)
+                {
+                    size = entry.Size;
+                }
+                else if (entry.Type == EntryType.Dir)
+                {
+                    // Sum all files in cache whose paths are this directory or subdirectories
+                    string prefix = path.EndsWith("/") ? path : path + "/";
+                    size = _cache.Values
+                        .Select(c => c.Entry)
+                        .Where(e => e != null && e.Type == EntryType.File)
+                        .Where(e => NormalizePath(e.Path).Equals(path, StringComparison.OrdinalIgnoreCase) ||
+                                    NormalizePath(e.Path).StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                        .Sum(e => e.Size);
+                }
+            }
+
+            // Cache the computed folder size
+            FolderSizeMap[path] = size;
+
+            return size;
         }
 
         /// <summary>
@@ -346,7 +367,7 @@ namespace WinPaletter.GitHub
 
             while (!string.IsNullOrEmpty(path))
             {
-                FolderSizeMap.Remove(path);
+                FolderSizeMap.TryRemove(path, out _);
                 path = GetParent(path);
             }
         }
