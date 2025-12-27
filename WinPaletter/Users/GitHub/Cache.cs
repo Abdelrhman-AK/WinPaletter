@@ -1,351 +1,636 @@
 ﻿using Octokit;
+using Serilog.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using static WinPaletter.GitHub.FileSystem;
 
 namespace WinPaletter.GitHub
 {
-    public static partial class FileSystem
+    /// <summary>
+    /// Provides caching utilities for repository entries, directories, and files with TTL, SHA/MD5 validation, 
+    /// folder size tracking, and change detection.
+    /// </summary>
+    public static class Cache
     {
-        internal static class Cache
+        /// <summary>
+        /// Represents a cached entry with its last fetched timestamp.
+        /// </summary>
+        public class CacheData
         {
-            internal class CacheData
-            {
-                public Entry Entry { get; set; }
-                public DateTime Fetched { get; set; }
-                public List<RepositoryContent> DirectoryContents { get; set; } = new();
-                public long? DirectorySize { get; set; }
-                public string Md5 { get; set; }
-            }
+            /// <summary>
+            /// The repository entry being cached (file or directory).
+            /// </summary>
+            public Entry Entry { get; set; }
 
-            private static readonly ConcurrentDictionary<string, CacheData> _cache = new(StringComparer.OrdinalIgnoreCase);
+            /// <summary>
+            /// The UTC timestamp when this entry was fetched or cached.
+            /// </summary>
+            public DateTime Fetched { get; set; }
+        }
 
-            #region Entry Cache
+        public static List<CacheData> Values => [.. _cache.Select(c => c.Value)];
 
-            public static void Add(Entry entry)
-            {
-                if (entry == null || string.IsNullOrEmpty(entry.Path)) return;
+        /// <summary>
+        /// Thread-safe cache for repository entries with fetch timestamp.
+        /// </summary>
+        private static readonly ConcurrentDictionary<string, CacheData> _cache = new();
 
-                _cache.AddOrUpdate(entry.Path,
-                    _ => new CacheData { Entry = entry, Fetched = DateTime.UtcNow },
-                    (_, old) =>
-                    {
-                        old.Entry = entry;
-                        old.Fetched = DateTime.UtcNow;
-                        return old;
-                    });
+        /// <summary>
+        /// Thread-safe cache for directory contents and their SHA.
+        /// </summary>
+        private static readonly ConcurrentDictionary<string, (IReadOnlyList<RepositoryContent> contents, string sha)> DirectoryCache = new();
 
-                UpdateDirectoryMapping(entry);
-                InvalidateSize(entry.Path);
-            }
+        /// <summary>
+        /// Thread-safe cache for computed SHA/MD5 hash values keyed by string.
+        /// </summary>
+        private static readonly ConcurrentDictionary<string, string> ShaMd5Cache = new();
 
-            public static void Add(string path, Entry entry)
-            {
-                if (string.IsNullOrEmpty(path) || entry == null) return;
-                entry.Path = path;
+        /// <summary>
+        /// Mapping of directory paths to their immediate children.
+        /// </summary>
+        private static readonly Dictionary<string, List<RepositoryContent>> DirectoryMap = new(StringComparer.OrdinalIgnoreCase);
 
-                _cache.AddOrUpdate(path,
-                    _ => new CacheData { Entry = entry, Fetched = DateTime.UtcNow },
-                    (_, old) =>
-                    {
-                        old.Entry = entry;
-                        old.Fetched = DateTime.UtcNow;
-                        return old;
-                    });
+        /// <summary>
+        /// Mapping of directory paths to total byte size of their contents.
+        /// </summary>
+        private static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
 
-                UpdateDirectoryMapping(entry);
-                InvalidateSize(path);
-            }
+        /// <summary>
+        /// TTL duration for cached entries.
+        /// </summary>
+        public static readonly TimeSpan CacheTTL = TimeSpan.FromSeconds(30);
 
-            public static bool Remove(string path)
-            {
-                if (string.IsNullOrEmpty(path)) return false;
+        private static string _lastRepoTreeSha;
 
-                if (!_cache.TryRemove(path, out var removed)) return false;
+        private static async Task<bool> RepositoryTreeChangedAsync()
+        {
+            var reference = await Program.GitHub.Client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
+            string currentSha = reference.Object.Sha;
 
-                RemoveDirectoryMapping(removed.Entry);
-                InvalidateSize(path);
+            if (_lastRepoTreeSha == currentSha) return false;
 
-                return true;
-            }
+            _lastRepoTreeSha = currentSha;
+            DirectoryCache.Clear();
+            return true;
+        }
 
-            public static void Clear() => _cache.Clear();
+        public static void Add(string path, Entry entry)
+        {
+            if (string.IsNullOrEmpty(path) || entry == null) return;
 
-            public static Entry Get(string path) => _cache.TryGetValue(path, out var data) ? data.Entry : null;
+            entry.Path = path;
 
-            public static CacheData GetData(string path) => _cache.TryGetValue(path, out var data) ? data : null;
-
-            public static bool Contains(string path) => _cache.ContainsKey(path);
-
-            public static IReadOnlyList<Entry> ToList() => _cache.Values.Select(d => d.Entry).ToList().AsReadOnly();
-
-            #endregion
-
-            #region Directory Mapping
-
-            private static void UpdateDirectoryMapping(Entry entry)
-            {
-                if (entry == null) return;
-
-                string parent = GetParent(entry.Path);
-                var parentData = _cache.GetOrAdd(parent, _ => new CacheData());
-
-                if (entry.Content != null)
+            // Add or update cache
+            _cache.AddOrUpdate(path,
+                _ => new CacheData { Entry = entry, Fetched = DateTime.UtcNow },
+                (_, old) =>
                 {
-                    var list = parentData.DirectoryContents;
-                    lock (list) // ensure thread safety
-                    {
-                        list.RemoveAll(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
-                        list.Add(entry.Content);
-                    }
+                    old.Entry = entry;
+                    old.Fetched = DateTime.UtcNow;
+                    return old;
+                });
+
+            // Update directory mapping for parent and children
+            UpdateDirectoryMap(entry);
+
+            // Invalidate cached size for this path and all parents
+            InvalidateSize(path);
+        }
+
+        /// <summary>
+        /// Stores or updates an Entry recursively in cache.
+        /// </summary>
+        public static void Add(Entry entry)
+        {
+            if (entry == null) return;
+
+            entry.FetchedAt = DateTime.UtcNow;
+            _cache[entry.Path] = new() { Entry = entry, Fetched = DateTime.UtcNow };
+
+            if (entry.Type == EntryType.Dir && entry.Children != null)
+                foreach (var child in entry.Children)
+                    Add(child);
+
+            UpdateDirectoryMap(entry);
+        }
+
+        /// <summary>
+        /// Removes an entry (file or directory) from the cache and updates directory maps and folder sizes.
+        /// </summary>
+        /// <param name="path">The path of the entry to remove.</param>
+        public static void Remove(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+
+            foreach (var key in _cache.Keys
+                .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                _cache.TryRemove(key, out _);
+            }
+
+            foreach (var key in DirectoryCache.Keys
+                .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                DirectoryCache.TryRemove(key, out _);
+            }
+
+            foreach (var key in FolderSizeMap.Keys
+                .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                FolderSizeMap.Remove(key);
+            }
+
+            foreach (var key in DirectoryMap.Keys
+                .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
+                .ToList())
+            {
+                DirectoryMap.Remove(key);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the cached size of an entry. Returns 0 if entry is not tracked.
+        /// </summary>
+        /// <param name="path">The entry path.</param>
+        /// <returns>The total size in bytes.</returns>
+        public static long GetSize(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return 0;
+
+            path = NormalizePath(path);
+            return FolderSizeMap.TryGetValue(path, out long size) ? size : 0;
+        }
+
+        /// <summary>
+        /// Clears all caches.
+        /// </summary>
+        public static void Clear()
+        {
+            // Clear main entry cache
+            _cache.Clear();
+
+            // Clear directory map and folder size map
+            DirectoryMap.Clear();
+            FolderSizeMap.Clear();
+
+            // Clear directory content cache
+            DirectoryCache.Clear();
+
+            // Clear SHA/MD5 hash cache
+            ShaMd5Cache.Clear();
+
+            // Optional: log the cache clearing
+            Program.Log?.Write(LogEventLevel.Information, "All FileSystem caches have been cleared.");
+        }
+
+        /// <summary>
+        /// Updates DirectoryMap and FolderSizeMap after storing or modifying an entry.
+        /// </summary>
+        private static void UpdateDirectoryMap(Entry entry)
+        {
+            string directory = NormalizePath(GetParent(entry.Path));
+
+            if (!DirectoryMap.TryGetValue(directory, out var list))
+                DirectoryMap[directory] = list = new();
+
+            if (entry.Type == EntryType.File && entry.Content != null)
+            {
+                var existing = list.FirstOrDefault(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
+                if (existing != null)
+                {
+                    list.Remove(existing);
+                    FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - existing.Size : 0);
                 }
 
-                if (entry.Type == EntryType.Dir && entry.Children != null)
+                list.Add(entry.Content);
+                FolderSizeMap[directory] = FolderSizeMap.TryGetValue(directory, out long current) ? current + entry.Content.Size : entry.Content.Size;
+            }
+
+            if (entry.Type == EntryType.Dir)
+            {
+                if (!FolderSizeMap.ContainsKey(entry.Path)) FolderSizeMap[entry.Path] = 0;
+            }
+
+            DirectoryCache[directory] = (list.AsReadOnly(), entry.Content?.Sha);
+        }
+
+        /// <summary>
+        /// Retrieves a cached entry if it exists and is valid based on TTL.
+        /// </summary>
+        public static bool TryGetEntry(string path, out Entry entry)
+        {
+            entry = null;
+            if (_cache.TryGetValue(path, out var cached))
+            {
+                if (DateTime.UtcNow - cached.Fetched < CacheTTL)
                 {
-                    foreach (var child in entry.Children)
-                        UpdateDirectoryMapping(child);
-                }
-            }
-
-            private static void RemoveDirectoryMapping(Entry entry)
-            {
-                if (entry == null) return;
-
-                string parent = GetParent(entry.Path);
-                if (_cache.TryGetValue(parent, out var parentData))
-                    parentData.DirectoryContents.RemoveAll(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
-
-                if (entry.Type == EntryType.Dir && entry.Children != null)
-                    foreach (var child in entry.Children) RemoveDirectoryMapping(child);
-
-                _cache.TryRemove(entry.Path, out _);
-            }
-
-            public static IReadOnlyList<RepositoryContent> GetDirectoryContents(string path, bool recursive = true)
-            {
-                if (string.IsNullOrEmpty(path)) path = string.Empty;
-
-                if (!_cache.TryGetValue(path, out var rootData) || rootData.DirectoryContents.Count == 0)
-                    return Array.Empty<RepositoryContent>();
-
-                if (!recursive) return rootData.DirectoryContents.AsReadOnly();
-
-                var allContents = new List<RepositoryContent>();
-                var queue = new Queue<CacheData>();
-                queue.Enqueue(rootData);
-
-                while (queue.Count > 0)
-                {
-                    var currentData = queue.Dequeue();
-
-                    foreach (var rc in currentData.DirectoryContents)
-                    {
-                        allContents.Add(rc);
-                        if (_cache.TryGetValue(rc.Path, out var childData) && childData.Entry?.Type == EntryType.Dir)
-                            queue.Enqueue(childData);
-                    }
-                }
-
-                return allContents.AsReadOnly();
-            }
-
-            #endregion
-
-            #region Size Cache
-
-            private static void InvalidateSize(string path)
-            {
-                if (string.IsNullOrEmpty(path)) return;
-
-                if (_cache.TryGetValue(path, out var data))
-                    data.DirectorySize = null;
-
-                string parent = GetParent(path);
-                while (!string.IsNullOrEmpty(parent))
-                {
-                    if (_cache.TryGetValue(parent, out var parentData))
-                        parentData.DirectorySize = null;
-
-                    parent = GetParent(parent);
-                }
-            }
-
-            public static long GetDirectorySize(string path)
-            {
-                if (string.IsNullOrEmpty(path)) return 0;
-
-                if (!_cache.TryGetValue(path, out var rootData)) return 0;
-                if (rootData.DirectorySize.HasValue) return rootData.DirectorySize.Value;
-
-                long total = 0;
-                var contents = GetDirectoryContents(path);
-                foreach (var rc in contents)
-                {
-                    if (_cache.TryGetValue(rc.Path, out var rcData) && rcData.Entry?.Type == EntryType.File)
-                        total += rc.Size;
-                }
-
-                rootData.DirectorySize = total;
-                return total;
-            }
-
-            #endregion
-
-            #region MD5 / SHA
-
-            public static void AddMd5(string sha)
-            {
-                if (string.IsNullOrEmpty(sha)) return;
-
-                if (_cache.TryGetValue(sha, out var data) && !string.IsNullOrEmpty(data.Md5)) return;
-
-                using var md5 = MD5.Create();
-                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sha));
-                string result = string.Concat(hashBytes.Select(b => b.ToString("x2")));
-
-                if (_cache.TryGetValue(sha, out data))
-                    data.Md5 = result;
-                else
-                    _cache[sha] = new CacheData { Md5 = result };
-            }
-
-            public static bool TryGetMd5(string sha, out string md5)
-            {
-                if (_cache.TryGetValue(sha, out var data) && !string.IsNullOrEmpty(data.Md5))
-                {
-                    md5 = data.Md5;
+                    entry = cached.Entry;
                     return true;
                 }
-                md5 = null;
-                return false;
             }
+            return false;
+        }
 
-            public static bool RemoveMd5(string sha)
+        public static bool TryGetValue(string path, out CacheData cacheData)
+        {
+            cacheData = null;
+            if (string.IsNullOrEmpty(path)) return false;
+            path = NormalizePath(path);
+            return _cache.TryGetValue(path, out cacheData);
+        }
+
+        /// <summary>
+        /// Retrieves directory contents from cache if SHA matches.
+        /// </summary>
+        public static IReadOnlyList<RepositoryContent> GetDirectory(string path)
+        {
+            if (DirectoryMap.TryGetValue(path, out var cached))
             {
-                if (_cache.TryGetValue(sha, out var data))
+                return cached;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Moves an entry (file or directory) from oldPath to newPath in the cache and updates directory maps.
+        /// Optionally provide the Entry fetched from Octokit to avoid lookup.
+        /// </summary>
+        public static void MoveEntry(string oldPath, string newPath, Entry entry = null)
+        {
+            if (string.IsNullOrEmpty(oldPath) || string.IsNullOrEmpty(newPath)) return;
+            if (string.Equals(oldPath, newPath, StringComparison.OrdinalIgnoreCase)) return;
+
+            entry ??= GetEntry(oldPath);
+            if (entry == null) return;
+
+            // Remove old entry from maps/cache
+            Remove(oldPath);
+
+            // Update path
+            entry.Path = newPath;
+
+            // Recursively update children's paths for directories
+            if (entry.Type == EntryType.Dir && entry.Children != null)
+            {
+                foreach (var child in entry.Children)
                 {
-                    data.Md5 = null;
-                    return true;
+                    string childTargetPath = newPath + child.Path.Substring(oldPath.Length);
+                    MoveEntry(child.Path, childTargetPath, child);
                 }
-                return false;
             }
 
-            #endregion
+            // Store updated entry and update maps
+            Add(entry);
+            UpdateDirectoryMaps(GetParent(newPath), entry);
+        }
 
-            #region Content Helpers
+        /// <summary>
+        /// Retrieves an Entry from the cache by path.
+        /// Returns null if the entry is not cached.
+        /// </summary>
+        /// <param name="path">Path of the file or directory in the repository.</param>
+        /// <returns>The cached Entry or null if not found.</returns>
+        private static Entry GetEntry(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return null;
 
-            /// <summary>
-            /// Returns all file paths in the cache.
-            /// </summary>
-            public static IReadOnlyList<string> AllFiles()
+            if (_cache.TryGetValue(path, out var cached))
+                return cached.Entry;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks if an entry exists in the cache (file or directory).
+        /// </summary>
+        /// <param name="path">Path of the file or directory.</param>
+        /// <returns>True if cached, false otherwise.</returns>
+        public static bool Contains(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return false;
+            path = NormalizePath(path);
+
+            return _cache.ContainsKey(path);
+        }
+
+        /// <summary>
+        /// Checks if an entry exists in the cache (file or directory).
+        /// </summary>
+        /// <param name="path">Path of the file or directory.</param>
+        /// <returns>True if cached, false otherwise.</returns>
+        public static bool ContainsInDirectoryMap(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return false;
+            path = NormalizePath(path);
+
+            return DirectoryMap.ContainsKey(path);
+        }
+
+        /// <summary>
+        /// Creates an internal lookup table mapping each directory path to its immediate children.
+        /// </summary>
+        public static void BuildDirectoryMap()
+        {
+            Program.Log?.Write(LogEventLevel.Information, "BuildDirectoryMap started");
+
+            DirectoryMap.Clear();
+
+            foreach (CacheData tuple in _cache.Values)
             {
-                return _cache.Values
-                    .Where(d => d.Entry?.Type == EntryType.File)
-                    .Select(d => d.Entry.Path)
-                    .ToList()
-                    .AsReadOnly();
+                Entry entry = tuple.Entry;
+                if (entry.Content == null) continue; // skip entries without RepositoryContent
+
+                string parent = GetParent(entry.Path);
+                if (!DirectoryMap.ContainsKey(parent)) DirectoryMap[parent] = [];
+
+                DirectoryMap[parent].Add(entry.Content);
             }
 
-            /// <summary>
-            /// Returns all RepositoryContent objects in the cache (files and directories).
-            /// </summary>
-            public static IReadOnlyList<RepositoryContent> AllRepositoryContents()
-            {
-                var allContents = new List<RepositoryContent>();
+            Program.Log?.Write(LogEventLevel.Information, $"BuildDirectoryMap completed: {DirectoryMap.Count} directory entries");
+        }
 
-                foreach (var data in _cache.Values)
+        /// <summary>
+        /// Computes and stores the total byte size of each directory based on its contents.
+        /// </summary>
+        /// <param name="path">The directory path to evaluate.</param>
+        public static long GetFoldersSize(string path, bool addToFolderSizeMap = true)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes started for '{path}'");
+
+            if (!DirectoryMap.ContainsKey(path))
+            {
+                Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes: no entries for '{path}'");
+                return 0;
+            }
+
+            long total = 0;
+
+            foreach (RepositoryContent entry in DirectoryMap[path])
+            {
+                if (entry.Type == Octokit.ContentType.Dir)
                 {
-                    if (data.DirectoryContents != null)
-                        allContents.AddRange(data.DirectoryContents);
-                    else if (data.Entry?.Content != null)
-                        allContents.Add(data.Entry.Content);
-                }
-
-                return allContents.AsReadOnly();
-            }
-
-            /// <summary>
-            /// Returns all cached Entry objects (files and directories).
-            /// </summary>
-            public static IReadOnlyList<Entry> All()
-            {
-                return _cache.Values
-                    .Select(d => d.Entry)
-                    .Where(e => e != null)
-                    .ToList()
-                    .AsReadOnly();
-            }
-
-            /// <summary>
-            /// Returns all cached directories (paths) in the repository.
-            /// </summary>
-            public static IReadOnlyList<string> AllDirectories()
-            {
-                return _cache.Values
-                    .Where(d => d.Entry?.Type == EntryType.Dir)
-                    .Select(d => d.Entry.Path)
-                    .ToList()
-                    .AsReadOnly();
-            }
-
-            /// <summary>
-            /// Returns immediate or all subdirectories under a given path.
-            /// </summary>
-            public static IReadOnlyList<string> GetDirectories(string path, bool subDirectories = true)
-            {
-                if (string.IsNullOrEmpty(path)) path = string.Empty;
-
-                if (!_cache.TryGetValue(path, out var rootData) || rootData.DirectoryContents.Count == 0)
-                    return Array.Empty<string>();
-
-                var directories = new List<string>();
-
-                if (!subDirectories)
-                {
-                    // Only immediate subdirectories
-                    directories.AddRange(rootData.DirectoryContents
-                        .Where(c => _cache.TryGetValue(c.Path, out var cd) && cd.Entry?.Type == EntryType.Dir)
-                        .Select(c => c.Path));
+                    total += GetFoldersSize(entry.Path);
                 }
                 else
                 {
-                    // Recursive: BFS through all children
-                    var queue = new Queue<CacheData>();
-                    queue.Enqueue(rootData);
+                    total += entry.Size;
+                }
+            }
 
-                    while (queue.Count > 0)
+            if (addToFolderSizeMap) FolderSizeMap[path] = total;
+
+            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes completed for '{path}', size={total}");
+
+            return total;
+        }
+
+        /// <summary>
+        /// Stores an Entry and its children recursively in the cache with the current timestamp.
+        /// </summary>
+        /// <param name="entry"></param>
+        private static void StoreEntryInCache(Entry entry)
+        {
+            if (entry == null) return;
+
+            entry.FetchedAt = DateTime.UtcNow; // TTL tracking
+
+            _cache[entry.Path] = new() { Entry = entry, Fetched = DateTime.UtcNow };
+
+            if (entry.Type == EntryType.Dir && entry.Children != null)
+            {
+                foreach (Entry child in entry.Children) StoreEntryInCache(child);
+            }
+        }
+
+        /// <summary>
+        /// Invalidates folder size for a directory and all parent directories.
+        /// </summary>
+        private static void InvalidateSize(string path)
+        {
+            path = NormalizePath(path);
+
+            while (!string.IsNullOrEmpty(path))
+            {
+                FolderSizeMap.Remove(path);
+                path = GetParent(path);
+            }
+        }
+
+        /// <summary>
+        /// Updates internal directory maps when an entry is added or modified.
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <param name="entry"></param>
+        private static void UpdateDirectoryMaps(string directory, Entry entry)
+        {
+            directory = NormalizePath(directory);
+
+            if (!DirectoryMap.TryGetValue(directory, out List<RepositoryContent> list))
+                DirectoryMap[directory] = list = new();
+
+            if (entry.Type == EntryType.File && entry.Content != null)
+            {
+                // Only add files that belong to this directory directly
+                if (GetParent(entry.Path) == directory)
+                {
+                    var existing = list.FirstOrDefault(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
+                    if (existing != null)
                     {
-                        var currentData = queue.Dequeue();
+                        list.Remove(existing);
+                        FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - existing.Size : 0);
+                    }
 
-                        foreach (var rc in currentData.DirectoryContents)
-                        {
-                            if (_cache.TryGetValue(rc.Path, out var childData) && childData.Entry?.Type == EntryType.Dir)
-                            {
-                                directories.Add(rc.Path);
-                                queue.Enqueue(childData);
-                            }
-                        }
+                    list.Add(entry.Content);
+                    FolderSizeMap[directory] = FolderSizeMap.TryGetValue(directory, out long current) ? current + entry.Content.Size : entry.Content.Size;
+                }
+            }
+
+            if (entry.Type == EntryType.Dir)
+            {
+                // Ensure FolderSizeMap entry exists, but do not add children to the list
+                if (!FolderSizeMap.ContainsKey(directory)) FolderSizeMap[directory] = 0;
+
+                // Only add this directory as a reference in parent
+                string parent = GetParent(entry.Path);
+                if (!string.IsNullOrEmpty(parent) && DirectoryMap.TryGetValue(parent, out var parentList))
+                {
+                    if (!parentList.Any(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        // Use the existing cached content of the directory
+                        if (entry.Content != null) parentList.Add(entry.Content);
                     }
                 }
-
-                return directories.AsReadOnly();
             }
 
-            #endregion
+            // Update DirectoryCache
+            DirectoryCache[directory] = (list.AsReadOnly(), entry.Content?.Sha);
+        }
 
-            #region Utilities
+        /// <summary>
+        /// Builds a dictionary of changes from the FileSystem cache.
+        /// Key = repository path, Value = new content (null if deleted)
+        /// </summary>
+        public static Dictionary<string, string> BuildChanges()
+        {
+            var changes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            private static string GetParent(string path)
+            foreach (var kv in _cache)
             {
-                if (string.IsNullOrEmpty(path)) return string.Empty;
-                int idx = path.LastIndexOf('/');
-                return idx < 0 ? string.Empty : path.Substring(0, idx);
+                Entry entry = kv.Value.Entry;
+
+                if (entry.Type == EntryType.File)
+                {
+                    string currentContent = entry.Content?.Content;
+                    string lastSha = entry.CommitSha;
+
+                    if (currentContent == null)
+                    {
+                        // File removed from UI
+                        changes[entry.Path] = null;
+                    }
+                    else
+                    {
+                        string contentSha = ComputeSha1(currentContent);
+
+                        // New file or modified content
+                        if (string.IsNullOrEmpty(lastSha) || lastSha != contentSha)
+                            changes[entry.Path] = currentContent;
+                    }
+                }
+                else if (entry.Type == EntryType.Dir && entry.Children != null)
+                {
+                    // Recurse into children
+                    foreach (Entry child in entry.Children)
+                        RecurseEntry(child, changes);
+                }
             }
 
-            #endregion
+            return changes;
+        }
+
+        private static void RecurseEntry(Entry entry, Dictionary<string, string> changes)
+        {
+            if (entry.Type == EntryType.File)
+            {
+                string currentContent = entry.Content?.Content;
+                string lastSha = entry.CommitSha;
+
+                if (currentContent == null)
+                {
+                    changes[entry.Path] = null;
+                }
+                else
+                {
+                    string contentSha = ComputeSha1(currentContent);
+                    if (string.IsNullOrEmpty(lastSha) || lastSha != contentSha)
+                        changes[entry.Path] = currentContent;
+                }
+            }
+            else if (entry.Type == EntryType.Dir && entry.Children != null)
+            {
+                foreach (Entry child in entry.Children)
+                    RecurseEntry(child, changes);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves GitHub directory contents with SHA validation and automatic cache refresh
+        /// when upstream data changes.
+        /// </summary>
+        /// <param name="path">Repository path to retrieve.</param>
+        /// <returns>A read-only list of repository contents.</returns>
+        public static async Task<IReadOnlyList<RepositoryContent>> GetContentsCachedAsync(string path)
+        {
+            await RepositoryTreeChangedAsync();
+
+            path = NormalizePath(path);
+
+            if (DirectoryCache.TryGetValue(path, out var cached))
+                return cached.contents;
+
+            List<RepositoryContent> contents = await GetDirectoryRecursiveAsync(path);
+
+            DirectoryCache[path] = (contents.AsReadOnly(), _lastRepoTreeSha);
+
+            return contents;
+        }
+
+        public static async Task<List<RepositoryContent>> GetDirectoryRecursiveAsync(string path)
+        {
+            List<RepositoryContent> result = new();
+
+            IReadOnlyList<RepositoryContent> contents =
+                await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                    _owner,
+                    GitHub.Repository.repositoryName,
+                    path,
+                    GitHub.Repository.branch);
+
+            foreach (RepositoryContent item in contents)
+            {
+                result.Add(item);
+
+                if (item.Type == ContentType.Dir)
+                {
+                    List<RepositoryContent> sub = await GetDirectoryRecursiveAsync(item.Path);
+                    result.AddRange(sub);
+                }
+            }
+
+            return result;
+        }
+
+        private static string ComputeSha1(string content)
+        {
+            if (string.IsNullOrEmpty(content)) return string.Empty;
+
+            using (SHA1 sha1 = SHA1.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(content);
+                byte[] hash = sha1.ComputeHash(bytes);
+                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            }
+        }
+
+        /// <summary>
+        /// Normalizes a path for consistent storage.
+        /// </summary>
+        private static string NormalizePath(string path) => path?.Replace("\\", "/").TrimEnd('/') ?? string.Empty;
+
+        /// <summary>
+        /// Converts a GitHub SHA string into a deterministic MD5 hash for UI and caching purposes.
+        /// </summary>
+        /// <param name="sha">The SHA string.</param>
+        /// <returns>An MD5 hex string, or empty string if input is null.</returns>
+        public static string ShaToMd5(string sha)
+        {
+            if (string.IsNullOrEmpty(sha)) return string.Empty;
+
+            if (ShaMd5Cache.TryGetValue(sha, out string cached)) return cached;
+
+            using MD5 md5 = MD5.Create();
+            byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sha));
+            string result = string.Concat(hashBytes.Select(b => b.ToString("x2")));
+            ShaMd5Cache[sha] = result;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the parent directory of a path.
+        /// </summary>
+        private static string GetParent(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return string.Empty;
+            int idx = path.LastIndexOf('/');
+            return idx <= 0 ? string.Empty : path.Substring(0, idx);
         }
     }
 }

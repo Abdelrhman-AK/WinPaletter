@@ -3,6 +3,7 @@ using Serilog.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
@@ -27,65 +28,14 @@ namespace WinPaletter.GitHub
     public static partial class FileSystem
     {
         /// <summary>
-        /// Provides a mapping of directory names to their associated repository contents, using case-insensitive string
-        /// comparison.
-        /// </summary>
-        /// <remarks>Directory names are compared using ordinal, case-insensitive semantics. This ensures
-        /// that lookups for directory names are not affected by letter casing.</remarks>
-        private static readonly Dictionary<string, List<RepositoryContent>> DirectoryMap = new(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// Provides a mapping between folder names and their corresponding sizes in bytes, using case-insensitive
-        /// string comparison.
-        /// </summary>
-        /// <remarks>This dictionary uses <see cref="StringComparer.OrdinalIgnoreCase"/> to ensure that
-        /// folder names are compared without regard to case. This is useful when folder names may vary in casing but
-        /// should be treated equivalently.</remarks>
-        public static readonly Dictionary<string, long> FolderSizeMap = new(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// Provides a thread-safe cache for directory contents and their associated SHA values, keyed by directory
-        /// path.
-        /// </summary>
-        /// <remarks>The cache stores the contents of each directory as an immutable list, along with the
-        /// corresponding SHA identifier. This enables efficient retrieval of previously accessed directory data and
-        /// reduces redundant repository queries. The cache is shared across all usages within the application and is
-        /// safe for concurrent access.</remarks>
-        private static readonly ConcurrentDictionary<string, (IReadOnlyList<RepositoryContent> Contents, string Sha)> DirectoryCache = new();
-
-        /// <summary>
-        /// Stores cached entries along with their fetch timestamps for thread-safe access within the application.
-        /// </summary>
-        /// <remarks>This dictionary enables efficient retrieval and expiration of cached data by
-        /// associating each entry with the time it was fetched. Access to the cache is safe for concurrent read and
-        /// write operations from multiple threads.</remarks>
-        private static readonly ConcurrentDictionary<string, (Entry entry, DateTime fetched)> _cache = new();
-
-        /// <summary>
-        /// Provides a thread-safe cache for storing computed SHA and MD5 hash values associated with string keys.
-        /// </summary>
-        /// <remarks>This dictionary enables efficient retrieval of previously computed hash values,
-        /// reducing redundant calculations in concurrent scenarios. Access to the cache is safe for multiple
-        /// threads.</remarks>
-        private static readonly ConcurrentDictionary<string, string> ShaMd5Cache = new();
-
-        /// <summary>
         /// SemaphoreSlim to limit concurrent GitHub API requests for repository data fetching.
         /// </summary>
         private static readonly SemaphoreSlim _semaphore = new(5);
 
         /// <summary>
-        /// Specifies the duration for which cached data remains valid before expiration.
-        /// </summary>
-        /// <remarks>This value determines the time-to-live (TTL) for items stored in the cache. After
-        /// this period elapses, cached entries are considered stale and may be refreshed or removed. Adjust this value
-        /// to balance cache freshness and performance based on application requirements.</remarks>
-        private static readonly TimeSpan CacheTTL = TimeSpan.FromSeconds(30);
-
-        /// <summary>
         /// Gets the GitHub login name of the current user.
         /// </summary>
-        private static string _owner => User.GitHub.Login;
+        public static string _owner => User.GitHub.Login;
 
         /// <summary>
         /// Recursively fetches repository contents starting at the specified path,
@@ -108,7 +58,7 @@ namespace WinPaletter.GitHub
             try
             {
                 await _semaphore.WaitAsync(cts.Token); // wait for slot
-                items = await GetContentsCachedAsync(path);   // cached fetch
+                items = await Cache.GetDirectoryRecursiveAsync(path);   // cached fetch
             }
             catch
             {
@@ -175,73 +125,15 @@ namespace WinPaletter.GitHub
         }
 
         /// <summary>
-        /// Creates an internal lookup table mapping each directory path to its immediate children.
-        /// </summary>
-        private static void BuildDirectoryMap()
-        {
-            Program.Log?.Write(LogEventLevel.Information, "BuildDirectoryMap started");
-
-            DirectoryMap.Clear();
-
-            foreach ((Entry, DateTime) tuple in _cache.Values)
-            {
-                Entry entry = tuple.Item1;
-                if (entry.Content == null) continue; // skip entries without RepositoryContent
-
-                string parent = GetParent(entry.Path);
-                if (!DirectoryMap.ContainsKey(parent)) DirectoryMap[parent] = [];
-
-                DirectoryMap[parent].Add(entry.Content);
-            }
-
-            Program.Log?.Write(LogEventLevel.Information, $"BuildDirectoryMap completed: {DirectoryMap.Count} directory entries");
-        }
-
-        /// <summary>
-        /// Computes and stores the total byte size of each directory based on its contents.
-        /// </summary>
-        /// <param name="path">The directory path to evaluate.</param>
-        private static long GetFoldersSize(string path, bool addToFolderSizeMap = true)
-        {
-            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes started for '{path}'");
-
-            if (!DirectoryMap.ContainsKey(path))
-            {
-                Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes: no entries for '{path}'");
-                return 0;
-            }
-
-            long total = 0;
-
-            foreach (RepositoryContent entry in DirectoryMap[path])
-            {
-                if (entry.Type == Octokit.ContentType.Dir)
-                {
-                    total += GetFoldersSize(entry.Path);
-                }
-                else
-                {
-                    total += entry.Size;
-                }
-            }
-
-            if (addToFolderSizeMap) FolderSizeMap[path] = total;
-
-            Program.Log?.Write(LogEventLevel.Information, $"BuildFolderSizes completed for '{path}', size={total}");
-
-            return total;
-        }
-
-        /// <summary>
         /// Retrieves a cached Entry for the specified path and validates it against the latest commits.
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
         private static async Task<Entry> GetFromCacheValidatedAsync(string path)
         {
-            if (!_cache.TryGetValue(path, out (Entry, DateTime) cached)) return null;
+            if (!Cache.Contains(path)) return null;
 
-            Entry cachedEntry = cached.Item1;
+            Cache.TryGetEntry(path, out Entry cachedEntry);
 
             try
             {
@@ -253,7 +145,7 @@ namespace WinPaletter.GitHub
                 {
                     if (latestCommit != null && latestCommit.Sha == cachedEntry.CommitSha) return cachedEntry;
 
-                    _cache.TryRemove(path, out _);
+                    Cache.Remove(path);
                     return null;
                 }
 
@@ -273,9 +165,9 @@ namespace WinPaletter.GitHub
                     // Compare with cached SHAs
                     foreach (Entry child in cachedEntry.Children)
                     {
-                        if (!_cache.TryGetValue(child.Path, out (Entry, DateTime) cachedChildTuple) || (latestShas.TryGetValue(child.Path, out string latestSha) && cachedChildTuple.Item1.CommitSha != latestSha))
+                        if (!Cache.TryGetValue(child.Path, out Cache.CacheData cachedChildTuple) || (latestShas.TryGetValue(child.Path, out string latestSha) && cachedChildTuple.Entry.CommitSha != latestSha))
                         {
-                            _cache.TryRemove(path, out _);
+                            Cache.Remove(path);
                             return null;
                         }
                     }
@@ -310,12 +202,12 @@ namespace WinPaletter.GitHub
             cts?.Token.ThrowIfCancellationRequested();
 
             // 1. Check cache
-            if (!forceRefresh && _cache.TryGetValue(path, out (Entry, DateTime) cachedTuple))
+            if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple))
             {
                 bool valid = true;
 
                 // TTL check
-                if (useTtlCache && DateTime.UtcNow - cachedTuple.Item2 >= CacheTTL) valid = false;
+                if (useTtlCache && DateTime.UtcNow - cachedTuple.Fetched >= Cache.CacheTTL) valid = false;
 
                 // SHA validation
                 if (useShaValidation && valid)
@@ -324,7 +216,7 @@ namespace WinPaletter.GitHub
                     if (validated == null) valid = false;
                 }
 
-                if (valid) return cachedTuple.Item1;
+                if (valid) return cachedTuple.Entry;
             }
 
             // 2. Fetch contents from GitHub
@@ -335,7 +227,7 @@ namespace WinPaletter.GitHub
             }
             catch
             {
-                _cache.TryRemove(path, out _);
+                Cache.Remove(path);
                 return null;
             }
 
@@ -354,9 +246,9 @@ namespace WinPaletter.GitHub
                     Entry childEntry = null;
 
                     // Try cached child if allowed
-                    if (useShaValidation && _cache.TryGetValue(item.Path, out (Entry, DateTime) cachedChildTuple))
+                    if (useShaValidation && Cache.TryGetValue(item.Path, out Cache.CacheData cachedChildTuple))
                     {
-                        Entry cachedChild = cachedChildTuple.Item1;
+                        Entry cachedChild = cachedChildTuple.Entry;
                         GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = item.Path })).FirstOrDefault();
 
                         if (latest != null && cachedChild.CommitSha == latest.Sha) childEntry = cachedChild;
@@ -377,7 +269,7 @@ namespace WinPaletter.GitHub
             }
 
             // 5. Store in cache
-            _cache[entry.Path] = (entry, DateTime.UtcNow);
+            Cache.Add(entry);
 
             return entry;
         }
@@ -386,11 +278,6 @@ namespace WinPaletter.GitHub
         /// Quick shallow lookup of a single path with TTL caching.
         /// </summary>
         public static Task<Entry> GetInfoFastAsync(string path, CancellationTokenSource cts = default) => GetInfoAsync(path, recursive: false, useShaValidation: false, useTtlCache: true, forceRefresh: false, maxDepth: 0, cts: cts);
-
-        /// <summary>
-        /// Accurate full recursive fetch with SHA validation.
-        /// </summary>
-        public static Task<Entry> GetInfoAccurateAsync(string path, int maxDepth = 20, CancellationTokenSource cts = default) => GetInfoAsync(path, recursive: true, useShaValidation: true, useTtlCache: false, forceRefresh: true, maxDepth: maxDepth, cts: cts);
 
         /// <summary>
         /// Force refresh the entry with optional recursion.
@@ -413,9 +300,9 @@ namespace WinPaletter.GitHub
             cts?.Token.ThrowIfCancellationRequested();
 
             // Return cached entry if fresh
-            if (!forceRefresh && _cache.TryGetValue(path, out (Entry, DateTime) cachedTuple) && DateTime.UtcNow - cachedTuple.Item2 < CacheTTL)
+            if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple) && DateTime.UtcNow - cachedTuple.Fetched < Cache.CacheTTL)
             {
-                return cachedTuple.Item1;
+                return cachedTuple.Entry;
             }
 
             IReadOnlyList<RepositoryContent> contents;
@@ -447,7 +334,7 @@ namespace WinPaletter.GitHub
             }
 
             // Store in _infoCache
-            _cache[entry.Path] = (entry, DateTime.UtcNow);
+            Cache.Add(entry);
             return entry;
         }
 
@@ -462,38 +349,6 @@ namespace WinPaletter.GitHub
         {
             Entry entry = await GetEntryCachedAsync(path, forceRefresh, 1, cts);
             return (entry?.Children ?? []) as List<Entry>;
-        }
-
-        /// <summary>
-        /// Retrieves GitHub directory contents with SHA validation and automatic cache refresh
-        /// when upstream data changes.
-        /// </summary>
-        /// <param name="path">Repository path to retrieve.</param>
-        /// <returns>A read-only list of repository contents.</returns>
-        private static async Task<IReadOnlyList<RepositoryContent>> GetContentsCachedAsync(string path)
-        {
-            if (DirectoryCache.TryGetValue(path, out (IReadOnlyList<RepositoryContent>, string) cached))
-            {
-                try
-                {
-                    IReadOnlyList<RepositoryContent> currentContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
-                    string currentSha = currentContents.FirstOrDefault()?.Sha ?? string.Empty;
-
-                    if (cached.Item2 == currentSha) return cached.Item1;
-
-                    DirectoryCache[path] = (currentContents, currentSha);
-                    return currentContents;
-                }
-                catch
-                {
-                    return cached.Item1;
-                }
-            }
-
-            IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
-            string sha = contents.FirstOrDefault()?.Sha ?? string.Empty;
-            DirectoryCache[path] = (contents, sha);
-            return contents;
         }
 
         /// <summary>
@@ -533,302 +388,7 @@ namespace WinPaletter.GitHub
                 processed++;
                 reportProgress?.Invoke(total > 0 ? (int)((processed * 100L) / total) : 100);
             }
-        }
-
-        /// <summary>
-        /// Stores an Entry and its children recursively in the cache with the current timestamp.
-        /// </summary>
-        /// <param name="entry"></param>
-        private static void StoreEntryInCache(Entry entry)
-        {
-            if (entry == null) return;
-
-            entry.FetchedAt = DateTime.UtcNow; // TTL tracking
-
-            _cache[entry.Path] = (entry, DateTime.UtcNow);
-
-            if (entry.Type == EntryType.Dir && entry.Children != null)
-            {
-                foreach (Entry child in entry.Children) StoreEntryInCache(child);
-            }
-        }
-
-        /// <summary>
-        /// Clears cached entries for the specified path and its subpaths.
-        /// </summary>
-        /// <param name="path"></param>
-        private static void ClearEntryCache(string path = null)
-        {
-            if (path == null)
-            {
-                _cache.Clear();
-                return;
-            }
-
-            _cache.TryRemove(path, out _);
-            foreach (string key in _cache.Keys.Where(k => k.StartsWith(path + "/")).ToList()) _cache.TryRemove(key, out _);
-        }
-
-        /// <summary>
-        /// Clears all cached data in the FileSystem, including entries, directory maps, folder sizes, and SHA/MD5 caches.
-        /// Intended to be called before switching branches to prevent stale data usage.
-        /// </summary>
-        public static void ClearAllCaches()
-        {
-            // Clear main entry cache
-            _cache.Clear();
-
-            // Clear directory map and folder size map
-            DirectoryMap.Clear();
-            FolderSizeMap.Clear();
-
-            // Clear directory content cache
-            DirectoryCache.Clear();
-
-            // Clear SHA/MD5 hash cache
-            ShaMd5Cache.Clear();
-
-            // Optional: log the cache clearing
-            Program.Log?.Write(LogEventLevel.Information, "All FileSystem caches have been cleared.");
-        }
-
-        /// <summary>
-        /// Updates internal directory maps when an entry is added or modified.
-        /// </summary>
-        /// <param name="directory"></param>
-        /// <param name="entry"></param>
-        private static void UpdateDirectoryMaps(string directory, Entry entry)
-        {
-            directory = NormalizePath(directory);
-
-            if (!DirectoryMap.TryGetValue(directory, out List<RepositoryContent> list))
-                DirectoryMap[directory] = list = new();
-
-            if (entry.Type == EntryType.File && entry.Content != null)
-            {
-                // Only add files that belong to this directory directly
-                if (GetParent(entry.Path) == directory)
-                {
-                    var existing = list.FirstOrDefault(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
-                    if (existing != null)
-                    {
-                        list.Remove(existing);
-                        FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - existing.Size : 0);
-                    }
-
-                    list.Add(entry.Content);
-                    FolderSizeMap[directory] = FolderSizeMap.TryGetValue(directory, out long current) ? current + entry.Content.Size : entry.Content.Size;
-                }
-            }
-
-            if (entry.Type == EntryType.Dir)
-            {
-                // Ensure FolderSizeMap entry exists, but do not add children to the list
-                if (!FolderSizeMap.ContainsKey(directory)) FolderSizeMap[directory] = 0;
-
-                // Only add this directory as a reference in parent
-                string parent = GetParent(entry.Path);
-                if (!string.IsNullOrEmpty(parent) && DirectoryMap.TryGetValue(parent, out var parentList))
-                {
-                    if (!parentList.Any(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        // Use the existing cached content of the directory
-                        if (entry.Content != null) parentList.Add(entry.Content);
-                    }
-                }
-            }
-
-            // Update DirectoryCache
-            DirectoryCache[directory] = (list.AsReadOnly(), entry.Content?.Sha);
-        }
-
-        /// <summary>
-        /// Removes an entry from internal directory maps.
-        /// </summary>
-        /// <param name="directory"></param>
-        /// <param name="entry"></param>
-        private static void RemoveDirectoryMaps(string directory, Entry entry)
-        {
-            directory = directory?.TrimEnd('/') ?? string.Empty;
-
-            if (entry.Type == EntryType.File)
-            {
-                if (DirectoryMap.TryGetValue(directory, out List<RepositoryContent> list))
-                {
-                    // Find the file to remove and adjust the folder size
-                    int removed = list.RemoveAll(c => string.Equals(c.Path, entry.Path, StringComparison.OrdinalIgnoreCase));
-                    if (removed > 0)
-                    {
-                        FolderSizeMap[directory] = Math.Max(0, FolderSizeMap.TryGetValue(directory, out long size) ? size - (entry.Content?.Size ?? 0) : 0);
-                    }
-                }
-            }
-
-            if (entry.Type == EntryType.Dir)
-            {
-                // Optionally, remove the folder size if directory is empty
-                FolderSizeMap.Remove(directory);
-            }
-
-            // Remove from DirectoryCache
-            DirectoryCache.TryRemove(directory, out _);
-        }
-
-        private static void RemoveDirectoryFromAllCaches(string dirPath)
-        {
-            dirPath = NormalizePath(dirPath).TrimEnd('/');
-
-            // 1. Remove Entry cache (dir + all children)
-            foreach (string key in _cache.Keys
-                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
-                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
-                .ToList())
-            {
-                _cache.TryRemove(key, out _);
-            }
-
-            // 2. Remove DirectoryCache entries
-            foreach (string key in DirectoryCache.Keys
-                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
-                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
-                .ToList())
-            {
-                DirectoryCache.TryRemove(key, out _);
-            }
-
-            // 3. Remove FolderSizeMap entries
-            foreach (string key in FolderSizeMap.Keys
-                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
-                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
-                .ToList())
-            {
-                FolderSizeMap.Remove(key);
-            }
-
-            // 4. Remove DirectoryMap entries
-            foreach (string key in DirectoryMap.Keys
-                .Where(k => k.Equals(dirPath, StringComparison.OrdinalIgnoreCase) ||
-                            k.StartsWith(dirPath + "/", StringComparison.OrdinalIgnoreCase))
-                .ToList())
-            {
-                DirectoryMap.Remove(key);
-            }
-
-            // 5. Remove directory from its parent list
-            string parent = GetParent(dirPath);
-            if (DirectoryMap.TryGetValue(parent, out List<RepositoryContent> list))
-            {
-                list.RemoveAll(c =>
-                    c.Type == ContentType.Dir &&
-                    string.Equals(c.Path, dirPath, StringComparison.OrdinalIgnoreCase));
-            }
-        }
-
-        private static void RemoveFileFromAllCaches(string filePath)
-        {
-            filePath = NormalizePath(filePath);
-
-            // Remove from entry cache
-            _cache.TryRemove(filePath, out _);
-
-            // Remove from DirectoryMap
-            string parentDir = GetParent(filePath);
-            if (DirectoryMap.TryGetValue(parentDir, out List<RepositoryContent> list))
-            {
-                list.RemoveAll(c => string.Equals(c.Path, filePath, StringComparison.OrdinalIgnoreCase));
-            }
-
-            // Remove from FolderSizeMap
-            if (FolderSizeMap.TryGetValue(parentDir, out long size))
-            {
-                // Optional: subtract file size if known
-                if (_cache.TryGetValue(filePath, out var cached))
-                    FolderSizeMap[parentDir] = Math.Max(0, size - (cached.entry.Content?.Size ?? 0));
-                else
-                    FolderSizeMap[parentDir] = size;
-            }
-
-            // Remove from DirectoryCache
-            DirectoryCache.TryRemove(parentDir, out _);
-        }
-
-        /// <summary>
-        /// Builds a dictionary of changes from the FileSystem cache.
-        /// Key = repository path, Value = new content (null if deleted)
-        /// </summary>
-        public static Dictionary<string, string> BuildChangesFromCache()
-        {
-            var changes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (var kv in FileSystem._cache)
-            {
-                Entry entry = kv.Value.entry;
-
-                if (entry.Type == EntryType.File)
-                {
-                    string currentContent = entry.Content?.Content;
-                    string lastSha = entry.CommitSha;
-
-                    if (currentContent == null)
-                    {
-                        // File removed from UI
-                        changes[entry.Path] = null;
-                    }
-                    else
-                    {
-                        string contentSha = ComputeSha1(currentContent);
-
-                        // New file or modified content
-                        if (string.IsNullOrEmpty(lastSha) || lastSha != contentSha)
-                            changes[entry.Path] = currentContent;
-                    }
-                }
-                else if (entry.Type == EntryType.Dir && entry.Children != null)
-                {
-                    // Recurse into children
-                    foreach (Entry child in entry.Children)
-                        RecurseEntry(child, changes);
-                }
-            }
-
-            return changes;
-        }
-
-        private static void RecurseEntry(Entry entry, Dictionary<string, string> changes)
-        {
-            if (entry.Type == EntryType.File)
-            {
-                string currentContent = entry.Content?.Content;
-                string lastSha = entry.CommitSha;
-
-                if (currentContent == null)
-                {
-                    changes[entry.Path] = null;
-                }
-                else
-                {
-                    string contentSha = ComputeSha1(currentContent);
-                    if (string.IsNullOrEmpty(lastSha) || lastSha != contentSha)
-                        changes[entry.Path] = currentContent;
-                }
-            }
-            else if (entry.Type == EntryType.Dir && entry.Children != null)
-            {
-                foreach (Entry child in entry.Children)
-                    RecurseEntry(child, changes);
-            }
-        }
-
-        private static string ComputeSha1(string content)
-        {
-            if (string.IsNullOrEmpty(content)) return string.Empty;
-
-            using (SHA1 sha1 = SHA1.Create())
-            {
-                byte[] bytes = Encoding.UTF8.GetBytes(content);
-                byte[] hash = sha1.ComputeHash(bytes);
-                return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-            }
+            //}
         }
     }
 }

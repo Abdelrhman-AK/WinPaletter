@@ -904,7 +904,7 @@ Generated automatically by WinPaletter.";
                     .Where(rc => rc != null && rc.Type == ContentType.Dir)
                     .Where(rc => Forms.GitHub_FileAction.ConfirmFolderDelete(
                         rc.Name,
-                        GitHub.Cache.GetDirectorySize(rc.Path)
+                        GitHub.Cache.GetSize(rc.Path)
                     ) == DialogResult.Yes)
                     .Select(rc => rc.Path)
                     .ToList();

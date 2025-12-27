@@ -326,9 +326,7 @@ namespace WinPaletter.GitHub
                             FetchedAt = DateTime.UtcNow
                         };
 
-                        _cache[normalizedPath] = (entry, DateTime.UtcNow);
-                        UpdateDirectoryMaps(DirectoryName(normalizedPath), entry);
-                        ClearEntryCache(NormalizePath(DirectoryName(normalizedPath)));
+                        Cache.Add(normalizedPath, entry);
                     }
 
                     reportProgress?.Invoke(100);
@@ -372,32 +370,21 @@ namespace WinPaletter.GitHub
                     await WriteFileAsync($"{normalizedPath}/.gitkeep", string.Empty, false, $"Create directory {normalizedPath} by {_owner}", cts);
 
                     // Refresh cache
-                    ClearEntryCache(normalizedPath);
-                    DirectoryCache.TryRemove(parentDir, out _);
+                    Cache.Remove(normalizedPath);
 
                     // Fetch fresh contents
-                    IReadOnlyList<RepositoryContent> parentContents = await GetContentsCachedAsync(parentDir);
+                    IReadOnlyList<RepositoryContent> parentContents = await Cache.GetContentsCachedAsync(parentDir);
                     var dirContent = parentContents.FirstOrDefault(c => c.Type == ContentType.Dir && string.Equals(c.Path, normalizedPath, StringComparison.OrdinalIgnoreCase));
 
                     if (dirContent == null)
                         throw new InvalidOperationException("GitHub did not return new directory.");
 
-                    // Patch directory map
-                    if (!DirectoryMap.TryGetValue(parentDir, out var list))
-                    {
-                        list = new List<RepositoryContent>();
-                        DirectoryMap[parentDir] = list;
-                    }
-                    if (!list.Any(c => c.Path.Equals(dirContent.Path, StringComparison.OrdinalIgnoreCase)))
-                        list.Add(dirContent);
-
-                    // Store entry
-                    StoreEntryInCache(new Entry
+                    Cache.Add(normalizedPath, new Entry
                     {
                         Path = normalizedPath,
                         Type = EntryType.Dir,
                         Content = dirContent,
-                        Children = new List<Entry>(),
+                        Children = [],
                         FetchedAt = DateTime.UtcNow
                     });
 
@@ -407,10 +394,10 @@ namespace WinPaletter.GitHub
 
                         listViewItem.SubItems.Add(FileTypeProvider?.Invoke(dirContent) ?? Program.Lang.Strings.Extensions.File);
 
-                        long size = dirContent.Type == Octokit.ContentType.Dir && FolderSizeMap.ContainsKey(dirContent.Path) ? FolderSizeMap[dirContent.Path] : dirContent.Size;
+                        long size = dirContent.Type == Octokit.ContentType.Dir && Cache.Contains(dirContent.Path) ? Cache.GetSize(dirContent.Path) : dirContent.Size;
 
                         listViewItem.SubItems.Add(size.ToStringFileSize());
-                        listViewItem.SubItems.Add(ShaToMd5(dirContent.Sha).ToUpper());
+                        listViewItem.SubItems.Add(Cache.ShaToMd5(dirContent.Sha).ToUpper());
                         listViewItem.SubItems.Add(dirContent.HtmlUrl);
                         listViewItem.SubItems.Add(dirContent.Content);
                     }
@@ -545,8 +532,7 @@ namespace WinPaletter.GitHub
                 newTree.Tree.Add(new NewTreeItem { Path = destPath, Mode = "100644", Type = TreeType.Blob, Sha = srcEntry.Content.Sha });
 
                 // Update caches
-                _cache[destPath] = (new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow }, DateTime.UtcNow);
-                UpdateDirectoryMaps(DirectoryName(destPath), new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
+                Cache.Add(destPath, new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
 
                 processed++;
                 reportProgress?.Invoke(processed * 100 / entriesToCopy.Count);
@@ -607,7 +593,9 @@ namespace WinPaletter.GitHub
                 if (entries.Count == 0)
                 {
                     await CreateDirectoryAsync(dstFull, cts: cts);
-                    UpdateDirectoryMaps(DirectoryName(dstFull), new Entry { Path = dstFull, Type = EntryType.Dir });
+
+                    Cache.Add(DirectoryName(dstFull), new Entry { Path = dstFull, Type = EntryType.Dir });
+
                     processedDirs++;
                     reportProgress?.Invoke(processedDirs * 100 / totalDirs);
                     continue;
@@ -680,17 +668,12 @@ namespace WinPaletter.GitHub
 
                         // Copy file to Git tree
                         newTree.Tree.Add(new NewTreeItem { Path = destPath, Mode = "100644", Type = TreeType.Blob, Sha = srcEntry.Content.Sha });
-
-                        var newEntry = new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow };
-                        _cache[destPath] = (newEntry, DateTime.UtcNow);
-                        UpdateDirectoryMaps(DirectoryName(destPath), newEntry);
+                        Cache.Add(destPath, new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
                     }
                     else // Directory
                     {
                         await CreateDirectoryAsync(destPath, cts: cts);
-                        var dirEntry = new Entry { Path = destPath, Type = EntryType.Dir, FetchedAt = DateTime.UtcNow };
-                        _cache[destPath] = (dirEntry, DateTime.UtcNow);
-                        UpdateDirectoryMaps(DirectoryName(destPath), dirEntry);
+                        Cache.Add(destPath, new Entry { Path = destPath, Type = EntryType.Dir, FetchedAt = DateTime.UtcNow });
                     }
                 }
 
@@ -810,9 +793,8 @@ namespace WinPaletter.GitHub
                 newTree.Tree.Add(new NewTreeItem { Path = srcEntry.Path, Mode = "100644", Type = TreeType.Blob, Sha = string.Empty });
 
                 // Update caches
-                _cache.TryRemove(srcEntry.Path, out _);
-                RemoveFileFromAllCaches(srcEntry.Path);
-                UpdateDirectoryMaps(DirectoryName(destPath), new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
+                Cache.Remove(destPath);
+                Cache.Add(srcEntry.Path, new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
 
                 processed++;
                 reportProgress?.Invoke(processed * 100 / entriesToMove.Count);
@@ -894,44 +876,14 @@ namespace WinPaletter.GitHub
             newTree.Tree.Add(new NewTreeItem { Path = dest, Mode = "100644", Type = TreeType.Blob, Sha = srcEntry.Content.Sha });
             newTree.Tree.Add(new NewTreeItem { Path = srcEntry.Path, Mode = "100644", Type = TreeType.Blob, Sha = string.Empty });
 
-            _cache.TryRemove(srcEntry.Path, out _);
-            RemoveFileFromAllCaches(srcEntry.Path);
-
-            UpdateDirectoryMaps(dest, new Entry
+            Cache.Remove(srcEntry.Path);
+            Cache.Add(dest, new Entry
             {
                 Path = dest,
                 Type = EntryType.File,
                 Content = srcEntry.Content,
                 FetchedAt = DateTime.UtcNow
             });
-
-            string srcDir = GetParent(srcEntry.Path);
-            string destDir = GetParent(dest);
-
-            // Remove from source directory
-            if (DirectoryMap.TryGetValue(srcDir, out var srcList))
-            {
-                srcList.RemoveAll(c =>
-                    c.Type == ContentType.File &&
-                    string.Equals(c.Path, srcEntry.Path, StringComparison.OrdinalIgnoreCase));
-            }
-
-            // Add to destination directory
-            if (!DirectoryMap.TryGetValue(destDir, out var destList))
-            {
-                DirectoryMap[destDir] = destList = [];
-            }
-
-            if (!destList.Any(c => string.Equals(c.Path, dest, StringComparison.OrdinalIgnoreCase)))
-            {
-                var newEntry = new Entry { Path = dest, Type = EntryType.File, Content = destEntry.Content, FetchedAt = DateTime.UtcNow };
-
-                destList.Add(newEntry.Content);
-            }
-
-            // Invalidate SHA-based cache only
-            DirectoryCache.TryRemove(srcDir, out _);
-            DirectoryCache.TryRemove(destDir, out _);
 
             reportProgress?.Invoke(50);
 
@@ -996,7 +948,7 @@ namespace WinPaletter.GitHub
                     string destPath = NormalizePath($"{dstRootFull}/{relative}");
                     Entry destEntry = await GetInfoRefreshAsync(destPath, false, cts: cts);
 
-                    allEntries.Add((file, destPath, destEntry));
+                    allEntries.Add(new(file, destPath, destEntry));
                     allSourceFiles.Add(file);
                     if (destEntry != null) allDestFiles.Add(destEntry);
                 }
@@ -1051,9 +1003,8 @@ namespace WinPaletter.GitHub
                 newTree.Tree.Add(new NewTreeItem { Path = srcEntry.Path, Mode = "100644", Type = TreeType.Blob, Sha = string.Empty });
 
                 // Update caches
-                _cache.TryRemove(srcEntry.Path, out _);
-                RemoveFileFromAllCaches(srcEntry.Path);
-                UpdateDirectoryMaps(DirectoryName(destPath), new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
+                Cache.Remove(srcEntry.Path);
+                Cache.Add(destPath, new Entry { Path = destPath, Type = EntryType.File, Content = srcEntry.Content, FetchedAt = DateTime.UtcNow });
 
                 processedItems++;
                 reportProgress?.Invoke(processedItems * 100 / totalItems);
@@ -1105,8 +1056,7 @@ namespace WinPaletter.GitHub
                         new DeleteFileRequest($"{_owner} deleted `{normalizedPath}`", file.Content.Sha)
                     );
 
-                    _cache.TryRemove(normalizedPath, out _);
-                    RemoveDirectoryMaps(DirectoryName(normalizedPath), file);
+                    Cache.Remove(normalizedPath);
 
                     processed++;
                     reportProgress?.Invoke(processed * 100 / total);
@@ -1175,7 +1125,7 @@ namespace WinPaletter.GitHub
                     var commit = await Program.GitHub.Client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, newCommit);
 
                     await Program.GitHub.Client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new ReferenceUpdate(commit.Sha));
-                    RemoveDirectoryFromAllCaches(normalizedPath);
+                    Cache.Remove(normalizedPath);
 
                     processed++;
                     reportProgress?.Invoke(processed * 100 / total);

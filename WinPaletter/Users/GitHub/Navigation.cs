@@ -119,7 +119,7 @@ namespace WinPaletter.GitHub
         public static async void SetBranch(string branch)
         {
             GitHub.Repository.branch = branch;
-            ClearAllCaches();
+            Cache.Clear();
         }
 
         /// <summary>
@@ -130,24 +130,6 @@ namespace WinPaletter.GitHub
         {
             SetBranch(branch);
             await PopulateRepositoryAsync(tree, list, breadCrumb, cts);
-        }
-
-        /// <summary>
-        /// Converts a GitHub SHA string into a deterministic MD5 hash for UI and caching purposes.
-        /// </summary>
-        /// <param name="sha">The SHA string.</param>
-        /// <returns>An MD5 hex string, or empty string if input is null.</returns>
-        private static string ShaToMd5(string sha)
-        {
-            if (string.IsNullOrEmpty(sha)) return string.Empty;
-
-            if (ShaMd5Cache.TryGetValue(sha, out string cached)) return cached;
-
-            using MD5 md5 = MD5.Create();
-            byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(sha));
-            string result = string.Concat(hashBytes.Select(b => b.ToString("x2")));
-            ShaMd5Cache[sha] = result;
-            return result;
         }
 
         /// <summary>
@@ -207,14 +189,15 @@ namespace WinPaletter.GitHub
                         Type = entry.Type == Octokit.ContentType.Dir ? FileSystem.EntryType.Dir : FileSystem.EntryType.File,
                         FetchedAt = DateTime.UtcNow
                     };
-                    _cache[e.Path] = (e, DateTime.UtcNow);
+
+                    Cache.Add(e);
                 }
 
-                Program.Log?.Write(LogEventLevel.Information, "Building directory map");
-                BuildDirectoryMap();
+                Program.Log?.Write(LogEventLevel.Information, "Rebuilding directory map");
+                Cache.BuildDirectoryMap();
 
-                Program.Log?.Write(LogEventLevel.Information, "Calculating folder sizes");
-                GetFoldersSize(_root);
+                Program.Log?.Write(LogEventLevel.Information, "Rebuilding folder sizes");
+                Cache.GetFoldersSize(_root);
 
                 void UpdateUI()
                 {
@@ -344,7 +327,7 @@ namespace WinPaletter.GitHub
                 foreach (TreeNode child in currentNode.Nodes.Cast<TreeNode>().ToList())
                 {
                     string childPath = child.Tag as string;
-                    if (!_cache.ContainsKey(childPath))
+                    if (!Cache.Contains(childPath))
                     {
                         Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Removing deleted node '{childPath}'");
                         currentNode.Nodes.Remove(child);
@@ -394,7 +377,7 @@ namespace WinPaletter.GitHub
             foreach (TreeNode child in node.Nodes.Cast<TreeNode>().ToList())
             {
                 string childPath = child.Tag as string;
-                if (!_cache.ContainsKey(childPath))
+                if (!Cache.Contains(childPath))
                 {
                     Program.Log?.Write(LogEventLevel.Information, $"[PruneDeletedNodes] Pruning deleted node '{childPath}'");
                     node.Nodes.Remove(child);
@@ -430,7 +413,7 @@ namespace WinPaletter.GitHub
 
             // Resolve
             string resolvedPath = newPath;
-            while (!DirectoryMap.ContainsKey(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
+            while (!Cache.ContainsInDirectoryMap(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
                 resolvedPath = UppermostRoot(resolvedPath) ?? _root;
 
             // Already at target
@@ -619,13 +602,13 @@ namespace WinPaletter.GitHub
         {
             Program.Log?.Write(LogEventLevel.Information, $"AddChildren called for '{parentPath}'");
 
-            if (!DirectoryMap.ContainsKey(parentPath))
+            if (!Cache.ContainsInDirectoryMap(parentPath))
             {
                 Program.Log?.Write(LogEventLevel.Information, $"AddChildren: no entries for '{parentPath}'");
                 return;
             }
 
-            foreach (RepositoryContent dir in DirectoryMap[parentPath].Where(d => d.Type == Octokit.ContentType.Dir).OrderBy(d => d.Name))
+            foreach (RepositoryContent dir in Cache.GetDirectory(parentPath).Where(d => d.Type == Octokit.ContentType.Dir).OrderBy(d => d.Name))
             {
                 TreeNode node = new(dir.Name)
                 {
@@ -755,14 +738,14 @@ namespace WinPaletter.GitHub
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
                 }
 
-                if (!DirectoryMap.ContainsKey(path))
+                if (!Cache.ContainsInDirectoryMap(path))
                 {
                     Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
                     list.Items.Clear();
                     return;
                 }
 
-                List<RepositoryContent> entries = [.. DirectoryMap[path].OrderBy(e => e.Type == Octokit.ContentType.Dir ? 0 : 1).ThenBy(e => e.Name)];
+                List<RepositoryContent> entries = [.. Cache.GetDirectory(path).OrderBy(e => e.Type == Octokit.ContentType.Dir ? 0 : 1).ThenBy(e => e.Name)];
 
                 Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync: {entries.Count} entries for '{path}'");
 
@@ -777,10 +760,10 @@ namespace WinPaletter.GitHub
 
                     item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
 
-                    long size = entry.Type == Octokit.ContentType.Dir && FolderSizeMap.ContainsKey(entry.Path) ? FolderSizeMap[entry.Path] : entry.Size;
+                    long size = entry.Type == Octokit.ContentType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
 
                     item.SubItems.Add(size.ToStringFileSize());
-                    item.SubItems.Add(ShaToMd5(entry.Sha).ToUpper());
+                    item.SubItems.Add(Cache.ShaToMd5(entry.Sha).ToUpper());
                     item.SubItems.Add(entry.HtmlUrl);
                     item.SubItems.Add(entry.Content);
 
@@ -825,10 +808,7 @@ namespace WinPaletter.GitHub
             string pathBeforeRefresh = currentPath;
 
             // Clear caches first
-            _cache.Clear();
-            DirectoryMap.Clear();
-            FolderSizeMap.Clear();
-            ClearEntryCache();
+            Cache.Clear();
 
             breadCrumb?.StartMarquee();
 
@@ -851,16 +831,17 @@ namespace WinPaletter.GitHub
                         Type = entry.Type == Octokit.ContentType.Dir ? FileSystem.EntryType.Dir : FileSystem.EntryType.File,
                         FetchedAt = DateTime.UtcNow
                     };
-                    _cache[e.Path] = (e, DateTime.UtcNow);
+
+                    Cache.Add(e);
                 }
 
                 Program.Log?.Write(LogEventLevel.Information, $"RefreshAsync: fetched {entries.Count} entries");
 
                 Program.Log?.Write(LogEventLevel.Information, "Rebuilding directory map");
-                BuildDirectoryMap();
+                Cache.BuildDirectoryMap();
 
                 Program.Log?.Write(LogEventLevel.Information, "Rebuilding folder sizes");
-                GetFoldersSize(_root);
+                Cache.GetFoldersSize(_root);
 
                 if (tree.InvokeRequired)
                 {
@@ -961,7 +942,7 @@ namespace WinPaletter.GitHub
                         Regex rx = null;
                         try { rx = new Regex(pattern, RegexOptions.IgnoreCase); } catch { }
 
-                        foreach (var entry in _cache.Values.Select(v => v.entry.Content))
+                        foreach (var entry in Cache.Values.Select(v => v.Entry.Content))
                         {
                             cts.Token.ThrowIfCancellationRequested();
                             if (entry == null) continue;
@@ -974,7 +955,7 @@ namespace WinPaletter.GitHub
                     }
                     else
                     {
-                        foreach (var entry in _cache.Values.Select(v => v.entry.Content))
+                        foreach (var entry in Cache.Values.Select(v => v.Entry.Content))
                         {
                             cts.Token.ThrowIfCancellationRequested();
                             if (entry == null) continue;
@@ -1003,12 +984,10 @@ namespace WinPaletter.GitHub
                     ListViewItem item = new(entry.Name) { Tag = entry };
                     item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
 
-                    long size = entry.Type == Octokit.ContentType.Dir && FolderSizeMap.ContainsKey(entry.Path)
-                        ? FolderSizeMap[entry.Path]
-                        : entry.Size;
+                    long size = entry.Type == Octokit.ContentType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
 
                     item.SubItems.Add(size.ToStringFileSize());
-                    item.SubItems.Add(ShaToMd5(entry.Sha).ToUpper());
+                    item.SubItems.Add(Cache.ShaToMd5(entry.Sha).ToUpper());
                     item.SubItems.Add(entry.HtmlUrl);
                     item.SubItems.Add(entry.Content);
 
