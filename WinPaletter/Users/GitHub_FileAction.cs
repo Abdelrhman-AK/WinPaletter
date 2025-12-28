@@ -37,6 +37,20 @@ namespace WinPaletter
             return this.ShowDialog();
         }
 
+        public DialogResult ConfirmFilesDelete(int count, long size)
+        {
+            this.Text = Program.Lang.Strings.GitHubStrings.Explorer_Confirmation_Title_DeleteFiles;
+            label1.Text = Program.Lang.Strings.GitHubStrings.Explorer_Confirmation_DeleteFiles;
+            pictureBox1.Image = Properties.Resources.IO_Dlg_Delete_File;
+
+            pictureBox2.Image = Properties.Resources.file_48;
+            label2.Text = $"{Program.Lang.Strings.Extensions.File}: {count}";
+            label5.Text = Program.Lang.Strings.Extensions.Files;
+            label6.Text = size.ToStringFileSize();
+
+            return this.ShowDialog();
+        }
+
         public DialogResult ConfirmFolderDelete(string name, long size)
         {
             this.Text = Program.Lang.Strings.GitHubStrings.Explorer_Confirmation_Title_DeleteFolder;
@@ -46,6 +60,20 @@ namespace WinPaletter
             pictureBox2.Image = Assets.GitHubMgr.folder_web_48;
             label2.Text = name;
             label5.Text = Program.Lang.Strings.Extensions.Folder;
+            label6.Text = size.ToStringFileSize();
+
+            return this.ShowDialog();
+        }
+
+        public DialogResult ConfirmFoldersDelete(int count, long size)
+        {
+            this.Text = Program.Lang.Strings.GitHubStrings.Explorer_Confirmation_Title_DeleteFolders;
+            label1.Text = Program.Lang.Strings.GitHubStrings.Explorer_Confirmation_DeleteFolders;
+            pictureBox1.Image = Properties.Resources.IO_Dlg_Delete_Folder;
+
+            pictureBox2.Image = Assets.GitHubMgr.folder_web_48;
+            label2.Text = $"{Program.Lang.Strings.Extensions.Folders}: {count}";
+            label5.Text = Program.Lang.Strings.Extensions.Folders;
             label6.Text = size.ToStringFileSize();
 
             return this.ShowDialog();

@@ -17,7 +17,9 @@
                 public string Themes { get; set; } = "Windows theme files";
                 public string VisualStyles { get; set; } = "Visual styles files";
                 public string File { get; set; } = "File";
+                public string Files { get; set; } = "Files";
                 public string Folder { get; set; } = "Folder";
+                public string Folders { get; set; } = "Folders";
                 public string NewFolder { get; set; } = "New Folder";
                 public string Text { get; set; } = "Text files";
                 public string Cursors { get; set; } = "Cursors";

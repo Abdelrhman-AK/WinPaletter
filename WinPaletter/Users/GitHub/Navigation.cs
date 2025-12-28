@@ -1,6 +1,7 @@
 ﻿using Octokit;
 using Serilog.Events;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -287,37 +289,35 @@ namespace WinPaletter.GitHub
             TreeNode rootNode = tree.Nodes[0];
             if (rootNode.Tag == null) rootNode.Tag = _root;
 
-            // Normalize path first
-            if (!path.StartsWith(_root + "/", StringComparison.OrdinalIgnoreCase))
-                path = _root + "/" + path.TrimStart('/');
+            path = path?.Trim().TrimEnd('/');
 
-            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Normalized path='{path}'");
+            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Raw normalized path='{path}'");
 
-            // Check if path is exactly root
             if (string.Equals(path, _root, StringComparison.OrdinalIgnoreCase))
             {
+                PruneDeletedNodes(rootNode);
                 tree.SelectedNode = rootNode;
                 rootNode.EnsureVisible();
                 Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Path is root, selected root node");
-                // Prune deleted nodes even if root is selected
-                PruneDeletedNodes(rootNode);
                 return;
             }
+
+            if (!path.StartsWith(_root + "/", StringComparison.OrdinalIgnoreCase)) path = _root + "/" + path.TrimStart('/');
+
+            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Final normalized path='{path}'");
 
             string relativePath = path.Substring(_root.Length + 1);
             string[] segments = relativePath.Split('/');
 
             TreeNode currentNode = rootNode;
 
-            // Initial pruning before traversal
             Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Pruning deleted nodes before traversal");
             PruneDeletedNodes(rootNode);
 
-            foreach (var segment in segments)
+            foreach (string segment in segments)
             {
                 Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Processing segment='{segment}'");
 
-                // Remove child nodes that no longer exist in cache
                 foreach (TreeNode child in currentNode.Nodes.Cast<TreeNode>().ToList())
                 {
                     string childPath = child.Tag as string;
@@ -328,31 +328,29 @@ namespace WinPaletter.GitHub
                     }
                 }
 
-                // Find existing child or create dynamically
                 TreeNode childNode = currentNode.Nodes.Cast<TreeNode>()
                     .FirstOrDefault(n => string.Equals(n.Text, segment, StringComparison.OrdinalIgnoreCase));
 
                 if (childNode == null)
                 {
-                    string parentTag = currentNode.Tag as string ?? _root;
-                    string fullTag = parentTag + "/" + segment;
+                    string parentPath = currentNode.Tag as string ?? _root;
+                    string fullPath = parentPath + "/" + segment;
 
                     childNode = new TreeNode(segment)
                     {
-                        Tag = fullTag,
+                        Tag = fullPath,
                         ImageKey = "folder",
                         SelectedImageKey = "folder"
                     };
 
                     currentNode.Nodes.Add(childNode);
-                    Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Created missing node '{fullTag}' dynamically");
+                    Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Created missing node '{fullPath}'");
                 }
 
                 currentNode.Expand();
                 currentNode = childNode;
             }
 
-            // Final pruning to remove any nodes deleted during traversal
             Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Pruning deleted nodes after traversal");
             PruneDeletedNodes(rootNode);
 
@@ -501,13 +499,22 @@ namespace WinPaletter.GitHub
         /// <param name="tree">The tree view control to which the image list will be assigned.</param>
         private static void InitializeImageLists(UI.WP.ListView list, UI.WP.TreeView tree)
         {
-            _smallIcons = new ImageList { ImageSize = new Size(16, 16), ColorDepth = ColorDepth.Depth32Bit };
-            _largeIcons = new ImageList { ImageSize = new Size(48, 48), ColorDepth = ColorDepth.Depth32Bit };
-            _treeIcons = new ImageList { ImageSize = new Size(16, 16), ColorDepth = ColorDepth.Depth32Bit };
+            int small = 16;
+            int large = 48;
 
-            AddIcons(_smallIcons, _smallIcons.ImageSize.Width);
-            AddIcons(_largeIcons, _largeIcons.ImageSize.Width);
-            AddIcons(_treeIcons, _treeIcons.ImageSize.Width);
+            _smallIcons = new ImageList { ImageSize = new Size(small, small), ColorDepth = ColorDepth.Depth32Bit };
+            _largeIcons = new ImageList { ImageSize = new Size(large, large), ColorDepth = ColorDepth.Depth32Bit };
+            _treeIcons = new ImageList { ImageSize = new Size(small, small), ColorDepth = ColorDepth.Depth32Bit };
+
+            AddStockIcons(_smallIcons);
+            AddStockIcons(_largeIcons);
+            AddStockIcons(_treeIcons);
+
+            AddSpecialIcons(_smallIcons, small);
+            AddSpecialIcons(_largeIcons, large);
+
+            ProcessGhostIcons(_smallIcons);
+            ProcessGhostIcons(_largeIcons);
 
             list.SmallImageList = _smallIcons;
             list.LargeImageList = _largeIcons;
@@ -521,11 +528,11 @@ namespace WinPaletter.GitHub
         /// icons and their appearance may vary depending on the specified size.</remarks>
         /// <param name="imgList">The image list to which the icons will be added. Must not be null.</param>
         /// <param name="size">The size, in pixels, of the icons to add. Typically 16 or 48.</param>
-        private static void AddIcons(ImageList imgList, int size)
+        private static void AddStockIcons(ImageList imgList)
         {
             imgList.Images.Clear();
 
-            if (size == 16)
+            if (imgList.ImageSize.Width < 24)
             {
                 imgList.AddWithAlpha("folder", Assets.GitHubMgr.folder_web_16);
                 imgList.AddWithAlpha("file", Properties.Resources.file_16);
@@ -537,16 +544,29 @@ namespace WinPaletter.GitHub
                 imgList.AddWithAlpha("file", Properties.Resources.file_48);
                 imgList.AddWithAlpha("home", Assets.GitHubMgr.home_48);
             }
+        }
 
+        private static void AddSpecialIcons(ImageList imgList, int size)
+        {
             using (Icon ico = Properties.Resources.fileextension.FromSize(size)) imgList.AddWithAlpha("wpth", ico.ToBitmap());
             using (Icon ico = Properties.Resources.ThemesResIcon.FromSize(size)) imgList.AddWithAlpha("wptp", ico.ToBitmap());
+        }
 
+        private static void ProcessGhostIcons(ImageList imgList)
+        {
             int count = imgList.Images.Count;
+
             for (int i = 0; i < count; i++)
             {
-                string key = $"ghost_{imgList.Images.Keys[i]}";
-                Bitmap ghost = (imgList.Images[i] as Bitmap).Ghost();
-                imgList.AddWithAlpha(key, ghost);
+                string baseKey = imgList.Images.Keys[i];
+                string ghostKey = $"ghost_{baseKey}";
+
+                if (imgList.Images.ContainsKey(ghostKey)) continue;
+
+                if (imgList.Images[i] is not Bitmap bmp) continue;
+
+                Bitmap ghost = bmp.Ghost();
+                imgList.AddWithAlpha(ghostKey, ghost);
             }
         }
 
@@ -724,71 +744,109 @@ namespace WinPaletter.GitHub
                 return;
             }
 
-            try
+            //try
+            //{
+            list.Cursor = Cursors.WaitCursor;
+            list.BeginUpdate();
+
+            if (list.Columns.Count == 0)
             {
-                list.Cursor = Cursors.WaitCursor;
-                list.BeginUpdate();
+                Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
 
-                if (list.Columns.Count == 0)
-                {
-                    Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
+                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
+                list.Columns.Add("MD5", 120);
+                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
+            }
 
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
-                    list.Columns.Add("MD5", 120);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
-                }
-
-                if (!Cache.Contains(path))
-                {
-                    Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
-                    list.Items.Clear();
-                    return;
-                }
-
+            if (!Cache.Contains(path))
+            {
+                Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
                 list.Items.Clear();
+                return;
+            }
 
-                int count = 0;
-                foreach (Entry entry in Cache.GetSubEntries(NormalizePath(path), sort: Cache.EntrySort.Default))
+            list.Items.Clear();
+
+            int count = 0;
+            foreach (Entry entry in Cache.GetSubEntries(NormalizePath(path), sort: Cache.EntrySort.Default))
+            {
+                if (entry.Content is null) continue;
+
+                cts?.Token.ThrowIfCancellationRequested();
+
+                ListViewItem item = new(entry.Name) { Tag = entry.Content };
+
+                item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
+
+                long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
+
+                item.SubItems.Add(size.ToStringFileSize());
+                item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
+                item.SubItems.Add(entry.Content.HtmlUrl);
+                item.SubItems.Add(entry.Content.Content);
+
+                if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
+                else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
+                else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
+                else if (!string.IsNullOrWhiteSpace(entry.Name))
                 {
-                    if (entry.Content is null) continue;
+                    // Get icon from Windows and add it into image lists
+                    string ext = GetExtension(entry.Name);
+                    if (!string.IsNullOrWhiteSpace(ext))
+                    {
+                        if (!list.SmallImageList.Images.ContainsKey(ext))
+                        {
+                            using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
+                            using (Icon ico_resized = ico?.FromSize(16))
+                            using (Bitmap bmp = ico_resized?.ToBitmap())
+                            {
+                                list.AddImagesToSmallImageList(new List<(Image, string)>
+                                {
+                                    (bmp, ext)
+                                });
+                            }
 
-                    cts?.Token.ThrowIfCancellationRequested();
+                            ProcessGhostIcons(list.SmallImageList);
+                        }
 
-                    ListViewItem item = new(entry.Name) { Tag = entry.Content };
+                        if (!list.LargeImageList.Images.ContainsKey(ext))
+                        {
+                            using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
+                            using (Icon ico_resized = ico?.FromSize(48))
+                            {
+                                list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
+                                ProcessGhostIcons(list.LargeImageList);
+                            }
+                        }
 
-                    item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
-
-                    long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
-
-                    item.SubItems.Add(size.ToStringFileSize());
-                    item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
-                    item.SubItems.Add(entry.Content.HtmlUrl);
-                    item.SubItems.Add(entry.Content.Content);
-
-                    if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
-                    else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
-                    else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
-                    else item.ImageKey = "file";
-
-                    list.Items.Add(item);
-
-                    count++;
-                    if (count % 50 == 0) await Task.Yield();
+                        item.ImageKey = ext;
+                    }
+                    else
+                    {
+                        item.ImageKey = "file";
+                    }
                 }
+                else item.ImageKey = "file";
+
+                list.Items.Add(item);
+
+                count++;
+                if (count % 50 == 0) await Task.Yield();
             }
-            catch (Exception ex)
-            {
-                Forms.BugReport.ThrowError(ex);
-                Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
-            }
-            finally
-            {
-                list.EndUpdate();
-                list.Cursor = Cursors.Default;
-                Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync finished for '{path}'");
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Forms.BugReport.ThrowError(ex);
+            //    Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
+            //}
+            //finally
+            //{
+            list.EndUpdate();
+            list.Cursor = Cursors.Default;
+            Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync finished for '{path}'");
+            //}
         }
 
         /// <summary>
@@ -986,9 +1044,47 @@ namespace WinPaletter.GitHub
                     item.SubItems.Add(entry.HtmlUrl);
                     item.SubItems.Add(entry.Content);
 
-                    if (entry.Type == Octokit.ContentType.Dir) item.ImageKey = "folder";
+                    if (entry.Type == ContentType.Dir) item.ImageKey = "folder";
                     else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
                     else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
+                    else if (!string.IsNullOrWhiteSpace(entry.Name))
+                    {
+                        // Get icon from Windows and add it into image lists
+                        string ext = GetExtension(entry.Name);
+                        if (!string.IsNullOrWhiteSpace(ext))
+                        {
+                            if (!list.SmallImageList.Images.ContainsKey(ext))
+                            {
+                                using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
+                                using (Icon ico_resized = ico?.FromSize(16))
+                                using (Bitmap bmp = ico_resized?.ToBitmap())
+                                {
+                                    list.AddImagesToSmallImageList(new List<(Image, string)>
+                                {
+                                    (bmp, ext)
+                                });
+                                }
+
+                                ProcessGhostIcons(list.SmallImageList);
+                            }
+
+                            if (!list.LargeImageList.Images.ContainsKey(ext))
+                            {
+                                using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
+                                using (Icon ico_resized = ico?.FromSize(48))
+                                {
+                                    list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
+                                    ProcessGhostIcons(list.LargeImageList);
+                                }
+                            }
+
+                            item.ImageKey = ext;
+                        }
+                        else
+                        {
+                            item.ImageKey = "file";
+                        }
+                    }
                     else item.ImageKey = "file";
 
                     list.Items.Add(item);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -102,6 +103,32 @@ namespace WinPaletter.UI.WP
             base.SmallImageList = newList;
         }
 
+        public void AddImagesToSmallImageList(IEnumerable<(Image image, string key)> images)
+        {
+            if (images == null || SmallImageList == null) return;
+
+            var canvasSize = SmallImageList.ImageSize;
+
+            foreach (var (image, key) in images)
+            {
+                if (image == null) continue;
+
+                int x = (canvasSize.Width - image.Width) / 2;   // horizontal center
+                int y = (canvasSize.Height - image.Height) / 2; // vertical center
+
+                Bitmap padded = new(canvasSize.Width, canvasSize.Height);
+                using (Graphics g = Graphics.FromImage(padded))
+                {
+                    g.Clear(Color.Transparent);
+                    g.DrawImage(image, x, y, image.Width, image.Height);
+                }
+
+                if (!string.IsNullOrEmpty(key))
+                    SmallImageList.Images.Add(key, padded);
+                else
+                    SmallImageList.Images.Add(padded);
+            }
+        }
 
         protected override void OnHandleCreated(EventArgs e)
         {
