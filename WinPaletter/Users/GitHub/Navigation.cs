@@ -21,6 +21,12 @@ namespace WinPaletter.GitHub
 {
     public static partial class FileSystem
     {
+        private class NavigationState
+        {
+            public string Path { get; set; }
+            public string SelectedItemPath { get; set; }
+        }
+
         /// <summary>
         /// Provides a function to determine the file type description for a given repository content entry.
         /// </summary>
@@ -61,14 +67,14 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Stores the navigation history for backward navigation within the application.
         /// </summary>
-        private static Stack<string> backStack = new();
+        private static Stack<NavigationState> backStack = new();
 
         /// <summary>
         /// Stores the collection of URLs available for forward navigation in the browser history stack.
         /// </summary>
         /// <remarks>This stack is used to manage forward navigation after a user navigates backward. It
         /// is cleared when a new navigation occurs that is not a forward action.</remarks>
-        private static Stack<string> forwardStack = new();
+        private static Stack<NavigationState> forwardStack = new();
 
         /// <summary>
         /// Gets the root path of the repository.
@@ -83,7 +89,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// To remember the last entered folder for navigation purposes.
         /// </summary>
-        private static string _lastEnteredFolder;
+        private static string _lastEnteredFolderPath;
 
         /// <summary>
         /// Gets whether backward navigation is possible.
@@ -399,35 +405,56 @@ namespace WinPaletter.GitHub
         {
             if (string.IsNullOrEmpty(newPath)) return;
 
-            // Normalize
+            // Ensure path starts with root
             if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase))
                 newPath = _root + "/" + newPath.TrimStart('/');
 
-            // Resolve
             string resolvedPath = newPath;
             while (!Cache.Contains(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
                 resolvedPath = UppermostRoot(resolvedPath) ?? _root;
 
-            // Already at target
             if (string.Equals(resolvedPath, currentPath, StringComparison.OrdinalIgnoreCase))
             {
-                if (addToHistory) forwardStack.Clear(); // re-click: clear forward
+                if (addToHistory) forwardStack.Clear();
                 return;
             }
 
-            // Update stacks
+            // Remember currently selected item's Path
+            string selectedPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
+                ? rc.Path
+                : null;
+
             if (addToHistory)
             {
-                backStack.Push(currentPath);   // previous path goes to back
-                forwardStack.Clear();          // new navigation clears forward
+                backStack.Push(new NavigationState
+                {
+                    Path = currentPath,
+                    SelectedItemPath = selectedPath
+                });
+                forwardStack.Clear();
             }
 
             currentPath = resolvedPath;
-
-            // Fire event
             OnNavigated(currentPath);
 
             await PopulateListViewAsync(list, currentPath);
+
+            // Restore previously selected item by Path
+            if (!string.IsNullOrEmpty(selectedPath))
+            {
+                ListViewItem itemToSelect = list.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == selectedPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    list.HideSelection = false;
+                    list.Focus();
+                }
+            }
+
             UpdateTreeNode(tree, currentPath, true);
         }
 
@@ -438,10 +465,32 @@ namespace WinPaletter.GitHub
         {
             if (!CanGoBack) return;
 
-            string previous = backStack.Pop();
-            forwardStack.Push(currentPath); // current path goes to forwardStack
+            var previousState = backStack.Pop();
+            forwardStack.Push(new NavigationState
+            {
+                Path = currentPath,
+                SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
+                    ? rc.Path
+                    : null
+            });
 
-            await NavigateTo(previous, list, tree, addToHistory: false);
+            await NavigateTo(previousState.Path, list, tree, addToHistory: false);
+
+            // Restore selection by Path
+            if (!string.IsNullOrEmpty(previousState.SelectedItemPath))
+            {
+                ListViewItem itemToSelect = list.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == previousState.SelectedItemPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    list.HideSelection = false;
+                    list.Focus();
+                }
+            }
         }
 
         /// <summary>
@@ -451,10 +500,32 @@ namespace WinPaletter.GitHub
         {
             if (!CanGoForward) return;
 
-            string next = forwardStack.Pop();
-            backStack.Push(currentPath);  // current path goes to backStack
+            var nextState = forwardStack.Pop();
+            backStack.Push(new NavigationState
+            {
+                Path = currentPath,
+                SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
+                    ? rc.Path
+                    : null
+            });
 
-            await NavigateTo(next, list, tree, addToHistory: false);
+            await NavigateTo(nextState.Path, list, tree, addToHistory: false);
+
+            // Restore selection by Path
+            if (!string.IsNullOrEmpty(nextState.SelectedItemPath))
+            {
+                ListViewItem itemToSelect = list.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == nextState.SelectedItemPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    list.HideSelection = false;
+                    list.Focus();
+                }
+            }
         }
 
         /// <summary>
@@ -466,10 +537,34 @@ namespace WinPaletter.GitHub
 
             string parent = GetParent(currentPath) ?? _root;
 
-            backStack.Push(currentPath);
+            // Push current state to back stack
+            backStack.Push(new NavigationState
+            {
+                Path = currentPath,
+                SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
+                    ? rc.Path
+                    : null
+            });
+
             forwardStack.Clear();
 
             await NavigateTo(parent, list, tree, addToHistory: false);
+
+            // After moving up, select the folder we came from using full path
+            if (!string.IsNullOrEmpty(_lastEnteredFolderPath))
+            {
+                ListViewItem itemToSelect = list.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == _lastEnteredFolderPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    list.HideSelection = false;
+                    list.Focus();
+                }
+            }
         }
 
         /// <summary>
@@ -689,7 +784,7 @@ namespace WinPaletter.GitHub
             if (_boundList.SelectedItems[0].Tag is not RepositoryContent entry) return;
             if (entry.Type.Value != Octokit.ContentType.Dir) return;
 
-            _lastEnteredFolder = entry.Name;
+            _lastEnteredFolderPath = entry.Path;
 
             // Navigate normally, history will be updated inside NavigateTo
             await NavigateTo(entry.Path, _boundList, _boundTree, addToHistory: true);

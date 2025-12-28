@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
@@ -124,12 +125,33 @@ namespace WinPaletter.NativeMethods
             if (string.IsNullOrWhiteSpace(extension)) return Program.Lang.Strings.Extensions.File;
             if (!extension.StartsWith(".")) extension = $".{extension}";
 
-            SHFILEINFO shfi = new();
-            IntPtr result = SHGetFileInfo(extension, 0, out shfi, (uint)Marshal.SizeOf<SHFILEINFO>(), SHGFI_TYPENAME | SHGFI_USEFILEATTRIBUTES);
+            string description = null;
 
-            if (!string.IsNullOrEmpty(shfi.szTypeName)) return shfi.szTypeName;
+            using (RegistryKey extKey = Registry.ClassesRoot.OpenSubKey(extension))
+            {
+                if (extKey != null)
+                {
+                    string progId = extKey.GetValue(null) as string;
+                    if (!string.IsNullOrEmpty(progId))
+                    {
+                        using (RegistryKey progIdKey = Registry.ClassesRoot.OpenSubKey(progId))
+                        {
+                            if (progIdKey != null)
+                                description = progIdKey.GetValue(null) as string;
+                        }
+                    }
 
-            return $"{extension} {Program.Lang.Strings.Extensions.File}";
+                    // fallback to PerceivedType if no ProgID description
+                    if (string.IsNullOrEmpty(description))
+                    {
+                        string perceivedType = extKey.GetValue("PerceivedType") as string;
+                        if (!string.IsNullOrEmpty(perceivedType))
+                            description = char.ToUpper(perceivedType[0]) + perceivedType.Substring(1) + " " + Program.Lang.Strings.Extensions.File;
+                    }
+                }
+            }
+
+            return !string.IsNullOrEmpty(description) ? description : $"{extension} {Program.Lang.Strings.Extensions.File}";
         }
 
         /// <summary>

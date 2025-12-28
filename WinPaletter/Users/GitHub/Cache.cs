@@ -32,6 +32,11 @@ namespace WinPaletter.GitHub
             /// The UTC timestamp when this entry was fetched or cached.
             /// </summary>
             public DateTime Fetched { get; set; }
+
+            /// <summary>
+            /// Size of a path, for quick access
+            /// </summary>
+            public long Size { get; set; }
         }
 
         public static List<CacheData> Values => [.. _cache.Select(c => c.Value)];
@@ -40,16 +45,6 @@ namespace WinPaletter.GitHub
         /// Thread-safe cache for repository entries with fetch timestamp.
         /// </summary>
         private static readonly ConcurrentDictionary<string, CacheData> _cache = new();
-
-        /// <summary>
-        /// Thread-safe cache for directory contents and their SHA.
-        /// </summary>
-        private static readonly ConcurrentDictionary<string, (IReadOnlyList<RepositoryContent> contents, string sha)> DirectoryCache = new();
-
-        /// <summary>
-        /// Cached folder sizes for fast repeated access.
-        /// </summary>
-        private static readonly ConcurrentDictionary<string, long> FolderSizeMap = new();
 
         /// <summary>
         /// Thread-safe cache for computed SHA/MD5 hash values keyed by string.
@@ -71,7 +66,6 @@ namespace WinPaletter.GitHub
             if (_lastRepoTreeSha == currentSha) return false;
 
             _lastRepoTreeSha = currentSha;
-            DirectoryCache.Clear();
             return true;
         }
 
@@ -87,7 +81,7 @@ namespace WinPaletter.GitHub
             _cache.TryRemove(path, out _);
 
             // Insert fresh entry
-            _cache[path] = new CacheData { Entry = entry, Fetched = DateTime.UtcNow };
+            _cache[path] = new CacheData { Entry = entry, Fetched = DateTime.UtcNow, Size = entry.Size };
 
             // Recursively add children if directory
             if (entry.Type == EntryType.Dir && entry.Children != null)
@@ -119,7 +113,7 @@ namespace WinPaletter.GitHub
                 _cache.TryRemove(path, out _);
 
             // Insert fresh entry
-            _cache[path] = new CacheData { Entry = entry, Fetched = DateTime.UtcNow };
+            _cache[path] = new CacheData { Entry = entry, Fetched = DateTime.UtcNow, Size = entry.Size };
 
             // Recursively add children (fully replace old children)
             if (entry.Type == EntryType.Dir && entry.Children != null)
@@ -150,14 +144,6 @@ namespace WinPaletter.GitHub
                 .ToList())
             {
                 _cache.TryRemove(key, out _);
-            }
-
-            // Remove from DirectoryCache recursively
-            foreach (var key in DirectoryCache.Keys
-                .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
-                .ToList())
-            {
-                DirectoryCache.TryRemove(key, out _);
             }
         }
 
@@ -246,39 +232,51 @@ namespace WinPaletter.GitHub
         /// <returns>Total size in bytes.</returns>
         public static long GetSize(string path)
         {
-            if (string.IsNullOrEmpty(path)) return 0;
-
-            path = NormalizePath(path);
-
-            // Return cached folder size if available
-            if (FolderSizeMap.TryGetValue(path, out long cachedSize))
-                return cachedSize;
-
-            long size = 0;
-
             if (TryGetEntry(path, out Entry entry))
             {
                 if (entry.Type == EntryType.File)
+                    return entry.Size;
+
+                if (entry.Type == EntryType.Dir)
                 {
-                    size = entry.Size;
-                }
-                else if (entry.Type == EntryType.Dir)
-                {
-                    // Sum all files in cache whose paths are this directory or subdirectories
-                    string prefix = path.EndsWith("/") ? path : path + "/";
-                    size = _cache.Values
-                        .Select(c => c.Entry)
-                        .Where(e => e != null && e.Type == EntryType.File)
-                        .Where(e => NormalizePath(e.Path).Equals(path, StringComparison.OrdinalIgnoreCase) ||
-                                    NormalizePath(e.Path).StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
-                        .Sum(e => e.Size);
+                    long total = 0;
+                    foreach (var child in GetChildren(path)) // Fetch all entries under path
+                    {
+                        total += GetSize(child.Path);
+                    }
+                    return total;
                 }
             }
+            return 0;
+        }
 
-            // Cache the computed folder size
-            FolderSizeMap[path] = size;
+        /// <summary>
+        /// Retrieves all direct children (files and directories) of a directory path.
+        /// </summary>
+        /// <param name="path">The directory path.</param>
+        /// <returns>An enumerable of child entries.</returns>
+        public static IEnumerable<Entry> GetChildren(string path)
+        {
+            if (string.IsNullOrEmpty(path)) yield break;
 
-            return size;
+            path = NormalizePath(path);
+            string prefix = path.EndsWith("/") ? path : path + "/";
+
+            // Iterate over cached entries
+            foreach (var cacheData in _cache.Values)
+            {
+                var entry = cacheData.Entry;
+                if (entry == null) continue;
+
+                // Only consider entries under this directory
+                string entryPath = NormalizePath(entry.Path);
+                if (!entryPath.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) continue;
+
+                // Only include direct children (ignore nested deeper paths)
+                string relativePath = entryPath.Substring(prefix.Length);
+                if (!relativePath.Contains("/")) // direct child
+                    yield return entry;
+            }
         }
 
         /// <summary>
@@ -288,12 +286,6 @@ namespace WinPaletter.GitHub
         {
             // Clear main entry cache
             _cache.Clear();
-
-            // Clear folder size map
-            FolderSizeMap.Clear();
-
-            // Clear directory content cache
-            DirectoryCache.Clear();
 
             // Clear SHA/MD5 hash cache
             ShaMd5Cache.Clear();
@@ -367,7 +359,7 @@ namespace WinPaletter.GitHub
 
             while (!string.IsNullOrEmpty(path))
             {
-                FolderSizeMap.TryRemove(path, out _);
+                if (_cache.ContainsKey(path)) _cache[path].Size = 0;
                 path = GetParent(path);
             }
         }
@@ -437,28 +429,6 @@ namespace WinPaletter.GitHub
                 foreach (Entry child in entry.Children)
                     RecurseEntry(child, changes);
             }
-        }
-
-        /// <summary>
-        /// Retrieves GitHub directory contents with SHA validation and automatic cache refresh
-        /// when upstream data changes.
-        /// </summary>
-        /// <param name="path">Repository path to retrieve.</param>
-        /// <returns>A read-only list of repository contents.</returns>
-        public static async Task<IReadOnlyList<RepositoryContent>> GetContentsCachedAsync(string path)
-        {
-            await RepositoryTreeChangedAsync();
-
-            path = NormalizePath(path);
-
-            if (DirectoryCache.TryGetValue(path, out var cached))
-                return cached.contents;
-
-            List<RepositoryContent> contents = await GetDirectoryRecursiveAsync(path);
-
-            DirectoryCache[path] = (contents.AsReadOnly(), _lastRepoTreeSha);
-
-            return contents;
         }
 
         public static async Task<List<RepositoryContent>> GetDirectoryRecursiveAsync(string path)
