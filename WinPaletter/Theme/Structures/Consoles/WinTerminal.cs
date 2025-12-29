@@ -23,14 +23,14 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public enum Mode : int
         {
+            /// <summary>EmptyError data that has nothing; no profiles, no themes, ...</summary>
+            Empty,
             /// <summary>Default Windows Terminal settings</summary>
             Default,
             /// <summary>Windows Terminal JSON settings File</summary>
             JSONFile,
             /// <summary>WinPaletter theme  File</summary>
             WinPaletterFile,
-            /// <summary>EmptyError data that has nothing; no profiles, no themes, ...</summary>
-            Empty
         }
 
         /// <summary>
@@ -1578,7 +1578,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
         /// </summary>
-        public WinTerminal() => new WinTerminal(string.Empty, Mode.Empty);
+        public WinTerminal() { }
 
         /// <summary>
         /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
@@ -1593,8 +1593,6 @@ namespace WinPaletter.Theme.Structures
                 // Load Windows Terminal settings from JSON File
                 case Mode.JSONFile:
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from JSON file `{File}`.");
-
                         WinTerminal result = new(string.Empty, Mode.Empty, Version);
 
                         if (System.IO.File.Exists(File))
@@ -1607,6 +1605,13 @@ namespace WinPaletter.Theme.Structures
                             }
 
                             if (!string.IsNullOrEmpty(JSON_String)) result = JsonHelper.DeserializeFast<WinTerminal>(JSON_String);
+                            else Program.Log?.Write(LogEventLevel.Information, $"Couldn't load Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings from JSON file `{File}`.");
+
+                            Program.Log?.Write(LogEventLevel.Information, $"Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings have been loaded from JSON file `{File}`.");
+                        }
+                        else
+                        {
+                            Program.Log?.Write(LogEventLevel.Information, $"Couldn't load Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings from JSON file `{File}`.");
                         }
 
                         Enabled = result.Enabled;
@@ -1623,8 +1628,6 @@ namespace WinPaletter.Theme.Structures
                 // Load Windows Terminal settings from WinPaletter theme File
                 case Mode.WinPaletterFile:
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal settings from WinPaletter theme file `{File}`.");
-
                         using (Manager TMx = new(Manager.Source.File, File))
                         {
                             BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
@@ -1641,12 +1644,14 @@ namespace WinPaletter.Theme.Structures
                             }
                         }
 
+                        Program.Log?.Write(LogEventLevel.Information, $"Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings have been loaded from WinPaletter theme file `{File}`.");
+
                         break;
                     }
 
                 case Mode.Empty:
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"An empty instance of Windows Terminal settings has been created.");
+                        Program.Log?.Write(LogEventLevel.Information, $"An empty instance of Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings has been created.");
 
                         break;
                     }
@@ -1687,7 +1692,7 @@ namespace WinPaletter.Theme.Structures
                                         SettingsFile = SysPaths.TerminalJSON;
                                     }
 
-                                    Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal settings into JSON file `{SettingsFile}`.");
+                                    Program.Log?.Write(LogEventLevel.Information, $"Saving Windows Terminal Stable settings into JSON file `{SettingsFile}`.");
 
                                     break;
                                 }

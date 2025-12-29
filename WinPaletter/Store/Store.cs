@@ -249,7 +249,7 @@ namespace WinPaletter
 
             this.LoadLanguage();
             ApplyStyle(this, true);
-            this.DropEffect(default, true, DWM.BackdropStyles.Acrylic);
+            this.DropEffect(default, true, DWM.DWMStyles.Acrylic);
 
             ThemesFetcher.RunWorkerAsync();
 

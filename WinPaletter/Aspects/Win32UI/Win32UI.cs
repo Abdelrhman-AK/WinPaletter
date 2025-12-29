@@ -34,7 +34,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager _Def = Default.Get(Program.WindowStyle))
+                    using (Manager _Def = Default.FromOS(Program.WindowStyle))
                     {
                         LoadFromWin9xTheme(dlg.FileName, _Def.Win32);
                     }
@@ -65,7 +65,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
+            Manager TMx = Default.FromOS(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -402,7 +402,7 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            using (Manager DefTM = Default.Get())
+            using (Manager DefTM = Default.FromCurrentOS)
             {
                 ActiveBorder_pick.DefaultBackColor = DefTM.Win32.ActiveBorder;
                 activetitle_pick.DefaultBackColor = DefTM.Win32.ActiveTitle;

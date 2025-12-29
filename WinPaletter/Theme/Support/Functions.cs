@@ -44,7 +44,7 @@ namespace WinPaletter.Theme
                 ls = [.. ls.Distinct()];
                 ls.Sort(colorComparer);
 
-                Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{Filename}`.");
+                Program.Log?.Write(LogEventLevel.Information, $"[ListColorsFromMSTheme] Found {ls.Count} colors in `{Filename}`.");
 
                 return ls;
             }
@@ -100,7 +100,7 @@ namespace WinPaletter.Theme
             ls = [.. ls.Distinct()];
             ls.Sort(colorComparer);
 
-            Program.Log?.Write(LogEventLevel.Information, $"Found {ls.Count} colors in `{ThemeName}` inside WinPaletter's themes database.");
+            Program.Log?.Write(LogEventLevel.Information, $"[ListColorsFromString] Found {ls.Count} colors in `{ThemeName}` inside WinPaletter's themes database.");
 
             return ls;
         }
@@ -109,221 +109,218 @@ namespace WinPaletter.Theme
         /// Get all colors inside current WinPaletter theme
         /// </summary>
         /// <returns></returns>
-        public List<Color> Palette
+        public List<Color> Palette()
         {
-            get
+            List<Color> CL = [];
+            CL.Clear();
+
+            foreach (FieldInfo @field in typeof(Windows10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
-                List<Color> CL = [];
-                CL.Clear();
-
-                foreach (FieldInfo @field in typeof(Windows10x).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                if (@field.FieldType.Name.ToLower() == "color")
                 {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(Windows12));
-                        CL.Add((Color)@field.GetValue(Windows11));
-                        CL.Add((Color)@field.GetValue(Windows10));
-                    }
+                    CL.Add((Color)@field.GetValue(Windows12));
+                    CL.Add((Color)@field.GetValue(Windows11));
+                    CL.Add((Color)@field.GetValue(Windows10));
                 }
-
-                foreach (FieldInfo @field in typeof(Windows81).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(Windows81));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(Windows8).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(Windows8));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(Windows7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(Windows7));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(WindowsVista).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(WindowsVista));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(Structures.LogonUI81).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(LogonUI81));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(Structures.LogonUI7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(LogonUI7));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(Structures.LogonUIXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(LogonUIXP));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(Win32));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(WallpaperTone).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(WallpaperTone_W12));
-                        CL.Add((Color)@field.GetValue(WallpaperTone_W11));
-                        CL.Add((Color)@field.GetValue(WallpaperTone_W10));
-                        CL.Add((Color)@field.GetValue(WallpaperTone_W81));
-                        CL.Add((Color)@field.GetValue(WallpaperTone_W7));
-                        CL.Add((Color)@field.GetValue(WallpaperTone_WVista));
-                        CL.Add((Color)@field.GetValue(WallpaperTone_WXP));
-                    }
-                }
-
-                foreach (FieldInfo @field in typeof(Structures.Console).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(CommandPrompt));
-                        CL.Add((Color)@field.GetValue(PowerShellx86));
-                        CL.Add((Color)@field.GetValue(PowerShellx64));
-                    }
-                }
-
-                foreach (WinTerminal.Types.Scheme c in Terminal.Schemes)
-                {
-                    CL.Add(c.Background);
-                    CL.Add(c.Foreground);
-                    CL.Add(c.SelectionBackground);
-                    CL.Add(c.Black);
-                    CL.Add(c.Blue);
-                    CL.Add(c.BrightBlack);
-                    CL.Add(c.BrightBlue);
-                    CL.Add(c.BrightCyan);
-                    CL.Add(c.BrightGreen);
-                    CL.Add(c.BrightPurple);
-                    CL.Add(c.BrightRed);
-                    CL.Add(c.BrightWhite);
-                    CL.Add(c.BrightYellow);
-                    CL.Add(c.CursorColor);
-                    CL.Add(c.Cyan);
-                    CL.Add(c.Green);
-                    CL.Add(c.Purple);
-                    CL.Add(c.Red);
-                    CL.Add(c.White);
-                    CL.Add(c.Yellow);
-                }
-
-                foreach (WinTerminal.Types.Scheme c in TerminalPreview.Schemes)
-                {
-                    CL.Add(c.Background);
-                    CL.Add(c.Foreground);
-                    CL.Add(c.SelectionBackground);
-                    CL.Add(c.Black);
-                    CL.Add(c.Blue);
-                    CL.Add(c.BrightBlack);
-                    CL.Add(c.BrightBlue);
-                    CL.Add(c.BrightCyan);
-                    CL.Add(c.BrightGreen);
-                    CL.Add(c.BrightPurple);
-                    CL.Add(c.BrightRed);
-                    CL.Add(c.BrightWhite);
-                    CL.Add(c.BrightYellow);
-                    CL.Add(c.CursorColor);
-                    CL.Add(c.Cyan);
-                    CL.Add(c.Green);
-                    CL.Add(c.Purple);
-                    CL.Add(c.Red);
-                    CL.Add(c.White);
-                    CL.Add(c.Yellow);
-                }
-
-                foreach (WinTerminal.Types.Theme c in Terminal.Themes)
-                {
-                    CL.Add(c.Tab.Background);
-                    CL.Add(c.Tab.UnfocusedBackground);
-                    CL.Add(c.TabRow.Background);
-                    CL.Add(c.TabRow.UnfocusedBackground);
-                }
-
-                foreach (WinTerminal.Types.Theme c in TerminalPreview.Themes)
-                {
-                    CL.Add(c.Tab.Background);
-                    CL.Add(c.Tab.UnfocusedBackground);
-                    CL.Add(c.TabRow.Background);
-                    CL.Add(c.TabRow.UnfocusedBackground);
-                }
-
-                foreach (WinTerminal.Types.Profile c in Terminal.Profiles.List)
-                    CL.Add(c.TabColor);
-
-                foreach (WinTerminal.Types.Profile c in TerminalPreview.Profiles.List)
-                    CL.Add(c.TabColor);
-
-                CL.Add(Terminal.Profiles.Defaults.TabColor);
-                CL.Add(TerminalPreview.Profiles.Defaults.TabColor);
-
-                foreach (FieldInfo @field in typeof(Cursor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
-                {
-                    if (@field.FieldType.Name.ToLower() == "color")
-                    {
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Arrow));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Help));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_AppLoading));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Busy));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Pen));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_None));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Move));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Up));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_NS));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_EW));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_NESW));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_NWSE));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Link));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Pin));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Person));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_IBeam));
-                        CL.Add((Color)@field.GetValue(Cursors.Cursor_Cross));
-                    }
-                }
-
-                CL = [.. CL.Distinct()];
-
-                CL.Sort(colorComparer);
-
-                if (CL.Contains(Color.FromArgb(0, 0, 0, 0)))
-                {
-                    while (CL.Contains(Color.FromArgb(0, 0, 0, 0))) CL.Remove(Color.FromArgb(0, 0, 0, 0));
-                }
-
-                Program.Log?.Write(LogEventLevel.Information, $"Found {CL.Count} colors in current WinPaletter theme.");
-
-                return CL;
             }
+
+            foreach (FieldInfo @field in typeof(Windows81).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(Windows81));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(Windows8).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(Windows8));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(Windows7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(Windows7));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(WindowsVista).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(WindowsVista));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(Structures.LogonUI81).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(LogonUI81));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(Structures.LogonUI7).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(LogonUI7));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(Structures.LogonUIXP).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(LogonUIXP));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(Win32));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(WallpaperTone).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(WallpaperTone_W12));
+                    CL.Add((Color)@field.GetValue(WallpaperTone_W11));
+                    CL.Add((Color)@field.GetValue(WallpaperTone_W10));
+                    CL.Add((Color)@field.GetValue(WallpaperTone_W81));
+                    CL.Add((Color)@field.GetValue(WallpaperTone_W7));
+                    CL.Add((Color)@field.GetValue(WallpaperTone_WVista));
+                    CL.Add((Color)@field.GetValue(WallpaperTone_WXP));
+                }
+            }
+
+            foreach (FieldInfo @field in typeof(Structures.Console).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(CommandPrompt));
+                    CL.Add((Color)@field.GetValue(PowerShellx86));
+                    CL.Add((Color)@field.GetValue(PowerShellx64));
+                }
+            }
+
+            foreach (WinTerminal.Types.Scheme c in Terminal.Schemes)
+            {
+                CL.Add(c.Background);
+                CL.Add(c.Foreground);
+                CL.Add(c.SelectionBackground);
+                CL.Add(c.Black);
+                CL.Add(c.Blue);
+                CL.Add(c.BrightBlack);
+                CL.Add(c.BrightBlue);
+                CL.Add(c.BrightCyan);
+                CL.Add(c.BrightGreen);
+                CL.Add(c.BrightPurple);
+                CL.Add(c.BrightRed);
+                CL.Add(c.BrightWhite);
+                CL.Add(c.BrightYellow);
+                CL.Add(c.CursorColor);
+                CL.Add(c.Cyan);
+                CL.Add(c.Green);
+                CL.Add(c.Purple);
+                CL.Add(c.Red);
+                CL.Add(c.White);
+                CL.Add(c.Yellow);
+            }
+
+            foreach (WinTerminal.Types.Scheme c in TerminalPreview.Schemes)
+            {
+                CL.Add(c.Background);
+                CL.Add(c.Foreground);
+                CL.Add(c.SelectionBackground);
+                CL.Add(c.Black);
+                CL.Add(c.Blue);
+                CL.Add(c.BrightBlack);
+                CL.Add(c.BrightBlue);
+                CL.Add(c.BrightCyan);
+                CL.Add(c.BrightGreen);
+                CL.Add(c.BrightPurple);
+                CL.Add(c.BrightRed);
+                CL.Add(c.BrightWhite);
+                CL.Add(c.BrightYellow);
+                CL.Add(c.CursorColor);
+                CL.Add(c.Cyan);
+                CL.Add(c.Green);
+                CL.Add(c.Purple);
+                CL.Add(c.Red);
+                CL.Add(c.White);
+                CL.Add(c.Yellow);
+            }
+
+            foreach (WinTerminal.Types.Theme c in Terminal.Themes)
+            {
+                CL.Add(c.Tab.Background);
+                CL.Add(c.Tab.UnfocusedBackground);
+                CL.Add(c.TabRow.Background);
+                CL.Add(c.TabRow.UnfocusedBackground);
+            }
+
+            foreach (WinTerminal.Types.Theme c in TerminalPreview.Themes)
+            {
+                CL.Add(c.Tab.Background);
+                CL.Add(c.Tab.UnfocusedBackground);
+                CL.Add(c.TabRow.Background);
+                CL.Add(c.TabRow.UnfocusedBackground);
+            }
+
+            foreach (WinTerminal.Types.Profile c in Terminal.Profiles.List)
+                CL.Add(c.TabColor);
+
+            foreach (WinTerminal.Types.Profile c in TerminalPreview.Profiles.List)
+                CL.Add(c.TabColor);
+
+            CL.Add(Terminal.Profiles.Defaults.TabColor);
+            CL.Add(TerminalPreview.Profiles.Defaults.TabColor);
+
+            foreach (FieldInfo @field in typeof(Cursor).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+            {
+                if (@field.FieldType.Name.ToLower() == "color")
+                {
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Arrow));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Help));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_AppLoading));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Busy));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Pen));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_None));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Move));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Up));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_NS));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_EW));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_NESW));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_NWSE));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Link));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Pin));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Person));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_IBeam));
+                    CL.Add((Color)@field.GetValue(Cursors.Cursor_Cross));
+                }
+            }
+
+            CL = [.. CL.Distinct()];
+
+            CL.Sort(colorComparer);
+
+            if (CL.Contains(Color.FromArgb(0, 0, 0, 0)))
+            {
+                while (CL.Contains(Color.FromArgb(0, 0, 0, 0))) CL.Remove(Color.FromArgb(0, 0, 0, 0));
+            }
+
+            Program.Log?.Write(LogEventLevel.Information, $"[List<Color>:Palette()] Found {CL.Count} colors in current WinPaletter theme.");
+
+            return CL;
         }
 
         /// <summary>

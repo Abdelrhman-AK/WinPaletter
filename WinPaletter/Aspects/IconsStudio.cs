@@ -45,7 +45,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
+            Manager TMx = Default.FromOS(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -1017,32 +1017,32 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox3.Text = TMx.Icons.Computer; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox3.Text = TMx.Icons.Computer; }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox1.Text = TMx.Icons.User; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox1.Text = TMx.Icons.User; }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox2.Text = TMx.Icons.RecycleBinEmpty; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox2.Text = TMx.Icons.RecycleBinEmpty; }
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox6.Text = TMx.Icons.RecycleBinFull; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox6.Text = TMx.Icons.RecycleBinFull; }
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox5.Text = TMx.Icons.Network; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox5.Text = TMx.Icons.Network; }
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox4.Text = TMx.Icons.ControlPanel; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox4.Text = TMx.Icons.ControlPanel; }
         }
 
         private void winIcon3_Click(object sender, EventArgs e)
@@ -1057,7 +1057,7 @@ namespace WinPaletter
 
             explorerData.Visible = false;
 
-            using (Manager TMx = Default.Get(Program.WindowStyle))
+            using (Manager TMx = Default.FromOS(Program.WindowStyle))
             {
                 for (int r = 0; r < explorerData.RowCount; r++)
                 {

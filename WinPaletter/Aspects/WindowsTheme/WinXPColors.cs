@@ -43,7 +43,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { LoadFromTM(TMx); }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)

@@ -10,9 +10,18 @@ namespace WinPaletter.Theme
         /// Default Windows 10 theme as a <see cref="Manager"/> object
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
-        public static Manager Windows10()
+        public static Manager Windows10
         {
-            Manager TM = new(Manager.Source.Empty);
+            get
+            {
+                if (_windows10 == null) _windows10 = w10();
+                return _windows10;
+            }
+        }
+        private static Manager _windows10 = w10();
+        private static Manager w10()
+        {
+            Manager TM = new();
 
             Info Info = TM.Info;
             Info.ThemeName = "Default Windows 10";
@@ -98,9 +107,6 @@ namespace WinPaletter.Theme
             Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(5).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(5).Item3);
             Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(6).Item1, Structures.Icons.ExplorerCLSIDs.ElementAt(7).Item3); // <- Windows 11 has this set as default !!
             Icons.ExplorerWrapper.Add(Structures.Icons.ExplorerCLSIDs.ElementAt(7).Item1, string.Empty); // <- Windows 11 has this set as default !!
-
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursors.Enabled = true;
             TM.Cursors.Shadow = true;

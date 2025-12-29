@@ -49,7 +49,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { LoadFromTM(TMx); }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
@@ -584,7 +584,7 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            using (Manager DefTM = Default.Get(WindowStyle.W81))
+            using (Manager DefTM = Default.FromOS(WindowStyle.W81))
             {
                 ColorizationColor_pick.DefaultBackColor = DefTM.Windows8.ColorizationColor;
                 ColorizationColorBalance_bar.DefaultValue = DefTM.Windows8.ColorizationColorBalance;

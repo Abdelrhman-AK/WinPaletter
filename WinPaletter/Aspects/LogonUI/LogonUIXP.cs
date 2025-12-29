@@ -51,7 +51,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle))
+            using (Manager TMx = Default.FromOS(Program.WindowStyle))
             {
                 LoadFromTM(TMx);
             }

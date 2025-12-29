@@ -43,7 +43,7 @@ namespace WinPaletter.Theme
                         using (User.Identity.Impersonate())
                         {
                             // Get the theme data from the registry and use @default to help WinPaletter know the default values
-                            using (Manager @default = Default.Get(Program.WindowStyle))
+                            using (Manager @default = Default.FromOS(Program.WindowStyle))
                             {
                                 if (Program.Settings.AppLog.Enabled)
                                 {
@@ -138,15 +138,13 @@ namespace WinPaletter.Theme
                                         else { TerPreDir = SysPaths.TerminalPreviewJSON; }
                                     }
 
-                                    Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal colors and settings from {TerDir}");
                                     if (System.IO.File.Exists(TerDir)) { Terminal = new(TerDir, WinTerminal.Mode.JSONFile); }
                                     else { Terminal = new(string.Empty, WinTerminal.Mode.Empty); }
 
-                                    Program.Log?.Write(LogEventLevel.Information, $"Loading Windows Terminal Preview colors and settings from {TerPreDir}");
                                     if (System.IO.File.Exists(TerPreDir)) { TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
                                     else { TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
                                 }
-                                else // If the OS is not Windows 10 or higher, then set Terminal and TerminalPreview to empty (Default values)
+                                else // If the OS is not Windows 10 and higher, then set Terminal and TerminalPreview to empty (Default values)
                                 {
                                     Program.Log?.Write(LogEventLevel.Error, $"Couldn't find Windows Terminals, loading default ones");
 
@@ -185,7 +183,7 @@ namespace WinPaletter.Theme
                         if (content_list is null || content_list.Count == 0) return;
 
                         // Use @default to help WinPaletter know the default values
-                        using (Manager @default = Default.Get())
+                        using (Manager @default = Default.FromCurrentOS)
                         {
                             try
                             {

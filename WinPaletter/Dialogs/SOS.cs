@@ -193,7 +193,7 @@ namespace WinPaletter.Dialogs
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Forms.ThemeLog.Apply_Theme(Default.Get());
+            Forms.ThemeLog.Apply_Theme(Default.FromCurrentOS);
         }
 
         private void button7_Click(object sender, EventArgs e)

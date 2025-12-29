@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -23,22 +24,16 @@ namespace WinPaletter.Tabs
             DoubleBuffered = true;
 
             BackColor = Color.Black;
+
+            Program.WindowsTransparencyChanged += Program_WindowsTransparencyChanged;
+        }
+
+        private void Program_WindowsTransparencyChanged(bool obj)
+        {
+            UpdateBackDrop();
         }
 
         Color activeTtl, inactiveTtl, activeTtlG, inactiveTtlG;
-
-        public static bool Transparency
-        {
-            get => _transparency;
-            set
-            {
-                if (_transparency != value)
-                {
-                    _transparency = value;
-                }
-            }
-        }
-        private static bool _transparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
 
         public static bool AccentOnTitlebars
         {
@@ -105,11 +100,11 @@ namespace WinPaletter.Tabs
                 if (OS.WVista || OS.W7 || OS.W8x) return TitlebarTypes.DWM;
 
                 // Windows 10/11/12
-                if (AccentOnTitlebars && isCompositionEnabled) return Transparency ? TitlebarTypes.DWM_Aero : TitlebarTypes.ColorPrevalence;
+                if (AccentOnTitlebars && isCompositionEnabled) return Program.WindowsTransparency ? TitlebarTypes.DWM_Aero : TitlebarTypes.ColorPrevalence;
 
                 if (AccentOnTitlebars && !isCompositionEnabled) return TitlebarTypes.ColorPrevalence;
 
-                if (Transparency) return OS.W10 ? TitlebarTypes.DWM_Aero : TitlebarTypes.DWM;
+                if (Program.WindowsTransparency) return OS.W10 ? TitlebarTypes.DWM_Aero : TitlebarTypes.DWM;
 
                 return TitlebarTypes.AppMode;
             }
@@ -174,19 +169,18 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            _lastBackdropType = (TitlebarTypes)(-1);
-            _lastBackdropPadding = Padding.Empty;
             isCompositionEnabled = DWMAPI.IsCompositionEnabled();
 
             base.OnHandleCreated(e);
 
             if (!DesignMode)
             {
-                if (FindForm() is Form form)
+                Form form = FindForm();
+                if (form != null)
                 {
                     form.Activated += Form_Activated;
                     form.Deactivate += Form_Deactivate;
-                    form.HandleCreated += (s, _) => UpdateBackDrop();
+                    form.Load += Form_Load;
                     SystemEvents.UserPreferenceChanged += OnSystemSettingsUpdated;
                 }
 
@@ -208,6 +202,13 @@ namespace WinPaletter.Tabs
             }
 
             base.OnHandleDestroyed(e);
+        }
+
+        private void Form_Load(object sender, EventArgs e)
+        {
+            _firstBackdropUpdate = true;   // force redraw
+            UpdateBackDrop();
+            ((Form)sender).Load -= Form_Load; // unsubscribe, only need once
         }
 
         private void OnSystemSettingsUpdated(object sender, UserPreferenceChangedEventArgs e)
@@ -330,12 +331,15 @@ namespace WinPaletter.Tabs
         private TitlebarTypes? _lastBackdropType = null;
         private Padding _lastBackdropPadding = Padding.Empty;
         private bool? _lastFocused = null;
+        private bool _firstBackdropUpdate = true;
 
         /// <summary>
         /// Updates the backdrop of the control.
         /// </summary>
         public void UpdateBackDrop()
         {
+            if (!this.IsHandleCreated || this.Handle == IntPtr.Zero || !User32.IsWindow(this.Handle)) return;
+
             if (Flag == Flags.Tabs_Extended)
             {
                 BackColor = scheme.Colors.Back_Hover(0);
@@ -360,42 +364,29 @@ namespace WinPaletter.Tabs
             TitlebarTypes type = TitlebarType;
 
             // Apply only if changed
-            bool needsRedraw = type != _lastBackdropType || p != _lastBackdropPadding || _lastFocused != _formFocused;
+            bool needsRedraw = _firstBackdropUpdate || _lastBackdropType == null || type != _lastBackdropType || p != _lastBackdropPadding || _lastFocused != _formFocused;
+            _firstBackdropUpdate = false;
 
             switch (type)
             {
                 case TitlebarTypes.DWM:
-                    {
-                        BackColor = Color.Black;
-                        if (needsRedraw && p != Padding.Empty) form.DropEffect(p);
-                        break;
-                    }
-
+                    BackColor = Color.Black;
+                    if (needsRedraw && p != Padding.Empty) form.DropEffect(p);
+                    break;
                 case TitlebarTypes.DWM_Aero:
-                    {
-                        BackColor = Color.Black;
-                        if (needsRedraw && p != Padding.Empty) form.DropEffect(p, false, DWM.BackdropStyles.Aero);
-                        break;
-                    }
-
+                    BackColor = Color.Black;
+                    if (needsRedraw && p != Padding.Empty) form.DropEffect(p, false, DWM.DWMStyles.Aero);
+                    break;
                 case TitlebarTypes.ColorPrevalence:
-                    {
-                        BackColor = _formFocused ? activeTtl : inactiveTtl;
-                        break;
-                    }
-
+                    BackColor = _formFocused ? activeTtl : inactiveTtl;
+                    break;
                 case TitlebarTypes.AppMode:
-                    {
-                        BackColor = Program.Style.DarkMode ? Color.FromArgb(32, 32, 32) : OS.W10 ? Color.White : Color.FromArgb(243, 243, 243);
-                        break;
-                    }
-
+                    BackColor = Program.Style.DarkMode ? Color.FromArgb(32, 32, 32) : OS.W10 ? Color.White : Color.FromArgb(243, 243, 243);
+                    break;
                 case TitlebarTypes.Basic:
                 case TitlebarTypes.Classic:
-                    {
-                        BackColor = Color.Black;
-                        break;
-                    }
+                    BackColor = Color.Black;
+                    break;
             }
 
             _lastBackdropType = type;

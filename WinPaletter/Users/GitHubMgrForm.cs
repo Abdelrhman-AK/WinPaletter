@@ -68,6 +68,8 @@ namespace WinPaletter
 
             GitHub.FileSystem.Navigated += FileSystem_Navigated;
 
+            toggle1.Checked = GitHub.FileSystem.ShowHiddenFiles;
+
             // After populating the tree for the first time
             UpdateExplorerLayout();
         }
@@ -311,7 +313,7 @@ namespace WinPaletter
                     }
                     else if (entry.Type == ContentType.Dir)
                     {
-                        selectedSize += WinPaletter.GitHub.Cache.GetSize(entry.Path);
+                        selectedSize += FileSystem.Cache.GetSize(entry.Path);
                     }
                 }
             }
@@ -456,8 +458,8 @@ namespace WinPaletter
 
         private async void button14_Click(object sender, EventArgs e)
         {
-            await GitHub.Repository.CommitAsync("newCommit", GitHub.Cache.BuildChanges());
-            GitHub.Cache.Clear();
+            await GitHub.Repository.CommitAsync("newCommit", FileSystem.Cache.BuildChanges());
+            FileSystem.Cache.Clear();
         }
 
         private async void button13_Click(object sender, EventArgs e)
@@ -773,7 +775,7 @@ Generated automatically by WinPaletter.";
                     }
                 }
 
-                foreach (ListViewItem notCutItem in listView1.Items.Cast<ListViewItem>().Where(i => !i.Selected && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
+                foreach (ListViewItem notCutItem in listView1.Items.Cast<ListViewItem>().Where(i => !i.Selected && !i.Text.StartsWith(".") && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
                 {
                     notCutItem.ImageKey = notCutItem.ImageKey.Replace("ghost_", string.Empty);
                 }
@@ -782,7 +784,7 @@ Generated automatically by WinPaletter.";
 
         void Init_Copy()
         {
-            foreach (ListViewItem item in listView1.Items.Cast<ListViewItem>().Where(i => i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
+            foreach (ListViewItem item in listView1.Items.Cast<ListViewItem>().Where(i => !i.Text.StartsWith(".") && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
             {
                 item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
             }
@@ -867,13 +869,15 @@ Generated automatically by WinPaletter.";
 
         async void RenameFile(ListViewItem item, LabelEditEventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-            breadcrumbControl1.StartMarquee();
-
             string initPath = FileSystem.currentPath;
             string oldPath = (item.Tag as RepositoryContent).Path;
             string itemText = item.Text.Trim();
             string newPath = $"{GitHub.FileSystem.GetParent(oldPath)}/{itemText}";
+
+            if (oldPath.Equals(newPath, StringComparison.OrdinalIgnoreCase)) return;
+
+            Cursor = Cursors.WaitCursor;
+            breadcrumbControl1.StartMarquee();
 
             try
             {
@@ -961,7 +965,7 @@ Generated automatically by WinPaletter.";
                 if (allDirs.Count > 1)
                 {
                     // Ask once for multiple directories
-                    var result = Forms.GitHub_FileAction.ConfirmFoldersDelete(allDirs.Count, allDirs.Sum(rc => GitHub.Cache.GetSize(rc.Path)));
+                    var result = Forms.GitHub_FileAction.ConfirmFoldersDelete(allDirs.Count, allDirs.Sum(rc => FileSystem.Cache.GetSize(rc.Path)));
 
                     if (result == DialogResult.Yes)
                     {
@@ -975,7 +979,7 @@ Generated automatically by WinPaletter.";
                 else
                 {
                     // Single directory: ask normally
-                    dirPaths = [.. allDirs.Where(rc => Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, GitHub.Cache.GetSize(rc.Path)) == DialogResult.Yes).Select(rc => rc.Path)];
+                    dirPaths = [.. allDirs.Where(rc => Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, FileSystem.Cache.GetSize(rc.Path)) == DialogResult.Yes).Select(rc => rc.Path)];
                 }
 
                 async Task ProcessDeletionAsync(List<string> paths, bool isDirectory)
@@ -1104,7 +1108,7 @@ Generated automatically by WinPaletter.";
                             item.Tag = entry?.Content;
                         }
 
-                        item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
+                        if (!item.Text.StartsWith(".")) item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
                         if (!isCopy) item.Remove();
                     }
 
@@ -1244,6 +1248,11 @@ Generated automatically by WinPaletter.";
         private void listView1_BeforeLabelEdit(object sender, LabelEditEventArgs e)
         {
             itemBeingEdited = listView1.Items[e.Item];
+        }
+
+        private void toggle1_CheckedChanged(object sender, EventArgs e)
+        {
+            GitHub.FileSystem.ShowHiddenFiles = toggle1.Checked;
         }
     }
 }

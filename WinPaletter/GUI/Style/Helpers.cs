@@ -245,133 +245,99 @@ namespace WinPaletter.UI.Style
         {
             if (ctrl == null) return;
 
-            // Don't apply the style to certain controls (Classic controls)
-            bool b = ctrl.GetType().Namespace.ToUpper() == typeof(WindowR).Namespace.ToUpper();
+            // Skip internal custom controls namespace check
+            bool skip = ctrl.GetType().Namespace?.ToUpper() == typeof(WindowR).Namespace.ToUpper();
 
-            if (!b)
+            if (!skip)
             {
-                // This will make all control have a consistent dark\light mode.
                 if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x) SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
 
-                switch (DarkMode)
-                {
-                    case true:
-                        {
-                            if (ctrl.ForeColor == Color.Black) ctrl.ForeColor = Color.White;
-                            break;
-                        }
-                    case false:
-                        {
-                            if (ctrl.ForeColor == Color.White) ctrl.ForeColor = Color.Black;
-                            break;
-                        }
-                }
-
-                //if (ctrl is not WinElement && ctrl is not Window && (ctrl.Font.Name == "Segoe UI" || ctrl.Font.Name == "Tahoma" || ctrl.Font.Name == "Microsoft Sans Serif") && !Fonts.Exists("Segoe UI")) ctrl.Font = new("Tahoma", ctrl.Font.Size == 9f ? 8.25f : ctrl.Font.Size, ctrl.Font.Style);
+                ctrl.ForeColor = DarkMode ? Color.White : Color.Black;
             }
 
-            if (ctrl is WP.GroupBox box)
+            // Custom control styling
+            switch (ctrl)
             {
-                box.BackColor = ctrl.GetParentColor().CB(ctrl.GetParentColor().IsDark() ? 0.04f : -0.05f);
+                case WP.GroupBox box:
+                    box.BackColor = ctrl.GetParentColor().CB(ctrl.GetParentColor().IsDark() ? 0.04f : -0.05f);
+                    break;
+
+                case WP.Button button:
+                    button.UpdateStyleSchemes();
+                    break;
+
+                case WP.LinkLabel label1:
+                    ctrl.ForeColor = DarkMode ? Color.White : Color.Black;
+                    break;
+
+                case TreeView tree:
+                    tree.BackColor = ctrl.Parent.BackColor;
+                    tree.ForeColor = DarkMode ? Color.White : Color.Black;
+                    break;
+
+                case ListView listView:
+                    listView.BackColor = ctrl.Parent.BackColor;
+                    listView.ForeColor = DarkMode ? Color.White : Color.Black;
+                    break;
+
+                case ListBox listBox:
+                    ctrl.BackColor = ctrl.Parent.BackColor;
+                    if (ctrl is CheckedListBox clb) clb.ForeColor = DarkMode ? Color.White : Color.Black;
+                    break;
+
+                case NumericUpDown nud:
+                    nud.BackColor = ctrl.FindForm().BackColor.CB(0.04f * (DarkMode ? 1 : -1));
+                    nud.ForeColor = DarkMode ? Color.White : Color.Black;
+                    break;
+
+                case ComboBox combo when ctrl is not UI.WP.ComboBox:
+                    combo.FlatStyle = FlatStyle.Flat;
+                    combo.BackColor = ctrl.FindForm().BackColor.CB(0.04f * (DarkMode ? 1 : -1));
+                    combo.ForeColor = DarkMode ? Color.White : Color.Black;
+                    break;
+
+                case TitlebarExtender titlebar:
+                    if (titlebar.IsHandleCreated) titlebar.UpdateBackDrop();
+                    else titlebar.HandleCreated += (s, e) => titlebar.UpdateBackDrop();
+                    break;
+
+                case DataGridView dgv:
+                    ApplyDataGridViewStyle(dgv, DarkMode);
+                    break;
             }
 
-            else if (ctrl is WP.Button button)
+            // Recursively style child controls
+            foreach (Control c in ctrl.Controls)
             {
-                button.UpdateStyleSchemes();
+                if (c is TabPage) c.BackColor = ctrl.Parent.BackColor;
+                ApplyStyleToSubControls(c, DarkMode);
             }
 
-            else if (ctrl is LinkLabel label)
-            {
-                label.LinkColor = DarkMode ? Color.White : Color.Black;
-            }
-
-            else if (ctrl is WP.LinkLabel label1)
-            {
-                label1.LinkColor = DarkMode ? Color.White : Color.Black;
-            }
-
-            else if (ctrl is TreeView temp1)
-            {
-                temp1.BackColor = ctrl.Parent.BackColor;
-                temp1.ForeColor = DarkMode ? Color.White : Color.Black;
-            }
-
-            else if (ctrl is ListView temp3)
-            {
-                temp3.BackColor = ctrl.Parent.BackColor;
-                temp3.ForeColor = DarkMode ? Color.White : Color.Black;
-            }
-
-            else if (ctrl is ListBox)
-            {
-                ctrl.BackColor = ctrl.Parent.BackColor;
-            }
-
-            else if (ctrl is CheckedListBox temp4)
-            {
-                temp4.BackColor = ctrl.Parent.BackColor;
-                temp4.ForeColor = DarkMode ? Color.White : Color.Black;
-            }
-
-            else if (ctrl is NumericUpDown temp5)
-            {
-                temp5.BackColor = ctrl.FindForm().BackColor.CB(0.04f * (DarkMode ? +1 : -1));
-                temp5.ForeColor = DarkMode ? Color.White : Color.Black;
-            }
-
-            else if (ctrl is ComboBox box1 && ctrl is not UI.WP.ComboBox)
-            {
-                ComboBox temp6 = box1;
-                temp6.FlatStyle = FlatStyle.Flat;
-                temp6.BackColor = ctrl.FindForm().BackColor.CB(0.04f * (DarkMode ? +1 : -1));
-                temp6.ForeColor = DarkMode ? Color.White : Color.Black;
-            }
-
-            else if (ctrl is TitlebarExtender titlebarExtender)
-            {
-                titlebarExtender.UpdateBackDrop();
-                titlebarExtender.Refresh();
-            }
-
-            else if (ctrl is DataGridView dataGridView)
-            {
-                Color Back = Program.Style.Schemes.Main.Colors.Back(ctrl.Level());
-                Color BackHover = Program.Style.Schemes.Main.Colors.Back_Hover(ctrl.Level());
-                Color Grid = Program.Style.Schemes.Main.Colors.Line_Hover(ctrl.Level());
-
-                dataGridView.EnableHeadersVisualStyles = false;
-
-                foreach (DataGridViewColumn col in dataGridView.Columns)
-                {
-                    col.HeaderCell.Style.BackColor = BackHover;
-                    col.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
-                }
-
-                foreach (DataGridViewRow row in dataGridView.Rows)
-                {
-                    row.HeaderCell.Style.BackColor = BackHover;
-                    row.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
-                }
-
-                dataGridView.BackColor = ctrl.Parent.BackColor;
-                dataGridView.BackgroundColor = ctrl.Parent.BackColor;
-                dataGridView.DefaultCellStyle.BackColor = Back;
-                dataGridView.GridColor = Grid;
-            }
-
-            // Recursively apply the style to all sub-controls
-            if (ctrl.HasChildren || ctrl.Controls?.Count > 0)
-            {
-                foreach (Control c in ctrl.Controls)
-                {
-                    if (c is TabPage) c.BackColor = ctrl.Parent.BackColor;
-
-                    ApplyStyleToSubControls(c, DarkMode);
-                }
-            }
-
-            // Invalidate the control to apply the style changes
             ctrl.Invalidate();
+        }
+
+        private static void ApplyDataGridViewStyle(DataGridView dgv, bool DarkMode)
+        {
+            Color Back = Program.Style.Schemes.Main.Colors.Back(dgv.Level());
+            Color BackHover = Program.Style.Schemes.Main.Colors.Back_Hover(dgv.Level());
+            Color Grid = Program.Style.Schemes.Main.Colors.Line_Hover(dgv.Level());
+
+            dgv.EnableHeadersVisualStyles = false;
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                col.HeaderCell.Style.BackColor = BackHover;
+                col.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
+            }
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                row.HeaderCell.Style.BackColor = BackHover;
+                row.HeaderCell.Style.ForeColor = DarkMode ? Color.White : Color.Black;
+            }
+
+            dgv.BackColor = dgv.Parent.BackColor;
+            dgv.BackgroundColor = dgv.Parent.BackColor;
+            dgv.DefaultCellStyle.BackColor = Back;
+            dgv.GridColor = Grid;
         }
 
         /// <summary>

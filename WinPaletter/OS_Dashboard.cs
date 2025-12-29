@@ -79,11 +79,11 @@ namespace WinPaletter
 
             BackColor = Color.Black;
 
-            DWM.BackdropStyles style;
+            DWM.DWMStyles style;
 
-            if (OS.WXP || OS.W8x) style = DWM.BackdropStyles.None;
-            else if (OS.WVista || OS.W7) style = DWM.BackdropStyles.Aero;
-            else style = DWM.BackdropStyles.Acrylic;
+            if (OS.WXP || OS.W8x) style = DWM.DWMStyles.None;
+            else if (OS.WVista || OS.W7) style = DWM.DWMStyles.Aero;
+            else style = DWM.DWMStyles.Acrylic;
 
             this.DropEffect(Padding.Empty, true, style, true);
         }

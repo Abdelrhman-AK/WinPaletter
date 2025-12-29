@@ -103,7 +103,7 @@ namespace WinPaletter
         /// <summary>
         /// Current applied wallpaper
         /// </summary>
-        public static Bitmap Wallpaper;
+        public static Bitmap Wallpaper { get; set; }
 
         /// <summary>
         /// Variable responsible for the preview type on forms
@@ -251,5 +251,10 @@ namespace WinPaletter
         /// Represents the size of the preview area.
         /// </summary>
         public static Size PreviewSize = new(528, 297);
+
+        public static bool WindowsTransparency => windowsTransparency;
+        private static bool windowsTransparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
+
+        public static event Action<bool> WindowsTransparencyChanged;
     }
 }

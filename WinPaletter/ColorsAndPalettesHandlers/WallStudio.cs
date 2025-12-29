@@ -639,7 +639,7 @@ namespace WinPaletter
 
         void AdjustTM(bool altNearing = false, bool skipEffects = true)
         {
-            TM = radioImage1.Checked ? Default.Get(Program.WindowStyle) : Program.TM.Clone();
+            TM = radioImage1.Checked ? Default.FromOS(Program.WindowStyle) : Program.TM.Clone();
 
             TM.LogonUI12.Enabled = File.Exists(textBox2.Text);
             TM.LogonUI11.Enabled = File.Exists(textBox2.Text);
@@ -650,6 +650,7 @@ namespace WinPaletter
             TM.PowerShellx64.Enabled = true;
             TM.Cursors.Enabled = true;
             TM.AppTheme.Enabled = true;
+            TM.Accessibility.Enabled = false;
 
             TM.Info.ThemeName = Text;
             TM.Info.Author = Application.CompanyName;

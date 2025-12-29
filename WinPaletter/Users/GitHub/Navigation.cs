@@ -111,6 +111,20 @@ namespace WinPaletter.GitHub
         /// </summary>
         public static event EventHandler<string> Navigated;
 
+        public static bool ShowHiddenFiles
+        {
+            get => showHiddenFiles;
+            set
+            {
+                if (showHiddenFiles != value)
+                {
+                    showHiddenFiles = value;
+                    Task.Run(() => PopulateListViewAsync(_boundList, currentPath, null));
+                }
+            }
+        }
+        private static bool showHiddenFiles = true;
+
         /// <summary>
         /// Invokes the Navigated event.
         /// </summary>
@@ -839,109 +853,115 @@ namespace WinPaletter.GitHub
                 return;
             }
 
-            //try
-            //{
-            list.Cursor = Cursors.WaitCursor;
-            list.BeginUpdate();
-
-            if (list.Columns.Count == 0)
+            try
             {
-                Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
+                list.Cursor = Cursors.WaitCursor;
+                list.BeginUpdate();
 
-                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
-                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
-                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
-                list.Columns.Add("MD5", 120);
-                list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
-            }
-
-            if (!Cache.Contains(path))
-            {
-                Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
-                list.Items.Clear();
-                return;
-            }
-
-            list.Items.Clear();
-
-            int count = 0;
-            foreach (Entry entry in Cache.GetSubEntries(NormalizePath(path), sort: Cache.EntrySort.Default))
-            {
-                if (entry.Content is null) continue;
-
-                cts?.Token.ThrowIfCancellationRequested();
-
-                ListViewItem item = new(entry.Name) { Tag = entry.Content };
-
-                item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
-
-                long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
-
-                item.SubItems.Add(size.ToStringFileSize());
-                item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
-                item.SubItems.Add(entry.Content.HtmlUrl);
-                item.SubItems.Add(entry.Content.Content);
-
-                if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
-                else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
-                else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
-                else if (!string.IsNullOrWhiteSpace(entry.Name))
+                if (list.Columns.Count == 0)
                 {
-                    // Get icon from Windows and add it into image lists
-                    string ext = GetExtension(entry.Name);
-                    if (!string.IsNullOrWhiteSpace(ext))
+                    Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
+
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
+                    list.Columns.Add("MD5", 120);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
+                }
+
+                if (!Cache.Contains(path))
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
+                    list.Items.Clear();
+                    return;
+                }
+
+                list.Items.Clear();
+
+                int count = 0;
+                foreach (Entry entry in Cache.GetSubEntries(NormalizePath(path), sort: Cache.EntrySort.Default))
+                {
+                    if (entry.Content is null) continue;
+
+                    cts?.Token.ThrowIfCancellationRequested();
+
+                    bool isHidden = entry.Name.StartsWith(".");
+                    if (!isHidden || isHidden && showHiddenFiles)
                     {
-                        if (!list.SmallImageList.Images.ContainsKey(ext))
+                        ListViewItem item = new(entry.Name) { Tag = entry.Content };
+
+                        item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
+
+                        long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
+
+                        item.SubItems.Add(size.ToStringFileSize());
+                        item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
+                        item.SubItems.Add(entry.Content.HtmlUrl);
+                        item.SubItems.Add(entry.Content.Content);
+
+                        if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
+                        else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
+                        else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
+                        else if (!string.IsNullOrWhiteSpace(entry.Name))
                         {
-                            using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
-                            using (Icon ico_resized = ico?.FromSize(16))
-                            using (Bitmap bmp = ico_resized?.ToBitmap())
+                            // Get icon from Windows and add it into image lists
+                            string ext = GetExtension(entry.Name);
+                            if (!string.IsNullOrWhiteSpace(ext))
                             {
-                                list.AddImagesToSmallImageList(new List<(Image, string)>
+                                if (!list.SmallImageList.Images.ContainsKey(ext))
+                                {
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
+                                    using (Icon ico_resized = ico?.FromSize(16))
+                                    using (Bitmap bmp = ico_resized?.ToBitmap())
+                                    {
+                                        list.AddImagesToSmallImageList(new List<(Image, string)>
                                 {
                                     (bmp, ext)
                                 });
+                                    }
+
+                                    ProcessGhostIcons(list.SmallImageList);
+                                }
+
+                                if (!list.LargeImageList.Images.ContainsKey(ext))
+                                {
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
+                                    using (Icon ico_resized = ico?.FromSize(48))
+                                    {
+                                        list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
+                                        ProcessGhostIcons(list.LargeImageList);
+                                    }
+                                }
+
+                                item.ImageKey = ext;
                             }
-
-                            ProcessGhostIcons(list.SmallImageList);
-                        }
-
-                        if (!list.LargeImageList.Images.ContainsKey(ext))
-                        {
-                            using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
-                            using (Icon ico_resized = ico?.FromSize(48))
+                            else
                             {
-                                list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
-                                ProcessGhostIcons(list.LargeImageList);
+                                item.ImageKey = "file";
                             }
                         }
+                        else item.ImageKey = "file";
 
-                        item.ImageKey = ext;
+                        if (isHidden) item.ImageKey = $"ghost_{item.ImageKey}";
+
+                        list.Items.Add(item);
                     }
-                    else
-                    {
-                        item.ImageKey = "file";
-                    }
+
+                    count++;
+                    if (count % 50 == 0) await Task.Yield();
                 }
-                else item.ImageKey = "file";
-
-                list.Items.Add(item);
-
-                count++;
-                if (count % 50 == 0) await Task.Yield();
             }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Forms.BugReport.ThrowError(ex);
-            //    Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
-            //}
-            //finally
-            //{
-            list.EndUpdate();
-            list.Cursor = Cursors.Default;
-            Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync finished for '{path}'");
-            //}
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+                Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
+            }
+            finally
+            {
+                list.EndUpdate();
+                list.Cursor = Cursors.Default;
+                Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync finished for '{path}'");
+            }
         }
 
         /// <summary>
@@ -1129,60 +1149,67 @@ namespace WinPaletter.GitHub
                 {
                     cts.Token.ThrowIfCancellationRequested();
 
-                    ListViewItem item = new(entry.Name) { Tag = entry };
-                    item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
-
-                    long size = entry.Type == Octokit.ContentType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
-
-                    item.SubItems.Add(size.ToStringFileSize());
-                    item.SubItems.Add(Cache.ShaToMd5(entry.Sha).ToUpper());
-                    item.SubItems.Add(entry.HtmlUrl);
-                    item.SubItems.Add(entry.Content);
-
-                    if (entry.Type == ContentType.Dir) item.ImageKey = "folder";
-                    else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
-                    else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
-                    else if (!string.IsNullOrWhiteSpace(entry.Name))
+                    bool isHidden = entry.Name.StartsWith(".");
+                    if (!isHidden || isHidden && showHiddenFiles)
                     {
-                        // Get icon from Windows and add it into image lists
-                        string ext = GetExtension(entry.Name);
-                        if (!string.IsNullOrWhiteSpace(ext))
+                        ListViewItem item = new(entry.Name) { Tag = entry };
+
+                        item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
+
+                        long size = entry.Type == ContentType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
+
+                        item.SubItems.Add(size.ToStringFileSize());
+                        item.SubItems.Add(Cache.ShaToMd5(entry.Sha).ToUpper());
+                        item.SubItems.Add(entry.HtmlUrl);
+                        item.SubItems.Add(entry.Content);
+
+                        if (entry.Type == ContentType.Dir) item.ImageKey = "folder";
+                        else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
+                        else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
+                        else if (!string.IsNullOrWhiteSpace(entry.Name))
                         {
-                            if (!list.SmallImageList.Images.ContainsKey(ext))
+                            // Get icon from Windows and add it into image lists
+                            string ext = GetExtension(entry.Name);
+                            if (!string.IsNullOrWhiteSpace(ext))
                             {
-                                using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
-                                using (Icon ico_resized = ico?.FromSize(16))
-                                using (Bitmap bmp = ico_resized?.ToBitmap())
+                                if (!list.SmallImageList.Images.ContainsKey(ext))
                                 {
-                                    list.AddImagesToSmallImageList(new List<(Image, string)>
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
+                                    using (Icon ico_resized = ico?.FromSize(16))
+                                    using (Bitmap bmp = ico_resized?.ToBitmap())
+                                    {
+                                        list.AddImagesToSmallImageList(new List<(Image, string)>
                                 {
                                     (bmp, ext)
                                 });
+                                    }
+
+                                    ProcessGhostIcons(list.SmallImageList);
                                 }
 
-                                ProcessGhostIcons(list.SmallImageList);
-                            }
-
-                            if (!list.LargeImageList.Images.ContainsKey(ext))
-                            {
-                                using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
-                                using (Icon ico_resized = ico?.FromSize(48))
+                                if (!list.LargeImageList.Images.ContainsKey(ext))
                                 {
-                                    list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
-                                    ProcessGhostIcons(list.LargeImageList);
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
+                                    using (Icon ico_resized = ico?.FromSize(48))
+                                    {
+                                        list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
+                                        ProcessGhostIcons(list.LargeImageList);
+                                    }
                                 }
+
+                                item.ImageKey = ext;
                             }
+                            else
+                            {
+                                item.ImageKey = "file";
+                            }
+                        }
+                        else item.ImageKey = "file";
 
-                            item.ImageKey = ext;
-                        }
-                        else
-                        {
-                            item.ImageKey = "file";
-                        }
+                        if (isHidden) item.ImageKey = $"ghost_{item.ImageKey}";
+
+                        list.Items.Add(item);
                     }
-                    else item.ImageKey = "file";
-
-                    list.Items.Add(item);
 
                     count++;
                     if (count % 50 == 0) await Task.Yield();

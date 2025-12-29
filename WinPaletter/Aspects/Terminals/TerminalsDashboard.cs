@@ -26,11 +26,11 @@ namespace WinPaletter
 
             BackColor = Color.Black;
 
-            DWM.BackdropStyles style;
+            DWM.DWMStyles style;
 
-            if (OS.WXP || OS.W8x) style = DWM.BackdropStyles.None;
-            else if (OS.WVista || OS.W7) style = DWM.BackdropStyles.Aero;
-            else style = DWM.BackdropStyles.Acrylic;
+            if (OS.WXP || OS.W8x) style = DWM.DWMStyles.None;
+            else if (OS.WVista || OS.W7) style = DWM.DWMStyles.Aero;
+            else style = DWM.DWMStyles.Acrylic;
 
             this.DropEffect(Padding.Empty, true, style, true);
         }
@@ -39,7 +39,7 @@ namespace WinPaletter
         {
             if (Program.Settings.WindowsTerminals.Bypass)
             {
-                Forms.WindowsTerminal._Mode = WinTerminal.Version.Stable;
+                Forms.WindowsTerminal.Mode = WinTerminal.Version.Stable;
                 Close();
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
             }
@@ -63,7 +63,7 @@ namespace WinPaletter
 
                 if (File.Exists(TerDir))
                 {
-                    Forms.WindowsTerminal._Mode = WinTerminal.Version.Stable;
+                    Forms.WindowsTerminal.Mode = WinTerminal.Version.Stable;
                     Close();
                     Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
                 }
@@ -83,7 +83,7 @@ namespace WinPaletter
         {
             if (Program.Settings.WindowsTerminals.Bypass)
             {
-                Forms.WindowsTerminal._Mode = WinTerminal.Version.Preview;
+                Forms.WindowsTerminal.Mode = WinTerminal.Version.Preview;
                 Close();
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
             }
@@ -106,7 +106,7 @@ namespace WinPaletter
 
                 if (File.Exists(TerPreDir))
                 {
-                    Forms.WindowsTerminal._Mode = WinTerminal.Version.Preview;
+                    Forms.WindowsTerminal.Mode = WinTerminal.Version.Preview;
                     Close();
                     Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
                 }

@@ -13,6 +13,10 @@ namespace WinPaletter.Theme
         public enum Source
         {
             /// <summary>
+            /// EmptyError WinPaletter theme File
+            /// </summary>
+            Empty,
+            /// <summary>
             /// Windows Registry
             /// </summary>
             Registry,
@@ -20,10 +24,6 @@ namespace WinPaletter.Theme
             /// WinPaletter theme File
             /// </summary>
             File,
-            /// <summary>
-            /// EmptyError WinPaletter theme File
-            /// </summary>
-            Empty
         }
     }
 }

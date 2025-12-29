@@ -238,7 +238,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button11_Click(object sender, EventArgs e)
         {
-            using (Manager _Def = Default.Get())
+            using (Manager _Def = Default.FromCurrentOS)
             {
                 _Def.Save(Manager.Source.Registry, string.Empty, null, true);
 
@@ -306,7 +306,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button17_Click(object sender, EventArgs e)
         {
-            using (Manager _Def = Default.Get())
+            using (Manager _Def = Default.FromCurrentOS)
             {
                 _Def.MetricsFonts.Enabled = true;
                 _Def.MetricsFonts.Apply();

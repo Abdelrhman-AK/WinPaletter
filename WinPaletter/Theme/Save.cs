@@ -135,7 +135,7 @@ namespace WinPaletter.Theme
 
                             Execute(() =>
                             {
-                                using (Manager def = Default.Get())
+                                using (Manager def = Default.FromCurrentOS)
                                 {
                                     def.Wallpaper.Enabled = false;
                                     def.Save(Source.Registry);

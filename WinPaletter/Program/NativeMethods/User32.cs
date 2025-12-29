@@ -440,6 +440,14 @@ namespace WinPaletter.NativeMethods
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         /// <summary>
+        /// Gets if a hwnd is a window or not.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = false)]
+        public static extern bool IsWindow(IntPtr hWnd);
+
+        /// <summary>
         /// SetWindowsHookEx function: Installs an application-defined hook procedure into a hook chain.
         /// This hook can monitor low-level mouse input events before the system processes them.
         /// </summary>

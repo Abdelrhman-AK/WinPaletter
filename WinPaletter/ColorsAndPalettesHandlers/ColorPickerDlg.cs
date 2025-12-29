@@ -106,7 +106,7 @@ namespace WinPaletter
 
             PaletteContainer.Controls.Clear();
 
-            foreach (Color c in TM.Palette)
+            foreach (Color c in TM.Palette())
             {
 
                 ColorItem MiniColorItem = new();
@@ -478,42 +478,42 @@ namespace WinPaletter
                     }
                 case 1:
                     {
-                        GetColorsFromPalette(Default.Windows12());
+                        GetColorsFromPalette(Default.Windows12);
                         break;
                     }
                 case 2:
                     {
-                        GetColorsFromPalette(Default.Windows11());
+                        GetColorsFromPalette(Default.Windows11);
                         break;
                     }
                 case 3:
                     {
-                        GetColorsFromPalette(Default.Windows10());
+                        GetColorsFromPalette(Default.Windows10);
                         break;
                     }
                 case 4:
                     {
-                        GetColorsFromPalette(Default.Windows81());
+                        GetColorsFromPalette(Default.Windows81);
                         break;
                     }
                 case 5:
                     {
-                        GetColorsFromPalette(Default.Windows8());
+                        GetColorsFromPalette(Default.Windows8);
                         break;
                     }
                 case 6:
                     {
-                        GetColorsFromPalette(Default.Windows7());
+                        GetColorsFromPalette(Default.Windows7);
                         break;
                     }
                 case 7:
                     {
-                        GetColorsFromPalette(Default.WindowsVista());
+                        GetColorsFromPalette(Default.WindowsVista);
                         break;
                     }
                 case 8:
                     {
-                        GetColorsFromPalette(Default.WindowsXP());
+                        GetColorsFromPalette(Default.WindowsXP);
                         break;
                     }
                 default:

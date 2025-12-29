@@ -654,35 +654,35 @@ namespace WinPaletter.Theme.Structures
                     Win32UI @default;
                     if (Program.WindowStyle == WindowStyle.W12)
                     {
-                        @default = Default.Windows12().Win32;
+                        @default = Default.Windows12.Win32;
                     }
                     else if (Program.WindowStyle == WindowStyle.W11)
                     {
-                        @default = Default.Windows11().Win32;
+                        @default = Default.Windows11.Win32;
                     }
                     else if (Program.WindowStyle == WindowStyle.W10)
                     {
-                        @default = Default.Windows10().Win32;
+                        @default = Default.Windows10.Win32;
                     }
                     else if (Program.WindowStyle == WindowStyle.W81)
                     {
-                        @default = Default.Windows81().Win32;
+                        @default = Default.Windows81.Win32;
                     }
                     else if (Program.WindowStyle == WindowStyle.W7)
                     {
-                        @default = Default.Windows7().Win32;
+                        @default = Default.Windows7.Win32;
                     }
                     else if (Program.WindowStyle == WindowStyle.WVista)
                     {
-                        @default = Default.WindowsVista().Win32;
+                        @default = Default.WindowsVista.Win32;
                     }
                     else if (Program.WindowStyle == WindowStyle.WXP)
                     {
-                        @default = Default.WindowsXP().Win32;
+                        @default = Default.WindowsXP.Win32;
                     }
                     else
                     {
-                        @default = Default.Windows12().Win32;
+                        @default = Default.Windows12.Win32;
                     }
 
                     WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse().ToArgb(), RegistryValueKind.String);

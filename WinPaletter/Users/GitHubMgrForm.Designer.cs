@@ -41,8 +41,6 @@
             this.button3 = new WinPaletter.UI.WP.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
-            this.button1 = new WinPaletter.UI.WP.Button();
             this.tabControl1 = new WinPaletter.UI.WP.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.email_lbl = new System.Windows.Forms.Label();
@@ -82,6 +80,10 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.separatorV3 = new WinPaletter.UI.WP.SeparatorV();
+            this.label9 = new System.Windows.Forms.Label();
+            this.separatorV2 = new WinPaletter.UI.WP.SeparatorV();
+            this.toggle1 = new WinPaletter.UI.WP.Toggle();
             this.button7 = new WinPaletter.UI.WP.Button();
             this.button13 = new WinPaletter.UI.WP.Button();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
@@ -94,7 +96,6 @@
             this.titlebarExtender1.SuspendLayout();
             this.explorer_controls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.bottom_buttons.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -313,52 +314,20 @@
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // bottom_buttons
-            // 
-            this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
-            this.bottom_buttons.Controls.Add(this.button1);
-            this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 633);
-            this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(1002, 48);
-            this.bottom_buttons.TabIndex = 121;
-            this.bottom_buttons.UseDecorationPattern = false;
-            this.bottom_buttons.UseSharpStyle = false;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(18)))), ((int)(((byte)(31)))));
-            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Image = null;
-            this.button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Cancel;
-            this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(881, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 34);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Close";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.button1.UseVisualStyleBackColor = false;
-            // 
             // tabControl1
             // 
             this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tabControl1.ItemSize = new System.Drawing.Size(35, 140);
-            this.tabControl1.Location = new System.Drawing.Point(4, 56);
+            this.tabControl1.Location = new System.Drawing.Point(0, 52);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(993, 574);
+            this.tabControl1.Size = new System.Drawing.Size(1002, 629);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -380,7 +349,7 @@
             this.tabPage1.Location = new System.Drawing.Point(144, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(845, 566);
+            this.tabPage1.Size = new System.Drawing.Size(854, 621);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Account overview";
             // 
@@ -389,9 +358,9 @@
             this.email_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.email_lbl.BackColor = System.Drawing.Color.Transparent;
             this.email_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.email_lbl.Location = new System.Drawing.Point(15, 334);
+            this.email_lbl.Location = new System.Drawing.Point(15, 361);
             this.email_lbl.Name = "email_lbl";
-            this.email_lbl.Size = new System.Drawing.Size(815, 15);
+            this.email_lbl.Size = new System.Drawing.Size(824, 15);
             this.email_lbl.TabIndex = 12;
             this.email_lbl.Text = "0";
             this.email_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -406,7 +375,7 @@
             this.flowLayoutPanel1.Controls.Add(this.label5);
             this.flowLayoutPanel1.Controls.Add(this.following_count_lbl);
             this.flowLayoutPanel1.Controls.Add(this.label7);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(310, 304);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(315, 331);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(204, 17);
             this.flowLayoutPanel1.TabIndex = 51;
@@ -481,9 +450,9 @@
             this.contry_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.contry_lbl.BackColor = System.Drawing.Color.Transparent;
             this.contry_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contry_lbl.Location = new System.Drawing.Point(15, 360);
+            this.contry_lbl.Location = new System.Drawing.Point(15, 387);
             this.contry_lbl.Name = "contry_lbl";
-            this.contry_lbl.Size = new System.Drawing.Size(815, 15);
+            this.contry_lbl.Size = new System.Drawing.Size(824, 15);
             this.contry_lbl.TabIndex = 17;
             this.contry_lbl.Text = "0";
             this.contry_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -493,7 +462,7 @@
             this.updated_lbl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.updated_lbl.BackColor = System.Drawing.Color.Transparent;
             this.updated_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updated_lbl.Location = new System.Drawing.Point(425, 489);
+            this.updated_lbl.Location = new System.Drawing.Point(430, 544);
             this.updated_lbl.Name = "updated_lbl";
             this.updated_lbl.Size = new System.Drawing.Size(331, 22);
             this.updated_lbl.TabIndex = 50;
@@ -505,7 +474,7 @@
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(425, 511);
+            this.label3.Location = new System.Drawing.Point(430, 566);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(331, 30);
             this.label3.TabIndex = 49;
@@ -517,7 +486,7 @@
             this.created_lbl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.created_lbl.BackColor = System.Drawing.Color.Transparent;
             this.created_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.created_lbl.Location = new System.Drawing.Point(88, 489);
+            this.created_lbl.Location = new System.Drawing.Point(93, 544);
             this.created_lbl.Name = "created_lbl";
             this.created_lbl.Size = new System.Drawing.Size(331, 22);
             this.created_lbl.TabIndex = 48;
@@ -529,7 +498,7 @@
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(88, 511);
+            this.label6.Location = new System.Drawing.Point(93, 566);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(331, 30);
             this.label6.TabIndex = 47;
@@ -543,9 +512,9 @@
             this.url_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.url_lbl.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.url_lbl.LinkColor = System.Drawing.Color.White;
-            this.url_lbl.Location = new System.Drawing.Point(15, 270);
+            this.url_lbl.Location = new System.Drawing.Point(15, 297);
             this.url_lbl.Name = "url_lbl";
-            this.url_lbl.Size = new System.Drawing.Size(815, 24);
+            this.url_lbl.Size = new System.Drawing.Size(824, 24);
             this.url_lbl.TabIndex = 46;
             this.url_lbl.TabStop = true;
             this.url_lbl.Text = "0";
@@ -557,9 +526,9 @@
             this.bio_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.bio_lbl.BackColor = System.Drawing.Color.Transparent;
             this.bio_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bio_lbl.Location = new System.Drawing.Point(15, 382);
+            this.bio_lbl.Location = new System.Drawing.Point(15, 409);
             this.bio_lbl.Name = "bio_lbl";
-            this.bio_lbl.Size = new System.Drawing.Size(815, 38);
+            this.bio_lbl.Size = new System.Drawing.Size(824, 38);
             this.bio_lbl.TabIndex = 18;
             this.bio_lbl.Text = "0";
             this.bio_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -569,9 +538,9 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(15, 232);
+            this.label1.Location = new System.Drawing.Point(15, 259);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(815, 38);
+            this.label1.Size = new System.Drawing.Size(824, 38);
             this.label1.TabIndex = 1;
             this.label1.Text = "0";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -579,7 +548,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureBox1.Location = new System.Drawing.Point(358, 90);
+            this.pictureBox1.Location = new System.Drawing.Point(363, 117);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(128, 128);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -592,7 +561,7 @@
             this.tabPage2.Controls.Add(this.tablessControl1);
             this.tabPage2.Location = new System.Drawing.Point(144, 4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(845, 566);
+            this.tabPage2.Size = new System.Drawing.Size(854, 621);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "My themes";
             // 
@@ -605,7 +574,7 @@
             this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(845, 566);
+            this.tablessControl1.Size = new System.Drawing.Size(854, 621);
             this.tablessControl1.TabIndex = 4;
             this.tablessControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -619,7 +588,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(837, 538);
+            this.tabPage3.Size = new System.Drawing.Size(846, 593);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "0";
             // 
@@ -631,7 +600,7 @@
             this.separatorH1.BackColor = System.Drawing.Color.Transparent;
             this.separatorH1.Location = new System.Drawing.Point(6, 161);
             this.separatorH1.Name = "separatorH1";
-            this.separatorH1.Size = new System.Drawing.Size(825, 1);
+            this.separatorH1.Size = new System.Drawing.Size(834, 1);
             this.separatorH1.TabIndex = 4;
             this.separatorH1.TabStop = false;
             this.separatorH1.Text = "separatorH1";
@@ -649,7 +618,7 @@
             this.groupBox6.Controls.Add(this.pictureBox6);
             this.groupBox6.Location = new System.Drawing.Point(6, 66);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(825, 89);
+            this.groupBox6.Size = new System.Drawing.Size(834, 89);
             this.groupBox6.TabIndex = 3;
             this.groupBox6.UseDecorationPattern = false;
             this.groupBox6.UseSharpStyle = false;
@@ -663,7 +632,7 @@
             this.comboBox1.ForeColor = System.Drawing.Color.White;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.ItemHeight = 20;
-            this.comboBox1.Location = new System.Drawing.Point(561, 31);
+            this.comboBox1.Location = new System.Drawing.Point(570, 31);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(173, 26);
             this.comboBox1.TabIndex = 21;
@@ -678,7 +647,7 @@
             this.button10.Image = null;
             this.button10.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Remove;
             this.button10.ImageGlyphEnabled = true;
-            this.button10.Location = new System.Drawing.Point(741, 32);
+            this.button10.Location = new System.Drawing.Point(750, 32);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(34, 25);
             this.button10.TabIndex = 20;
@@ -694,7 +663,7 @@
             this.button12.Image = null;
             this.button12.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.button12.ImageGlyphEnabled = true;
-            this.button12.Location = new System.Drawing.Point(781, 32);
+            this.button12.Location = new System.Drawing.Point(790, 32);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(34, 25);
             this.button12.TabIndex = 19;
@@ -710,7 +679,7 @@
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(57, 30);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(498, 53);
+            this.label12.Size = new System.Drawing.Size(507, 53);
             this.label12.TabIndex = 18;
             this.label12.Text = resources.GetString("label12.Text");
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -748,7 +717,7 @@
             this.groupBox5.Enabled = false;
             this.groupBox5.Location = new System.Drawing.Point(6, 168);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(825, 54);
+            this.groupBox5.Size = new System.Drawing.Size(834, 54);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.UseDecorationPattern = true;
             this.groupBox5.UseSharpStyle = false;
@@ -762,7 +731,7 @@
             this.button11.Image = null;
             this.button11.ImageGlyph = null;
             this.button11.ImageGlyphEnabled = false;
-            this.button11.Location = new System.Drawing.Point(711, 10);
+            this.button11.Location = new System.Drawing.Point(720, 10);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(105, 34);
             this.button11.TabIndex = 19;
@@ -801,7 +770,7 @@
             this.groupBox3.Controls.Add(this.pictureBox3);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(825, 54);
+            this.groupBox3.Size = new System.Drawing.Size(834, 54);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.UseDecorationPattern = false;
             this.groupBox3.UseSharpStyle = false;
@@ -815,7 +784,7 @@
             this.button9.Image = null;
             this.button9.ImageGlyph = null;
             this.button9.ImageGlyphEnabled = false;
-            this.button9.Location = new System.Drawing.Point(711, 10);
+            this.button9.Location = new System.Drawing.Point(720, 10);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(105, 34);
             this.button9.TabIndex = 19;
@@ -854,7 +823,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(837, 538);
+            this.tabPage4.Size = new System.Drawing.Size(846, 593);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "1";
             // 
@@ -863,14 +832,65 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox4.Controls.Add(this.separatorV3);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.separatorV2);
+            this.groupBox4.Controls.Add(this.toggle1);
             this.groupBox4.Controls.Add(this.button7);
             this.groupBox4.Controls.Add(this.button13);
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(831, 32);
+            this.groupBox4.Size = new System.Drawing.Size(840, 38);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.UseDecorationPattern = false;
             this.groupBox4.UseSharpStyle = false;
+            // 
+            // separatorV3
+            // 
+            this.separatorV3.AlternativeLook = false;
+            this.separatorV3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.separatorV3.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV3.Location = new System.Drawing.Point(495, 6);
+            this.separatorV3.Name = "separatorV3";
+            this.separatorV3.Size = new System.Drawing.Size(1, 26);
+            this.separatorV3.TabIndex = 18;
+            this.separatorV3.TabStop = false;
+            this.separatorV3.Text = "separatorV3";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(502, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(111, 20);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Show hidden items";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // separatorV2
+            // 
+            this.separatorV2.AlternativeLook = false;
+            this.separatorV2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.separatorV2.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV2.Location = new System.Drawing.Point(717, 6);
+            this.separatorV2.Name = "separatorV2";
+            this.separatorV2.Size = new System.Drawing.Size(1, 26);
+            this.separatorV2.TabIndex = 16;
+            this.separatorV2.TabStop = false;
+            this.separatorV2.Text = "separatorV2";
+            // 
+            // toggle1
+            // 
+            this.toggle1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.toggle1.Checked = false;
+            this.toggle1.DarkLight_Toggler = false;
+            this.toggle1.Location = new System.Drawing.Point(619, 9);
+            this.toggle1.Name = "toggle1";
+            this.toggle1.Size = new System.Drawing.Size(40, 20);
+            this.toggle1.TabIndex = 15;
+            this.toggle1.CheckedChanged += new System.EventHandler(this.toggle1_CheckedChanged);
             // 
             // button7
             // 
@@ -882,7 +902,7 @@
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.ImageGlyph = null;
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(783, 3);
+            this.button7.Location = new System.Drawing.Point(665, 6);
             this.button7.Name = "button7";
             this.button7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(46, 26);
@@ -895,14 +915,15 @@
             // 
             this.button13.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.button13.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.button13.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button13.Flag = ((WinPaletter.UI.WP.Button.Flags)(((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover) 
+            | WinPaletter.UI.WP.Button.Flags.CustomColorOnHover)));
             this.button13.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button13.Image = null;
             this.button13.ImageGlyph = null;
             this.button13.ImageGlyphEnabled = true;
-            this.button13.Location = new System.Drawing.Point(671, 3);
+            this.button13.Location = new System.Drawing.Point(724, 6);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(106, 26);
+            this.button13.Size = new System.Drawing.Size(111, 26);
             this.button13.TabIndex = 14;
             this.button13.Text = "Submit changes";
             this.button13.UseVisualStyleBackColor = true;
@@ -914,9 +935,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.status_lbl);
-            this.groupBox1.Location = new System.Drawing.Point(3, 503);
+            this.groupBox1.Location = new System.Drawing.Point(3, 558);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(831, 32);
+            this.groupBox1.Size = new System.Drawing.Size(840, 32);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
@@ -928,7 +949,7 @@
             this.status_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.status_lbl.Location = new System.Drawing.Point(7, 9);
             this.status_lbl.Name = "status_lbl";
-            this.status_lbl.Size = new System.Drawing.Size(815, 15);
+            this.status_lbl.Size = new System.Drawing.Size(824, 15);
             this.status_lbl.TabIndex = 13;
             this.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -939,10 +960,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.splitContainer1);
-            this.groupBox2.Location = new System.Drawing.Point(3, 41);
+            this.groupBox2.Location = new System.Drawing.Point(3, 47);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3);
-            this.groupBox2.Size = new System.Drawing.Size(831, 456);
+            this.groupBox2.Size = new System.Drawing.Size(840, 505);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.UseDecorationPattern = false;
             this.groupBox2.UseSharpStyle = false;
@@ -962,7 +983,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listView1);
-            this.splitContainer1.Size = new System.Drawing.Size(825, 450);
+            this.splitContainer1.Size = new System.Drawing.Size(834, 499);
             this.splitContainer1.SplitterDistance = 178;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -976,7 +997,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.ShowLines = false;
             this.treeView1.ShowRootLines = false;
-            this.treeView1.Size = new System.Drawing.Size(177, 450);
+            this.treeView1.Size = new System.Drawing.Size(177, 499);
             this.treeView1.TabIndex = 0;
             // 
             // separatorV1
@@ -986,7 +1007,7 @@
             this.separatorV1.Dock = System.Windows.Forms.DockStyle.Right;
             this.separatorV1.Location = new System.Drawing.Point(177, 0);
             this.separatorV1.Name = "separatorV1";
-            this.separatorV1.Size = new System.Drawing.Size(1, 450);
+            this.separatorV1.Size = new System.Drawing.Size(1, 499);
             this.separatorV1.TabIndex = 1;
             this.separatorV1.TabStop = false;
             this.separatorV1.Text = "separatorV1";
@@ -1002,7 +1023,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
             this.listView1.RowHeight = 24;
-            this.listView1.Size = new System.Drawing.Size(643, 450);
+            this.listView1.Size = new System.Drawing.Size(652, 499);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -1020,9 +1041,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(1002, 681);
-            this.Controls.Add(this.titlebarExtender1);
-            this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.titlebarExtender1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1033,7 +1053,6 @@
             this.titlebarExtender1.ResumeLayout(false);
             this.explorer_controls.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.bottom_buttons.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1066,8 +1085,6 @@
         private UI.WP.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private UI.WP.GroupBox bottom_buttons;
-        internal UI.WP.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         internal System.Windows.Forms.Label email_lbl;
@@ -1125,5 +1142,9 @@
         private UI.WP.Button button13;
         private UI.WP.GroupBox groupBox4;
         private UI.WP.SeparatorH separatorH1;
+        internal System.Windows.Forms.Label label9;
+        private UI.WP.SeparatorV separatorV2;
+        private UI.WP.Toggle toggle1;
+        private UI.WP.SeparatorV separatorV3;
     }
 }

@@ -81,7 +81,7 @@ namespace WinPaletter
             else if (!OS.WXP && !OS.W8x)
             {
                 // If the OS is not Windows XP, 8 or 8.1 or even DWM composition is disabled, use Acrylic effect.
-                this.DropEffect(Padding.Empty, shownOverAParent, DWM.BackdropStyles.Acrylic, true);
+                this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.Acrylic, true);
 
                 if (shownOverAParent)
                 {
@@ -107,7 +107,7 @@ namespace WinPaletter
             else
             {
                 // If the OS is Windows XP, 8 or 8.1, use transparent gray effect.
-                this.DropEffect(Padding.Empty, shownOverAParent, DWM.BackdropStyles.None);
+                this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.None);
             }
 
             base.OnLoad(e);

@@ -42,7 +42,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
+            Manager TMx = Default.FromOS(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }

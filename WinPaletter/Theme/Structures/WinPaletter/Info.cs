@@ -112,8 +112,8 @@ namespace WinPaletter.Theme.Structures
             Description = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Description", string.Empty);
             ExportResThemePack = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ExportResThemePack", false);
             License = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "License", string.Empty);
-            Color1 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Default.Get().Info.Color1);
-            Color2 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Default.Get().Info.Color2);
+            Color1 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color1", Default.FromCurrentOS.Info.Color1);
+            Color2 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Default.FromCurrentOS.Info.Color2);
 
             Pattern = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", 1);
             DesignedFor_Win12 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win12", true);

@@ -9,9 +9,19 @@ namespace WinPaletter.Theme
         /// Default Windows Vista theme as a <see cref="Manager"/> object
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
-        public static Manager WindowsVista()
+        /// 
+        public static Manager WindowsVista
         {
-            Manager TM = new(Manager.Source.Empty);
+            get
+            {
+                if (_windowsVista == null) _windowsVista = wv();
+                return _windowsVista;
+            }
+        }
+        private static Manager _windowsVista = null;
+        private static Manager wv()
+        {
+            Manager TM = new();
 
             Info Info = TM.Info;
             Info.ThemeName = "Default Windows Vista";
@@ -134,9 +144,6 @@ namespace WinPaletter.Theme
 
             Icons Icons = TM.Icons;
             Icons.Enabled = true;
-
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursors.Enabled = true;
             TM.Cursors.Shadow = true;

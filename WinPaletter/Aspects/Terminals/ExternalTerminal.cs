@@ -75,7 +75,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager _Def = Default.Get(Program.WindowStyle))
+            using (Manager _Def = Default.FromOS(Program.WindowStyle))
             {
                 LoadFromTM(_Def.CommandPrompt);
                 ApplyPreview();
@@ -90,7 +90,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.W12)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W12)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin11Preset(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W11)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
@@ -112,7 +112,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W10)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
@@ -123,7 +123,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W81)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
@@ -134,7 +134,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W8)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
@@ -145,7 +145,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W7)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
@@ -156,7 +156,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.WVista)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx.CommandPrompt); }
+            using (Manager TMx = Default.FromOS(WindowStyle.WXP)) { LoadFromTM(TMx.CommandPrompt); }
         }
 
         private void ExternalTerminal_Load(object sender, EventArgs e)
@@ -406,7 +406,7 @@ namespace WinPaletter
                 return;
             }
 
-            using (Manager @default = Default.Get(Program.WindowStyle))
+            using (Manager @default = Default.FromOS(Program.WindowStyle))
             {
                 ColorTable00.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable00", @default.CommandPrompt.ColorTable00.Reverse()).Reverse());
                 ColorTable01.BackColor = Color.FromArgb(255, ReadReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "ColorTable01", @default.CommandPrompt.ColorTable01.Reverse()).Reverse());

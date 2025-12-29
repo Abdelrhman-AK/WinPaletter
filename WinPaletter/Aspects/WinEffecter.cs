@@ -44,7 +44,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
+            Manager TMx = Default.FromOS(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -57,37 +57,37 @@ namespace WinPaletter
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W11)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W10)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W81)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W8)) { LoadFromTM(TMx); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W7)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(WindowStyle.WVista)) { LoadFromTM(TMx); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(WindowStyle.WXP)) { LoadFromTM(TMx); }
         }
 
         private void Apply(object sender, EventArgs e)
@@ -287,7 +287,7 @@ namespace WinPaletter
 
         private void button21_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox1.Checked = TM.WindowsEffects.WindowAnimation;
             }
@@ -295,7 +295,7 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox27.Checked = TM.WindowsEffects.AnimateControlsInsideWindow;
             }
@@ -303,7 +303,7 @@ namespace WinPaletter
 
         private void button2_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox2.Checked = TM.WindowsEffects.WindowShadow;
             }
@@ -311,7 +311,7 @@ namespace WinPaletter
 
         private void button3_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox3.Checked = TM.WindowsEffects.WindowUIEffects;
             }
@@ -319,7 +319,7 @@ namespace WinPaletter
 
         private void button4_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox11.Checked = TM.WindowsEffects.ShowWinContentDrag;
             }
@@ -327,7 +327,7 @@ namespace WinPaletter
 
         private void button5_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox21.Checked = TM.WindowsEffects.ShakeToMinimize;
             }
@@ -335,7 +335,7 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox4.Checked = TM.WindowsEffects.IconsShadow;
             }
@@ -343,7 +343,7 @@ namespace WinPaletter
 
         private void button6_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox10.Checked = TM.WindowsEffects.IconsDesktopTranslSel;
             }
@@ -351,7 +351,7 @@ namespace WinPaletter
 
         private void button11_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox6.Checked = TM.WindowsEffects.MenuAnimation;
             }
@@ -359,7 +359,7 @@ namespace WinPaletter
 
         private void button10_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 ComboBox1.SelectedIndex = TM.WindowsEffects.MenuFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? 0 : 1;
             }
@@ -367,7 +367,7 @@ namespace WinPaletter
 
         private void button9_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox5.Checked = TM.WindowsEffects.MenuSelectionFade;
             }
@@ -375,7 +375,7 @@ namespace WinPaletter
 
         private void button8_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox12.Checked = TM.WindowsEffects.KeyboardUnderline;
             }
@@ -383,7 +383,7 @@ namespace WinPaletter
 
         private void button13_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox8.Checked = TM.WindowsEffects.ComboBoxAnimation;
             }
@@ -391,7 +391,7 @@ namespace WinPaletter
 
         private void button12_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox7.Checked = TM.WindowsEffects.ListBoxSmoothScrolling;
             }
@@ -399,7 +399,7 @@ namespace WinPaletter
 
         private void button17_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox9.Checked = TM.WindowsEffects.TooltipAnimation;
             }
@@ -407,7 +407,7 @@ namespace WinPaletter
 
         private void button16_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 ComboBox2.SelectedIndex = TM.WindowsEffects.TooltipFade == Theme.Structures.WinEffects.MenuAnimType.Fade ? 0 : 1;
             }
@@ -415,7 +415,7 @@ namespace WinPaletter
 
         private void button15_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox17.Checked = TM.WindowsEffects.BalloonNotifications;
             }
@@ -423,7 +423,7 @@ namespace WinPaletter
 
         private void button18_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox13.Checked = TM.WindowsEffects.AWT_Enabled;
             }
@@ -431,7 +431,7 @@ namespace WinPaletter
 
         private void button14_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox14.Checked = TM.WindowsEffects.AWT_BringActivatedWindowToTop;
             }
@@ -439,7 +439,7 @@ namespace WinPaletter
 
         private void button20_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox20.Checked = TM.WindowsEffects.SysListView32;
             }
@@ -452,7 +452,7 @@ namespace WinPaletter
 
         private void button22_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox23.Checked = TM.WindowsEffects.DisableNavBar;
             }
@@ -460,7 +460,7 @@ namespace WinPaletter
 
         private void button24_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox16.Checked = TM.WindowsEffects.Win11ClassicContextMenu;
             }
@@ -468,7 +468,7 @@ namespace WinPaletter
 
         private void button23_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox22.Checked = TM.WindowsEffects.Win11BootDots;
             }
@@ -476,7 +476,7 @@ namespace WinPaletter
 
         private void button31_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox15.Checked = TM.WindowsEffects.SnapCursorToDefButton;
             }
@@ -484,7 +484,7 @@ namespace WinPaletter
 
         private void button30_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox19.Checked = TM.WindowsEffects.ShowSecondsInSystemClock;
             }
@@ -492,7 +492,7 @@ namespace WinPaletter
 
         private void button29_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox18.Checked = TM.WindowsEffects.PaintDesktopVersion;
             }
@@ -500,7 +500,7 @@ namespace WinPaletter
 
         private void button28_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox25.Checked = TM.WindowsEffects.FullScreenStartMenu;
             }
@@ -508,7 +508,7 @@ namespace WinPaletter
 
         private void button27_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox24.Checked = TM.WindowsEffects.AutoHideScrollBars;
             }
@@ -516,7 +516,7 @@ namespace WinPaletter
 
         private void button26_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox26.Checked = TM.WindowsEffects.ClassicVolMixer;
             }
@@ -524,7 +524,7 @@ namespace WinPaletter
 
         private void button32_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 checkBox28.Checked = TM.WindowsEffects.EnableAeroPeek;
             }
@@ -532,7 +532,7 @@ namespace WinPaletter
 
         private void button33_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 checkBox29.Checked = TM.WindowsEffects.AlwaysHibernateThumbnails;
             }

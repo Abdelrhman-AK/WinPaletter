@@ -53,6 +53,7 @@
             this.card15 = new WinPaletter.UI.WP.Card();
             this.card10 = new WinPaletter.UI.WP.Card();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.button15 = new WinPaletter.UI.WP.Button();
             this.apply_btn = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.restartExplorer_btn = new WinPaletter.UI.WP.Button();
@@ -82,7 +83,6 @@
             this.tip_label = new System.Windows.Forms.Label();
             this.userButton = new WinPaletter.UI.WP.Button();
             this.winEdition = new WinPaletter.UI.WP.Button();
-            this.button15 = new WinPaletter.UI.WP.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -409,6 +409,24 @@
             this.bottom_buttons.UseDecorationPattern = false;
             this.bottom_buttons.UseSharpStyle = false;
             // 
+            // button15
+            // 
+            this.button15.CustomColor = System.Drawing.Color.Empty;
+            this.button15.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
+            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button15.ForeColor = System.Drawing.Color.White;
+            this.button15.Image = ((System.Drawing.Image)(resources.GetObject("button15.Image")));
+            this.button15.ImageGlyph = null;
+            this.button15.ImageGlyphEnabled = false;
+            this.button15.Location = new System.Drawing.Point(9, 6);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(130, 37);
+            this.button15.TabIndex = 35;
+            this.button15.Text = "Exit";
+            this.button15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button15.UseVisualStyleBackColor = false;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
             // apply_btn
             // 
             this.apply_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -553,7 +571,7 @@
             // 
             this.Button3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(202)))), ((int)(((byte)(228)))));
-            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
@@ -572,7 +590,7 @@
             // 
             this.Button20.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button20.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.Button20.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button20.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button20.ForeColor = System.Drawing.Color.White;
             this.Button20.Image = null;
@@ -591,7 +609,7 @@
             // 
             this.Button2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
-            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
@@ -610,7 +628,7 @@
             // 
             this.Button7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(89)))), ((int)(((byte)(174)))));
-            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
@@ -629,7 +647,7 @@
             // 
             this.Button9.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button9.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(89)))), ((int)(((byte)(174)))));
-            this.Button9.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button9.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button9.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button9.ForeColor = System.Drawing.Color.White;
             this.Button9.Image = null;
@@ -648,7 +666,7 @@
             // 
             this.Button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button10.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(18)))), ((int)(((byte)(31)))));
-            this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button10.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button10.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button10.ForeColor = System.Drawing.Color.White;
             this.Button10.Image = null;
@@ -667,7 +685,7 @@
             // 
             this.btn_history.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btn_history.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(24)))));
-            this.btn_history.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.btn_history.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.btn_history.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btn_history.ForeColor = System.Drawing.Color.White;
             this.btn_history.Image = null;
@@ -686,7 +704,7 @@
             // 
             this.button14.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.button14.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
-            this.button14.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.button14.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button14.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button14.ForeColor = System.Drawing.Color.White;
             this.button14.Image = null;
@@ -717,7 +735,7 @@
             // 
             this.Button11.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button11.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button11.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button11.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button11.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button11.ForeColor = System.Drawing.Color.White;
             this.Button11.Image = null;
@@ -736,7 +754,7 @@
             // 
             this.Button5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button5.CustomColor = System.Drawing.Color.DodgerBlue;
-            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button5.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
@@ -755,7 +773,7 @@
             // 
             this.Button31.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
-            this.Button31.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button31.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button31.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button31.ForeColor = System.Drawing.Color.White;
             this.Button31.Image = null;
@@ -774,7 +792,7 @@
             // 
             this.button8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.button8.CustomColor = System.Drawing.Color.Purple;
-            this.button8.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.button8.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = null;
@@ -792,7 +810,7 @@
             // 
             this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.button1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(84)))), ((int)(((byte)(204)))));
-            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.button1.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Image = null;
@@ -811,7 +829,7 @@
             // 
             this.Button39.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button39.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(40)))), ((int)(((byte)(0)))));
-            this.Button39.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button39.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button39.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button39.ForeColor = System.Drawing.Color.White;
             this.Button39.Image = null;
@@ -830,7 +848,7 @@
             // 
             this.Button6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button6.CustomColor = System.Drawing.Color.Indigo;
-            this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button6.ForeColor = System.Drawing.Color.White;
             this.Button6.Image = null;
@@ -849,7 +867,7 @@
             // 
             this.button4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
@@ -868,7 +886,7 @@
             // 
             this.Button12.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Button12.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.Button12.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.Button12.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button12.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button12.ForeColor = System.Drawing.Color.White;
             this.Button12.Image = null;
@@ -945,24 +963,6 @@
             this.winEdition.Tag = "";
             this.winEdition.UseVisualStyleBackColor = false;
             this.winEdition.Click += new System.EventHandler(this.winEdition_Click);
-            // 
-            // button15
-            // 
-            this.button15.CustomColor = System.Drawing.Color.Empty;
-            this.button15.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
-            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button15.ForeColor = System.Drawing.Color.White;
-            this.button15.Image = ((System.Drawing.Image)(resources.GetObject("button15.Image")));
-            this.button15.ImageGlyph = null;
-            this.button15.ImageGlyphEnabled = false;
-            this.button15.Location = new System.Drawing.Point(9, 6);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(130, 37);
-            this.button15.TabIndex = 35;
-            this.button15.Text = "Exit";
-            this.button15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button15.UseVisualStyleBackColor = false;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // Home
             // 

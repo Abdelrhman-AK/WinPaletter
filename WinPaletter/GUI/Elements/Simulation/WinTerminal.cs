@@ -523,7 +523,7 @@ namespace WinPaletter.UI.Simulation
         {
             if (Program.Wallpaper != null)
             {
-                adaptedBack = Program.Wallpaper;
+                adaptedBack = Program.Wallpaper.Resize(Size);
                 adaptedBackBlurred = adaptedBack.Blur(13);
             }
         }

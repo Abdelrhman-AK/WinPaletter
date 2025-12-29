@@ -49,7 +49,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
+            Manager TMx = Default.FromOS(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -60,7 +60,7 @@ namespace WinPaletter
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    using (Manager _Def = Default.Get(Program.WindowStyle))
+                    using (Manager _Def = Default.FromOS(Program.WindowStyle))
                     {
                         GetFromClassicThemeFile(dlg.FileName, _Def.Sounds);
                     }
@@ -692,432 +692,432 @@ namespace WinPaletter
 
         private void button259_Click_1(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox1.Text = TMx.Sounds.Snd_Win_SystemStart; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox1.Text = TMx.Sounds.Snd_Win_SystemStart; }
         }
 
         private void button12_Click_1(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox3.Text = TMx.Sounds.Snd_Win_SystemExit; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox3.Text = TMx.Sounds.Snd_Win_SystemExit; }
         }
 
         private void button11_Click_1(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox4.Text = TMx.Sounds.Snd_Win_WindowsLogoff; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox4.Text = TMx.Sounds.Snd_Win_WindowsLogoff; }
         }
 
         private void button10_Click_1(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox5.Text = TMx.Sounds.Snd_Win_WindowsLogon; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox5.Text = TMx.Sounds.Snd_Win_WindowsLogon; }
         }
 
         private void button9_Click_1(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox6.Text = TMx.Sounds.Snd_Win_WindowsUnlock; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox6.Text = TMx.Sounds.Snd_Win_WindowsUnlock; }
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox86.Text = TMx.Sounds.Snd_Win_WindowsLock; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox86.Text = TMx.Sounds.Snd_Win_WindowsLock; }
         }
 
         private void button7_Click_1(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox64.Text = TMx.Sounds.Snd_Win_ChangeTheme; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox64.Text = TMx.Sounds.Snd_Win_ChangeTheme; }
         }
 
         private void button275_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox10.Text = TMx.Sounds.Snd_Win_SystemNotification; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox10.Text = TMx.Sounds.Snd_Win_SystemNotification; }
         }
 
         private void button274_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox7.Text = TMx.Sounds.Snd_Win_SystemQuestion; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox7.Text = TMx.Sounds.Snd_Win_SystemQuestion; }
         }
 
         private void button273_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox8.Text = TMx.Sounds.Snd_Win_SystemExclamation; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox8.Text = TMx.Sounds.Snd_Win_SystemExclamation; }
         }
 
         private void button272_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox9.Text = TMx.Sounds.Snd_Win_SystemAsterisk; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox9.Text = TMx.Sounds.Snd_Win_SystemAsterisk; }
         }
 
         private void button271_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox66.Text = TMx.Sounds.Snd_Win_SystemHand; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox66.Text = TMx.Sounds.Snd_Win_SystemHand; }
         }
 
         private void button270_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox11.Text = TMx.Sounds.Snd_Win_WindowsUAC; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox11.Text = TMx.Sounds.Snd_Win_WindowsUAC; }
         }
 
         private void button269_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox68.Text = TMx.Sounds.Snd_Win_AppGPFault; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox68.Text = TMx.Sounds.Snd_Win_AppGPFault; }
         }
 
         private void button283_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox16.Text = TMx.Sounds.Snd_Win_Open; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox16.Text = TMx.Sounds.Snd_Win_Open; }
         }
 
         private void button282_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox15.Text = TMx.Sounds.Snd_Win_Close; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox15.Text = TMx.Sounds.Snd_Win_Close; }
         }
 
         private void button281_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox14.Text = TMx.Sounds.Snd_Win_Maximize; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox14.Text = TMx.Sounds.Snd_Win_Maximize; }
         }
 
         private void button280_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox13.Text = TMx.Sounds.Snd_Win_Minimize; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox13.Text = TMx.Sounds.Snd_Win_Minimize; }
         }
 
         private void button279_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox12.Text = TMx.Sounds.Snd_Win_RestoreDown; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox12.Text = TMx.Sounds.Snd_Win_RestoreDown; }
         }
 
         private void button278_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox17.Text = TMx.Sounds.Snd_Win_RestoreUp; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox17.Text = TMx.Sounds.Snd_Win_RestoreUp; }
         }
 
         private void button292_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox45.Text = TMx.Sounds.Snd_Win_DeviceConnect; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox45.Text = TMx.Sounds.Snd_Win_DeviceConnect; }
         }
 
         private void button291_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox46.Text = TMx.Sounds.Snd_Win_DeviceDisconnect; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox46.Text = TMx.Sounds.Snd_Win_DeviceDisconnect; }
         }
 
         private void button290_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox47.Text = TMx.Sounds.Snd_Win_DeviceFail; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox47.Text = TMx.Sounds.Snd_Win_DeviceFail; }
         }
 
         private void button289_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox84.Text = TMx.Sounds.Snd_ChargerConnected; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox84.Text = TMx.Sounds.Snd_ChargerConnected; }
         }
 
         private void button288_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox85.Text = TMx.Sounds.Snd_ChargerDisconnected; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox85.Text = TMx.Sounds.Snd_ChargerDisconnected; }
         }
 
         private void button287_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox48.Text = TMx.Sounds.Snd_Win_LowBatteryAlarm; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox48.Text = TMx.Sounds.Snd_Win_LowBatteryAlarm; }
         }
 
         private void button286_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox49.Text = TMx.Sounds.Snd_Win_CriticalBatteryAlarm; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox49.Text = TMx.Sounds.Snd_Win_CriticalBatteryAlarm; }
         }
 
         private void button285_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox50.Text = TMx.Sounds.Snd_Win_PrintComplete; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox50.Text = TMx.Sounds.Snd_Win_PrintComplete; }
         }
 
         private void button284_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox52.Text = TMx.Sounds.Snd_Win_ProximityConnection; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox52.Text = TMx.Sounds.Snd_Win_ProximityConnection; }
         }
 
         private void button297_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox79.Text = TMx.Sounds.Snd_Explorer_FaxLineRings; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox79.Text = TMx.Sounds.Snd_Explorer_FaxLineRings; }
         }
 
         private void button296_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox51.Text = TMx.Sounds.Snd_Win_FaxBeep; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox51.Text = TMx.Sounds.Snd_Win_FaxBeep; }
         }
 
         private void button295_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox76.Text = TMx.Sounds.Snd_Explorer_FaxNew; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox76.Text = TMx.Sounds.Snd_Explorer_FaxNew; }
         }
 
         private void button294_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox77.Text = TMx.Sounds.Snd_Explorer_FaxSent; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox77.Text = TMx.Sounds.Snd_Explorer_FaxSent; }
         }
 
         private void button293_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox78.Text = TMx.Sounds.Snd_Explorer_FaxError; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox78.Text = TMx.Sounds.Snd_Explorer_FaxError; }
         }
 
         private void button306_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox62.Text = TMx.Sounds.Snd_Explorer_Navigating; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox62.Text = TMx.Sounds.Snd_Explorer_Navigating; }
         }
 
         private void button305_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox61.Text = TMx.Sounds.Snd_Explorer_EmptyRecycleBin; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox61.Text = TMx.Sounds.Snd_Explorer_EmptyRecycleBin; }
         }
 
         private void button304_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox56.Text = TMx.Sounds.Snd_Explorer_MoveMenuItem; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox56.Text = TMx.Sounds.Snd_Explorer_MoveMenuItem; }
         }
 
         private void button303_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox60.Text = TMx.Sounds.Snd_Explorer_ActivatingDocument; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox60.Text = TMx.Sounds.Snd_Explorer_ActivatingDocument; }
         }
 
         private void button302_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox63.Text = TMx.Sounds.Snd_Win_ShowBand; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox63.Text = TMx.Sounds.Snd_Win_ShowBand; }
         }
 
         private void button301_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox59.Text = TMx.Sounds.Snd_Explorer_SecurityBand; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox59.Text = TMx.Sounds.Snd_Explorer_SecurityBand; }
         }
 
         private void button300_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox58.Text = TMx.Sounds.Snd_Explorer_BlockedPopup; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox58.Text = TMx.Sounds.Snd_Explorer_BlockedPopup; }
         }
 
         private void button299_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox57.Text = TMx.Sounds.Snd_Explorer_FeedDiscovered; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox57.Text = TMx.Sounds.Snd_Explorer_FeedDiscovered; }
         }
 
         private void button298_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox75.Text = TMx.Sounds.Snd_Explorer_SearchProviderDiscovered; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox75.Text = TMx.Sounds.Snd_Explorer_SearchProviderDiscovered; }
         }
 
         private void button315_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox55.Text = TMx.Sounds.Snd_Win_Default; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox55.Text = TMx.Sounds.Snd_Win_Default; }
         }
 
         private void button314_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox23.Text = TMx.Sounds.Snd_Win_Notification_Default; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox23.Text = TMx.Sounds.Snd_Win_Notification_Default; }
         }
 
         private void button313_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox22.Text = TMx.Sounds.Snd_Win_Notification_IM; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox22.Text = TMx.Sounds.Snd_Win_Notification_IM; }
         }
 
         private void button312_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox21.Text = TMx.Sounds.Snd_Win_MessageNudge; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox21.Text = TMx.Sounds.Snd_Win_MessageNudge; }
         }
 
         private void button311_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox20.Text = TMx.Sounds.Snd_Win_Notification_Mail; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox20.Text = TMx.Sounds.Snd_Win_Notification_Mail; }
         }
 
         private void button310_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox65.Text = TMx.Sounds.Snd_Win_MailBeep; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox65.Text = TMx.Sounds.Snd_Win_MailBeep; }
         }
 
         private void button309_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox19.Text = TMx.Sounds.Snd_Win_Notification_Proximity; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox19.Text = TMx.Sounds.Snd_Win_Notification_Proximity; }
         }
 
         private void button308_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox18.Text = TMx.Sounds.Snd_Win_Notification_Reminder; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox18.Text = TMx.Sounds.Snd_Win_Notification_Reminder; }
         }
 
         private void button307_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox24.Text = TMx.Sounds.Snd_Win_Notification_SMS; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox24.Text = TMx.Sounds.Snd_Win_Notification_SMS; }
         }
 
         private void button325_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox31.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox31.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm; }
         }
 
         private void button324_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox30.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm2; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox30.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm2; }
         }
 
         private void button323_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox29.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm3; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox29.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm3; }
         }
 
         private void button322_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox28.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm4; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox28.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm4; }
         }
 
         private void button321_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox27.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm5; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox27.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm5; }
         }
 
         private void button320_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox26.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm6; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox26.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm6; }
         }
 
         private void button319_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox25.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm7; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox25.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm7; }
         }
 
         private void button318_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox34.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm8; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox34.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm8; }
         }
 
         private void button317_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox33.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm9; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox33.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm9; }
         }
 
         private void button316_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox32.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm10; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox32.Text = TMx.Sounds.Snd_Win_Notification_Looping_Alarm10; }
         }
 
         private void button335_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox44.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox44.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call; }
         }
 
         private void button334_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox43.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call2; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox43.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call2; }
         }
 
         private void button333_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox42.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call3; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox42.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call3; }
         }
 
         private void button332_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox41.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call4; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox41.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call4; }
         }
 
         private void button331_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox40.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call5; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox40.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call5; }
         }
 
         private void button330_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox39.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call6; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox39.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call6; }
         }
 
         private void button329_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox38.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call7; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox38.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call7; }
         }
 
         private void button328_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox37.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call8; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox37.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call8; }
         }
 
         private void button327_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox36.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call9; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox36.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call9; }
         }
 
         private void button326_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox35.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call10; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox35.Text = TMx.Sounds.Snd_Win_Notification_Looping_Call10; }
         }
 
         private void button341_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox70.Text = TMx.Sounds.Snd_SpeechRec_DisNumbersSound; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox70.Text = TMx.Sounds.Snd_SpeechRec_DisNumbersSound; }
         }
 
         private void button340_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox74.Text = TMx.Sounds.Snd_SpeechRec_PanelSound; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox74.Text = TMx.Sounds.Snd_SpeechRec_PanelSound; }
         }
 
         private void button339_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox69.Text = TMx.Sounds.Snd_SpeechRec_MisrecoSound; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox69.Text = TMx.Sounds.Snd_SpeechRec_MisrecoSound; }
         }
 
         private void button338_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox73.Text = TMx.Sounds.Snd_SpeechRec_HubOffSound; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox73.Text = TMx.Sounds.Snd_SpeechRec_HubOffSound; }
         }
 
         private void button337_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox72.Text = TMx.Sounds.Snd_SpeechRec_HubOnSound; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox72.Text = TMx.Sounds.Snd_SpeechRec_HubOnSound; }
         }
 
         private void button336_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox71.Text = TMx.Sounds.Snd_SpeechRec_HubSleepSound; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox71.Text = TMx.Sounds.Snd_SpeechRec_HubSleepSound; }
         }
 
         private void button345_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox83.Text = TMx.Sounds.Snd_NetMeeting_PersonJoins; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox83.Text = TMx.Sounds.Snd_NetMeeting_PersonJoins; }
         }
 
         private void button344_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox82.Text = TMx.Sounds.Snd_NetMeeting_PersonLeaves; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox82.Text = TMx.Sounds.Snd_NetMeeting_PersonLeaves; }
         }
 
         private void button343_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox80.Text = TMx.Sounds.Snd_NetMeeting_ReceiveCall; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox80.Text = TMx.Sounds.Snd_NetMeeting_ReceiveCall; }
         }
 
         private void button342_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox81.Text = TMx.Sounds.Snd_NetMeeting_ReceiveRequestToJoin; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox81.Text = TMx.Sounds.Snd_NetMeeting_ReceiveRequestToJoin; }
         }
 
         private void button346_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { TextBox67.Text = TMx.Sounds.Snd_Win_CCSelect; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { TextBox67.Text = TMx.Sounds.Snd_Win_CCSelect; }
         }
 
         private void button348_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox87.Text = TMx.Sounds.Snd_WiFiConnected; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox87.Text = TMx.Sounds.Snd_WiFiConnected; }
         }
 
         private void button352_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox88.Text = TMx.Sounds.Snd_WiFiDisconnected; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox88.Text = TMx.Sounds.Snd_WiFiDisconnected; }
         }
 
         private void button356_Click(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { textBox89.Text = TMx.Sounds.Snd_WiFiConnectionFailed; }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { textBox89.Text = TMx.Sounds.Snd_WiFiConnectionFailed; }
         }
 
         #endregion

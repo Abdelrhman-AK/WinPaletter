@@ -135,7 +135,7 @@ namespace WinPaletter.UI.WP
             base.OnHandleCreated(e);
             if (DesignMode) return;
 
-            UxTheme.SetWindowTheme(Handle, "Explorer", null);
+            SetControlTheme(Handle, CtrlTheme.DarkExplorer);
             SubclassHeader();
         }
 
@@ -147,7 +147,7 @@ namespace WinPaletter.UI.WP
             if (headerHandle != IntPtr.Zero)
             {
                 // Apply modern Explorer theme for smoother rendering
-                UxTheme.SetWindowTheme(headerHandle, "Explorer", null);
+                SetControlTheme(Handle, CtrlTheme.DarkExplorer);
 
                 // Enable double-buffering at the window level to avoid flicker
                 int exStyle = User32.GetWindowLong(headerHandle, GWL_EXSTYLE);

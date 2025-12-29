@@ -223,11 +223,11 @@ namespace WinPaletter.Theme
         /// <summary>
         /// class that contains data about Windows Terminal Stable, and it can be customized.
         /// </summary>
-        public WinTerminal Terminal { get; set; } = new(string.Empty, WinTerminal.Mode.Empty);
+        public WinTerminal Terminal { get; set; } = new();
 
         /// <summary>
         /// class that contains data about Windows Terminal Preview, and it can be customized.
         /// </summary>
-        public WinTerminal TerminalPreview { get; set; } = new(string.Empty, WinTerminal.Mode.Empty);
+        public WinTerminal TerminalPreview { get; set; } = new();
     }
 }

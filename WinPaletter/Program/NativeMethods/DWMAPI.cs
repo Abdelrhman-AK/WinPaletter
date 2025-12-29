@@ -425,11 +425,6 @@ namespace WinPaletter.NativeMethods
             VISIBLE_FRAME_BORDER_THICKNESS,
 
             /// <summary>
-            /// Specifies the system backdrop type.
-            /// </summary>
-            SYSTEMBACKDROP_TYPE,
-
-            /// <summary>
             /// Specifies the Mica effect attribute.
             /// </summary>
             MICA_EFFECT = 1029,

@@ -9,9 +9,19 @@ namespace WinPaletter.Theme
         /// Default Windows XP theme as a <see cref="Manager"/> object
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
-        public static Manager WindowsXP()
+        /// 
+        public static Manager WindowsXP
         {
-            Manager TM = new(Manager.Source.Empty);
+            get
+            {
+                if (_windowsXP == null) _windowsXP = w10();
+                return _windowsXP;
+            }
+        }
+        private static Manager _windowsXP = wxp();
+        private static Manager wxp()
+        {
+            Manager TM = new();
 
             Info Info = TM.Info;
             Info.ThemeName = "Default Windows XP";
@@ -222,9 +232,6 @@ namespace WinPaletter.Theme
             Icons.RecycleBinEmpty = $"{SysPaths.System32}\\shell32.dll,31";
             Icons.RecycleBinFull = $"{SysPaths.System32}\\shell32.dll,32";
             Icons.ControlPanel = $"{SysPaths.System32}\\shell32.dll,21";
-
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             ScreenSaver ScreenSaver = TM.ScreenSaver;
             ScreenSaver.Enabled = true;

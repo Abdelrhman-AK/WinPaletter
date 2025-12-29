@@ -671,7 +671,7 @@ namespace WinPaletter
         {
             if (Forms.MainForm.ExitWithChangedFileResponse())
             {
-                Program.TM = Default.Get().Clone();
+                Program.TM = Default.FromCurrentOS.Clone();
                 Program.TM_Original = Program.TM.Clone();
                 File = null;
                 Text = Application.ProductName;

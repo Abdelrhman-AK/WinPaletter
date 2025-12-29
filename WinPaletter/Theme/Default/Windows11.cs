@@ -9,9 +9,18 @@ namespace WinPaletter.Theme
         /// Default Windows 11 theme as a <see cref="Manager"/> object
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
-        public static Manager Windows11()
+        public static Manager Windows11
         {
-            Manager TM = new(Manager.Source.Empty);
+            get
+            {
+                if (_windows11 == null) _windows11 = w11();
+                return _windows11;
+            }
+        }
+        private static Manager _windows11 = w11();
+        private static Manager w11()
+        {
+            Manager TM = new();
 
             Info Info = TM.Info;
             Info.ThemeName = "Default Windows 11";
@@ -90,9 +99,6 @@ namespace WinPaletter.Theme
 
             Icons Icons = TM.Icons;
             Icons.Enabled = true;
-
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursors.Enabled = true;
             TM.Cursors.Shadow = true;

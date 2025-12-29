@@ -9,9 +9,18 @@ namespace WinPaletter.Theme
         /// Default Windows 7 theme as a <see cref="Manager"/> object
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
-        public static Manager Windows7()
+        public static Manager Windows7
         {
-            Manager TM = new(Manager.Source.Empty);
+            get
+            {
+                if (_windows7 == null) _windows7 = w7();
+                return _windows7;
+            }
+        }
+        private static Manager _windows7 = w7();
+        private static Manager w7()
+        {
+            Manager TM = new();
 
             Info Info = TM.Info;
             Info.ThemeName = "Default Windows 7";
@@ -95,9 +104,6 @@ namespace WinPaletter.Theme
             WinEffects.Win11ClassicContextMenu = false;
             WinEffects.SysListView32 = false;
             WinEffects.EnableAeroPeek = true;
-
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             Icons Icons = TM.Icons;
             Icons.Enabled = true;

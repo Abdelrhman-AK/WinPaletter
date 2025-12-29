@@ -9,9 +9,18 @@ namespace WinPaletter.Theme
         /// Default Windows 8 theme as a <see cref="Manager"/> object
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
-        public static Manager Windows8()
+        public static Manager Windows8
         {
-            Manager TM = new(Manager.Source.Empty);
+            get
+            {
+                if (_windows8 == null) _windows8 = w8();
+                return _windows8;
+            }
+        }
+        private static Manager _windows8 = w8();
+        private static Manager w8()
+        {
+            Manager TM = new();
 
             Info Info = TM.Info;
             Info.ThemeName = "Default Windows 8";
@@ -101,9 +110,6 @@ namespace WinPaletter.Theme
 
             Icons Icons = TM.Icons;
             Icons.Enabled = true;
-
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursors.Enabled = true;
             TM.Cursors.Shadow = false;
@@ -221,6 +227,5 @@ namespace WinPaletter.Theme
 
             return TM;
         }
-
     }
 }

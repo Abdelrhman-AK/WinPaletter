@@ -761,7 +761,7 @@ namespace WinPaletter.UI.WP
 
             #region Button render
 
-            if (!_imageGlyphEnabled || DesignMode)
+            if (!_imageGlyphEnabled || DesignMode || _imageGlyphEnabled && (Flag == Flags.AlwaysTinted || Flag == Flags.AlwaysError || Flag == Flags.AlwaysTertiary || Flag == Flags.AlwaysCustomColor))
             {
                 if (Enabled)
                 {

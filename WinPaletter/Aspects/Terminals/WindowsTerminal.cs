@@ -16,7 +16,7 @@ namespace WinPaletter
 {
     public partial class WindowsTerminal
     {
-        public WinTerminal.Version _Mode;
+        public WinTerminal.Version Mode;
         public WinTerminal _Terminal;
         public WinTerminal _TerminalDefault;
         public WinTerminal.Version SaveState;
@@ -29,7 +29,7 @@ namespace WinPaletter
 
         public WindowsTerminal()
         {
-            SaveState = _Mode;
+            SaveState = Mode;
             InitializeComponent();
         }
 
@@ -41,7 +41,7 @@ namespace WinPaletter
                 {
                     using (Manager TMx = new(Manager.Source.File, dlg.FileName))
                     {
-                        _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+                        _Terminal = Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
                         Load_FromTerminal();
                     }
                 }
@@ -51,22 +51,22 @@ namespace WinPaletter
         private void LoadFromCurrent(object sender, EventArgs e)
         {
             Manager TMx = new(Manager.Source.Registry);
-            _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+            _Terminal = Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
             Load_FromTerminal();
             TMx.Dispose();
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
-            _Terminal = _Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
+            Manager TMx = Default.FromOS(Program.WindowStyle);
+            _Terminal = Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
             Load_FromTerminal();
             TMx.Dispose();
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {
-            switch (_Mode)
+            switch (Mode)
             {
                 case WinTerminal.Version.Stable:
                     {
@@ -96,11 +96,11 @@ namespace WinPaletter
                 {
                     try
                     {
-                        if (_Mode == WinTerminal.Version.Stable)
+                        if (Mode == WinTerminal.Version.Stable)
                         {
                             _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile);
                         }
-                        else if (_Mode == WinTerminal.Version.Preview)
+                        else if (Mode == WinTerminal.Version.Preview)
                         {
                             _Terminal = new(dlg.FileName, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                         }
@@ -168,11 +168,11 @@ namespace WinPaletter
                         }
                     }
 
-                    if (File.Exists(TerDir) && _Mode == WinTerminal.Version.Stable)
+                    if (File.Exists(TerDir) && Mode == WinTerminal.Version.Stable)
                     {
                         _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
                     }
-                    else if (File.Exists(TerPreDir) && _Mode == WinTerminal.Version.Preview)
+                    else if (File.Exists(TerPreDir) && Mode == WinTerminal.Version.Preview)
                     {
                         _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                     }
@@ -192,8 +192,8 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = _Mode == WinTerminal.Version.Stable ? Program.Lang.Strings.Aspects.TerminalStable : Program.Lang.Strings.Aspects.TerminalPreview,
-                Enabled = _Mode == WinTerminal.Version.Stable ? Program.TM.Terminal.Enabled : Program.TM.TerminalPreview.Enabled,
+                AspectName = Mode == WinTerminal.Version.Stable ? Program.Lang.Strings.Aspects.TerminalStable : Program.Lang.Strings.Aspects.TerminalPreview,
+                Enabled = Mode == WinTerminal.Version.Stable ? Program.TM.Terminal.Enabled : Program.TM.TerminalPreview.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
                 GeneratePalette = false,
@@ -214,7 +214,7 @@ namespace WinPaletter
 
             toggle1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
 
-            switch (_Mode)
+            switch (Mode)
             {
                 case WinTerminal.Version.Stable:
                     {
@@ -265,8 +265,8 @@ namespace WinPaletter
 
             TerProfiles.SelectedIndex = 0;
 
-            Terminal1.PreviewVersion = _Mode == WinTerminal.Version.Preview;
-            Terminal2.PreviewVersion = _Mode == WinTerminal.Version.Preview;
+            Terminal1.PreviewVersion = Mode == WinTerminal.Version.Preview;
+            Terminal2.PreviewVersion = Mode == WinTerminal.Version.Preview;
 
             if (_Terminal.Theme != null)
             {
@@ -1344,7 +1344,7 @@ namespace WinPaletter
                 }
             }
 
-            switch (_Mode)
+            switch (Mode)
             {
                 case WinTerminal.Version.Stable:
                     {
@@ -1414,7 +1414,7 @@ namespace WinPaletter
         {
             if (DialogResult != DialogResult.OK)
             {
-                switch (_Mode)
+                switch (Mode)
                 {
                     case WinTerminal.Version.Stable:
                         {
@@ -1445,12 +1445,12 @@ namespace WinPaletter
                 TerPreDir = SysPaths.TerminalPreviewJSON;
 
 
-                if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
+                if (File.Exists(TerDir) & Mode == WinTerminal.Version.Stable)
                 {
                     Process.Start(TerDir);
                 }
 
-                if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
+                if (File.Exists(TerPreDir) & Mode == WinTerminal.Version.Preview)
                 {
                     Process.Start(TerPreDir);
                 }
@@ -1473,12 +1473,12 @@ namespace WinPaletter
                         TerDir = SysPaths.TerminalJSON;
                         TerPreDir = SysPaths.TerminalPreviewJSON;
 
-                        if (File.Exists(TerDir) & _Mode == WinTerminal.Version.Stable)
+                        if (File.Exists(TerDir) & Mode == WinTerminal.Version.Stable)
                         {
                             File.Copy(TerDir, dlg.FileName);
                         }
 
-                        if (File.Exists(TerPreDir) & _Mode == WinTerminal.Version.Preview)
+                        if (File.Exists(TerPreDir) & Mode == WinTerminal.Version.Preview)
                         {
                             File.Copy(TerPreDir, dlg.FileName);
                         }

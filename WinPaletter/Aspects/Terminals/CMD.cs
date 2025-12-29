@@ -64,7 +64,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
+            Manager TMx = Default.FromOS(Program.WindowStyle);
             LoadFromTM(TMx, _Edition);
             TMx.Dispose();
         }
@@ -76,42 +76,42 @@ namespace WinPaletter
         }
         private void ImportWin12Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W12)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W12)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin11Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W11)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W11)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin10Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W10)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W10)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin81Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W81)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W81)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin8Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W8)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W8)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWin7Preset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.W7)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.W7)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWinVistaPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.WVista)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.WVista)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void ImportWinXPPreset(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(WindowStyle.WXP)) { LoadFromTM(TMx, _Edition); }
+            using (Manager TMx = Default.FromOS(WindowStyle.WXP)) { LoadFromTM(TMx, _Edition); }
         }
 
         private void Apply(object sender, EventArgs e)

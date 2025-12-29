@@ -47,7 +47,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.Get(Program.WindowStyle)) { LoadFromTM(TMx); }
+            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { LoadFromTM(TMx); }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
@@ -334,7 +334,7 @@ namespace WinPaletter
 
         public void ApplyDefaultTMValues()
         {
-            using (Manager DefTM = Default.Get(WindowStyle.W10))
+            using (Manager DefTM = Default.FromOS(WindowStyle.W10))
             {
                 TActive.DefaultBackColor = DefTM.Windows10.Titlebar_Active;
                 TInactive.DefaultBackColor = DefTM.Windows10.Titlebar_Inactive;

@@ -10,9 +10,18 @@ namespace WinPaletter.Theme
         /// <br>To be made if Windows 12 support is done.</br>
         /// </summary>
         /// <returns><see cref="Manager"/> </returns>
-        public static Manager Windows12()
+        public static Manager Windows12
         {
-            Manager TM = new(Manager.Source.Empty);
+            get
+            {
+                if (_windows12 == null) _windows12 = w12();
+                return _windows12;
+            }
+        }
+        private static Manager _windows12 = w12();
+        private static Manager w12()
+        {
+            Manager TM = new();
 
             Info Info = TM.Info;
             Info.ThemeName = "Default Windows 12";
@@ -91,9 +100,6 @@ namespace WinPaletter.Theme
 
             Icons Icons = TM.Icons;
             Icons.Enabled = true;
-
-            TM.Terminal = new(string.Empty, WinTerminal.Mode.Empty);
-            TM.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty);
 
             TM.Cursors.Enabled = true;
             TM.Cursors.Shadow = true;
@@ -211,6 +217,5 @@ namespace WinPaletter.Theme
 
             return TM;
         }
-
     }
 }

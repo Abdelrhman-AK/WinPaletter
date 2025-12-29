@@ -330,7 +330,7 @@ namespace WinPaletter
             }
 
             // If the wallpaper type is solid color, return the solid color wallpaper
-            string backgroundColor = (ReadReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.Get().Win32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)) ?? "255 255 255");
+            string backgroundColor = (ReadReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.FromCurrentOS.Win32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)) ?? "255 255 255");
             return backgroundColor.ToColorFromWin32().ToBitmap(Screen.PrimaryScreen.Bounds.Size);
         }
 
@@ -385,6 +385,7 @@ namespace WinPaletter
                     const string Explorer = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers";
                     const string Personalize = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
                     const string DWM = @"SOFTWARE\Microsoft\Windows\DWM";
+                    const string Transparency = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 
                     // Register essential events first
                     RegisterRegistryChangeEvent(sid, Desktop, "Wallpaper", Wallpaper_Changed_EventHandler);
@@ -395,6 +396,7 @@ namespace WinPaletter
                     {
                         RegisterRegistryChangeEvent(sid, Explorer, "BackgroundType", WallpaperType_Changed);
                         RegisterRegistryChangeEvent(sid, Personalize, "AppsUseLightTheme", DarkMode_Changed_EventHandler);
+                        RegisterRegistryChangeEvent(sid, Transparency, "EnableTransparency", Transparency_Changed_EventHandler);
                     }
                     else
                     {
@@ -449,7 +451,6 @@ namespace WinPaletter
             }
         }
 
-
         /// <summary>
         /// Stop all the registered watchers
         /// </summary>
@@ -480,6 +481,12 @@ namespace WinPaletter
             });
         }
 
+        private static void Transparency_Changed_EventHandler(object sender, EventArgs e)
+        {
+            windowsTransparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
+            WindowsTransparencyChanged?.Invoke(windowsTransparency);
+        }
+
         /// <summary>
         /// Event handler for the wallpaper change event to update the wallpaper in all open forms previews
         /// </summary>
@@ -497,7 +504,6 @@ namespace WinPaletter
         /// <param name="e"></param>
         private static void PreferencesRelatedToTitlebarExtenderChanged(object sender, EventArgs e)
         {
-            TitlebarExtender.Transparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
             TitlebarExtender.AccentOnTitlebars = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1) == 1;
         }
 

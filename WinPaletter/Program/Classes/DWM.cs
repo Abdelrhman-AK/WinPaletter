@@ -29,42 +29,44 @@ namespace WinPaletter
         /// <param name="Style">The style of the backdrop effect to apply. Supported styles include Mica, Tabbed, Acrylic, and Aero.</param>
         /// <param name="useOldAcrylicMethod">A value indicating whether to use an older method for applying the Acrylic effect. This is relevant for
         /// compatibility with certain systems.</param>
-        public static void DropEffect(IntPtr hwnd, Padding Margins = default, bool Border = true, BackdropStyles Style = BackdropStyles.Mica, bool useOldAcrylicMethod = false)
+        public static void DropEffect(IntPtr hwnd, Padding Margins = default, bool Border = true, DWMStyles Style = DWMStyles.Mica, bool useOldAcrylicMethod = false)
         {
+            if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
+
             Margins = Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0) ? new(-1) : Margins;
 
             bool CompositionEnabled = DWMAPI.IsCompositionEnabled();
-            bool Transparency_W10x = (OS.W10 || OS.W11 || OS.W12) && ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", true);
+            bool Transparency_W10x = (OS.W10 || OS.W11 || OS.W12) && Program.WindowsTransparency;
 
             if ((OS.W12 || OS.W11) && Transparency_W10x)
             {
                 switch (Style)
                 {
-                    case BackdropStyles.Mica:
+                    case DWMStyles.Mica:
                         {
-                            DrawMica(hwnd, Margins, BackdropStyles.Mica);
+                            DrawMica(hwnd, Margins, DWMStyles.Mica);
                             return;
                         }
 
-                    case BackdropStyles.Tabbed:
+                    case DWMStyles.Tabbed:
                         {
-                            DrawMica(hwnd, Margins, BackdropStyles.Tabbed);
+                            DrawMica(hwnd, Margins, DWMStyles.Tabbed);
                             return;
                         }
 
-                    case BackdropStyles.Acrylic:
+                    case DWMStyles.Acrylic:
                         {
                             DrawAcrylic(hwnd, Margins, Border, useOldAcrylicMethod);
                             return;
                         }
 
-                    case BackdropStyles.Aero:
+                    case DWMStyles.Aero:
                         {
                             DrawAero(hwnd, Margins);
                             return;
                         }
 
-                    case BackdropStyles.None:
+                    case DWMStyles.None:
                         {
                             DrawTransparentGray(hwnd);
                             return;
@@ -72,7 +74,7 @@ namespace WinPaletter
 
                     default:
                         {
-                            DrawMica(hwnd, Margins, BackdropStyles.Mica);
+                            DrawMica(hwnd, Margins, DWMStyles.Mica);
                             return;
                         }
                 }
@@ -82,19 +84,19 @@ namespace WinPaletter
             {
                 switch (Style)
                 {
-                    case BackdropStyles.Acrylic:
+                    case DWMStyles.Acrylic:
                         {
                             DrawAcrylic(hwnd, Margins, Border, useOldAcrylicMethod);
                             return;
                         }
 
-                    case BackdropStyles.Aero:
+                    case DWMStyles.Aero:
                         {
                             DrawAero(hwnd, Margins);
                             return;
                         }
 
-                    case BackdropStyles.None:
+                    case DWMStyles.None:
                         {
                             DrawTransparentGray(hwnd);
                             return;
@@ -114,7 +116,7 @@ namespace WinPaletter
                 return;
             }
 
-            else if (Style == BackdropStyles.None)
+            else if (Style == DWMStyles.None)
             {
                 DrawTransparentGray(hwnd);
                 return;
@@ -130,11 +132,11 @@ namespace WinPaletter
         /// <param name="Margins">The <see cref="Padding"/> that defines the margins for the drop effect. Defaults to <see cref="Padding.Empty"/> if
         /// not specified.</param>
         /// <param name="Border">A value indicating whether the form's border should be visible. Defaults to <see langword="true"/>.</param>
-        /// <param name="FormStyle">The <see cref="BackdropStyles"/> that specifies the visual style of the drop effect. Defaults to <see
-        /// cref="BackdropStyles.Mica"/>.</param>
+        /// <param name="FormStyle">The <see cref="DWMStyles"/> that specifies the visual style of the drop effect. Defaults to <see
+        /// cref="DWMStyles.Mica"/>.</param>
         /// <param name="useOldAcrylicMethod">A value indicating whether to use the legacy acrylic method for the drop effect. Defaults to <see
         /// langword="false"/>.</param>
-        public static void DropEffect(this Form Form, Padding Margins = default, bool Border = true, BackdropStyles FormStyle = BackdropStyles.Mica, bool useOldAcrylicMethod = false)
+        public static void DropEffect(this Form Form, Padding Margins = default, bool Border = true, DWMStyles FormStyle = DWMStyles.Mica, bool useOldAcrylicMethod = false)
         {
             DropEffect(Form.Handle, Margins, Border, FormStyle, useOldAcrylicMethod);
         }
@@ -165,13 +167,15 @@ namespace WinPaletter
         /// <param name="hwnd">A handle to the window whose effects are to be reset. Must not be <see cref="IntPtr.Zero"/>.</param>
         public static void ResetEffect(IntPtr hwnd)
         {
+            if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
+
             if (OS.WXP) return; // Unsupported OS
 
             if (hwnd == IntPtr.Zero) return;
 
             // 1. Reset backdrop type to "None"
-            int backdropNone = (int)BackdropStyles.None;
-            DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref backdropNone, Marshal.SizeOf<int>());
+            int backdropNone = (int)SystemBackdropType.None;
+            DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropNone, Marshal.SizeOf<int>());
 
             // 2. Use correct dark mode setting
             int useDarkMode = Program.Style.DarkMode ? 1 : 0;
@@ -191,31 +195,52 @@ namespace WinPaletter
         /// <param name="hwnd">A handle to the window to which the backdrop effect will be applied.</param>
         /// <param name="margins">The margins of the window where the backdrop effect should be applied.  Use <see cref="Padding.Empty"/> to
         /// apply the effect to the entire window.</param>
-        /// <param name="style">The desired backdrop style to apply. Defaults to <see cref="BackdropStyles.Mica"/>.  If <see
-        /// cref="BackdropStyles.Tabbed"/> is specified but not supported, the Mica style will be used instead.</param>
-        public static void DrawMica(IntPtr hwnd, Padding margins, BackdropStyles style = BackdropStyles.Mica)
+        /// <param name="style">The desired backdrop style to apply. Defaults to <see cref="DWMStyles.Mica"/>.  If <see
+        /// cref="DWMStyles.Tabbed"/> is specified but not supported, the Mica style will be used instead.</param>
+        public static void DrawMica(IntPtr hwnd, Padding margins, DWM.DWMStyles style = DWM.DWMStyles.Mica)
         {
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x || OS.W10) return; // Mica and Tabbed are only supported on Windows 11 and later
+            if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
 
-            margins = margins == default || margins == null || margins == Padding.Empty || margins == new Padding(0) ? new(-1) : margins;
+            // Only Windows 10+ supported
+            if (!(OS.W10 || OS.W11 || OS.W12)) return;
 
-            DrawAero(hwnd, margins, false); // Extend frame into client area
+            // Normalize margins
+            margins = margins == default || margins == null || margins == Padding.Empty || margins == new Padding(0) ? new Padding(-1) : margins;
 
-            // Determine which style to apply
-            int backdrop = (int)style;
-            if (style == BackdropStyles.Tabbed && !OS.W11_22523) backdrop = (int)BackdropStyles.Mica;
+            // Extend frame into client area (safe fallback)
+            DrawAero(hwnd, margins, false);
 
-            int darkMode = Program.Style.DarkMode ? 1 : 0;
+            // Handle backdrop safely for Windows 11 builds
+            if (OS.W11_22523)
+            {
+                int backdrop = (int)style;
+                if (style == DWM.DWMStyles.Tabbed && !OS.W11_22523) backdrop = (int)DWM.DWMStyles.Mica;
 
-            // Set the dark mode attribute for the titlebar
-            DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref darkMode, Marshal.SizeOf<int>());
-            if (OS.W10_1909_AndBelow) DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref darkMode, Marshal.SizeOf<int>());
+                int darkMode = Program.Style.DarkMode ? 1 : 0;
 
-            DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.MICA_EFFECT, ref backdrop, Marshal.SizeOf<int>());
-
-            DWMAPI.DwmSetWindowAttribute(hwnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdrop, Marshal.SizeOf<int>());
-
-            DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.SYSTEMBACKDROP_TYPE, ref backdrop, Marshal.SizeOf<int>());
+                // Only set system backdrop if the build supports it
+                try { DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdrop, Marshal.SizeOf<int>()); } catch { }
+                try { DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref darkMode, Marshal.SizeOf<int>()); } catch { }
+            }
+            else if (OS.W11) // pre-22523
+            {
+                int backdrop = (int)DWM.DWMStyles.Mica;
+                int darkMode = Program.Style.DarkMode ? 1 : 0;
+                try { DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdrop, Marshal.SizeOf<int>()); } catch { }
+                try { DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref darkMode, Marshal.SizeOf<int>()); } catch { }
+            }
+            else if (OS.W10) // Windows 10
+            {
+                int darkMode = Program.Style.DarkMode ? 1 : 0;
+                try
+                {
+                    if (OS.W10_1909_AndBelow)
+                        DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref darkMode, Marshal.SizeOf<int>());
+                    else
+                        DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref darkMode, Marshal.SizeOf<int>());
+                }
+                catch { }
+            }
         }
 
         /// <summary>
@@ -235,6 +260,8 @@ namespace WinPaletter
         /// langword="false"/>.</param>
         public static void DrawAcrylic(IntPtr hwnd, Padding margins, bool border = true, bool useOldMethod = false)
         {
+            if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
+
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return; // Unsupported OS
 
             if (OS.W10 || useOldMethod)
@@ -273,7 +300,7 @@ namespace WinPaletter
             }
             else
             {
-                DrawMica(hwnd, margins, BackdropStyles.Acrylic);
+                DrawMica(hwnd, margins, DWMStyles.Acrylic);
             }
         }
 
@@ -291,14 +318,16 @@ namespace WinPaletter
         /// Acrylic, or Tabbed effects) before extending the frame. This parameter is ignored on Windows 10 and later.</param>
         public static void DrawAero(IntPtr hwnd, Padding Margins, bool eraseOldBackdrops = true)
         {
+            if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
+
             if (OS.WXP) return; // Unsupported OS
 
             Margins = Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0) ? new(-1) : Margins;
 
             if (!OS.WVista && !OS.W7 && !OS.W8x && !OS.W10 && eraseOldBackdrops)
             {
-                int backdropType = 0; // 1 = Mica, 2 = Acrylic, 3 = Tabbed, 0 = None
-                DWMAPI.DwmSetWindowAttribute(hwnd, 38, ref backdropType, sizeof(int));
+                int backdropType = (int)SystemBackdropType.None;
+                DWMAPI.DwmSetWindowAttribute(hwnd, DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, sizeof(int));
             }
 
             DWMAPI.MARGINS DWM_Margins = new() { leftWidth = Margins.Left, rightWidth = Margins.Right, topHeight = Margins.Top, bottomHeight = Margins.Bottom };
@@ -308,14 +337,16 @@ namespace WinPaletter
         /// <summary>
         /// Applies a semi-transparent gray overlay to the specified window handle.
         /// </summary>
-        /// <param name="hWnd">Handle to the window.</param>
+        /// <param name="hwnd">Handle to the window.</param>
         /// <param name="noWindowBorders">
         /// If true, removes the standard window border and caption (makes the window borderless).
         /// </param>
         /// <param name="opacity">Opacity value from 0.0 (fully transparent) to 1.0 (fully opaque).</param>
-        public static void DrawTransparentGray(IntPtr hWnd, bool noWindowBorders = true, float opacity = 0.5f)
+        public static void DrawTransparentGray(IntPtr hwnd, bool noWindowBorders = true, float opacity = 0.5f)
         {
-            if (hWnd == IntPtr.Zero) return;
+            if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
+
+            if (hwnd == IntPtr.Zero) return;
 
             const int GWL_STYLE = -16;
             const int WS_BORDER = 0x00800000;
@@ -327,15 +358,15 @@ namespace WinPaletter
             // Remove borders if requested
             if (noWindowBorders)
             {
-                int style = User32.GetWindowLong(hWnd, GWL_STYLE);
+                int style = User32.GetWindowLong(hwnd, GWL_STYLE);
                 style &= ~WS_BORDER & ~WS_CAPTION;
-                User32.SetWindowLong(hWnd, GWL_STYLE, style);
+                User32.SetWindowLong(hwnd, GWL_STYLE, style);
             }
 
             // Enable layered window style
-            int exStyle = User32.GetWindowLong(hWnd, GWL_EXSTYLE);
+            int exStyle = User32.GetWindowLong(hwnd, GWL_EXSTYLE);
             exStyle |= WS_EX_LAYERED;
-            User32.SetWindowLong(hWnd, GWL_EXSTYLE, exStyle);
+            User32.SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
 
             // Set gray color and opacity
             byte alpha = (byte)(opacity * 255f);
@@ -343,7 +374,7 @@ namespace WinPaletter
             uint colorRef = (uint)((color.R) | (color.G << 8) | (color.B << 16));
 
             // Apply transparency
-            User32.SetLayeredWindowAttributes(hWnd, colorRef, alpha, LWA_ALPHA);
+            User32.SetLayeredWindowAttributes(hwnd, colorRef, alpha, LWA_ALPHA);
         }
 
         /// <summary>
@@ -352,7 +383,7 @@ namespace WinPaletter
         /// <remarks>Backdrop styles define the visual appearance of a window's background, such as transparency, blur,
         /// and noise effects. These styles are typically used to enhance the user interface by providing a modern and visually
         /// appealing background. The availability of certain styles may depend on the operating system version.</remarks>
-        public enum BackdropStyles
+        public enum DWMStyles
         {
             /// <summary>
             /// No backdrop effect.
@@ -384,6 +415,14 @@ namespace WinPaletter
             /// Automatically choose the best effect depending on the OS
             /// </summary>
             Auto,
+        }
+
+        public enum SystemBackdropType
+        {
+            None = 0,
+            Mica = 2,
+            Acrylic = 3,
+            Tabbed = 4
         }
     }
 }

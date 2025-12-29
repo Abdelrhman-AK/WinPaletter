@@ -51,7 +51,7 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     using (INI ini = new(dlg.FileName))
-                    using (Manager TMx = Default.Get(Program.WindowStyle))
+                    using (Manager TMx = Default.FromOS(Program.WindowStyle))
                     {
                         string metricsStr = ini.Read("Metrics", "NonclientMetrics");
                         string iconsmetricsStr = ini.Read("Metrics", "IconMetrics");
@@ -122,7 +122,7 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.Get(Program.WindowStyle);
+            Manager TMx = Default.FromOS(Program.WindowStyle);
             LoadFromTM(TMx);
             TMx.Dispose();
         }
@@ -445,7 +445,7 @@ namespace WinPaletter
 
         void LoadDefaultValues()
         {
-            using (Manager @default = Default.Get(Program.WindowStyle))
+            using (Manager @default = Default.FromOS(Program.WindowStyle))
             {
                 trackBarX1.DefaultValue = @default.MetricsFonts.CaptionHeight;
                 trackBarX2.DefaultValue = @default.MetricsFonts.CaptionWidth;
@@ -488,7 +488,7 @@ namespace WinPaletter
             string metrics = SelectedTheme.Split('|').Where(s => s.ToLower().StartsWith("nonclientmetrics")).FirstOrDefault();
             string icon = SelectedTheme.Split('|').Where(s => s.ToLower().StartsWith("iconmetrics")).FirstOrDefault();
 
-            using (Manager TM_Default = Default.Get(Program.WindowStyle))
+            using (Manager TM_Default = Default.FromOS(Program.WindowStyle))
             using (Manager TMx = Program.TM.Clone())
             {
                 TMx.MetricsFonts = TM_Default.MetricsFonts;
@@ -884,7 +884,7 @@ namespace WinPaletter
 
         private void undo_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 Label1.Font = TM.MetricsFonts.CaptionFont;
                 Label1.Text = Label1.Font.Name;
@@ -894,7 +894,7 @@ namespace WinPaletter
 
         private void button21_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 Label5.Font = TM.MetricsFonts.SmCaptionFont;
                 Label5.Text = Label5.Font.Name;
@@ -904,7 +904,7 @@ namespace WinPaletter
 
         private void button22_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 Label2.Font = TM.MetricsFonts.IconFont;
                 Label2.Text = Label2.Font.Name;
@@ -914,7 +914,7 @@ namespace WinPaletter
 
         private void button23_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 Label3.Font = TM.MetricsFonts.MenuFont;
                 Label3.Text = Label3.Font.Name;
@@ -924,7 +924,7 @@ namespace WinPaletter
 
         private void button24_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 Label4.Font = TM.MetricsFonts.MessageFont;
                 Label4.Text = Label4.Font.Name;
@@ -934,7 +934,7 @@ namespace WinPaletter
 
         private void button25_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 Label6.Font = TM.MetricsFonts.StatusFont;
                 Label6.Text = Label6.Font.Name;
@@ -944,7 +944,7 @@ namespace WinPaletter
 
         private void button26_Click(object sender, EventArgs e)
         {
-            using (Manager TM = Default.Get(Program.WindowStyle))
+            using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
                 CheckBox1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
             }
